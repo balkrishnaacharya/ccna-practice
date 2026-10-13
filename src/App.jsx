@@ -9,6 +9,7 @@ import Settings from "./pages/Settings";
 import ExamHistory from "./pages/ExamHistory";
 import SessionReview from "./pages/SessionReview";
 import Notes from "./pages/Notes";
+import PracticalExam from "./pages/PracticalExam";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -69,6 +70,16 @@ export default function App() {
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      to: "/practical-exam",
+      label: "Practical",
+      fullLabel: "Practical Lab",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9h8m-8 4h5m-9 7h14a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
     },
@@ -192,6 +203,7 @@ export default function App() {
           <Route path="/" element={<Dashboard profileName={profileName} />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/exam" element={<Exam onProgressChange={reportExamProgress} />} />
+          <Route path="/practical-exam" element={<PracticalExam />} />
           <Route path="/history" element={<ExamHistory />} />
           <Route path="/history/:sessionId" element={<SessionReview />} />
           <Route path="/notes" element={<Notes />} />
@@ -205,7 +217,7 @@ export default function App() {
 
       {/* Mobile Bottom Tab Bar (fixed bottom-0 inset-x-0 h-16 bg-white border-t) */}
       <nav
-        className="sm:hidden fixed bottom-0 inset-x-0 h-16 bg-white border-t border-[#e5e5e5] flex items-center justify-around z-50 px-2"
+        className="sm:hidden fixed bottom-0 inset-x-0 h-16 bg-white border-t border-[#e5e5e5] flex items-center justify-start overflow-x-auto z-50 px-2"
         style={{ paddingBottom: "var(--safe-bottom)" }}
       >
         {navLinks.map((link) => {
@@ -215,7 +227,7 @@ export default function App() {
               key={link.to}
               to={link.to}
               onClick={(event) => guardNavigation(event, link.to)}
-              className={`flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors duration-150 ${
+              className={`flex min-w-[60px] flex-none flex-col items-center justify-center py-1 rounded-xl transition-colors duration-150 ${
                 isActive
                   ? "text-[#4d6bfe] font-semibold"
                   : "text-[#5a5a5a] hover:text-[#0d0d0d]"
