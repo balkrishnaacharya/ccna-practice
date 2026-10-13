@@ -1,3 +1,5 @@
+import { showAccessLists, showRunningConfig } from "./iosEngine";
+
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const pick = (values) => values[rand(0, values.length - 1)];
 
@@ -110,7 +112,18 @@ function ospfAreaScenario() {
 
 function sshAclScenario() {
   const host = `198.51.100.${rand(10, 240)}`; const r1 = device("R1", {}, { acls: { 15: [{ action: "deny", ip: host, wildcard: "0.0.0.0" }, { action: "permit", ip: "any", wildcard: null }] }, vtyAccessList: 15 });
-  const check = (ds) => (ds.R1.acls[15] || []).some((e) => e.action === "permit" && e.ip === host && (e.wildcard === "0.0.0.0" || e.wildcard === null)) && !(ds.R1.acls[15] || []).some((e) => e.action === "deny" && e.ip === host);
+  const check = (ds) => {
+    const entries = ds.R1.acls[15] || [];
+    const accessLists = showAccessLists(ds.R1);
+    const runningConfig = showRunningConfig(ds.R1);
+    const permit = entries.some((e) => e.action === "permit" && e.ip === host && e.wildcard === "0.0.0.0");
+    const blocked = entries.some((e) => e.action === "deny" && e.ip === host);
+    return permit && !blocked
+      && new RegExp(`^    permit ${host.replaceAll(".", "\\.")} 0\\.0\\.0\\.0$`, "m").test(accessLists)
+      && new RegExp(`^access-list 15 permit ${host.replaceAll(".", "\\.")} 0\\.0\\.0\\.0$`, "m").test(runningConfig)
+      && !new RegExp(`^    deny ${host.replaceAll(".", "\\.")} 0\\.0\\.0\\.0$`, "m").test(accessLists)
+      && !new RegExp(`^access-list 15 deny ${host.replaceAll(".", "\\.")} 0\\.0\\.0\\.0$`, "m").test(runningConfig);
+  };
   return { title: "Standard ACL blocks SSH administration", domain: "services_security", description: `Administrators connecting from ${host} cannot reach the VTY lines. ACL 15 contains a blocking entry; repair the standard ACL.`, devices: { R1: r1 }, validationRules: [rule("ssh-standard-acl", `ACL 15 permits administrator ${host}`, "R1", check)] };
 }
 
@@ -119,8 +132,12 @@ function webAclScenario() {
   const r1 = device("R1", {}, { extendedAcls: { "web-filter": [{ action: "deny", protocol: "tcp", source: "any", destination: `host ${server} eq 80` }, { action: "deny", protocol: "tcp", source: "any", destination: `host ${server} eq 443` }] } });
   const check = (ds) => {
     const entries = ds.R1.extendedAcls["web-filter"] || [];
-    const allows = ["80", "443"].every((port) => entries.some((e) => e.action === "permit" && e.protocol === "tcp" && e.destination.includes(server) && e.destination.match(/\beq\s+(\d+)\b/)?.[1] === port));
-    return allows;
+    const accessLists = showAccessLists(ds.R1);
+    const runningConfig = showRunningConfig(ds.R1);
+    const exactPermit = (port) => entries.some((e) => e.action === "permit" && e.protocol === "tcp" && e.source === "any" && e.destination === `host ${server} eq ${port}`);
+    const accessListsHas = (port) => new RegExp(`^    permit tcp any host ${server.replaceAll(".", "\\.")} eq ${port}$`, "m").test(accessLists);
+    const configHas = (port) => new RegExp(`^ permit tcp any host ${server.replaceAll(".", "\\.")} eq ${port}$`, "m").test(runningConfig);
+    return ["80", "443"].every((port) => exactPermit(port) && accessListsHas(port) && configHas(port));
   };
   return { title: "Extended ACL blocks HTTP and HTTPS", domain: "services_security", description: `Users cannot access web server ${server} on TCP ports 80 and 443. Inspect and repair the named extended ACL.`, devices: { R1: r1 }, validationRules: [rule("web-extended-acl", `Permit TCP/80 and TCP/443 to ${server}`, "R1", check)] };
 }

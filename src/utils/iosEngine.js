@@ -181,7 +181,7 @@ function showRoutes(device, ipv6 = false) {
   return rows.join("\n");
 }
 
-function showRunningConfig(device) {
+export function showRunningConfig(device) {
   const out = [`hostname ${device.name}`];
   if (device.ipRouting) out.push("ip routing");
   if (device.ipv6Routing) out.push("ipv6 unicast-routing");
@@ -238,6 +238,13 @@ function showRunningConfig(device) {
   return out.join("\n");
 }
 
+export function showAccessLists(device) {
+  return [
+    ...Object.entries(device.acls || {}).flatMap(([number, entries]) => entries.map((entry) => `Standard IP access list ${number}\n    ${entry.action} ${entry.ip} ${entry.wildcard || ""}`)),
+    ...Object.entries(device.extendedAcls || {}).flatMap(([name, entries]) => entries.map((entry) => `Extended IP access list ${name}\n    ${entry.action} ${entry.protocol} ${entry.source} ${entry.destination}`)),
+  ].join("\n") || "No access lists configured";
+}
+
 function showNeighbors(devices, name, detail = false, protocol = "cdp") {
   const device = devices[name];
   if (protocol === "lldp" && !device.lldpEnabled) return "No LLDP neighbors found";
@@ -280,7 +287,7 @@ function runShow(devices, name, cmd) {
   if (cmd === "show cdp neighbors detail") return showNeighbors(devices, name, true, "cdp");
   if (cmd === "show ip nat translations") return ["Pro  Inside global       Inside local        Outside local      Outside global", ...device.nat.static.map((n) => `---  ${n.global.padEnd(19)} ${n.local}`)].join("\n");
   if (cmd === "show ip nat statistics") return `Total active translations: ${device.nat.static.length}\nOutside interfaces: ${Object.values(device.interfaces).filter((i) => i.natRole === "outside").map((i) => i.name).join(",") || "none"}\nInside interfaces: ${Object.values(device.interfaces).filter((i) => i.natRole === "inside").map((i) => i.name).join(",") || "none"}`;
-  if (cmd === "show access-lists" || cmd === "show ip access-lists") return [...Object.entries(device.acls).flatMap(([n, es]) => es.map((e) => `Standard IP access list ${n}\n    ${e.action} ${e.ip} ${e.wildcard || ""}`)), ...Object.entries(device.extendedAcls).flatMap(([n, es]) => es.map((e) => `Extended IP access list ${n}\n    ${e.action} ${e.protocol} ${e.source} ${e.destination}`))].join("\n") || "No access lists configured";
+  if (cmd === "show access-lists" || cmd === "show ip access-lists") return showAccessLists(device);
   if (cmd === "show mac address-table") return ["          Mac Address Table", "Vlan    Mac Address       Type        Ports", ...Object.values(device.interfaces).map((i) => `${String(i.accessVlan).padEnd(8)} 0000.0000.${String(i.macCount).padStart(4, "0")}  STATIC      ${i.name}`)].join("\n");
   if (cmd === "show etherchannel summary") return ["Group  Port-channel  Protocol    Ports", ...Object.values(device.interfaces).filter((i) => i.channelGroup).map((i) => `${i.channelGroup}      Po${i.channelGroup}            ${i.channelMode === "active" || i.channelMode === "passive" ? "LACP" : "-"}         ${i.name}(${i.channelMode === "active" || i.channelMode === "passive" ? "P" : "I"})`)].join("\n");
   if (cmd === "show lacp neighbor") return Object.values(device.interfaces).filter((i) => i.channelGroup).map((i) => `${i.name}: LACP ${i.channelMode}, partner ${i.channelMode === "on" ? "not detected" : "present"}`).join("\n") || "No LACP neighbors";
@@ -391,7 +398,16 @@ function applyGlobalConfig(device, cmd, words, originalCommand) {
   if (cmd === "no lldp run") { device.lldpEnabled = false; return ""; }
   if (cmd === "cdp run") { device.cdpEnabled = true; return ""; }
   if (cmd === "no cdp run") { device.cdpEnabled = false; return ""; }
-  if (first === "no" && words[1] === "access-list") { delete device.acls[words[2]]; return ""; }
+  if (first === "no" && words[1] === "access-list") {
+    const number = words[2];
+    if (words.length === 3) { delete device.acls[number]; return ""; }
+    const [action, ip, wildcard] = words.slice(3);
+    const entries = device.acls[number] || [];
+    const index = entries.findIndex((entry) => entry.action === action && entry.ip === ip && (entry.wildcard || null) === (wildcard || null));
+    if (index < 0) return `% Rule does not exist in access-list ${number}`;
+    entries.splice(index, 1);
+    return "";
+  }
   if (first === "no" && words[1] === "ip" && words[2] === "access-list") { const type = words[3]; const name = words.slice(4).join(" "); if (type === "standard") delete device.acls[name]; else delete device.extendedAcls[name]; return ""; }
   if (first === "line" && words[1]) { device.currentLine = words.slice(1).join(" "); device.lines[device.currentLine] ||= {}; device.mode = "line"; return ""; }
   if (first === "ip" && words[1] === "access-list" && ["standard", "extended"].includes(words[2])) { device.currentAcl = words.slice(3).join(" "); if (words[2] === "standard") { device.acls[device.currentAcl] ||= []; device.mode = "acl-standard"; } else { device.extendedAcls[device.currentAcl] ||= []; device.mode = "acl-extended"; } return ""; }
