@@ -513,6 +513,15 @@ pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
         domain_candidates.push((domain, target, candidates, Vec::new()));
     }
 
+    domain_candidates.sort_by_key(|(domain, _, _, _)| match *domain {
+        "switching" => 0,
+        "ai_ops" => 1,
+        "services_security" => 2,
+        "ip_routing" => 3,
+        "network_infra" => 4,
+        _ => 5,
+    });
+
     let mut rng = rand::thread_rng();
     let mut topic_counts = HashMap::<String, usize>::new();
     for (_, target, candidates, selected) in &mut domain_candidates {
