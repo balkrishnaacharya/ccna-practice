@@ -38,3 +38,6 @@ Thumbs.db
 *.idsig
 *.aab
 release-apk/
+
+# Tauri generated Android project (regenerate with: npm run tauri android init)
+src-tauri/gen/
