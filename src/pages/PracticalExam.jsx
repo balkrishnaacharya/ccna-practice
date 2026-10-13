@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CliTerminal from "../components/CliTerminal";
 import { generateScenarioSet } from "../utils/scenarioGenerator";
@@ -20,22 +20,28 @@ function readHistory() {
   } catch { return []; }
 }
 
-function newSession() {
+function createScenarios() {
   const history = readHistory();
   const recentIds = history.flat();
   const count = Math.random() < 0.5 ? 5 : 6;
-  const scenarios = generateScenarioSet(count, recentIds);
-  const nextHistory = [...history, scenarios.map((scenario) => scenario.id)].slice(-4);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(nextHistory));
-  return scenarios;
+  return generateScenarioSet(count, recentIds);
+}
+
+function recordSession(scenarios) {
+  const history = readHistory();
+  const ids = scenarios.map((scenario) => scenario.id);
+  if (JSON.stringify(history.at(-1)) === JSON.stringify(ids)) return;
+  localStorage.setItem(HISTORY_KEY, JSON.stringify([...history, ids].slice(-4)));
 }
 
 export default function PracticalExam() {
-  const [scenarios, setScenarios] = useState(() => newSession());
+  const [scenarios, setScenarios] = useState(() => createScenarios());
   const [activeIndex, setActiveIndex] = useState(0);
   const [results, setResults] = useState(null);
   const [showScoreboard, setShowScoreboard] = useState(false);
   const activeScenario = scenarios[activeIndex];
+
+  useEffect(() => { recordSession(scenarios); }, []);
 
   function refreshDevices(devices) {
     activeScenario.devices = devices;
@@ -55,7 +61,9 @@ export default function PracticalExam() {
   }
 
   function startFresh() {
-    setScenarios(newSession());
+    const nextScenarios = createScenarios();
+    recordSession(nextScenarios);
+    setScenarios(nextScenarios);
     setActiveIndex(0);
     setResults(null);
     setShowScoreboard(false);

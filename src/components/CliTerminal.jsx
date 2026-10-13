@@ -56,10 +56,20 @@ export default function CliTerminal({ devices, onDevicesChange }) {
       : device?.mode === "privileged"
         ? ["configure terminal", ...quickCommands, "show ip ospf neighbor", "show vlan brief", "show interfaces trunk"]
         : device?.mode === "config"
-          ? ["interface ", "router ospf ", "access-list ", "ip route "]
+          ? ["interface ", "router ospf ", "ipv6 router ospf ", "vlan ", "ip dhcp pool ", "access-list ", "ip access-list standard ", "ip access-list extended ", "ip route ", "ipv6 route ", "aaa new-model", "username ", "tacacs server ", "radius server ", "line vty 0 4", "lldp run", "ip nat inside source "]
           : device?.mode === "interface"
-            ? ["ip address ", "no shutdown", "switchport mode trunk", "ip helper-address ", "channel-group "]
-            : ["network "];
+            ? ["ip address ", "ipv6 address ", "no shutdown", "shutdown", "switchport mode access", "switchport mode trunk", "switchport access vlan ", "switchport trunk native vlan ", "switchport trunk allowed vlan add ", "ip helper-address ", "ip ospf ", "channel-group ", "ip access-group ", "ip nat inside", "ip nat outside", "switchport port-security maximum "]
+            : device?.mode === "dhcp"
+              ? ["network ", "default-router ", "dns-server "]
+              : device?.mode === "vlan"
+                ? ["name "]
+                : device?.mode === "server-tacacs" || device?.mode === "server-radius"
+                  ? ["address ipv4 ", "key "]
+                  : device?.mode === "line"
+                    ? ["transport input ssh", "login local", "access-class "]
+                    : device?.mode === "acl-standard" || device?.mode === "acl-extended"
+                      ? ["permit ", "deny "]
+                      : ["network ", "area "];
     const matches = choices.filter((item) => item.toLowerCase().startsWith(input.toLowerCase()));
     if (matches.length === 1) setInput(matches[0]);
     else if (matches.length > 1) setEntries((old) => [...old, { prompt, command: input, output: matches.join("   ") }]);
