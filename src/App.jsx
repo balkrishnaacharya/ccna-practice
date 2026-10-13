@@ -6,6 +6,8 @@ import Quiz from "./pages/Quiz";
 import Exam from "./pages/Exam";
 import Review from "./pages/Review";
 import Settings from "./pages/Settings";
+import ExamHistory from "./pages/ExamHistory";
+import SessionReview from "./pages/SessionReview";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -46,6 +48,15 @@ export default function App() {
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      to: "/history",
+      label: "History",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
     },
@@ -147,6 +158,8 @@ export default function App() {
           <Route path="/" element={<Dashboard profileName={profileName} />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/exam" element={<Exam />} />
+          <Route path="/history" element={<ExamHistory />} />
+          <Route path="/history/:sessionId" element={<SessionReview />} />
           <Route path="/review" element={<Review />} />
           <Route
             path="/settings"
