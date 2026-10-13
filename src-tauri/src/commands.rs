@@ -1,5 +1,6 @@
 use crate::db::Db;
 use rand::seq::SliceRandom;
+use rand::Rng;
 use rusqlite::{params, Connection, OptionalExtension};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -133,6 +134,52 @@ pub struct SessionDetail {
     pub session: SessionSummary,
     pub domain_scores: Vec<DomainScore>,
     pub reviews: Vec<QuestionReviewResult>,
+}
+
+struct ExamCandidate {
+    id: i64,
+    stem: String,
+    domain: String,
+    difficulty: String,
+    multi_select: i64,
+    subtopic: String,
+    adaptive_weight: f64,
+}
+
+fn subtopic_capacity(candidates: &[ExamCandidate]) -> usize {
+    let mut topics = HashMap::<&str, usize>::new();
+    for candidate in candidates {
+        *topics.entry(&candidate.subtopic).or_default() += 1;
+    }
+    topics.values().map(|count| (*count).min(2)).sum()
+}
+
+fn weighted_exam_sample(
+    mut candidates: Vec<ExamCandidate>,
+    count: usize,
+    rng: &mut impl Rng,
+) -> Vec<ExamCandidate> {
+    let mut selected = Vec::with_capacity(count);
+    let mut topic_counts = HashMap::<String, usize>::new();
+
+    while selected.len() < count {
+        let eligible: Vec<usize> = candidates.iter().enumerate()
+            .filter(|(_, candidate)| topic_counts.get(&candidate.subtopic).copied().unwrap_or(0) < 2)
+            .map(|(index, _)| index)
+            .collect();
+        if eligible.is_empty() { break; }
+
+        let total_weight: f64 = eligible.iter().map(|index| candidates[*index].adaptive_weight).sum();
+        let mut draw = rng.gen_range(0.0..total_weight);
+        let chosen = eligible.iter().copied().find(|index| {
+            draw -= candidates[*index].adaptive_weight;
+            draw < 0.0
+        }).unwrap_or(*eligible.last().unwrap());
+        let candidate = candidates.swap_remove(chosen);
+        *topic_counts.entry(candidate.subtopic.clone()).or_default() += 1;
+        selected.push(candidate);
+    }
+    selected
 }
 
 // ─── Stats ────────────────────────────────────────────────────────────────────
@@ -415,49 +462,66 @@ pub fn submit_answer_conn(payload: &SubmitPayload, conn: &Connection) -> Result<
 pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
 
-    // Weighted according to CCNA 2.0 blueprint: 25/25/20/20/10 = 100 questions
+    // Blueprint counts total 100. The bundled bank has only 12 switching topics,
+    // so the two-per-topic cap shifts one seat to network infrastructure (±1).
     let targets = [
-        ("network_infra", 25i64),
+        ("network_infra", 25usize),
         ("switching", 25),
         ("ip_routing", 20),
         ("services_security", 20),
         ("ai_ops", 10),
     ];
-
-    let mut all_questions: Vec<Question> = Vec::new();
-
-    for (domain, count) in targets {
-        let mut stmt = conn
-            .prepare(
-                "SELECT id, stem, domain, difficulty, COALESCE(multi_select, 0) FROM questions
-                 WHERE domain = ?1 ORDER BY RANDOM() LIMIT ?2",
-            )
-            .map_err(|e| e.to_string())?;
-
-        let rows: Vec<(i64, String, String, String, i64)> = stmt
-            .query_map(params![domain, count], |r| {
-                Ok((
-                    r.get::<_, i64>(0)?,
-                    r.get::<_, String>(1)?,
-                    r.get::<_, String>(2)?,
-                    r.get::<_, String>(3)?,
-                    r.get::<_, i64>(4)?,
-                ))
+    let mut domain_candidates = Vec::new();
+    for (domain, target) in targets {
+        let mut stmt = conn.prepare(
+            "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0),
+                    COALESCE(q.subtopic, ''),
+                    CASE WHEN COALESCE((
+                        SELECT a.correct FROM answers a WHERE a.question_id = q.id
+                        ORDER BY a.answered_at DESC, a.id DESC LIMIT 1
+                    ), 0) = 1 THEN 1.0 ELSE 2.0 END
+             FROM questions q WHERE q.domain = ?1",
+        ).map_err(|e| e.to_string())?;
+        let candidates: Vec<ExamCandidate> = stmt.query_map(params![domain], |row| {
+            Ok(ExamCandidate {
+                id: row.get(0)?,
+                stem: row.get(1)?,
+                domain: row.get(2)?,
+                difficulty: row.get(3)?,
+                multi_select: row.get(4)?,
+                subtopic: row.get(5)?,
+                adaptive_weight: row.get(6)?,
             })
-            .map_err(|e| e.to_string())?
-            .filter_map(|r| r.ok())
-            .collect();
-
-        for (id, stem, domain, difficulty, multi_select) in rows {
-            let q = row_to_question(&conn, id, stem, domain, difficulty, multi_select)?;
-            all_questions.push(q);
-        }
+        }).map_err(|e| e.to_string())?.filter_map(Result::ok).collect();
+        domain_candidates.push((domain, target, candidates));
     }
 
-    // Shuffle across domains
-    let mut rng = rand::thread_rng();
-    all_questions.shuffle(&mut rng);
+    let mut counts: Vec<usize> = domain_candidates.iter()
+        .map(|(_, target, candidates)| (*target).min(subtopic_capacity(candidates)))
+        .collect();
+    let mut remaining = 100usize.saturating_sub(counts.iter().sum());
+    // Keep all domains within one question of the blueprint when topic caps
+    // make a precise quota impossible.
+    while remaining > 0 {
+        let Some(index) = domain_candidates.iter().enumerate().find_map(|(index, (_, target, candidates))| {
+            let capacity = subtopic_capacity(candidates);
+            (counts[index] < target + 1 && counts[index] < capacity).then_some(index)
+        }) else { break; };
+        counts[index] += 1;
+        remaining -= 1;
+    }
 
+    let mut rng = rand::thread_rng();
+    let mut all_questions = Vec::with_capacity(100);
+    for (index, (_, _, candidates)) in domain_candidates.into_iter().enumerate() {
+        for candidate in weighted_exam_sample(candidates, counts[index], &mut rng) {
+            all_questions.push(row_to_question(
+                &conn, candidate.id, candidate.stem, candidate.domain,
+                candidate.difficulty, candidate.multi_select,
+            )?);
+        }
+    }
+    all_questions.shuffle(&mut rng);
     Ok(all_questions)
 }
 
@@ -922,6 +986,7 @@ pub fn reset_stats(db: State<Db>) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM answers", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM sessions", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM flags", []).map_err(|e| e.to_string())?;
     Ok(())
 }
 
