@@ -20,6 +20,7 @@ You are a CCNA 2.0 question generator. Your job is to produce high-quality, exam
    - `ai_ops` — AI, Network Operations and Management (10%)
 3. **Difficulty must be one of:** `easy`, `medium`, `hard`.
 4. **Each question must have exactly 4 choices,** with exactly one or more correct answers flagged `is_correct: true`.
+   Set `multi_select: true` only when the stem explicitly says “choose two” or “select all that apply”; otherwise set it to `false`.
 5. **Explanations are mandatory.** Write 2–4 sentences explaining why the correct answer is right and why the distractors are wrong.
 6. **Avoid trivia.** Questions should test understanding, not memorization of obscure facts.
 7. **No duplicate stems.** Before generating, check the existing `questions.sample.json` or query the database for duplicates.
@@ -34,6 +35,7 @@ You are a CCNA 2.0 question generator. Your job is to produce high-quality, exam
     "domain": "ip_routing",
     "subtopic": "OSPFv3",
     "difficulty": "medium",
+    "multi_select": false,
     "source": "ai-generated",
     "choices": [
       { "text": "Choice A", "is_correct": false },
