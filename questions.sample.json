@@ -1,0 +1,44 @@
+[
+  {
+    "stem": "Which command enables IPv6 routing on a Cisco router?",
+    "explanation": "The `ipv6 unicast-routing` command is required to enable IPv6 routing on a Cisco IOS router. Without it, the router will not forward IPv6 packets even if IPv6 addresses are configured on interfaces.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "easy",
+    "source": "sample",
+    "choices": [
+      { "text": "ip routing", "is_correct": false },
+      { "text": "ipv6 unicast-routing", "is_correct": true },
+      { "text": "ipv6 enable", "is_correct": false },
+      { "text": "ipv6 routing", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the primary purpose of DHCP snooping on a Layer 2 switch?",
+    "explanation": "DHCP snooping acts as a firewall between untrusted hosts and trusted DHCP servers. It filters DHCP messages and builds a binding table of trusted MAC-to-IP mappings, preventing rogue DHCP servers and DHCP starvation attacks.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "sample",
+    "choices": [
+      { "text": "To encrypt DHCP messages", "is_correct": false },
+      { "text": "To filter untrusted DHCP messages and build a binding table", "is_correct": true },
+      { "text": "To assign static IP addresses", "is_correct": false },
+      { "text": "To route DHCP packets between VLANs", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In the context of agentic AI for network operations, what does 'prompt engineering' primarily involve?",
+    "explanation": "Prompt engineering involves crafting inputs to an AI model — specifying persona, output format, and constraints — to get reliable, structured responses. In networking, this might mean asking an AI to generate configuration templates or troubleshoot issues in a specific format.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "hard",
+    "source": "sample",
+    "choices": [
+      { "text": "Writing Python scripts to automate network tasks", "is_correct": false },
+      { "text": "Designing the structure of AI model weights", "is_correct": false },
+      { "text": "Crafting inputs with persona, format, and constraints to guide AI output", "is_correct": true },
+      { "text": "Configuring SNMP traps for AI monitoring", "is_correct": false }
+    ]
+  }
+]

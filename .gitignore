@@ -1,0 +1,8 @@
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+*.db
+.env
+.DS_Store
+pipeline/node_modules/

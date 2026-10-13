@@ -1,0 +1,13 @@
+{
+  "name": "ccna-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Question import pipeline for CCNA Practice app",
+  "main": "import-questions.js",
+  "scripts": {
+    "import": "node import-questions.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  }
+}

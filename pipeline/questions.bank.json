@@ -1,0 +1,5202 @@
+[
+  {
+    "stem": "What is the primary function of a Layer 2 switch in an enterprise campus network?",
+    "explanation": "A Layer 2 switch forwards Ethernet frames using MAC addresses stored in its CAM table. It operates at the Data Link layer and provides microsegmentation by creating separate collision domains for each port. Routers operate at Layer 3 to forward packets between different IP subnets.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Forward frames based on destination MAC addresses",
+        "is_correct": true
+      },
+      {
+        "text": "Route packets based on destination IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Perform network address translation between subnets",
+        "is_correct": false
+      },
+      {
+        "text": "Filter traffic using stateful inspection rules",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which architectural design combines the distribution and core layers into a single tier?",
+    "explanation": "A collapsed core design merges the core and distribution layers into a single switch tier. This topology is recommended for smaller enterprise campus networks to reduce hardware costs and operational complexity. Three-tier designs retain dedicated distribution and core switches for larger scalability.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Collapsed core topology",
+        "is_correct": true
+      },
+      {
+        "text": "Spine-leaf architecture",
+        "is_correct": false
+      },
+      {
+        "text": "Three-tier hierarchical model",
+        "is_correct": false
+      },
+      {
+        "text": "Hub-and-spoke WAN design",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a modern data center spine-leaf architecture, how do leaf switches connect to the rest of the fabric?",
+    "explanation": "In a spine-leaf design, every leaf switch connects to every spine switch, but leaf switches never connect to other leaf switches directly. This ensures predictable, consistent low latency across the fabric with equal-cost multipathing (ECMP). Spine switches also do not connect directly to other spine switches.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Every leaf connects to every spine switch",
+        "is_correct": true
+      },
+      {
+        "text": "Leaves connect directly to adjacent leaf switches",
+        "is_correct": false
+      },
+      {
+        "text": "Leaves connect only to a designated primary spine switch",
+        "is_correct": false
+      },
+      {
+        "text": "Leaves connect through an access-aggregation ring",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which type of optical fiber is optimized for high-bandwidth transmissions over long distances exceeding 2 kilometers?",
+    "explanation": "Single-mode fiber (SMF) uses a narrow core (around 9 microns) and a laser light source to transmit signals over long distances with minimal modal dispersion. In contrast, multimode fiber (MMF) has a larger core (50 or 62.5 microns) and is typically used for shorter campus or data center runs under 500 meters.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Single-mode fiber (SMF)",
+        "is_correct": true
+      },
+      {
+        "text": "Multimode fiber (MMF)",
+        "is_correct": false
+      },
+      {
+        "text": "Shielded twisted-pair (STP)",
+        "is_correct": false
+      },
+      {
+        "text": "Unshielded twisted-pair (UTP)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum power delivered by the Power over Ethernet Plus (802.3at) standard at the PSE port?",
+    "explanation": "The IEEE 802.3at standard, also known as PoE+, delivers up to 30.0 Watts of DC power at the Power Sourcing Equipment (PSE) port, guaranteeing at least 25.5 Watts at the Powered Device (PD). Standard 802.3af delivers 15.4 Watts at the PSE port. Newer 802.3bt standards provide 60W or 90W for higher draw devices.",
+    "domain": "network_infra",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "30.0 Watts",
+        "is_correct": true
+      },
+      {
+        "text": "15.4 Watts",
+        "is_correct": false
+      },
+      {
+        "text": "60.0 Watts",
+        "is_correct": false
+      },
+      {
+        "text": "90.0 Watts",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which symptom typically indicates a duplex mismatch between two connected Ethernet interfaces?",
+    "explanation": "When one side is configured for full-duplex and the other for half-duplex, the half-duplex side will experience late collisions and runts because it detects transmissions during its own transmission window. The full-duplex side will typically log FCS/CRC errors. Link down state or no carrier errors indicate physical layer disconnects.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Late collisions on the half-duplex interface",
+        "is_correct": true
+      },
+      {
+        "text": "Immediate line protocol down status",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast storms traversing the link",
+        "is_correct": false
+      },
+      {
+        "text": "Complete cessation of ARP requests",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default TCP flags sequence during a standard three-way handshake?",
+    "explanation": "A TCP connection is established using a three-way handshake: the client sends a SYN packet, the server responds with SYN-ACK, and the client finishes the handshake with an ACK packet. After this sequence, reliable bidirectional data transmission can begin.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "SYN, SYN-ACK, ACK",
+        "is_correct": true
+      },
+      {
+        "text": "ACK, SYN, ACK",
+        "is_correct": false
+      },
+      {
+        "text": "SYN, ACK, FIN",
+        "is_correct": false
+      },
+      {
+        "text": "RST, SYN, ACK",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many usable host IP addresses are available in a /28 IPv4 subnet?",
+    "explanation": "A /28 subnet has 32 - 28 = 4 host bits. The total number of addresses is 2^4 = 16, and subtracting 2 for the network and broadcast addresses leaves 14 usable host addresses.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "14",
+        "is_correct": true
+      },
+      {
+        "text": "16",
+        "is_correct": false
+      },
+      {
+        "text": "30",
+        "is_correct": false
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which address range is designated for private network addressing under RFC 1918 for Class B networks?",
+    "explanation": "RFC 1918 reserves 172.16.0.0 through 172.31.255.255 (a /12 block) for private networks in the historical Class B range. The range 10.0.0.0/8 corresponds to Class A, while 192.168.0.0/16 corresponds to Class B private space.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "172.16.0.0 to 172.31.255.255",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.0.0 to 172.32.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0 to 10.255.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0 to 192.168.255.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What prefix designates an IPv6 Link-Local address?",
+    "explanation": "IPv6 link-local addresses always start with the prefix FE80::/10 (typically appearing as fe80::). These addresses are mandatory on all IPv6-enabled interfaces and are used exclusively for communication within the local broadcast domain. They are not routable outside the local link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "FE80::/10",
+        "is_correct": true
+      },
+      {
+        "text": "FC00::/7",
+        "is_correct": false
+      },
+      {
+        "text": "2000::/3",
+        "is_correct": false
+      },
+      {
+        "text": "FF00::/8",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless deployment architecture uses CAPWAP tunnels to split MAC layer processing between an AP and a controller?",
+    "explanation": "A Split-MAC architecture divides 802.11 processing between the lightweight access point (LAP) and the centralized wireless LAN controller (WLC). Real-time frames like beacons and ACKs are handled by the LAP, while association, authentication, and management are forwarded via CAPWAP to the WLC.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Split-MAC architecture with Lightweight APs",
+        "is_correct": true
+      },
+      {
+        "text": "Autonomous AP deployment",
+        "is_correct": false
+      },
+      {
+        "text": "Ad-hoc peer-to-peer Wi-Fi network",
+        "is_correct": false
+      },
+      {
+        "text": "Bridge mode mesh network",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What mode allows a Cisco Lightweight AP to locally switch client data traffic if the WAN link to its WLC fails?",
+    "explanation": "FlexConnect mode (formerly known as H-REAP) enables lightweight access points at branch offices to switch client data frames locally on the local subnet. If connection to the central WLC drops, the AP can continue to provide local connectivity and authentication without interruption.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "FlexConnect mode",
+        "is_correct": true
+      },
+      {
+        "text": "Sniffer mode",
+        "is_correct": false
+      },
+      {
+        "text": "Rogue detector mode",
+        "is_correct": false
+      },
+      {
+        "text": "Bridge mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which field in the IPv4 header prevents packets from endlessly circulating in a routing loop?",
+    "explanation": "The Time to Live (TTL) field is an 8-bit counter decremented by 1 at every router hop. When the TTL reaches 0, the router drops the packet and sends an ICMP Time Exceeded message back to the sender, preventing permanent routing loops.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Time to Live (TTL)",
+        "is_correct": true
+      },
+      {
+        "text": "Differentiated Services Code Point (DSCP)",
+        "is_correct": false
+      },
+      {
+        "text": "Header Checksum",
+        "is_correct": false
+      },
+      {
+        "text": "Identification",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 header field serves the equivalent role of the IPv4 Time to Live (TTL) field?",
+    "explanation": "In IPv6, the Hop Limit field is an 8-bit integer decremented by each router that forwards the packet. Just like IPv4 TTL, when the Hop Limit reaches 0, the packet is discarded and an ICMPv6 Hop Limit Exceeded message is returned.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Hop Limit",
+        "is_correct": true
+      },
+      {
+        "text": "Flow Label",
+        "is_correct": false
+      },
+      {
+        "text": "Next Header",
+        "is_correct": false
+      },
+      {
+        "text": "Traffic Class",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an EUI-64 IPv6 address generation process, which modifications are made to a 48-bit MAC address?",
+    "explanation": "To convert a 48-bit MAC address into a 64-bit interface identifier, the 16-bit hex sequence 0xFFFE is inserted into the exact middle of the MAC. Additionally, the 7th bit of the first byte (the universal/local bit) is inverted (flipped).",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Insert 0xFFFE into the middle and invert the 7th bit",
+        "is_correct": true
+      },
+      {
+        "text": "Insert 0xEEEE into the middle and set the 8th bit to 1",
+        "is_correct": false
+      },
+      {
+        "text": "Append 0xFFFF to the end and invert the first bit",
+        "is_correct": false
+      },
+      {
+        "text": "Prepend 0xFE80 and leave all MAC bits untouched",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the network address of the subnet containing the host IP 192.168.10.145/27?",
+    "explanation": "A /27 subnet has a mask of 255.255.255.224, giving a block size of 32 (256 - 224). The subnet boundaries are 0, 32, 64, 96, 128, 160, etc. Since 145 lies between 128 and 159, the network address is 192.168.10.128.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "192.168.10.128",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.10.144",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.96",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol operates over UDP port 67 and port 68 for automatic IP configuration?",
+    "explanation": "The Dynamic Host Configuration Protocol (DHCP) uses UDP port 67 for the server and UDP port 68 for the client. Clients broadcast DHCPDISCOVER messages to discover available servers on the local segment.",
+    "domain": "network_infra",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCP",
+        "is_correct": true
+      },
+      {
+        "text": "DNS",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary characteristic of UDP compared to TCP?",
+    "explanation": "User Datagram Protocol (UDP) is a connectionless, best-effort transport protocol with low overhead. Unlike TCP, UDP does not provide sequencing, acknowledgments, or flow control, making it ideal for delay-sensitive real-time voice and video streams.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Connectionless with no guarantee of delivery",
+        "is_correct": true
+      },
+      {
+        "text": "Connection-oriented with positive acknowledgments",
+        "is_correct": false
+      },
+      {
+        "text": "Provides byte-stream windowing and error retransmissions",
+        "is_correct": false
+      },
+      {
+        "text": "Negotiates maximum segment size (MSS) prior to sending",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which connector type is commonly used with Category 6 unshielded twisted-pair (UTP) copper cabling?",
+    "explanation": "RJ-45 (Registered Jack 45) is the 8-pin modular connector standardized for Ethernet over twisted-pair copper cables like Cat5e, Cat6, and Cat6a. LC, SC, and ST are optical fiber connectors.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "RJ-45",
+        "is_correct": true
+      },
+      {
+        "text": "LC connector",
+        "is_correct": false
+      },
+      {
+        "text": "SC connector",
+        "is_correct": false
+      },
+      {
+        "text": "BNC connector",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the broadcast address for the subnet 10.1.4.0/22?",
+    "explanation": "A /22 mask is 255.255.252.0. The third octet has a block size of 4 (256 - 252). The subnet spans 10.1.4.0 through 10.1.7.255, making 10.1.7.255 the directed broadcast address.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "10.1.7.255",
+        "is_correct": true
+      },
+      {
+        "text": "10.1.4.255",
+        "is_correct": false
+      },
+      {
+        "text": "10.1.15.255",
+        "is_correct": false
+      },
+      {
+        "text": "10.1.255.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless frequency band provides more non-overlapping 20 MHz channels to minimize co-channel interference?",
+    "explanation": "The 5 GHz frequency band offers up to 24 or more non-overlapping 20 MHz channels, depending on regulatory domain and DFS support. By contrast, the 2.4 GHz band provides only three non-overlapping channels (channels 1, 6, and 11 in North America), making it much more susceptible to congestion and co-channel interference.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "5 GHz band",
+        "is_correct": true
+      },
+      {
+        "text": "2.4 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "900 MHz band",
+        "is_correct": false
+      },
+      {
+        "text": "60 GHz band",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the Point-to-Point Protocol over Ethernet (PPPoE) in WAN broadband access?",
+    "explanation": "PPPoE encapsulates PPP frames inside Ethernet frames, enabling service providers to implement user authentication, session accounting, and link configuration over a shared Ethernet transport like DSL. It allows telcos to manage customer credentials using standard RADIUS or TACACS+ mechanisms.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Provide authentication and session management over Ethernet",
+        "is_correct": true
+      },
+      {
+        "text": "Establish an encrypted IPsec tunnel over the public internet",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamically route BGP prefixes across multiple ISPs",
+        "is_correct": false
+      },
+      {
+        "text": "Aggregate multiple physical serial links into a single logical channel",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows detailed hardware statistics, including input/output errors, CRC errors, and duplex status on a Cisco switch port?",
+    "explanation": "The command `show interfaces [interface-id]` displays complete operational parameters and counters for an interface. This includes speed, duplex, packet counts, runt/giant errors, CRC errors, and input/output drops.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show interfaces GigabitEthernet0/1",
+        "is_correct": true
+      },
+      {
+        "text": "show ip interface brief",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "show vlan brief",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an IPv4 address beginning with 169.254.X.X signify when observed on a host?",
+    "explanation": "The 169.254.0.0/16 prefix is reserved for Automatic Private IP Addressing (APIPA) / Link-Local addressing. A host self-assigns an address from this range when it is configured for DHCP but fails to receive a response from a DHCP server on the local network.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The host failed to obtain an IP from a DHCP server (APIPA)",
+        "is_correct": true
+      },
+      {
+        "text": "The host is connected to a public cloud VPC network",
+        "is_correct": false
+      },
+      {
+        "text": "The host is using a reserved multicast class D address",
+        "is_correct": false
+      },
+      {
+        "text": "The host has received a rogue DHCP reservation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address represents all IPv6 routers on the local link?",
+    "explanation": "The address FF02::2 is the link-local all-routers multicast address in IPv6. All IPv6 routers listen on this group address for Router Solicitation messages from hosts. FF02::1 represents all IPv6 nodes.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "FF02::2",
+        "is_correct": true
+      },
+      {
+        "text": "FF02::1",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::5",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::1:FF00::/104",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a three-tier hierarchical network design, what is the primary role of the Core layer?",
+    "explanation": "The core layer acts as the high-speed network backbone. Its main objective is to switch packets as fast as possible between distribution blocks with low latency and high availability, without performing CPU-intensive tasks like packet filtering or ACL inspection.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Provide high-speed, low-latency transport between distribution blocks",
+        "is_correct": true
+      },
+      {
+        "text": "Perform granular security filtering and quality of service tagging",
+        "is_correct": false
+      },
+      {
+        "text": "Terminate end-user client connections and apply 802.1X security",
+        "is_correct": false
+      },
+      {
+        "text": "Distribute IP addresses via DHCP and act as the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which standard defines Power over Ethernet (PoE) providing up to 15.4 Watts per port?",
+    "explanation": "IEEE 802.3af was the original Power over Ethernet standard ratified in 2003, supplying up to 15.4 W at the PSE port. The newer 802.3at (PoE+) provides 30 W, while 802.3bt (4PPoE) offers up to 60 W (Type 3) and 90 W (Type 4).",
+    "domain": "network_infra",
+    "subtopic": "PoE Standards",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "IEEE 802.3af",
+        "is_correct": true
+      },
+      {
+        "text": "IEEE 802.3at",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.3bt",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.11ax",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum distance supported by standard 1000BASE-T Gigabit Ethernet over Category 5e UTP cabling?",
+    "explanation": "1000BASE-T over Cat5e or Cat6 UTP cabling supports a maximum segment length of 100 meters (approximately 328 feet). This includes up to 90 meters of horizontal solid-core cabling and 10 meters of patch cords.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "100 meters",
+        "is_correct": true
+      },
+      {
+        "text": "50 meters",
+        "is_correct": false
+      },
+      {
+        "text": "250 meters",
+        "is_correct": false
+      },
+      {
+        "text": "500 meters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which layer of the OSI model is responsible for logical addressing and packet routing across inter-network boundaries?",
+    "explanation": "The Network layer (Layer 3) handles logical addressing (such as IPv4 and IPv6) and path determination across routed networks. The Data Link layer (Layer 2) handles physical MAC addressing on local segments.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Network layer (Layer 3)",
+        "is_correct": true
+      },
+      {
+        "text": "Data Link layer (Layer 2)",
+        "is_correct": false
+      },
+      {
+        "text": "Transport layer (Layer 4)",
+        "is_correct": false
+      },
+      {
+        "text": "Session layer (Layer 5)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What frame check sequence error typically occurs when a frame is corrupt or damaged in transit across a copper cable?",
+    "explanation": "A Cyclic Redundancy Check (CRC) error occurs when the mathematical checksum calculated by the receiving switch port does not match the FCS field in the Ethernet trailer. High CRC errors are usually caused by bad physical cables, electromagnetic interference, or faulty transceiver modules.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "CRC / FCS error",
+        "is_correct": true
+      },
+      {
+        "text": "Late collision error",
+        "is_correct": false
+      },
+      {
+        "text": "Buffer overrun error",
+        "is_correct": false
+      },
+      {
+        "text": "Carrier transition error",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol is used by Cisco Discovery Protocol (CDP) and LLDP to share device information?",
+    "explanation": "Both CDP and LLDP are Layer 2 neighbor discovery protocols that encapsulate advertisements directly into Data Link layer frames without requiring an IP stack. They multicast advertisements on local segments to discover adjacent device types, software versions, and port IDs.",
+    "domain": "network_infra",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Direct Layer 2 multicast frames",
+        "is_correct": true
+      },
+      {
+        "text": "Layer 3 UDP broadcast packets",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 4 TCP unicast connections",
+        "is_correct": false
+      },
+      {
+        "text": "ICMP echo discovery messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables Link Layer Discovery Protocol (LLDP) globally on a Cisco IOS-XE switch?",
+    "explanation": "The global configuration command `lldp run` turns on LLDP processing on the switch. Unlike CDP, which is enabled by default on Cisco equipment, LLDP is an open IEEE standard (802.1AB) that often requires explicit global activation.",
+    "domain": "network_infra",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "lldp run",
+        "is_correct": true
+      },
+      {
+        "text": "lldp enable",
+        "is_correct": false
+      },
+      {
+        "text": "lldp transmit and receive",
+        "is_correct": false
+      },
+      {
+        "text": "enable lldp-discovery",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of the Service Set Identifier (SSID) in an 802.11 wireless network?",
+    "explanation": "An SSID is a human-readable text string (up to 32 characters) that uniquely identifies a specific wireless local area network. Access points broadcast the SSID in 802.11 beacon frames so wireless clients can identify and select the desired wireless network.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Identifies the name of the wireless network for clients",
+        "is_correct": true
+      },
+      {
+        "text": "Acts as the encryption master key for WPA3 handshakes",
+        "is_correct": false
+      },
+      {
+        "text": "Specifies the radio frequency channel allocated to the BSS",
+        "is_correct": false
+      },
+      {
+        "text": "Designates the VLAN ID assigned to the AP trunk interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless topology feature combines multiple Basic Service Sets (BSSs) connected by a common Distribution System (DS)?",
+    "explanation": "An Extended Service Set (ESS) consists of two or more interconnected Basic Service Sets (BSSs) sharing the same SSID across a common wired Distribution System. This allows wireless clients to roam seamlessly between access points without dropping their network session.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Extended Service Set (ESS)",
+        "is_correct": true
+      },
+      {
+        "text": "Independent Basic Service Set (IBSS)",
+        "is_correct": false
+      },
+      {
+        "text": "Personal Area Network (PAN)",
+        "is_correct": false
+      },
+      {
+        "text": "Mesh Portal Cluster (MPC)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which encapsulation method is used to transport client traffic between an AP and a central WLC in a unified wireless network?",
+    "explanation": "Control and Provisioning of Wireless Access Points (CAPWAP) is the standard protocol used between lightweight APs and WLCs. It creates two tunnels: a control tunnel over UDP port 5246 (secured with DTLS) and a data tunnel over UDP port 5247 for client payload frames.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "CAPWAP data tunnel (UDP 5247)",
+        "is_correct": true
+      },
+      {
+        "text": "GRE point-to-point tunnel (IP proto 47)",
+        "is_correct": false
+      },
+      {
+        "text": "IPsec transport mode (ESP proto 50)",
+        "is_correct": false
+      },
+      {
+        "text": "VXLAN overlay tunnel (UDP 4789)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the usable host range for a host configured on network 172.16.80.0/20?",
+    "explanation": "A /20 subnet has a subnet mask of 255.255.240.0, which has an increment of 16 in the third octet. The network spans 172.16.80.0 through 172.16.95.255. The usable host addresses are 172.16.80.1 through 172.16.95.254.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "172.16.80.1 to 172.16.95.254",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.80.1 to 172.16.80.254",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.80.1 to 172.16.87.254",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.80.1 to 172.16.111.254",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many subnets and hosts per subnet are created by subnetting 192.168.1.0/24 with a /29 mask?",
+    "explanation": "Borrowing from /24 to /29 gives 29 - 24 = 5 borrowed subnet bits, yielding 2^5 = 32 subnets. With 3 host bits remaining (32 - 29 = 3), each subnet has 2^3 - 2 = 6 usable hosts per subnet.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "32 subnets with 6 usable hosts each",
+        "is_correct": true
+      },
+      {
+        "text": "16 subnets with 14 usable hosts each",
+        "is_correct": false
+      },
+      {
+        "text": "64 subnets with 2 usable hosts each",
+        "is_correct": false
+      },
+      {
+        "text": "8 subnets with 30 usable hosts each",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 address represents the equivalent of IPv4 loopback (127.0.0.1)?",
+    "explanation": "The IPv6 loopback address is ::1 (or 0:0:0:0:0:0:0:1 in uncompressed format). It is used by a node to send packets to itself for local testing and internal IPC.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "::1",
+        "is_correct": true
+      },
+      {
+        "text": "::",
+        "is_correct": false
+      },
+      {
+        "text": "FE80::1",
+        "is_correct": false
+      },
+      {
+        "text": "FF01::1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the prefix range for IPv6 Unique Local Addresses (ULA) specified in RFC 4193?",
+    "explanation": "Unique Local Addresses use the block FC00::/7 (which encompasses FC00::/8 and FD00::/8). They are analogous to IPv4 RFC 1918 private addresses and are meant for local routing within an organization without being routed over the public internet.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "FC00::/7",
+        "is_correct": true
+      },
+      {
+        "text": "2000::/3",
+        "is_correct": false
+      },
+      {
+        "text": "FE80::/10",
+        "is_correct": false
+      },
+      {
+        "text": "FF00::/8",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transceiver form-factor supports 40 Gigabit Ethernet connections over fiber or DAC cabling?",
+    "explanation": "QSFP+ (Quad Small Form-factor Pluggable Plus) is the compact, hot-swappable transceiver standard designed for 40 Gbps data links by bundling four 10 Gbps lanes. SFP supports 1 Gbps, and SFP+ supports 10 Gbps.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "QSFP+",
+        "is_correct": true
+      },
+      {
+        "text": "SFP+",
+        "is_correct": false
+      },
+      {
+        "text": "GBIC",
+        "is_correct": false
+      },
+      {
+        "text": "XFP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which mechanism allows an Ethernet switch port in 'err-disabled' state to automatically recover after a configured period?",
+    "explanation": "The command `errdisable recovery cause [cause]` along with `errdisable recovery interval [seconds]` allows a switch to automatically re-enable ports placed into err-disabled state (e.g. from BPDU guard or port security violations) without manual administrator intervention.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "errdisable recovery cause all",
+        "is_correct": true
+      },
+      {
+        "text": "auto-recovery error-state enable",
+        "is_correct": false
+      },
+      {
+        "text": "switchport recovery timer",
+        "is_correct": false
+      },
+      {
+        "text": "service auto-restart interfaces",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default aging time of dynamic MAC address table entries on a Cisco Catalyst switch?",
+    "explanation": "By default, dynamic MAC entries learned by a Cisco Catalyst switch age out after 300 seconds (5 minutes) of inactivity. If no frames with that source MAC arrive within that duration, the switch flushes the entry to keep the CAM table up to date.",
+    "domain": "network_infra",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "300 seconds (5 minutes)",
+        "is_correct": true
+      },
+      {
+        "text": "60 seconds (1 minute)",
+        "is_correct": false
+      },
+      {
+        "text": "600 seconds (10 minutes)",
+        "is_correct": false
+      },
+      {
+        "text": "3600 seconds (1 hour)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which field in the TCP header is used by the receiver to inform the sender how many bytes of data it can accept before receiving an acknowledgment?",
+    "explanation": "The Window Size field in the TCP header dictates the receive window (rwnd). This is the core mechanism of TCP flow control, preventing a fast sender from overwhelming a receiver's buffer space.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Window Size",
+        "is_correct": true
+      },
+      {
+        "text": "Sequence Number",
+        "is_correct": false
+      },
+      {
+        "text": "Acknowledgment Number",
+        "is_correct": false
+      },
+      {
+        "text": "Urgent Pointer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which WAN topology offers the highest redundancy and fault tolerance at the highest implementation cost?",
+    "explanation": "A full mesh topology connects every site directly to every other site with dedicated circuits. While it provides zero single points of failure and optimal path routing, the circuit count grows exponentially with n*(n-1)/2, making it the most expensive WAN design.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Full mesh topology",
+        "is_correct": true
+      },
+      {
+        "text": "Hub-and-spoke topology",
+        "is_correct": false
+      },
+      {
+        "text": "Partial mesh topology",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point leased line",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What type of frame is discarded by a switch because its length is less than the minimum 64-byte Ethernet standard?",
+    "explanation": "A runt frame is an Ethernet frame that is smaller than the IEEE 802.3 minimum size of 64 bytes and has a bad FCS/CRC. Runts are most frequently generated as fragments resulting from network collisions.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Runt frame",
+        "is_correct": true
+      },
+      {
+        "text": "Giant frame",
+        "is_correct": false
+      },
+      {
+        "text": "Jumbo frame",
+        "is_correct": false
+      },
+      {
+        "text": "Baby giant frame",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco platform provides centralized, intent-based network management, automation, and assurance for campus fabrics?",
+    "explanation": "Cisco Catalyst Center (formerly Cisco DNA Center) is the enterprise network management and command controller for Cisco Software-Defined Access (SD-Access). It provides automated device provisioning, policy management, and predictive telemetry assurance across campus LANs and WLANs.",
+    "domain": "network_infra",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Cisco Catalyst Center (DNA Center)",
+        "is_correct": true
+      },
+      {
+        "text": "Cisco Adaptive Security Appliance (ASA)",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco Prime Infrastructure Express",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco Firepower Device Manager",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a Next-Generation Firewall (NGFW), what capability distinguishes it from a traditional stateful inspection firewall?",
+    "explanation": "A Next-Generation Firewall (NGFW) integrates deep packet inspection, application awareness (identifying applications regardless of port), and built-in intrusion prevention systems (IPS). Traditional stateful firewalls inspect only Layer 3 and Layer 4 header attributes like IP addresses and TCP/UDP ports.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Application-level inspection and integrated IPS",
+        "is_correct": true
+      },
+      {
+        "text": "Stateful tracking of TCP SYN/ACK flags",
+        "is_correct": false
+      },
+      {
+        "text": "Basic Layer 4 port filtering",
+        "is_correct": false
+      },
+      {
+        "text": "Static NAT address translation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which standard defines 802.11ax wireless technology, commonly known as Wi-Fi 6?",
+    "explanation": "IEEE 802.11ax is branded by the Wi-Fi Alliance as Wi-Fi 6. It introduces Orthogonal Frequency-Division Multiple Access (OFDMA), Target Wake Time (TWT), and 1024-QAM to dramatically increase network efficiency and client density in congested environments.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Wi-Fi 6 (802.11ax)",
+        "is_correct": true
+      },
+      {
+        "text": "Wi-Fi 5 (802.11ac)",
+        "is_correct": false
+      },
+      {
+        "text": "Wi-Fi 4 (802.11n)",
+        "is_correct": false
+      },
+      {
+        "text": "Wi-Fi 6E (802.11be)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What feature in Wi-Fi 6 allows multiple clients with different bandwidth requirements to transmit simultaneously on the same channel?",
+    "explanation": "OFDMA (Orthogonal Frequency-Division Multiple Access) subdivides a single Wi-Fi channel into smaller frequency allocations called Resource Units (RUs). This allows the access point to communicate with multiple clients in parallel in both uplink and downlink, drastically cutting latency.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "OFDMA (Orthogonal Frequency-Division Multiple Access)",
+        "is_correct": true
+      },
+      {
+        "text": "CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)",
+        "is_correct": false
+      },
+      {
+        "text": "MIMO beamforming arrays",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic Frequency Selection (DFS)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which parameter is dynamically negotiated using TCP MSS (Maximum Segment Size)?",
+    "explanation": "The TCP MSS dictates the maximum amount of payload data (excluding IP and TCP headers) that a host can receive in a single TCP segment. During the initial three-way handshake, each host advertises its MSS, which is typically derived from the interface MTU minus 40 bytes (for IPv4).",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The maximum payload data size in a single TCP segment",
+        "is_correct": true
+      },
+      {
+        "text": "The total size of the Ethernet frame including preamble",
+        "is_correct": false
+      },
+      {
+        "text": "The maximum number of TCP segments sent without an ACK",
+        "is_correct": false
+      },
+      {
+        "text": "The maximum allowable transmission delay across a WAN link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the size of the 802.1Q tag inserted into an Ethernet frame header?",
+    "explanation": "An IEEE 802.1Q tag is exactly 4 bytes (32 bits) in length. It includes a 2-byte Tag Protocol Identifier (TPID 0x8100) and 2 bytes of Tag Control Information (TCI), which contains the 3-bit Priority Code Point (PCP), 1-bit DEI, and the 12-bit VLAN Identifier (VID).",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "4 bytes (32 bits)",
+        "is_correct": true
+      },
+      {
+        "text": "2 bytes (16 bits)",
+        "is_correct": false
+      },
+      {
+        "text": "8 bytes (64 bits)",
+        "is_correct": false
+      },
+      {
+        "text": "12 bytes (96 bits)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many bits in an 802.1Q tag are allocated for the VLAN Identifier (VID)?",
+    "explanation": "The VLAN Identifier (VID) field is 12 bits long within the 802.1Q header. This 12-bit field supports up to 2^12 = 4,096 total VLAN IDs (VLANs 0 through 4095, where 1 to 4094 are usable).",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "12 bits",
+        "is_correct": true
+      },
+      {
+        "text": "8 bits",
+        "is_correct": false
+      },
+      {
+        "text": "16 bits",
+        "is_correct": false
+      },
+      {
+        "text": "10 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an interface to unconditionally operate as an 802.1Q trunk port without negotiating DTP?",
+    "explanation": "The command `switchport mode trunk` places the interface into permanent trunking mode. When combined with `switchport nonegotiate`, the switch disables Dynamic Trunking Protocol (DTP) frame transmission completely.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "switchport mode trunk followed by switchport nonegotiate",
+        "is_correct": true
+      },
+      {
+        "text": "switchport mode dynamic desirable",
+        "is_correct": false
+      },
+      {
+        "text": "switchport trunk native vlan 1",
+        "is_correct": false
+      },
+      {
+        "text": "switchport mode access",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens to untagged frames received on an 802.1Q trunk port?",
+    "explanation": "Untagged frames arriving on an 802.1Q trunk port are placed into the native VLAN configured on that port. By default on Cisco Catalyst switches, the native VLAN is VLAN 1 unless explicitly changed.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "They are forwarded onto the configured native VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "They are immediately dropped with a frame check violation",
+        "is_correct": false
+      },
+      {
+        "text": "They are flooded across all active trunk ports in VLAN 4095",
+        "is_correct": false
+      },
+      {
+        "text": "They are tagged with the default management VLAN ID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DTP mode combination between two Cisco switches results in an access link rather than a trunk link?",
+    "explanation": "If both connected switch ports are set to `dynamic auto`, neither port actively initiates trunk negotiation. Since both sides passively wait for the other side to begin trunking, the link defaults to an access link.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "dynamic auto on both ends",
+        "is_correct": true
+      },
+      {
+        "text": "dynamic desirable on both ends",
+        "is_correct": false
+      },
+      {
+        "text": "dynamic desirable on one end and dynamic auto on the other",
+        "is_correct": false
+      },
+      {
+        "text": "trunk on one end and dynamic auto on the other",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command correctly assigns a Cisco IP phone to Voice VLAN 150 and an end-user PC to Data VLAN 20 on the same physical port?",
+    "explanation": "Cisco switches support configuring a voice VLAN alongside an access data VLAN on the same physical interface. The commands `switchport access vlan 20` and `switchport voice vlan 150` ensure the PC sends untagged frames into VLAN 20 while the IP phone uses 802.1Q tagged frames for voice traffic.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "switchport access vlan 20 and switchport voice vlan 150",
+        "is_correct": true
+      },
+      {
+        "text": "switchport trunk allowed vlan 20,150",
+        "is_correct": false
+      },
+      {
+        "text": "switchport voice vlan 20 and switchport data vlan 150",
+        "is_correct": false
+      },
+      {
+        "text": "switchport mode dynamic desirable voice 150",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In classic 802.1D Spanning Tree Protocol, what are the three components that make up the Bridge ID (BID)?",
+    "explanation": "Under the extended system ID format, the BID consists of a 4-bit Bridge Priority (configurable in multiples of 4096), a 12-bit Extended System ID (which carries the VLAN ID), and the switch's 48-bit base MAC address. The switch with the lowest overall BID is elected as the root bridge.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "4-bit priority, 12-bit extended system ID, and 48-bit MAC address",
+        "is_correct": true
+      },
+      {
+        "text": "16-bit priority, 16-bit VLAN ID, and 32-bit IP address",
+        "is_correct": false
+      },
+      {
+        "text": "8-bit cost, 8-bit port priority, and 48-bit MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "4-bit domain ID, 12-bit revision number, and 48-bit MAC address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default bridge priority value on a Cisco switch running PVST+?",
+    "explanation": "The default STP bridge priority on Cisco switches is 32768. When the 12-bit extended system ID is added for a specific VLAN (e.g. VLAN 1), the resulting priority displayed in `show spanning-tree` is 32769.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "32768",
+        "is_correct": true
+      },
+      {
+        "text": "4096",
+        "is_correct": false
+      },
+      {
+        "text": "65535",
+        "is_correct": false
+      },
+      {
+        "text": "1024",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a spanning-tree network elect the root bridge among all connected switches?",
+    "explanation": "The root bridge is the switch with the lowest Bridge ID (BID). Switches compare BIDs received in Hello BPDUs; the switch with the lowest priority wins, and in the event of a tie, the lowest MAC address breaks the tie.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The switch with the lowest Bridge ID (priority + MAC) is elected",
+        "is_correct": true
+      },
+      {
+        "text": "The switch with the highest Bridge ID is elected",
+        "is_correct": false
+      },
+      {
+        "text": "The switch with the fastest physical interface bandwidth wins",
+        "is_correct": false
+      },
+      {
+        "text": "The switch with the lowest IP address on its management SVI wins",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which STP port role is assigned to the single port on a non-root switch with the lowest path cost to the root bridge?",
+    "explanation": "Every non-root switch elects exactly one Root Port. This is the local port that provides the lowest cumulative path cost back to the root bridge. Ports pointing away from the root on a segment are Designated Ports.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Root Port",
+        "is_correct": true
+      },
+      {
+        "text": "Designated Port",
+        "is_correct": false
+      },
+      {
+        "text": "Alternate Port",
+        "is_correct": false
+      },
+      {
+        "text": "Backup Port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IEEE 802.1D Spanning Tree, what is the default forward delay timer for the Listening and Learning states?",
+    "explanation": "The default forward delay timer in 802.1D is 15 seconds. An interface spends 15 seconds in the Listening state and 15 seconds in the Learning state, resulting in a total transition delay of 30 seconds before reaching the Forwarding state.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "15 seconds for each state (30 seconds total)",
+        "is_correct": true
+      },
+      {
+        "text": "20 seconds for each state (40 seconds total)",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds for each state (10 seconds total)",
+        "is_correct": false
+      },
+      {
+        "text": "2 seconds for each state (4 seconds total)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What feature allows an access switch port connected to an end-user host to bypass Listening and Learning states and transition immediately to Forwarding?",
+    "explanation": "Spanning Tree PortFast allows an edge port connected to a workstation or server to transition immediately into the Forwarding state upon link up. This prevents DHCP client timeout issues and avoids sending Topology Change Notifications (TCNs).",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "PortFast",
+        "is_correct": true
+      },
+      {
+        "text": "BPDU Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Root Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What action does a switch take when BPDU Guard is enabled on a PortFast-configured interface and a BPDU is received?",
+    "explanation": "BPDU Guard immediately puts the interface into the `err-disabled` state upon receiving any BPDU. This protects the spanning-tree topology from unauthorized rogue switches or bridge loops accidentally introduced on access ports.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It immediately transitions the port to err-disabled state",
+        "is_correct": true
+      },
+      {
+        "text": "It drops the BPDU and continues forwarding user traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the port into an 802.1Q trunk port dynamically",
+        "is_correct": false
+      },
+      {
+        "text": "It recalculates the root path cost with an added penalty",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which STP feature prevents an unauthorized downstream switch from becoming the root bridge by placing superior BPDU-receiving ports into root-inconsistent state?",
+    "explanation": "Root Guard prevents an unintended switch from becoming the root bridge. If a port with Root Guard enabled receives a superior BPDU advertising a lower BID, the switch transitions that port into a `root-inconsistent` (blocking) state until the superior BPDUs stop.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Root Guard",
+        "is_correct": true
+      },
+      {
+        "text": "BPDU Guard",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Filter",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What port roles are introduced in Rapid Spanning Tree Protocol (802.1w) that replace the 802.1D blocking state?",
+    "explanation": "RSTP (802.1w) introduces the Alternate port and Backup port roles to replace the generic non-designated/blocking role. An Alternate port provides an alternate path to the root bridge if the root port fails, enabling sub-second convergence.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Alternate and Backup port roles",
+        "is_correct": true
+      },
+      {
+        "text": "Listening and Learning port roles",
+        "is_correct": false
+      },
+      {
+        "text": "Master and Subordinate port roles",
+        "is_correct": false
+      },
+      {
+        "text": "Active and Standby port roles",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Rapid PVST+ achieve near-instantaneous convergence on point-to-point links without waiting for timers?",
+    "explanation": "Rapid PVST+ uses an explicit proposal and agreement handshake between directly connected switches on full-duplex point-to-point links. When a link comes up, switches exchange a proposal/agreement sequence, sync their topologies, and immediately transition ports to forwarding.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Through a proposal and agreement handshake mechanism",
+        "is_correct": true
+      },
+      {
+        "text": "By reducing forward delay timers from 15 seconds to 1 second",
+        "is_correct": false
+      },
+      {
+        "text": "By querying the central VTP server for path calculations",
+        "is_correct": false
+      },
+      {
+        "text": "By using RIP timers to flush outdated MAC addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IEEE open standard specifies Link Aggregation Control Protocol (LACP) for bundling Ethernet links into an EtherChannel?",
+    "explanation": "IEEE 802.3ad (incorporated into 802.3ax) is the industry standard for LACP. It allows multi-vendor switches to dynamically bundle up to 8 active physical links into a single logical channel. PAgP is Cisco's proprietary alternative.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "IEEE 802.3ad",
+        "is_correct": true
+      },
+      {
+        "text": "IEEE 802.1Q",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.1D",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.1X",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which channel-group mode combination will successfully negotiate an LACP EtherChannel between two switches?",
+    "explanation": "In LACP, ports set to `active` actively send LACP packets, while ports set to `passive` only respond. Therefore, active-active or active-passive will form an EtherChannel. Passive-passive will not form because neither side initiates negotiation.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Active on Switch A and Passive on Switch B",
+        "is_correct": true
+      },
+      {
+        "text": "Passive on Switch A and Passive on Switch B",
+        "is_correct": false
+      },
+      {
+        "text": "Desirable on Switch A and Active on Switch B",
+        "is_correct": false
+      },
+      {
+        "text": "Auto on Switch A and Passive on Switch B",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the mode keywords used when configuring Cisco proprietary Port Aggregation Protocol (PAgP)?",
+    "explanation": "PAgP uses the modes `auto` and `desirable`. In `desirable` mode, the port actively asks the other end to form a bundle, while in `auto` mode, the port only forms a bundle if requested by the remote switch.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "auto and desirable",
+        "is_correct": true
+      },
+      {
+        "text": "active and passive",
+        "is_correct": false
+      },
+      {
+        "text": "on and dynamic",
+        "is_correct": false
+      },
+      {
+        "text": "client and server",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which parameter must match across all physical member interfaces to successfully form a Layer 2 EtherChannel?",
+    "explanation": "All member interfaces in an EtherChannel bundle must have identical speed, duplex, STP settings, trunk encapsulation, native VLAN, and allowed VLAN lists. A mismatch in any of these parameters causes the switch to suspend the mismatched port.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Speed, duplex, native VLAN, and allowed VLAN list",
+        "is_correct": true
+      },
+      {
+        "text": "Interface MAC address and interface description",
+        "is_correct": false
+      },
+      {
+        "text": "IP address and subnet mask assigned to each physical port",
+        "is_correct": false
+      },
+      {
+        "text": "CDP holdtime and LLDP refresh interval",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures load balancing across an EtherChannel using both source and destination IP addresses?",
+    "explanation": "The global command `port-channel load-balance src-dst-ip` configures the switch to hash both source and destination IP addresses to select which physical link carries a given frame. This provides balanced distribution across multiple conversations.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "port-channel load-balance src-dst-ip",
+        "is_correct": true
+      },
+      {
+        "text": "etherchannel hash-algorithm ip dual",
+        "is_correct": false
+      },
+      {
+        "text": "channel-group balance ip source-destination",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree etherchannel balance-ip",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum number of active physical links supported in a single standard LACP EtherChannel bundle?",
+    "explanation": "A standard LACP bundle supports up to 8 active physical interfaces transmitting data concurrently. LACP also supports up to 8 additional standby ports that automatically become active if an active link fails.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "8 active links",
+        "is_correct": true
+      },
+      {
+        "text": "4 active links",
+        "is_correct": false
+      },
+      {
+        "text": "16 active links",
+        "is_correct": false
+      },
+      {
+        "text": "2 active links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port security violation mode drops packets from unauthorized MACs, increments the security violation counter, and generates an SNMP trap without shutting down the interface?",
+    "explanation": "The `restrict` violation mode drops unauthorized frames, increments the violation counter, and sends a syslog message/SNMP trap. The `protect` mode drops frames silently without logging, while `shutdown` places the port into err-disabled state.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "restrict",
+        "is_correct": true
+      },
+      {
+        "text": "protect",
+        "is_correct": false
+      },
+      {
+        "text": "shutdown",
+        "is_correct": false
+      },
+      {
+        "text": "trap-only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables dynamic learning of MAC addresses on a port security interface and saves them to the running configuration?",
+    "explanation": "The command `switchport port-security mac-address sticky` dynamically records the current source MAC addresses into the running configuration. If the administrator saves the config (`write memory`), the addresses are preserved across switch reloads.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "switchport port-security mac-address sticky",
+        "is_correct": true
+      },
+      {
+        "text": "switchport port-security mac-address dynamic save",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security learn-mac auto",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security persist-addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What prerequisite command must be entered on an interface before `switchport port-security` can be enabled?",
+    "explanation": "Port security can only be enabled on static access or static trunk interfaces; it cannot be enabled on dynamic DTP switch ports. Therefore, entering `switchport mode access` is required before enabling port security.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "switchport mode access",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree portfast",
+        "is_correct": false
+      },
+      {
+        "text": "no shutdown",
+        "is_correct": false
+      },
+      {
+        "text": "switchport nonegotiate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In VTP (VLAN Trunking Protocol), which mode allows a switch to create and delete local VLANs without propagating them to or synchronizing with other switches?",
+    "explanation": "A switch in VTP Transparent mode forwards VTP advertisements received from other switches over trunk links, but does not synchronize its local database with them. It allows local VLAN additions, modifications, and deletions in VLANs 1–4094 without affecting neighboring switches.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Transparent mode",
+        "is_correct": true
+      },
+      {
+        "text": "Client mode",
+        "is_correct": false
+      },
+      {
+        "text": "Server mode",
+        "is_correct": false
+      },
+      {
+        "text": "Off mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What parameter in a VTP advertisement determines whether a switch updates its local VLAN database?",
+    "explanation": "The VTP Configuration Revision number is a 32-bit integer that increments each time a VLAN is created, deleted, or modified. A switch in VTP Client or Server mode will overwrite its VLAN database if it receives an advertisement with a higher revision number for the same VTP domain.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Configuration Revision number",
+        "is_correct": true
+      },
+      {
+        "text": "VTP Domain Hash length",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning-tree Bridge Priority value",
+        "is_correct": false
+      },
+      {
+        "text": "System Up-time timestamp",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How can a network administrator reset a switch's VTP configuration revision number to 0 before connecting it to a production network?",
+    "explanation": "Changing the VTP domain name to a dummy name and then back, or changing the VTP mode to `transparent` and back to client/server, immediately resets the revision number to 0. This prevents accidental overwriting of production VLAN databases.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Change the VTP mode to transparent or temporarily change the domain name",
+        "is_correct": true
+      },
+      {
+        "text": "Reload the switch using the reload command",
+        "is_correct": false
+      },
+      {
+        "text": "Issue the command clear vtp revision",
+        "is_correct": false
+      },
+      {
+        "text": "Delete the startup-config and reboot",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a Layer 3 switch port to function as a routed interface capable of having an IP address assigned directly?",
+    "explanation": "The interface command `no switchport` disables Layer 2 switching capabilities on the port and converts it into a routed Layer 3 interface. An IP address and subnet mask can then be configured directly on that interface using `ip address`.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "no switchport",
+        "is_correct": true
+      },
+      {
+        "text": "switchport mode routed",
+        "is_correct": false
+      },
+      {
+        "text": "ip routing enable",
+        "is_correct": false
+      },
+      {
+        "text": "switchport layer3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What virtual interface acts as the default gateway for hosts residing in VLAN 10 on a multilayer switch?",
+    "explanation": "A Switched Virtual Interface (SVI), configured via `interface Vlan 10`, provides Layer 3 routing services for all hosts within VLAN 10. The SVI is assigned an IP address in that VLAN's subnet and serves as the hosts' default gateway.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Switched Virtual Interface (interface Vlan 10)",
+        "is_correct": true
+      },
+      {
+        "text": "Loopback interface 10",
+        "is_correct": false
+      },
+      {
+        "text": "Port-channel 10 in trunk mode",
+        "is_correct": false
+      },
+      {
+        "text": "Subinterface GigabitEthernet0/0.10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What condition must be met for a VLAN SVI to enter the 'up/up' operational state?",
+    "explanation": "For an SVI (e.g., `interface Vlan 10`) to be operational (up/up), the VLAN must exist in the VLAN database, must not be shut down, and at least one Layer 2 access or trunk port assigned to that VLAN must be in the up/up forwarding state. If all associated ports go down, the SVI automatically transitions to down/down.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "At least one Layer 2 port in that VLAN must be up and in STP forwarding state",
+        "is_correct": true
+      },
+      {
+        "text": "The switch must be elected as the Spanning Tree root bridge",
+        "is_correct": false
+      },
+      {
+        "text": "The switch must have an active default route configured",
+        "is_correct": false
+      },
+      {
+        "text": "At least two routed interfaces must be operational on the switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which global command must be enabled on a Cisco multilayer switch to allow it to route packets between SVIs?",
+    "explanation": "The global configuration command `ip routing` activates the IPv4 routing table and forwarding engine on Cisco multilayer switches. Without `ip routing`, the switch will only operate at Layer 2.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip routing",
+        "is_correct": true
+      },
+      {
+        "text": "routing enable",
+        "is_correct": false
+      },
+      {
+        "text": "ip forward-protocol",
+        "is_correct": false
+      },
+      {
+        "text": "system routing ipv4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary danger of a Native VLAN mismatch across an 802.1Q trunk link?",
+    "explanation": "A native VLAN mismatch occurs when two switches configure different native VLANs on opposite ends of a trunk (e.g. VLAN 1 on Switch A, VLAN 10 on Switch B). Untagged frames from Switch A's native VLAN 1 will be placed into VLAN 10 on Switch B, causing cross-VLAN traffic leakage and potential loops.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Traffic from one VLAN leaks directly into a different VLAN without a router",
+        "is_correct": true
+      },
+      {
+        "text": "The trunk link immediately shuts down permanently due to keepalive loss",
+        "is_correct": false
+      },
+      {
+        "text": "All tagged packets on the trunk link are converted to unencrypted plain text",
+        "is_correct": false
+      },
+      {
+        "text": "The switches automatically re-negotiate DTP back to 10 Mbps half-duplex",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command restricts an 802.1Q trunk port to only carry traffic for VLANs 10, 20, and 30?",
+    "explanation": "The interface command `switchport trunk allowed vlan 10,20,30` replaces the allowed VLAN list with only the specified VLANs. By default, trunks allow all VLANs (1–4094), so explicit restriction prevents unnecessary broadcast traffic from flooding across the link.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "switchport trunk allowed vlan 10,20,30",
+        "is_correct": true
+      },
+      {
+        "text": "switchport access vlan 10,20,30",
+        "is_correct": false
+      },
+      {
+        "text": "switchport trunk permit 10,20,30",
+        "is_correct": false
+      },
+      {
+        "text": "switchport filter vlan 10,20,30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What command displays the status of all configured EtherChannels, showing the protocol used and member port flags?",
+    "explanation": "The command `show etherchannel summary` provides a concise table of all Port-channel interfaces, the protocols running (LACP, PAgP, or none), and state flags for each member port (e.g., 'P' for bundled in port-channel, 'I' for stand-alone). This makes it the primary troubleshooting command to quickly verify bundle health.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show etherchannel summary",
+        "is_correct": true
+      },
+      {
+        "text": "show port-channel brief",
+        "is_correct": false
+      },
+      {
+        "text": "show interfaces lacp",
+        "is_correct": false
+      },
+      {
+        "text": "show pagp neighbor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which mechanism protects a switch's CAM table from MAC flooding attacks by limiting the number of learned MAC addresses per port?",
+    "explanation": "Port Security limits the maximum number of valid MAC addresses that can be learned on an interface (via `switchport port-security maximum [n]`). In a CAM flooding attack, an attacker exhausts the CAM table with bogus MACs; port security prevents this by dropping excess addresses or disabling the port.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Port Security",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic ARP Inspection (DAI)",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP Snooping",
+        "is_correct": false
+      },
+      {
+        "text": "IP Source Guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens when an unknown unicast destination MAC address is processed by an Ethernet switch?",
+    "explanation": "When a switch receives a frame with a destination MAC address that is not currently present in its MAC address table (CAM table), it floods the frame out all ports belonging to the same VLAN, except the ingress port on which the frame arrived. This behavior ensures the destination device receives the frame and generates a reply to populate the table.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It floods the frame out all ports in the VLAN except the incoming port",
+        "is_correct": true
+      },
+      {
+        "text": "It drops the frame immediately and sends an ICMP unreachable message",
+        "is_correct": false
+      },
+      {
+        "text": "It sends an ARP request to determine the IP address associated with the MAC",
+        "is_correct": false
+      },
+      {
+        "text": "It buffers the frame for 300 seconds waiting for an ARP reply",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows whether a switch port is currently negotiating trunking using DTP?",
+    "explanation": "The command `show dtp interface [id]` displays DTP negotiation parameters, including whether DTP is enabled, the operating administrative mode, and trunking negotiation frequency. `show interfaces [id] switchport` also shows administrative and operational trunking modes.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show dtp interface GigabitEthernet0/1",
+        "is_correct": true
+      },
+      {
+        "text": "show trunk negotiation",
+        "is_correct": false
+      },
+      {
+        "text": "show spanning-tree interface dtp",
+        "is_correct": false
+      },
+      {
+        "text": "show vlan trunk status",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of the Spanning Tree Loop Guard feature?",
+    "explanation": "Loop Guard prevents non-designated ports (root or alternate ports) from erroneously transitioning to the forwarding state if they stop receiving BPDUs due to unidirectional link failures. Instead of looping traffic, Loop Guard moves the port into a `loop-inconsistent` state.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Prevents ports from transitioning to forwarding if BPDUs stop arriving",
+        "is_correct": true
+      },
+      {
+        "text": "Blocks all broadcast frames when CPU utilization exceeds 90 percent",
+        "is_correct": false
+      },
+      {
+        "text": "Enforces unidirectional link detection on fiber connections",
+        "is_correct": false
+      },
+      {
+        "text": "Disables PortFast on ports that receive rapid topology change notifications",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many spanning-tree instances are run on a switch configured for Cisco Per-VLAN Spanning Tree Plus (PVST+)?",
+    "explanation": "PVST+ runs an independent 802.1D Spanning Tree instance for every configured active VLAN. This allows administrators to load balance traffic across links by designating different switches as the root bridge for different VLANs.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "One instance per configured active VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "A single instance shared across all VLANs (like 802.1D CST)",
+        "is_correct": false
+      },
+      {
+        "text": "Exactly two instances (one for data, one for voice)",
+        "is_correct": false
+      },
+      {
+        "text": "One instance for each physical trunk link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command sets the spanning-tree priority of a switch to 4096 for VLAN 20?",
+    "explanation": "The command `spanning-tree vlan 20 priority 4096` assigns an explicit priority of 4096 to VLAN 20. Spanning-tree priority values must be configured in increments of 4096.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "spanning-tree vlan 20 priority 4096",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree priority 4096 vlan 20",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree root primary vlan 20 priority 4096",
+        "is_correct": false
+      },
+      {
+        "text": "vlan 20 spanning-tree cost 4096",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What priority value is assigned when entering the command `spanning-tree vlan 10 root primary` on a switch whose current root has priority 32768?",
+    "explanation": "When `spanning-tree vlan [id] root primary` is executed, the switch checks the priority of the current root bridge. If the current root priority is 32768, the switch sets its own priority to 24576 (two increments of 4096 below 32768) to take over root election.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "24576",
+        "is_correct": true
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "4096",
+        "is_correct": false
+      },
+      {
+        "text": "28672",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which spanning-tree port state is found in 802.1D but removed in 802.1w Rapid Spanning Tree Protocol?",
+    "explanation": "In 802.1w (RSTP), the 802.1D Disabled, Blocking, and Listening states are consolidated into a single unified state called Discarding. Learning and Forwarding states are retained in both standards.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Listening",
+        "is_correct": true
+      },
+      {
+        "text": "Learning",
+        "is_correct": false
+      },
+      {
+        "text": "Forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "Discarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol is Cisco's proprietary protocol that detects unidirectional fiber or copper link problems caused by broken strands?",
+    "explanation": "Unidirectional Link Detection (UDLD) is a Layer 2 protocol that monitors physical cabling to detect when a bidirectional link becomes unidirectional (e.g. when the transmit strand works but receive is severed). UDLD shuts down the affected port to prevent spanning tree loops.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "UDLD (Unidirectional Link Detection)",
+        "is_correct": true
+      },
+      {
+        "text": "BFD (Bidirectional Forwarding Detection)",
+        "is_correct": false
+      },
+      {
+        "text": "LACP (Link Aggregation Control Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "VTP (VLAN Trunking Protocol)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the standard STP port cost for a 10 Gigabit Ethernet (10 Gbps) link under the long path cost method?",
+    "explanation": "Under the IEEE 802.1D-1998 short path cost table, a 10 Gbps link has a cost of 2, while 1 Gbps has a cost of 4. Under the newer 32-bit long path cost standard (IEEE 802.1t), 10 Gbps has a cost of 2,000.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "2 (short cost) or 2,000 (long cost)",
+        "is_correct": true
+      },
+      {
+        "text": "4 (short cost) or 20,000 (long cost)",
+        "is_correct": false
+      },
+      {
+        "text": "19 (short cost) or 200,000 (long cost)",
+        "is_correct": false
+      },
+      {
+        "text": "100 (short cost) or 2,000,000 (long cost)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the CAM MAC address table filtered only for entries learned on VLAN 50?",
+    "explanation": "The command `show mac address-table vlan 50` displays only the MAC addresses dynamically learned or statically configured within VLAN 50, along with their associated physical or port-channel interfaces. This allows engineers to isolate and inspect MAC learning behavior within an individual broadcast domain.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show mac address-table vlan 50",
+        "is_correct": true
+      },
+      {
+        "text": "show vlan 50 mac-table",
+        "is_correct": false
+      },
+      {
+        "text": "show ip arp vlan 50",
+        "is_correct": false
+      },
+      {
+        "text": "show cam table vlan 50",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens when an EtherChannel is configured on two switches and one switch has its bundle set to 'on' while the other is set to 'active'?",
+    "explanation": "The `on` mode unconditionally enables EtherChannel without sending or responding to negotiation packets (LACP or PAgP). Because the other side in `active` mode waits for LACP negotiation packets that are never sent by the `on` side, the channel fails to form and ports may be placed into suspended or err-disabled states.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The channel fails to form because the 'on' side never exchanges LACP negotiation packets",
+        "is_correct": true
+      },
+      {
+        "text": "The channel forms successfully after a 30-second STP timer expires",
+        "is_correct": false
+      },
+      {
+        "text": "The 'on' side automatically senses LACP and falls back to passive mode",
+        "is_correct": false
+      },
+      {
+        "text": "The switches establish a half-duplex trunk channel over VLAN 1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables Rapid PVST+ as the active spanning-tree mode on a Cisco switch?",
+    "explanation": "The global configuration command `spanning-tree mode rapid-pvst` switches the spanning-tree operational mode from classic 802.1D PVST+ to IEEE 802.1w Rapid PVST+. This provides significantly faster convergence across all VLANs.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "spanning-tree mode rapid-pvst",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree rapid-pvst enable",
+        "is_correct": false
+      },
+      {
+        "text": "switch spanning-tree 802.1w",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree version rapid",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What feature prevents newly added switches with high revision numbers from erasing existing VLANs when using VTP version 1 or 2?",
+    "explanation": "Configuring a VTP domain password (via `vtp password [string]`) encrypts the VTP MD5 digest. Switches with mismatched passwords ignore incoming VTP summary advertisements, protecting the network from catastrophic VLAN erasure.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Configuring a VTP password across all switches in the domain",
+        "is_correct": true
+      },
+      {
+        "text": "Setting all switches to VTP Server mode",
+        "is_correct": false
+      },
+      {
+        "text": "Enabling STP Root Guard on all trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Activating Dynamic ARP Inspection on VLAN 1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows whether a switch port is placed in an 'err-disabled' state and lists the specific reason?",
+    "explanation": "The command `show interfaces status err-disabled` lists all switch interfaces that are currently shut down due to error conditions, along with the triggering cause (such as bpduguard, psecure-violation, or loopback). Administrators use this output to diagnose which protection feature took the port offline.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show interfaces status err-disabled",
+        "is_correct": true
+      },
+      {
+        "text": "show errdisable log",
+        "is_correct": false
+      },
+      {
+        "text": "show interfaces error-state brief",
+        "is_correct": false
+      },
+      {
+        "text": "show port-security violation-status",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a router receives a packet with multiple matching routes of varying prefix lengths in its routing table, which route is selected to forward the packet?",
+    "explanation": "Routers always select the route with the longest prefix match (most specific subnet mask), regardless of administrative distance or metric. Administrative distance is only evaluated when comparing identical prefixes learned via different routing protocols. If the packet destination matches both a /24 and a /28 route, the /28 route is selected.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The route with the longest prefix match (most specific mask)",
+        "is_correct": true
+      },
+      {
+        "text": "The route with the lowest administrative distance",
+        "is_correct": false
+      },
+      {
+        "text": "The route with the lowest metric cost",
+        "is_correct": false
+      },
+      {
+        "text": "The route that was learned most recently",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Administrative Distance (AD) of an internal EIGRP route?",
+    "explanation": "Internal EIGRP routes have a default administrative distance of 90 on Cisco routers. By comparison, OSPF has an AD of 110, RIP has an AD of 120, and static routes have an AD of 1. External EIGRP routes carry an AD of 170.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "90",
+        "is_correct": true
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      },
+      {
+        "text": "120",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Administrative Distance of an OSPF route?",
+    "explanation": "OSPF routes are installed into the routing table with a default administrative distance of 110. Administrative distance indicates the believability of a routing source. Lower AD values are prioritized over higher AD values when competing for the same route.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "110",
+        "is_correct": true
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "115",
+        "is_correct": false
+      },
+      {
+        "text": "120",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an IPv4 floating static default route with an administrative distance of 130?",
+    "explanation": "The command `ip route 0.0.0.0 0.0.0.0 192.168.1.1 130` specifies a default route with an administrative distance of 130 appended at the end. Because its AD is higher than dynamic routing protocols like OSPF (110) or EIGRP (90), it remains inactive in the routing table until the primary route fails.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip route 0.0.0.0 0.0.0.0 192.168.1.1 130",
+        "is_correct": true
+      },
+      {
+        "text": "ip route 0.0.0.0 0.0.0.0 192.168.1.1 distance 130",
+        "is_correct": false
+      },
+      {
+        "text": "ip route default 192.168.1.1 metric 130",
+        "is_correct": false
+      },
+      {
+        "text": "ip default-network 192.168.1.1 130",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a Router-on-a-Stick configuration, which command binds subinterface GigabitEthernet0/0.30 to VLAN 30 using 802.1Q trunking?",
+    "explanation": "The command `encapsulation dot1Q 30` configures the subinterface to process 802.1Q tagged frames for VLAN 30. This must be configured before assigning an IP address to the subinterface. The physical parent interface must remain administratively up without an IP address.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "encapsulation dot1Q 30",
+        "is_correct": true
+      },
+      {
+        "text": "switchport trunk native vlan 30",
+        "is_correct": false
+      },
+      {
+        "text": "vlan 30 dot1q bind",
+        "is_correct": false
+      },
+      {
+        "text": "switchport access vlan 30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is the OSPFv2 Router ID (RID) determined if it is not manually configured via the `router-id` command?",
+    "explanation": "If no manual router-id is configured, OSPF chooses the highest IPv4 address among all active loopback interfaces. If no loopback interfaces exist, it selects the highest IPv4 address among active physical interfaces in up/up state. Once elected, the RID does not change unless OSPF is reloaded or cleared.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Highest IPv4 address on any active loopback interface",
+        "is_correct": true
+      },
+      {
+        "text": "Lowest IPv4 address on any active physical interface",
+        "is_correct": false
+      },
+      {
+        "text": "Highest MAC address among all participating interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "The IP address of the interface connecting to Area 0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which destination multicast address is used by OSPF DR and BDR routers to receive Link-State Updates on a broadcast network?",
+    "explanation": "All DR and BDR routers listen on 224.0.0.6 (AllDRouters) to receive link-state advertisements sent by DROther routers. In turn, the DR sends updates to all non-DR routers on 224.0.0.5 (AllSPFRouters). This division prevents duplicate LSA flooding across multiaccess networks.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "224.0.0.6",
+        "is_correct": true
+      },
+      {
+        "text": "224.0.0.5",
+        "is_correct": false
+      },
+      {
+        "text": "224.0.0.9",
+        "is_correct": false
+      },
+      {
+        "text": "224.0.0.10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What occurs when the interface command `ip ospf priority 0` is configured on an OSPF broadcast network interface?",
+    "explanation": "Setting the OSPF interface priority to 0 disqualifies that router from participating in the DR or BDR election on that subnet. The router becomes permanently ineligible to act as DR or BDR and remains in the DROther role. The default OSPF priority is 1.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The router is prevented from becoming a DR or BDR on that segment",
+        "is_correct": true
+      },
+      {
+        "text": "The router is immediately elected as the primary DR",
+        "is_correct": false
+      },
+      {
+        "text": "The interface stops sending and receiving OSPF Hello packets",
+        "is_correct": false
+      },
+      {
+        "text": "The OSPF cost on that interface is set to zero",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the formula used by Cisco IOS to calculate the default OSPF interface cost?",
+    "explanation": "The default OSPF cost formula is Reference Bandwidth divided by Interface Bandwidth, with a default reference bandwidth of 100 Mbps (10^8 bps). Under this default, FastEthernet (100 Mbps), GigabitEthernet (1 Gbps), and 10 Gbps interfaces all evaluate to an equal cost of 1. Modifying the reference bandwidth with `auto-cost reference-bandwidth` is required for higher-speed links.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Reference Bandwidth (100 Mbps) / Interface Bandwidth",
+        "is_correct": true
+      },
+      {
+        "text": "Interface Bandwidth / 1000",
+        "is_correct": false
+      },
+      {
+        "text": "Interface Delay + Interface Bandwidth / 256",
+        "is_correct": false
+      },
+      {
+        "text": "Hop Count * Administrative Distance",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command changes the OSPF reference bandwidth to 100 Gbps across a router to distinguish Gigabit and 10G interfaces?",
+    "explanation": "The command `auto-cost reference-bandwidth 100000` (in Mbps) or `10000` configures the reference bandwidth to accurately differentiate between 1G, 10G, and 40G interfaces. For 100 Gbps, configuring 100000 ensures high-speed links have distinct, non-zero proportional metrics. This command must be configured identically on all routers in the OSPF domain.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "auto-cost reference-bandwidth 100000",
+        "is_correct": true
+      },
+      {
+        "text": "ospf cost-multiplier 100000",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf reference-cost 100g",
+        "is_correct": false
+      },
+      {
+        "text": "metric-bandwidth reference 100000",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary effect of configuring `passive-interface GigabitEthernet0/1` under an OSPF process?",
+    "explanation": "The `passive-interface` command suppresses OSPF Hello packet transmission out of the specified interface, preventing neighbor relationships from forming on that link. However, the subnet associated with the interface is still included in LSAs and advertised to other OSPF routers. This is standard practice on interfaces facing end-user access networks.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Suppresses Hello packets while continuing to advertise the connected subnet",
+        "is_correct": true
+      },
+      {
+        "text": "Completely removes the subnet from all OSPF advertisements",
+        "is_correct": false
+      },
+      {
+        "text": "Converts the interface into a silent OSPF stub area",
+        "is_correct": false
+      },
+      {
+        "text": "Disables link-state acknowledgments on the interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF neighbor state indicates that bidirectional communication has been established because each router sees itself in the other's Hello packet?",
+    "explanation": "The 2-Way state is reached when a router receives a Hello packet from a neighbor that includes its own Router ID in the neighbor list. On broadcast networks, the DR and BDR election occurs during the 2-Way state. Drother routers remain in 2-Way state with other Drothers.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "2-Way",
+        "is_correct": true
+      },
+      {
+        "text": "Init",
+        "is_correct": false
+      },
+      {
+        "text": "ExStart",
+        "is_correct": false
+      },
+      {
+        "text": "Loading",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In which OSPF neighbor state do routers elect the master and slave roles and agree upon the initial Database Description (DBD) sequence number?",
+    "explanation": "The ExStart state is where master/slave negotiation occurs prior to exchanging DBD packets. The router with the higher Router ID becomes the master and controls the polling and sequence numbers. Once master/slave negotiation completes, routers transition to the Exchange state.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ExStart",
+        "is_correct": true
+      },
+      {
+        "text": "Exchange",
+        "is_correct": false
+      },
+      {
+        "text": "Loading",
+        "is_correct": false
+      },
+      {
+        "text": "Init",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default Hello and Dead intervals on an OSPF broadcast network type?",
+    "explanation": "On standard OSPF broadcast and point-to-point networks, the default Hello timer is 10 seconds and the Dead interval is 4 times the Hello timer, which is 40 seconds. Both timers must match exactly between two routers for an OSPF adjacency to form.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Hello: 10 seconds, Dead: 40 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "Hello: 30 seconds, Dead: 120 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "Hello: 5 seconds, Dead: 15 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "Hello: 60 seconds, Dead: 180 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which virtual MAC address format is utilized by HSRP version 1?",
+    "explanation": "HSRP version 1 uses the virtual MAC address format 0000.0c07.acXX, where XX is the two-digit hex HSRP group number (groups 0–255). HSRP version 2 uses 0000.0c9f.fXXX to support groups up to 4095. This virtual MAC is used by hosts as their default gateway ARP entry.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "0000.0c07.acXX",
+        "is_correct": true
+      },
+      {
+        "text": "0000.0c9f.fXXX",
+        "is_correct": false
+      },
+      {
+        "text": "0000.5e00.01XX",
+        "is_correct": false
+      },
+      {
+        "text": "0007.b400.XXYY",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the standard virtual MAC address prefix used by VRRP (Virtual Router Redundancy Protocol) for IPv4?",
+    "explanation": "VRRP uses the standardized MAC address format 0000.5e00.01XX, where XX represents the VRRP virtual router identifier (VRID) in hexadecimal. VRRP is an open IETF standard (RFC 5798), whereas HSRP is Cisco proprietary.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "0000.5e00.01XX",
+        "is_correct": true
+      },
+      {
+        "text": "0000.0c07.acXX",
+        "is_correct": false
+      },
+      {
+        "text": "0000.0c9f.fXXX",
+        "is_correct": false
+      },
+      {
+        "text": "0005.73a0.00XX",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What command enables an HSRP router with a higher configured priority to immediately reclaim the Active role when it recovers?",
+    "explanation": "The command `standby [group] preempt` allows a router with higher priority to immediately assume the Active router role from a lower-priority router. Without the preempt command, the currently active router remains active even if a router with higher priority comes online.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "standby 1 preempt",
+        "is_correct": true
+      },
+      {
+        "text": "standby 1 takeover",
+        "is_correct": false
+      },
+      {
+        "text": "standby 1 priority-override",
+        "is_correct": false
+      },
+      {
+        "text": "standby 1 active-force",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default priority of a router in an HSRP standby group?",
+    "explanation": "The default HSRP priority on a Cisco router interface is 100. If priorities are equal, the router with the highest configured IP address on the interface is elected as the Active router. Administrators increase priority (e.g. to 110) to designate a preferred active gateway.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "100",
+        "is_correct": true
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "50",
+        "is_correct": false
+      },
+      {
+        "text": "128",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an IPv6 default route pointing to next-hop address 2001:DB8:ACAD:1::1?",
+    "explanation": "In IPv6, a default route is written as `::/0` (representing all zeros prefix and prefix length). The command `ipv6 route ::/0 2001:DB8:ACAD:1::1` installs a static default gateway for all unlisted IPv6 destinations.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ipv6 route ::/0 2001:DB8:ACAD:1::1",
+        "is_correct": true
+      },
+      {
+        "text": "ip route ::/0 2001:DB8:ACAD:1::1",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 default-gateway 2001:DB8:ACAD:1::1",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 route default 2001:DB8:ACAD:1::1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When configuring a static route using a link-local IPv6 next-hop address, what additional parameter is mandatory?",
+    "explanation": "Because link-local addresses (FE80::/10) are ambiguous and can exist identically across multiple interfaces, the exit interface must be specified alongside the next-hop address (e.g., `ipv6 route ::/0 GigabitEthernet0/0 fe80::1`). Without the exit interface, the router cannot determine which local link reaches the neighbor.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The local exit interface must be explicitly specified",
+        "is_correct": true
+      },
+      {
+        "text": "An administrative distance greater than 200 must be set",
+        "is_correct": false
+      },
+      {
+        "text": "The global unicast address of the loopback must be appended",
+        "is_correct": false
+      },
+      {
+        "text": "The EUI-64 keyword must be included at the end",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What command displays the current contents of the IPv4 routing table on a Cisco IOS-XE router?",
+    "explanation": "The command `show ip route` prints the complete IP routing table, displaying codes for route sources (such as C for connected, S for static, O for OSPF, D for EIGRP), administrative distances, metrics, next-hops, and uptime. It is the primary operational command for verifying path installation and gateway selection.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show ip route",
+        "is_correct": true
+      },
+      {
+        "text": "show ip protocols",
+        "is_correct": false
+      },
+      {
+        "text": "show ip rib summary",
+        "is_correct": false
+      },
+      {
+        "text": "show routing-table ipv4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the routing table entry `O 10.2.0.0/16 [110/65] via 192.168.1.2`, what do the numbers 110 and 65 represent?",
+    "explanation": "In Cisco routing table bracket notation `[x/y]`, the first number `x` is the Administrative Distance (110 for OSPF), and the second number `y` is the protocol Metric or cumulative cost (65). This allows network engineers to quickly determine route preference and path cost.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "110 is Administrative Distance and 65 is Metric (Cost)",
+        "is_correct": true
+      },
+      {
+        "text": "110 is Hop Count and 65 is Administrative Distance",
+        "is_correct": false
+      },
+      {
+        "text": "110 is Bandwidth and 65 is Delay",
+        "is_correct": false
+      },
+      {
+        "text": "110 is MTU size and 65 is Link Reliability",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which autonomous system routing protocol uses the AS_PATH attribute as its primary loop prevention mechanism?",
+    "explanation": "Border Gateway Protocol (BGP) prepends its own Autonomous System Number (ASN) to the AS_PATH attribute when advertising prefixes to external peers. If a router receives an update containing its own ASN within the AS_PATH list, it drops the update to prevent routing loops.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "BGP (Border Gateway Protocol)",
+        "is_correct": true
+      },
+      {
+        "text": "OSPF (Open Shortest Path First)",
+        "is_correct": false
+      },
+      {
+        "text": "EIGRP (Enhanced Interior Gateway Routing Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "IS-IS (Intermediate System to Intermediate System)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the administrative distance of an External BGP (eBGP) route compared to an Internal BGP (iBGP) route?",
+    "explanation": "eBGP routes have an administrative distance of 20, making them highly preferred over interior gateway protocols like OSPF and EIGRP. Conversely, iBGP routes have a high administrative distance of 200, ensuring interior dynamic IGP paths are preferred internally.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "eBGP has an AD of 20, while iBGP has an AD of 200",
+        "is_correct": true
+      },
+      {
+        "text": "eBGP has an AD of 200, while iBGP has an AD of 20",
+        "is_correct": false
+      },
+      {
+        "text": "Both eBGP and iBGP share a default AD of 110",
+        "is_correct": false
+      },
+      {
+        "text": "eBGP has an AD of 90, while iBGP has an AD of 170",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command verifies all active OSPF neighbor adjacencies, their current states, and their interface roles?",
+    "explanation": "The command `show ip ospf neighbor` lists all discovered OSPF neighbors along with their neighbor ID, current state (e.g. FULL/DR, FULL/BDR, 2WAY/DROTHER), dead timer countdown, and local connecting interface. It is the vital first command for diagnosing OSPF peering issues.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "show ip ospf neighbor",
+        "is_correct": true
+      },
+      {
+        "text": "show ip ospf database",
+        "is_correct": false
+      },
+      {
+        "text": "show ip ospf interface brief",
+        "is_correct": false
+      },
+      {
+        "text": "show ip route ospf",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which requirement must be satisfied for two directly connected routers to successfully establish an OSPF adjacency?",
+    "explanation": "For OSPF neighbors to form an adjacency, they must reside on the same IP subnet, belong to the same OSPF Area, match Hello and Dead interval timers, have matching area type flags (such as stub flags), and match authentication credentials. A mismatch in any of these parameters halts adjacency formation.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Matching subnet, area ID, and Hello/Dead timers",
+        "is_correct": true
+      },
+      {
+        "text": "Identical Router IDs configured on both routers",
+        "is_correct": false
+      },
+      {
+        "text": "Identical OSPF process ID numbers on both routers",
+        "is_correct": false
+      },
+      {
+        "text": "Identical interface physical bandwidth settings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens if two routers in the same OSPF area are accidentally configured with identical Router IDs?",
+    "explanation": "Duplicate Router IDs prevent proper link-state database synchronization and cause severe routing instability. While neighbors might briefly reach 2-Way or ExStart state, they will generate continuous syslog error messages and fail to exchange LSAs correctly.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "LSA exchange fails and routers log duplicate router-id error messages",
+        "is_correct": true
+      },
+      {
+        "text": "The router with the higher IP automatically renumbers its Router ID to 0.0.0.0",
+        "is_correct": false
+      },
+      {
+        "text": "The routers share a single virtual IP address similar to HSRP",
+        "is_correct": false
+      },
+      {
+        "text": "One router is demoted to a passive stub router automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What OSPF network type is configured by default on an Ethernet interface?",
+    "explanation": "By default, Cisco IOS configures all Ethernet interfaces with the Broadcast OSPF network type. This network type uses multicast for Hellos (224.0.0.5) and conducts DR and BDR elections to reduce the number of adjacencies across multiaccess media.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      },
+      {
+        "text": "Non-broadcast multi-access (NBMA)",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-multipoint",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an interface to operate as an OSPF point-to-point link, eliminating DR and BDR elections?",
+    "explanation": "The interface command `ip ospf network point-to-point` changes the OSPF network type from broadcast to point-to-point. This eliminates DR/BDR election overhead and speeds up adjacency establishment on dedicated two-router links.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip ospf network point-to-point",
+        "is_correct": true
+      },
+      {
+        "text": "ip ospf mode p2p",
+        "is_correct": false
+      },
+      {
+        "text": "neighbor point-to-point enable",
+        "is_correct": false
+      },
+      {
+        "text": "ospf link-type dedicated",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary role of an Area Border Router (ABR) in an OSPF multi-area network?",
+    "explanation": "An Area Border Router (ABR) connects one or more non-backbone areas to the backbone area (Area 0). An ABR maintains separate link-state databases for each area it attaches to and originates Type 3 Summary LSAs into adjacent areas to advertise inter-area routes.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Connects non-backbone areas to Area 0 and generates Type 3 summary LSAs",
+        "is_correct": true
+      },
+      {
+        "text": "Redistributes external non-OSPF routes into the OSPF domain",
+        "is_correct": false
+      },
+      {
+        "text": "Acts as the permanent Designated Router for all multi-access subnets",
+        "is_correct": false
+      },
+      {
+        "text": "Calculates BGP path metrics for autonomous system boundaries",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an Autonomous System Boundary Router (ASBR) in an OSPF deployment?",
+    "explanation": "An ASBR is a router that redistributes routes learned from another routing protocol (such as BGP, EIGRP, or static routes) into the OSPF domain. An ASBR generates Type 5 External LSAs to distribute these external destinations throughout OSPF areas.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A router that redistributes external routes into the OSPF domain using Type 5 LSAs",
+        "is_correct": true
+      },
+      {
+        "text": "A router located exclusively within Area 0 backbone",
+        "is_correct": false
+      },
+      {
+        "text": "A router configured with passive interfaces on all physical ports",
+        "is_correct": false
+      },
+      {
+        "text": "A designated backup router for HSRP default gateway failover",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command directly enables OSPFv3 on an interface for IPv6 in Area 0?",
+    "explanation": "In OSPFv3, routing is enabled directly on interfaces rather than under the router process with network statements. The command `ospf 1 ipv6 area 0` or `ipv6 ospf 1 area 0` immediately activates OSPFv3 processing for that interface.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ipv6 ospf 1 area 0",
+        "is_correct": true
+      },
+      {
+        "text": "network 2001:db8::/32 area 0",
+        "is_correct": false
+      },
+      {
+        "text": "router ospfv3 area 0 enable",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 routing ospf area 0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What requirement must be met before an OSPFv3 process can start routing on a router configured exclusively with IPv6 addresses?",
+    "explanation": "OSPFv3 still requires a 32-bit IPv4-formatted Router ID (such as 1.1.1.1) to identify the router. If the router has no IPv4 addresses configured, the administrator must manually assign a Router ID using the `router-id` command under the OSPFv3 process.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A 32-bit Router ID must be manually configured under the OSPFv3 process",
+        "is_correct": true
+      },
+      {
+        "text": "An IPv4 default route must be configured in global configuration",
+        "is_correct": false
+      },
+      {
+        "text": "Dual-stack tunneling must be activated on the egress interface",
+        "is_correct": false
+      },
+      {
+        "text": "The router must be joined to the FF02::1 multicast group statically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which metric does Cisco's Enhanced Interior Gateway Routing Protocol (EIGRP) use by default to determine the best path?",
+    "explanation": "By default, EIGRP uses bandwidth (slowest link on the path) and cumulative delay (sum of delays) to calculate its composite metric (using K1=1, K3=1, and K2=K4=K5=0). Reliability, load, and MTU are not included in default metric calculations.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Minimum Bandwidth and Cumulative Delay",
+        "is_correct": true
+      },
+      {
+        "text": "Hop Count and MTU size",
+        "is_correct": false
+      },
+      {
+        "text": "Interface Cost and Reference Bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "Packet Loss and Jitter statistics",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In EIGRP terminology, what is a Feasible Successor?",
+    "explanation": "A Feasible Successor is a backup path that satisfies the Feasibility Condition: its Reported Distance (RD) must be strictly less than the Feasible Distance (FD) of the current Successor route. Because it satisfies this condition, the Feasible Successor can be installed immediately without recalculation if the primary path fails.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A loop-free backup route whose Reported Distance is lower than the current Feasible Distance",
+        "is_correct": true
+      },
+      {
+        "text": "The primary route currently installed in the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "A neighboring router that has formed an active adjacency in Area 0",
+        "is_correct": false
+      },
+      {
+        "text": "A static route configured with an administrative distance of 255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a static host route for an individual server located at IP address 10.5.20.15 via next-hop 192.168.10.1?",
+    "explanation": "A host route matches a single IP address using a 32-bit mask (255.255.255.255 or /32). The command `ip route 10.5.20.15 255.255.255.255 192.168.10.1` ensures that traffic destined exclusively for that host takes the designated path.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip route 10.5.20.15 255.255.255.255 192.168.10.1",
+        "is_correct": true
+      },
+      {
+        "text": "ip route 10.5.20.15 255.255.255.0 192.168.10.1",
+        "is_correct": false
+      },
+      {
+        "text": "ip host 10.5.20.15 gateway 192.168.10.1",
+        "is_correct": false
+      },
+      {
+        "text": "ip route host 10.5.20.15 192.168.10.1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What mechanism is used by Distance Vector routing protocols to prevent loops by disallowing route advertisements back out the interface where they were learned?",
+    "explanation": "Split Horizon dictates that a router must never advertise routing information back out of the same interface through which it originally learned that information. This fundamental rule prevents basic two-node routing loops in distance vector networks.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Split Horizon",
+        "is_correct": true
+      },
+      {
+        "text": "Route Poisoning",
+        "is_correct": false
+      },
+      {
+        "text": "Hold-Down Timers",
+        "is_correct": false
+      },
+      {
+        "text": "Counting to Infinity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the route code 'C' indicate when viewing the output of the `show ip route` command?",
+    "explanation": "The code 'C' identifies a directly connected network assigned to an active interface on the local router. Connected routes have an administrative distance of 0 and represent links directly attached to the router.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Directly connected network",
+        "is_correct": true
+      },
+      {
+        "text": "Candidate default route",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco Discovery Protocol route",
+        "is_correct": false
+      },
+      {
+        "text": "Converged OSPF route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the route code 'L' indicate in modern Cisco IOS routing tables?",
+    "explanation": "The code 'L' designates a Local host route (/32 in IPv4 or /128 in IPv6) representing the specific IP address configured on the router's own interface. Local routes allow the router's control plane to efficiently process traffic addressed directly to itself.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Local host route representing the router's own interface IP",
+        "is_correct": true
+      },
+      {
+        "text": "Learned dynamic route via Link-State Protocol",
+        "is_correct": false
+      },
+      {
+        "text": "Loopback virtual interface route",
+        "is_correct": false
+      },
+      {
+        "text": "Legacy RIP route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens when a packet's destination does not match any entry in the routing table and no default route is configured?",
+    "explanation": "If no matching route exists and there is no default route (gateway of last resort) installed, the router discards the packet. It then generates an ICMP Destination Host or Network Unreachable message back to the source IP address.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The packet is dropped and an ICMP Destination Unreachable message is returned",
+        "is_correct": true
+      },
+      {
+        "text": "The packet is broadcast out all active interfaces in the default VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "The packet is buffered until a dynamic routing update arrives",
+        "is_correct": false
+      },
+      {
+        "text": "The packet is forwarded to the lowest IP loopback interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference between Standard Access Control Lists (ACLs) and Extended ACLs in Cisco IOS?",
+    "explanation": "Standard ACLs evaluate only the source IPv4 address of a packet. Extended ACLs evaluate source and destination IPv4 addresses, Layer 4 protocols (such as TCP and UDP), and port numbers. Because of this precision, extended ACLs should be placed as close as possible to the source of the traffic.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Standard ACLs filter only by source IP, while Extended ACLs filter by source, destination, protocol, and port",
+        "is_correct": true
+      },
+      {
+        "text": "Standard ACLs can filter TCP ports, while Extended ACLs only inspect ICMP packets",
+        "is_correct": false
+      },
+      {
+        "text": "Standard ACLs are placed closest to the source, while Extended ACLs are placed closest to the destination",
+        "is_correct": false
+      },
+      {
+        "text": "Standard ACLs support stateful tracking, while Extended ACLs are purely stateless",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the standard ACL number range in Cisco IOS software?",
+    "explanation": "Standard IPv4 ACLs use the number ranges 1–99 and expanded ranges 1300–1999. Extended ACLs use ranges 100–199 and expanded ranges 2000–2699. Named ACLs can also be used to provide descriptive names instead of numbers.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "1–99 and 1300–1999",
+        "is_correct": true
+      },
+      {
+        "text": "100–199 and 2000–2699",
+        "is_correct": false
+      },
+      {
+        "text": "200–299 and 1000–1199",
+        "is_correct": false
+      },
+      {
+        "text": "1–50 and 500–599",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What statement is implicitly present at the end of every Cisco IOS Access Control List?",
+    "explanation": "Every Cisco ACL concludes with an invisible implicit deny statement (e.g., `deny ip any any` or `deny any`). Any packet that does not match an explicit permit statement in the ACL is silently dropped. Administrators often append an explicit deny statement with the `log` option to monitor dropped packets.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "An implicit deny statement that drops all unmatched traffic",
+        "is_correct": true
+      },
+      {
+        "text": "An implicit permit statement that allows all unmatched traffic",
+        "is_correct": false
+      },
+      {
+        "text": "An automatic redirect to the default management interface",
+        "is_correct": false
+      },
+      {
+        "text": "A rate-limiting policy that caps unmatched traffic at 10 Mbps",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wildcard mask matches all hosts within the IPv4 subnet 192.168.16.0/20 in an ACL statement?",
+    "explanation": "A /20 subnet mask is 255.255.240.0. Subtracting this mask from 255.255.255.255 yields the wildcard mask 0.0.15.255. An ACL statement using this wildcard mask evaluates the first 20 bits and ignores the remaining 12 bits.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "0.0.15.255",
+        "is_correct": true
+      },
+      {
+        "text": "0.0.31.255",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.240.255",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.7.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which NAT type maps multiple private IP addresses to a single public IP address using unique Layer 4 source port numbers?",
+    "explanation": "Port Address Translation (PAT), also known as NAT Overload, maps multiple private IP addresses to a single public registered address. It achieves this by tracking individual sessions with unique TCP/UDP source port numbers. This is the primary method used in home and enterprise routers to conserve IPv4 public address space.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Port Address Translation (PAT) / NAT Overload",
+        "is_correct": true
+      },
+      {
+        "text": "Static one-to-one NAT",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic pooled NAT without overload",
+        "is_correct": false
+      },
+      {
+        "text": "Dual-stack NAT64 translation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What command enables Port Address Translation (PAT) using the public IP address configured on interface GigabitEthernet0/0/0?",
+    "explanation": "The command `ip nat inside source list 1 interface GigabitEthernet0/0/0 overload` links an ACL (list 1) identifying private addresses to the specified outside interface. The `overload` keyword activates PAT port multiplexing. Traffic leaving the interface has its source IP replaced with that interface's IP.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip nat inside source list 1 interface GigabitEthernet0/0/0 overload",
+        "is_correct": true
+      },
+      {
+        "text": "ip nat pool OVERLOAD interface GigabitEthernet0/0/0",
+        "is_correct": false
+      },
+      {
+        "text": "ip pat enable interface GigabitEthernet0/0/0",
+        "is_correct": false
+      },
+      {
+        "text": "ip nat translation port-map GigabitEthernet0/0/0 inside",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco NAT terminology, what does the term 'Inside Global' address represent?",
+    "explanation": "An Inside Global address is the globally unique, routable public IP address that represents an internal private host to the outside world. The Inside Local address is the private IP configured on the host inside the network. When an inside host sends a packet to the internet, NAT translates its Inside Local address to an Inside Global address.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The public IP address that represents an inside host to the outside world",
+        "is_correct": true
+      },
+      {
+        "text": "The private IP address assigned to a host on the local inside network",
+        "is_correct": false
+      },
+      {
+        "text": "The IP address of an outside destination host as viewed from the inside network",
+        "is_correct": false
+      },
+      {
+        "text": "The default gateway IP assigned to the ISP perimeter edge router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command clears all dynamic active NAT translations from the router translation table?",
+    "explanation": "The privileged EXEC command `clear ip nat translation *` immediately flushes all dynamic translations from the NAT table. It is frequently used after modifying NAT configuration or ACLs to force immediate re-evaluation. Static NAT translations are unaffected by this command.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "clear ip nat translation *",
+        "is_correct": true
+      },
+      {
+        "text": "reset ip nat dynamic-table",
+        "is_correct": false
+      },
+      {
+        "text": "flush nat entries all",
+        "is_correct": false
+      },
+      {
+        "text": "no ip nat translations",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of configuring `ip helper-address 10.1.50.10` on an access router interface?",
+    "explanation": "The `ip helper-address` command enables the router to act as a DHCP relay agent. It intercepts local broadcast DHCP messages (UDP ports 67/68) and forwards them as unicast packets to the specified remote DHCP server at 10.1.50.10. It also relays other specified UDP broadcast protocols, such as TFTP and DNS, by default.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Relays client broadcast DHCP requests as unicast to a centralized DHCP server",
+        "is_correct": true
+      },
+      {
+        "text": "Acts as a primary DNS name server forwarding queries to root servers",
+        "is_correct": false
+      },
+      {
+        "text": "Establishes a redundant default gateway tracking protocol",
+        "is_correct": false
+      },
+      {
+        "text": "Enables dynamic ARP inspection to validate client MAC addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command reserves IP addresses 192.168.1.1 through 192.168.1.10 so they are not dynamically assigned by a Cisco IOS DHCP pool?",
+    "explanation": "The global configuration command `ip dhcp excluded-address 192.168.1.1 192.168.1.10` prevents the local DHCP server from leasing out those addresses. This reserves them for statically assigned equipment such as default gateways, switches, and servers. This command is executed in global configuration mode outside the pool definition.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip dhcp excluded-address 192.168.1.1 192.168.1.10",
+        "is_correct": true
+      },
+      {
+        "text": "ip dhcp pool exclude 192.168.1.1 to 192.168.1.10",
+        "is_correct": false
+      },
+      {
+        "text": "reserve ip address 192.168.1.1 192.168.1.10",
+        "is_correct": false
+      },
+      {
+        "text": "deny dhcp lease 192.168.1.1 192.168.1.10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the Network Time Protocol (NTP) hierarchy, what stratum level is assigned to a device directly synchronized with a Stratum 1 atomic clock time server?",
+    "explanation": "NTP measures hierarchical distance using stratum levels. Stratum 0 represents authoritative reference clocks like atomic clocks or GPS satellites. Devices directly synchronized to Stratum 1 servers become Stratum 2 servers. The stratum number increments by 1 at each hop away from the reference clock.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Stratum 2",
+        "is_correct": true
+      },
+      {
+        "text": "Stratum 1",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 0",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an NTP stratum level of 16 indicate on a Cisco router?",
+    "explanation": "In NTP, Stratum 16 signifies that the device is unsynchronized and unreachable. NTP only supports stratum levels from 1 to 15 for valid time tracking. A device at Stratum 16 cannot be used by other devices as a valid time source.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The device is unsynchronized and its clock cannot be trusted",
+        "is_correct": true
+      },
+      {
+        "text": "The device is an authoritative Stratum 0 GPS master clock",
+        "is_correct": false
+      },
+      {
+        "text": "The device is operating in peer-to-peer authenticated broadcast mode",
+        "is_correct": false
+      },
+      {
+        "text": "The device has exceeded the maximum round-trip latency threshold",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a Cisco router to synchronize its system clock with an external NTP server at IP 203.0.113.50?",
+    "explanation": "The global configuration command `ntp server 203.0.113.50` instructs the router to poll the remote NTP server at that IP address for time synchronization. The router periodically exchanges NTP packets over UDP port 123. The command `show ntp associations` verifies synchronization status.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ntp server 203.0.113.50",
+        "is_correct": true
+      },
+      {
+        "text": "clock sync 203.0.113.50",
+        "is_correct": false
+      },
+      {
+        "text": "time-server 203.0.113.50 enable",
+        "is_correct": false
+      },
+      {
+        "text": "service ntp client 203.0.113.50",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the numeric Syslog severity level for 'Warning' messages?",
+    "explanation": "Syslog severity levels range from 0 to 7: 0=Emergency, 1=Alert, 2=Critical, 3=Error, 4=Warning, 5=Notice, 6=Informational, and 7=Debugging. Therefore, Warning corresponds to severity level 4. A mnemonic commonly used is 'Every Awesome Cisco Engineer Will Need Ice Cream Daily'.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Level 4",
+        "is_correct": true
+      },
+      {
+        "text": "Level 3",
+        "is_correct": false
+      },
+      {
+        "text": "Level 5",
+        "is_correct": false
+      },
+      {
+        "text": "Level 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Syslog severity level represents granular, real-time diagnostic output generated by commands such as `debug ip packet`?",
+    "explanation": "Syslog severity level 7 represents Debugging output. It produces highly detailed real-time information about protocol exchanges and system events. Because level 7 output can cause high CPU utilization, it should be used cautiously on production equipment.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Level 7 (Debugging)",
+        "is_correct": true
+      },
+      {
+        "text": "Level 6 (Informational)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 0 (Emergency)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 5 (Notice)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command sends syslog messages of severity level Informational (level 6) and higher to a remote syslog server at 192.168.1.25?",
+    "explanation": "The commands `logging host 192.168.1.25` and `logging trap informational` (or level 6) direct syslog output to a remote server. The trap level specifies the maximum severity level transmitted, meaning levels 0 through 6 are forwarded to the syslog daemon. Remote syslog uses UDP port 514 by default.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "logging host 192.168.1.25 and logging trap informational",
+        "is_correct": true
+      },
+      {
+        "text": "syslog server 192.168.1.25 level 6",
+        "is_correct": false
+      },
+      {
+        "text": "service syslog remote 192.168.1.25 trap 6",
+        "is_correct": false
+      },
+      {
+        "text": "log-forward 192.168.1.25 trap info",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What security features does SNMPv3 provide that are absent in SNMPv1 and SNMPv2c?",
+    "explanation": "SNMPv3 introduces cryptographic message integrity, user authentication, and payload encryption (privacy). Earlier versions sent community strings across the network in cleartext, making them vulnerable to packet sniffing. SNMPv3 defines three security models: noAuthNoPriv, authNoPriv, and authPriv.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Message integrity, user authentication, and data encryption (authPriv)",
+        "is_correct": true
+      },
+      {
+        "text": "Support for community string hashing using MD5 exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Unicast transport over TLS without requiring user credentials",
+        "is_correct": false
+      },
+      {
+        "text": "Mandatory bidirectional public-key certificate verification",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference between an SNMP Trap and an SNMP Inform message?",
+    "explanation": "An SNMP Trap is an unacknowledged message sent by an agent to an NMS over UDP port 162. An SNMP Inform is an acknowledged notification where the NMS must respond with an Inform-Response packet. If no acknowledgment is received, the agent retransmits the Inform, guaranteeing notification delivery.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Informs require an acknowledgment from the NMS, while Traps are unacknowledged",
+        "is_correct": true
+      },
+      {
+        "text": "Traps use TCP port 161, while Informs use UDP port 162",
+        "is_correct": false
+      },
+      {
+        "text": "Informs are sent only when a hardware temperature threshold is breached",
+        "is_correct": false
+      },
+      {
+        "text": "Traps carry encrypted payloads, while Informs are always cleartext",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two commands are prerequisites before an RSA key pair can be generated for SSH access on a Cisco router?",
+    "explanation": "A hostname (configured with `hostname [name]`) and an IP domain name (configured with `ip domain-name [domain]`) must be established before running `crypto key generate rsa`. Cisco IOS uses these two values together to form the Fully Qualified Domain Name (FQDN) that names the RSA key pair.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "hostname and ip domain-name",
+        "is_correct": true
+      },
+      {
+        "text": "enable secret and username secret",
+        "is_correct": false
+      },
+      {
+        "text": "ip routing and line vty 0 4",
+        "is_correct": false
+      },
+      {
+        "text": "crypto isakmp enable and service password-encryption",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures VTY lines to accept only SSH connections while rejecting cleartext Telnet sessions?",
+    "explanation": "The line configuration command `transport input ssh` restricts remote terminal access to encrypted SSH on port 22. Any incoming connection using Telnet (port 23) or other protocols is immediately rejected. This prevents eavesdropping of administrative credentials in transit.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "transport input ssh",
+        "is_correct": true
+      },
+      {
+        "text": "transport secure-only",
+        "is_correct": false
+      },
+      {
+        "text": "login transport ssh-only",
+        "is_correct": false
+      },
+      {
+        "text": "line vty protocol ssh",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol in an AAA architecture separates Authentication, Authorization, and Accounting functions and encrypts the entire packet payload?",
+    "explanation": "TACACS+ is a Cisco-developed protocol that operates over TCP port 49 and encrypts the entire packet payload. It cleanly separates Authentication, Authorization, and Accounting into distinct modular processes. In contrast, RADIUS combines authentication and authorization and only encrypts the password field over UDP.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "TACACS+",
+        "is_correct": true
+      },
+      {
+        "text": "RADIUS",
+        "is_correct": false
+      },
+      {
+        "text": "Diameter",
+        "is_correct": false
+      },
+      {
+        "text": "Kerberos",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What transport protocol and port numbers are standard for RADIUS authentication and accounting according to RFC 2865 and RFC 2866?",
+    "explanation": "Modern RADIUS uses UDP port 1812 for authentication/authorization and UDP port 1813 for accounting. Earlier legacy implementations used UDP ports 1645 and 1646. RADIUS only encrypts the password attribute, leaving the rest of the packet header in cleartext.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "UDP ports 1812 (Authentication) and 1813 (Accounting)",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 49 for all functions",
+        "is_correct": false
+      },
+      {
+        "text": "TCP ports 88 and 464",
+        "is_correct": false
+      },
+      {
+        "text": "UDP ports 500 and 4500",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an interface on a switch as a trusted port for DHCP Snooping?",
+    "explanation": "The command `ip dhcp snooping trust` designates the port as trusted, allowing it to receive DHCP server messages (such as DHCPOFFER and DHCPACK). All edge access ports facing end users default to untrusted state to block rogue DHCP servers. Trusted ports are typically uplinks connecting to network cores or legitimate DHCP servers.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip dhcp snooping trust",
+        "is_correct": true
+      },
+      {
+        "text": "switchport dhcp allow-server",
+        "is_correct": false
+      },
+      {
+        "text": "ip dhcp-server trusted-port",
+        "is_correct": false
+      },
+      {
+        "text": "service dhcp trust enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What database does Dynamic ARP Inspection (DAI) utilize to validate Address Resolution Protocol packets on untrusted ports?",
+    "explanation": "Dynamic ARP Inspection inspects ARP requests and replies on untrusted ports against the DHCP Snooping binding database. It verifies that the IP-to-MAC mapping matches a valid dynamic lease or static ARP ACL entry. Invalid ARP packets that attempt ARP poisoning or man-in-the-middle attacks are discarded.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCP Snooping binding database",
+        "is_correct": true
+      },
+      {
+        "text": "Switch CAM MAC address table",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF Link-State Database",
+        "is_correct": false
+      },
+      {
+        "text": "Local DNS resolver cache",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables Dynamic ARP Inspection on VLANs 10 and 20?",
+    "explanation": "The global configuration command `ip arp inspection vlan 10,20` activates DAI on those specific VLANs. Untrusted ports on those VLANs will intercept all ARP frames and validate their IP and MAC addresses against the binding table. Uplinks connected to other switches must be configured as trusted using `ip arp inspection trust`.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip arp inspection vlan 10,20",
+        "is_correct": true
+      },
+      {
+        "text": "arp validate vlan 10 20",
+        "is_correct": false
+      },
+      {
+        "text": "service dai enable vlan 10,20",
+        "is_correct": false
+      },
+      {
+        "text": "ip dynamic-arp vlan 10,20 enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What security feature dynamically filters IP traffic on untrusted Layer 2 ports based on the DHCP Snooping database to prevent IP address spoofing?",
+    "explanation": "IP Source Guard (IPSG) inspects traffic entering an untrusted port and drops packets whose source IP address does not match an entry in the DHCP snooping binding table. When configured with MAC verification, it also checks the source MAC address against the port's CAM table. This prevents malicious hosts from impersonating other valid endpoints.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "IP Source Guard (IPSG)",
+        "is_correct": true
+      },
+      {
+        "text": "Port Security",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Storm Control",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which key exchange mechanism is introduced in WPA3 Personal to prevent offline dictionary attacks against Wi-Fi pre-shared keys?",
+    "explanation": "WPA3 Personal replaces the vulnerable WPA2 4-way PSK handshake with Simultaneous Authentication of Equals (SAE), based on the Dragonfly handshake. SAE ensures forward secrecy and prevents attackers from capturing a handshake and executing offline dictionary brute-force attacks. It also allows authentication without sharing the raw pre-shared key over the air.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Simultaneous Authentication of Equals (SAE)",
+        "is_correct": true
+      },
+      {
+        "text": "Temporal Key Integrity Protocol (TKIP)",
+        "is_correct": false
+      },
+      {
+        "text": "Wired Equivalent Privacy (WEP) RC4 engine",
+        "is_correct": false
+      },
+      {
+        "text": "Pre-Shared Key with Diffie-Hellman Group 1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless security framework requires an external RADIUS authentication server and 802.1X for enterprise user credentials?",
+    "explanation": "WPA2/WPA3 Enterprise uses the IEEE 802.1X standard and Extensible Authentication Protocol (EAP) to authenticate individual users against a central AAA/RADIUS server (such as Cisco ISE). Each user signs in with unique corporate credentials or digital certificates rather than a shared static pre-shared key. Dynamic encryption keys are then generated per session.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "WPA2/WPA3 Enterprise (802.1X)",
+        "is_correct": true
+      },
+      {
+        "text": "WPA2 Personal (PSK)",
+        "is_correct": false
+      },
+      {
+        "text": "Open System with MAC Filtering",
+        "is_correct": false
+      },
+      {
+        "text": "Wi-Fi Protected Setup (WPS)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command activates the local AAA subsystem on a Cisco device to enable RADIUS or local authentication policies?",
+    "explanation": "The global command `aaa new-model` initializes the AAA subsystem in Cisco IOS. Until `aaa new-model` is entered, advanced AAA authentication, authorization, and accounting commands cannot be configured. It is the essential foundation for enterprise identity access control.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "aaa new-model",
+        "is_correct": true
+      },
+      {
+        "text": "enable aaa services",
+        "is_correct": false
+      },
+      {
+        "text": "aaa authentication default enable",
+        "is_correct": false
+      },
+      {
+        "text": "service aaa-system start",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of the Cisco IOS `service password-encryption` command?",
+    "explanation": "The command `service password-encryption` reversibly obfuscates all plaintext passwords in the running configuration using Cisco Type 7 encryption. While Type 7 is weak and can be easily decrypted with public algorithms, it protects passwords from casual shoulder surfing. Sensitive passwords should always be secured using modern salted hashes like Type 8 or Type 9 (`secret`).",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Obfuscates cleartext passwords in configuration files using Type 7 encryption",
+        "is_correct": true
+      },
+      {
+        "text": "Upgrades all passwords to SHA-256 salted Type 8 hashes",
+        "is_correct": false
+      },
+      {
+        "text": "Enforces a mandatory 16-character minimum password complexity rule",
+        "is_correct": false
+      },
+      {
+        "text": "Disables password recovery upon reboot",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an enable password using a secure PBKDF2 with SHA-256 hash (Type 8) on Cisco IOS-XE?",
+    "explanation": "The command `enable algorithm-type sha256 secret [password]` uses PBKDF2 with SHA-256 (Type 8) to store the enable secret. Older Cisco IOS versions used MD5 (Type 5), which is susceptible to rainbow table collision attacks. Type 8 and scrypt (Type 9) offer superior resistance against modern password-cracking hardware.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "enable algorithm-type sha256 secret [password]",
+        "is_correct": true
+      },
+      {
+        "text": "enable secret type-7 [password]",
+        "is_correct": false
+      },
+      {
+        "text": "service password sha256 enable",
+        "is_correct": false
+      },
+      {
+        "text": "security password-hash sha256 [password]",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What feature limits incoming broadcast, multicast, or unknown unicast traffic on a switch port to prevent denial of service and link saturation?",
+    "explanation": "Storm Control monitors incoming broadcast, multicast, and unknown unicast levels on a physical switch port over 1-second intervals. If traffic exceeds a configured threshold (expressed as bandwidth percentage or packets per second), the switch blocks further excess packets or shuts down the interface. This prevents broadcast storms from crippling the LAN.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Storm Control",
+        "is_correct": true
+      },
+      {
+        "text": "Quality of Service (QoS)",
+        "is_correct": false
+      },
+      {
+        "text": "Port Security",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic ARP Inspection",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What type of attack involves an adversary inserting a rogue switch into an access port to capture traffic from all VLANs?",
+    "explanation": "A VLAN hopping attack (specifically switch spoofing) occurs when an attacker's device negotiates a dynamic 802.1Q trunk link with an access switch using DTP. Once the trunk forms, the attacker can transmit and receive traffic across all active VLANs. Disabling DTP negotiation and setting unused ports to static access mode mitigates this attack.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "VLAN Hopping via Switch Spoofing",
+        "is_correct": true
+      },
+      {
+        "text": "CAM Table Overflow",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP Starvation",
+        "is_correct": false
+      },
+      {
+        "text": "ARP Cache Poisoning",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How can network administrators protect against Double-Tagging VLAN hopping attacks?",
+    "explanation": "In a double-tagging attack, an attacker prepends two 802.1Q tags to a frame, matching the native VLAN in the outer tag. To neutralize this vulnerability, administrators change the native VLAN to an unused ID and enable native VLAN tagging using `vlan dot1q tag native`. Furthermore, access ports should never belong to the native VLAN.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Set the native VLAN to an unused dummy VLAN and enable vlan dot1q tag native",
+        "is_correct": true
+      },
+      {
+        "text": "Configure BPDU Filter on all trunk uplinks",
+        "is_correct": false
+      },
+      {
+        "text": "Enable DHCP Snooping on the native VLAN exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Set the switch port security maximum MAC addresses to 1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of Control Plane Policing (CoPP) on a core router or Layer 3 switch?",
+    "explanation": "Control Plane Policing (CoPP) protects the router's Route Processor (CPU) from being overwhelmed by high-rate or malicious management and control traffic (such as routing updates, SSH, ICMP, and ARP). By classifying and rate-limiting traffic destined for the control plane, CoPP ensures continuous routing stability and prevents denial of service.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Protects the router's CPU by rate-limiting traffic destined for the control plane",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts transit user payload frames traversing the data plane",
+        "is_correct": false
+      },
+      {
+        "text": "Filters customer internet traffic based on geographic IP blocks",
+        "is_correct": false
+      },
+      {
+        "text": "Restricts physical console access using biometric authentication",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command applies extended ACL 105 to filter inbound traffic entering interface GigabitEthernet0/0?",
+    "explanation": "The interface configuration command `ip access-group 105 in` binds access list 105 to incoming packets on GigabitEthernet0/0. Packets are evaluated against the ACL before routing table lookups occur. Traffic matching a permit statement is forwarded, while unmatched packets are dropped by the implicit deny.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "ip access-group 105 in",
+        "is_correct": true
+      },
+      {
+        "text": "access-class 105 in",
+        "is_correct": false
+      },
+      {
+        "text": "ip access-list 105 apply inbound",
+        "is_correct": false
+      },
+      {
+        "text": "filter ip 105 interface GigabitEthernet0/0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command applies standard ACL 10 to restrict incoming management sessions on virtual terminal (VTY) lines?",
+    "explanation": "The line configuration command `access-class 10 in` binds an ACL to incoming VTY line connections. Unlike physical interfaces that use `ip access-group`, terminal lines utilize `access-class`. This ensures that only authorized administrator source IP addresses can establish SSH or Telnet sessions.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "access-class 10 in",
+        "is_correct": true
+      },
+      {
+        "text": "ip access-group 10 in",
+        "is_correct": false
+      },
+      {
+        "text": "transport access-list 10",
+        "is_correct": false
+      },
+      {
+        "text": "vty filter 10 inbound",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What parameter does the `established` keyword evaluate in an extended IPv4 ACL TCP statement?",
+    "explanation": "The `established` keyword permits incoming TCP packets only if the ACK or RST control flag is set in the TCP header. This signifies that the packet belongs to an established return session initiated from the inside network. Packets with only the SYN flag set (initial connection requests from the outside) are blocked.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Permits TCP packets that have the ACK or RST flags set",
+        "is_correct": true
+      },
+      {
+        "text": "Verifies the packet checksum against an active state table",
+        "is_correct": false
+      },
+      {
+        "text": "Matches packets whose sequence numbers fall within the negotiated MSS",
+        "is_correct": false
+      },
+      {
+        "text": "Restricts traffic to established UDP streaming sessions",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port number is utilized by Domain Name System (DNS) queries and responses?",
+    "explanation": "DNS primarily uses UDP port 53 for standard name resolution queries and responses between clients and DNS resolvers. It can also use TCP port 53 for zone transfers between servers or when responses exceed 512 bytes.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Port 53",
+        "is_correct": true
+      },
+      {
+        "text": "Port 69",
+        "is_correct": false
+      },
+      {
+        "text": "Port 123",
+        "is_correct": false
+      },
+      {
+        "text": "Port 88",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol is utilized for unencrypted, trivial file transfers over UDP port 69 without authentication?",
+    "explanation": "Trivial File Transfer Protocol (TFTP) uses UDP port 69 to transfer configuration files and software images between network devices and servers. It does not provide directory browsing, user authentication, or data encryption. For secure file operations, SCP or SFTP should be used.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "TFTP",
+        "is_correct": true
+      },
+      {
+        "text": "FTP",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary role of Machine Learning (ML) algorithms in modern Cisco AIOps platforms?",
+    "explanation": "Machine Learning models establish dynamic operational baselines by continuously analyzing telemetry across the network. They detect statistical anomalies and predict potential network outages before users report degradation. This transforms network operations from reactive ticket handling to proactive remediation.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Establish dynamic baselines and detect anomalies to predict network degradations",
+        "is_correct": true
+      },
+      {
+        "text": "Replace physical router microcode with neural network firmware",
+        "is_correct": false
+      },
+      {
+        "text": "Eliminate the need for Layer 3 IP routing protocols",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypt wireless radio frequencies using quantum keys",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In prompt engineering for network automation with Generative AI, what is the importance of providing explicit constraints and output format?",
+    "explanation": "Explicit constraints and format specifications (e.g. requesting strict JSON or IOS-XE CLI syntax) eliminate hallucinated explanations and ensure syntactic precision. This enables automated pipelines to parse and validate AI-generated configurations without human pre-processing. Without strict format constraints, LLM outputs may introduce invalid commands into production workflows.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Guarantees deterministic, syntactically valid outputs that automation scripts can parse directly",
+        "is_correct": true
+      },
+      {
+        "text": "Reduces the computational memory requirements of the network switch CPU",
+        "is_correct": false
+      },
+      {
+        "text": "Bypasses authentication mechanisms on TACACS+ servers",
+        "is_correct": false
+      },
+      {
+        "text": "Allows LLMs to directly execute unauthenticated BGP updates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP status code signifies that a REST API request was successful and resulted in the creation of a new network resource?",
+    "explanation": "The HTTP status code 201 Created indicates that the request succeeded and a new resource was successfully created on the server. Code 200 OK indicates general success without creating a resource, while 204 No Content indicates success with no response body. Codes in the 400 range indicate client-side errors.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "201 Created",
+        "is_correct": true
+      },
+      {
+        "text": "200 OK",
+        "is_correct": false
+      },
+      {
+        "text": "204 No Content",
+        "is_correct": false
+      },
+      {
+        "text": "202 Accepted",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP verb in a RESTful API is typically used to partially update an existing resource without replacing the entire entity?",
+    "explanation": "The PATCH method applies partial modifications to an existing resource. In contrast, the PUT method replaces the entire resource representation with the payload provided. POST is generally used to create a new resource, and GET retrieves information.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "PATCH",
+        "is_correct": true
+      },
+      {
+        "text": "PUT",
+        "is_correct": false
+      },
+      {
+        "text": "POST",
+        "is_correct": false
+      },
+      {
+        "text": "UPDATE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What HTTP status code is returned when a client's API request fails because it lacks valid authentication credentials?",
+    "explanation": "HTTP 401 Unauthorized indicates that the request requires user authentication credentials (such as an API token or bearer token) that are missing or invalid. HTTP 403 Forbidden indicates that credentials are valid but the client lacks permission to access the resource. HTTP 404 indicates the requested endpoint was not found.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "401 Unauthorized",
+        "is_correct": true
+      },
+      {
+        "text": "403 Forbidden",
+        "is_correct": false
+      },
+      {
+        "text": "400 Bad Request",
+        "is_correct": false
+      },
+      {
+        "text": "404 Not Found",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which data serialization format relies on strict whitespace indentation to represent hierarchical data structures without using curly braces?",
+    "explanation": "YAML (YAML Ain't Markup Language) uses whitespace indentation rather than braces or tags to represent hierarchies, key-value pairs, and lists. It is widely favored in automation tools like Ansible because of its clean human readability. JSON relies on curly braces and brackets, while XML uses opening and closing tags.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "YAML",
+        "is_correct": true
+      },
+      {
+        "text": "JSON",
+        "is_correct": false
+      },
+      {
+        "text": "XML",
+        "is_correct": false
+      },
+      {
+        "text": "HTML",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which character is used to denote an array or ordered list of items in JSON format?",
+    "explanation": "In JSON (JavaScript Object Notation), square brackets `[` and `]` encapsulate ordered lists or arrays of values. Curly braces `{` and `}` enclose unordered key-value objects. Colons separate keys from values, and commas separate individual items.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Square brackets [ ]",
+        "is_correct": true
+      },
+      {
+        "text": "Curly braces { }",
+        "is_correct": false
+      },
+      {
+        "text": "Parentheses ( )",
+        "is_correct": false
+      },
+      {
+        "text": "Angle brackets < >",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What data modeling language is standardized by the IETF (RFC 6020/7950) to define network device configurations and state data for NETCONF and RESTCONF?",
+    "explanation": "YANG (Yet Another Next Generation) is the standard data modeling language used to define the schema for network configuration and operational state. NETCONF and RESTCONF use YANG models to structure RPC operations and payloads. YANG itself is not a transport protocol; it models the data that protocols transport.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "YANG",
+        "is_correct": true
+      },
+      {
+        "text": "YAML",
+        "is_correct": false
+      },
+      {
+        "text": "JSON-Schema",
+        "is_correct": false
+      },
+      {
+        "text": "OpenConfig-DSL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport protocol and default TCP port are utilized by NETCONF to manage network devices securely?",
+    "explanation": "NETCONF (RFC 6241) uses SSH over TCP port 830 as its mandatory secure transport protocol. Within the SSH session, NETCONF exchanges XML-encoded Remote Procedure Call (RPC) messages like `<get-config>` and `<edit-config>`. This provides encryption, authentication, and guaranteed delivery.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "SSH over TCP port 830",
+        "is_correct": true
+      },
+      {
+        "text": "HTTPS over TCP port 443",
+        "is_correct": false
+      },
+      {
+        "text": "TLS over TCP port 6513",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP over UDP port 161",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference between NETCONF and RESTCONF protocols?",
+    "explanation": "NETCONF uses SSH (port 830) with XML-formatted RPCs to interact with YANG data models. RESTCONF (RFC 8040) uses HTTPS (port 443) with standard REST verbs (GET, POST, PUT, DELETE) and supports both JSON and XML encoding. RESTCONF provides a lightweight, web-friendly alternative to NETCONF.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "NETCONF uses SSH with XML RPCs, while RESTCONF uses HTTPS with REST methods supporting JSON and XML",
+        "is_correct": true
+      },
+      {
+        "text": "NETCONF is stateless and unauthenticated, while RESTCONF requires TLS mutual certificates",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF operates over UDP, while RESTCONF requires SCTP transport",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF only reads device status, while RESTCONF can only push configuration changes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which configuration management tool is agentless, uses SSH for communication, and executes tasks defined in YAML playbooks?",
+    "explanation": "Ansible is an agentless configuration management engine that communicates with managed network devices using standard SSH or REST APIs. It does not require any software agent to be installed on target switches or routers. Automation workflows are organized in declarative YAML files called playbooks.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Ansible",
+        "is_correct": true
+      },
+      {
+        "text": "Puppet",
+        "is_correct": false
+      },
+      {
+        "text": "Chef",
+        "is_correct": false
+      },
+      {
+        "text": "SaltStack",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which configuration management tool uses an agent-based architecture with Ruby-like declarative 'manifests' compiled by a Master server?",
+    "explanation": "Puppet operates primarily with an agent-based architecture where nodes run a Puppet agent that regularly polls a Puppet Master. Manifests are written in Puppet's declarative language and compiled into catalogs before execution on managed devices. Chef also uses an agent, but terms its configuration units 'recipes' and 'cookbooks'.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Puppet",
+        "is_correct": true
+      },
+      {
+        "text": "Ansible",
+        "is_correct": false
+      },
+      {
+        "text": "Terraform",
+        "is_correct": false
+      },
+      {
+        "text": "Vagrant",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary advantage of Model-Driven Streaming Telemetry over traditional SNMP polling?",
+    "explanation": "Streaming telemetry operates on a push model, where devices continuously stream real-time data to collectors as changes occur or at sub-second intervals. In contrast, SNMP relies on periodic, high-overhead pull queries that consume CPU and introduce monitoring latency. Streaming telemetry provides high granularity and immediate visibility into network conditions.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Uses a push model to stream high-frequency real-time data with lower CPU overhead than SNMP polling",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts transit data using proprietary Cisco symmetric keys exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Requires no IP connectivity between the device and the management station",
+        "is_correct": false
+      },
+      {
+        "text": "Replaces hardware forwarding ASICs with software telemetry pipelines",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In streaming telemetry, what is the difference between a 'dial-in' and a 'dial-out' subscription mode?",
+    "explanation": "In dial-in telemetry, the management station (collector) initiates the connection to the network device and requests data over gRPC. In dial-out telemetry, the network device actively initiates the outbound connection to the collector and begins pushing data. Dial-out mode is beneficial in environments where inbound connections through firewalls are restricted.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "In dial-in, the collector connects to the device; in dial-out, the device connects outbound to the collector",
+        "is_correct": true
+      },
+      {
+        "text": "In dial-in, telemetry is sent over analog modems; in dial-out, it is sent over Ethernet",
+        "is_correct": false
+      },
+      {
+        "text": "Dial-in uses UDP packets, while dial-out requires unencrypted TCP",
+        "is_correct": false
+      },
+      {
+        "text": "Dial-in only streams interface statistics, while dial-out only streams Syslog entries",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Catalyst Center (DNA Center), what feature utilizes artificial intelligence to correlate client connectivity events and identify root causes?",
+    "explanation": "AI Network Analytics in Cisco Catalyst Center applies machine learning and cloud-scale analytics to telemetry collected across wireless and wired networks. It analyzes client onboarding stages (association, authentication, DHCP, DNS) and automatically surfaces root causes for failures. This minimizes manual troubleshooting time for network operations teams.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "AI Network Analytics / DNA Assurance",
+        "is_correct": true
+      },
+      {
+        "text": "Catalyst Center CLI Wizard",
+        "is_correct": false
+      },
+      {
+        "text": "Adaptive Security Device Manager",
+        "is_correct": false
+      },
+      {
+        "text": "Simple Network Management Console",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What capability does an AI-powered Network Digital Twin provide to enterprise operations teams?",
+    "explanation": "A Network Digital Twin creates a high-fidelity software model of the physical network topology, state, and policies. It enables teams to simulate configuration changes, validate routing updates, and predict disruptions in a safe virtual environment before pushing changes to production. This significantly reduces outages caused by human configuration errors.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Simulates and validates configuration changes in software before deploying to production",
+        "is_correct": true
+      },
+      {
+        "text": "Clones physical switch ASICs to double hardware switching capacity",
+        "is_correct": false
+      },
+      {
+        "text": "Provides automated wireless power amplification during peak hours",
+        "is_correct": false
+      },
+      {
+        "text": "Generates synthetic MAC addresses to bypass switch CAM table limitations",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which component of an AI prompt establishes the domain context, perspective, and behavioral tone expected from the LLM?",
+    "explanation": "The Persona or Role definition instructs the model on who it is acting as (for example, 'You are a senior Cisco CCIE network engineer'). Setting an explicit persona focuses the model's vocabulary and analytical reasoning toward network engineering best practices. Context and task instructions further narrow the response to specific operational requirements.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The Persona (Role)",
+        "is_correct": true
+      },
+      {
+        "text": "The Delimiter token",
+        "is_correct": false
+      },
+      {
+        "text": "The Temperature parameter",
+        "is_correct": false
+      },
+      {
+        "text": "The Top-P probability threshold",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an inherent risk of applying AI-generated router configurations directly to production network infrastructure without automated validation?",
+    "explanation": "Generative AI models can produce hallucinations—plausible-sounding CLI commands that are syntactically incorrect, obsolete, or incompatible with the target platform. Deploying unvalidated outputs can cause syntax parsing errors, unintended routing loops, or catastrophic network downtime. Automated CI/CD linting and sandbox testing are essential safeguards in NetDevOps pipelines.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "AI hallucinations can introduce invalid syntax or conflicting routes that disrupt network operations",
+        "is_correct": true
+      },
+      {
+        "text": "The router CPU will automatically downgrade from 64-bit to 32-bit execution mode",
+        "is_correct": false
+      },
+      {
+        "text": "All interface IP addresses are converted into IPv6 link-local addresses irreversibly",
+        "is_correct": false
+      },
+      {
+        "text": "The switch bootloader is overwritten with an unauthenticated microcode image",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What open-source format uses key-value pairs formatted as `\"key\": \"value\"` and is universally supported across modern network REST APIs?",
+    "explanation": "JSON (JavaScript Object Notation) is a lightweight, language-independent data-interchange format. It is universally supported by network controllers like Cisco Catalyst Center, Meraki, and modern IOS-XE RESTCONF APIs. Because of its compact syntax and easy programmatic parsing, it has largely replaced XML in web-based automation.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "JSON",
+        "is_correct": true
+      },
+      {
+        "text": "CSV",
+        "is_correct": false
+      },
+      {
+        "text": "YANG",
+        "is_correct": false
+      },
+      {
+        "text": "BSON",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In NetDevOps, what is the role of Continuous Integration / Continuous Deployment (CI/CD) pipelines?",
+    "explanation": "CI/CD pipelines automate the testing, validation, and deployment of network configuration changes stored in version control systems like Git. When changes are proposed, automated runners validate syntax against lab virtual environments (such as Cisco CML) before deploying to production. This process minimizes human errors and accelerates reliable change delivery.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Automates testing, validation, and deployment of network configurations from version control",
+        "is_correct": true
+      },
+      {
+        "text": "Replaces traditional Ethernet switching with software-defined radio frequencies",
+        "is_correct": false
+      },
+      {
+        "text": "Maintains an active-passive hardware failover link between distant data centers",
+        "is_correct": false
+      },
+      {
+        "text": "Automatically buys cloud transit bandwidth during bandwidth spikes",
+        "is_correct": false
+      }
+    ]
+  }
+]

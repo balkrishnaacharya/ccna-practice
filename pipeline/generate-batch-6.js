@@ -1,0 +1,837 @@
+const fs = require("fs");
+const path = require("path");
+
+const questions = [
+  {
+    stem: "What is the recommended placement strategy for standard IPv4 Access Control Lists (ACLs)?",
+    explanation: "Standard ACLs filter traffic based only on source IPv4 address. Because they cannot filter by destination, they should be placed as close to the destination as possible to avoid prematurely blocking legitimate traffic heading toward other destinations.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "As close to the source as possible", is_correct: false },
+      { text: "As close to the destination as possible", is_correct: true },
+      { text: "Exclusively on loopback interfaces", is_correct: false },
+      { text: "On the core layer switch backbone only", is_correct: false }
+    ]
+  },
+  {
+    stem: "Where should an extended IPv4 Access Control List (ACL) ideally be placed in a network topology?",
+    explanation: "Extended ACLs filter on source IP, destination IP, protocol, and port numbers. They should be placed as close to the traffic source as possible to conserve network bandwidth by dropping unauthorized traffic immediately.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "As close to the destination as possible", is_correct: false },
+      { text: "As close to the traffic source as possible", is_correct: true },
+      { text: "Only on WAN boundary edge routers", is_correct: false },
+      { text: "Exclusively on virtual terminal lines", is_correct: false }
+    ]
+  },
+  {
+    stem: "What number range identifies standard IPv4 numbered Access Control Lists in Cisco IOS?",
+    explanation: "Standard numbered ACLs use ranges 1–99 and expanded range 1300–1999. Extended ACLs use ranges 100–199 and 2000–2699.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "1 to 99 and 1300 to 1999", is_correct: true },
+      { text: "100 to 199 and 2000 to 2699", is_correct: false },
+      { text: "200 to 299", is_correct: false },
+      { text: "1000 to 1299", is_correct: false }
+    ]
+  },
+  {
+    stem: "What invisible statement exists at the end of every Cisco IPv4 Access Control List?",
+    explanation: "Every Cisco ACL concludes with an invisible, implicit `deny any` (or `deny ip any any`). If incoming traffic does not match any configured permit statement, it is silently discarded.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "permit any", is_correct: false },
+      { text: "deny any", is_correct: true },
+      { text: "log all unmatched", is_correct: false },
+      { text: "redirect to gateway", is_correct: false }
+    ]
+  },
+  {
+    stem: "What wildcard mask corresponds to the subnet mask 255.255.255.224 (/27)?",
+    explanation: "The wildcard mask is calculated by subtracting each octet from 255: 255-255=0, 255-255=0, 255-255=0, and 255-224=31. Thus, the wildcard mask is 0.0.0.31.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "0.0.0.15", is_correct: false },
+      { text: "0.0.0.31", is_correct: true },
+      { text: "0.0.0.63", is_correct: false },
+      { text: "0.0.0.127", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command applies access list 101 to filter inbound traffic on interface GigabitEthernet0/1?",
+    explanation: "The interface command `ip access-group 101 in` activates ACL 101 on inbound packets arriving on that interface.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "access-list 101 in", is_correct: false },
+      { text: "ip access-group 101 in", is_correct: true },
+      { text: "ip access-list 101 apply inbound", is_correct: false },
+      { text: "traffic-filter 101 in", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of the `established` keyword in an extended IPv4 Access Control List entry?",
+    explanation: "The `established` keyword matches TCP segments with the ACK or RST control bits set, permitting return traffic for TCP sessions originally initiated from inside the trusted network while blocking inbound connection attempts (SYN packets).",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It permits all UDP traffic that has sent an initial DNS lookup", is_correct: false },
+      { text: "It permits incoming TCP segments that have the ACK or RST flags set", is_correct: true },
+      { text: "It allows OSPF and EIGRP packets to bypass interface filters", is_correct: false },
+      { text: "It logs session start and end times to an external syslog server", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Network Address Translation (NAT) terminology, what is the 'Inside Global' address?",
+    explanation: "An Inside Global address is the registered, routable public IP address assigned by the ISP that represents an internal private host to the outside world.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The private IP address assigned to a host on the local inside network", is_correct: false },
+      { text: "The public IP address that represents inside devices to outside networks", is_correct: true },
+      { text: "The destination IP address of an external web server", is_correct: false },
+      { text: "The loopback address of the ISP edge gateway", is_correct: false }
+    ]
+  },
+  {
+    stem: "In NAT terminology, what is the 'Inside Local' address?",
+    explanation: "The Inside Local address is the actual private IPv4 address configured on an internal host (typically an RFC 1918 address such as 192.168.1.50) before translation occurs.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "The private IPv4 address assigned to a host on the inside network", is_correct: true },
+      { text: "The public IPv4 address assigned by the service provider", is_correct: false },
+      { text: "The MAC address of the inside gateway switch SVI", is_correct: false },
+      { text: "The multicast group address used for local HSRP", is_correct: false }
+    ]
+  },
+  {
+    stem: "What feature of NAT allows multiple internal private hosts to share a single public IP address by tracking unique Layer 4 port numbers?",
+    explanation: "Port Address Translation (PAT), also known as NAT overload, maps multiple private IP addresses to a single public IP address by assigning unique source TCP/UDP port numbers to each outbound conversation.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Static NAT", is_correct: false },
+      { text: "Dynamic NAT without pooling", is_correct: false },
+      { text: "Port Address Translation (PAT / NAT Overload)", is_correct: true },
+      { text: "Carrier-Grade IPv6 NAT64", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures PAT (NAT Overload) using the public IP address of interface GigabitEthernet0/0 for hosts matching ACL 1?",
+    explanation: "The command `ip nat inside source list 1 interface GigabitEthernet0/0 overload` maps internal addresses matching ACL 1 to the external IP assigned to GigabitEthernet0/0, appending the `overload` keyword for PAT.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "ip nat pool OVERLOAD 1 gigabitethernet0/0", is_correct: false },
+      { text: "ip nat inside source list 1 interface GigabitEthernet0/0 overload", is_correct: true },
+      { text: "ip pat list 1 outside interface gig0/0", is_correct: false },
+      { text: "nat overload access-list 1 interface gig0/0", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command displays active NAT translation sessions, including inside local, inside global, outside local, and outside global mappings?",
+    explanation: "The command `show ip nat translations` displays the active NAT translation table, showing transport protocol, inside local IP:port, inside global IP:port, and outside endpoints.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "show ip nat statistics", is_correct: false },
+      { text: "show ip nat translations", is_correct: true },
+      { text: "show ip connections nat", is_correct: false },
+      { text: "show nat table", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command maps internal private IP 192.168.1.10 statically to public IP 203.0.113.10?",
+    explanation: "The command `ip nat inside source static 192.168.1.10 203.0.113.10` creates a permanent, one-to-one static NAT translation, typically used for public-facing servers.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "ip nat static 192.168.1.10 203.0.113.10", is_correct: false },
+      { text: "ip nat inside source static 192.168.1.10 203.0.113.10", is_correct: true },
+      { text: "nat one-to-one inside 192.168.1.10 203.0.113.10", is_correct: false },
+      { text: "ip route static nat 192.168.1.10 203.0.113.10", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the four-step sequence of messages exchanged between a client and a DHCP server during initial IP address assignment?",
+    explanation: "DHCP uses the DORA sequence: DHCPDISCOVER (client broadcast), DHCPOFFER (server unicast/broadcast), DHCPREQUEST (client broadcast), and DHCPACK (server unicast/broadcast).",
+    domain: "services_security",
+    subtopic: "DHCP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Discover, Offer, Request, Acknowledge (DORA)", is_correct: true },
+      { text: "Solicit, Advertise, Request, Reply (SARR)", is_correct: false },
+      { text: "Syn, Syn-Ack, Ack, Fin", is_correct: false },
+      { text: "Hello, Query, Response, Confirm", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which transport layer protocol and destination port does a DHCP client use to broadcast a DHCPDISCOVER message?",
+    explanation: "DHCP uses UDP. The client transmits from source UDP port 68 to destination UDP port 67 (the DHCP server port).",
+    domain: "services_security",
+    subtopic: "DHCP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "TCP port 67", is_correct: false },
+      { text: "UDP port 67", is_correct: true },
+      { text: "UDP port 68", is_correct: false },
+      { text: "TCP port 80", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command on a Cisco router interface forwards broadcast DHCPDISCOVER requests to a DHCP server on a different subnet?",
+    explanation: "The interface command `ip helper-address <server-ip>` turns on DHCP relay. It intercepts broadcast UDP messages (including DHCP ports 67/68, DNS, TFTP, NTP, NetBIOS) and forwards them as unicast to the specified server IP.",
+    domain: "services_security",
+    subtopic: "DHCP and Helper Address",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "dhcp-relay forward <server-ip>", is_correct: false },
+      { text: "ip helper-address <server-ip>", is_correct: true },
+      { text: "forward-dhcp server <server-ip>", is_correct: false },
+      { text: "ip dhcp-relay enable", is_correct: false }
+    ]
+  },
+  {
+    stem: "What security threat does DHCP Snooping prevent on a Layer 2 switch network?",
+    explanation: "DHCP Snooping prevents rogue (unauthorized) DHCP servers from distributing incorrect IP configurations or default gateways (man-in-the-middle attacks), and it blocks DHCP starvation attacks by rate-limiting requests on untrusted ports.",
+    domain: "services_security",
+    subtopic: "DHCP Snooping",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Spanning tree root bridge takeovers", is_correct: false },
+      { text: "Rogue DHCP servers and DHCP starvation attacks", is_correct: true },
+      { text: "VLAN hopping via double 802.1Q tags", is_correct: false },
+      { text: "Unauthorized dynamic routing protocol neighbor formation", is_correct: false }
+    ]
+  },
+  {
+    stem: "When DHCP Snooping is enabled on a VLAN, what type of interface must be configured on the uplink port connected to the legitimate DHCP server?",
+    explanation: "The command `ip dhcp snooping trust` must be applied to interfaces connected to legitimate DHCP servers or uplinks to other switches. By default, all ports are untrusted and discard DHCPOFFER and DHCPACK messages.",
+    domain: "services_security",
+    subtopic: "DHCP Snooping",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "ip dhcp snooping untrusted", is_correct: false },
+      { text: "ip dhcp snooping trust", is_correct: true },
+      { text: "switchport mode dhcp-server", is_correct: false },
+      { text: "dhcp-snooping uplink enable", is_correct: false }
+    ]
+  },
+  {
+    stem: "What information is maintained in the DHCP Snooping binding database table?",
+    explanation: "The DHCP Snooping binding table records the client MAC address, leased IPv4 address, lease time, binding type, VLAN ID, and the physical interface on which the client resides.",
+    domain: "services_security",
+    subtopic: "DHCP Snooping",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Only client MAC address and host name", is_correct: false },
+      { text: "Client MAC address, leased IP address, lease time, VLAN, and interface", is_correct: true },
+      { text: "Active spanning tree root bridge priorities and timers", is_correct: false },
+      { text: "Public NAT translations and port allocation numbers", is_correct: false }
+    ]
+  },
+  {
+    stem: "What security feature uses the DHCP Snooping binding database to validate ARP packets on untrusted switch ports?",
+    explanation: "Dynamic ARP Inspection (DAI) intercepts all ARP requests and replies on untrusted ports and verifies that the MAC-to-IP binding matches a valid entry in the DHCP snooping binding database, preventing ARP poisoning and spoofing.",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "IP Source Guard", is_correct: false },
+      { text: "Dynamic ARP Inspection (DAI)", is_correct: true },
+      { text: "BPDU Guard", is_correct: false },
+      { text: "Storm Control", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command enables Dynamic ARP Inspection for VLAN 10 on a Cisco switch?",
+    explanation: "The global configuration command `ip arp inspection vlan 10` activates DAI on all interfaces within VLAN 10.",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "arp inspection enable vlan 10", is_correct: false },
+      { text: "ip arp inspection vlan 10", is_correct: true },
+      { text: "service dai vlan 10", is_correct: false },
+      { text: "vlan 10 arp-security", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command configures an interface as trusted for Dynamic ARP Inspection?",
+    explanation: "The interface command `ip arp inspection trust` designates an interface as trusted (bypassing ARP inspection), typically configured on trunks connecting to other trusted switches or routers.",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "arp-security trust", is_correct: false },
+      { text: "ip arp inspection trust", is_correct: true },
+      { text: "switchport arp trusted", is_correct: false },
+      { text: "set dai port-trust", is_correct: false }
+    ]
+  },
+  {
+    stem: "What network security attack does Dynamic ARP Inspection specifically mitigate?",
+    explanation: "DAI mitigates ARP spoofing and ARP poisoning (man-in-the-middle attacks), where malicious hosts send gratuitous ARP messages claiming to possess the IP address of the default gateway or another client.",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "SYN flood attacks", is_correct: false },
+      { text: "ARP poisoning and ARP spoofing man-in-the-middle attacks", is_correct: true },
+      { text: "VLAN double-tagging attacks", is_correct: false },
+      { text: "BGP route hijacking", is_correct: false }
+    ]
+  },
+  {
+    stem: "What protocol operates on UDP port 123 to synchronize hardware system clocks across network devices?",
+    explanation: "Network Time Protocol (NTP) uses UDP port 123 to synchronize clocks among routers, switches, and servers.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "SNMP", is_correct: false },
+      { text: "NTP", is_correct: true },
+      { text: "Syslog", is_correct: false },
+      { text: "TFTP", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Network Time Protocol (NTP), what does Stratum 1 indicate?",
+    explanation: "An NTP Stratum 1 time server is directly connected to a Stratum 0 high-precision atomic clock or GPS reference clock source. Stratum 2 servers synchronize from Stratum 1 servers.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A client that cannot synchronize with atomic time", is_correct: false },
+      { text: "A primary server directly connected to a Stratum 0 atomic clock or GPS device", is_correct: true },
+      { text: "An unsynchronized server running on battery power", is_correct: false },
+      { text: "A server operating in broadcast NTP peer mode", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the maximum valid NTP stratum level before a clock is considered unsynchronized in NTP?",
+    explanation: "NTP stratum levels range from 1 to 15 for valid, synchronized clocks. Stratum 16 indicates that the clock is completely unsynchronized and cannot be used as a time source.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "7", is_correct: false },
+      { text: "15", is_correct: false },
+      { text: "16 (indicates unsynchronized / invalid)", is_correct: true },
+      { text: "255", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures a Cisco router to synchronize its time with an external NTP server at 192.168.1.100?",
+    explanation: "The global configuration command `ntp server 192.168.1.100` configures the router to query the specified NTP server periodically to synchronize its local clock.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "clock set server 192.168.1.100", is_correct: false },
+      { text: "ntp server 192.168.1.100", is_correct: true },
+      { text: "time-server 192.168.1.100", is_correct: false },
+      { text: "ntp peer 192.168.1.100 client", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command verifies that a Cisco router is synchronized with an NTP time source and shows the current stratum level?",
+    explanation: "The command `show ntp status` displays whether the clock is synchronized, the reference clock IP, and the current stratum level.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "show clock detail", is_correct: false },
+      { text: "show ntp status", is_correct: true },
+      { text: "show ntp peers", is_correct: false },
+      { text: "show ntp configuration", is_correct: false }
+    ]
+  },
+  {
+    stem: "What transport protocol and port does the standard Syslog logging service use by default?",
+    explanation: "Syslog logging messages are transmitted across the network using UDP port 514 by default.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "TCP port 23", is_correct: false },
+      { text: "UDP port 514", is_correct: true },
+      { text: "TCP port 514", is_correct: false },
+      { text: "UDP port 162", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the numeric severity level for a Syslog 'Emergency' message?",
+    explanation: "Syslog severity level 0 is Emergency (system unusable). The scale goes from 0 (most severe) to 7 (Debugging, least severe).",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "0", is_correct: true },
+      { text: "1", is_correct: false },
+      { text: "4", is_correct: false },
+      { text: "7", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does Syslog severity level 7 represent in Cisco IOS?",
+    explanation: "Severity level 7 is Debugging, which includes highly detailed diagnostic output generated by debug commands.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Informational", is_correct: false },
+      { text: "Warning", is_correct: false },
+      { text: "Debugging", is_correct: true },
+      { text: "Critical", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures a Cisco router to forward Syslog messages to a central log server at 10.1.1.50?",
+    explanation: "The command `logging host 10.1.1.50` (or `logging 10.1.1.50`) configures the destination IP address of an external syslog daemon.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "syslog server 10.1.1.50", is_correct: false },
+      { text: "logging host 10.1.1.50", is_correct: true },
+      { text: "service logging forward 10.1.1.50", is_correct: false },
+      { text: "log-server 10.1.1.50", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command ensures that Syslog messages in Cisco IOS include accurate date and millisecond timestamps?",
+    explanation: "The command `service timestamps log datetime msec` formats all generated syslog messages with calendar date, time, and millisecond precision.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "ntp log timestamp", is_correct: false },
+      { text: "service timestamps log datetime msec", is_correct: true },
+      { text: "logging timestamp enable", is_correct: false },
+      { text: "clock timestamp syslog", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary architectural enhancement introduced in SNMPv3 compared to SNMPv1 and SNMPv2c?",
+    explanation: "SNMPv3 introduces cryptographic security: authentication (HMAC-MD5 or SHA) and data encryption/privacy (DES or AES). SNMPv1 and v2c used plaintext community strings.",
+    domain: "services_security",
+    subtopic: "SNMP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Support for 64-bit counter objects in MIBs", is_correct: false },
+      { text: "Cryptographic user authentication (SHA) and payload encryption (AES)", is_correct: true },
+      { text: "Automatic interface bandwidth auto-discovery", is_correct: false },
+      { text: "Elimination of UDP in favor of raw ICMP transport", is_correct: false }
+    ]
+  },
+  {
+    stem: "In SNMPv3, what security level provides both user authentication and message encryption (privacy)?",
+    explanation: "The `authPriv` security level requires both cryptographic authentication (MD5/SHA) and privacy encryption (DES/AES). In contrast, `noAuthNoPriv` has no security, and `authNoPriv` has authentication without encryption.",
+    domain: "services_security",
+    subtopic: "SNMP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "noAuthNoPriv", is_correct: false },
+      { text: "authNoPriv", is_correct: false },
+      { text: "authPriv", is_correct: true },
+      { text: "encrOnly", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which destination UDP port is used by an SNMP managed device to send unsolicited SNMP Trap notifications to an SNMP Network Management Station (NMS)?",
+    explanation: "SNMP traps and informs are sent from agents to destination UDP port 162 on the NMS. Standard SNMP polls/queries from the NMS to the agent use destination UDP port 161.",
+    domain: "services_security",
+    subtopic: "SNMP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "UDP port 161", is_correct: false },
+      { text: "UDP port 162", is_correct: true },
+      { text: "TCP port 162", is_correct: false },
+      { text: "UDP port 514", is_correct: false }
+    ]
+  },
+  {
+    stem: "What prerequisite steps are required before SSH can be successfully enabled on a Cisco router?",
+    explanation: "To enable SSH, the router must have: a unique hostname (`hostname`), an IP domain name (`ip domain-name`), and an RSA cryptographic key pair (`crypto key generate rsa`). In addition, local user credentials must be created.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Configure an external RADIUS server and enable OSPF", is_correct: false },
+      { text: "Configure a hostname, IP domain name, and generate an RSA crypto key pair", is_correct: true },
+      { text: "Set line vty transport input telnet and enable CDP", is_correct: false },
+      { text: "Configure an NTP server and assign an SVI IP address", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command restricts access on virtual terminal lines (vty) so that only secure SSH connections are accepted?",
+    explanation: "Under `line vty 0 4`, the command `transport input ssh` restricts incoming remote management connections strictly to SSH, blocking unencrypted Telnet sessions.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "enable ssh only", is_correct: false },
+      { text: "transport input ssh", is_correct: true },
+      { text: "ssh vty permit", is_correct: false },
+      { text: "crypto transport ssh", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command generates a 2048-bit RSA key pair on a Cisco router for SSH?",
+    explanation: "The command `crypto key generate rsa modulus 2048` creates a 2048-bit RSA key pair for SSH version 2 encryption.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "ssh key create 2048", is_correct: false },
+      { text: "crypto key generate rsa modulus 2048", is_correct: true },
+      { text: "generate rsa key 2048", is_correct: false },
+      { text: "rsa-key new 2048", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command forces a Cisco router to use only SSH Version 2 and reject vulnerable SSH Version 1 connections?",
+    explanation: "The global configuration command `ip ssh version 2` forces the device to negotiate only SSHv2.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "ssh protocol v2", is_correct: false },
+      { text: "ip ssh version 2", is_correct: true },
+      { text: "crypto ssh version 2", is_correct: false },
+      { text: "transport ssh v2", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary function of the Authentication, Authorization, and Accounting (AAA) security framework in Cisco IOS?",
+    explanation: "AAA provides a centralized modular framework: Authentication verifies identity (who you are), Authorization controls accessible commands and services (what you can do), and Accounting tracks user activity and command history (what you did).",
+    domain: "services_security",
+    subtopic: "AAA Security",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It resolves DNS names to IP addresses across routing domains", is_correct: false },
+      { text: "It provides identity verification, permission control, and session auditing", is_correct: true },
+      { text: "It encrypts Layer 2 frames traversing trunk ports", is_correct: false },
+      { text: "It balances traffic across redundant gateway routers", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which global command enables AAA services on a Cisco device?",
+    explanation: "The global configuration command `aaa new-model` activates the AAA subsystem, allowing configuration of authentication methods, authorization lists, and accounting servers.",
+    domain: "services_security",
+    subtopic: "AAA Security",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "aaa enable", is_correct: false },
+      { text: "aaa new-model", is_correct: true },
+      { text: "service aaa start", is_correct: false },
+      { text: "security aaa on", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command encrypts all existing plaintext passwords in the Cisco IOS configuration using Type 7 reversible encryption?",
+    explanation: "The command `service password-encryption` applies Cisco Type 7 encryption to all plaintext passwords in the running configuration.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "enable secret all", is_correct: false },
+      { text: "service password-encryption", is_correct: true },
+      { text: "crypto password encrypt", is_correct: false },
+      { text: "password hash sha-256", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is `enable secret` preferred over `enable password` in Cisco IOS configuration?",
+    explanation: "`enable secret` uses strong one-way hashing (MD5 or SHA-256 type 8/9), whereas `enable password` is stored in plaintext (or weak Type 7 encryption when service password-encryption is on).",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "enable secret is stored in plaintext for easier recovery", is_correct: false },
+      { text: "enable secret uses strong cryptographic hashing rather than plaintext or weak Type 7", is_correct: true },
+      { text: "enable secret allows remote Telnet login without a username", is_correct: false },
+      { text: "enable secret does not require privileged EXEC mode", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of the command `login block-for 120 attempts 3 within 60` on a Cisco router?",
+    explanation: "This command enables login rate limiting (DoS / brute-force mitigation). If an attacker fails 3 login attempts within 60 seconds, the router blocks all login attempts for 120 seconds.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It restarts the router after 3 failed attempts within 60 seconds", is_correct: false },
+      { text: "It blocks new login attempts for 120 seconds if 3 failed attempts occur in 60 seconds", is_correct: true },
+      { text: "It disables the console port permanently", is_correct: false },
+      { text: "It generates an OSPF alert message to Area 0", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures a legal warning banner displayed to users before they log into a Cisco network device?",
+    explanation: "The command `banner motd <delim>` (Message of the Day) or `banner login <delim>` displays an operational or legal notification before authentication.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "message prompt <text>", is_correct: false },
+      { text: "banner motd # Authorized Access Only #", is_correct: true },
+      { text: "display warning <text>", is_correct: false },
+      { text: "security banner login enable", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of IP Source Guard (IPSG) on an access switch port?",
+    explanation: "IP Source Guard prevents IP address spoofing attacks on untrusted Layer 2 ports. It dynamically builds an interface ACL based on the DHCP snooping binding table, dropping any IP traffic with an unauthorized source IP.",
+    domain: "services_security",
+    subtopic: "Layer 2 Security",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It blocks all incoming ICMP echo requests from external networks", is_correct: false },
+      { text: "It prevents IP spoofing by filtering packets whose source IP does not match DHCP bindings", is_correct: true },
+      { text: "It converts IPv4 unicast frames into IPv6 anycast tunnels", is_correct: false },
+      { text: "It blocks broadcast BPDUs from reaching access workstations", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which wireless security protocol introduces Simultaneous Authentication of Equals (SAE) to replace PSK and protect against offline dictionary attacks?",
+    explanation: "WPA3 Personal replaces the 4-way handshake PSK with Simultaneous Authentication of Equals (SAE), based on Dragonfly handshake. SAE provides forward secrecy and renders offline dictionary attacks ineffective.",
+    domain: "services_security",
+    subtopic: "Wireless Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "WEP", is_correct: false },
+      { text: "WPA Personal", is_correct: false },
+      { text: "WPA2 Personal", is_correct: false },
+      { text: "WPA3 Personal", is_correct: true }
+    ]
+  },
+  {
+    stem: "What encryption cipher does WPA2 Enterprise use by default to secure client data frames?",
+    explanation: "WPA2 uses AES (Advanced Encryption Standard) with CCMP (Counter Mode with Cipher Block Chaining Message Authentication Code Protocol) to provide confidentiality and integrity.",
+    domain: "services_security",
+    subtopic: "Wireless Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "RC4 with TKIP", is_correct: false },
+      { text: "AES with CCMP", is_correct: true },
+      { text: "DES 56-bit", is_correct: false },
+      { text: "MD5 hashing", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is an ACL sequence number used for in Cisco named and numbered Access Control Lists?",
+    explanation: "Sequence numbers (typically in increments of 10) determine the evaluation order of ACE statements and allow administrators to easily insert or delete individual statements without rewriting the entire ACL.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "They calculate the total bandwidth allocated to the interface", is_correct: false },
+      { text: "They dictate statement evaluation order and enable line insertion or deletion", is_correct: true },
+      { text: "They define the TCP window size for return traffic", is_correct: false },
+      { text: "They record the total packets matched by the rule", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command deletes statement 20 from a named Access Control List called RESTRICT-WEB?",
+    explanation: "Under named ACL configuration mode `ip access-list extended RESTRICT-WEB`, entering `no 20` removes only statement 20 without altering other rules.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "clear access-list RESTRICT-WEB 20", is_correct: false },
+      { text: "no 20 (inside named ACL configuration mode)", is_correct: true },
+      { text: "delete rule 20 from RESTRICT-WEB", is_correct: false },
+      { text: "no ip access-group 20", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does the command `show access-lists` show in Cisco IOS?",
+    explanation: "The command `show access-lists` displays all configured ACLs, their statements with sequence numbers, and packet match counters for each rule.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Only which interfaces have ACLs applied", is_correct: false },
+      { text: "All configured ACL rules, sequence numbers, and match hit counts", is_correct: true },
+      { text: "Active NAT translation sessions", is_correct: false },
+      { text: "The DHCP snooping binding table", is_correct: false }
+    ]
+  },
+  {
+    stem: "What happens when an engineer configures an ACL with `permit tcp any any eq 80` followed by `deny ip any any`?",
+    explanation: "The router permits all incoming TCP traffic destined for port 80 (HTTP) from any source to any destination, while all other IPv4 traffic is denied by the explicit deny statement.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "All traffic is denied because deny ip any any overrides previous lines", is_correct: false },
+      { text: "Only HTTP port 80 traffic is permitted; all other traffic is dropped", is_correct: true },
+      { text: "Only HTTPS port 443 traffic is permitted", is_correct: false },
+      { text: "The ACL is ignored because of a syntax conflict", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the wildcard mask to match only hosts in the subnet 10.50.16.0/20 in an Access Control List?",
+    explanation: "A /20 subnet has mask 255.255.240.0. Subtracting each octet from 255 gives 0.0.15.255 as the matching wildcard mask.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "0.0.7.255", is_correct: false },
+      { text: "0.0.15.255", is_correct: true },
+      { text: "0.0.31.255", is_correct: false },
+      { text: "0.0.240.255", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is an advantage of TACACS+ over RADIUS in enterprise network device administration (AAA)?",
+    explanation: "TACACS+ separates authentication, authorization, and accounting into distinct modular operations and encrypts the entire packet payload using TCP port 49, whereas RADIUS combines auth/authz and only encrypts the password over UDP.",
+    domain: "services_security",
+    subtopic: "AAA Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "TACACS+ uses UDP for faster, connectionless transport", is_correct: false },
+      { text: "TACACS+ separates authentication and authorization and encrypts the entire packet payload over TCP", is_correct: true },
+      { text: "TACACS+ is an open IETF standard supported on all non-Cisco equipment", is_correct: false },
+      { text: "TACACS+ does not require a shared secret key", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures an interface to limit broadcast traffic and prevent broadcast storms from saturating the link?",
+    explanation: "The command `storm-control broadcast level <percentage>` sets the maximum broadcast traffic threshold allowed on a switch port before excess broadcast packets are dropped.",
+    domain: "services_security",
+    subtopic: "Layer 2 Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "broadcast limit 10", is_correct: false },
+      { text: "storm-control broadcast level 20.0", is_correct: true },
+      { text: "switchport broadcast filter 50", is_correct: false },
+      { text: "traffic-shape broadcast 100", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of the `ip verify source` command on a switch port?",
+    explanation: "The interface command `ip verify source` enables IP Source Guard (IPSG), causing the switch to drop incoming IP packets on untrusted ports whose source IP does not match the DHCP snooping binding table.",
+    domain: "services_security",
+    subtopic: "Layer 2 Security",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It verifies the CRC of all incoming Ethernet frames", is_correct: false },
+      { text: "It enables IP Source Guard, filtering packets with unapproved source IP addresses", is_correct: true },
+      { text: "It forces the port to request a DHCP lease on behalf of the client", is_correct: false },
+      { text: "It enables Dynamic ARP Inspection on the interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What happens when an administrator enters `clear ip nat translation *` in privileged EXEC mode?",
+    explanation: "The command `clear ip nat translation *` flushes all dynamic NAT translations from the translation table. Active static translations are preserved.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It disables the NAT routing process permanently", is_correct: false },
+      { text: "It clears all dynamic NAT translations from the NAT translation table", is_correct: true },
+      { text: "It deletes the configured NAT pool from the running configuration", is_correct: false },
+      { text: "It reloads the router to reinitialize IP routing", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command restricts access to the local console port on a Cisco router with password authentication?",
+    explanation: "Entering `line con 0` followed by `password <pass>` and `login` enforces password verification whenever someone connects directly to the physical console port.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "line aux 0 followed by login", is_correct: false },
+      { text: "line con 0 followed by password <secret> and login", is_correct: true },
+      { text: "console security enable", is_correct: false },
+      { text: "transport input console", is_correct: false }
+    ]
+  }
+];
+
+fs.writeFileSync(
+  path.join(__dirname, "../questions-batch-6.json"),
+  JSON.stringify(questions, null, 2)
+);
+console.log(`Generated ${questions.length} questions in questions-batch-6.json`);

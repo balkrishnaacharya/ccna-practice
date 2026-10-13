@@ -1,0 +1,711 @@
+const fs = require("fs");
+const path = require("path");
+
+const questions = [
+  {
+    stem: "Which field in the IEEE 802.1Q tag specifies the VLAN to which the Ethernet frame belongs?",
+    explanation: "The VLAN Identifier (VID) is a 12-bit field in the 802.1Q tag that identifies the specific VLAN, supporting values from 0 to 4095 (with 1 to 4094 usable).",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Tag Protocol Identifier (TPID)", is_correct: false },
+      { text: "Priority Code Point (PCP)", is_correct: false },
+      { text: "VLAN Identifier (VID)", is_correct: true },
+      { text: "Drop Eligible Indicator (DEI)", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the size of the IEEE 802.1Q tag inserted into the Ethernet frame header?",
+    explanation: "The IEEE 802.1Q tag is 4 bytes (32 bits) in length. It includes a 2-byte TPID (0x8100) and a 2-byte Tag Control Information (TCI) field containing priority, DEI, and the 12-bit VLAN ID.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "2 bytes", is_correct: false },
+      { text: "4 bytes", is_correct: true },
+      { text: "8 bytes", is_correct: false },
+      { text: "30 bytes", is_correct: false }
+    ]
+  },
+  {
+    stem: "What happens when an untagged frame arrives on an 802.1Q trunk port of a Cisco switch?",
+    explanation: "When an untagged frame arrives on an 802.1Q trunk port, the switch assigns it internally to the configured native VLAN of that trunk port. By default on Cisco switches, the native VLAN is VLAN 1.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "The frame is dropped immediately as a trunk violation", is_correct: false },
+      { text: "The frame is assigned to the native VLAN of the trunk interface", is_correct: true },
+      { text: "The frame is forwarded out all trunk ports regardless of VLAN", is_correct: false },
+      { text: "The frame is sent to the default gateway router", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command stops a switch interface from negotiating trunking via Dynamic Trunking Protocol (DTP)?",
+    explanation: "The interface command `switchport nonegotiate` stops DTP frames from being sent. It requires that the port be statically configured as an access port or trunk port beforehand.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "switchport mode static", is_correct: false },
+      { text: "switchport nonegotiate", is_correct: true },
+      { text: "no dtp enable", is_correct: false },
+      { text: "switchport dtp off", is_correct: false }
+    ]
+  },
+  {
+    stem: "If Switch A is configured with `switchport mode dynamic auto` and Switch B is configured with `switchport mode dynamic auto`, what trunking state will form between them?",
+    explanation: "Dynamic auto listens for trunking negotiation but will never actively initiate a trunk. Because both switches are passive (auto), the link will remain an access port link rather than a trunk.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "The link will become an 802.1Q trunk", is_correct: false },
+      { text: "The link will operate as an access link", is_correct: true },
+      { text: "The link will be placed into err-disable state", is_correct: false },
+      { text: "The link will form an EtherChannel bundle", is_correct: false }
+    ]
+  },
+  {
+    stem: "If Switch A is set to `dynamic desirable` and Switch B is set to `dynamic auto`, what will be the resulting operational mode of the link?",
+    explanation: "Dynamic desirable actively initiates DTP negotiation. Dynamic auto responds to negotiation requests. Therefore, the link will successfully negotiate and form a trunk.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Access mode", is_correct: false },
+      { text: "Trunk mode", is_correct: true },
+      { text: "Err-disabled", is_correct: false },
+      { text: "Disconnected", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default bridge priority value on a Cisco switch running Rapid PVST+?",
+    explanation: "The default STP bridge priority on Cisco switches is 32768. Combined with the 12-bit System ID Extension (VLAN ID), the effective priority for VLAN 1 is 32769.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "0", is_correct: false },
+      { text: "4096", is_correct: false },
+      { text: "32768", is_correct: true },
+      { text: "65535", is_correct: false }
+    ]
+  },
+  {
+    stem: "Bridge priority in STP can only be configured in increments of what value?",
+    explanation: "Because the lowest 12 bits of the 16-bit Priority field are used for the System ID Extension (which holds the VLAN ID from 1 to 4095), the remaining 4 bits represent priority values in increments of 4096 (2^12).",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "128", is_correct: false },
+      { text: "1024", is_correct: false },
+      { text: "4096", is_correct: true },
+      { text: "8192", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a switch elect the Root Bridge in a Spanning Tree Protocol domain?",
+    explanation: "The switch with the lowest Bridge ID (BID) is elected as the root bridge. The Bridge ID is composed of Bridge Priority, System ID Extension, and the switch base MAC address. If priorities tie, the lowest MAC address breaks the tie.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "The switch with the highest IP address is elected root", is_correct: false },
+      { text: "The switch with the lowest Bridge ID (BID) is elected root", is_correct: true },
+      { text: "The switch with the largest number of active trunk ports is elected root", is_correct: false },
+      { text: "The switch with the longest uptime is elected root", is_correct: false }
+    ]
+  },
+  {
+    stem: "In standard Rapid Spanning Tree Protocol (RSTP / 802.1w), which port state replaces the Listening, Blocking, and Disabled states of legacy 802.1D?",
+    explanation: "RSTP simplifies port states down to three: Discarding, Learning, and Forwarding. The Discarding state encompasses the legacy 802.1D Disabled, Blocking, and Listening states.",
+    domain: "switching",
+    subtopic: "Rapid PVST+",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Listening", is_correct: false },
+      { text: "Discarding", is_correct: true },
+      { text: "Blocking", is_correct: false },
+      { text: "Pre-Forwarding", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which port role in 802.1w RSTP provides a backup path to the root bridge if the primary Root Port fails?",
+    explanation: "The Alternate port role acts as an immediate standby path to the root bridge. If the active Root Port goes down, an Alternate port can immediately transition to Forwarding without going through timer delays.",
+    domain: "switching",
+    subtopic: "Rapid PVST+",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Designated port", is_correct: false },
+      { text: "Backup port", is_correct: false },
+      { text: "Alternate port", is_correct: true },
+      { text: "Master port", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of Spanning Tree PortFast on an access port connected to a host workstation?",
+    explanation: "PortFast transitions an access port immediately from the Discarding state directly to Forwarding, bypassing the Listening and Learning timer delays (30 seconds). It also prevents topology change notifications (TCNs) when end-user devices connect or disconnect.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It doubles the maximum bandwidth of the Ethernet interface", is_correct: false },
+      { text: "It transitions the port immediately to the Forwarding state, bypassing listening and learning", is_correct: true },
+      { text: "It blocks all broadcast frames from entering the access port", is_correct: false },
+      { text: "It forces the port to act as the Spanning Tree root bridge", is_correct: false }
+    ]
+  },
+  {
+    stem: "What action does Spanning Tree BPDU Guard take if a Bridge Protocol Data Unit (BPDU) is received on a PortFast-enabled interface?",
+    explanation: "BPDU Guard protects the network against rogue switches. If any BPDU is received on a port configured with BPDU Guard, the port is immediately disabled and placed into the err-disabled state.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It silently drops the BPDU and keeps forwarding traffic", is_correct: false },
+      { text: "It disables the interface and places it into the err-disable state", is_correct: true },
+      { text: "It lowers the port priority to prevent election", is_correct: false },
+      { text: "It converts the port automatically to an 802.1Q trunk", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of STP Root Guard on a switch port?",
+    explanation: "Root Guard prevents unauthorized downstream switches from becoming the Spanning Tree root bridge. If a port enabled with Root Guard receives superior BPDUs, it places the port into a root-inconsistent (blocking) state until the superior BPDUs cease.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It automatically promotes the local switch to root bridge", is_correct: false },
+      { text: "It prevents a connected downstream switch from becoming the root bridge", is_correct: true },
+      { text: "It encrypts all BPDUs sent across trunk connections", is_correct: false },
+      { text: "It filters all unicast frames destined for the root switch MAC address", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which open-standard protocol is defined by IEEE 802.3ad / 802.1ax for bundling multiple physical Ethernet links into a single logical channel?",
+    explanation: "Link Aggregation Control Protocol (LACP) is the IEEE open standard for link aggregation. Port Aggregation Protocol (PAgP) is Cisco-proprietary.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "PAgP", is_correct: false },
+      { text: "LACP", is_correct: true },
+      { text: "VTP", is_correct: false },
+      { text: "CDP", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which combination of LACP modes will successfully form an EtherChannel between two switches?",
+    explanation: "In LACP, 'active' actively negotiates the bundle using LACP packets, and 'passive' listens and responds. An active-passive or active-active combination forms an EtherChannel. A passive-passive combination will never form a channel.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "passive and passive", is_correct: false },
+      { text: "active and passive", is_correct: true },
+      { text: "auto and desirable", is_correct: false },
+      { text: "on and active", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which two PAgP modes will negotiate and successfully form an EtherChannel bundle?",
+    explanation: "Port Aggregation Protocol (PAgP) uses 'desirable' (initiates negotiation) and 'auto' (responds passively). Desirable-auto or desirable-desirable will form a bundle, whereas auto-auto will not.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "auto and auto", is_correct: false },
+      { text: "desirable and auto", is_correct: true },
+      { text: "active and passive", is_correct: false },
+      { text: "on and desirable", is_correct: false }
+    ]
+  },
+  {
+    stem: "What happens when an EtherChannel is configured with the `channel-group 1 mode on` command on both ends?",
+    explanation: "Mode 'on' forces the physical interfaces into an EtherChannel bundle without any negotiation protocol (neither LACP nor PAgP). Both ends must be configured with mode 'on', otherwise packet loss or spanning tree loops can occur.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The ports negotiate dynamically using LACP active packets", is_correct: false },
+      { text: "The bundle is unconditionally enabled without using any negotiation protocol", is_correct: true },
+      { text: "PAgP is used to verify speed and duplex compatibility", is_correct: false },
+      { text: "The channel group is limited to a single physical interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What physical interface parameters must match identically across all member ports to form an EtherChannel bundle?",
+    explanation: "All member interfaces in an EtherChannel must match in speed, duplex, access/trunk mode, native VLAN, allowed VLAN list on trunks, and STP settings. If any parameter mismatches, the port is suspended from the bundle.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Speed, duplex, operational switchport mode, and allowed VLAN list", is_correct: true },
+      { text: "MAC address and IP address assignment", is_correct: false },
+      { text: "Port description and PoE power draw allocation", is_correct: false },
+      { text: "Physical ASIC chip identification and interface ID numbers", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures EtherChannel load balancing globally based on source and destination IP addresses?",
+    explanation: "The global configuration command `port-channel load-balance src-dst-ip` configures the switch hashing algorithm to balance traffic across bundle members using source and destination IP addresses.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "channel-group load-balance ip", is_correct: false },
+      { text: "port-channel load-balance src-dst-ip", is_correct: true },
+      { text: "etherchannel hash ip-both", is_correct: false },
+      { text: "ip load-share per-packet", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the maximum number of active member ports supported in a single standard LACP EtherChannel bundle on a Cisco Catalyst switch?",
+    explanation: "LACP supports up to 16 ports in a channel group, but a maximum of 8 active forwarding ports can operate simultaneously. The remaining ports operate in standby mode ready to take over if an active link fails.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "4 active ports", is_correct: false },
+      { text: "8 active ports", is_correct: true },
+      { text: "16 active ports", is_correct: false },
+      { text: "32 active ports", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a Layer 2 switch handle an incoming frame when the destination MAC address is not present in its MAC address table (CAM table)?",
+    explanation: "When a switch receives a frame with an unknown unicast destination MAC address, it floods the frame out all ports belonging to the same VLAN, except the ingress port on which the frame arrived.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "The switch discards the frame and sends an ICMP Host Unreachable packet", is_correct: false },
+      { text: "The switch floods the frame out all active interfaces in that VLAN except the receiving port", is_correct: true },
+      { text: "The switch sends an ARP request to determine the destination port", is_correct: false },
+      { text: "The switch queues the frame until the destination device sends a packet", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default aging time for dynamically learned MAC address table entries on a Cisco Catalyst switch?",
+    explanation: "The default MAC address table aging time on Cisco Catalyst switches is 300 seconds (5 minutes). If no frames are received from a source MAC address within 300 seconds, the entry is flushed.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "60 seconds", is_correct: false },
+      { text: "120 seconds", is_correct: false },
+      { text: "300 seconds", is_correct: true },
+      { text: "3600 seconds", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which switching method inspects only the first 64 bytes of an incoming frame to filter out collision runts before beginning transmission?",
+    explanation: "Fragment-free switching reads the first 64 bytes (the minimum Ethernet frame size where collisions occur) before forwarding the frame. This provides a balance between low latency and filtering out collision fragments.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Store-and-forward", is_correct: false },
+      { text: "Cut-through", is_correct: false },
+      { text: "Fragment-free", is_correct: true },
+      { text: "Adaptive switching", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is an advantage of store-and-forward switching compared to cut-through switching?",
+    explanation: "Store-and-forward buffers the entire frame and computes the Frame Check Sequence (FCS/CRC) to verify frame integrity before forwarding. Corrupted frames are dropped, preventing bad frames from propagating.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Store-and-forward provides lower forwarding latency than cut-through", is_correct: false },
+      { text: "Store-and-forward verifies the frame CRC/FCS checksum, discarding corrupt frames", is_correct: true },
+      { text: "Store-and-forward does not require CAM table lookups", is_correct: false },
+      { text: "Store-and-forward enables dynamic VLAN creation without trunking", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command converts a Layer 2 switchport interface into a routed Layer 3 interface on a multilayer switch?",
+    explanation: "The interface command `no switchport` disables Layer 2 switching on the physical port, allowing an IP address and subnet mask to be directly configured for Layer 3 routing.",
+    domain: "switching",
+    subtopic: "Layer 3 Switching",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "switchport routing enable", is_correct: false },
+      { text: "no switchport", is_correct: true },
+      { text: "ip routing port", is_correct: false },
+      { text: "mode routed", is_correct: false }
+    ]
+  },
+  {
+    stem: "What virtual interface is created on a multilayer switch to provide a Layer 3 gateway for a specific VLAN?",
+    explanation: "A Switch Virtual Interface (SVI), configured with `interface vlan <id>`, provides a Layer 3 routing interface for devices residing in that VLAN, functioning as their default gateway.",
+    domain: "switching",
+    subtopic: "Layer 3 Switching",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Loopback interface", is_correct: false },
+      { text: "Switch Virtual Interface (SVI)", is_correct: true },
+      { text: "Port-channel subinterface", is_correct: false },
+      { text: "Tunnel interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What global command must be entered on a Cisco multilayer switch to enable IPv4 packet routing between SVIs?",
+    explanation: "On Cisco multilayer switches, Layer 3 routing is disabled by default. The global configuration command `ip routing` is required to enable IP routing between SVIs and routed interfaces.",
+    domain: "switching",
+    subtopic: "Layer 3 Switching",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "routing enable", is_correct: false },
+      { text: "ip routing", is_correct: true },
+      { text: "layer3 enable", is_correct: false },
+      { text: "system ip routing", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which port security violation mode drops frames from unauthorized MAC addresses, increments the violation counter, and generates a syslog/SNMP trap without shutting down the interface?",
+    explanation: "The `restrict` violation mode drops unauthorized frames, increments the security violation counter, and generates syslog/SNMP notifications. The `protect` mode drops frames silently without logging, while `shutdown` err-disables the port.",
+    domain: "switching",
+    subtopic: "Port Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "protect", is_correct: false },
+      { text: "restrict", is_correct: true },
+      { text: "shutdown", is_correct: false },
+      { text: "quarantine", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does the command `switchport port-security mac-address sticky` do on an access interface?",
+    explanation: "Sticky learning dynamically converts learned MAC addresses into static secure MAC address entries in the running configuration. If the running config is saved, the learned MACs persist across reboots.",
+    domain: "switching",
+    subtopic: "Port Security",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It prevents any MAC addresses from ever being aged out of the CAM table", is_correct: false },
+      { text: "It saves dynamically learned MAC addresses into the running configuration as secure MACs", is_correct: true },
+      { text: "It binds the MAC address to a specific DHCP IP reservation", is_correct: false },
+      { text: "It drops packets whose source IP address does not match ARP cache", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default violation action when port security is enabled without specifying a violation mode?",
+    explanation: "The default port security violation mode is `shutdown`. When a violation occurs, the port is immediately disabled and placed into the err-disabled state.",
+    domain: "switching",
+    subtopic: "Port Security",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "protect", is_correct: false },
+      { text: "restrict", is_correct: false },
+      { text: "shutdown", is_correct: true },
+      { text: "alert", is_correct: false }
+    ]
+  },
+  {
+    stem: "An interface is placed into the `err-disable` state due to a port security violation. Which command sequence re-enables the interface after resolving the issue?",
+    explanation: "To manually recover an err-disabled interface, an administrator must issue `shutdown` followed by `no shutdown` on the interface. Alternatively, `errdisable recovery cause psecure-violation` can be configured globally for automatic recovery.",
+    domain: "switching",
+    subtopic: "Port Security",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "restart interface", is_correct: false },
+      { text: "shutdown followed by no shutdown", is_correct: true },
+      { text: "clear port-security all", is_correct: false },
+      { text: "default interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the VLAN range for normal range VLANs stored in the `vlan.dat` file in switch flash memory?",
+    explanation: "Normal range VLANs span VLAN IDs 1 through 1005 (with 1002-1005 reserved for legacy Token Ring/FDDI). They are stored in `flash:vlan.dat`. Extended range VLANs span 1006 through 4094 and are stored in the running configuration.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "1 to 255", is_correct: false },
+      { text: "1 to 1005", is_correct: true },
+      { text: "1006 to 4094", is_correct: false },
+      { text: "1 to 4096", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures an interface on a Cisco switch to support an attached Cisco IP Phone alongside a connected PC?",
+    explanation: "The command `switchport voice vlan <vlan-id>` designates a secondary voice VLAN on an access port. The phone tags voice traffic with 802.1Q priority while user PC traffic remains untagged on the access VLAN.",
+    domain: "switching",
+    subtopic: "Voice VLANs",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "switchport mode voice", is_correct: false },
+      { text: "switchport voice vlan <vlan-id>", is_correct: true },
+      { text: "voice-port access <vlan-id>", is_correct: false },
+      { text: "switchport trunk voice <vlan-id>", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of VTP Transparent mode in VLAN Trunking Protocol?",
+    explanation: "A switch in VTP transparent mode forwards VTP advertisements across its trunks to other switches but does not synchronize or modify its own local VLAN database based on received advertisements. Local VLANs can be created, modified, and deleted independently.",
+    domain: "switching",
+    subtopic: "VTP",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It automatically replicates all VLANs created on other switches", is_correct: false },
+      { text: "It forwards received VTP advertisements but maintains only its own local VLAN database", is_correct: true },
+      { text: "It blocks all VTP traffic from traversing its trunk links", is_correct: false },
+      { text: "It resets the VTP configuration revision number of the entire domain to 0", is_correct: false }
+    ]
+  },
+  {
+    stem: "How can an administrator reset the VTP Configuration Revision Number to 0 before adding a pre-owned switch to an existing network?",
+    explanation: "Changing the VTP domain name to a temporary dummy string (or changing the VTP mode to transparent and back) immediately resets the VTP configuration revision number to 0, preventing accidental deletion of existing enterprise VLANs.",
+    domain: "switching",
+    subtopic: "VTP",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Rebooting the switch with `reload`", is_correct: false },
+      { text: "Changing the VTP domain to a temporary name or switching mode to transparent", is_correct: true },
+      { text: "Deleting the running configuration and reloading", is_correct: false },
+      { text: "Configuring `clear vtp revision` in privileged EXEC mode", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command displays the Spanning Tree status and cost for a specific VLAN on a Cisco switch?",
+    explanation: "The command `show spanning-tree vlan <id>` displays root bridge parameters, local bridge priority, bridge MAC, timers, interface roles, states, and path costs for the specified VLAN.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "show spanning-tree vlan <id>", is_correct: true },
+      { text: "show ip spanning-tree", is_correct: false },
+      { text: "show stp status", is_correct: false },
+      { text: "show vlan stp <id>", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default STP path cost for a 10 Gigabit Ethernet (10 Gbps) interface under the IEEE revised path cost standard?",
+    explanation: "Under the short (16-bit) cost standard, 10 Gbps has a cost of 2. Under the long (32-bit) cost standard used in modern RSTP/MSTP, 10 Gbps has a cost of 2,000 (with 1 Gbps being 20,000 and 100 Mbps being 200,000). In legacy standard: 10 Gbps = 2, 1 Gbps = 4, 100 Mbps = 19, 10 Mbps = 100.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "19", is_correct: false },
+      { text: "4", is_correct: false },
+      { text: "2", is_correct: true },
+      { text: "100", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary function of Spanning Tree Loop Guard?",
+    explanation: "Loop Guard prevents non-designated ports (root or alternate ports) from transitioning to the designated forwarding state when they stop receiving BPDUs due to unidirectional link failures. Instead, the port moves to a loop-inconsistent state.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It prevents access ports from negotiating EtherChannel bundles", is_correct: false },
+      { text: "It prevents root and alternate ports from becoming designated forwarding if BPDUs stop arriving", is_correct: true },
+      { text: "It drops multicast traffic when broadcast storm control thresholds are reached", is_correct: false },
+      { text: "It disables trunking negotiation when native VLANs mismatch", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of the 802.1Q Native VLAN mismatch detection performed by Cisco Discovery Protocol (CDP)?",
+    explanation: "When CDP detects that two connected trunk ports have different native VLANs configured, it issues a console warning `%CDP-4-NATIVE_VLAN_MISMATCH`. This prevents traffic leakage and cross-VLAN bridging between different VLAN segments.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It shuts down the trunk interface permanently until rebooted", is_correct: false },
+      { text: "It warns administrators of configuration discrepancies that cause cross-VLAN traffic leaking", is_correct: true },
+      { text: "It dynamically adjusts the higher native VLAN to match the lower one", is_correct: false },
+      { text: "It re-encapsulates untagged packets into proprietary ISL headers", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command is used to prune VLAN 10 from being transmitted across trunk port GigabitEthernet0/1?",
+    explanation: "The command `switchport trunk allowed vlan remove 10` removes VLAN 10 from the allowed trunk VLAN list. Using `switchport trunk allowed vlan 10` would overwrite the allowed list and permit ONLY VLAN 10.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "switchport trunk allowed vlan 10", is_correct: false },
+      { text: "switchport trunk allowed vlan remove 10", is_correct: true },
+      { text: "no switchport vlan 10", is_correct: false },
+      { text: "clear trunk vlan 10", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is it considered a security best practice to change the default native VLAN on 802.1Q trunks from VLAN 1 to an unused VLAN ID?",
+    explanation: "Changing the native VLAN from the default of VLAN 1 prevents VLAN hopping attacks (such as double-tagging attacks) where an attacker crafts frames with outer tags matching the native VLAN to traverse trunks into restricted target VLANs.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It increases physical trunk bandwidth by 10 percent", is_correct: false },
+      { text: "It mitigates double-tagging VLAN hopping attacks targeting the native VLAN", is_correct: true },
+      { text: "It disables Spanning Tree BPDU generation on access ports", is_correct: false },
+      { text: "It eliminates the requirement for PortFast configuration on servers", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command verifies which physical interfaces belong to Port-Channel 1 and shows the protocol in use?",
+    explanation: "The command `show etherchannel summary` provides an overview of all configured channel groups, their member interfaces, protocol (LACP, PAgP, or None), and operational status flags (e.g. [P] for bundled, [D] for down, [SU] for Layer 2 in-use).",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "show ip port-channel 1", is_correct: false },
+      { text: "show etherchannel summary", is_correct: true },
+      { text: "show interfaces trunk", is_correct: false },
+      { text: "show lacp status", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Spanning Tree Protocol, which port on a non-root switch is selected as the Root Port?",
+    explanation: "The Root Port on a non-root switch is the single port that has the lowest total administrative path cost to reach the Root Bridge. If path costs are equal, tiebreakers are lowest neighbor bridge ID, lowest neighbor port priority, and lowest neighbor internal port number.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The port with the highest configured MAC address", is_correct: false },
+      { text: "The port with the lowest total path cost to reach the root bridge", is_correct: true },
+      { text: "The port with the highest physical bandwidth", is_correct: false },
+      { text: "The port connecting to the default gateway router", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of the Spanning Tree Designated Port on a network segment?",
+    explanation: "On each shared network collision domain or point-to-point link, the Designated Port is the switch port that advertises the lowest cost path toward the root bridge and is responsible for forwarding traffic from that segment toward the root.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It blocks all traffic to prevent forwarding loops", is_correct: false },
+      { text: "It forwards traffic from the network segment toward the root bridge", is_correct: true },
+      { text: "It synchronizes VTP revision numbers across access switches", is_correct: false },
+      { text: "It terminates inter-VLAN routed subinterfaces", is_correct: false }
+    ]
+  },
+  {
+    stem: "How many Root Ports does a non-root switch have in an instance of Spanning Tree?",
+    explanation: "Each non-root switch has exactly one Root Port per spanning-tree instance. The Root Bridge itself has zero Root Ports (all active ports on a Root Bridge are Designated Ports).",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Zero", is_correct: false },
+      { text: "Exactly one per spanning-tree instance", is_correct: true },
+      { text: "One per connected active trunk", is_correct: false },
+      { text: "Up to four for load balancing", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command configures a Cisco switch to use Rapid PVST+ as its spanning tree mode?",
+    explanation: "The global configuration command `spanning-tree mode rapid-pvst` switches the spanning tree protocol from traditional 802.1D PVST+ to IEEE 802.1w Rapid PVST+ per-VLAN spanning tree.",
+    domain: "switching",
+    subtopic: "Rapid PVST+",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "spanning-tree rstp enable", is_correct: false },
+      { text: "spanning-tree mode rapid-pvst", is_correct: true },
+      { text: "switchport stp rapid", is_correct: false },
+      { text: "spanning-tree protocol 802.1w", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is an EtherChannel min-links configuration used for in LACP bundles?",
+    explanation: "The `port-channel min-links <number>` command specifies the minimum number of operational member links required to keep the Port-Channel interface in the up state. If active links drop below this threshold, the entire bundle is shut down to avoid oversaturating the remaining links.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It limits the maximum speed negotiation per physical link", is_correct: false },
+      { text: "It defines the minimum active member ports required to keep the bundle operational", is_correct: true },
+      { text: "It forces equal cost load balancing across physical VLANs", is_correct: false },
+      { text: "It sets the LACP system priority threshold for root election", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command configures a Cisco switch so that it is guaranteed to become the root bridge for VLAN 10 unless another switch has priority 0?",
+    explanation: "The command `spanning-tree vlan 10 root primary` evaluates current root priorities and adjusts the switch priority to either 24576 or 4096 lower than the current root bridge to make this switch the primary root bridge.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "spanning-tree root enable 10", is_correct: false },
+      { text: "spanning-tree vlan 10 root primary", is_correct: true },
+      { text: "set stp root vlan 10", is_correct: false },
+      { text: "spanning-tree vlan 10 priority 65535", is_correct: false }
+    ]
+  },
+  {
+    stem: "What feature in Cisco switches allows a port with PortFast enabled to dynamically recover from err-disabled state after a specified interval?",
+    explanation: "The global command `errdisable recovery cause bpduguard` coupled with `errdisable recovery interval <seconds>` enables automatic self-recovery of ports shut down by BPDU Guard without manual administrator intervention.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "spanning-tree auto-recover", is_correct: false },
+      { text: "errdisable recovery cause bpduguard", is_correct: true },
+      { text: "port-security auto-reset", is_correct: false },
+      { text: "service auto-restart interface", is_correct: false }
+    ]
+  }
+];
+
+fs.writeFileSync(
+  path.join(__dirname, "../questions-batch-3.json"),
+  JSON.stringify(questions, null, 2)
+);
+console.log(`Generated ${questions.length} questions in questions-batch-3.json`);

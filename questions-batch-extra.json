@@ -1,0 +1,54 @@
+[
+  {
+    "stem": "Which fiber optic connector type utilizes a push-pull latching mechanism and is frequently deployed in high-density data center switch interconnects?",
+    "explanation": "The Lucent Connector (LC) uses a small form-factor push-pull latching design, making it ideal for high-density enterprise and data center switches. Subscriber Connector (SC) uses a push-pull mechanism but is larger in form factor. Straight Tip (ST) uses a bayonet twist-lock mechanism. BNC is used with coaxial cables rather than optical fiber.",
+    "domain": "network_infra",
+    "subtopic": "Cabling and Physical Interfaces",
+    "difficulty": "medium",
+    "source": "CCNA 200-301 Official Cert Guide",
+    "choices": [
+      {
+        "text": "LC (Lucent Connector)",
+        "is_correct": true
+      },
+      {
+        "text": "ST (Straight Tip)",
+        "is_correct": false
+      },
+      {
+        "text": "SC (Subscriber Connector)",
+        "is_correct": false
+      },
+      {
+        "text": "BNC (Bayonet Neill-Concelman)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary operational effect of enabling Rapid PVST+ (RPVST+) on Cisco Catalyst switches compared to traditional 802.1D STP?",
+    "explanation": "Rapid PVST+ (IEEE 802.1w per-VLAN) significantly reduces convergence time from 30-50 seconds down to sub-second or a few seconds using explicit handshake proposals and agreements. Traditional 802.1D relies on fixed forward-delay and max-age timers. RPVST+ does not disable loop prevention or eliminate designated port roles. It maintains separate spanning-tree instances per VLAN.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "CCNA 200-301 Official Cert Guide",
+    "choices": [
+      {
+        "text": "It decreases convergence time through proposal-agreement handshakes instead of relying on fixed timers.",
+        "is_correct": true
+      },
+      {
+        "text": "It combines all VLANs into a single common spanning-tree topology to reduce switch CPU overhead.",
+        "is_correct": false
+      },
+      {
+        "text": "It eliminates the need for root bridge elections by assigning root bridge roles statically across switches.",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents broadcast radiation by replacing MAC address learning with static forwarding tables.",
+        "is_correct": false
+      }
+    ]
+  }
+]
