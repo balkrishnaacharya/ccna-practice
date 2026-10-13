@@ -123,6 +123,7 @@ export default function Exam() {
 
   // Task 2: count answered from answers state (not from nav position)
   const answeredCount = questions.filter((q) => (answers[q.id] || []).length > 0).length;
+  const unansweredCount = questions.length - answeredCount;
 
   if (loading) {
     return (
@@ -172,9 +173,10 @@ export default function Exam() {
 
           <button
             onClick={() => setShowConfirmModal(true)}
-            className="px-5 py-2 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors duration-150"
+            disabled={unansweredCount > 0 || isSubmitting}
+            className="px-5 py-2 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors duration-150 disabled:bg-[#d1d5db] disabled:text-[#6b7280] disabled:shadow-none disabled:cursor-not-allowed"
           >
-            Finish Exam
+            {unansweredCount > 0 ? `Finish Exam (${unansweredCount} unanswered)` : "Finish Exam"}
           </button>
         </div>
       </div>
@@ -327,8 +329,8 @@ export default function Exam() {
                 const isCurrent = idx === currentIndex;
 
                 let bgClass = "bg-[#f7f7f9] text-[#5a5a5a] border border-[#e5e5e5] hover:bg-gray-100";
-                if (isFlag) bgClass = "bg-amber-400 text-gray-900 border-amber-400 font-bold";
-                else if (hasAnswer) bgClass = "bg-[#4d6bfe] text-white border-[#4d6bfe]";
+                if (hasAnswer) bgClass = "bg-[#4d6bfe] text-white border-[#4d6bfe]";
+                else if (isFlag) bgClass = "bg-amber-400 text-gray-900 border-amber-400 font-bold";
 
                 return (
                   <button
