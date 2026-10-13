@@ -14,6 +14,19 @@ fn now_secs() -> i64 {
         .unwrap_or(0)
 }
 
+fn record_question_stat(conn: &Connection, question_id: i64, correct: bool, seen_at: i64) -> Result<(), String> {
+    conn.execute(
+        "INSERT INTO user_question_stats (question_id, times_seen, times_correct, last_seen_at)
+         VALUES (?1, 1, ?2, ?3)
+         ON CONFLICT(question_id) DO UPDATE SET
+           times_seen = times_seen + 1,
+           times_correct = times_correct + excluded.times_correct,
+           last_seen_at = excluded.last_seen_at",
+        params![question_id, if correct { 1 } else { 0 }, seen_at],
+    ).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 // ─── Shared structs ───────────────────────────────────────────────────────────
 
 #[derive(Serialize)]
@@ -448,6 +461,7 @@ pub fn submit_answer_conn(payload: &SubmitPayload, conn: &Connection) -> Result<
         params![payload.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
     )
     .map_err(|e| e.to_string())?;
+    record_question_stat(conn, payload.question_id, is_correct, now)?;
 
     Ok(SubmitResult {
         correct: is_correct,
@@ -476,10 +490,21 @@ pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
         let mut stmt = conn.prepare(
             "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0),
                     COALESCE(q.subtopic, ''),
-                    CASE WHEN COALESCE((
+                    (CASE WHEN COALESCE((
                         SELECT a.correct FROM answers a WHERE a.question_id = q.id
                         ORDER BY a.answered_at DESC, a.id DESC LIMIT 1
-                    ), 0) = 1 THEN 1.0 ELSE 2.0 END
+                    ), 0) = 1 THEN 1.0 ELSE 2.0 END) *
+                    (CASE WHEN (
+                        SELECT COUNT(*) FROM (
+                            SELECT a.correct FROM answers a
+                            JOIN questions topic_q ON topic_q.id = a.question_id
+                            WHERE topic_q.domain = q.domain
+                              AND COALESCE(topic_q.subtopic, '') = COALESCE(q.subtopic, '')
+                            ORDER BY a.answered_at DESC, a.id DESC LIMIT 2
+                        ) recent WHERE recent.correct = 1
+                    ) = 2 THEN CASE q.difficulty
+                        WHEN 'hard' THEN 4.0 WHEN 'medium' THEN 2.0 ELSE 0.5 END
+                     ELSE 1.0 END)
              FROM questions q WHERE q.domain = ?1",
         ).map_err(|e| e.to_string())?;
         let candidates: Vec<ExamCandidate> = stmt.query_map(params![domain], |row| {
@@ -602,6 +627,7 @@ pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResu
             params![session_id, item.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
         )
         .map_err(|e| e.to_string())?;
+        record_question_stat(&conn, item.question_id, is_correct, now)?;
 
         reviews.push(QuestionReviewResult {
             question_id: item.question_id,
@@ -987,6 +1013,7 @@ pub fn reset_stats(db: State<Db>) -> Result<(), String> {
     conn.execute("DELETE FROM answers", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM sessions", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM flags", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM user_question_stats", []).map_err(|e| e.to_string())?;
     Ok(())
 }
 

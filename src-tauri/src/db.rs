@@ -58,6 +58,14 @@ pub fn init(path: &Path) -> Result<Connection> {
             value TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS user_question_stats (
+            id INTEGER PRIMARY KEY,
+            question_id INTEGER NOT NULL UNIQUE REFERENCES questions(id),
+            times_seen INTEGER NOT NULL DEFAULT 0,
+            times_correct INTEGER NOT NULL DEFAULT 0,
+            last_seen_at INTEGER NOT NULL DEFAULT 0
+        );
+
         CREATE INDEX IF NOT EXISTS idx_q_domain ON questions(domain);
         CREATE INDEX IF NOT EXISTS idx_q_difficulty ON questions(difficulty);
         ",
