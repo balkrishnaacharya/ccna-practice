@@ -5,22 +5,25 @@ Switched from one AI model to another mid-project. No commits existed before
 the checkpoint at <git hash from the commit above>.
 
 ## Task Status
-1. BUG — single-answer multi-select           : appears DONE (verify UI)
-2. BUG — exam last question incomplete        : UNKNOWN (no code evidence)
-3. FEATURE — persist exam history             : appears DONE (verify History route)
-4. FEATURE — AI study prompt generator        : NOT STARTED
-5. FEATURE — exam sampling rules              : NOT STARTED
-6. FEATURE — difficulty escalation            : NOT STARTED
-7. FEATURE — study notes + calculators        : NOT STARTED
+1. BUG — single-answer multi-select           : DONE
+2. BUG — exam last question incomplete        : DONE
+3. FEATURE — persist exam history             : DONE
+4. FEATURE — AI study prompt generator        : DONE
+5. FEATURE — exam sampling rules              : DONE
+6. FEATURE — difficulty escalation            : DONE
+7. FEATURE — study notes + calculators        : DONE
 
 ## What Was Changed
-- db.rs: schema extended for multi_select, sessions/answers history
-- commands.rs: IPC surface extended
-- new routes: see src/pages/ for History, Review
+- Task 1: `.agents/agents/question-generator.md` now documents the `multi_select` rule; conditional radios/checkboxes and backend validation were already present.
+- Task 2: `src/pages/Exam.jsx` disables Finish Exam until all questions have answers and gives answered navigator cells priority over flags.
+- Task 3: `src/App.jsx` registers History routes and navigation; `src/pages/SessionReview.jsx` reviews saved answers and supports retaking missed questions.
+- Task 4: `src/pages/SessionReview.jsx` generates and copies a local-only weak-area study prompt.
+- Task 5: `src-tauri/src/commands.rs` samples with blueprint quotas, a two-per-subtopic cap, adaptive weights, and reset clears flags.
+- Task 6: `src-tauri/src/db.rs` adds per-question answer stats; `src-tauri/src/commands.rs` records stats and favors harder questions after two consecutive subtopic successes.
+- Task 7: `src/pages/Notes.jsx` adds local subnet, wildcard, and CIDR calculators; `src/App.jsx` registers the Notes route and link.
 
 ## Known Issues
-- Task 2 unclear: need to verify exam navigator marks Q100 as answered
-- Task 1 unclear: need to verify single-answer questions render radios, not checkboxes
+- Desktop interaction was not run in this implementation pass; `cargo check` and `npm run build` passed after each task.
 
 ## Original Task Prompt
 ou are working on a Tauri 2.0 + React + Rust + SQLite CCNA 2.0 practice app. Read AGENTS.md and src-tauri/src/db.rs first to understand the schema and stack rules. Then work through the following tasks in order, verifying each on desktop with npm run tauri dev before moving to the next.

@@ -8,6 +8,7 @@ import Review from "./pages/Review";
 import Settings from "./pages/Settings";
 import ExamHistory from "./pages/ExamHistory";
 import SessionReview from "./pages/SessionReview";
+import Notes from "./pages/Notes";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -57,6 +58,15 @@ export default function App() {
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      to: "/notes",
+      label: "Notes",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
         </svg>
       ),
     },
@@ -160,6 +170,7 @@ export default function App() {
           <Route path="/exam" element={<Exam />} />
           <Route path="/history" element={<ExamHistory />} />
           <Route path="/history/:sessionId" element={<SessionReview />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/review" element={<Review />} />
           <Route
             path="/settings"
