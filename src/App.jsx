@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { invoke } from "@tauri-apps/api/core";
 import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/Quiz";
@@ -12,7 +12,27 @@ import Notes from "./pages/Notes";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
+  const [examProgress, setExamProgress] = useState({ active: false, unanswered: 0 });
+  const [pendingNavigation, setPendingNavigation] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const reportExamProgress = useCallback((active, unanswered) => {
+    setExamProgress({ active, unanswered });
+  }, []);
+
+  function guardNavigation(event, destination) {
+    if (location.pathname === "/exam" && examProgress.active && destination !== "/exam") {
+      event.preventDefault();
+      setPendingNavigation(destination);
+    }
+  }
+
+  function leaveExam() {
+    const destination = pendingNavigation;
+    setPendingNavigation(null);
+    if (destination) navigate(destination);
+  }
 
   useEffect(() => {
     invoke("get_setting", { key: "profile_name" })
@@ -102,6 +122,7 @@ export default function App() {
         <div className="flex items-center gap-6">
           <Link
             to="/"
+            onClick={(event) => guardNavigation(event, "/")}
             className="font-semibold text-base text-[#4d6bfe] tracking-tight flex items-center gap-2"
           >
             <span className="w-7 h-7 rounded-full bg-[#4d6bfe] text-white flex items-center justify-center text-xs font-bold">
@@ -120,6 +141,7 @@ export default function App() {
                 <Link
                   key={link.to}
                   to={link.to}
+                  onClick={(event) => guardNavigation(event, link.to)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-colors duration-150 ${
                     isActive
                       ? "bg-[#e8ecff] text-[#1a2a8a]"
@@ -137,6 +159,7 @@ export default function App() {
         <div className="hidden sm:flex items-center gap-3">
           <Link
             to="/settings"
+            onClick={(event) => guardNavigation(event, "/settings")}
             className="flex items-center gap-2 px-3 py-1 bg-[#f7f7f9] hover:bg-[#e8ecff] border border-[#e5e5e5] rounded-full text-xs font-medium text-[#5a5a5a] hover:text-[#1a2a8a] transition-colors duration-150"
             title="Edit local candidate profile"
           >
@@ -151,6 +174,7 @@ export default function App() {
         <div className="sm:hidden flex items-center">
           <Link
             to="/settings"
+            onClick={(event) => guardNavigation(event, "/settings")}
             className="w-8 h-8 rounded-full bg-[#e8ecff] text-[#1a2a8a] flex items-center justify-center text-xs font-semibold"
             title={profileName || "Candidate Profile"}
           >
@@ -167,7 +191,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard profileName={profileName} />} />
           <Route path="/quiz" element={<Quiz />} />
-          <Route path="/exam" element={<Exam />} />
+          <Route path="/exam" element={<Exam onProgressChange={reportExamProgress} />} />
           <Route path="/history" element={<ExamHistory />} />
           <Route path="/history/:sessionId" element={<SessionReview />} />
           <Route path="/notes" element={<Notes />} />
@@ -190,6 +214,7 @@ export default function App() {
             <Link
               key={link.to}
               to={link.to}
+              onClick={(event) => guardNavigation(event, link.to)}
               className={`flex flex-col items-center justify-center flex-1 py-1 rounded-xl transition-colors duration-150 ${
                 isActive
                   ? "text-[#4d6bfe] font-semibold"
@@ -210,6 +235,19 @@ export default function App() {
           );
         })}
       </nav>
+
+      {pendingNavigation && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="leave-exam-title" className="w-full max-w-md space-y-4 rounded-2xl border border-[#e5e5e5] bg-white p-6 shadow-xl">
+            <h2 id="leave-exam-title" className="text-lg font-semibold">Leave this exam?</h2>
+            <p className="text-sm leading-relaxed text-[#5a5a5a]">You have {examProgress.unanswered} unanswered question{examProgress.unanswered === 1 ? "" : "s"}. Are you sure you want to leave?</p>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setPendingNavigation(null)} className="rounded-full border border-[#e5e5e5] px-4 py-2 text-sm text-[#5a5a5a]">Stay in exam</button>
+              <button onClick={leaveExam} className="rounded-full bg-[#4d6bfe] px-4 py-2 text-sm font-medium text-white">Leave exam</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="hidden sm:block border-t border-[#e5e5e5] bg-white py-4 text-center text-xs text-[#5a5a5a]">
         CCNA 2.0 Local-First Practice App • Cross-Platform (Desktop + Android)

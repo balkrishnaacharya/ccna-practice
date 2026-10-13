@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link } from "react-router-dom";
 
-export default function Exam() {
+export default function Exam({ onProgressChange }) {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -124,6 +124,10 @@ export default function Exam() {
   // Task 2: count answered from answers state (not from nav position)
   const answeredCount = questions.filter((q) => (answers[q.id] || []).length > 0).length;
   const unansweredCount = questions.length - answeredCount;
+
+  useEffect(() => {
+    onProgressChange?.(!loading && !examResult && questions.length > 0, unansweredCount);
+  }, [onProgressChange, loading, examResult, questions.length, unansweredCount]);
 
   if (loading) {
     return (
