@@ -159,21 +159,13 @@ struct ExamCandidate {
     adaptive_weight: f64,
 }
 
-fn subtopic_capacity(candidates: &[ExamCandidate]) -> usize {
-    let mut topics = HashMap::<&str, usize>::new();
-    for candidate in candidates {
-        *topics.entry(&candidate.subtopic).or_default() += 1;
-    }
-    topics.values().map(|count| (*count).min(2)).sum()
-}
-
 fn weighted_exam_sample(
-    mut candidates: Vec<ExamCandidate>,
+    candidates: &mut Vec<ExamCandidate>,
     count: usize,
     rng: &mut impl Rng,
+    topic_counts: &mut HashMap<String, usize>,
 ) -> Vec<ExamCandidate> {
     let mut selected = Vec::with_capacity(count);
-    let mut topic_counts = HashMap::<String, usize>::new();
 
     while selected.len() < count {
         let eligible: Vec<usize> = candidates.iter().enumerate()
@@ -518,28 +510,48 @@ pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
                 adaptive_weight: row.get(6)?,
             })
         }).map_err(|e| e.to_string())?.filter_map(Result::ok).collect();
-        domain_candidates.push((domain, target, candidates));
-    }
-
-    let mut counts: Vec<usize> = domain_candidates.iter()
-        .map(|(_, target, candidates)| (*target).min(subtopic_capacity(candidates)))
-        .collect();
-    let mut remaining = 100usize.saturating_sub(counts.iter().sum());
-    // Keep all domains within one question of the blueprint when topic caps
-    // make a precise quota impossible.
-    while remaining > 0 {
-        let Some(index) = domain_candidates.iter().enumerate().find_map(|(index, (_, target, candidates))| {
-            let capacity = subtopic_capacity(candidates);
-            (counts[index] < target + 1 && counts[index] < capacity).then_some(index)
-        }) else { break; };
-        counts[index] += 1;
-        remaining -= 1;
+        domain_candidates.push((domain, target, candidates, Vec::new()));
     }
 
     let mut rng = rand::thread_rng();
+    let mut topic_counts = HashMap::<String, usize>::new();
+    for (_, target, candidates, selected) in &mut domain_candidates {
+        *selected = weighted_exam_sample(candidates, *target, &mut rng, &mut topic_counts);
+    }
+    let mut total_selected: usize = domain_candidates.iter().map(|(_, _, _, selected)| selected.len()).sum();
+
+    // Refill any quota lost to a cross-domain subtopic collision. Only use
+    // the blueprint's ±1 allowance after every domain has had a chance to
+    // recover its target count.
+    loop {
+        if total_selected >= 100 { break; }
+        let mut progressed = false;
+        for (_, target, candidates, selected) in &mut domain_candidates {
+            if total_selected >= 100 { break; }
+            if selected.len() < *target {
+                let additions = weighted_exam_sample(candidates, 1, &mut rng, &mut topic_counts);
+                total_selected += additions.len();
+                progressed |= !additions.is_empty();
+                selected.extend(additions);
+            }
+        }
+        if !progressed {
+            for (_, target, candidates, selected) in &mut domain_candidates {
+                if total_selected >= 100 { break; }
+                if selected.len() < *target + 1 {
+                    let additions = weighted_exam_sample(candidates, 1, &mut rng, &mut topic_counts);
+                    total_selected += additions.len();
+                    progressed |= !additions.is_empty();
+                    selected.extend(additions);
+                }
+            }
+        }
+        if !progressed { break; }
+    }
+
     let mut all_questions = Vec::with_capacity(100);
-    for (index, (_, _, candidates)) in domain_candidates.into_iter().enumerate() {
-        for candidate in weighted_exam_sample(candidates, counts[index], &mut rng) {
+    for (_, _, _, selected) in domain_candidates {
+        for candidate in selected {
             all_questions.push(row_to_question(
                 &conn, candidate.id, candidate.stem, candidate.domain,
                 candidate.difficulty, candidate.multi_select,
