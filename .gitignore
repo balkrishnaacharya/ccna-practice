@@ -32,3 +32,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Build outputs (never commit these)
+*.apk
+*.idsig
+*.aab
+release-apk/
