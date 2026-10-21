@@ -112,20 +112,27 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_CERT_SHA256: ${{ secrets.ANDROID_CERT_SHA256 }}
+          IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') }}
+          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
         run: |
           set -euo pipefail
 
           # Locate unsigned APK
-          UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/ -type f -name "*release*.apk" | head -n 1)
+          UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/apk/ -type f -name "*unsigned.apk" | head -n 1)
           if [ -z "$UNSIGNED_APK" ] || [ ! -f "$UNSIGNED_APK" ]; then
-            echo "ERROR: No release APK found in build outputs!"
+            UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/apk/ -type f -name "*release*.apk" ! -name "ccna-practice-*" | head -n 1)
+          fi
+          if [ -z "$UNSIGNED_APK" ] || [ ! -f "$UNSIGNED_APK" ]; then
+            echo "ERROR: No unsigned release APK found in build outputs!"
+            find src-tauri/gen/android/app/build/outputs/ -maxdepth 5 || true
             exit 1
           fi
-          echo "Found release APK at: $UNSIGNED_APK"
+          echo "Found unsigned release APK at: $UNSIGNED_APK"
 
           # Fail-closed check: Secrets must be present to publish/sign APK
           if [ -z "${ANDROID_KEY_BASE64:-}" ] || [ -z "${ANDROID_KEYSTORE_PASSWORD:-}" ] || [ -z "${ANDROID_KEY_ALIAS:-}" ] || [ -z "${ANDROID_KEY_PASSWORD:-}" ]; then
-            if [ "${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') }}" = "true" ]; then
+            if [ "$IS_RELEASE" = "true" ]; then
               echo "ERROR: Android signing secrets (ANDROID_KEY_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD) are missing for release build! Fail-closed."
               exit 1
             else
@@ -135,13 +142,31 @@ jobs:
             fi
           fi
 
-          BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
-          KEYSTORE_FILE=$(mktemp /tmp/release-keystore.XXXXXX.jks)
-          ALIGNED_APK="/tmp/aligned.apk"
-          FINAL_APK_DIR="src-tauri/gen/android/app/build/outputs/apk/release"
-          FINAL_APK="$FINAL_APK_DIR/ccna-practice-v0.2.0-android-aarch64.apk"
+          if [ -z "${ANDROID_CERT_SHA256:-}" ]; then
+            if [ "$IS_RELEASE" = "true" ]; then
+              echo "ERROR: ANDROID_CERT_SHA256 secret is required for release build! Fail-closed."
+              exit 1
+            else
+              echo "WARNING: ANDROID_CERT_SHA256 not set. Skipping certificate fingerprint verification."
+            fi
+          fi
 
+          # Discover Android build-tools dynamically
+          BUILD_TOOLS=$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -n 1)
+          if [ -z "$BUILD_TOOLS" ] || [ ! -x "$BUILD_TOOLS/zipalign" ] || [ ! -x "$BUILD_TOOLS/apksigner" ]; then
+            echo "ERROR: Valid Android build-tools with zipalign and apksigner not found in $ANDROID_HOME/build-tools"
+            exit 1
+          fi
+          echo "Using Android build-tools at: $BUILD_TOOLS"
+
+          KEYSTORE_FILE=$(mktemp /tmp/release-keystore.XXXXXX.jks)
+          chmod 600 "$KEYSTORE_FILE"
+          ALIGNED_APK=$(mktemp /tmp/aligned.XXXXXX.apk)
+          trap 'rm -f "$KEYSTORE_FILE" "$ALIGNED_APK"' EXIT
+
+          FINAL_APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
           mkdir -p "$FINAL_APK_DIR"
+          FINAL_APK="$FINAL_APK_DIR/ccna-practice-${RELEASE_TAG}-android-aarch64.apk"
 
           # Decode keystore
           echo "$ANDROID_KEY_BASE64" | base64 -d > "$KEYSTORE_FILE"
@@ -164,8 +189,26 @@ jobs:
           echo "Verifying signature with apksigner..."
           "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$FINAL_APK"
 
-          # Clean up temporary keystore and intermediate files
-          rm -f "$KEYSTORE_FILE" "$ALIGNED_APK"
+          # Verify certificate fingerprint identity if provided
+          if [ -n "${ANDROID_CERT_SHA256:-}" ]; then
+            echo "Verifying certificate SHA-256 fingerprint against expected fingerprint..."
+            ACTUAL_FINGERPRINT=$("$BUILD_TOOLS/apksigner" verify --print-certs "$FINAL_APK" | grep -i "SHA-256 digest" | head -n 1 | awk '{print tolower($NF)}' | tr -d ':\r\n ')
+            EXPECTED_FINGERPRINT=$(echo "$ANDROID_CERT_SHA256" | tr '[:upper:]' '[:lower:]' | tr -d ':\r\n ')
+
+            if [ -z "$ACTUAL_FINGERPRINT" ]; then
+              echo "ERROR: Failed to extract SHA-256 digest from apksigner output!"
+              exit 1
+            fi
+
+            if [ "$ACTUAL_FINGERPRINT" != "$EXPECTED_FINGERPRINT" ]; then
+              echo "ERROR: Certificate fingerprint mismatch!"
+              echo "Expected: $EXPECTED_FINGERPRINT"
+              echo "Actual:   $ACTUAL_FINGERPRINT"
+              exit 1
+            fi
+            echo "Certificate fingerprint verified: $ACTUAL_FINGERPRINT"
+          fi
+
           # Remove original unsigned APK to prevent accidental upload
           rm -f "$UNSIGNED_APK"
 
@@ -175,8 +218,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-bundle-android
-          path: src-tauri/gen/android/app/build/outputs/apk/release/ccna-practice-*.apk
-          if-no-files-found: ignore
+          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/ccna-practice-*.apk
+          if-no-files-found: ${{ (startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')) && 'error' || 'warn' }}
 
   release:
     name: Publish beta release
@@ -225,3 +268,4 @@ jobs:
             release-assets/**/*.msi
             release-assets/**/*.exe
             release-assets/**/*-android-*.apk
+            release-assets/*-android-*.apk
