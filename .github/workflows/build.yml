@@ -174,7 +174,7 @@ jobs:
 
           # Zipalign unsigned APK
           echo "Aligning APK..."
-          "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED_APK" "$ALIGNED_APK"
+          "$BUILD_TOOLS/zipalign" -v -p -f 4 "$UNSIGNED_APK" "$ALIGNED_APK"
 
           # Sign APK
           echo "Signing APK with apksigner..."
