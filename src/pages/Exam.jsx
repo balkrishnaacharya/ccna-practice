@@ -1,18 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ExamConfirmationModal from "../components/ExamConfirmationModal";
 
 export default function Exam({ onProgressChange }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [hasStarted, setHasStarted] = useState(Boolean(location.state?.started));
+  const [showPreflightModal, setShowPreflightModal] = useState(!location.state?.started);
+
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  // answers: { [questionId]: choiceId[] }
   const [answers, setAnswers] = useState({});
   const [flagged, setFlagged] = useState(new Set());
   const [secondsRemaining, setSecondsRemaining] = useState(120 * 60);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  // Task 2: separate modal for "last question, click Next"
   const [showLastQModal, setShowLastQModal] = useState(false);
   const [examResult, setExamResult] = useState(null);
   const [reviewFilter, setReviewFilter] = useState("all");
@@ -27,8 +32,9 @@ export default function Exam({ onProgressChange }) {
     };
   }, []);
 
+  // Timer only starts if hasStarted is true, loading is done, no result, and seconds remain
   useEffect(() => {
-    if (!loading && !examResult && secondsRemaining > 0) {
+    if (hasStarted && !loading && !examResult && secondsRemaining > 0) {
       timerRef.current = setInterval(() => {
         setSecondsRemaining((prev) => {
           if (prev <= 1) {
@@ -41,7 +47,7 @@ export default function Exam({ onProgressChange }) {
       }, 1000);
       return () => clearInterval(timerRef.current);
     }
-  }, [loading, examResult]);
+  }, [hasStarted, loading, examResult]);
 
   async function loadExamQuestions() {
     setLoading(true);
@@ -55,7 +61,16 @@ export default function Exam({ onProgressChange }) {
     }
   }
 
-  // Task 1: radio vs checkbox selection in exam
+  function handleStartConfirmed() {
+    setShowPreflightModal(false);
+    setHasStarted(true);
+  }
+
+  function handleCancelPreflight() {
+    setShowPreflightModal(false);
+    navigate(-1 || "/");
+  }
+
   function handleSelectChoice(choiceId, isMultiSelect) {
     const q = questions[currentIndex];
     const currentSelected = answers[q.id] || [];
@@ -67,7 +82,6 @@ export default function Exam({ onProgressChange }) {
         updated = [...currentSelected, choiceId];
       }
     } else {
-      // Radio: replace
       updated = [choiceId];
     }
     setAnswers({ ...answers, [q.id]: updated });
@@ -118,23 +132,22 @@ export default function Exam({ onProgressChange }) {
     const h = Math.floor(totalSeconds / 3600);
     const m = Math.floor((totalSeconds % 3600) / 60);
     const s = totalSeconds % 60;
-    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+    return `${h > 0 ? `${h}:` : ""}${m < 10 ? "0" : ""}${m}:${s < 10 ? "0" : ""}${s}`;
   }
 
-  // Task 2: count answered from answers state (not from nav position)
   const answeredCount = questions.filter((q) => (answers[q.id] || []).length > 0).length;
   const unansweredCount = questions.length - answeredCount;
 
   useEffect(() => {
-    onProgressChange?.(!loading && !examResult && questions.length > 0, unansweredCount);
-  }, [onProgressChange, loading, examResult, questions.length, unansweredCount]);
+    onProgressChange?.(hasStarted && !loading && !examResult && questions.length > 0, unansweredCount);
+  }, [onProgressChange, hasStarted, loading, examResult, questions.length, unansweredCount]);
 
   if (loading) {
     return (
-      <div className="py-20 text-center space-y-3">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#4d6bfe] border-t-transparent"></div>
-        <p className="text-[#5a5a5a] font-medium text-sm">
-          Generating 100-question weighted CCNA 2.0 exam paper...
+      <div className="py-24 text-center space-y-4">
+        <div className="inline-block animate-spin rounded-full h-9 w-9 border-2 border-gold border-t-transparent"></div>
+        <p className="text-paper-muted font-sans text-sm">
+          Generating 100-question CCNA 2.0 blueprint exam paper...
         </p>
       </div>
     );
@@ -150,23 +163,32 @@ export default function Exam({ onProgressChange }) {
 
   return (
     <div className="space-y-6">
+      {/* Preflight Modal if user landed directly on /exam without confirmation */}
+      {showPreflightModal && (
+        <ExamConfirmationModal
+          isOpen={showPreflightModal}
+          onCancel={handleCancelPreflight}
+          onConfirm={handleStartConfirmed}
+        />
+      )}
+
       {/* Top Exam Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-white border border-[#e5e5e5] rounded-2xl shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-dark-card border border-dark-border rounded-2xl shadow-dock">
         <div>
-          <span className="text-xs font-medium tracking-wide uppercase text-[#1a2a8a] bg-[#e8ecff] px-3 py-1 rounded-full">
+          <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
             CCNA 2.0 Full Exam Simulator
           </span>
-          <p className="text-sm font-medium text-[#0d0d0d] mt-2">
-            Question {currentIndex + 1} of {questions.length}
+          <p className="text-sm font-medium text-paper mt-2">
+            Question <span className="font-serif text-gold text-base">{currentIndex + 1}</span> of {questions.length}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <div
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border font-mono text-sm font-semibold ${
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-full border font-mono text-sm font-semibold transition-colors ${
               secondsRemaining < 600
-                ? "bg-red-50 text-[#b3261e] border-[#f0a5a0] animate-pulse"
-                : "bg-[#f7f7f9] text-[#0d0d0d] border-[#e5e5e5]"
+                ? "bg-heart/20 text-heart-light border-heart shadow-heart-glow animate-pulse"
+                : "bg-dark-surface text-gold border-dark-border"
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,79 +200,80 @@ export default function Exam({ onProgressChange }) {
           <button
             onClick={() => setShowConfirmModal(true)}
             disabled={unansweredCount > 0 || isSubmitting}
-            className="px-5 py-2 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors duration-150 disabled:bg-[#d1d5db] disabled:text-[#6b7280] disabled:shadow-none disabled:cursor-not-allowed"
+            className="px-5 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all duration-150 disabled:bg-dark-surface disabled:text-paper-dim disabled:border disabled:border-dark-border disabled:shadow-none disabled:cursor-not-allowed"
           >
-            {unansweredCount > 0 ? `Finish Exam (${unansweredCount} unanswered)` : "Finish Exam"}
+            {unansweredCount > 0 ? `Finish Exam (${unansweredCount} left)` : "Finish Exam"}
           </button>
         </div>
       </div>
 
-      {/* Main Grid */}
+      {/* Main Grid: Question Content & Navigator */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Question & Choices */}
-        <div className="lg:col-span-3 border border-[#e5e5e5] rounded-2xl p-5 sm:p-6 bg-white shadow-sm space-y-5">
-          <div className="flex justify-between items-start gap-3">
-            <div className="space-y-2">
+        <div className="lg:col-span-3 border border-dark-border rounded-2xl p-6 sm:p-7 bg-dark-card shadow-dock space-y-6">
+          <div className="flex justify-between items-start gap-4">
+            <div className="space-y-3">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-medium uppercase tracking-wide text-[#1a2a8a] bg-[#e8ecff] px-2.5 py-1 rounded-full">
-                  {currentQ.domain.replace(/_/g, " ")}
+                <span className="text-xs font-medium uppercase tracking-wider text-paper-muted bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                  {currentQ?.domain.replace(/_/g, " ")}
                 </span>
-                {/* Task 1: multi-select hint in exam */}
-                {currentQ.multi_select && (
-                  <span className="text-xs font-medium text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full">
+                {currentQ?.multi_select && (
+                  <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                     Select all that apply
                   </span>
                 )}
               </div>
-              <h2 className="text-lg font-medium text-[#0d0d0d] leading-relaxed pt-1">
-                {currentQ.stem}
+              <h2 className="font-serif text-xl sm:text-2xl text-paper leading-relaxed font-normal pt-1">
+                {currentQ?.stem}
               </h2>
             </div>
 
             <button
               onClick={toggleQuestionFlag}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-colors duration-150 shrink-0 ${
-                flagged.has(currentQ.id)
-                  ? "bg-amber-100 text-amber-900 border-amber-300"
-                  : "bg-white text-[#5a5a5a] border-[#e5e5e5] hover:bg-[#f7f7f9] hover:text-[#0d0d0d]"
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-150 shrink-0 ${
+                flagged.has(currentQ?.id)
+                  ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
+                  : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
               }`}
             >
               <svg
                 className="w-3.5 h-3.5"
-                fill={flagged.has(currentQ.id) ? "currentColor" : "none"}
+                fill={flagged.has(currentQ?.id) ? "currentColor" : "none"}
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
               </svg>
-              <span>{flagged.has(currentQ.id) ? "Flagged" : "Flag"}</span>
+              <span>{flagged.has(currentQ?.id) ? "Flagged" : "Flag"}</span>
             </button>
           </div>
 
-          {/* Task 1: radio vs checkbox in exam */}
-          <div className="space-y-3 pt-2">
-            {currentQ.choices.map((c) => {
+          {/* Choices list */}
+          <div className="space-y-3 pt-1">
+            {currentQ?.choices.map((c) => {
               const isSelected = selectedChoices.includes(c.id);
               const inputType = currentQ.multi_select ? "checkbox" : "radio";
               return (
                 <div
                   key={c.id}
                   onClick={() => handleSelectChoice(c.id, currentQ.multi_select)}
-                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-colors duration-150 ${
+                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 ${
                     isSelected
-                      ? "border-[#4d6bfe] bg-[#e8ecff] text-[#1a2a8a]"
-                      : "border-[#e5e5e5] hover:border-[#4d6bfe] text-[#0d0d0d] bg-white"
+                      ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
+                      : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
                   }`}
                 >
                   <div className="flex items-start">
                     <input
                       type={inputType}
                       name={`exam-q-${currentQ.id}`}
-                      className={`mt-0.5 mr-3.5 text-[#4d6bfe] focus:ring-[#4d6bfe] ${inputType === "checkbox" ? "rounded" : ""}`}
+                      className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
+                        inputType === "checkbox" ? "rounded" : ""
+                      }`}
                       checked={isSelected}
                       readOnly
                     />
-                    <span className="select-none leading-relaxed">{c.text}</span>
+                    <span className="select-none leading-relaxed font-sans">{c.text}</span>
                   </div>
                 </div>
               );
@@ -258,31 +281,30 @@ export default function Exam({ onProgressChange }) {
           </div>
 
           {/* Navigation Controls */}
-          <div className="flex items-center justify-between pt-4 border-t border-[#e5e5e5]">
+          <div className="flex items-center justify-between pt-5 border-t border-dark-borderSubtle">
             <button
               onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
               disabled={currentIndex === 0}
-              className="px-5 py-2.5 border border-[#e5e5e5] rounded-full text-xs font-medium tracking-wide text-[#5a5a5a] hover:bg-[#f7f7f9] hover:text-[#0d0d0d] disabled:opacity-30 disabled:pointer-events-none transition-colors duration-150"
+              className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25 disabled:pointer-events-none transition-colors"
             >
               ← Previous
             </button>
 
-            <span className="text-xs text-[#5a5a5a] font-medium tracking-wide">
-              {answeredCount} of {questions.length} answered
+            <span className="text-xs text-paper-muted font-mono tracking-wide">
+              {answeredCount} / {questions.length} answered
             </span>
 
-            {/* Task 2: last question → show confirm instead of disabling Next */}
             {isLastQuestion ? (
               <button
                 onClick={() => setShowLastQModal(true)}
-                className="px-6 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide transition-colors duration-150 shadow-sm"
+                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide transition-all shadow-gold-glow"
               >
                 Finish →
               </button>
             ) : (
               <button
                 onClick={() => setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))}
-                className="px-6 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide transition-colors duration-150 shadow-sm"
+                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide transition-all shadow-gold-glow"
               >
                 Next →
               </button>
@@ -291,50 +313,49 @@ export default function Exam({ onProgressChange }) {
         </div>
 
         {/* Question Navigator */}
-        <div className="border border-[#e5e5e5] rounded-2xl p-5 bg-white shadow-sm space-y-4">
-          <div className="flex justify-between items-center pb-2 border-b border-[#e5e5e5]">
-            <h3 className="text-xs font-medium text-[#0d0d0d] uppercase tracking-wide">
-              Question Navigator
+        <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-4">
+          <div className="flex justify-between items-center pb-3 border-b border-dark-borderSubtle">
+            <h3 className="text-xs font-semibold text-paper uppercase tracking-wider">
+              Question Grid
             </h3>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[#5a5a5a] font-medium">
+              <span className="text-xs font-mono text-paper-dim">
                 {answeredCount}/{questions.length}
               </span>
               <button
                 onClick={() => setShowMobileNav(!showMobileNav)}
-                className="lg:hidden text-xs text-[#4d6bfe] font-medium px-2 py-1 bg-[#e8ecff] rounded-full"
+                className="lg:hidden text-xs text-gold font-medium px-2.5 py-1 bg-gold/15 rounded-full border border-gold/30"
               >
                 {showMobileNav ? "Hide" : "Show"}
               </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-[#5a5a5a]">
+          <div className="flex items-center gap-3 text-xs text-paper-muted">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#4d6bfe]"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-gold"></span>
               <span>Answered</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-peach"></span>
               <span>Flagged</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#f7f7f9] border border-[#e5e5e5]"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-dark-surface border border-dark-border"></span>
               <span>Pending</span>
             </div>
           </div>
 
           <div className={`${showMobileNav ? "block" : "hidden lg:block"}`}>
-            <div className="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 max-h-[460px] overflow-y-auto p-1">
+            <div className="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 max-h-[460px] overflow-y-auto p-1 custom-scrollbar">
               {questions.map((q, idx) => {
-                // Task 2: check answers[q.id] length, not currentIndex
                 const hasAnswer = (answers[q.id] || []).length > 0;
                 const isFlag = flagged.has(q.id);
                 const isCurrent = idx === currentIndex;
 
-                let bgClass = "bg-[#f7f7f9] text-[#5a5a5a] border border-[#e5e5e5] hover:bg-gray-100";
-                if (hasAnswer) bgClass = "bg-[#4d6bfe] text-white border-[#4d6bfe]";
-                else if (isFlag) bgClass = "bg-amber-400 text-gray-900 border-amber-400 font-bold";
+                let bgClass = "bg-dark-surface text-paper-dim border border-dark-border hover:border-gold/40 hover:text-paper";
+                if (hasAnswer) bgClass = "bg-gold text-dark-bg font-semibold border-gold shadow-gold-glow";
+                else if (isFlag) bgClass = "bg-peach text-dark-bg font-semibold border-peach";
 
                 return (
                   <button
@@ -344,7 +365,7 @@ export default function Exam({ onProgressChange }) {
                       setShowMobileNav(false);
                     }}
                     className={`w-9 h-9 rounded-lg text-xs font-mono font-medium transition-all relative flex items-center justify-center shrink-0 ${bgClass} ${
-                      isCurrent ? "ring-2 ring-[#0d0d0d] ring-offset-1 scale-105 z-10" : ""
+                      isCurrent ? "ring-2 ring-paper ring-offset-2 ring-offset-dark-card scale-105 z-10" : ""
                     }`}
                     title={`Question ${idx + 1}`}
                   >
@@ -359,31 +380,29 @@ export default function Exam({ onProgressChange }) {
 
       {/* Finish Exam Confirmation Modal */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl space-y-4 border border-[#e5e5e5]">
-            <h3 className="text-xl font-medium text-[#0d0d0d]">Submit Examination?</h3>
-            <p className="text-sm text-[#5a5a5a] leading-relaxed">
-              You have answered{" "}
-              <strong className="text-[#0d0d0d]">{answeredCount}</strong> of{" "}
-              <strong className="text-[#0d0d0d]">{questions.length}</strong> questions.
+        <div className="fixed inset-0 bg-dark-bg/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="bg-dark-card rounded-2xl max-w-md w-full p-6 shadow-dock space-y-4 border border-dark-border text-paper">
+            <h3 className="font-serif text-2xl font-semibold text-paper">Submit Examination?</h3>
+            <p className="text-sm text-paper-muted leading-relaxed">
+              You have answered <strong className="text-paper">{answeredCount}</strong> of{" "}
+              <strong className="text-paper">{questions.length}</strong> questions.
               {questions.length - answeredCount > 0 && (
-                <span className="block mt-3 text-[#b3261e] bg-[#fdecea] p-3 rounded-2xl border border-[#f0a5a0] text-xs">
-                  ⚠️ You have {questions.length - answeredCount} unanswered questions.
-                  Unanswered questions receive 0 marks.
+                <span className="block mt-3 text-heart-light bg-heart/15 p-3 rounded-xl border border-heart/30 text-xs">
+                  ⚠️ You have {questions.length - answeredCount} unanswered questions. Unanswered questions receive 0 marks.
                 </span>
               )}
             </p>
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowConfirmModal(false)}
-                className="px-5 py-2.5 border border-[#e5e5e5] rounded-full text-xs font-medium tracking-wide text-[#5a5a5a] hover:bg-[#f7f7f9] transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Return to Exam
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Yes, Submit Exam"}
               </button>
@@ -392,17 +411,16 @@ export default function Exam({ onProgressChange }) {
         </div>
       )}
 
-      {/* Task 2: Last-question Next button modal */}
+      {/* Last-question Next button modal */}
       {showLastQModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl space-y-4 border border-[#e5e5e5]">
-            <h3 className="text-xl font-medium text-[#0d0d0d]">This is the last question</h3>
-            <p className="text-sm text-[#5a5a5a] leading-relaxed">
-              You have answered{" "}
-              <strong className="text-[#0d0d0d]">{answeredCount}</strong> of{" "}
-              <strong className="text-[#0d0d0d]">{questions.length}</strong> questions.
+        <div className="fixed inset-0 bg-dark-bg/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="bg-dark-card rounded-2xl max-w-md w-full p-6 shadow-dock space-y-4 border border-dark-border text-paper">
+            <h3 className="font-serif text-2xl font-semibold text-paper">This is the last question</h3>
+            <p className="text-sm text-paper-muted leading-relaxed">
+              You have answered <strong className="text-paper">{answeredCount}</strong> of{" "}
+              <strong className="text-paper">{questions.length}</strong> questions.
               {questions.length - answeredCount > 0 && (
-                <span className="block mt-3 text-[#b3261e] bg-[#fdecea] p-3 rounded-2xl border border-[#f0a5a0] text-xs">
+                <span className="block mt-3 text-heart-light bg-heart/15 p-3 rounded-xl border border-heart/30 text-xs">
                   ⚠️ You have {questions.length - answeredCount} unanswered question
                   {questions.length - answeredCount !== 1 ? "s" : ""}. Submit anyway?
                 </span>
@@ -411,14 +429,14 @@ export default function Exam({ onProgressChange }) {
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowLastQModal(false)}
-                className="px-5 py-2.5 border border-[#e5e5e5] rounded-full text-xs font-medium tracking-wide text-[#5a5a5a] hover:bg-[#f7f7f9] transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Go Back &amp; Review
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Submit Exam"}
               </button>
@@ -431,7 +449,6 @@ export default function Exam({ onProgressChange }) {
 
   function renderScoreReport() {
     const {
-      session_id,
       total_questions,
       score,
       percentage,
@@ -449,60 +466,61 @@ export default function Exam({ onProgressChange }) {
     });
 
     return (
-      <div className="space-y-6 max-w-4xl mx-auto pb-12">
+      <div className="space-y-6 max-w-4xl mx-auto pb-16">
         {/* Result Banner */}
         <div
-          className={`rounded-2xl p-8 border shadow-sm text-center ${
+          className={`rounded-2xl p-8 border shadow-dock text-center space-y-3 relative overflow-hidden ${
             passed
-              ? "bg-gradient-to-b from-[#e6f7ee] to-white border-[#8ed4b0]"
-              : "bg-gradient-to-b from-[#fdecea] to-white border-[#f0a5a0]"
+              ? "bg-dark-card border-sage/40"
+              : "bg-dark-card border-heart/40"
           }`}
         >
           {passed ? (
-            <span className="inline-block bg-[#e6f7ee] text-[#0e6245] px-4 py-1.5 rounded-full border border-[#8ed4b0] text-xs font-medium mb-3">
+            <span className="inline-block bg-sage/20 text-sage-light px-4 py-1.5 rounded-full border border-sage/40 text-xs font-semibold tracking-wider uppercase mb-1 shadow-sage-glow">
               Result: PASS
             </span>
           ) : (
-            <span className="inline-block bg-[#fdecea] text-[#b3261e] px-4 py-1.5 rounded-full border border-[#f0a5a0] text-xs font-medium mb-3">
+            <span className="inline-block bg-heart/20 text-heart-light px-4 py-1.5 rounded-full border border-heart/40 text-xs font-semibold tracking-wider uppercase mb-1 shadow-heart-glow">
               Result: FAIL
             </span>
           )}
 
-          <h1 className="text-4xl font-semibold text-[#0d0d0d] tracking-tight">
-            {scaled_score} <span className="text-xl font-normal text-[#5a5a5a]">/ 1000</span>
+          <h1 className="font-serif text-5xl font-semibold text-paper tracking-tight">
+            {scaled_score} <span className="text-xl font-normal text-paper-dim">/ 1000</span>
           </h1>
 
-          <p className="text-sm font-medium text-[#5a5a5a] mt-2">
-            Passing Standard: <strong>825 / 1000 (82.5%)</strong> • Raw Score:{" "}
-            <strong>{score} / {total_questions}</strong> ({percentage}%)
+          <p className="text-sm font-medium text-paper-muted">
+            Passing Standard: <strong className="text-gold">825 / 1000 (82.5%)</strong> • Raw Score:{" "}
+            <strong className="text-paper">{score} / {total_questions}</strong> ({percentage}%)
           </p>
-          <p className="text-xs text-[#5a5a5a] mt-1">
+          <p className="text-xs text-paper-dim">
             Time Taken: {Math.floor(time_spent_seconds / 60)} min {time_spent_seconds % 60}s
           </p>
 
-          <div className="flex justify-center gap-3 mt-6 flex-wrap">
+          <div className="flex justify-center gap-3 mt-6 flex-wrap pt-2">
             <button
               onClick={() => {
                 setExamResult(null);
                 setAnswers({});
                 setFlagged(new Set());
                 setSecondsRemaining(120 * 60);
+                setHasStarted(false);
+                setShowPreflightModal(true);
                 loadExamQuestions();
               }}
-              className="px-6 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white text-xs font-medium tracking-wide rounded-full shadow-sm transition-colors duration-150"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold tracking-wide rounded-full shadow-gold-glow transition-all"
             >
               Take Another Exam
             </button>
-            {/* Task 3: link to history */}
             <Link
               to="/history"
-              className="px-6 py-2.5 border border-[#4d6bfe] text-[#4d6bfe] hover:bg-[#e8ecff] text-xs font-medium tracking-wide rounded-full transition-colors duration-150"
+              className="px-6 py-2.5 border border-gold/40 text-gold hover:bg-gold/15 text-xs font-medium tracking-wide rounded-full transition-colors"
             >
               View Exam History
             </Link>
             <Link
               to="/"
-              className="px-6 py-2.5 border border-[#e5e5e5] hover:bg-[#f7f7f9] text-[#5a5a5a] hover:text-[#0d0d0d] text-xs font-medium tracking-wide rounded-full transition-colors duration-150"
+              className="px-6 py-2.5 border border-dark-border hover:bg-dark-surface text-paper-muted hover:text-paper text-xs font-medium tracking-wide rounded-full transition-colors"
             >
               Return to Dashboard
             </Link>
@@ -510,25 +528,25 @@ export default function Exam({ onProgressChange }) {
         </div>
 
         {/* Domain Breakdown */}
-        <div className="border border-[#e5e5e5] rounded-2xl p-5 sm:p-6 bg-white shadow-sm space-y-4">
-          <h2 className="text-base font-medium text-[#0d0d0d]">Blueprint Domain Breakdown</h2>
+        <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
+          <h2 className="font-serif text-xl font-semibold text-paper">Blueprint Domain Breakdown</h2>
           <div className="space-y-4">
             {domain_scores.map((ds) => (
               <div key={ds.domain} className="space-y-1.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-[#0d0d0d] capitalize">{ds.domain.replace(/_/g, " ")}</span>
-                  <span className="text-[#0d0d0d] font-semibold">
+                  <span className="text-paper capitalize">{ds.domain.replace(/_/g, " ")}</span>
+                  <span className="text-paper font-semibold">
                     {ds.correct} / {ds.total} ({ds.percentage}%)
                   </span>
                 </div>
-                <div className="w-full h-2.5 bg-[#e8ecff] rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-dark-surface rounded-full overflow-hidden border border-dark-borderSubtle">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       ds.percentage >= 82.5
-                        ? "bg-emerald-500"
+                        ? "bg-sage shadow-sage-glow"
                         : ds.percentage >= 60
-                        ? "bg-amber-400"
-                        : "bg-rose-500"
+                        ? "bg-gold shadow-gold-glow"
+                        : "bg-heart shadow-heart-glow"
                     }`}
                     style={{ width: `${ds.percentage}%` }}
                   ></div>
@@ -539,11 +557,11 @@ export default function Exam({ onProgressChange }) {
         </div>
 
         {/* Detailed Review */}
-        <div className="border border-[#e5e5e5] rounded-2xl p-5 sm:p-6 bg-white shadow-sm space-y-5">
+        <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h2 className="text-base font-medium text-[#0d0d0d]">Detailed Question Review</h2>
-              <p className="text-xs text-[#5a5a5a] mt-0.5">
+              <h2 className="font-serif text-xl font-semibold text-paper">Detailed Question Review</h2>
+              <p className="text-xs text-paper-dim mt-0.5">
                 Examine your answers against correct choices and technical explanations.
               </p>
             </div>
@@ -552,10 +570,10 @@ export default function Exam({ onProgressChange }) {
                 <button
                   key={f}
                   onClick={() => setReviewFilter(f)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide border capitalize transition-colors duration-150 ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide border capitalize transition-all ${
                     reviewFilter === f
-                      ? "bg-[#4d6bfe] text-white border-[#4d6bfe] shadow-sm"
-                      : "border-[#e5e5e5] text-[#5a5a5a] hover:bg-[#f7f7f9] hover:text-[#0d0d0d]"
+                      ? "bg-gold text-dark-bg border-gold shadow-gold-glow font-semibold"
+                      : "border-dark-border text-paper-muted hover:bg-dark-surface hover:text-paper"
                   }`}
                 >
                   {f} (
@@ -576,50 +594,50 @@ export default function Exam({ onProgressChange }) {
                 key={r.question_id}
                 className={`p-5 rounded-2xl border space-y-3 ${
                   r.is_correct
-                    ? "border-[#8ed4b0] bg-[#e6f7ee]/30"
-                    : "border-[#f0a5a0] bg-[#fdecea]/30"
+                    ? "border-sage/40 bg-sage/5"
+                    : "border-heart/40 bg-heart/5"
                 }`}
               >
                 <div className="flex justify-between items-start gap-2">
-                  <span className="text-xs font-medium uppercase text-[#5a5a5a] tracking-wide">
+                  <span className="text-xs font-medium uppercase text-paper-dim tracking-wide">
                     Q{i + 1} • {r.domain.replace(/_/g, " ")}
                     {r.subtopic ? ` • ${r.subtopic}` : ""}
                   </span>
                   <span
                     className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${
                       r.is_correct
-                        ? "bg-[#e6f7ee] text-[#0e6245] border border-[#8ed4b0]"
-                        : "bg-[#fdecea] text-[#b3261e] border border-[#f0a5a0]"
+                        ? "bg-sage/20 text-sage-light border border-sage/40"
+                        : "bg-heart/20 text-heart-light border border-heart/40"
                     }`}
                   >
                     {r.is_correct ? "Correct" : "Incorrect"}
                   </span>
                 </div>
 
-                <h3 className="text-sm font-medium text-[#0d0d0d]">{r.stem}</h3>
+                <h3 className="font-serif text-base font-normal text-paper leading-snug">{r.stem}</h3>
 
                 <div className="space-y-2 text-xs">
                   {r.choices.map((c) => {
                     const isUserPick = r.user_choice_ids.includes(c.id);
                     const isRight = c.is_correct;
 
-                    let choiceClass = "border-[#e5e5e5] bg-white text-[#0d0d0d]";
-                    if (isRight) choiceClass = "border-[#8ed4b0] bg-[#e6f7ee] text-[#0e6245] font-medium";
-                    else if (isUserPick && !isRight) choiceClass = "border-[#f0a5a0] bg-[#fdecea] text-[#b3261e] line-through";
+                    let choiceClass = "border-dark-border bg-dark-surface/60 text-paper-muted";
+                    if (isRight) choiceClass = "border-sage/60 bg-sage/20 text-sage-light font-semibold shadow-sage-glow";
+                    else if (isUserPick && !isRight) choiceClass = "border-heart/60 bg-heart/20 text-heart-light line-through";
 
                     return (
                       <div key={c.id} className={`p-3 rounded-xl border flex items-center justify-between ${choiceClass}`}>
                         <span>{c.text}</span>
-                        {isRight && <span className="text-[11px] font-bold text-[#0e6245] ml-2">✓ Correct</span>}
-                        {isUserPick && !isRight && <span className="text-[11px] font-bold text-[#b3261e] ml-2">✗ Your Pick</span>}
+                        {isRight && <span className="text-[11px] font-bold text-sage-light ml-2">✓ Correct</span>}
+                        {isUserPick && !isRight && <span className="text-[11px] font-bold text-heart-light ml-2">✗ Your Pick</span>}
                       </div>
                     );
                   })}
                 </div>
 
-                <div className="bg-white p-4 rounded-xl border border-[#e5e5e5] text-xs space-y-1">
-                  <p className="font-medium text-[#0d0d0d]">Explanation:</p>
-                  <p className="text-[#5a5a5a] leading-relaxed">{r.explanation}</p>
+                <div className="bg-dark-surface/70 p-4 rounded-xl border border-dark-border text-xs space-y-1">
+                  <p className="font-semibold text-paper">Explanation:</p>
+                  <p className="text-paper-muted leading-relaxed font-sans">{r.explanation}</p>
                 </div>
               </div>
             ))}

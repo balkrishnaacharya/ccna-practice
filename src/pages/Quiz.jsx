@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { useNavigate } from "react-router-dom";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const MODES = [
   { id: "easy", label: "Easy", desc: "No timer, fundamental concepts" },
@@ -10,7 +12,7 @@ const MODES = [
   { id: "exam", label: "Exam Mode", desc: "120-min full 100-Q timed simulation" },
 ];
 
-export default function Quiz() {
+export default function Quiz({ onOpenExamModal }) {
   const [mode, setMode] = useState("easy");
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -20,6 +22,10 @@ export default function Quiz() {
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const cardContainerRef = useRef(null);
+  const stemContainerRef = useRef(null);
+  const feedbackRef = useRef(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +33,77 @@ export default function Quiz() {
     loadQuestion();
   }, [mode]);
 
+  // Parallax Stack Transition when question updates
+  useGSAP(
+    () => {
+      if (!question || !cardContainerRef.current) return;
+
+      const tl = gsap.timeline();
+      // Outer card enters from bottom
+      tl.fromTo(
+        cardContainerRef.current,
+        { opacity: 0, y: 70 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }
+      );
+
+      // Inner stem moves with parallax speed difference (3D depth layer)
+      if (stemContainerRef.current) {
+        tl.fromTo(
+          stemContainerRef.current,
+          { opacity: 0, y: 25 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+          "-=0.35"
+        );
+      }
+    },
+    { dependencies: [question?.id] }
+  );
+
+  // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
+  useGSAP(
+    () => {
+      if (!feedback || !feedbackRef.current) return;
+
+      if (feedback.correct) {
+        // Sage pulse
+        gsap.fromTo(
+          feedbackRef.current,
+          { scale: 0.98, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.5)" }
+        );
+      } else {
+        // Heart pulse + micro-shake
+        const tl = gsap.timeline();
+        tl.fromTo(
+          feedbackRef.current,
+          { scale: 0.98, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out" }
+        ).to(feedbackRef.current, {
+          x: -6,
+          duration: 0.06,
+          repeat: 3,
+          yoyo: true,
+          ease: "power1.inOut",
+        });
+      }
+    },
+    { dependencies: [feedback] }
+  );
+
   async function loadQuestion() {
+    // If card exists, animate old card sliding UP and fading out
+    if (cardContainerRef.current && question) {
+      await new Promise((resolve) => {
+        gsap.to(cardContainerRef.current, {
+          opacity: 0,
+          y: -40,
+          duration: 0.25,
+          ease: "power2.in",
+          onComplete: resolve,
+        });
+      });
+    }
+
     setLoading(true);
     setFeedback(null);
     setSelected([]);
@@ -85,17 +161,14 @@ export default function Quiz() {
     }
   }
 
-  // Task 1: radio vs checkbox toggle logic
   function handleChoiceChange(choiceId, isMultiSelect) {
     if (isMultiSelect) {
-      // Checkbox behaviour: toggle
       if (selected.includes(choiceId)) {
         setSelected(selected.filter((id) => id !== choiceId));
       } else {
         setSelected([...selected, choiceId]);
       }
     } else {
-      // Radio behaviour: replace selection
       setSelected([choiceId]);
     }
   }
@@ -116,98 +189,104 @@ export default function Quiz() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       {/* Mode Selector Tabs */}
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
-          {MODES.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => setMode(m.id)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-colors duration-150 ${
-                mode === m.id
-                  ? "bg-[#4d6bfe] text-white shadow-sm"
-                  : "bg-white border border-[#e5e5e5] text-[#5a5a5a] hover:bg-[#f7f7f9] hover:text-[#0d0d0d]"
-              }`}
-            >
-              {m.label}
-            </button>
-          ))}
+          {MODES.map((m) => {
+            const isActive = mode === m.id;
+            return (
+              <button
+                key={m.id}
+                onClick={() => setMode(m.id)}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 ${
+                  isActive
+                    ? "bg-gold text-dark-bg font-semibold shadow-gold-glow"
+                    : "bg-dark-card border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface"
+                }`}
+              >
+                {m.label}
+              </button>
+            );
+          })}
         </div>
-        <p className="text-xs text-[#5a5a5a]">
+        <p className="text-xs text-paper-dim font-sans">
           {MODES.find((m) => m.id === mode)?.desc}
         </p>
       </div>
 
       {/* Exam Mode Launcher */}
       {mode === "exam" ? (
-        <div className="border border-[#e5e5e5] rounded-2xl p-8 bg-white text-center shadow-sm space-y-4">
-          <div className="w-12 h-12 bg-[#e8ecff] text-[#4d6bfe] rounded-full flex items-center justify-center mx-auto">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
+          <div className="w-14 h-14 bg-gold/15 text-gold border border-gold/30 rounded-full flex items-center justify-center mx-auto shadow-gold-glow">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-medium text-[#0d0d0d]">CCNA 2.0 Full Exam Simulator</h2>
-          <p className="text-sm text-[#5a5a5a] max-w-md mx-auto leading-relaxed">
+          <h2 className="font-serif text-2xl font-semibold text-paper">CCNA 2.0 Full Exam Simulator</h2>
+          <p className="text-sm text-paper-muted max-w-md mx-auto leading-relaxed">
             100 questions precisely weighted to the CCNA 2.0 blueprint. 120-minute countdown timer
             with no immediate feedback. Complete score and competency breakdown at the end.
           </p>
           <div className="pt-2">
             <button
-              onClick={() => navigate("/exam")}
-              className="px-6 py-3 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white font-medium text-sm rounded-full shadow-sm transition-colors duration-150"
+              onClick={onOpenExamModal || (() => navigate("/exam"))}
+              className="px-6 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold text-xs tracking-wider uppercase rounded-full shadow-gold-glow transition-all duration-150 transform hover:scale-105 active:scale-95"
             >
               Begin 120-Minute Exam →
             </button>
           </div>
         </div>
       ) : loading ? (
-        <div className="py-20 text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#4d6bfe] border-t-transparent"></div>
-          <p className="text-[#5a5a5a] text-sm mt-3">Loading question...</p>
+        <div className="py-24 text-center space-y-3">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
+          <p className="text-paper-muted text-sm font-sans">Loading question stem...</p>
         </div>
       ) : !question ? (
-        <div className="border border-[#e5e5e5] rounded-2xl p-8 bg-white text-center shadow-sm space-y-3">
-          <p className="text-[#5a5a5a] text-sm">No questions available for this mode.</p>
+        <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
+          <p className="text-paper-muted text-sm font-sans">No questions available for this mode.</p>
           <button
             onClick={loadQuestion}
-            className="px-5 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-sm font-medium transition-colors"
+            className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-colors shadow-gold-glow"
           >
             Retry
           </button>
         </div>
       ) : (
-        /* Practice Mode Card */
-        <div className="border border-[#e5e5e5] rounded-2xl p-5 sm:p-6 bg-white shadow-sm space-y-5">
-          <div className="flex flex-wrap justify-between items-start gap-3">
-            <div className="space-y-2">
+        /* Practice Mode Card with Parallax Stack */
+        <div
+          ref={cardContainerRef}
+          className="border border-dark-border rounded-2xl p-6 sm:p-7 bg-dark-card shadow-dock space-y-6 will-change-transform"
+        >
+          {/* Header & Badges */}
+          <div className="flex flex-wrap justify-between items-start gap-4">
+            <div ref={stemContainerRef} className="space-y-3 max-w-3xl">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-medium tracking-wide uppercase text-[#1a2a8a] bg-[#e8ecff] px-2.5 py-1 rounded-full">
+                <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                   {question.domain.replace(/_/g, " ")}
                 </span>
-                <span className="text-xs font-medium tracking-wide text-[#5a5a5a] capitalize bg-[#f7f7f9] border border-[#e5e5e5] px-2.5 py-1 rounded-full">
+                <span className="text-xs font-medium tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                   {question.difficulty}
                 </span>
-                {/* Task 1: hint badge */}
                 {question.multi_select && (
-                  <span className="text-xs font-medium text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-peach bg-peach/15 border border-peach/30 px-3 py-1 rounded-full">
                     Select all that apply
                   </span>
                 )}
               </div>
-              <h2 className="text-lg font-medium text-[#0d0d0d] leading-relaxed pt-1">
+              <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper leading-relaxed pt-1">
                 {question.stem}
               </h2>
             </div>
 
             {/* Flag Button */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <button
                 onClick={handleToggleFlag}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-colors duration-150 ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-150 ${
                   isFlagged
-                    ? "bg-amber-100 text-amber-900 border-amber-300"
-                    : "bg-white text-[#5a5a5a] border-[#e5e5e5] hover:bg-[#f7f7f9] hover:text-[#0d0d0d]"
+                    ? "bg-gold/20 text-gold border-gold shadow-gold-glow font-semibold"
+                    : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
                 }`}
                 title={isFlagged ? "Click to unflag" : "Flag this question"}
               >
@@ -224,7 +303,7 @@ export default function Quiz() {
               {isFlagged && (
                 <button
                   onClick={() => setShowNoteInput(!showNoteInput)}
-                  className="text-xs text-[#4d6bfe] hover:underline block mt-1.5 text-right w-full"
+                  className="text-xs text-gold hover:underline block mt-1.5 text-right w-full"
                 >
                   {showNoteInput ? "Close note" : flagNote ? "Edit note" : "+ Add note"}
                 </button>
@@ -234,19 +313,19 @@ export default function Quiz() {
 
           {/* Flag Note Form */}
           {showNoteInput && isFlagged && (
-            <form onSubmit={handleSaveNote} className="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs space-y-2">
-              <label className="block font-medium text-amber-900">Personal Review Note:</label>
+            <form onSubmit={handleSaveNote} className="bg-dark-surface p-4 rounded-xl border border-dark-border text-xs space-y-2">
+              <label className="block font-medium text-gold">Personal Review Note:</label>
               <input
                 type="text"
                 value={flagNote}
                 onChange={(e) => setFlagNote(e.target.value)}
                 placeholder="e.g. Review OSPF LSAs and area border router rules"
-                className="w-full px-3 py-2 border border-amber-300 rounded-xl text-xs bg-white focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-dark-border rounded-xl text-xs bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
               />
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-full font-medium"
+                  className="px-4 py-1.5 bg-gold hover:bg-gold-hover text-dark-bg rounded-full font-semibold"
                 >
                   Save Note
                 </button>
@@ -254,7 +333,7 @@ export default function Quiz() {
             </form>
           )}
 
-          {/* Task 1: render radio or checkbox based on multi_select */}
+          {/* Choices list */}
           <div className="space-y-3">
             {question.choices.map((c) => {
               const isChecked = selected.includes(c.id);
@@ -262,67 +341,66 @@ export default function Quiz() {
               return (
                 <label
                   key={c.id}
-                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-colors duration-150 ${
+                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 ${
                     isChecked
-                      ? "border-[#4d6bfe] bg-[#e8ecff] text-[#1a2a8a]"
-                      : "border-[#e5e5e5] hover:border-[#4d6bfe] text-[#0d0d0d] bg-white"
+                      ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
+                      : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
                   } ${feedback ? "pointer-events-none" : ""}`}
                 >
                   <div className="flex items-start">
                     <input
                       type={inputType}
                       name={`q-${question.id}`}
-                      className={`mt-0.5 mr-3.5 text-[#4d6bfe] focus:ring-[#4d6bfe] ${inputType === "checkbox" ? "rounded" : ""}`}
+                      className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
+                        inputType === "checkbox" ? "rounded" : ""
+                      }`}
                       checked={isChecked}
                       disabled={feedback !== null}
                       onChange={() => handleChoiceChange(c.id, question.multi_select)}
                     />
-                    <span className="leading-relaxed select-none">{c.text}</span>
+                    <span className="leading-relaxed select-none font-sans">{c.text}</span>
                   </div>
                 </label>
               );
             })}
           </div>
 
-          {/* Submit / Next */}
+          {/* Submit / Next Button */}
           <div className="flex items-center gap-3 pt-2">
             {!feedback ? (
               <button
                 onClick={submit}
                 disabled={selected.length === 0}
-                className="w-full sm:w-auto px-6 py-3 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-sm font-medium disabled:opacity-40 transition-colors duration-150 shadow-sm"
+                className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
               >
                 Submit Answer
               </button>
             ) : (
               <button
                 onClick={loadQuestion}
-                className="w-full sm:w-auto px-6 py-3 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-sm font-medium transition-colors duration-150 shadow-sm"
+                className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
               >
                 Next Question →
               </button>
             )}
           </div>
 
-          {/* Feedback */}
+          {/* Feedback Section with Sage / Heart pulses */}
           {feedback && (
             <div
-              className={`p-5 rounded-2xl border space-y-2 ${
+              ref={feedbackRef}
+              className={`p-5 rounded-2xl border space-y-2 will-change-transform ${
                 feedback.correct
-                  ? "bg-[#e6f7ee] border-[#8ed4b0]"
-                  : "bg-[#fdecea] border-[#f0a5a0]"
+                  ? "bg-sage/15 border-sage text-sage-light shadow-sage-glow"
+                  : "bg-heart/15 border-heart text-heart-light shadow-heart-glow"
               }`}
             >
               <div className="flex items-center gap-2">
-                <span
-                  className={`text-sm font-semibold ${
-                    feedback.correct ? "text-[#0e6245]" : "text-[#b3261e]"
-                  }`}
-                >
+                <span className="text-sm font-semibold">
                   {feedback.correct ? "✓ Correct!" : "✗ Incorrect"}
                 </span>
               </div>
-              <p className="text-sm text-[#0d0d0d] leading-relaxed pt-1">
+              <p className="text-sm text-paper leading-relaxed pt-1 font-sans">
                 {feedback.explanation}
               </p>
             </div>

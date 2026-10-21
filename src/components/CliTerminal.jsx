@@ -107,7 +107,7 @@ export default function CliTerminal({ devices, onDevicesChange }) {
     <section className="flex h-[50vh] min-h-[320px] max-h-[calc(100dvh-12rem)] flex-col overflow-hidden rounded-2xl border border-[#252a32] bg-[#101318] shadow-lg sm:h-[56vh] sm:max-h-none">
       <div className="flex shrink-0 items-center gap-2 overflow-x-auto border-b border-[#2b3038] bg-[#191d24] p-2.5">
         {deviceNames.map((name) => (
-          <button key={name} onClick={() => { setActiveDevice(name); inputRef.current?.focus(); }} className={`min-w-14 rounded-lg px-4 py-2 font-mono text-sm font-semibold ${activeDevice === name ? "bg-[#4d6bfe] text-white" : "bg-[#282e37] text-[#c4cad4] hover:bg-[#353c48]"}`}>{name}</button>
+          <button key={name} onClick={() => { setActiveDevice(name); inputRef.current?.focus(); }} className={`min-w-14 rounded-lg px-4 py-2 font-mono text-sm font-semibold transition-all ${activeDevice === name ? "bg-gold text-dark-bg shadow-gold-glow" : "bg-[#282e37] text-paper-muted hover:bg-[#353c48]"}`}>{name}</button>
         ))}
         <span className="ml-auto hidden pr-2 font-mono text-xs text-[#858d99] sm:inline">IOS command line</span>
       </div>

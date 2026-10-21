@@ -39,22 +39,24 @@ export default function Review() {
       : flags.filter((f) => f.domain === filterDomain);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-[#0d0d0d]">Review Queue</h1>
-          <p className="text-sm text-[#5a5a5a] mt-1">
+          <h1 className="font-serif text-3xl font-semibold tracking-tight text-paper">
+            Review Queue
+          </h1>
+          <p className="text-sm text-paper-muted mt-1 font-sans">
             Questions flagged during practice sessions and exams.
           </p>
         </div>
 
         {flags.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#5a5a5a] font-medium tracking-wide">Domain:</span>
+            <span className="text-xs text-paper-dim font-medium tracking-wide">Domain:</span>
             <select
               value={filterDomain}
               onChange={(e) => setFilterDomain(e.target.value)}
-              className="text-xs border border-[#e5e5e5] rounded-xl px-3 py-2 bg-white text-[#0d0d0d] focus:outline-none focus:ring-1 focus:ring-[#4d6bfe]"
+              className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
             >
               <option value="all">All Domains ({flags.length})</option>
               {domains.map((d) => (
@@ -68,15 +70,15 @@ export default function Review() {
       </div>
 
       {loading ? (
-        <div className="py-20 text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#4d6bfe] border-t-transparent"></div>
-          <p className="text-[#5a5a5a] text-sm mt-3">Loading review queue...</p>
+        <div className="py-24 text-center space-y-3">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
+          <p className="text-paper-muted text-sm font-sans">Loading review queue...</p>
         </div>
       ) : flags.length === 0 ? (
-        <div className="border border-[#e5e5e5] rounded-2xl p-12 bg-white text-center shadow-sm space-y-3">
-          <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto">
+        <div className="border border-dark-border rounded-2xl p-12 bg-dark-card text-center shadow-dock space-y-4">
+          <div className="w-14 h-14 bg-gold/15 text-gold border border-gold/30 rounded-full flex items-center justify-center mx-auto shadow-gold-glow">
             <svg
-              className="w-6 h-6"
+              className="w-7 h-7"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -89,16 +91,16 @@ export default function Review() {
               />
             </svg>
           </div>
-          <h3 className="text-base font-medium text-[#0d0d0d]">
+          <h3 className="font-serif text-xl font-medium text-paper">
             No flagged questions yet
           </h3>
-          <p className="text-sm text-[#5a5a5a] max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-paper-muted max-w-sm mx-auto leading-relaxed font-sans">
             Whenever you encounter a tricky question during practice or exam simulations, tap the "Flag" button to study it here.
           </p>
           <div className="pt-2">
             <Link
               to="/quiz"
-              className="px-6 py-2.5 bg-[#4d6bfe] hover:bg-[#3b59e9] text-white rounded-full text-xs font-medium tracking-wide shadow-sm transition-colors duration-150 inline-block"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase shadow-gold-glow transition-all duration-150 inline-block"
             >
               Start Practicing Questions
             </Link>
@@ -109,21 +111,21 @@ export default function Review() {
           {filteredFlags.map((f) => (
             <div
               key={f.id}
-              className="border border-[#e5e5e5] rounded-2xl p-5 bg-white shadow-sm space-y-4"
+              className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4"
             >
-              <div className="flex flex-wrap justify-between items-start gap-2">
+              <div className="flex flex-wrap justify-between items-start gap-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium tracking-wide uppercase text-[#1a2a8a] bg-[#e8ecff] px-2.5 py-1 rounded-full">
-                    {f.domain.replace("_", " ")}
+                  <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                    {f.domain.replace(/_/g, " ")}
                   </span>
-                  <span className="text-xs font-medium tracking-wide text-[#5a5a5a] capitalize bg-[#f7f7f9] border border-[#e5e5e5] px-2.5 py-1 rounded-full">
+                  <span className="text-xs font-medium tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                     {f.difficulty}
                   </span>
                 </div>
 
                 <button
                   onClick={() => handleUnflag(f.question_id)}
-                  className="text-xs font-medium text-[#5a5a5a] hover:text-[#b3261e] px-3 py-1 rounded-full border border-[#e5e5e5] hover:border-red-200 transition-colors duration-150 flex items-center gap-1"
+                  className="text-xs font-medium text-paper-dim hover:text-heart-light px-3.5 py-1.5 rounded-full border border-dark-border hover:border-heart/40 transition-colors flex items-center gap-1.5"
                   title="Remove from review queue"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +135,7 @@ export default function Review() {
                 </button>
               </div>
 
-              <h2 className="text-base font-medium text-[#0d0d0d] leading-relaxed">
+              <h2 className="font-serif text-lg font-normal text-paper leading-relaxed">
                 {f.stem}
               </h2>
 
@@ -143,15 +145,15 @@ export default function Review() {
                   {f.choices.map((c) => (
                     <div
                       key={c.id}
-                      className={`p-3 rounded-xl border flex items-center justify-between ${
+                      className={`p-3.5 rounded-xl border flex items-center justify-between ${
                         c.is_correct
-                          ? "bg-[#e6f7ee] border-[#8ed4b0] text-[#0e6245] font-medium"
-                          : "bg-[#f7f7f9] border-[#e5e5e5] text-[#5a5a5a]"
+                          ? "bg-sage/20 border-sage/50 text-sage-light font-semibold shadow-sage-glow"
+                          : "bg-dark-surface/60 border-dark-border text-paper-muted"
                       }`}
                     >
-                      <span>{c.text}</span>
+                      <span className="font-sans">{c.text}</span>
                       {c.is_correct && (
-                        <span className="text-[#0e6245] text-[11px] font-bold ml-2">
+                        <span className="text-sage-light text-[11px] font-bold ml-2">
                           ✓ Correct
                         </span>
                       )}
@@ -162,16 +164,16 @@ export default function Review() {
 
               {/* Technical Explanation */}
               {f.explanation && (
-                <div className="bg-[#e8ecff]/40 p-4 rounded-xl border border-[#e8ecff] text-xs space-y-1">
-                  <p className="font-medium text-[#1a2a8a]">Explanation:</p>
-                  <p className="text-[#5a5a5a] leading-relaxed">{f.explanation}</p>
+                <div className="bg-dark-surface/70 p-4 rounded-xl border border-dark-border text-xs space-y-1">
+                  <p className="font-semibold text-paper">Explanation:</p>
+                  <p className="text-paper-muted leading-relaxed font-sans">{f.explanation}</p>
                 </div>
               )}
 
               {/* Custom Note if any */}
               {f.note && (
-                <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-center gap-2">
-                  <span className="font-medium">Note:</span>
+                <div className="bg-peach/10 p-3.5 rounded-xl border border-peach/30 text-xs text-peach flex items-center gap-2">
+                  <span className="font-semibold">Note:</span>
                   <span>{f.note}</span>
                 </div>
               )}

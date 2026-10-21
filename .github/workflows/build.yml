@@ -48,6 +48,9 @@ jobs:
         run: npx tauri icon src-tauri/icons/icon.png
 
       - name: Build Tauri app
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: npm run tauri -- build
 
       - name: Upload build bundles
@@ -103,12 +106,77 @@ jobs:
       - name: Build Android app
         run: npm run tauri -- android build --apk --target aarch64
 
+      - name: Sign and verify Android APK
+        env:
+          ANDROID_KEY_BASE64: ${{ secrets.ANDROID_KEY_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          # Locate unsigned APK
+          UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/ -type f -name "*release*.apk" | head -n 1)
+          if [ -z "$UNSIGNED_APK" ] || [ ! -f "$UNSIGNED_APK" ]; then
+            echo "ERROR: No release APK found in build outputs!"
+            exit 1
+          fi
+          echo "Found release APK at: $UNSIGNED_APK"
+
+          # Fail-closed check: Secrets must be present to publish/sign APK
+          if [ -z "${ANDROID_KEY_BASE64:-}" ] || [ -z "${ANDROID_KEYSTORE_PASSWORD:-}" ] || [ -z "${ANDROID_KEY_ALIAS:-}" ] || [ -z "${ANDROID_KEY_PASSWORD:-}" ]; then
+            if [ "${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') }}" = "true" ]; then
+              echo "ERROR: Android signing secrets (ANDROID_KEY_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD) are missing for release build! Fail-closed."
+              exit 1
+            else
+              echo "WARNING: Signing secrets not configured. Skipping signing on non-release branch."
+              rm -f "$UNSIGNED_APK"
+              exit 0
+            fi
+          fi
+
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          KEYSTORE_FILE=$(mktemp /tmp/release-keystore.XXXXXX.jks)
+          ALIGNED_APK="/tmp/aligned.apk"
+          FINAL_APK_DIR="src-tauri/gen/android/app/build/outputs/apk/release"
+          FINAL_APK="$FINAL_APK_DIR/ccna-practice-v0.2.0-android-aarch64.apk"
+
+          mkdir -p "$FINAL_APK_DIR"
+
+          # Decode keystore
+          echo "$ANDROID_KEY_BASE64" | base64 -d > "$KEYSTORE_FILE"
+
+          # Zipalign unsigned APK
+          echo "Aligning APK..."
+          "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED_APK" "$ALIGNED_APK"
+
+          # Sign APK
+          echo "Signing APK with apksigner..."
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$KEYSTORE_FILE" \
+            --ks-pass "pass:$ANDROID_KEYSTORE_PASSWORD" \
+            --ks-key-alias "$ANDROID_KEY_ALIAS" \
+            --key-pass "pass:$ANDROID_KEY_PASSWORD" \
+            --out "$FINAL_APK" \
+            "$ALIGNED_APK"
+
+          # Cryptographic verification - Fail closed
+          echo "Verifying signature with apksigner..."
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$FINAL_APK"
+
+          # Clean up temporary keystore and intermediate files
+          rm -f "$KEYSTORE_FILE" "$ALIGNED_APK"
+          # Remove original unsigned APK to prevent accidental upload
+          rm -f "$UNSIGNED_APK"
+
+          echo "Successfully created and cryptographically verified: $FINAL_APK"
+
       - name: Upload Android APKs
         uses: actions/upload-artifact@v4
         with:
           name: app-bundle-android
-          path: src-tauri/gen/android/app/build/outputs/**/*.apk
-          if-no-files-found: error
+          path: src-tauri/gen/android/app/build/outputs/apk/release/ccna-practice-*.apk
+          if-no-files-found: ignore
 
   release:
     name: Publish beta release
@@ -128,7 +196,7 @@ jobs:
             gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' |
               while IFS= read -r asset; do
                 case "$asset" in
-                  *.AppImage|*.deb|*.rpm|*.msi|*.exe|*.apk) ;;
+                  *.AppImage|*.deb|*.rpm|*.msi|*.exe|*android*.apk) ;;
                   *) gh release delete-asset "$RELEASE_TAG" "$asset" --repo "$GITHUB_REPOSITORY" --yes ;;
                 esac
               done
@@ -156,4 +224,4 @@ jobs:
             release-assets/**/*.rpm
             release-assets/**/*.msi
             release-assets/**/*.exe
-            release-assets/**/*.apk
+            release-assets/**/*-android-*.apk

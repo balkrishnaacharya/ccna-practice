@@ -10,13 +10,27 @@ import ExamHistory from "./pages/ExamHistory";
 import SessionReview from "./pages/SessionReview";
 import Notes from "./pages/Notes";
 import PracticalExam from "./pages/PracticalExam";
+import FloatingBottomNav from "./components/FloatingBottomNav";
+import ExamConfirmationModal from "./components/ExamConfirmationModal";
+import OrganicMeshBackground from "./components/OrganicMeshBackground";
+import SplashSequence from "./components/SplashSequence";
+import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
+import { useUpdater } from "./utils/useUpdater";
+import UpdateModal from "./components/UpdateModal";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
   const [examProgress, setExamProgress] = useState({ active: false, unanswered: 0 });
   const [pendingNavigation, setPendingNavigation] = useState(null);
+  const [isExamModalOpen, setIsExamModalOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const updater = useUpdater({
+    autoCheck: true,
+    isExamActive: examProgress.active,
+  });
 
   const reportExamProgress = useCallback((active, unanswered) => {
     setExamProgress({ active, unanswered });
@@ -35,6 +49,11 @@ export default function App() {
     if (destination) navigate(destination);
   }
 
+  function handleStartExamConfirmed() {
+    setIsExamModalOpen(false);
+    navigate("/exam", { state: { started: true } });
+  }
+
   useEffect(() => {
     invoke("get_setting", { key: "profile_name" })
       .then((val) => {
@@ -43,227 +62,180 @@ export default function App() {
       .catch(console.error);
   }, []);
 
-  const navLinks = [
-    {
-      to: "/",
-      label: "Dashboard",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg>
-      ),
-    },
-    {
-      to: "/quiz",
-      label: "Practice",
-      fullLabel: "Practice Quiz",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
-    },
-    {
-      to: "/exam",
-      label: "Exam",
-      fullLabel: "Full Exam (120m)",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-    },
-    {
-      to: "/practical-exam",
-      label: "Practical",
-      fullLabel: "Practical Lab",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9h8m-8 4h5m-9 7h14a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
-    {
-      to: "/history",
-      label: "History",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-    },
-    {
-      to: "/notes",
-      label: "Notes",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
-        </svg>
-      ),
-    },
-    {
-      to: "/review",
-      label: "Review",
-      fullLabel: "Review Queue",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-        </svg>
-      ),
-    },
-    {
-      to: "/settings",
-      label: "Settings",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
-    },
+  const headerLinks = [
+    { to: "/", label: "Dashboard" },
+    { to: "/quiz", label: "Practice" },
+    { to: "/practical-exam", label: "Labs" },
+    { to: "/notes", label: "Notes" },
+    { to: "/history", label: "History" },
+    { to: "/review", label: "Review" },
   ];
 
   return (
-    <div className="min-h-screen bg-[#f7f7f9] text-[#0d0d0d] flex flex-col font-sans">
-      {/* Top Nav Bar (h-14 with px-4) */}
+    <div className="min-h-screen bg-dark-bg text-paper flex flex-col font-sans selection:bg-gold/30 selection:text-paper relative overflow-x-hidden">
+      {/* Background Organic Mesh Blobs */}
+      <OrganicMeshBackground />
+
+      {/* Opening Splash Sequence (Polpharma-inspired) */}
+      <SplashSequence />
+
+      {/* Top Editorial Nav Bar */}
       <nav
-        className="bg-white border-b border-[#e5e5e5] px-4 h-14 flex items-center justify-between sticky top-0 z-40 box-content"
+        className="bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 h-14 flex items-center justify-between sticky top-0 z-40 box-content"
         style={{ paddingTop: "var(--safe-top)" }}
       >
         <div className="flex items-center gap-6">
           <Link
             to="/"
             onClick={(event) => guardNavigation(event, "/")}
-            className="font-semibold text-base text-[#4d6bfe] tracking-tight flex items-center gap-2"
+            className="font-semibold text-base text-gold tracking-tight flex items-center gap-2 group"
           >
-            <span className="w-7 h-7 rounded-full bg-[#4d6bfe] text-white flex items-center justify-center text-xs font-bold">
+            <span className="w-7 h-7 rounded-full bg-gold text-dark-bg flex items-center justify-center text-xs font-bold shadow-gold-glow transition-transform group-hover:scale-105">
               2.0
             </span>
-            <span className="text-sm font-semibold tracking-wide text-[#0d0d0d]">
-              CCNA Practice
+            <span className="font-serif text-base tracking-wide text-paper">
+              CCNA <span className="italic text-gold font-normal">Practice</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden sm:flex items-center gap-1.5">
-            {navLinks.map((link) => {
+          {/* Desktop Navigation Links (subtle pill design) */}
+          <div className="hidden lg:flex items-center gap-1">
+            {headerLinks.map((link) => {
               const isActive = location.pathname === link.to;
               return (
                 <Link
                   key={link.to}
                   to={link.to}
                   onClick={(event) => guardNavigation(event, link.to)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-colors duration-150 ${
+                  className={`px-3 py-1 rounded-full text-xs font-medium tracking-wide transition-all duration-150 ${
                     isActive
-                      ? "bg-[#e8ecff] text-[#1a2a8a]"
-                      : "text-[#5a5a5a] hover:text-[#0d0d0d] hover:bg-[#f7f7f9]"
+                      ? "bg-gold/15 text-gold border border-gold/30 font-semibold"
+                      : "text-paper-muted hover:text-paper hover:bg-dark-surface"
                   }`}
                 >
-                  {link.fullLabel || link.label}
+                  {link.label}
                 </Link>
               );
             })}
           </div>
         </div>
 
-        {/* Right: Local Candidate Display Name Badge (desktop and tablet) */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Right Candidate Badge */}
+        <div className="flex items-center gap-3">
           <Link
             to="/settings"
             onClick={(event) => guardNavigation(event, "/settings")}
-            className="flex items-center gap-2 px-3 py-1 bg-[#f7f7f9] hover:bg-[#e8ecff] border border-[#e5e5e5] rounded-full text-xs font-medium text-[#5a5a5a] hover:text-[#1a2a8a] transition-colors duration-150"
+            className="flex items-center gap-2 px-3 py-1 bg-dark-card hover:bg-dark-surface border border-dark-border rounded-full text-xs font-medium text-paper-muted hover:text-gold transition-colors duration-150"
             title="Edit local candidate profile"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="w-2 h-2 rounded-full bg-sage shadow-sage-glow"></span>
             <span className="truncate max-w-[140px]">
               {profileName || "Candidate Profile"}
             </span>
-          </Link>
-        </div>
-
-        {/* Mobile top-right compact badge */}
-        <div className="sm:hidden flex items-center">
-          <Link
-            to="/settings"
-            onClick={(event) => guardNavigation(event, "/settings")}
-            className="w-8 h-8 rounded-full bg-[#e8ecff] text-[#1a2a8a] flex items-center justify-center text-xs font-semibold"
-            title={profileName || "Candidate Profile"}
-          >
-            {profileName ? profileName.slice(0, 1).toUpperCase() : "C"}
           </Link>
         </div>
       </nav>
 
       {/* Main Container */}
       <main
-        className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-24 sm:pb-8"
-        style={{ paddingBottom: "calc(var(--safe-bottom) + 5rem)" }}
+        className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 sm:pb-32"
+        style={{ paddingBottom: "calc(var(--safe-bottom) + 6.5rem)" }}
       >
-        <Routes>
-          <Route path="/" element={<Dashboard profileName={profileName} />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/exam" element={<Exam onProgressChange={reportExamProgress} />} />
-          <Route path="/practical-exam" element={<PracticalExam />} />
-          <Route path="/history" element={<ExamHistory />} />
-          <Route path="/history/:sessionId" element={<SessionReview />} />
-          <Route path="/notes" element={<Notes />} />
-          <Route path="/review" element={<Review />} />
-          <Route
-            path="/settings"
-            element={<Settings onProfileChange={setProfileName} />}
-          />
-        </Routes>
+        <DirectionalRouteWrapper>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Dashboard
+                  profileName={profileName}
+                  onOpenExamModal={() => setIsExamModalOpen(true)}
+                />
+              }
+            />
+            <Route
+              path="/quiz"
+              element={<Quiz onOpenExamModal={() => setIsExamModalOpen(true)} />}
+            />
+            <Route
+              path="/exam"
+              element={<Exam onProgressChange={reportExamProgress} />}
+            />
+            <Route path="/practical-exam" element={<PracticalExam />} />
+            <Route path="/history" element={<ExamHistory />} />
+            <Route path="/history/:sessionId" element={<SessionReview />} />
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/review" element={<Review />} />
+            <Route
+              path="/settings"
+              element={
+                <Settings
+                  onProfileChange={setProfileName}
+                  updater={updater}
+                />
+              }
+            />
+          </Routes>
+        </DirectionalRouteWrapper>
       </main>
 
-      {/* Mobile Bottom Tab Bar (fixed bottom-0 inset-x-0 h-16 bg-white border-t) */}
-      <nav
-        className="sm:hidden fixed bottom-0 inset-x-0 h-16 bg-white border-t border-[#e5e5e5] flex items-center justify-start overflow-x-auto z-50 px-2"
-        style={{ paddingBottom: "var(--safe-bottom)" }}
-      >
-        {navLinks.map((link) => {
-          const isActive = location.pathname === link.to;
-          return (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={(event) => guardNavigation(event, link.to)}
-              className={`flex min-w-[60px] flex-none flex-col items-center justify-center py-1 rounded-xl transition-colors duration-150 ${
-                isActive
-                  ? "text-[#4d6bfe] font-semibold"
-                  : "text-[#5a5a5a] hover:text-[#0d0d0d]"
-              }`}
-            >
-              <div
-                className={`p-1 rounded-full transition-colors ${
-                  isActive ? "bg-[#e8ecff]" : ""
-                }`}
-              >
-                {link.icon}
-              </div>
-              <span className="text-[10px] font-medium tracking-tight mt-0.5">
-                {link.label}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
+      {/* Floating Bottom Navigation Pill Dock (Universal across all screens) */}
+      <FloatingBottomNav
+        onOpenExamModal={() => setIsExamModalOpen(true)}
+        guardNavigation={guardNavigation}
+      />
 
+      {/* GSAP-Animated Exam Confirmation Modal */}
+      <ExamConfirmationModal
+        isOpen={isExamModalOpen}
+        onCancel={() => setIsExamModalOpen(false)}
+        onConfirm={handleStartExamConfirmed}
+      />
+
+      {/* Application Update Modal */}
+      <UpdateModal
+        isOpen={updater.showModal}
+        updateInfo={updater.updateInfo}
+        status={updater.status}
+        downloadProgress={updater.downloadProgress}
+        onClose={() => updater.setShowModal(false)}
+        onApply={updater.applyUpdate}
+      />
+
+      {/* Leave Exam Modal Guard */}
       {pendingNavigation && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4">
-          <div role="dialog" aria-modal="true" aria-labelledby="leave-exam-title" className="w-full max-w-md space-y-4 rounded-2xl border border-[#e5e5e5] bg-white p-6 shadow-xl">
-            <h2 id="leave-exam-title" className="text-lg font-semibold">Leave this exam?</h2>
-            <p className="text-sm leading-relaxed text-[#5a5a5a]">You have {examProgress.unanswered} unanswered question{examProgress.unanswered === 1 ? "" : "s"}. Are you sure you want to leave?</p>
-            <div className="flex justify-end gap-3">
-              <button onClick={() => setPendingNavigation(null)} className="rounded-full border border-[#e5e5e5] px-4 py-2 text-sm text-[#5a5a5a]">Stay in exam</button>
-              <button onClick={leaveExam} className="rounded-full bg-[#4d6bfe] px-4 py-2 text-sm font-medium text-white">Leave exam</button>
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="leave-exam-title"
+            className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
+          >
+            <h2 id="leave-exam-title" className="font-serif text-xl font-semibold text-paper">
+              Leave this exam?
+            </h2>
+            <p className="text-sm leading-relaxed text-paper-muted font-sans">
+              You have {examProgress.unanswered} unanswered question
+              {examProgress.unanswered === 1 ? "" : "s"}. Are you sure you want to exit? Your timer will stop and progress will be lost.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setPendingNavigation(null)}
+                className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+              >
+                Stay in exam
+              </button>
+              <button
+                type="button"
+                onClick={leaveExam}
+                className="rounded-full bg-heart hover:bg-heart-hover px-5 py-2 text-xs font-semibold text-paper shadow-heart-glow transition-colors"
+              >
+                Leave exam
+              </button>
             </div>
           </div>
         </div>
       )}
-
-      <footer className="hidden sm:block border-t border-[#e5e5e5] bg-white py-4 text-center text-xs text-[#5a5a5a]">
-        CCNA 2.0 Local-First Practice App • Cross-Platform (Desktop + Android)
-      </footer>
     </div>
   );
 }
