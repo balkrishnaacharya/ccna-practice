@@ -63,6 +63,7 @@ jobs:
   android:
     name: Build on Android
     runs-on: ubuntu-latest
+    environment: apk_key
 
     steps:
       - name: Check out repository
