@@ -1,120 +1,113 @@
-# CCNA 2.0 Practice — Cross-Platform Starter (Tauri 2.0)
+# CCNA 2.0 Practice — Cross-Platform (Tauri 2.0)
 
-A local-first CCNA 2.0 practice app that runs on **Windows, Linux, and Android** from a single codebase.
+A local-first, privacy-focused CCNA 2.0 practice application running natively on **Windows, Linux, and Android** from a unified codebase.
 
-## Stack
+[![Release](https://img.shields.io/github/v/release/balkrishnaacharya/ccna-practice?include_prereleases&label=Latest%20Release)](https://github.com/balkrishnaacharya/ccna-practice/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/balkrishnaacharya/ccna-practice/build.yml?label=CI%2FCD)](https://github.com/balkrishnaacharya/ccna-practice/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- **Tauri 2.0** — cross-platform shell (desktop + Android from one codebase)
-- **React + Vite + Tailwind** — frontend UI
-- **Rust + rusqlite** — local SQLite database, zero server needed
-- **Antigravity subagents** — question generation pipeline
+---
 
-## Why Tauri 2.0?
+## Downloads (Latest Release: [v0.2.0-beta.2](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.2.0-beta.2))
 
-| | Tauri 2.0 | Electron | Capacitor | Flutter |
-|---|---|---|---|---|
-| Windows / Linux | ✅ | ✅ | ✅ (via Electron host) | ✅ |
-| Android | ✅ | ❌ | ✅ | ✅ |
-| Bundle size | ~5–10 MB | ~100–150 MB | WebView-based | ~15–20 MB |
-| Memory (idle) | ~30–40 MB | ~200–300 MB | N/A | ~50 MB |
-| Frontend stack | Any web stack | Any web stack | Any web stack | Dart only |
+| Platform | Format | Direct Download |
+|---|---|---|
+| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.2.0-beta.2-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/ccna-practice-v0.2.0-beta.2-android-aarch64.apk) |
+| **Linux** | AppImage | [CCNA.Practice_0.2.0_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_amd64.AppImage) |
+| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.2.0_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_amd64.deb) |
+| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.2.0-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice-0.2.0-1.x86_64.rpm) |
+| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.2.0_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_x64-setup.exe) |
+| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.2.0_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_x64_en-US.msi) |
 
-Tauri 2.0 is the only option that gives you **native desktop + Android from the same web frontend** with a tiny binary. Capacitor is the fallback if you want an App Store–friendly Android build; Flutter is the alternative if you prefer Dart over React.
+---
 
-## Quick Start (Desktop)
+## Key Features
 
+- **Dark-First Editorial Aesthetic:** Editorial dark palette (`#181815` warm dark, `#B8842A` agent gold, `#5C6E4E` sage, `#C1633C` heart) paired with high-contrast serif typography (`Playfair Display`) and clean sans-serif (`Inter`).
+- **Polpharma-Inspired Splash Animation:** Smooth opening identity sequence with micro-interactions powered by GSAP.
+- **Directional Navigation & Floating Dock:** Hierarchy-aware transitions and responsive elevated action trigger dock.
+- **Timed Exam Engine:** Full 120-minute blueprint-weighted mock exams (25% Network Fundamentals, 25% Network Access, 20% IP Connectivity, 20% IP Services & Security, 10% Automation/AI-Ops) with modal confirmation guards.
+- **Local-First SQLite Engine:** All question banks, progress metrics, and review histories persist entirely offline via Rust (`rusqlite`). No server or network connectivity required.
+- **Spaced Anti-Repeat & Randomization:** Weighted decay algorithm ensures question bank coverage while randomizing choice placement (`ORDER BY RANDOM()`).
+- **Cryptographically Signed Releases:** Fail-closed Android signing pipeline with pinned certificate fingerprints (v2/v3 signature schemes).
+
+---
+
+## Tech Stack
+
+- **Desktop & Android Shell:** [Tauri 2.0](https://v2.tauri.app/) (Rust + Webview)
+- **Frontend UI:** React 18, Vite, Tailwind CSS
+- **Animation & Motion:** GSAP 3 (`@gsap/react`, `useGSAP`, `ScrollTrigger`)
+- **Database:** Local SQLite 3 via `rusqlite`
+- **Testing:** Node.js native test runner (`node:test`)
+- **CI/CD:** GitHub Actions with automated cross-platform bundling & release publishing
+
+---
+
+## Quick Start (Local Development)
+
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **Rust Toolchain:** [rustup.rs](https://rustup.rs)
+- **Tauri CLI:**
+  ```bash
+  cargo install tauri-cli --version "^2.0.0"
+  ```
+
+### 2. Install Dependencies
 ```bash
-# 1. Install prerequisites
-#    Rust: https://rustup.rs
-#    Node: https://nodejs.org
-#    Tauri CLI: cargo install tauri-cli --version "^2.0.0"
-
-# 2. Install dependencies
 npm install
+```
 
-# 3. Run in dev mode (hot reload)
+### 3. Run Development Server
+```bash
 npm run tauri dev
+```
 
-# 4. Build production binaries
+### 4. Run Automated Tests
+```bash
+npm test
+```
+
+### 5. Build Desktop Installers
+```bash
 npm run tauri build
 ```
 
-The SQLite database is created automatically at:
+---
 
-- **Windows:** `%APPDATA%\ccna-practice\ccna.db`
-- **Linux:** `~/.local/share/ccna-practice/ccna.db`
-- **Android:** app-private storage
+## Android Build & Signing
 
-## Android Build
+A dedicated script is included in [`release-apk/build-apk.sh`](release-apk/build-apk.sh):
 
-```
-# 1. Install Android SDK + NDK (via Android Studio)
-# 2. Set environment variables
-export ANDROID_HOME=$HOME/Android/Sdk
-export NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
+```bash
+# Debug build (local development with debug keystore)
+./release-apk/build-apk.sh
 
-# 3. Initialize Android project (first time only)
-npm run tauri android init
-
-# 4. Run on emulator or device
-npm run tauri android dev
-
-# 5. Build APK
-npm run tauri android build
+# Production release build (strict fail-closed verification)
+./release-apk/build-apk.sh --mode release \
+  --keystore /path/to/release.keystore \
+  --alias my-key-alias \
+  --keystore-pass "mypassword" \
+  --key-pass "mypassword" \
+  --fingerprint "adb796a991cf024a98b77129a0f00606a51aebbd0ca1a6744700f5a0bdc275c5"
 ```
 
-## Question Pipeline
+For full details regarding keystore generation, manual commands, and CI configuration, see the [Android Build & Signing Guide](release-apk/README.md).
 
-The `pipeline/` folder contains a Node script that imports questions into SQLite.
+---
 
-```
-# Generate AI questions (requires Antigravity agent)
-# — see .agents/agents/question-generator.md
+## Question Import Pipeline
 
-# Or import from a JSON file
-node pipeline/import-questions.js questions.json
-```
+You can seed or update the local question database via the included importer:
 
-## Project Structure
-
-```
-.
-├── src/                      # React frontend
-│   ├── components/           # UI components
-│   ├── pages/                # Screens (Dashboard, Quiz, Review)
-│   └── lib/                  # API wrappers
-├── src-tauri/                # Rust backend
-│   ├── src/
-│   │   ├── main.rs           # Tauri entry point
-│   │   ├── db.rs             # SQLite schema + queries
-│   │   └── commands.rs       # Tauri IPC commands
-│   └── Cargo.toml
-├── pipeline/                 # Question import scripts
-├── .agents/agents/           # Antigravity subagent definitions
-├── skills/                   # Antigravity skills
-├── mcp_config.json           # MCP server config for Antigravity
-└── questions.sample.json     # Sample question bank
+```bash
+# Import questions from a JSON file into ccna.db
+node pipeline/import-questions.js questions.sample.json
 ```
 
-## Antigravity Setup
-
-1. Open this folder in Antigravity IDE.
-2. Copy `mcp_config.json` to `~/.gemini/antigravity/mcp_config.json` (merge with existing).
-3. The subagents in `.agents/agents/` are auto-discovered.
-4. Use `/browser` slash command for scraping tasks.
-
-## Difficulty Modes
-
-| Mode ↕▾ | How it works ↕▾ |
-|---|---|
-| −Easy | `difficulty = 'easy'`, no timer |
-| Medium | `difficulty = 'medium'`, 90s/question |
-| Hard | `difficulty = 'hard'`, 60s/question |
-| Impossible | Hardest questions, multi-select, no partial credit |
-| Exam-like | Timed 120min, weighted by blueprint (25/25/20/20/10) |
-⚙
+---
 
 ## License
 
-MIT — use it, fork it, ship it.
-
+MIT License — see [LICENSE](LICENSE) for details.
