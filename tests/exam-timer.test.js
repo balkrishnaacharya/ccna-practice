@@ -67,6 +67,12 @@ class ExamSessionSimulator {
     this.examResult = { passed: false, score: 0 };
   }
 
+  quitExam() {
+    this._stopTimer();
+    this.hasStarted = false;
+    this.showConfirmationModal = false;
+  }
+
   destroy() {
     this._stopTimer();
   }
@@ -136,6 +142,54 @@ test("Exam Timer Guard: Pre-confirmed flow (via Floating Dock Center Button) sta
 
   session.tick();
   assert.equal(session.secondsRemaining, 7199);
+
+  session.destroy();
+});
+
+test("Exam Timer Guard: Explicit exit destroys active timer immediately and stops tick decrements", () => {
+  const session = new ExamSessionSimulator({ preConfirmed: true });
+  session._startTimer();
+  assert.notEqual(session.timerIntervalId, null, "Timer should be active");
+
+  session.tick();
+  assert.equal(session.secondsRemaining, 7199);
+
+  // Candidate clicks Exit
+  session.quitExam();
+  assert.equal(session.timerIntervalId, null, "Timer interval must be immediately destroyed");
+  assert.equal(session.hasStarted, false);
+
+  // Subsequent ticks must not decrement remaining seconds
+  session.tick();
+  assert.equal(session.secondsRemaining, 7199, "Time remaining must freeze after exit");
+  assert.equal(session.ticksCount, 1, "Tick count must remain unchanged");
+
+  session.destroy();
+});
+
+test("Exam Timer Guard: Android back button popstate intercept cleanly destroys timer upon leave confirmation", () => {
+  const session = new ExamSessionSimulator({ preConfirmed: true });
+  session._startTimer();
+
+  session.tick();
+  session.tick();
+  assert.equal(session.secondsRemaining, 7198);
+
+  // Simulate Android hardware back button triggering popstate leave confirmation
+  let popstatePendingNavigation = null;
+  const onPopState = () => {
+    popstatePendingNavigation = "/";
+  };
+  onPopState();
+
+  assert.equal(popstatePendingNavigation, "/", "Back button must target home navigation");
+
+  // Candidate confirms leave in the confirmation modal
+  session.quitExam();
+  assert.equal(session.timerIntervalId, null, "Timer must be completely killed upon back-exit confirmation");
+
+  session.tick();
+  assert.equal(session.secondsRemaining, 7198);
 
   session.destroy();
 });

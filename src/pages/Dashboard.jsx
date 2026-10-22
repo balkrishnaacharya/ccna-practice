@@ -12,6 +12,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [flagCount, setFlagCount] = useState(0);
   const navigate = useNavigate();
 
+  const containerRef = useRef(null);
   const domainContainerRef = useRef(null);
   const heroRef = useRef(null);
 
@@ -27,34 +28,37 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       if (!stats) return;
 
       // Animate Hero entrance
-      gsap.fromTo(
-        heroRef.current,
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }
-      );
+      if (heroRef.current) {
+        gsap.fromTo(
+          heroRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", force3D: true }
+        );
+      }
 
       // Parallax scroll on domain breakdown items
-      const cards = gsap.utils.toArray(".domain-row");
+      const cards = gsap.utils.toArray(".domain-row", containerRef.current);
       cards.forEach((card, i) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 35 },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.5,
-            delay: i * 0.08,
-            ease: "power3.out",
+            duration: 0.35,
+            delay: i * 0.05,
+            ease: "power2.out",
+            force3D: true,
             scrollTrigger: {
               trigger: card,
-              start: "top 92%",
+              start: "top 95%",
               toggleActions: "play none none none",
             },
           }
         );
       });
     },
-    { dependencies: [stats] }
+    { scope: containerRef, dependencies: [stats] }
   );
 
   if (!stats) {
@@ -77,10 +81,11 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div ref={containerRef} className="space-y-8 pb-12">
       {/* Greeting Banner */}
       <div
         ref={heroRef}
+        data-tour="home-welcome"
         className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-dark-surface via-dark-card to-[#2A2A23] border border-dark-border shadow-dock relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
@@ -127,7 +132,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       </div>
 
       {/* Primary KPI Cards - Responsive: 1 col on mobile (375px), 2 col on sm, 4 col on desktop (1024px+) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div data-tour="dashboard-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           label="Question Bank"
           value={stats.total}
@@ -160,6 +165,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       {/* Blueprint Domains & Quick Actions - Responsive: stack vertically on mobile, 3 cols on desktop */}
       <div
         ref={domainContainerRef}
+        data-tour="exam-blueprint"
         className="flex flex-col lg:grid lg:grid-cols-3 gap-6"
       >
         {/* Domain distribution (2 cols on desktop) */}

@@ -27,7 +27,7 @@ export default function DirectionalRouteWrapper({ children }) {
       const isForward = currentRank >= prevRankRef.current;
       prevRankRef.current = currentRank;
 
-      const offset = isForward ? 35 : -35;
+      const offset = isForward ? 24 : -24;
 
       gsap.fromTo(
         container,
@@ -35,13 +35,14 @@ export default function DirectionalRouteWrapper({ children }) {
         {
           opacity: 1,
           x: 0,
-          duration: 0.3,
+          duration: 0.25,
           ease: "power2.out",
+          force3D: true,
           overwrite: "auto",
         }
       );
     },
-    { dependencies: [location.pathname] }
+    { scope: containerRef, dependencies: [location.pathname] }
   );
 
   return (

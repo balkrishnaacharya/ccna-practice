@@ -19,6 +19,7 @@ export default function Exam({ onProgressChange }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showLastQModal, setShowLastQModal] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
   const [examResult, setExamResult] = useState(null);
   const [reviewFilter, setReviewFilter] = useState("all");
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -28,9 +29,21 @@ export default function Exam({ onProgressChange }) {
   useEffect(() => {
     loadExamQuestions();
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, []);
+
+  function handleExplicitExit() {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    onProgressChange?.(false, 0);
+    navigate("/");
+  }
 
   // Timer only starts if hasStarted is true, loading is done, no result, and seconds remain
   useEffect(() => {
@@ -198,6 +211,15 @@ export default function Exam({ onProgressChange }) {
           </div>
 
           <button
+            type="button"
+            onClick={() => setShowExitModal(true)}
+            className="px-4 py-2 border border-dark-border hover:border-heart/50 hover:text-heart rounded-full text-xs font-medium text-paper-muted transition-colors cursor-pointer"
+            title="Exit Exam"
+          >
+            Exit
+          </button>
+
+          <button
             onClick={() => setShowConfirmModal(true)}
             disabled={unansweredCount > 0 || isSubmitting}
             className="px-5 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all duration-150 disabled:bg-dark-surface disabled:text-paper-dim disabled:border disabled:border-dark-border disabled:shadow-none disabled:cursor-not-allowed"
@@ -206,6 +228,41 @@ export default function Exam({ onProgressChange }) {
           </button>
         </div>
       </div>
+
+      {/* Explicit Exit Modal */}
+      {showExitModal && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exit-exam-title"
+            className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
+          >
+            <h2 id="exit-exam-title" className="font-serif text-xl font-semibold text-paper">
+              Exit this exam?
+            </h2>
+            <p className="text-sm leading-relaxed text-paper-muted font-sans">
+              You have {unansweredCount} unanswered question{unansweredCount === 1 ? "" : "s"}. Are you sure you want to exit? Your timer will stop and progress will be lost.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowExitModal(false)}
+                className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors cursor-pointer"
+              >
+                Stay in exam
+              </button>
+              <button
+                type="button"
+                onClick={handleExplicitExit}
+                className="rounded-full bg-heart hover:bg-heart-hover px-5 py-2 text-xs font-semibold text-paper shadow-heart-glow transition-colors cursor-pointer"
+              >
+                Exit to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Grid: Question Content & Navigator */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

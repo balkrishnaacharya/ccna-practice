@@ -1,100 +1,53 @@
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-
 export default function OrganicMeshBackground() {
-  const blob1Ref = useRef(null);
-  const blob2Ref = useRef(null);
-  const blob3Ref = useRef(null);
-
-  useGSAP(() => {
-    // Check prefers-reduced-motion
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    // Slow, drifting organic motion across coordinate space
-    const tl1 = gsap.to(blob1Ref.current, {
-      xPercent: 18,
-      yPercent: 12,
-      rotation: 20,
-      duration: 16,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    const tl2 = gsap.to(blob2Ref.current, {
-      xPercent: -15,
-      yPercent: -18,
-      rotation: -25,
-      duration: 20,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    const tl3 = gsap.to(blob3Ref.current, {
-      xPercent: 12,
-      yPercent: -14,
-      scale: 1.08,
-      duration: 18,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    return () => {
-      tl1.kill();
-      tl2.kill();
-      tl3.kill();
-    };
-  }, []);
-
   return (
     <div
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-dark-bg"
+      style={{
+        background: `
+          radial-gradient(at 15% 15%, rgba(92, 110, 78, 0.08) 0px, transparent 50%),
+          radial-gradient(at 85% 85%, rgba(184, 132, 42, 0.07) 0px, transparent 50%),
+          radial-gradient(at 50% 40%, rgba(92, 110, 78, 0.04) 0px, transparent 60%),
+          #181815
+        `,
+      }}
     >
       {/* Subtle architectural coordinate grid: 32px spacing, ultra faint */}
       <div
-        className="absolute inset-0 opacity-[0.035]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage:
-            "radial-gradient(#F6F2E9 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(#F6F2E9 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
 
-      {/* Organic Shape 1: Subtle Sage #5C6E4E gradient field */}
+      {/* Organic Shape 1: Polpharma Sage #5C6E4E fluid mesh blob */}
       <div
-        ref={blob1Ref}
-        className="absolute -top-32 -left-32 w-[34rem] h-[34rem] rounded-full blur-[100px] will-change-transform opacity-30"
+        className="animate-mesh-blob-1 absolute -top-24 -left-24 w-[30rem] h-[30rem] rounded-full blur-[75px] opacity-25 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(92, 110, 78, 0.45) 0%, rgba(92, 110, 78, 0.05) 60%, transparent 80%)",
+            "radial-gradient(circle, rgba(92, 110, 78, 0.40) 0%, rgba(92, 110, 78, 0.08) 55%, transparent 75%)",
         }}
       />
 
-      {/* Organic Shape 2: Subtle Peach #E8A87C gradient field */}
+      {/* Organic Shape 2: Polpharma Gold #B8842A fluid mesh blob */}
       <div
-        ref={blob2Ref}
-        className="absolute -bottom-36 -right-36 w-[36rem] h-[36rem] rounded-full blur-[110px] will-change-transform opacity-25"
+        className="animate-mesh-blob-2 absolute -bottom-28 -right-28 w-[32rem] h-[32rem] rounded-full blur-[80px] opacity-20 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(232, 168, 124, 0.35) 0%, rgba(232, 168, 124, 0.05) 65%, transparent 80%)",
+            "radial-gradient(circle, rgba(184, 132, 42, 0.35) 0%, rgba(184, 132, 42, 0.06) 60%, transparent 75%)",
         }}
       />
 
-      {/* Organic Shape 3: Gentle Warm Agent Gold ambient highlight in center */}
+      {/* Organic Shape 3: Gentle ambient core highlight */}
       <div
-        ref={blob3Ref}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] rounded-full blur-[120px] will-change-transform opacity-15"
+        className="animate-mesh-blob-3 absolute top-1/2 left-1/2 w-[24rem] h-[24rem] rounded-full blur-[90px] opacity-15 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(184, 132, 42, 0.30) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(92, 110, 78, 0.25) 0%, rgba(184, 132, 42, 0.15) 45%, transparent 70%)",
         }}
       />
     </div>
   );
 }
+

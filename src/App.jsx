@@ -17,15 +17,31 @@ import SplashSequence from "./components/SplashSequence";
 import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
 import { useUpdater } from "./utils/useUpdater";
 import UpdateModal from "./components/UpdateModal";
+import { hasSeenTour, startTour } from "./utils/tourGuide";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
   const [examProgress, setExamProgress] = useState({ active: false, unanswered: 0 });
   const [pendingNavigation, setPendingNavigation] = useState(null);
   const [isExamModalOpen, setIsExamModalOpen] = useState(false);
+  const [isSplashActive, setIsSplashActive] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !sessionStorage.getItem("ccna_splash_seen");
+  });
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const handleSplashComplete = useCallback(() => {
+    setIsSplashActive(false);
+  }, []);
+
+  // Automatic first-launch onboarding tour trigger
+  useEffect(() => {
+    if (!isSplashActive && !hasSeenTour() && location.pathname === "/") {
+      startTour();
+    }
+  }, [isSplashActive, location.pathname]);
 
   const updater = useUpdater({
     autoCheck: true,
@@ -44,15 +60,39 @@ export default function App() {
   }
 
   function leaveExam() {
-    const destination = pendingNavigation;
+    const destination = pendingNavigation || "/";
     setPendingNavigation(null);
-    if (destination) navigate(destination);
+    setExamProgress({ active: false, unanswered: 0 });
+    navigate(destination);
+  }
+
+  function cancelLeaveExam() {
+    setPendingNavigation(null);
+    if (location.pathname === "/exam" && examProgress.active) {
+      window.history.pushState({ inExam: true }, "", window.location.href);
+    }
   }
 
   function handleStartExamConfirmed() {
     setIsExamModalOpen(false);
     navigate("/exam", { state: { started: true } });
   }
+
+  // Intercept Android hardware back button and browser popstate during active exam
+  useEffect(() => {
+    if (location.pathname === "/exam" && examProgress.active) {
+      window.history.pushState({ inExam: true }, "", window.location.href);
+
+      const handlePopState = () => {
+        setPendingNavigation("/");
+      };
+
+      window.addEventListener("popstate", handlePopState);
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, [location.pathname, examProgress.active]);
 
   useEffect(() => {
     invoke("get_setting", { key: "profile_name" })
@@ -77,7 +117,7 @@ export default function App() {
       <OrganicMeshBackground />
 
       {/* Opening Splash Sequence (Polpharma-inspired) */}
-      <SplashSequence />
+      <SplashSequence onComplete={handleSplashComplete} />
 
       {/* Top Editorial Nav Bar */}
       <nav
@@ -220,7 +260,7 @@ export default function App() {
             <div className="flex justify-end gap-3 pt-2">
               <button
                 type="button"
-                onClick={() => setPendingNavigation(null)}
+                onClick={cancelLeaveExam}
                 className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Stay in exam

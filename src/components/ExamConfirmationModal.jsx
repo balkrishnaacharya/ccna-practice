@@ -8,66 +8,29 @@ export default function ExamConfirmationModal({ isOpen, onCancel, onConfirm }) {
 
   useGSAP(
     () => {
-      if (!isOpen) return;
+      if (!isOpen || !overlayRef.current || !cardRef.current) return;
 
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
       tl.fromTo(
         overlayRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.25, ease: "power2.out" }
+        { opacity: 1, duration: 0.18 }
       ).fromTo(
         cardRef.current,
-        { opacity: 0, y: 30, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" },
-        "-=0.15"
+        { opacity: 0, y: 16, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.2 },
+        "-=0.1"
       );
     },
-    { dependencies: [isOpen] }
+    { scope: overlayRef, dependencies: [isOpen] }
   );
 
   function handleCancel() {
-    if (!overlayRef.current || !cardRef.current) {
-      onCancel();
-      return;
-    }
-    const tl = gsap.timeline({
-      onComplete: () => {
-        onCancel();
-      },
-    });
-    tl.to(cardRef.current, {
-      opacity: 0,
-      y: 20,
-      scale: 0.96,
-      duration: 0.2,
-      ease: "power2.in",
-    }).to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.15,
-      ease: "power2.in",
-    }, "-=0.1");
+    onCancel();
   }
 
   function handleConfirm() {
-    if (!overlayRef.current || !cardRef.current) {
-      onConfirm();
-      return;
-    }
-    const tl = gsap.timeline({
-      onComplete: () => {
-        onConfirm();
-      },
-    });
-    tl.to(cardRef.current, {
-      opacity: 0,
-      scale: 1.03,
-      duration: 0.2,
-      ease: "power2.in",
-    }).to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.15,
-      ease: "power2.in",
-    }, "-=0.1");
+    onConfirm();
   }
 
   if (!isOpen) return null;

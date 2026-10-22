@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { useNavigate } from "react-router-dom";
+import { startTour } from "../utils/tourGuide";
 
 export default function Settings({ onProfileChange, updater }) {
   const [name, setName] = useState("");
   const [savedMsg, setSavedMsg] = useState("");
   const [resetConfirm, setResetConfirm] = useState(false);
   const [resetMsg, setResetMsg] = useState("");
+
+  const navigate = useNavigate();
+
+  function handleReplayTour() {
+    navigate("/");
+    startTour({ isReplay: true });
+  }
 
   useEffect(() => {
     invoke("get_setting", { key: "profile_name" })
@@ -141,6 +150,29 @@ export default function Settings({ onProfileChange, updater }) {
               {updater.errorMessage || "Unable to reach update service."}
             </span>
           )}
+        </div>
+      </div>
+
+      {/* Feature Tour Section */}
+      <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-paper mb-1">Feature Tour</h2>
+          <p className="text-xs text-paper-dim font-sans">
+            Take another look at the app's main features.
+          </p>
+        </div>
+
+        <div className="pt-1">
+          <button
+            type="button"
+            onClick={handleReplayTour}
+            className="px-5 py-2.5 bg-dark-surface hover:bg-dark-elevated text-paper hover:text-gold border border-dark-border text-xs font-semibold uppercase tracking-wider rounded-full transition-colors flex items-center gap-2 cursor-pointer"
+          >
+            <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Replay Feature Tour</span>
+          </button>
         </div>
       </div>
 

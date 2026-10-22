@@ -91,34 +91,45 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
     const targetW = targetRect.width;
     const targetH = targetRect.height;
 
+    // Apply dimensions directly to avoid layout thrashing via GSAP width/height tweening
+    pillEl.style.width = `${targetW}px`;
+    pillEl.style.height = `${targetH}px`;
+
     if (animate) {
+      // Animate ONLY transform (x, y) and opacity with 250ms duration
       gsap.to(pillEl, {
         x: targetX,
         y: targetY,
-        width: targetW,
-        height: targetH,
         opacity: 1,
-        duration: 0.35,
-        ease: "power3.out",
+        duration: 0.25,
+        ease: "power2.out",
+        force3D: true,
         overwrite: "auto",
       });
 
-      // Subtle coordinated icon scale pop
+      // Subtle coordinated icon scale pop (120ms each way)
       const icon = targetEl.querySelector(".nav-icon-wrapper");
       if (icon) {
         gsap.fromTo(
           icon,
-          { scale: 0.85 },
-          { scale: 1, duration: 0.35, ease: "back.out(2)", overwrite: "auto" }
+          { scale: 1 },
+          {
+            scale: 1.1,
+            duration: 0.12,
+            yoyo: true,
+            repeat: 1,
+            ease: "power1.inOut",
+            force3D: true,
+            overwrite: "auto",
+          }
         );
       }
     } else {
       gsap.set(pillEl, {
         x: targetX,
         y: targetY,
-        width: targetW,
-        height: targetH,
         opacity: 1,
+        force3D: true,
       });
     }
   }
@@ -127,7 +138,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
     () => {
       updatePillPosition(true);
     },
-    { dependencies: [location.pathname] }
+    { scope: navRef, dependencies: [location.pathname] }
   );
 
   // Resize listener to keep pill aligned during window resize
@@ -146,32 +157,35 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
     >
       <nav
         ref={navRef}
+        data-tour="bottom-navigation"
         aria-label="Bottom Navigation"
-        className="pointer-events-auto w-full max-w-md mx-auto bg-dark-surface/90 backdrop-blur-xl border border-dark-border rounded-full px-2 sm:px-3 py-1.5 shadow-dock flex items-center justify-between relative overflow-hidden"
+        className="pointer-events-auto relative w-full max-w-lg mx-auto bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-full px-2 sm:px-3 py-1.5 shadow-dock flex items-center justify-between overflow-visible"
       >
-        {/* Continuous Sliding Background Active Pill */}
+        {/* Continuous Sliding Background Active Pill (transform-only motion) */}
         <div
           ref={pillRef}
           className="absolute top-0 left-0 rounded-full bg-gold/15 border border-gold/30 shadow-gold-glow pointer-events-none opacity-0 will-change-transform z-0"
         />
 
-        {/* Left items */}
-        <div className="flex items-center justify-around flex-1 gap-1 relative z-10">
+        {/* Left items (3 icons) */}
+        <div className="flex items-center justify-around flex-1 pr-6 sm:pr-8 relative z-10">
           {leftLinks.map((link) => {
             const isActive = location.pathname === link.to;
+            const leftTourAttr = link.to === "/quiz" ? { "data-tour": "practice-navigation" } : {};
             return (
               <Link
                 key={link.to}
                 ref={(el) => (itemRefs.current[link.to] = el)}
                 to={link.to}
+                {...leftTourAttr}
                 onClick={(e) => guardNavigation(e, link.to)}
-                className={`flex flex-col items-center justify-center py-1 px-2 min-w-[50px] rounded-full transition-colors duration-200 select-none ${
+                className={`flex flex-col items-center justify-center py-1 px-2 min-w-[50px] rounded-full transition-colors duration-150 select-none ${
                   isActive
                     ? "text-gold font-semibold"
                     : "text-paper-muted hover:text-paper"
                 }`}
               >
-                <div className="nav-icon-wrapper p-1 rounded-full transition-transform">
+                <div className="nav-icon-wrapper p-1 rounded-full will-change-transform">
                   {link.icon}
                 </div>
                 <span className="text-[10px] tracking-tight">{link.label}</span>
@@ -180,17 +194,20 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
           })}
         </div>
 
-        {/* Center Elevated Button: "Take Full Exam" */}
-        <div className="relative -mt-6 sm:-mt-7 mx-1 flex flex-col items-center shrink-0 z-20">
+        {/* Center Floating "EXAM" Action Button (Positioned absolutely over center) */}
+        <div
+          data-tour="exam-button"
+          className="absolute left-1/2 -translate-x-1/2 -top-6 flex flex-col items-center pointer-events-auto z-20"
+        >
           <button
             type="button"
             onClick={onOpenExamModal}
-            className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#8E6319] via-gold to-[#D8A243] border-2 border-dark-bg text-dark-bg shadow-gold-glow flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-gold/50"
+            className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#8E6319] via-gold to-[#D8A243] border-2 border-dark-bg text-dark-bg shadow-gold-glow flex items-center justify-center transition-transform duration-150 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-gold/50 cursor-pointer"
             title="Take Full CCNA Exam"
             aria-label="Take Full CCNA Exam"
           >
             <svg
-              className="w-6 h-6 text-dark-bg transition-transform duration-300 group-hover:rotate-12"
+              className="w-6 h-6 text-dark-bg transition-transform duration-150 group-hover:rotate-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -203,28 +220,37 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
               />
             </svg>
           </button>
-          <span className="text-[9px] uppercase tracking-wider font-semibold text-gold mt-0.5">
+          <span className="text-[9px] uppercase tracking-wider font-semibold text-gold mt-0.5 select-none">
             Exam
           </span>
         </div>
 
-        {/* Right items */}
-        <div className="flex items-center justify-around flex-1 gap-1 relative z-10">
+        {/* Right items (3 icons) */}
+        <div className="flex items-center justify-around flex-1 pl-6 sm:pl-8 relative z-10">
           {rightLinks.map((link) => {
             const isActive = location.pathname === link.to;
+            const tourAttr =
+              link.to === "/review"
+                ? { "data-tour": "review-navigation" }
+                : link.to === "/history"
+                ? { "data-tour": "history-navigation" }
+                : link.to === "/settings"
+                ? { "data-tour": "settings-navigation" }
+                : {};
             return (
               <Link
                 key={link.to}
                 ref={(el) => (itemRefs.current[link.to] = el)}
                 to={link.to}
+                {...tourAttr}
                 onClick={(e) => guardNavigation(e, link.to)}
-                className={`flex flex-col items-center justify-center py-1 px-2 min-w-[50px] rounded-full transition-colors duration-200 select-none ${
+                className={`flex flex-col items-center justify-center py-1 px-2 min-w-[50px] rounded-full transition-colors duration-150 select-none ${
                   isActive
                     ? "text-gold font-semibold"
                     : "text-paper-muted hover:text-paper"
                 }`}
               >
-                <div className="nav-icon-wrapper p-1 rounded-full transition-transform">
+                <div className="nav-icon-wrapper p-1 rounded-full will-change-transform">
                   {link.icon}
                 </div>
                 <span className="text-[10px] tracking-tight">{link.label}</span>
@@ -236,3 +262,4 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
     </div>
   );
 }
+

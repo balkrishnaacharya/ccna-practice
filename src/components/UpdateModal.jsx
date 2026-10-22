@@ -15,21 +15,21 @@ export default function UpdateModal({
 
   useGSAP(
     () => {
-      if (!isOpen) return;
+      if (!isOpen || !overlayRef.current || !cardRef.current) return;
 
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
       tl.fromTo(
         overlayRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.25, ease: "power2.out" }
+        { opacity: 1, duration: 0.18 }
       ).fromTo(
         cardRef.current,
-        { opacity: 0, scale: 0.92, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(1.5)" },
-        "-=0.15"
+        { opacity: 0, scale: 0.94, y: 16 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.2 },
+        "-=0.1"
       );
     },
-    { dependencies: [isOpen] }
+    { scope: overlayRef, dependencies: [isOpen] }
   );
 
   if (!isOpen || !updateInfo) return null;

@@ -22,6 +22,7 @@ export default function Quiz({ onOpenExamModal }) {
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
   const stemContainerRef = useRef(null);
   const feedbackRef = useRef(null);
@@ -38,25 +39,25 @@ export default function Quiz({ onOpenExamModal }) {
     () => {
       if (!question || !cardContainerRef.current) return;
 
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
       // Outer card enters from bottom
       tl.fromTo(
         cardContainerRef.current,
-        { opacity: 0, y: 70 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.25 }
       );
 
-      // Inner stem moves with parallax speed difference (3D depth layer)
+      // Inner stem moves with subtle parallax speed difference
       if (stemContainerRef.current) {
         tl.fromTo(
           stemContainerRef.current,
-          { opacity: 0, y: 25 },
-          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-          "-=0.35"
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.25 },
+          "-=0.15"
         );
       }
     },
-    { dependencies: [question?.id] }
+    { scope: rootRef, dependencies: [question?.id] }
   );
 
   // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
@@ -69,25 +70,25 @@ export default function Quiz({ onOpenExamModal }) {
         gsap.fromTo(
           feedbackRef.current,
           { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.5)" }
+          { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out", force3D: true }
         );
       } else {
         // Heart pulse + micro-shake
-        const tl = gsap.timeline();
+        const tl = gsap.timeline({ defaults: { force3D: true } });
         tl.fromTo(
           feedbackRef.current,
           { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out" }
+          { scale: 1, opacity: 1, duration: 0.15, ease: "power2.out" }
         ).to(feedbackRef.current, {
-          x: -6,
-          duration: 0.06,
+          x: -4,
+          duration: 0.05,
           repeat: 3,
           yoyo: true,
           ease: "power1.inOut",
         });
       }
     },
-    { dependencies: [feedback] }
+    { scope: rootRef, dependencies: [feedback] }
   );
 
   async function loadQuestion() {
@@ -96,9 +97,10 @@ export default function Quiz({ onOpenExamModal }) {
       await new Promise((resolve) => {
         gsap.to(cardContainerRef.current, {
           opacity: 0,
-          y: -40,
-          duration: 0.25,
+          y: -20,
+          duration: 0.18,
           ease: "power2.in",
+          force3D: true,
           onComplete: resolve,
         });
       });
@@ -189,7 +191,7 @@ export default function Quiz({ onOpenExamModal }) {
   }
 
   return (
-    <div className="space-y-6 pb-12">
+    <div ref={rootRef} className="space-y-6 pb-12">
       {/* Mode Selector Tabs */}
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
