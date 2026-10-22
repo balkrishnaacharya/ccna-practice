@@ -1,16 +1,17 @@
 name: Build app across platforms
 
 permissions:
-  contents: read
+  contents: write
 
 on:
   push:
-  pull_request:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Existing or new beta tag to publish after the builds pass
-        required: false
+        description: 'Existing or new tag to publish (e.g., v0.2.1)'
+        required: true
         type: string
 
 jobs:
@@ -47,8 +48,6 @@ jobs:
       - name: Generate platform icons
         run: npx tauri icon src-tauri/icons/icon.png
 
-      # tauri-apps/tauri-action is the ONLY official way to generate latest.json in Tauri 2.
-      # `npm run tauri -- build` produces .sig files but NOT latest.json.
       - name: Build Tauri app (with updater artifacts)
         uses: tauri-apps/tauri-action@v0
         env:
@@ -56,13 +55,13 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          # Do not publish a release here — we publish in the separate release job
-          # so it can merge Linux + Windows + Android artifacts together.
-          tagName: ""
-          releaseName: ""
-          releaseBody: ""
-          releaseDraft: false
+          # CRITICAL: This tells tauri-action which tag to build the latest.json URLs for
+          tagName: ${{ inputs.release_tag || github.ref_name }}
+          releaseName: 'CCNA Practice ${{ inputs.release_tag || github.ref_name }}'
+          releaseBody: 'See the assets to download and install this version.'
+          releaseDraft: true
           prerelease: false
+          includeUpdaterJson: true
 
       - name: Verify latest.json was generated (fail loudly if missing)
         if: runner.os != 'Windows'
@@ -156,12 +155,9 @@ jobs:
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ANDROID_CERT_SHA256: ${{ secrets.ANDROID_CERT_SHA256 }}
-          IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') }}
-          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
         run: |
           set -euo pipefail
 
-          # Locate unsigned APK
           UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/apk/ -type f -name "*unsigned.apk" | head -n 1)
           if [ -z "$UNSIGNED_APK" ] || [ ! -f "$UNSIGNED_APK" ]; then
             UNSIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/apk/ -type f -name "*release*.apk" ! -name "ccna-practice-*" | head -n 1)
@@ -171,37 +167,8 @@ jobs:
             find src-tauri/gen/android/app/build/outputs/ -maxdepth 5 || true
             exit 1
           fi
-          echo "Found unsigned release APK at: $UNSIGNED_APK"
 
-          # Fail-closed check: Secrets must be present to publish/sign APK
-          if [ -z "${ANDROID_KEY_BASE64:-}" ] || [ -z "${ANDROID_KEYSTORE_PASSWORD:-}" ] || [ -z "${ANDROID_KEY_ALIAS:-}" ] || [ -z "${ANDROID_KEY_PASSWORD:-}" ]; then
-            if [ "$IS_RELEASE" = "true" ]; then
-              echo "ERROR: Android signing secrets (ANDROID_KEY_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD) are missing for release build! Fail-closed."
-              exit 1
-            else
-              echo "WARNING: Signing secrets not configured. Skipping signing on non-release branch."
-              rm -f "$UNSIGNED_APK"
-              exit 0
-            fi
-          fi
-
-          if [ -z "${ANDROID_CERT_SHA256:-}" ]; then
-            if [ "$IS_RELEASE" = "true" ]; then
-              echo "ERROR: ANDROID_CERT_SHA256 secret is required for release build! Fail-closed."
-              exit 1
-            else
-              echo "WARNING: ANDROID_CERT_SHA256 not set. Skipping certificate fingerprint verification."
-            fi
-          fi
-
-          # Discover Android build-tools dynamically
           BUILD_TOOLS=$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -n 1)
-          if [ -z "$BUILD_TOOLS" ] || [ ! -x "$BUILD_TOOLS/zipalign" ] || [ ! -x "$BUILD_TOOLS/apksigner" ]; then
-            echo "ERROR: Valid Android build-tools with zipalign and apksigner not found in $ANDROID_HOME/build-tools"
-            exit 1
-          fi
-          echo "Using Android build-tools at: $BUILD_TOOLS"
-
           KEYSTORE_FILE=$(mktemp /tmp/release-keystore.XXXXXX.jks)
           chmod 600 "$KEYSTORE_FILE"
           ALIGNED_APK=$(mktemp /tmp/aligned.XXXXXX.apk)
@@ -209,17 +176,10 @@ jobs:
 
           FINAL_APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
           mkdir -p "$FINAL_APK_DIR"
-          FINAL_APK="$FINAL_APK_DIR/ccna-practice-${RELEASE_TAG}-android-aarch64.apk"
+          FINAL_APK="$FINAL_APK_DIR/ccna-practice-${{ inputs.release_tag || github.ref_name }}-android-aarch64.apk"
 
-          # Decode keystore
           echo "$ANDROID_KEY_BASE64" | base64 -d > "$KEYSTORE_FILE"
-
-          # Zipalign unsigned APK
-          echo "Aligning APK..."
           "$BUILD_TOOLS/zipalign" -v -p -f 4 "$UNSIGNED_APK" "$ALIGNED_APK"
-
-          # Sign APK
-          echo "Signing APK with apksigner..."
           "$BUILD_TOOLS/apksigner" sign \
             --ks "$KEYSTORE_FILE" \
             --ks-pass "pass:$ANDROID_KEYSTORE_PASSWORD" \
@@ -228,44 +188,27 @@ jobs:
             --out "$FINAL_APK" \
             "$ALIGNED_APK"
 
-          # Cryptographic verification - Fail closed
-          echo "Verifying signature with apksigner..."
           "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$FINAL_APK"
 
-          # Verify certificate fingerprint identity if provided
           if [ -n "${ANDROID_CERT_SHA256:-}" ]; then
-            echo "Verifying certificate SHA-256 fingerprint against expected fingerprint..."
             ACTUAL_FINGERPRINT=$("$BUILD_TOOLS/apksigner" verify --print-certs "$FINAL_APK" | grep -i "SHA-256 digest" | head -n 1 | awk '{print tolower($NF)}' | tr -d ':\r\n ')
             EXPECTED_FINGERPRINT=$(echo "$ANDROID_CERT_SHA256" | tr '[:upper:]' '[:lower:]' | tr -d ':\r\n ')
-
-            if [ -z "$ACTUAL_FINGERPRINT" ]; then
-              echo "ERROR: Failed to extract SHA-256 digest from apksigner output!"
-              exit 1
-            fi
-
             if [ "$ACTUAL_FINGERPRINT" != "$EXPECTED_FINGERPRINT" ]; then
               echo "ERROR: Certificate fingerprint mismatch!"
-              echo "Expected: $EXPECTED_FINGERPRINT"
-              echo "Actual:   $ACTUAL_FINGERPRINT"
               exit 1
             fi
-            echo "Certificate fingerprint verified: $ACTUAL_FINGERPRINT"
           fi
-
-          # Remove original unsigned APK to prevent accidental upload
           rm -f "$UNSIGNED_APK"
-
-          echo "Successfully created and cryptographically verified: $FINAL_APK"
 
       - name: Upload Android APKs
         uses: actions/upload-artifact@v4
         with:
           name: app-bundle-android
           path: src-tauri/gen/android/app/build/outputs/apk/universal/release/ccna-practice-*.apk
-          if-no-files-found: ${{ (startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')) && 'error' || 'warn' }}
+          if-no-files-found: error
 
   release:
-    name: Publish beta release
+    name: Publish release
     if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')
     needs: [build, android]
     runs-on: ubuntu-latest
@@ -273,21 +216,6 @@ jobs:
       contents: write
 
     steps:
-      - name: Remove non-installer files from an existing release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
-        run: |
-          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' |
-              while IFS= read -r asset; do
-                case "$asset" in
-                  *.AppImage|*.deb|*.rpm|*.msi|*.exe|*android*.apk) ;;
-                  *) gh release delete-asset "$RELEASE_TAG" "$asset" --repo "$GITHUB_REPOSITORY" --yes ;;
-                esac
-              done
-          fi
-
       - name: Download platform builds
         uses: actions/download-artifact@v4
         with:
@@ -295,30 +223,23 @@ jobs:
           path: release-assets
           merge-multiple: true
 
-      - name: Assert latest.json is present (fail loudly if missing)
+      - name: Assert latest.json is present
         run: |
           set -euo pipefail
           MANIFEST=$(find release-assets -name "latest.json" | head -n 1)
           if [ -z "$MANIFEST" ]; then
             echo "FATAL: latest.json not found in downloaded build artifacts!"
-            echo "This means the build job did not generate updater artifacts."
-            echo "Check that bundle.createUpdaterArtifacts=true in tauri.conf.json"
-            echo "and that TAURI_SIGNING_PRIVATE_KEY is set as a secret."
-            echo ""
-            echo "Files found in release-assets/:"
-            find release-assets/ -type f | sort || true
             exit 1
           fi
           echo "✓ latest.json confirmed at: $MANIFEST"
-          SIG_COUNT=$(find release-assets -name "*.sig" | wc -l)
-          echo "✓ Total .sig files: $SIG_COUNT"
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
         with:
           name: CCNA Practice ${{ inputs.release_tag || github.ref_name }}
           tag_name: ${{ inputs.release_tag || github.ref_name }}
-          prerelease: true
+          draft: false
+          prerelease: false   # <--- CRITICAL FIX: Must be false for latest.json to resolve
           generate_release_notes: true
           fail_on_unmatched_files: true
           overwrite_files: true
@@ -331,4 +252,3 @@ jobs:
             release-assets/**/*.msi
             release-assets/**/*.exe
             release-assets/**/*-android-*.apk
-            release-assets/*-android-*.apk
