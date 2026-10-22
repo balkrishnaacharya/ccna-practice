@@ -35,7 +35,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDc1QzkyNEIwNjk3QjAxMEYKUldRUEFYdHBzQ1RKZFF3bEJ2Nkp1VkUxL0YvQVE4dnRFeUs2OW9KU2RBbTA4YzJwTllXenFKY2YK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJDRDA3MDRENzE1QTFCNDIKUldSQ0cxcHhUWERRdlBDNDhYa1JJWm4vc3BJbFlaWm0rUVFxY1pMemY4K2JBM094ZDJsT2tTdDMK",
       "endpoints": [
         "https://github.com/balkrishnaacharya/ccna-practice/releases/latest/download/latest.json"
       ]
