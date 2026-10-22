@@ -121,8 +121,12 @@ export default function App() {
 
       {/* Top Editorial Nav Bar */}
       <nav
-        className="bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 h-14 flex items-center justify-between sticky top-0 z-40 box-content"
-        style={{ paddingTop: "var(--safe-top)" }}
+        className="bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 flex items-end justify-between sticky top-0 z-40 box-content"
+        style={{
+          paddingTop: "var(--safe-top)",
+          height: "3.5rem",
+          minHeight: "calc(3.5rem + var(--safe-top))",
+        }}
       >
         <div className="flex items-center gap-6">
           <Link
@@ -179,7 +183,10 @@ export default function App() {
       {/* Main Container */}
       <main
         className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 sm:pb-32"
-        style={{ paddingBottom: "calc(var(--safe-bottom) + 6.5rem)" }}
+        style={{
+          paddingTop: "1.5rem",
+          paddingBottom: "calc(var(--safe-bottom) + 6.5rem)",
+        }}
       >
         <DirectionalRouteWrapper>
           <Routes>
