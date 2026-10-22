@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "CCNA Practice",
+        "title": "CCNA_Practice",
         "width": 900,
         "height": 700,
         "resizable": true
