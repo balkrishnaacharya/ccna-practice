@@ -3,9 +3,13 @@ import { invoke } from "@tauri-apps/api/core";
 import { useNavigate } from "react-router-dom";
 import { startTour } from "../utils/tourGuide";
 
+const DEFAULT_DAILY_GOAL = 12;
+
 export default function Settings({ onProfileChange, updater }) {
   const [name, setName] = useState("");
   const [savedMsg, setSavedMsg] = useState("");
+  const [goal, setGoal] = useState(String(DEFAULT_DAILY_GOAL));
+  const [goalStatus, setGoalStatus] = useState(null);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [resetMsg, setResetMsg] = useState("");
 
@@ -22,7 +26,30 @@ export default function Settings({ onProfileChange, updater }) {
         if (val) setName(val);
       })
       .catch(console.error);
+    invoke("get_setting", { key: "daily_goal" })
+      .then((val) => {
+        if (val) setGoal(val);
+      })
+      .catch(console.error);
   }, []);
+
+  async function handleSaveGoal(e) {
+    e.preventDefault();
+    const parsed = Number.parseInt(goal, 10);
+    if (!Number.isFinite(parsed) || parsed < 1 || parsed > 500) {
+      setGoalStatus({ ok: false, text: "Enter a whole number between 1 and 500." });
+      return;
+    }
+    try {
+      await invoke("set_setting", { key: "daily_goal", value: String(parsed) });
+      setGoal(String(parsed));
+      setGoalStatus({ ok: true, text: `Saved — ${parsed} per day.` });
+      setTimeout(() => setGoalStatus(null), 3000);
+    } catch (err) {
+      console.error(err);
+      setGoalStatus({ ok: false, text: "Could not save the goal." });
+    }
+  }
 
   async function handleSave(e) {
     e.preventDefault();
@@ -96,6 +123,58 @@ export default function Settings({ onProfileChange, updater }) {
         </form>
       </div>
 
+      {/* Daily Goal Section */}
+      <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-paper mb-1">Daily Study Goal</h2>
+          <p className="text-xs text-paper-dim font-sans">
+            Sets the target used by the study streak panel on your dashboard. Any answer keeps the streak alive;
+            the goal only measures how much of today's work is done.
+          </p>
+        </div>
+
+        <form onSubmit={handleSaveGoal} className="space-y-4 max-w-md pt-1">
+          <div>
+            <label htmlFor="dailyGoal" className="block text-xs font-medium text-paper-muted mb-1.5">
+              Questions per day
+            </label>
+            <input
+              id="dailyGoal"
+              type="number"
+              min="1"
+              max="500"
+              inputMode="numeric"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              className="w-32 px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface font-mono"
+            />
+            <p className="text-xs text-paper-dim mt-1.5">
+              Between 1 and 500. Default is {DEFAULT_DAILY_GOAL}.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold uppercase tracking-wider rounded-full shadow-gold-glow transition-all"
+            >
+              Save Goal
+            </button>
+            {goalStatus && (
+              <span
+                className={`text-xs font-semibold px-3 py-1 rounded-full border ${
+                  goalStatus.ok
+                    ? "text-sage-light bg-sage/20 border-sage/40"
+                    : "text-heart-light bg-heart/15 border-heart/30"
+                }`}
+              >
+                {goalStatus.text}
+              </span>
+            )}
+          </div>
+        </form>
+      </div>
+
       {/* Software Updates Section */}
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -159,7 +238,7 @@ export default function Settings({ onProfileChange, updater }) {
               </span>
               {updater.errorMessage &&
                 !updater.errorMessage.toLowerCase().includes("404") && (
-                  <span className="text-[10px] font-mono text-paper-dim px-3.5">
+                  <span className="text-xs font-mono text-paper-dim px-3.5">
                     {updater.errorMessage}
                   </span>
               )}
@@ -202,23 +281,23 @@ export default function Settings({ onProfileChange, updater }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="flex justify-between p-3.5 rounded-xl bg-dark-surface/60 border border-dark-border">
             <span className="font-medium text-paper">Network Infrastructure</span>
-            <span className="text-gold font-mono font-semibold">25% (25 Qs)</span>
+            <span className="text-peach font-mono font-semibold">25% (25 Qs)</span>
           </div>
           <div className="flex justify-between p-3.5 rounded-xl bg-dark-surface/60 border border-dark-border">
             <span className="font-medium text-paper">Switching & Network Access</span>
-            <span className="text-gold font-mono font-semibold">25% (25 Qs)</span>
+            <span className="text-peach font-mono font-semibold">25% (25 Qs)</span>
           </div>
           <div className="flex justify-between p-3.5 rounded-xl bg-dark-surface/60 border border-dark-border">
             <span className="font-medium text-paper">IP Routing</span>
-            <span className="text-gold font-mono font-semibold">20% (20 Qs)</span>
+            <span className="text-peach font-mono font-semibold">20% (20 Qs)</span>
           </div>
           <div className="flex justify-between p-3.5 rounded-xl bg-dark-surface/60 border border-dark-border">
             <span className="font-medium text-paper">Services & Security</span>
-            <span className="text-gold font-mono font-semibold">20% (20 Qs)</span>
+            <span className="text-peach font-mono font-semibold">20% (20 Qs)</span>
           </div>
           <div className="flex justify-between p-3.5 rounded-xl bg-dark-surface/60 border border-dark-border sm:col-span-2">
             <span className="font-medium text-paper">AI, NetOps & Automation</span>
-            <span className="text-gold font-mono font-semibold">10% (10 Qs)</span>
+            <span className="text-peach font-mono font-semibold">10% (10 Qs)</span>
           </div>
         </div>
       </div>
@@ -253,7 +332,7 @@ export default function Settings({ onProfileChange, updater }) {
             <div className="flex gap-2">
               <button
                 onClick={handleResetStats}
-                className="px-4 py-1.5 bg-heart hover:bg-heart-hover text-paper text-xs font-semibold rounded-full shadow-heart-glow"
+                className="px-4 py-1.5 bg-heart hover:bg-heart-hover text-dark-bg text-xs font-semibold rounded-full shadow-heart-glow"
               >
                 Yes, Clear All Progress
               </button>

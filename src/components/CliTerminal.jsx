@@ -104,32 +104,32 @@ export default function CliTerminal({ devices, onDevicesChange }) {
   ];
 
   return (
-    <section className="flex h-[50vh] min-h-[320px] max-h-[calc(100dvh-12rem)] flex-col overflow-hidden rounded-2xl border border-[#252a32] bg-[#101318] shadow-lg sm:h-[56vh] sm:max-h-none">
-      <div className="flex shrink-0 items-center gap-2 overflow-x-auto border-b border-[#2b3038] bg-[#191d24] p-2.5">
+    <section className="flex h-[50vh] min-h-[320px] max-h-[calc(100dvh-12rem)] flex-col overflow-hidden rounded-2xl border border-dark-border bg-dark-bg shadow-lg sm:h-[56vh] sm:max-h-none">
+      <div className="flex shrink-0 items-center gap-2 overflow-x-auto border-b border-dark-borderSubtle bg-dark-surface p-2.5">
         {deviceNames.map((name) => (
-          <button key={name} onClick={() => { setActiveDevice(name); inputRef.current?.focus(); }} className={`min-w-14 rounded-lg px-4 py-2 font-mono text-sm font-semibold transition-all ${activeDevice === name ? "bg-gold text-dark-bg shadow-gold-glow" : "bg-[#282e37] text-paper-muted hover:bg-[#353c48]"}`}>{name}</button>
+          <button key={name} onClick={() => { setActiveDevice(name); inputRef.current?.focus(); }} className={`min-w-14 rounded-lg px-4 py-2 font-mono text-sm font-semibold transition-all ${activeDevice === name ? "bg-gold text-dark-bg shadow-gold-glow" : "bg-dark-card text-paper-muted hover:bg-dark-elevated"}`}>{name}</button>
         ))}
-        <span className="ml-auto hidden pr-2 font-mono text-xs text-[#858d99] sm:inline">IOS command line</span>
+        <span className="ml-auto hidden pr-2 font-mono text-xs text-paper-dim sm:inline">IOS command line</span>
       </div>
 
-      <div ref={outputRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 font-mono text-[12px] leading-5 text-[#d6deeb] sm:p-4 sm:text-sm">
-        <div className="mb-3 text-[#8f9baa]">Local IOS simulation • Type <span className="text-[#9db1ff]">?</span> for help</div>
+      <div ref={outputRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 font-mono text-[13px] leading-5 text-paper sm:p-4 sm:text-sm">
+        <div className="mb-3 text-paper-muted">Local IOS simulation • Type <span className="text-peach">?</span> for help</div>
         {entries.map((entry, index) => (
           <div key={`${index}-${entry.command}`} className="whitespace-pre-wrap break-words">
-            <div><span className="text-[#8fbf9f]">{entry.prompt}</span> <span className="text-white">{entry.command}</span></div>
-            {entry.output && <div className="mb-1 text-[#c3cbd7]">{entry.output}</div>}
+            <div><span className="text-sage-light">{entry.prompt}</span> <span className="text-paper">{entry.command}</span></div>
+            {entry.output && <div className="mb-1 text-paper-muted">{entry.output}</div>}
           </div>
         ))}
         <div className="flex min-w-0 items-center gap-2 whitespace-nowrap">
-          <span className="shrink-0 text-[#8fbf9f]">{prompt}</span>
-          <input ref={inputRef} aria-label="IOS command" autoComplete="off" autoCapitalize="off" spellCheck="false" value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={keyDown} className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-[12px] text-white outline-none ring-0 focus:ring-0 sm:text-sm" />
-          <span className="animate-pulse text-[#8fbf9f]">▋</span>
+          <span className="shrink-0 text-sage-light">{prompt}</span>
+          <input ref={inputRef} aria-label="IOS command" autoComplete="off" autoCapitalize="off" spellCheck="false" value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={keyDown} className="min-w-0 flex-1 border-0 bg-transparent p-0 font-mono text-[13px] text-paper outline-none ring-0 focus:ring-0 sm:text-sm" />
+          <span className="animate-pulse text-sage-light">▋</span>
         </div>
       </div>
 
-      <div className="sticky bottom-0 z-10 shrink-0 border-t border-[#2b3038] bg-[#191d24] px-2 py-2 pb-[calc(0.5rem+var(--safe-bottom,0px))]">
+      <div className="sticky bottom-0 z-10 shrink-0 border-t border-dark-borderSubtle bg-dark-surface px-2 py-2 pb-[calc(0.5rem+var(--safe-bottom,0px))]">
         <div className="flex touch-pan-x gap-1.5 overflow-x-auto">
-          {controls.map(([label, action]) => <button key={label} onClick={action} className="min-h-10 shrink-0 rounded-lg border border-[#343b46] bg-[#242a33] px-3 font-mono text-xs text-[#edf0f5] active:bg-[#4d6bfe]">{label}</button>)}
+          {controls.map(([label, action]) => <button key={label} onClick={action} className="min-h-10 shrink-0 rounded-lg border border-dark-border bg-dark-card px-3 font-mono text-xs text-paper active:bg-dark-elevated">{label}</button>)}
         </div>
       </div>
     </section>

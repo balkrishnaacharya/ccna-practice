@@ -128,5 +128,23 @@ pub fn init(path: &Path) -> Result<Connection> {
         )?;
     }
 
+    // Content-based uniqueness: normalized stem + sorted choice texts. Populated
+    // by the import pipeline, which also backfills rows from older databases.
+    // NULL is allowed for legacy rows so opening the app never fails on a
+    // duplicate that predates the fingerprint.
+    let has_content_hash: i64 = conn.query_row(
+        "SELECT COUNT(*) FROM pragma_table_info('questions') WHERE name='content_hash'",
+        [],
+        |r| r.get(0),
+    )?;
+    if has_content_hash == 0 {
+        conn.execute("ALTER TABLE questions ADD COLUMN content_hash TEXT", [])?;
+    }
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_q_content_hash
+         ON questions(content_hash) WHERE content_hash IS NOT NULL",
+        [],
+    )?;
+
     Ok(conn)
 }

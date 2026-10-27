@@ -76,12 +76,12 @@ export default function PracticalExam() {
     <div className="mx-auto max-w-6xl space-y-6 pb-12">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold">Practical Lab</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-peach">Practical Lab</p>
           <h1 className="mt-1 font-serif text-3xl font-semibold tracking-tight text-paper">IOS Troubleshooting Lab</h1>
           <p className="mt-1 text-sm text-paper-muted font-sans">Diagnose topology issues and repair running configs locally in the virtual terminal.</p>
         </div>
         <div className="flex items-center gap-2 rounded-full border border-dark-border bg-dark-card px-4 py-2 text-xs font-mono">
-          <span className="font-semibold text-gold">{scenarios.length} scenarios</span>
+          <span className="font-semibold text-peach">{scenarios.length} scenarios</span>
           <span className="text-paper-dim">·</span>
           <span className="text-paper">1000 pts</span>
           <span className="text-paper-dim">·</span>
@@ -93,7 +93,7 @@ export default function PracticalExam() {
         <section className="space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 shadow-dock">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-xs font-medium text-gold font-mono">Scenario {activeIndex + 1} of {scenarios.length} · {DOMAIN_LABELS[activeScenario.domain] || activeScenario.domain}</p>
+              <p className="text-xs font-medium text-peach font-mono">Scenario {activeIndex + 1} of {scenarios.length} · {DOMAIN_LABELS[activeScenario.domain] || activeScenario.domain}</p>
               <h2 className="mt-1 font-serif text-xl font-semibold text-paper">{activeScenario.title}</h2>
             </div>
             {results && (
@@ -161,7 +161,7 @@ export default function PracticalExam() {
         <div className="min-w-0 space-y-2">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-xs font-semibold uppercase tracking-wider text-paper-dim font-mono">Virtual Cisco IOS Terminal</h2>
-            <span className="text-[11px] text-paper-dim">Interactive local emulator</span>
+            <span className="text-xs text-paper-dim">Interactive local emulator</span>
           </div>
           <CliTerminal key={activeScenario.id} devices={activeScenario.devices} onDevicesChange={refreshDevices} />
         </div>
@@ -178,10 +178,10 @@ export default function PracticalExam() {
                 : "border-dark-border bg-dark-card hover:border-gold/40 text-paper-muted"
             }`}
           >
-            <span className="block text-[10px] font-semibold uppercase tracking-wider text-gold">{DOMAIN_LABELS[scenario.domain]}</span>
+            <span className="block text-xs font-semibold uppercase tracking-wider text-peach">{DOMAIN_LABELS[scenario.domain]}</span>
             <span className="mt-1 block truncate text-xs font-medium text-paper">{scenario.title}</span>
             {results && (
-              <span className={`mt-1 block text-[10px] font-mono ${results[index].passed ? "text-sage-light" : "text-heart-light"}`}>
+              <span className={`mt-1 block text-xs font-mono ${results[index].passed ? "text-sage-light" : "text-heart-light"}`}>
                 {results[index].passed ? "Objectives complete" : "Objectives incomplete"}
               </span>
             )}
@@ -194,7 +194,7 @@ export default function PracticalExam() {
           <section role="dialog" aria-modal="true" aria-labelledby="practical-score-title" className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-dark-card border border-dark-border p-6 shadow-dock text-paper sm:p-7 space-y-4">
             <div className="flex flex-wrap items-start justify-between gap-3 border-b border-dark-borderSubtle pb-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-gold">Practical Exam Score</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-peach">Practical Exam Score</p>
                 <h2 id="practical-score-title" className="mt-1 font-serif text-3xl font-bold">{score} <span className="text-base font-normal text-paper-dim">/ 1000</span></h2>
                 <p className={`mt-1 text-xs font-mono font-medium ${score >= 825 ? "text-sage-light" : "text-heart-light"}`}>
                   {score >= 825 ? "PASS" : "FAIL"} · {passedCount} of {scenarios.length} scenarios passed · Passing threshold 825

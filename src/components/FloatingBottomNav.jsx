@@ -188,7 +188,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
                 <div className="nav-icon-wrapper p-1 rounded-full will-change-transform">
                   {link.icon}
                 </div>
-                <span className="text-[10px] tracking-tight">{link.label}</span>
+                <span className="text-[11px] tracking-tight">{link.label}</span>
               </Link>
             );
           })}
@@ -220,7 +220,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
               />
             </svg>
           </button>
-          <span className="text-[9px] uppercase tracking-wider font-semibold text-gold mt-0.5 select-none">
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-gold mt-0.5 select-none">
             Exam
           </span>
         </div>
@@ -253,7 +253,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
                 <div className="nav-icon-wrapper p-1 rounded-full will-change-transform">
                   {link.icon}
                 </div>
-                <span className="text-[10px] tracking-tight">{link.label}</span>
+                <span className="text-[11px] tracking-tight">{link.label}</span>
               </Link>
             );
           })}

@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 const MODES = [
+  { id: "weak", label: "Weak Spots", desc: "Drills the questions you get wrong first" },
   { id: "easy", label: "Easy", desc: "No timer, fundamental concepts" },
   { id: "medium", label: "Medium", desc: "Standard difficulty, 90s pace" },
   { id: "hard", label: "Hard", desc: "Complex scenarios, 60s pace" },
@@ -13,7 +14,18 @@ const MODES = [
 ];
 
 export default function Quiz({ onOpenExamModal }) {
-  const [mode, setMode] = useState("easy");
+  const [searchParams] = useSearchParams();
+  const requestedMode = searchParams.get("mode");
+  const drillSubtopic = searchParams.get("subtopic")?.trim() || null;
+  const drillDomain = searchParams.get("domain")?.trim() || null;
+  const isDrilling = Boolean(drillSubtopic || drillDomain);
+  const [mode, setMode] = useState(() =>
+    MODES.some((m) => m.id === requestedMode)
+      ? requestedMode
+      : isDrilling
+      ? "weak"
+      : "easy"
+  );
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState([]);
   const [feedback, setFeedback] = useState(null);
@@ -32,7 +44,8 @@ export default function Quiz({ onOpenExamModal }) {
   useEffect(() => {
     if (mode === "exam") return;
     loadQuestion();
-  }, [mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, drillSubtopic, drillDomain]);
 
   // Parallax Stack Transition when question updates
   useGSAP(
@@ -111,7 +124,11 @@ export default function Quiz({ onOpenExamModal }) {
     setSelected([]);
     setShowNoteInput(false);
     try {
-      const q = await invoke("get_random_question", { mode });
+      const q = await invoke("get_random_question", {
+        mode,
+        subtopic: drillSubtopic,
+        domain: drillDomain,
+      });
       setQuestion(q);
       if (q) checkFlagStatus(q.id);
     } catch (err) {
@@ -190,8 +207,75 @@ export default function Quiz({ onOpenExamModal }) {
     }
   }
 
+  // Keyboard-first answering: 1-4 picks a choice, Enter submits or advances.
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = e.target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (!question) return;
+
+      if (e.key === "Enter") {
+        if (feedback) {
+          e.preventDefault();
+          loadQuestion();
+        } else if (selected.length > 0) {
+          e.preventDefault();
+          submit();
+        }
+        return;
+      }
+
+      const digit = Number(e.key);
+      if (
+        !feedback &&
+        Number.isInteger(digit) &&
+        digit >= 1 &&
+        digit <= question.choices.length
+      ) {
+        e.preventDefault();
+        handleChoiceChange(question.choices[digit - 1].id, question.multi_select);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question, feedback, selected]);
+
   return (
     <div ref={rootRef} className="space-y-6 pb-12">
+      {/* Topic Drill Banner */}
+      {isDrilling && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="font-semibold uppercase tracking-wider text-gold">
+              Topic Drill
+            </span>
+            <span className="text-paper font-sans">{drillSubtopic || "All subtopics"}</span>
+            {drillDomain && (
+              <span className="text-paper-dim capitalize font-sans">
+                · {drillDomain.replace(/_/g, " ")}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/topics"
+              className="px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-gold/40 text-gold hover:bg-gold/20 transition-colors"
+            >
+              Change topic
+            </Link>
+            <Link
+              to="/quiz"
+              className="px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+            >
+              Exit drill
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Mode Selector Tabs */}
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
@@ -212,9 +296,19 @@ export default function Quiz({ onOpenExamModal }) {
             );
           })}
         </div>
-        <p className="text-xs text-paper-dim font-sans">
-          {MODES.find((m) => m.id === mode)?.desc}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-xs text-paper-dim font-sans">
+            {MODES.find((m) => m.id === mode)?.desc}
+          </p>
+          {!isDrilling && (
+            <Link
+              to="/topics"
+              className="text-xs font-medium text-gold hover:underline"
+            >
+              Browse topics to drill a subtopic →
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* Exam Mode Launcher */}
@@ -337,19 +431,28 @@ export default function Quiz({ onOpenExamModal }) {
 
           {/* Choices list */}
           <div className="space-y-3">
-            {question.choices.map((c) => {
+            {question.choices.map((c, index) => {
               const isChecked = selected.includes(c.id);
               const inputType = question.multi_select ? "checkbox" : "radio";
               return (
                 <label
                   key={c.id}
-                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 ${
+                  className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer transition-all duration-200 ${
                     isChecked
                       ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
                       : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
                   } ${feedback ? "pointer-events-none" : ""}`}
                 >
                   <div className="flex items-start">
+                    <span
+                      className={`mt-0.5 mr-2.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-mono ${
+                        isChecked
+                          ? "border-gold bg-gold/20 text-gold"
+                          : "border-dark-border text-paper-dim"
+                      }`}
+                    >
+                      {index + 1}
+                    </span>
                     <input
                       type={inputType}
                       name={`q-${question.id}`}
@@ -366,6 +469,12 @@ export default function Quiz({ onOpenExamModal }) {
               );
             })}
           </div>
+
+          <p className="text-xs text-paper-dim font-sans">
+            Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
+            <kbd className="font-mono text-paper-muted">4</kbd> to pick an answer,{" "}
+            <kbd className="font-mono text-paper-muted">Enter</kbd> to submit or advance.
+          </p>
 
           {/* Submit / Next Button */}
           <div className="flex items-center gap-3 pt-2">

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "driver.js/dist/driver.css";
 
 @tailwind base;
@@ -20,7 +19,7 @@
 }
 
 body {
-  font-family: Graphik, "Plus Jakarta Sans", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   background-color: #181815;
   color: #F6F2E9;
@@ -29,7 +28,7 @@ body {
 
 input[type="checkbox"],
 input[type="radio"] {
-  accent-color: #B8842A;
+  accent-color: #BD8D39;
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -95,6 +94,14 @@ input[type="radio"] {
   }
 }
 
+/* Stop compositor work entirely while the window is in the background. */
+.mesh-paused .animate-mesh-blob-1,
+.mesh-paused .animate-mesh-blob-2,
+.mesh-paused .animate-mesh-blob-3 {
+  animation-play-state: paused;
+  will-change: auto;
+}
+
 /* ==========================================================================
    Driver.js Onboarding Tour — CCNA Practice 2.0 Design System Overrides
    ========================================================================== */
@@ -107,7 +114,7 @@ input[type="radio"] {
 
 /* Spotlight ring — subtle Agent Gold halo around the active element */
 .driver-active-element {
-  outline: 2px solid rgba(184, 132, 42, 0.80) !important;
+  outline: 2px solid rgba(189, 141, 57, 0.80) !important;
   outline-offset: 4px !important;
   border-radius: inherit !important;
 }
@@ -115,17 +122,17 @@ input[type="radio"] {
 .driver-popover.ccna-tour-popover {
   background-color: #181815 !important;
   color: #F6F2E9 !important;
-  border: 1px solid rgba(184, 132, 42, 0.35) !important;
+  border: 1px solid rgba(189, 141, 57, 0.35) !important;
   border-radius: 1rem !important; /* rounded-2xl */
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 25px -4px rgba(184, 132, 42, 0.2) !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 25px -4px rgba(189, 141, 57, 0.2) !important;
   padding: 1.25rem 1.35rem !important;
   max-width: 350px !important;
-  font-family: Graphik, "Plus Jakarta Sans", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   z-index: 1000000000 !important;
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-title {
-  font-family: "Playfair Display", Georgia, serif !important;
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif !important;
   font-size: 1.15rem !important;
   font-weight: 600 !important;
   color: #F6F2E9 !important;
@@ -135,7 +142,7 @@ input[type="radio"] {
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-description {
-  font-family: Graphik, "Plus Jakarta Sans", Inter, sans-serif !important;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   font-size: 0.825rem !important;
   line-height: 1.55 !important;
   color: rgba(246, 242, 233, 0.75) !important;
@@ -155,7 +162,7 @@ input[type="radio"] {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
-  color: #B8842A !important;
+  color: #BD8D39 !important;
   letter-spacing: 0.05em !important;
 }
 
@@ -183,21 +190,21 @@ input[type="radio"] {
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-next-btn {
-  background: #B8842A !important;
-  border: 1px solid #B8842A !important;
+  background: #BD8D39 !important;
+  border: 1px solid #BD8D39 !important;
   color: #181815 !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   border-radius: 9999px !important;
   padding: 0.35rem 0.95rem !important;
   cursor: pointer !important;
-  box-shadow: 0 0 15px -2px rgba(184, 132, 42, 0.45) !important;
+  box-shadow: 0 0 15px -2px rgba(189, 141, 57, 0.45) !important;
   transition: all 0.15s ease !important;
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-next-btn:hover {
-  background: #C99232 !important;
-  border-color: #C99232 !important;
+  background: #C99A47 !important;
+  border-color: #C99A47 !important;
   transform: translateY(-0.5px) !important;
 }
 
@@ -210,7 +217,7 @@ input[type="radio"] {
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-close-btn:hover {
-  color: #B8842A !important;
+  color: #BD8D39 !important;
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-arrow {
@@ -230,7 +237,7 @@ input[type="radio"] {
   background: transparent !important;
   border: none !important;
   color: rgba(246, 242, 233, 0.45) !important;
-  font-family: Graphik, "Plus Jakarta Sans", Inter, sans-serif !important;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   font-size: 0.7rem !important;
   font-weight: 500 !important;
   cursor: pointer !important;

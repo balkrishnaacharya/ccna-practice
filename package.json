@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "import": "node pipeline/import-questions.js",
+    "bank:build": "node pipeline/build-bank.js",
+    "bank:stats": "node pipeline/bank-stats.js",
+    "bank:check": "node pipeline/bank-stats.js --strict",
     "test": "node --test tests/*.test.js"
   },
   "dependencies": {

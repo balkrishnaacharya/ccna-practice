@@ -132,7 +132,7 @@ export default function SessionReview() {
       <section className="mx-auto max-w-3xl space-y-5 rounded-2xl border border-dark-border bg-dark-card p-6 shadow-dock sm:p-7">
         <div className="flex items-center justify-between gap-3">
           <h1 className="font-serif text-xl font-semibold text-paper">Retake missed questions</h1>
-          <span className="text-xs font-mono text-gold">{retakeIndex + 1} / {wrongReviews.length}</span>
+          <span className="text-xs font-mono text-peach">{retakeIndex + 1} / {wrongReviews.length}</span>
         </div>
         <h2 className="font-serif text-lg leading-relaxed text-paper font-normal">{review.stem}</h2>
         <div className="space-y-2 pt-1">
@@ -242,7 +242,7 @@ export default function SessionReview() {
               >
                 Copy
               </button>
-              <span role="status" className="text-xs text-gold font-mono">{copyStatus}</span>
+              <span role="status" className="text-xs text-peach font-mono">{copyStatus}</span>
             </div>
           </div>
         )}
@@ -283,7 +283,7 @@ export default function SessionReview() {
                   }`}
                 >
                   <span className="font-sans">{choice.text}</span>
-                  <span className="text-[11px] font-semibold">
+                  <span className="text-xs font-semibold">
                     {choice.is_correct ? "✓ Correct answer" : userPicked ? "✗ Your answer" : ""}
                   </span>
                 </div>

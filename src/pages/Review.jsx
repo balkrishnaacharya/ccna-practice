@@ -153,7 +153,7 @@ export default function Review() {
                     >
                       <span className="font-sans">{c.text}</span>
                       {c.is_correct && (
-                        <span className="text-sage-light text-[11px] font-bold ml-2">
+                        <span className="text-sage-light text-xs font-bold ml-2">
                           ✓ Correct
                         </span>
                       )}

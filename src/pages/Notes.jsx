@@ -57,7 +57,7 @@ function ResultCard({ title, value }) {
   return (
     <div className="rounded-xl border border-dark-border bg-dark-surface/60 p-3 space-y-1">
       <p className="text-xs text-paper-dim font-sans">{title}</p>
-      <p className="break-all font-mono text-sm font-medium text-gold">{value}</p>
+      <p className="break-all font-mono text-sm font-medium text-peach">{value}</p>
     </div>
   );
 }
@@ -144,7 +144,7 @@ export default function Notes() {
               inputMode="decimal"
               className="w-full rounded-xl border border-dark-border bg-dark-surface px-3.5 py-2.5 font-mono text-sm text-paper focus:outline-none focus:ring-1 focus:ring-gold"
             />
-            <span className="block pt-1.5 text-xs font-mono font-semibold text-gold">
+            <span className="block pt-1.5 text-xs font-mono font-semibold text-peach">
               Wildcard: {maskWildcard ?? "Invalid IPv4 mask"}
             </span>
           </label>
@@ -155,7 +155,7 @@ export default function Notes() {
               inputMode="decimal"
               className="w-full rounded-xl border border-dark-border bg-dark-surface px-3.5 py-2.5 font-mono text-sm text-paper focus:outline-none focus:ring-1 focus:ring-gold"
             />
-            <span className="block pt-1.5 text-xs font-mono font-semibold text-gold">
+            <span className="block pt-1.5 text-xs font-mono font-semibold text-peach">
               Subnet mask: {wildcardSubnet ?? "Invalid IPv4 wildcard"}
             </span>
           </label>
@@ -180,7 +180,7 @@ export default function Notes() {
             <tbody className="divide-y divide-dark-borderSubtle">
               {cidrRows.map((row) => (
                 <tr key={row.cidr} className="hover:bg-dark-surface/40 transition-colors">
-                  <td className="px-4 py-2.5 font-mono font-semibold text-gold">/{row.cidr}</td>
+                  <td className="px-4 py-2.5 font-mono font-semibold text-peach">/{row.cidr}</td>
                   <td className="px-4 py-2.5 font-mono text-paper">{row.mask}</td>
                   <td className="px-4 py-2.5 text-right font-mono text-paper-muted">{row.total.toLocaleString()}</td>
                   <td className="px-4 py-2.5 text-right font-mono text-paper">{row.usable.toLocaleString()}</td>

@@ -45,6 +45,8 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             commands::get_stats,
+            commands::get_subtopic_stats,
+            commands::get_streak_stats,
             commands::get_random_question,
             commands::submit_answer,
             commands::get_exam_questions,

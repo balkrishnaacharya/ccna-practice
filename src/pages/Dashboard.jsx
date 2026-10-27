@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import StreakPanel from "../components/StreakPanel";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Dashboard({ profileName, onOpenExamModal }) {
   const [stats, setStats] = useState(null);
+  const [subtopics, setSubtopics] = useState([]);
   const [flagCount, setFlagCount] = useState(0);
   const navigate = useNavigate();
 
@@ -18,6 +20,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
   useEffect(() => {
     invoke("get_stats").then(setStats).catch(console.error);
+    invoke("get_subtopic_stats")
+      .then((rows) => setSubtopics(rows || []))
+      .catch(console.error);
     invoke("get_flags")
       .then((flags) => setFlagCount(flags ? flags.length : 0))
       .catch(console.error);
@@ -80,6 +85,12 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
     ai_ops: "AI & NetOps (10%)",
   };
 
+  // Weakest subtopics first; untried subtopics carry no signal yet.
+  const weakAreas = subtopics
+    .filter((s) => s.attempts > 0)
+    .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)
+    .slice(0, 5);
+
   return (
     <div ref={containerRef} className="space-y-8 pb-12">
       {/* Greeting Banner */}
@@ -127,6 +138,12 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             >
               Practice Quiz
             </Link>
+            <Link
+              to="/topics"
+              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-semibold tracking-wider uppercase rounded-full border border-dark-border transition-colors duration-150"
+            >
+              Drill a Topic
+            </Link>
           </div>
         </div>
       </div>
@@ -136,7 +153,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         <StatCard
           label="Question Bank"
           value={stats.total}
-          subtitle="CCNA 2.0 blueprint"
+          subtitle={`${Math.min(100, Math.round((stats.total / 2000) * 100))}% of 2,000 goal`}
           icon="📚"
         />
         <StatCard
@@ -148,7 +165,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         <StatCard
           label="Correct Answers"
           value={stats.correct}
-          subtitle={`${stats.total > 0 ? ((stats.correct / stats.total) * 100).toFixed(0) : 0}% of bank`}
+          subtitle={`${stats.answered > 0 ? ((stats.correct / stats.answered) * 100).toFixed(0) : 0}% of answered`}
           icon="✅"
           accent="sage"
         />
@@ -161,6 +178,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           accent={stats.accuracy >= 82.5 ? "sage" : "gold"}
         />
       </div>
+
+      {/* Study streak + daily goal */}
+      <StreakPanel />
 
       {/* Blueprint Domains & Quick Actions - Responsive: stack vertically on mobile, 3 cols on desktop */}
       <div
@@ -214,6 +234,69 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
         {/* Quick Launch Cards (1 col on desktop) */}
         <div className="space-y-4">
+          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-semibold text-paper">
+                Weak Areas
+              </h3>
+              <span className="text-xs font-mono font-semibold text-heart-light bg-heart/15 px-2.5 py-0.5 rounded-full border border-heart/30">
+                {weakAreas.length} tracked
+              </span>
+            </div>
+            {weakAreas.length === 0 ? (
+              <p className="text-xs text-paper-muted leading-relaxed font-sans">
+                Answer a few questions and your weakest subtopics will surface here.
+              </p>
+            ) : (
+              <ul className="space-y-2.5">
+                {weakAreas.map((s) => (
+                  <li key={`${s.domain}-${s.subtopic}`} className="space-y-1">
+                    <Link
+                      to={`/quiz?mode=weak&domain=${encodeURIComponent(
+                        s.domain
+                      )}&subtopic=${encodeURIComponent(s.subtopic)}`}
+                      className="block group space-y-1"
+                      title={`Drill ${s.subtopic}`}
+                    >
+                      <div className="flex justify-between items-baseline gap-2 text-xs">
+                        <span className="text-paper-muted group-hover:text-paper truncate font-sans">
+                          {s.subtopic}
+                        </span>
+                        <span className="font-mono text-paper-dim shrink-0">
+                          {s.accuracy}%
+                        </span>
+                      </div>
+                      <div className="w-full h-1.5 bg-dark-surface rounded-full overflow-hidden border border-dark-borderSubtle">
+                        <div
+                          className={`h-full rounded-full ${
+                            s.accuracy >= 82.5
+                              ? "bg-sage-light"
+                              : s.accuracy >= 60
+                              ? "bg-gold"
+                              : "bg-heart"
+                          }`}
+                          style={{ width: `${Math.max(3, s.accuracy)}%` }}
+                        ></div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Link
+              to="/quiz?mode=weak"
+              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-full transition-colors duration-150"
+            >
+              Drill Weak Spots →
+            </Link>
+            <Link
+              to="/topics"
+              className="block w-full text-center text-xs font-medium text-paper-dim hover:text-gold transition-colors"
+            >
+              Browse all topics →
+            </Link>
+          </div>
+
           <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
@@ -280,7 +363,7 @@ function StatCard({ label, value, subtitle, highlight, icon, accent }) {
       <div className="flex items-center justify-between">
         <span className="text-lg">{icon}</span>
         {subtitle && (
-          <p className="text-[11px] text-paper-dim truncate max-w-[120px] font-mono">
+          <p className="text-xs text-paper-dim truncate max-w-[120px] font-mono">
             {subtitle}
           </p>
         )}

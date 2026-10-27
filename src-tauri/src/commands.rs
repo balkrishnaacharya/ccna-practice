@@ -1,7 +1,7 @@
 use crate::db::Db;
 use rand::seq::SliceRandom;
 use rand::Rng;
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{params, params_from_iter, Connection, OptionalExtension};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -43,6 +43,18 @@ pub struct DomainCount {
     pub domain: String,
     pub count: i64,
 }
+
+#[derive(Serialize)]
+pub struct SubtopicStat {
+    pub domain: String,
+    pub subtopic: String,
+    pub total: i64,
+    pub seen: i64,
+    pub attempts: i64,
+    pub correct: i64,
+    pub accuracy: f64,
+}
+
 
 /// Task 1: added multi_select field
 #[derive(Serialize, Deserialize, Clone)]
@@ -232,6 +244,207 @@ pub fn get_stats(db: State<Db>) -> Result<Stats, String> {
     })
 }
 
+/// Per-subtopic accuracy, used to point the learner at weak areas.
+/// `seen` counts distinct questions attempted; `attempts` counts total answers.
+#[tauri::command]
+pub fn get_subtopic_stats(db: State<Db>) -> Result<Vec<SubtopicStat>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let mut stmt = conn
+        .prepare(
+            "SELECT q.domain,
+                    COALESCE(NULLIF(TRIM(q.subtopic), ''), 'Uncategorized') AS sub,
+                    COUNT(*) AS total,
+                    COUNT(s.question_id) AS seen,
+                    COALESCE(SUM(s.times_seen), 0) AS attempts,
+                    COALESCE(SUM(s.times_correct), 0) AS correct
+             FROM questions q
+             LEFT JOIN user_question_stats s ON s.question_id = q.id
+             GROUP BY q.domain, sub
+             ORDER BY q.domain ASC, sub ASC",
+        )
+        .map_err(|e| e.to_string())?;
+
+    let rows = stmt
+        .query_map([], |r| {
+            let attempts: i64 = r.get(4)?;
+            let correct: i64 = r.get(5)?;
+            Ok(SubtopicStat {
+                domain: r.get(0)?,
+                subtopic: r.get(1)?,
+                total: r.get(2)?,
+                seen: r.get(3)?,
+                attempts,
+                correct,
+                accuracy: if attempts > 0 {
+                    (correct as f64 / attempts as f64) * 1000.0
+                } else {
+                    0.0
+                },
+            })
+        })
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .map(|mut s| {
+            s.accuracy = (s.accuracy / 10.0).round();
+            s
+        })
+        .collect();
+
+    Ok(rows)
+}
+
+// ─── Study streak ─────────────────────────────────────────────────────────────
+
+#[derive(Serialize)]
+pub struct DayActivity {
+    /// Local calendar date, YYYY-MM-DD.
+    pub date: String,
+    pub answered: i64,
+    pub correct: i64,
+    pub goal_met: bool,
+}
+
+#[derive(Serialize)]
+pub struct StreakStats {
+    pub today_answered: i64,
+    pub today_correct: i64,
+    pub daily_goal: i64,
+    pub remaining_today: i64,
+    pub goal_met_today: bool,
+    pub current_streak: i64,
+    pub longest_streak: i64,
+    pub active_days: i64,
+    /// Last seven days, oldest first, with gaps filled as zero.
+    pub recent: Vec<DayActivity>,
+}
+
+const DEFAULT_DAILY_GOAL: i64 = 12;
+
+/// Day counts keyed by a local calendar-day ordinal (days since an arbitrary
+/// epoch). Ordinals come from SQLite so the local-time conversion matches.
+fn daily_activity(conn: &Connection) -> Result<Vec<(i64, i64, i64)>, String> {
+    let mut stmt = conn
+        .prepare(
+            "SELECT CAST(julianday(date(answered_at, 'unixepoch', 'localtime')) AS INTEGER) AS day,
+                    COUNT(*),
+                    COALESCE(SUM(correct), 0)
+             FROM answers
+             WHERE answered_at > 0
+             GROUP BY day
+             ORDER BY day ASC",
+        )
+        .map_err(|e| e.to_string())?;
+
+    let rows = stmt
+        .query_map([], |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?)))
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .collect();
+
+    Ok(rows)
+}
+
+fn daily_goal(conn: &Connection) -> i64 {
+    conn.query_row(
+        "SELECT value FROM settings WHERE key = 'daily_goal'",
+        [],
+        |r| r.get::<_, String>(0),
+    )
+    .optional()
+    .ok()
+    .flatten()
+    .and_then(|raw| raw.trim().parse::<i64>().ok())
+    .filter(|goal| *goal > 0)
+    .map(|goal| goal.min(500))
+    .unwrap_or(DEFAULT_DAILY_GOAL)
+}
+
+fn today_ordinal(conn: &Connection) -> Result<i64, String> {
+    conn.query_row(
+        "SELECT CAST(julianday(date('now', 'localtime')) AS INTEGER)",
+        [],
+        |r| r.get(0),
+    )
+    .map_err(|e| e.to_string())
+}
+
+/// Ordinals are truncated Julian days, so they land at midnight of the *previous*
+/// day; adding half a day recovers the calendar date they were derived from.
+fn date_label(conn: &Connection, ordinal: i64) -> Result<String, String> {
+    conn.query_row(
+        "SELECT date(julianday(?1) + 0.5)",
+        params![ordinal],
+        |r| r.get(0),
+    )
+    .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_streak_stats(db: State<Db>) -> Result<StreakStats, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    streak_stats_conn(&conn)
+}
+
+fn streak_stats_conn(conn: &Connection) -> Result<StreakStats, String> {
+    let goal = daily_goal(conn);
+    let today = today_ordinal(conn)?;
+    let activity = daily_activity(conn)?;
+
+    let by_day: HashMap<i64, (i64, i64)> = activity
+        .iter()
+        .map(|(day, answered, correct)| (*day, (*answered, *correct)))
+        .collect();
+
+    let (today_answered, today_correct) = by_day.get(&today).copied().unwrap_or((0, 0));
+
+    // A streak survives until a full day is missed, so an untouched today
+    // continues the run that ended yesterday.
+    let streak_anchor = if by_day.contains_key(&today) {
+        today
+    } else {
+        today - 1
+    };
+    let mut current_streak = 0;
+    let mut cursor = streak_anchor;
+    while by_day.contains_key(&cursor) {
+        current_streak += 1;
+        cursor -= 1;
+    }
+
+    let mut longest_streak = 0;
+    let mut run = 0;
+    let mut previous: Option<i64> = None;
+    for &(day, _, _) in &activity {
+        run = if previous == Some(day - 1) { run + 1 } else { 1 };
+        longest_streak = longest_streak.max(run);
+        previous = Some(day);
+    }
+
+    let mut recent = Vec::with_capacity(7);
+    for offset in (0..7).rev() {
+        let day = today - offset;
+        let (answered, correct) = by_day.get(&day).copied().unwrap_or((0, 0));
+        recent.push(DayActivity {
+            date: date_label(conn, day)?,
+            answered,
+            correct,
+            goal_met: answered >= goal,
+        });
+    }
+
+    Ok(StreakStats {
+        today_answered,
+        today_correct,
+        daily_goal: goal,
+        remaining_today: (goal - today_answered).max(0),
+        goal_met_today: today_answered >= goal,
+        current_streak,
+        longest_streak,
+        active_days: activity.len() as i64,
+        recent,
+    })
+}
+
 // ─── Question loading ─────────────────────────────────────────────────────────
 
 /// Load choices for a question_id in random order.
@@ -273,12 +486,69 @@ fn row_to_question(
 }
 
 #[tauri::command]
-pub fn get_random_question(mode: String, db: State<Db>) -> Result<Option<Question>, String> {
+pub fn get_random_question(
+    mode: String,
+    subtopic: Option<String>,
+    domain: Option<String>,
+    db: State<Db>,
+) -> Result<Option<Question>, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
-    get_random_question_conn(&mode, &conn)
+    let subtopic = subtopic.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    let domain = domain.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    get_random_question_conn(&mode, subtopic, domain, &conn)
 }
 
-pub fn get_random_question_conn(mode: &str, conn: &Connection) -> Result<Option<Question>, String> {
+pub fn get_random_question_conn(
+    mode: &str,
+    subtopic: Option<&str>,
+    domain: Option<&str>,
+    conn: &Connection,
+) -> Result<Option<Question>, String> {
+    // A topic drill narrows the rotation to one domain/subtopic instead of
+    // scanning the whole bank, so it short-circuits the normal paths.
+    if subtopic.is_some() || domain.is_some() {
+        return drill_question_conn(mode, subtopic, domain, conn);
+    }
+
+    // "weak" ignores difficulty tiers: it drills the questions you actually get
+    // wrong, then the ones you have not seen yet.
+    if mode == "weak" {
+        let mut stmt = conn
+            .prepare(
+                "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0)
+                 FROM questions q
+                 LEFT JOIN user_question_stats s ON s.question_id = q.id
+                 ORDER BY
+                   CASE
+                     WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
+                     WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
+                     ELSE 1
+                   END ASC,
+                   COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
+                   RANDOM()
+                 LIMIT 1",
+            )
+            .map_err(|e| e.to_string())?;
+
+        let row = stmt
+            .query_row([], |r| {
+                Ok((
+                    r.get::<_, i64>(0)?,
+                    r.get::<_, String>(1)?,
+                    r.get::<_, String>(2)?,
+                    r.get::<_, String>(3)?,
+                    r.get::<_, i64>(4)?,
+                ))
+            })
+            .optional()
+            .map_err(|e| e.to_string())?;
+
+        let Some((id, stem, domain, difficulty, multi_select)) = row else {
+            return Ok(None);
+        };
+        return row_to_question(conn, id, stem, domain, difficulty, multi_select).map(Some);
+    }
+
     let difficulty = match mode {
         "easy" => "easy",
         "medium" => "medium",
@@ -400,6 +670,76 @@ pub fn get_random_question_conn(mode: &str, conn: &Connection) -> Result<Option<
     };
 
     row_to_question(conn, id, stem, domain, difficulty, multi_select).map(Some)
+}
+
+/// Picks a question from one domain/subtopic. Difficulty tiers still apply for
+/// the graded modes, but "weak" and "exam" span every difficulty so a drill is
+/// never empty just because a topic has no hard questions yet.
+fn drill_question_conn(
+    mode: &str,
+    subtopic: Option<&str>,
+    domain: Option<&str>,
+    conn: &Connection,
+) -> Result<Option<Question>, String> {
+    let mut sql = String::from(
+        "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0)
+         FROM questions q
+         LEFT JOIN user_question_stats s ON s.question_id = q.id
+         WHERE 1 = 1",
+    );
+    let mut args: Vec<String> = Vec::new();
+
+    if let Some(d) = domain {
+        sql.push_str(" AND q.domain = ?");
+        args.push(d.to_string());
+    }
+    if let Some(s) = subtopic {
+        // Matches the grouping key used by get_subtopic_stats.
+        sql.push_str(" AND COALESCE(NULLIF(TRIM(q.subtopic), ''), 'Uncategorized') = ?");
+        args.push(s.to_string());
+    }
+    if mode != "weak" && mode != "exam" {
+        let difficulty = match mode {
+            "easy" => "easy",
+            "medium" => "medium",
+            "hard" => "hard",
+            "impossible" => "hard",
+            _ => "medium",
+        };
+        sql.push_str(" AND q.difficulty = ?");
+        args.push(difficulty.to_string());
+    }
+
+    sql.push_str(
+        " ORDER BY
+            CASE
+              WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
+              WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
+              ELSE 1
+            END ASC,
+            COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
+            RANDOM()
+          LIMIT 1",
+    );
+
+    let mut stmt = conn.prepare(&sql).map_err(|e| e.to_string())?;
+    let row = stmt
+        .query_row(params_from_iter(args.iter()), |r| {
+            Ok((
+                r.get::<_, i64>(0)?,
+                r.get::<_, String>(1)?,
+                r.get::<_, String>(2)?,
+                r.get::<_, String>(3)?,
+                r.get::<_, i64>(4)?,
+            ))
+        })
+        .optional()
+        .map_err(|e| e.to_string())?;
+
+    let Some((id, stem, q_domain, difficulty, multi_select)) = row else {
+        return Ok(None);
+    };
+    row_to_question(conn, id, stem, q_domain, difficulty, multi_select).map(Some)
 }
 
 // ─── Submit answer ────────────────────────────────────────────────────────────
@@ -1076,6 +1416,13 @@ mod tests {
                 answered_at INTEGER NOT NULL DEFAULT 0,
                 selected_choice_ids TEXT NOT NULL DEFAULT '[]'
             );
+            CREATE TABLE user_question_stats (
+                id INTEGER PRIMARY KEY,
+                question_id INTEGER NOT NULL UNIQUE REFERENCES questions(id),
+                times_seen INTEGER NOT NULL DEFAULT 0,
+                times_correct INTEGER NOT NULL DEFAULT 0,
+                last_seen_at INTEGER NOT NULL DEFAULT 0
+            );
             ",
         )
         .unwrap();
@@ -1106,9 +1453,12 @@ mod tests {
     #[test]
     fn test_random_choice_order() {
         let conn = setup_test_db();
+        // 200 draws so the pass band stays far outside random noise; a 10-draw
+        // sample failed ~8% of the time purely by chance.
+        let draws = 200;
         let mut pos_a_count = 0;
-        for _ in 0..10 {
-            let q = get_random_question_conn("easy", &conn).unwrap().unwrap();
+        for _ in 0..draws {
+            let q = get_random_question_conn("easy", None, None, &conn).unwrap().unwrap();
             assert_eq!(q.choices.len(), 4);
             assert!(!q.multi_select, "all test questions are single-select");
             let correct_pos = q
@@ -1120,18 +1470,19 @@ mod tests {
                 pos_a_count += 1;
             }
         }
-        println!("Correct choice landed in position A: {} / 10 times", pos_a_count);
+        println!("Correct choice landed in position A: {} / {} times", pos_a_count, draws);
         assert!(
-            pos_a_count <= 4,
-            "Correct choice in position A too many times: {}",
-            pos_a_count
+            (20..=80).contains(&pos_a_count),
+            "Correct choice position A is not uniformly distributed: {}/{}",
+            pos_a_count,
+            draws
         );
     }
 
     #[test]
     fn test_single_select_rejects_multi_submit() {
         let conn = setup_test_db();
-        let q = get_random_question_conn("easy", &conn).unwrap().unwrap();
+        let q = get_random_question_conn("easy", None, None, &conn).unwrap().unwrap();
         let payload = SubmitPayload {
             question_id: q.id,
             choice_ids: vec![q.choices[0].id, q.choices[1].id],
@@ -1147,7 +1498,7 @@ mod tests {
         let mut seen = HashSet::new();
 
         for i in 0..20 {
-            let q = get_random_question_conn("easy", &conn).unwrap().unwrap();
+            let q = get_random_question_conn("easy", None, None, &conn).unwrap().unwrap();
             let q_id = q.id;
             assert!(
                 seen.insert(q_id),
@@ -1177,7 +1528,113 @@ mod tests {
         assert_eq!(dup_count, 0);
 
         conn.execute("UPDATE answers SET answered_at = 0", []).unwrap();
-        let next_q = get_random_question_conn("easy", &conn).unwrap().unwrap();
+        let next_q = get_random_question_conn("easy", None, None, &conn).unwrap().unwrap();
         assert!(next_q.id > 0);
+    }
+
+    #[test]
+    fn test_topic_drill_filters_domain_and_subtopic() {
+        let conn = setup_test_db();
+        conn.execute("UPDATE questions SET subtopic = 'OSPF' WHERE id <= 5", []).unwrap();
+        conn.execute("UPDATE questions SET subtopic = 'VLANs' WHERE id > 5", []).unwrap();
+
+        for _ in 0..10 {
+            let q = get_random_question_conn("weak", Some("OSPF"), None, &conn)
+                .unwrap()
+                .unwrap();
+            assert!(q.id <= 5, "Drill leaked a non-OSPF question: {}", q.id);
+        }
+
+        for _ in 0..10 {
+            let q = get_random_question_conn("easy", Some("VLANs"), Some("network_infra"), &conn)
+                .unwrap()
+                .unwrap();
+            assert!(q.id > 5, "Drill leaked a non-VLAN question: {}", q.id);
+        }
+
+        // Blank subtopics are grouped under "Uncategorized" to match the stats query.
+        conn.execute("UPDATE questions SET subtopic = NULL WHERE id = 30", [])
+            .unwrap();
+        let uncategorized = get_random_question_conn("weak", Some("Uncategorized"), None, &conn)
+            .unwrap()
+            .unwrap();
+        assert_eq!(uncategorized.id, 30);
+
+        assert!(
+            get_random_question_conn("weak", Some("no-such-subtopic"), None, &conn)
+                .unwrap()
+                .is_none()
+        );
+        assert!(
+            get_random_question_conn("weak", None, Some("ai_ops"), &conn)
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    fn noon_epoch(conn: &Connection, days_ago: i64) -> i64 {
+        conn.query_row(
+            "SELECT CAST(strftime('%s', date('now', 'localtime', ?1) || ' 12:00:00', 'utc') AS INTEGER)",
+            params![format!("{} days", -days_ago)],
+            |r| r.get(0),
+        )
+        .unwrap()
+    }
+
+    fn add_answer(conn: &Connection, question_id: i64, correct: bool, at: i64) {
+        conn.execute(
+            "INSERT INTO answers (question_id, correct, answered_at) VALUES (?1, ?2, ?3)",
+            params![question_id, if correct { 1 } else { 0 }, at],
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn test_streak_stats_counts_consecutive_days() {
+        let conn = setup_test_db();
+
+        let empty = streak_stats_conn(&conn).unwrap();
+        assert_eq!(empty.daily_goal, DEFAULT_DAILY_GOAL);
+        assert_eq!(empty.current_streak, 0);
+        assert_eq!(empty.longest_streak, 0);
+        assert_eq!(empty.active_days, 0);
+        assert_eq!(empty.recent.len(), 7);
+        assert!(empty.recent.iter().all(|d| d.answered == 0));
+
+        // A three-day run ending yesterday, plus one isolated older day.
+        for offset in [1, 2, 3] {
+            add_answer(&conn, 1, true, noon_epoch(&conn, offset));
+        }
+        add_answer(&conn, 2, false, noon_epoch(&conn, 6));
+
+        let stats = streak_stats_conn(&conn).unwrap();
+        assert_eq!(stats.current_streak, 3, "an untouched today must not break the run");
+        assert_eq!(stats.today_answered, 0);
+        assert_eq!(stats.remaining_today, DEFAULT_DAILY_GOAL);
+        assert_eq!(stats.active_days, 4);
+        assert_eq!(stats.recent[6].answered, 0, "last bucket is today");
+        assert_eq!(stats.recent[5].answered, 1, "second-to-last bucket is yesterday");
+        assert_eq!(stats.recent[5].correct, 1);
+
+        // Answering today extends the run and closes the gap by one.
+        add_answer(&conn, 3, false, noon_epoch(&conn, 0));
+        let stats = streak_stats_conn(&conn).unwrap();
+        assert_eq!(stats.today_answered, 1);
+        assert_eq!(stats.today_correct, 0);
+        assert_eq!(stats.current_streak, 4);
+        assert_eq!(stats.longest_streak, 4);
+        assert_eq!(stats.remaining_today, DEFAULT_DAILY_GOAL - 1);
+        assert!(!stats.goal_met_today);
+
+        // A stored goal of 1 makes today's single answer enough.
+        conn.execute_batch("CREATE TABLE settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);")
+            .unwrap();
+        conn.execute("INSERT INTO settings (key, value) VALUES ('daily_goal', '1')", [])
+            .unwrap();
+        let stats = streak_stats_conn(&conn).unwrap();
+        assert_eq!(stats.daily_goal, 1);
+        assert_eq!(stats.remaining_today, 0);
+        assert!(stats.goal_met_today);
+        assert!(stats.recent[6].goal_met);
     }
 }

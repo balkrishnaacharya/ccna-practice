@@ -29,6 +29,12 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 - **Timed Exam Engine:** Full 120-minute blueprint-weighted mock exams (25% Network Fundamentals, 25% Network Access, 20% IP Connectivity, 20% IP Services & Security, 10% Automation/AI-Ops) with modal confirmation guards.
 - **Local-First SQLite Engine:** All question banks, progress metrics, and review histories persist entirely offline via Rust (`rusqlite`). No server or network connectivity required.
 - **Spaced Anti-Repeat & Randomization:** Weighted decay algorithm ensures question bank coverage while randomizing choice placement (`ORDER BY RANDOM()`).
+- **Weak Spots Mode:** A drill mode that ranks subtopics by your actual accuracy — under-70% subtopics first, then seen-but-passing, then unseen — so study time goes where the marks are missing.
+- **Weak Areas Panel:** The dashboard surfaces your five weakest attempted subtopics with accuracy bars and a one-click jump into a drill session.
+- **Topic Drill:** A `/topics` browser lists every subtopic with its question count, seen count, and accuracy bar, and links straight into a filtered drill for that exact domain/subtopic.
+- **Subtopic Coverage Report:** `bank:stats` reports per-subtopic counts, not just per-domain totals, and flags every subtopic with fewer than four questions.
+- **Keyboard-First Answering:** `1`–`4` select a choice, `Enter` submits or advances, so a full set can be drilled without touching the mouse.
+- **Study Streak & Daily Goal:** A dashboard panel tracks consecutive study days and today's progress against a 12-question default goal, with a seven-day activity strip. Any answer keeps the run alive; the goal only measures how much of today is done. The target is editable in Settings and stored locally in `settings`.
 - **Cryptographically Signed Releases:** Fail-closed Android signing pipeline with pinned certificate fingerprints (v2/v3 signature schemes).
 
 ---
@@ -41,6 +47,29 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 - **Database:** Local SQLite 3 via `rusqlite`
 - **Testing:** Node.js native test runner (`node:test`)
 - **CI/CD:** GitHub Actions with automated cross-platform bundling & release publishing
+
+---
+
+## Practice Modes
+
+| Mode | Behavior |
+|---|---|
+| **Easy / Medium / Hard** | Filters the pool by question difficulty. |
+| **Impossible** | The hardest tier — long stems, multi-step reasoning, close distractors. |
+| **Exam** | 120-minute, blueprint-weighted mock exam with a question navigator and confirmation guards. |
+| **Weak Spots** | Ignores difficulty and ranks subtopics by *your* accuracy, so the questions you get wrong come back first. |
+
+Weak Spots is also reachable directly at `/quiz?mode=weak`, which is what the
+dashboard's **Weak Areas** panel links to.
+
+### Topic Drill
+
+`/topics` lists every subtopic grouped by domain and links to
+`/quiz?mode=weak&domain=<domain>&subtopic=<subtopic>`. Both filters are optional:
+pass only `domain` to drill a whole domain, or only `subtopic` to drill that topic
+across domains. Difficulty tiers still apply when you switch to Easy/Medium/Hard
+inside a drill; Weak Spots and Exam span every difficulty so a thin topic is never
+empty. Blank subtopics are grouped as `Uncategorized`, matching the stats query.
 
 ---
 
@@ -102,9 +131,75 @@ For full details regarding keystore generation, manual commands, and CI configur
 You can seed or update the local question database via the included importer:
 
 ```bash
-# Import questions from a JSON file into ccna.db
-node pipeline/import-questions.js questions.sample.json
+# Validate + import questions from a JSON file into ccna.db
+npm run import -- pipeline/data/network_infra.json
+
+# Preview what would be imported without touching the database
+npm run import -- pipeline/data/network_infra.json --dry-run
+
+# Assemble all domain files, validate, and import the full bank
+npm run bank:build
 ```
+
+### Uniqueness
+
+Duplicate detection is **content-based**, not id- or stem-based. A question is
+fingerprinted as:
+
+```
+sha256(normalized stem + sorted normalized choice texts)
+```
+
+The fingerprint ignores option order, casing, punctuation, and `id`, so the same
+question re-imported with shuffled answers or edited metadata is rejected. The
+`questions.content_hash` column has a unique index, so uniqueness is enforced by
+the database as well as the importer.
+
+### Bank health
+
+```bash
+npm run bank:stats    # size, duplicates, per-domain coverage vs 2,000
+npm run bank:check    # same, but exits non-zero on duplicates/invalid rows
+```
+
+`bank:check` is suitable for CI: it fails the build if a duplicate or malformed
+question enters the bank.
+
+---
+
+## Roadmap
+
+The app is a solid local practice tool (**9/10**). The bottleneck for a CCNA 2.0
+exam in five months is question volume and quality, not features.
+
+**Current bank:** 369 unique questions, 0 duplicates, 0 invalid →
+**1,631 short of the 2,000 goal** (≈12 new questions/day for 150 days).
+
+Domain mix (goal weight in brackets):
+
+| Domain | Questions | Share |
+|---|---|---|
+| `network_infra` | 95 | 25.7% (25%) |
+| `switching` | 86 | 23.3% (25%) |
+| `ip_routing` | 72 | 19.5% (20%) |
+| `services_security` | 72 | 19.5% (20%) |
+| `ai_ops` | 44 | 11.9% (10%) |
+
+Difficulty mix: 129 easy / 180 medium / 60 hard. Hard is the thin tier, so new
+batches should favour scenario-heavy items over recall.
+
+Priorities:
+
+1. **Grow the bank to 2,000 unique questions.** Add ~12/day, rotating domains
+   with the blueprint weights (25/25/20/20/10) and targeting whatever
+   `bank:stats` still flags as thin. Run `npm run bank:check` after every batch.
+2. **Test the Android build on a real device.** Desktop and CI are exercised;
+   touch input, back-button handling, and the 120-minute exam timer on mobile
+   are not.
+3. **Add spaced repetition.** `user_question_stats` already records seen/correct
+   counts — scheduling reviews from it (SM-2 style) would beat random sampling.
+4. **Keep a screenshot-based UI regression check** for the quiz, exam navigator,
+   and results screens.
 
 ---
 

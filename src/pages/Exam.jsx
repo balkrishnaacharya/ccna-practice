@@ -192,7 +192,7 @@ export default function Exam({ onProgressChange }) {
             CCNA 2.0 Full Exam Simulator
           </span>
           <p className="text-sm font-medium text-paper mt-2">
-            Question <span className="font-serif text-gold text-base">{currentIndex + 1}</span> of {questions.length}
+            Question <span className="font-serif text-peach text-base">{currentIndex + 1}</span> of {questions.length}
           </p>
         </div>
 
@@ -547,7 +547,7 @@ export default function Exam({ onProgressChange }) {
           </h1>
 
           <p className="text-sm font-medium text-paper-muted">
-            Passing Standard: <strong className="text-gold">825 / 1000 (82.5%)</strong> • Raw Score:{" "}
+            Passing Standard: <strong className="text-peach">825 / 1000 (82.5%)</strong> • Raw Score:{" "}
             <strong className="text-paper">{score} / {total_questions}</strong> ({percentage}%)
           </p>
           <p className="text-xs text-paper-dim">
@@ -685,8 +685,8 @@ export default function Exam({ onProgressChange }) {
                     return (
                       <div key={c.id} className={`p-3 rounded-xl border flex items-center justify-between ${choiceClass}`}>
                         <span>{c.text}</span>
-                        {isRight && <span className="text-[11px] font-bold text-sage-light ml-2">✓ Correct</span>}
-                        {isUserPick && !isRight && <span className="text-[11px] font-bold text-heart-light ml-2">✗ Your Pick</span>}
+                        {isRight && <span className="text-xs font-bold text-sage-light ml-2">✓ Correct</span>}
+                        {isUserPick && !isRight && <span className="text-xs font-bold text-heart-light ml-2">✗ Your Pick</span>}
                       </div>
                     );
                   })}

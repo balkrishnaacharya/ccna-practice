@@ -186,7 +186,7 @@ export default function SplashSequence({ onComplete }) {
                   <line x1="12" y1="7" x2="19" y2="17" />
                   <line x1="7" y1="19" x2="17" y2="19" />
                 </svg>
-                <span className="text-[9px] font-bold text-gold uppercase tracking-widest mt-0.5 font-mono">
+                <span className="text-xs font-bold text-gold uppercase tracking-widest mt-0.5 font-mono">
                   CCNA
                 </span>
               </div>

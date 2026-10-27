@@ -1,6 +1,7 @@
 export const ROUTE_ORDER = {
   "/": 0,
   "/quiz": 1,
+  "/topics": 1.5,
   "/practical-exam": 2,
   "/notes": 3,
   "/review": 4,

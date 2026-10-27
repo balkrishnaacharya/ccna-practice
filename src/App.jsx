@@ -10,6 +10,7 @@ import ExamHistory from "./pages/ExamHistory";
 import SessionReview from "./pages/SessionReview";
 import Notes from "./pages/Notes";
 import PracticalExam from "./pages/PracticalExam";
+import Topics from "./pages/Topics";
 import FloatingBottomNav from "./components/FloatingBottomNav";
 import ExamConfirmationModal from "./components/ExamConfirmationModal";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
@@ -208,6 +209,7 @@ export default function App() {
               element={<Exam onProgressChange={reportExamProgress} />}
             />
             <Route path="/practical-exam" element={<PracticalExam />} />
+            <Route path="/topics" element={<Topics />} />
             <Route path="/history" element={<ExamHistory />} />
             <Route path="/history/:sessionId" element={<SessionReview />} />
             <Route path="/notes" element={<Notes />} />

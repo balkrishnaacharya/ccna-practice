@@ -69,7 +69,7 @@ export default function UpdateModal({
 
         {/* Release Notes */}
         <div className="rounded-xl border border-dark-border bg-dark-surface/60 p-4 max-h-48 overflow-y-auto space-y-2 text-xs text-paper-muted font-sans">
-          <p className="font-semibold text-paper uppercase tracking-wider text-[10px]">
+          <p className="font-semibold text-paper uppercase tracking-wider text-xs">
             What's New:
           </p>
           <div className="whitespace-pre-line leading-relaxed">
@@ -80,7 +80,7 @@ export default function UpdateModal({
         {/* Progress bar during download */}
         {isDownloading && (
           <div className="space-y-1.5">
-            <div className="flex justify-between text-xs font-mono text-gold">
+            <div className="flex justify-between text-xs font-mono text-peach">
               <span>Downloading update...</span>
               <span>{downloadProgress}%</span>
             </div>
