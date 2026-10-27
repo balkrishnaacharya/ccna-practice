@@ -8,22 +8,22 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 
 ---
 
-## Downloads (Latest Release: [v0.2.0-beta.2](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.2.0-beta.2))
+## Downloads (Latest Release: [v0.3.0](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.3.0))
 
 | Platform | Format | Direct Download |
 |---|---|---|
-| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.2.0-beta.2-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/ccna-practice-v0.2.0-beta.2-android-aarch64.apk) |
-| **Linux** | AppImage | [CCNA.Practice_0.2.0_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_amd64.AppImage) |
-| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.2.0_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_amd64.deb) |
-| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.2.0-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice-0.2.0-1.x86_64.rpm) |
-| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.2.0_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_x64-setup.exe) |
-| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.2.0_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.2.0-beta.2/CCNA.Practice_0.2.0_x64_en-US.msi) |
+| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.3.0-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/ccna-practice-v0.3.0-android-aarch64.apk) |
+| **Linux** | AppImage | [CCNA.Practice_0.3.0_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_amd64.AppImage) |
+| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.3.0_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_amd64.deb) |
+| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.3.0-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice-0.3.0-1.x86_64.rpm) |
+| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.3.0_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_x64-setup.exe) |
+| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.3.0_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_x64_en-US.msi) |
 
 ---
 
 ## Key Features
 
-- **Dark-First Editorial Aesthetic:** Editorial dark palette (`#181815` warm dark, `#B8842A` agent gold, `#5C6E4E` sage, `#C1633C` heart) paired with high-contrast serif typography (`Playfair Display`) and clean sans-serif (`Inter`).
+- **Dark-First Editorial Aesthetic:** Editorial dark palette (`#181815` warm dark, `#BD8D39` agent gold, `#93AB80` sage, `#C36842` heart) paired with high-contrast serif typography (system serif stack) and clean sans-serif (system sans stack).
 - **Polpharma-Inspired Splash Animation:** Smooth opening identity sequence with micro-interactions powered by GSAP.
 - **Directional Navigation & Floating Dock:** Hierarchy-aware transitions and responsive elevated action trigger dock.
 - **Timed Exam Engine:** Full 120-minute blueprint-weighted mock exams (25% Network Fundamentals, 25% Network Access, 20% IP Connectivity, 20% IP Services & Security, 10% Automation/AI-Ops) with modal confirmation guards.

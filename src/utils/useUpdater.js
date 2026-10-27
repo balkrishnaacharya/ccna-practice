@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-const CURRENT_VERSION = "0.2.2";
+const CURRENT_VERSION = "0.3.0";
 const GITHUB_REPO = "balkrishnaacharya/ccna-practice";
 
 export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
