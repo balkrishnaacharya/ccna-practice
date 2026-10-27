@@ -104,58 +104,6 @@
     ]
   },
   {
-    "stem": "What is the maximum power delivered by the Power over Ethernet Plus (802.3at) standard at the PSE port?",
-    "explanation": "The IEEE 802.3at standard, also known as PoE+, delivers up to 30.0 Watts of DC power at the Power Sourcing Equipment (PSE) port, guaranteeing at least 25.5 Watts at the Powered Device (PD). Standard 802.3af delivers 15.4 Watts at the PSE port. Newer 802.3bt standards provide 60W or 90W for higher draw devices.",
-    "domain": "network_infra",
-    "subtopic": "PoE Standards",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "30.0 Watts",
-        "is_correct": true
-      },
-      {
-        "text": "15.4 Watts",
-        "is_correct": false
-      },
-      {
-        "text": "60.0 Watts",
-        "is_correct": false
-      },
-      {
-        "text": "90.0 Watts",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "Which symptom typically indicates a duplex mismatch between two connected Ethernet interfaces?",
-    "explanation": "When one side is configured for full-duplex and the other for half-duplex, the half-duplex side will experience late collisions and runts because it detects transmissions during its own transmission window. The full-duplex side will typically log FCS/CRC errors. Link down state or no carrier errors indicate physical layer disconnects.",
-    "domain": "network_infra",
-    "subtopic": "Interface Troubleshooting",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "Late collisions on the half-duplex interface",
-        "is_correct": true
-      },
-      {
-        "text": "Immediate line protocol down status",
-        "is_correct": false
-      },
-      {
-        "text": "Broadcast storms traversing the link",
-        "is_correct": false
-      },
-      {
-        "text": "Complete cessation of ARP requests",
-        "is_correct": false
-      }
-    ]
-  },
-  {
     "stem": "What is the default TCP flags sequence during a standard three-way handshake?",
     "explanation": "A TCP connection is established using a three-way handshake: the client sends a SYN packet, the server responds with SYN-ACK, and the client finishes the handshake with an ACK packet. After this sequence, reliable bidirectional data transmission can begin.",
     "domain": "network_infra",
@@ -416,32 +364,6 @@
     ]
   },
   {
-    "stem": "Which protocol operates over UDP port 67 and port 68 for automatic IP configuration?",
-    "explanation": "The Dynamic Host Configuration Protocol (DHCP) uses UDP port 67 for the server and UDP port 68 for the client. Clients broadcast DHCPDISCOVER messages to discover available servers on the local segment.",
-    "domain": "network_infra",
-    "subtopic": "Network Services",
-    "difficulty": "easy",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "DHCP",
-        "is_correct": true
-      },
-      {
-        "text": "DNS",
-        "is_correct": false
-      },
-      {
-        "text": "SNMP",
-        "is_correct": false
-      },
-      {
-        "text": "TFTP",
-        "is_correct": false
-      }
-    ]
-  },
-  {
     "stem": "What is the primary characteristic of UDP compared to TCP?",
     "explanation": "User Datagram Protocol (UDP) is a connectionless, best-effort transport protocol with low overhead. Unlike TCP, UDP does not provide sequencing, acknowledgments, or flow control, making it ideal for delay-sensitive real-time voice and video streams.",
     "domain": "network_infra",
@@ -572,53 +494,27 @@
     ]
   },
   {
-    "stem": "Which command shows detailed hardware statistics, including input/output errors, CRC errors, and duplex status on a Cisco switch port?",
-    "explanation": "The command `show interfaces [interface-id]` displays complete operational parameters and counters for an interface. This includes speed, duplex, packet counts, runt/giant errors, CRC errors, and input/output drops.",
-    "domain": "network_infra",
-    "subtopic": "Interface Troubleshooting",
-    "difficulty": "easy",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "show interfaces GigabitEthernet0/1",
-        "is_correct": true
-      },
-      {
-        "text": "show ip interface brief",
-        "is_correct": false
-      },
-      {
-        "text": "show mac address-table",
-        "is_correct": false
-      },
-      {
-        "text": "show vlan brief",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "What does an IPv4 address beginning with 169.254.X.X signify when observed on a host?",
-    "explanation": "The 169.254.0.0/16 prefix is reserved for Automatic Private IP Addressing (APIPA) / Link-Local addressing. A host self-assigns an address from this range when it is configured for DHCP but fails to receive a response from a DHCP server on the local network.",
+    "stem": "Which IPv4 block is reserved for documentation and examples and must never appear routed on a live network?",
+    "explanation": "RFC 5737 sets aside three blocks for examples: 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24. They are safe to print in diagrams and lab guides precisely because no operator will route them, so a leaked configuration snippet cannot point at real hosts.",
     "domain": "network_infra",
     "subtopic": "IPv4 Addressing",
-    "difficulty": "easy",
-    "source": "blueprint-bank",
+    "difficulty": "medium",
+    "source": "ai-generated",
     "choices": [
       {
-        "text": "The host failed to obtain an IP from a DHCP server (APIPA)",
+        "text": "192.0.2.0/24",
         "is_correct": true
       },
       {
-        "text": "The host is connected to a public cloud VPC network",
+        "text": "198.18.0.0/15",
         "is_correct": false
       },
       {
-        "text": "The host is using a reserved multicast class D address",
+        "text": "192.168.0.0/16",
         "is_correct": false
       },
       {
-        "text": "The host has received a rogue DHCP reservation",
+        "text": "169.254.0.0/16",
         "is_correct": false
       }
     ]
@@ -676,32 +572,6 @@
     ]
   },
   {
-    "stem": "Which standard defines Power over Ethernet (PoE) providing up to 15.4 Watts per port?",
-    "explanation": "IEEE 802.3af was the original Power over Ethernet standard ratified in 2003, supplying up to 15.4 W at the PSE port. The newer 802.3at (PoE+) provides 30 W, while 802.3bt (4PPoE) offers up to 60 W (Type 3) and 90 W (Type 4).",
-    "domain": "network_infra",
-    "subtopic": "PoE Standards",
-    "difficulty": "easy",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "IEEE 802.3af",
-        "is_correct": true
-      },
-      {
-        "text": "IEEE 802.3at",
-        "is_correct": false
-      },
-      {
-        "text": "IEEE 802.3bt",
-        "is_correct": false
-      },
-      {
-        "text": "IEEE 802.11ax",
-        "is_correct": false
-      }
-    ]
-  },
-  {
     "stem": "What is the maximum distance supported by standard 1000BASE-T Gigabit Ethernet over Category 5e UTP cabling?",
     "explanation": "1000BASE-T over Cat5e or Cat6 UTP cabling supports a maximum segment length of 100 meters (approximately 328 feet). This includes up to 90 meters of horizontal solid-core cabling and 10 meters of patch cords.",
     "domain": "network_infra",
@@ -749,84 +619,6 @@
       },
       {
         "text": "Session layer (Layer 5)",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "What frame check sequence error typically occurs when a frame is corrupt or damaged in transit across a copper cable?",
-    "explanation": "A Cyclic Redundancy Check (CRC) error occurs when the mathematical checksum calculated by the receiving switch port does not match the FCS field in the Ethernet trailer. High CRC errors are usually caused by bad physical cables, electromagnetic interference, or faulty transceiver modules.",
-    "domain": "network_infra",
-    "subtopic": "Interface Troubleshooting",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "CRC / FCS error",
-        "is_correct": true
-      },
-      {
-        "text": "Late collision error",
-        "is_correct": false
-      },
-      {
-        "text": "Buffer overrun error",
-        "is_correct": false
-      },
-      {
-        "text": "Carrier transition error",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "Which protocol is used by Cisco Discovery Protocol (CDP) and LLDP to share device information?",
-    "explanation": "Both CDP and LLDP are Layer 2 neighbor discovery protocols that encapsulate advertisements directly into Data Link layer frames without requiring an IP stack. They multicast advertisements on local segments to discover adjacent device types, software versions, and port IDs.",
-    "domain": "network_infra",
-    "subtopic": "Discovery Protocols",
-    "difficulty": "easy",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "Direct Layer 2 multicast frames",
-        "is_correct": true
-      },
-      {
-        "text": "Layer 3 UDP broadcast packets",
-        "is_correct": false
-      },
-      {
-        "text": "Layer 4 TCP unicast connections",
-        "is_correct": false
-      },
-      {
-        "text": "ICMP echo discovery messages",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "Which command enables Link Layer Discovery Protocol (LLDP) globally on a Cisco IOS-XE switch?",
-    "explanation": "The global configuration command `lldp run` turns on LLDP processing on the switch. Unlike CDP, which is enabled by default on Cisco equipment, LLDP is an open IEEE standard (802.1AB) that often requires explicit global activation.",
-    "domain": "network_infra",
-    "subtopic": "Discovery Protocols",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "lldp run",
-        "is_correct": true
-      },
-      {
-        "text": "lldp enable",
-        "is_correct": false
-      },
-      {
-        "text": "lldp transmit and receive",
-        "is_correct": false
-      },
-      {
-        "text": "enable lldp-discovery",
         "is_correct": false
       }
     ]
@@ -1040,58 +832,6 @@
     ]
   },
   {
-    "stem": "Which mechanism allows an Ethernet switch port in 'err-disabled' state to automatically recover after a configured period?",
-    "explanation": "The command `errdisable recovery cause [cause]` along with `errdisable recovery interval [seconds]` allows a switch to automatically re-enable ports placed into err-disabled state (e.g. from BPDU guard or port security violations) without manual administrator intervention.",
-    "domain": "network_infra",
-    "subtopic": "Interface Troubleshooting",
-    "difficulty": "hard",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "errdisable recovery cause all",
-        "is_correct": true
-      },
-      {
-        "text": "auto-recovery error-state enable",
-        "is_correct": false
-      },
-      {
-        "text": "switchport recovery timer",
-        "is_correct": false
-      },
-      {
-        "text": "service auto-restart interfaces",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "What is the default aging time of dynamic MAC address table entries on a Cisco Catalyst switch?",
-    "explanation": "By default, dynamic MAC entries learned by a Cisco Catalyst switch age out after 300 seconds (5 minutes) of inactivity. If no frames with that source MAC arrive within that duration, the switch flushes the entry to keep the CAM table up to date.",
-    "domain": "network_infra",
-    "subtopic": "Switch Operations",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "300 seconds (5 minutes)",
-        "is_correct": true
-      },
-      {
-        "text": "60 seconds (1 minute)",
-        "is_correct": false
-      },
-      {
-        "text": "600 seconds (10 minutes)",
-        "is_correct": false
-      },
-      {
-        "text": "3600 seconds (1 hour)",
-        "is_correct": false
-      }
-    ]
-  },
-  {
     "stem": "Which field in the TCP header is used by the receiver to inform the sender how many bytes of data it can accept before receiving an acknowledgment?",
     "explanation": "The Window Size field in the TCP header dictates the receive window (rwnd). This is the core mechanism of TCP flow control, preventing a fast sender from overwhelming a receiver's buffer space.",
     "domain": "network_infra",
@@ -1139,58 +879,6 @@
       },
       {
         "text": "Point-to-point leased line",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "What type of frame is discarded by a switch because its length is less than the minimum 64-byte Ethernet standard?",
-    "explanation": "A runt frame is an Ethernet frame that is smaller than the IEEE 802.3 minimum size of 64 bytes and has a bad FCS/CRC. Runts are most frequently generated as fragments resulting from network collisions.",
-    "domain": "network_infra",
-    "subtopic": "Interface Troubleshooting",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "Runt frame",
-        "is_correct": true
-      },
-      {
-        "text": "Giant frame",
-        "is_correct": false
-      },
-      {
-        "text": "Jumbo frame",
-        "is_correct": false
-      },
-      {
-        "text": "Baby giant frame",
-        "is_correct": false
-      }
-    ]
-  },
-  {
-    "stem": "Which Cisco platform provides centralized, intent-based network management, automation, and assurance for campus fabrics?",
-    "explanation": "Cisco Catalyst Center (formerly Cisco DNA Center) is the enterprise network management and command controller for Cisco Software-Defined Access (SD-Access). It provides automated device provisioning, policy management, and predictive telemetry assurance across campus LANs and WLANs.",
-    "domain": "network_infra",
-    "subtopic": "Network Automation Architecture",
-    "difficulty": "medium",
-    "source": "blueprint-bank",
-    "choices": [
-      {
-        "text": "Cisco Catalyst Center (DNA Center)",
-        "is_correct": true
-      },
-      {
-        "text": "Cisco Adaptive Security Appliance (ASA)",
-        "is_correct": false
-      },
-      {
-        "text": "Cisco Prime Infrastructure Express",
-        "is_correct": false
-      },
-      {
-        "text": "Cisco Firepower Device Manager",
         "is_correct": false
       }
     ]
@@ -1295,6 +983,3178 @@
       },
       {
         "text": "The maximum allowable transmission delay across a WAN link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field is recalculated by every router that forwards a packet?",
+    "explanation": "The Header Checksum covers only the IPv4 header, and because the TTL is decremented at each hop the checksum must be recomputed each time. A router that receives a packet whose header checksum does not match discards it.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Header Checksum",
+        "is_correct": true
+      },
+      {
+        "text": "Identification",
+        "is_correct": false
+      },
+      {
+        "text": "Total Length",
+        "is_correct": false
+      },
+      {
+        "text": "Protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header fields work together so that fragments can be reassembled in the correct order?",
+    "explanation": "The Identification field tags all fragments belonging to the same original datagram, while the Fragment Offset records where each fragment's payload belongs. The More Fragments flag marks all but the last fragment.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Identification and Fragment Offset",
+        "is_correct": true
+      },
+      {
+        "text": "TTL and Protocol",
+        "is_correct": false
+      },
+      {
+        "text": "Version and IHL",
+        "is_correct": false
+      },
+      {
+        "text": "Source and Destination Address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the minimum size of an IPv4 header when no options are present?",
+    "explanation": "The fixed portion of the IPv4 header is 20 bytes. The IHL field expresses the header length in 32-bit words, so a value of 5 means 20 bytes; options can extend it to a maximum of 60 bytes.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "20 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "8 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "14 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "40 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the fixed size of the base IPv6 header?",
+    "explanation": "The IPv6 base header is a fixed 40 bytes. Optional features are moved into extension headers chained through the Next Header field, which is why the base header never changes size.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "40 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "20 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "24 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "60 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 header field can label a traffic flow for special handling without inspecting the transport header?",
+    "explanation": "The 20-bit Flow Label identifies packets that belong to the same flow so routers can apply consistent treatment without parsing upper-layer headers. A value of zero means the packet has not been assigned to any flow.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Flow Label",
+        "is_correct": true
+      },
+      {
+        "text": "Traffic Class",
+        "is_correct": false
+      },
+      {
+        "text": "Next Header",
+        "is_correct": false
+      },
+      {
+        "text": "Payload Length",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the Next Header field in an IPv6 packet identify?",
+    "explanation": "Next Header points to whatever follows the current header: an upper-layer protocol such as TCP or UDP, or another extension header. This chaining is how IPv6 adds optional behavior without growing the base header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The header or upper-layer protocol that follows the current header",
+        "is_correct": true
+      },
+      {
+        "text": "The IPv6 address of the next-hop router toward the destination",
+        "is_correct": false
+      },
+      {
+        "text": "The maximum payload size the source is willing to send",
+        "is_correct": false
+      },
+      {
+        "text": "The number of routers the packet has already traversed",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layer is responsible for formatting, compression, and encryption of data?",
+    "explanation": "The Presentation layer handles how data is represented to the application, including character encoding, compression, and encryption. It sits between the Application layer and the Session layer.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Presentation",
+        "is_correct": true
+      },
+      {
+        "text": "Session",
+        "is_correct": false
+      },
+      {
+        "text": "Transport",
+        "is_correct": false
+      },
+      {
+        "text": "Data Link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "At which OSI layer are MAC addresses used to deliver frames on a local segment?",
+    "explanation": "Layer 2, the Data Link layer, uses MAC addresses to deliver frames between devices on the same broadcast domain. Layer 3 then uses IP addresses to move packets between networks.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Data Link",
+        "is_correct": true
+      },
+      {
+        "text": "Network",
+        "is_correct": false
+      },
+      {
+        "text": "Transport",
+        "is_correct": false
+      },
+      {
+        "text": "Physical",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which device forwards traffic between different IP networks by choosing a next hop from a routing table?",
+    "explanation": "A router examines the destination IP address, consults its routing table, and forwards the packet toward the best matching next hop. This is what separates broadcast domains and connects distinct subnets.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Router",
+        "is_correct": true
+      },
+      {
+        "text": "Layer 2 switch",
+        "is_correct": false
+      },
+      {
+        "text": "Hub",
+        "is_correct": false
+      },
+      {
+        "text": "Access point",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of a wireless access point in an enterprise LAN?",
+    "explanation": "An AP bridges wireless clients onto the wired LAN, typically by mapping each SSID to a VLAN and tagging frames toward the wired uplink. In a controller-based design the AP is often a lightweight device managed centrally.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It bridges wireless clients onto the wired LAN",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns public IP addresses to wireless clients using NAT",
+        "is_correct": false
+      },
+      {
+        "text": "It provides Layer 3 routing between wireless subnets",
+        "is_correct": false
+      },
+      {
+        "text": "It stores the MAC address table for the entire campus",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary function of a firewall between network zones?",
+    "explanation": "A firewall enforces an access policy on traffic crossing between zones, permitting or denying flows based on addresses, ports, application, or state. It is placed at trust boundaries rather than inside a single flat segment.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It permits or denies traffic between zones according to a configured policy",
+        "is_correct": true
+      },
+      {
+        "text": "It converts private addresses to public addresses for every host",
+        "is_correct": false
+      },
+      {
+        "text": "It learns MAC addresses and forwards frames within a VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It distributes routing updates between autonomous systems",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why are publicly reachable servers placed in a DMZ rather than on the internal LAN?",
+    "explanation": "A DMZ is a segment isolated from the internal network by the firewall, so a compromised public server cannot reach internal hosts directly. Traffic from the DMZ to the inside is restricted to only what the service truly needs.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It isolates internet-facing servers so a compromise cannot reach internal hosts directly",
+        "is_correct": true
+      },
+      {
+        "text": "It guarantees higher bandwidth for public web traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for any access control lists on the firewall",
+        "is_correct": false
+      },
+      {
+        "text": "It automatically encrypts all traffic destined for the internet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a spine-leaf data center fabric, why is every leaf connected to every spine?",
+    "explanation": "A full mesh between leaves and spines gives any two leaves an equal-cost path of exactly two hops. This produces predictable latency and lets routing protocols use all links simultaneously instead of blocking redundant ones.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It gives predictable two-hop paths and lets every link be used simultaneously",
+        "is_correct": true
+      },
+      {
+        "text": "It allows spanning tree to block the redundant links for loop prevention",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for any Layer 3 routing in the data center",
+        "is_correct": false
+      },
+      {
+        "text": "It ensures each leaf has a single path to the core for simplicity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a spine-leaf fabric, why are spines not connected to each other?",
+    "explanation": "Spines act only as a high-speed transit tier between leaves. Connecting spines to each other would add hops and create the potential for loops without improving any leaf-to-leaf path.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Spines are pure transit devices, and interconnecting them would add hops and possible loops",
+        "is_correct": true
+      },
+      {
+        "text": "Spines have no routing table and therefore cannot form adjacencies",
+        "is_correct": false
+      },
+      {
+        "text": "Spine ports are reserved exclusively for out-of-band management",
+        "is_correct": false
+      },
+      {
+        "text": "Spine-to-spine links would collapse the VXLAN overlay",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a three-tier campus design, which layer aggregates access switches and enforces routing and security policy?",
+    "explanation": "The distribution layer sits between access and core. It terminates access VLANs, runs inter-VLAN routing, applies ACLs and QoS policy, and summarizes routes toward the core so the core can stay simple and fast.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The distribution layer",
+        "is_correct": true
+      },
+      {
+        "text": "The access layer",
+        "is_correct": false
+      },
+      {
+        "text": "The core layer",
+        "is_correct": false
+      },
+      {
+        "text": "The data center layer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of the access layer in a Cisco campus architecture?",
+    "explanation": "The access layer is the edge that end devices physically attach to. It provides port density, PoE, VLAN assignment, port security, and 802.1X authentication before traffic is handed upward.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Connecting end devices and applying port-level services such as PoE, VLANs, and port security",
+        "is_correct": true
+      },
+      {
+        "text": "Providing high-speed transit between distribution blocks",
+        "is_correct": false
+      },
+      {
+        "text": "Hosting the default gateway for every VLAN in the campus",
+        "is_correct": false
+      },
+      {
+        "text": "Terminating WAN circuits from the service provider",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address range is reserved for loopback testing and is never forwarded by a router?",
+    "explanation": "The 127.0.0.0/8 range is reserved for loopback. An address such as 127.0.0.1 refers to the local TCP/IP stack, and packets sent to this range are never placed on a physical link or forwarded by a router.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "127.0.0.0/8",
+        "is_correct": true
+      },
+      {
+        "text": "169.254.0.0/16",
+        "is_correct": false
+      },
+      {
+        "text": "224.0.0.0/4",
+        "is_correct": false
+      },
+      {
+        "text": "240.0.0.0/4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the broadcast address of the subnet 192.168.10.64/26?",
+    "explanation": "A /26 has a block size of 64, so the subnets start at .0, .64, .128 and .192. The .64 subnet spans 192.168.10.64 through 192.168.10.127, and the last address in that range is the broadcast.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "192.168.10.127",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.10.126",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.128",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.191",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which WAN topology connects every remote site to one central hub, forcing spoke-to-spoke traffic to transit the hub?",
+    "explanation": "A hub-and-spoke WAN is cheap to build because each site needs only one circuit, but it creates a single point of failure and adds latency for site-to-site traffic. A full mesh or DMVPN removes that hairpin at higher cost or complexity.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Hub-and-spoke",
+        "is_correct": true
+      },
+      {
+        "text": "Full mesh",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      },
+      {
+        "text": "Ring",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which WAN service provides any-to-any connectivity through the provider cloud without the customer building a full mesh of physical circuits?",
+    "explanation": "An MPLS VPN lets the provider label and forward customer traffic across a shared backbone, so every site needs only one link to the provider while still reaching every other site. The customer sees a private, any-to-any network without owning the mesh.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "MPLS VPN",
+        "is_correct": true
+      },
+      {
+        "text": "Leased line",
+        "is_correct": false
+      },
+      {
+        "text": "Dark fiber",
+        "is_correct": false
+      },
+      {
+        "text": "Metro Ethernet E-Line",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which 802.11 amendment introduced the 5 GHz band with a maximum data rate of 54 Mbps?",
+    "explanation": "802.11a was the first 5 GHz OFDM standard and reached 54 Mbps. 802.11b stayed on 2.4 GHz at 11 Mbps, 802.11g brought 54 Mbps to 2.4 GHz, and 802.11n added MIMO on both bands.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "802.11a",
+        "is_correct": true
+      },
+      {
+        "text": "802.11b",
+        "is_correct": false
+      },
+      {
+        "text": "802.11g",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the widest channel supported by 802.11ac?",
+    "explanation": "802.11ac introduced 80 MHz channels and an optional 160 MHz mode (or 80+80 MHz on two non-contiguous segments). Wider channels raise throughput but consume more of the band, so dense deployments usually stay at 20 or 40 MHz.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "160 MHz",
+        "is_correct": true
+      },
+      {
+        "text": "20 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "40 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "80 MHz",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary function of a multilayer (Layer 3) switch in a campus network?",
+    "explanation": "A multilayer switch forwards at Layer 2 within a VLAN and routes between VLANs in hardware, so the default gateway for each subnet lives on the switch itself instead of on an external router.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Switching within VLANs and routing between them at wire speed",
+        "is_correct": true
+      },
+      {
+        "text": "Extending a VLAN across a WAN link",
+        "is_correct": false
+      },
+      {
+        "text": "Converting broadcast domains into collision domains",
+        "is_correct": false
+      },
+      {
+        "text": "Providing PoE only to IP phones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layer provides reliable end-to-end delivery using sequencing, acknowledgments and flow control?",
+    "explanation": "The transport layer (Layer 4) is where TCP establishes a session, numbers segments so they can be reassembled, acknowledges receipt, and slows down when the receiver cannot keep up. Layer 3 delivers packets between networks but makes no delivery guarantee.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The transport layer (Layer 4)",
+        "is_correct": true
+      },
+      {
+        "text": "The network layer (Layer 3)",
+        "is_correct": false
+      },
+      {
+        "text": "The data link layer (Layer 2)",
+        "is_correct": false
+      },
+      {
+        "text": "The session layer (Layer 5)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an intrusion prevention system (IPS) differ from an intrusion detection system (IDS)?",
+    "explanation": "Both inspect traffic against signatures and behavioral rules, but an IDS receives a copy of the traffic and can only alert. An IPS sits inline in the forwarding path, so it can drop or reset a malicious flow before it reaches the target.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "An IPS is inline and can block traffic; an IDS only monitors a copy and alerts",
+        "is_correct": true
+      },
+      {
+        "text": "An IPS works only on encrypted traffic; an IDS works only on cleartext",
+        "is_correct": false
+      },
+      {
+        "text": "An IPS protects endpoints; an IDS protects network devices",
+        "is_correct": false
+      },
+      {
+        "text": "An IPS requires a TAP; an IDS requires a firewall",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a spine-leaf fabric preferred over a traditional three-tier design for data center east-west traffic?",
+    "explanation": "Every leaf is one hop from every spine, so any server-to-server path has the same predictable latency and the fabric can be scaled by adding leaves or spines. Three-tier designs add aggregation hops and oversubscribe the uplinks where most server traffic must cross.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Every leaf-to-leaf path is the same short hop count, giving predictable latency and easy horizontal scaling",
+        "is_correct": true
+      },
+      {
+        "text": "It eliminates the need for Layer 3 routing inside the data center",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for redundant links between switches",
+        "is_correct": false
+      },
+      {
+        "text": "It concentrates all traffic through a single core pair",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a Wireless LAN Controller provide to lightweight access points in a centralized deployment?",
+    "explanation": "The WLC centralizes configuration, RF channel and power planning, client authentication, roaming decisions and firmware for every joined AP. The AP keeps only the real-time MAC functions, which is why the split is called split-MAC.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Centralized configuration, RF management, client authentication and roaming for all joined APs",
+        "is_correct": true
+      },
+      {
+        "text": "Local switching of all client traffic without a tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 2 trunking between access switches",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP and DNS services for wireless clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a Basic Service Set Identifier (BSSID) identify?",
+    "explanation": "The BSSID is the MAC address of a single AP radio in a basic service set. Several BSSIDs can carry the same SSID to form an extended service set, which is how clients see one network name across many access points.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A single access point radio within one basic service set",
+        "is_correct": true
+      },
+      {
+        "text": "The network name that clients select when associating",
+        "is_correct": false
+      },
+      {
+        "text": "The group of APs sharing one distribution system",
+        "is_correct": false
+      },
+      {
+        "text": "The encryption key used by the basic service set",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many total addresses does a /26 block contain, including the network and broadcast addresses?",
+    "explanation": "A /26 leaves 6 host bits, so the block contains 2^6 = 64 addresses. Two of them are reserved for the network and broadcast addresses, leaving 62 usable host addresses. Counting total instead of usable addresses is a common off-by-two error.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "64",
+        "is_correct": true
+      },
+      {
+        "text": "62",
+        "is_correct": false
+      },
+      {
+        "text": "128",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do large data-center fabrics use ECMP across spine links in a spine-leaf topology?",
+    "explanation": "Every leaf peers with every spine, creating multiple equal-cost paths. ECMP hashes individual flows across those paths so aggregate east-west bandwidth scales with the number of spines, without reconfiguring the leaves or relying on STP.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "To spread flows across multiple equal-cost spine paths and scale bandwidth",
+        "is_correct": true
+      },
+      {
+        "text": "To elect a single active spine and block the rest, avoiding loops",
+        "is_correct": false
+      },
+      {
+        "text": "To replace routing protocols with Spanning Tree on the leaf uplinks",
+        "is_correct": false
+      },
+      {
+        "text": "To guarantee that all traffic from one host follows the same spine",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which TCP flag instructs the receiving host to hand buffered data to the application immediately instead of waiting for more segments?",
+    "explanation": "Set on the last segment of an interactive write, PSH tells the receiver's stack to flush what it has buffered upward rather than batching it. Applications that send a short request and then wait for a reply depend on that prompt delivery, otherwise the stalled data waits for a full buffer.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "PSH",
+        "is_correct": true
+      },
+      {
+        "text": "URG",
+        "is_correct": false
+      },
+      {
+        "text": "SYN",
+        "is_correct": false
+      },
+      {
+        "text": "FIN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A hypervisor that runs directly on the server hardware without an underlying host operating system is best described as which type?",
+    "explanation": "Type 1 hypervisors such as ESXi and Hyper-V run bare-metal on the hardware and own the drivers directly. Type 2 hypervisors such as VirtualBox and VMware Workstation run as an application on top of a conventional host OS. Type 1 is the usual choice for data center virtualization because it removes the host OS from the performance and patching path.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 1 (bare-metal) hypervisor",
+        "is_correct": true
+      },
+      {
+        "text": "Type 2 (hosted) hypervisor",
+        "is_correct": false
+      },
+      {
+        "text": "Container runtime",
+        "is_correct": false
+      },
+      {
+        "text": "Overlay network gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the key architectural difference between a virtual machine and a container?",
+    "explanation": "Each virtual machine carries its own complete guest operating system and kernel, so the hypervisor must virtualize hardware for every instance. Containers share the host kernel and isolate only the process, filesystem, and network namespace. That shared kernel is why containers start in milliseconds and are far denser than VMs, at the cost of weaker isolation.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A VM includes its own guest OS and kernel; a container shares the host kernel",
+        "is_correct": true
+      },
+      {
+        "text": "A container includes its own guest OS and kernel; a VM shares the host kernel",
+        "is_correct": false
+      },
+      {
+        "text": "A VM cannot have an IP address, while every container must have one",
+        "is_correct": false
+      },
+      {
+        "text": "A container requires a physical network adapter, while a VM does not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two virtual machines on the same hypervisor host exchange frames through a virtual switch. Which statement describes how that traffic is handled?",
+    "explanation": "A virtual switch forwards frames between virtual NICs in software on the hypervisor, so same-host traffic never needs a physical adapter or an external switch. The frames only traverse a physical uplink when the destination sits outside the host and the port group is bound to an uplink. This is why same-host VM-to-VM throughput can exceed the speed of the physical NIC.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is switched in software on the host and stays local unless the destination is external",
+        "is_correct": true
+      },
+      {
+        "text": "It is always flooded out the physical uplink before reaching the peer VM",
+        "is_correct": false
+      },
+      {
+        "text": "It must be routed by the physical top-of-rack switch in every case",
+        "is_correct": false
+      },
+      {
+        "text": "It is dropped because two VMs cannot share a broadcast domain",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which field in a VXLAN header identifies the individual Layer 2 segment that a frame belongs to?",
+    "explanation": "VXLAN places a 24-bit VNI in its header to identify the tenant or Layer 2 segment, which allows roughly 16 million segments compared with the 4094 VLAN IDs of 802.1Q. The original Ethernet frame is encapsulated inside UDP, normally destination port 4789. The VNI is what lets the same VLAN ID be reused by many isolated tenants on shared physical infrastructure.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The 24-bit VXLAN Network Identifier (VNI)",
+        "is_correct": true
+      },
+      {
+        "text": "The 12-bit 802.1Q VLAN Identifier",
+        "is_correct": false
+      },
+      {
+        "text": "The 8-bit IP Time To Live field",
+        "is_correct": false
+      },
+      {
+        "text": "The 16-bit UDP source port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A laptop's Ethernet adapter shows a link light but the host has been assigned the address 169.254.37.12. What does this address indicate?",
+    "explanation": "169.254.0.0/16 is the IPv4 link-local range that a host self-assigns when DHCP fails, commonly called APIPA. The link light only proves the physical and data-link layers are up; it says nothing about whether a DHCP server was reachable. The investigator should check VLAN assignment, relay configuration, and DHCP scope exhaustion rather than the cable.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The host could not reach a DHCP server and self-assigned a link-local address",
+        "is_correct": true
+      },
+      {
+        "text": "The host received a valid address from a DHCP server on the local subnet",
+        "is_correct": false
+      },
+      {
+        "text": "The Ethernet cable is faulty and no frames can be transmitted",
+        "is_correct": false
+      },
+      {
+        "text": "The host is using a statically configured public address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A user can successfully ping 8.8.8.8 but cannot open www.example.com. Which cause is most likely?",
+    "explanation": "Reaching an external IP address proves the local link, default gateway, and internet routing all work. Name resolution is the only remaining step that differs between the two tests, so a failed or unreachable DNS server is the prime suspect. Verifying the configured resolver with a direct query confirms it quickly.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Name resolution is failing or the configured DNS server is unreachable",
+        "is_correct": true
+      },
+      {
+        "text": "The default gateway is misconfigured or missing",
+        "is_correct": false
+      },
+      {
+        "text": "The Ethernet duplex setting is mismatched",
+        "is_correct": false
+      },
+      {
+        "text": "The host has an APIPA address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A workstation can reach every host in its own subnet but nothing beyond it. Which configuration should be checked first?",
+    "explanation": "Intra-subnet delivery uses ARP and Layer 2 forwarding only, while every off-subnet destination requires the host to send to its default gateway. A host with a wrong or missing default gateway therefore behaves exactly this way. The subnet mask is worth confirming too, since an overly wide mask makes remote hosts look local.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The default gateway address and the subnet mask",
+        "is_correct": true
+      },
+      {
+        "text": "The DNS search domain suffix",
+        "is_correct": false
+      },
+      {
+        "text": "The duplex and speed settings of the switch port",
+        "is_correct": false
+      },
+      {
+        "text": "The MTU size configured on the NIC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A wireless client associates successfully but drops connections intermittently while far from the access point. Which action addresses the most likely cause?",
+    "explanation": "A client that associates but disconnects intermittently at range is usually suffering weak signal and high retransmission, not an addressing problem. Improving coverage by relocating or adding an access point, or tuning channel and transmit power, attacks the root cause. Changing IP settings or DNS would not affect radio-layer stability.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Improve radio coverage by relocating or adding an access point and adjusting channel and power",
+        "is_correct": true
+      },
+      {
+        "text": "Assign the client a static IP address in the correct VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Change the client's DNS servers to a public resolver",
+        "is_correct": false
+      },
+      {
+        "text": "Disable DHCP snooping on the client's VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An enterprise needs an encrypted connection from its on-premises router to a cloud virtual network across the public internet. Which option fits?",
+    "explanation": "A site-to-site IPsec VPN builds encrypted tunnels over any internet path between the on-premises gateway and the cloud VPN gateway. It needs no dedicated circuit and is the standard low-cost way to connect a branch or data center to a cloud VPC. A dedicated interconnect would bypass the internet entirely rather than encrypt a path across it.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A site-to-site IPsec VPN between the on-premises router and the cloud VPN gateway",
+        "is_correct": true
+      },
+      {
+        "text": "A dedicated private circuit from a carrier that bypasses the internet",
+        "is_correct": false
+      },
+      {
+        "text": "A public DNS zone hosted by the cloud provider",
+        "is_correct": false
+      },
+      {
+        "text": "A Layer 2 trunk extended from the data center over the internet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which connectivity option provides a private, dedicated circuit between an enterprise data center and a cloud provider without traversing the public internet?",
+    "explanation": "Dedicated interconnects such as AWS Direct Connect and Azure ExpressRoute give a private physical or carrier-provided path into the provider's network. Because the traffic bypasses the public internet, these links offer more predictable latency and bandwidth than a VPN over broadband. They are more expensive and take longer to provision than an internet VPN.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A dedicated private interconnect such as Direct Connect or ExpressRoute",
+        "is_correct": true
+      },
+      {
+        "text": "A site-to-site IPsec tunnel over a broadband internet connection",
+        "is_correct": false
+      },
+      {
+        "text": "A remote-access VPN terminated on a cloud host",
+        "is_correct": false
+      },
+      {
+        "text": "A client-to-site SSL portal",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Instances in a cloud private subnet need outbound internet access for software updates but must not accept inbound connections from the internet. Which component provides this?",
+    "explanation": "A NAT gateway performs source NAT for traffic leaving the private subnet, so replies return to the gateway and are forwarded back to the instance. Because no inbound mapping exists, internet hosts cannot initiate a session to those instances. Assigning public IPs or opening the security group inbound would defeat the requirement.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A NAT gateway attached to the private subnet's route table",
+        "is_correct": true
+      },
+      {
+        "text": "A public IP address assigned directly to each instance",
+        "is_correct": false
+      },
+      {
+        "text": "An inbound security group rule permitting all sources",
+        "is_correct": false
+      },
+      {
+        "text": "A virtual private gateway terminating an IPsec tunnel",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a cloud provider's virtual private gateway terminate in a hybrid cloud design?",
+    "explanation": "The virtual private gateway is the provider-side endpoint of the tunnels that connect a virtual network to an on-premises gateway. The customer-side device is the customer gateway, and the two ends form the site-to-site VPN. Route tables then direct traffic for on-premises prefixes into that gateway.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The VPN tunnels that connect the cloud virtual network to the on-premises gateway",
+        "is_correct": true
+      },
+      {
+        "text": "The DNS zone that publishes the cloud application",
+        "is_correct": false
+      },
+      {
+        "text": "The load balancer that distributes traffic across instances",
+        "is_correct": false
+      },
+      {
+        "text": "The object storage bucket that holds virtual machine images",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IEEE standard defines 1000BASE-T over twisted-pair copper?",
+    "explanation": "Gigabit Ethernet over Category 5e arrived as 802.3ab, using all four pairs in both directions at once. The earlier 802.3z covered the fiber variants, and 802.3af is the Power over Ethernet amendment, so neither describes the copper gigabit PHY.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.3ab",
+        "is_correct": true
+      },
+      {
+        "text": "802.3z",
+        "is_correct": false
+      },
+      {
+        "text": "802.3af",
+        "is_correct": false
+      },
+      {
+        "text": "802.3ae",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which copper cabling category is rated for 10GBASE-T across the full 100-meter channel?",
+    "explanation": "Category 6a is specified for 10GBASE-T at 100 meters and adds shielding or improved construction to control alien crosstalk. Category 6 can carry 10GBASE-T only up to about 55 meters, and Category 5e is not rated for 10 Gbps at all. For full-length 10-gigabit copper runs, 6a is the minimum.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Category 6a",
+        "is_correct": true
+      },
+      {
+        "text": "Category 6",
+        "is_correct": false
+      },
+      {
+        "text": "Category 5e",
+        "is_correct": false
+      },
+      {
+        "text": "Category 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How far can 10GBASE-SR travel over OM3 laser-optimized multimode fiber?",
+    "explanation": "OM3 is rated for 300 meters at 10 Gbps with short-reach optics, and OM4 raises that to 400 meters. Beyond those distances the modal dispersion of multimode fiber forces a move to single-mode, which is why campus backbones typically switch to single-mode past a few hundred meters.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "300 meters",
+        "is_correct": true
+      },
+      {
+        "text": "100 meters",
+        "is_correct": false
+      },
+      {
+        "text": "550 meters",
+        "is_correct": false
+      },
+      {
+        "text": "10 kilometers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A twisted-pair cable is terminated with T568A on one end and T568B on the other. What is this cable?",
+    "explanation": "A straight-through cable uses the same pinout at both ends, while a crossover cable deliberately wires one end to T568A and the other to T568B so the transmit pair at one end lands on the receive pair at the other. It was used to link like devices such as switch-to-switch. Modern ports implement auto-MDIX, so either cable type now works in most cases.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A crossover cable, historically used between like devices",
+        "is_correct": true
+      },
+      {
+        "text": "A straight-through cable, used between unlike devices",
+        "is_correct": false
+      },
+      {
+        "text": "A rollover cable, used for console access",
+        "is_correct": false
+      },
+      {
+        "text": "A fiber patch cord with mismatched connectors",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A cable must be installed in the return-air space above a suspended ceiling. Which cable rating is required for that location?",
+    "explanation": "A plenum space moves building air, so a fire there would distribute smoke and toxic gas through the whole floor. CMP cable uses a low-smoke, low-flame-spread jacket. CMR is for risers between floors, CMG for general in-wall runs, and CMX for outdoor exposure.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CMP (plenum-rated)",
+        "is_correct": true
+      },
+      {
+        "text": "CMR (riser-rated)",
+        "is_correct": false
+      },
+      {
+        "text": "CMG (general-purpose)",
+        "is_correct": false
+      },
+      {
+        "text": "CMX (outdoor-rated)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary purpose of the metallic shield in a shielded twisted-pair (STP) cable?",
+    "explanation": "The foil or braid acts as a barrier: interference induces a current in the shield, which is bonded to ground and taken out of the signal path. The pairs must stay twisted and balanced, and the shield does not carry signal return current.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drains induced electromagnetic interference to ground before it couples onto the pairs",
+        "is_correct": true
+      },
+      {
+        "text": "It increases the cable's tensile strength for long pulls",
+        "is_correct": false
+      },
+      {
+        "text": "It carries the signal return path for each pair",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the pairs from untwisting inside the jacket",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Ethernet standard allows 2.5 Gbps over existing Category 5e cabling, typically to uplink a Wi-Fi 6 access point?",
+    "explanation": "IEEE 802.3bz defined 2.5GBASE-T and 5GBASE-T so installed Cat 5e and Cat 6 runs could carry more than 1 Gbps without recabling. It is the usual choice when an access point can exceed a Gigabit uplink but the cable plant will not support 10GBASE-T.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "2.5GBASE-T (IEEE 802.3bz)",
+        "is_correct": true
+      },
+      {
+        "text": "1000BASE-T (IEEE 802.3ab)",
+        "is_correct": false
+      },
+      {
+        "text": "10GBASE-T (IEEE 802.3an)",
+        "is_correct": false
+      },
+      {
+        "text": "40GBASE-T (IEEE 802.3bq)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A cable tester reports that pairs 1-2 and 3-6 pass, while pairs 4-5 and 7-8 are open. What does this indicate?",
+    "explanation": "10BASE-T and 100BASE-TX use only pairs 1-2 and 3-6. 1000BASE-T and faster use all four pairs, so an open on 4-5 or 7-8 lets the link come up at 100 Mbps and fail Gigabit autonegotiation. A tester that reports per-pair continuity localises the fault to the termination.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two pairs are broken or mis-pinned, so the link can run 10/100 but not Gigabit",
+        "is_correct": true
+      },
+      {
+        "text": "The cable is a working crossover cable",
+        "is_correct": false
+      },
+      {
+        "text": "The cable is shielded and needs a ground bond",
+        "is_correct": false
+      },
+      {
+        "text": "The link is running at full duplex but half speed",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why are the parallel links between an access switch and its distribution switch usually bundled into an EtherChannel?",
+    "explanation": "Spanning tree blocks redundant parallel links to prevent loops, which wastes half the capacity. An EtherChannel is presented to STP as one port, so all members can forward at once and the bundle's throughput is the sum of its members.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The bundle adds bandwidth while spanning tree sees a single logical link",
+        "is_correct": true
+      },
+      {
+        "text": "The bundle lets each VLAN use a different physical link without STP",
+        "is_correct": false
+      },
+      {
+        "text": "The bundle makes the access switch the spanning-tree root",
+        "is_correct": false
+      },
+      {
+        "text": "The bundle carries only voice traffic and leaves data on one link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the Cisco enterprise campus architecture, what is the function of the services block?",
+    "explanation": "The services block holds the servers that every other block depends on: DNS, DHCP, NTP, AAA, and management tools. Keeping them in one module makes them easier to secure and to scale independently of the access and core layers.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It centralises shared services such as DNS, DHCP, NTP, and AAA for the campus",
+        "is_correct": true
+      },
+      {
+        "text": "It terminates the ISP circuits at the internet edge",
+        "is_correct": false
+      },
+      {
+        "text": "It aggregates the building distribution switches",
+        "is_correct": false
+      },
+      {
+        "text": "It provides the wireless client access layer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a building block (pod) in a modular campus design?",
+    "explanation": "Modular designs replicate a proven access-plus-distribution unit for each building or floor. Because every pod follows the same template, capacity can be added one pod at a time and a fault inside one pod stays local instead of affecting the whole campus.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A repeatable group of access and distribution switches deployed per building or floor",
+        "is_correct": true
+      },
+      {
+        "text": "The redundant pair of core switches at the centre of the campus",
+        "is_correct": false
+      },
+      {
+        "text": "A single wiring closet with one access switch",
+        "is_correct": false
+      },
+      {
+        "text": "The DMZ segment that faces the internet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the main benefit of making the access-to-distribution uplink a routed Layer 3 link instead of a Layer 2 trunk?",
+    "explanation": "A routed uplink ends the Layer 2 domain at the access switch. With no loop in that segment, spanning tree does not need to block the redundant path, and equal-cost routing can use both links. VLANs stay local, which also shrinks failure domains.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both uplinks can forward at once because there is no Layer 2 loop for spanning tree to block",
+        "is_correct": true
+      },
+      {
+        "text": "It lets every VLAN extend across the entire campus",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for an interior gateway protocol",
+        "is_correct": false
+      },
+      {
+        "text": "It doubles the number of broadcast domains on the access switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A desktop's Ethernet port shows no link light after the cable is connected. Which layer should be checked first?",
+    "explanation": "A missing link light means the two PHYs never established a physical connection, so nothing above Layer 1 can work. Reseat or swap the cable, try another wall jack, and check that the switch port is not shut down or err-disabled before looking at addressing.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Layer 1: the cable, the wall jack, the switch port, and the NIC",
+        "is_correct": true
+      },
+      {
+        "text": "Layer 3: the default gateway address",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 4: the TCP port the application uses",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 7: the DNS server configuration",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A server answers on TCP 22 and TCP 443 but connections to TCP 3306 time out. Which cause best fits?",
+    "explanation": "If other services on the same host respond, the path, addressing, and name resolution are working. A single port that silently times out points to a filter, such as a firewall policy or an ACL, that permits the other ports but not this one.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A firewall or ACL is dropping traffic for that specific port",
+        "is_correct": true
+      },
+      {
+        "text": "The default gateway is missing on the server",
+        "is_correct": false
+      },
+      {
+        "text": "DNS resolution is failing for the server name",
+        "is_correct": false
+      },
+      {
+        "text": "The Ethernet cable is damaged",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch interface shows a steadily rising count of CRC and input errors. What is the most likely cause?",
+    "explanation": "CRC errors mean the frame arrived with a bad checksum, which is a physical or link problem: a crushed cable, a dirty or poorly crimped connector, or a duplex mismatch. IP and MAC address issues show up as reachability or flooding problems, not checksum failures.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A damaged cable, bad connector, or duplex mismatch corrupting frames in transit",
+        "is_correct": true
+      },
+      {
+        "text": "An IP address conflict on the VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "A missing default route on the switch",
+        "is_correct": false
+      },
+      {
+        "text": "A duplicate MAC address in the CAM table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two hosts on the same VLAN are manually configured with the same IPv4 address. What symptom typically appears?",
+    "explanation": "Both hosts answer ARP for the same address, so neighbours cache whichever MAC replied last and traffic alternates between the two machines. Connections reset or stall unpredictably. A DHCP-managed address plan, or DHCP snooping and DAI, prevents the conflict.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Intermittent connectivity and ARP conflicts as each host claims the address",
+        "is_correct": true
+      },
+      {
+        "text": "Both hosts lose link light on their switch ports",
+        "is_correct": false
+      },
+      {
+        "text": "The switch shuts down the entire VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "DNS stops resolving for every host on the VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a cloud VPC, what determines whether a subnet's traffic goes to an internet gateway, a NAT gateway, or a peered VPC?",
+    "explanation": "Subnets are associated with a route table, and the longest matching route decides the next hop. Security groups filter whether traffic is allowed, but they do not choose the path. A subnet with no route to an internet gateway stays private even if its security group permits outbound traffic.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The route table associated with the subnet",
+        "is_correct": true
+      },
+      {
+        "text": "The MAC address of the instance's virtual NIC",
+        "is_correct": false
+      },
+      {
+        "text": "The outbound rules in the security group",
+        "is_correct": false
+      },
+      {
+        "text": "The TTL value in the instance's DNS resolver",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two VPCs must exchange traffic over private IP addresses without a VPN or a gateway appliance. Which feature provides that?",
+    "explanation": "VPC peering creates a direct private route between two VPCs, so instances talk using their private addresses and traffic does not leave the provider's network. It is not transitive: if A peers with B and B peers with C, A still cannot reach C without its own peering or a transit gateway.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VPC peering",
+        "is_correct": true
+      },
+      {
+        "text": "An internet gateway",
+        "is_correct": false
+      },
+      {
+        "text": "A NAT gateway",
+        "is_correct": false
+      },
+      {
+        "text": "A site-to-site VPN connection",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An enterprise has dozens of VPCs plus on-premises connections that must all reach each other. Which component replaces a full mesh of peerings with one hub?",
+    "explanation": "A transit gateway is a regional hub that VPCs and on-premises links attach to, so each network needs one attachment instead of a peering to every other network. That removes the growth of peerings with each new VPC and gives one place to apply routing and segmentation policy.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A transit gateway",
+        "is_correct": true
+      },
+      {
+        "text": "A NAT instance in every VPC",
+        "is_correct": false
+      },
+      {
+        "text": "A public-facing load balancer",
+        "is_correct": false
+      },
+      {
+        "text": "An internet gateway per VPC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a cloud load balancer do for an application tier that runs on several instances?",
+    "explanation": "The load balancer holds the client-facing address and distributes connections across a target group. Health checks remove an instance that stops responding, so capacity and availability survive a single instance failure. Encryption and addressing are handled by other services.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It spreads incoming requests across healthy targets and stops sending traffic to failed ones",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns private IP addresses to the instances",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts traffic between the application instances",
+        "is_correct": false
+      },
+      {
+        "text": "It stores the application's session database",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address is the limited broadcast address, which is never forwarded beyond the local link?",
+    "explanation": "255.255.255.255 means every host on this link, and routers do not forward it. A directed broadcast such as 192.168.1.255 targets all hosts in one subnet and can be routed if the router is configured to allow it. 224.0.0.1 is the all-hosts multicast group, and 127.0.0.1 is loopback.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "255.255.255.255",
+        "is_correct": true
+      },
+      {
+        "text": "0.0.0.0",
+        "is_correct": false
+      },
+      {
+        "text": "224.0.0.1",
+        "is_correct": false
+      },
+      {
+        "text": "127.0.0.1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address range is reserved for multicast group addresses?",
+    "explanation": "Class D space, 224.0.0.0/4, is used for multicast groups, with 224.0.0.0/24 reserved for link-local control traffic such as OSPF and EIGRP hellos. 169.254.0.0/16 is APIPA, 172.16.0.0/12 is RFC 1918 private space, and 100.64.0.0/10 is carrier-grade NAT space.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "224.0.0.0/4",
+        "is_correct": true
+      },
+      {
+        "text": "169.254.0.0/16",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.0/12",
+        "is_correct": false
+      },
+      {
+        "text": "100.64.0.0/10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which address block is reserved for carrier-grade NAT by RFC 6598 and should not be used for enterprise private addressing?",
+    "explanation": "RFC 6598 sets aside 100.64.0.0/10 as the shared address space that a carrier uses between its CGNAT platform and customer edge devices. It is not one of the RFC 1918 private ranges, so an enterprise that also uses it can collide with the carrier's addressing.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "100.64.0.0/10",
+        "is_correct": true
+      },
+      {
+        "text": "10.0.0.0/8",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.0/12",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0/16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a subnet mask tell an IPv4 host?",
+    "explanation": "The mask marks the boundary between the network prefix and the host portion. The host ANDs its address with the mask to learn its own subnet, then compares a destination's masked address to decide whether to send directly or to the default gateway.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Which bits of the address identify the network and which identify the host",
+        "is_correct": true
+      },
+      {
+        "text": "Which default gateway the host should use",
+        "is_correct": false
+      },
+      {
+        "text": "Which DNS server the host should query first",
+        "is_correct": false
+      },
+      {
+        "text": "Which VLAN the host's switch port belongs to",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field tells the destination host which upper-layer protocol should receive the payload?",
+    "explanation": "The Protocol field carries a number such as 6 for TCP, 17 for UDP, or 1 for ICMP. The receiving host uses it to hand the payload to the correct transport or control module. Version identifies IPv4 itself, and Total Length covers the whole packet.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Protocol",
+        "is_correct": true
+      },
+      {
+        "text": "Version",
+        "is_correct": false
+      },
+      {
+        "text": "Total Length",
+        "is_correct": false
+      },
+      {
+        "text": "Header Checksum",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field is used to mark packets so routers can apply QoS treatment?",
+    "explanation": "The DS field, formerly the Type of Service byte, holds the 6-bit Differentiated Services Code Point. A router reads the DSCP to choose a per-hop behaviour, such as expedited forwarding for voice. The other fields support fragmentation and reassembly.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Differentiated Services field, which carries the DSCP value",
+        "is_correct": true
+      },
+      {
+        "text": "The Identification field",
+        "is_correct": false
+      },
+      {
+        "text": "The Flags field",
+        "is_correct": false
+      },
+      {
+        "text": "The Fragment Offset field",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv4 packet carries options, so its header is longer than 20 bytes. Which field tells a router where the header ends and the payload begins?",
+    "explanation": "IHL counts 32-bit words in the header, so a value of 6 means 24 bytes and the payload starts there. Total Length measures the whole packet, not the header boundary. Without IHL a router could not parse a variable-length header.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Internet Header Length (IHL)",
+        "is_correct": true
+      },
+      {
+        "text": "Total Length",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment Offset",
+        "is_correct": false
+      },
+      {
+        "text": "Header Checksum",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router drops an oversized packet because the Don't Fragment (DF) bit is set and returns an ICMP fragmentation-needed message. What should the sender do?",
+    "explanation": "Path MTU discovery relies on that ICMP message: the source learns the smallest MTU on the path and shrinks its payload to fit, so no router has to fragment. Clearing DF would let routers fragment, which is exactly what the application was trying to avoid.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Reduce its segment size to the reported MTU and continue using path MTU discovery",
+        "is_correct": true
+      },
+      {
+        "text": "Clear the DF bit and resend without changing the size",
+        "is_correct": false
+      },
+      {
+        "text": "Increase the TTL so the packet survives the path",
+        "is_correct": false
+      },
+      {
+        "text": "Recalculate the header checksum and resend the same packet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does the IPv6 header have no header checksum?",
+    "explanation": "Every router used to decrement the TTL and recompute the IPv4 header checksum, which costs forwarding capacity. IPv6 assumes the link layer or a transport checksum detects bit errors, so it drops the field and lets routers forward with less work.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Link-layer and upper-layer checksums already catch corruption, so the per-hop recalculation was removed to speed forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "IPv6 relies on the Hop Limit field to detect corrupted headers",
+        "is_correct": false
+      },
+      {
+        "text": "The checksum was moved into the extension headers",
+        "is_correct": false
+      },
+      {
+        "text": "IPv6 packets cannot be corrupted in transit",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 header field plays the role that the IPv4 DSCP field plays for QoS?",
+    "explanation": "The 8-bit Traffic Class field carries the DSCP marking, so an IPv6 router can classify and queue a packet the same way it would an IPv4 packet. Flow Label is a separate 20-bit field used to identify a flow for special handling.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Traffic Class",
+        "is_correct": true
+      },
+      {
+        "text": "Flow Label",
+        "is_correct": false
+      },
+      {
+        "text": "Payload Length",
+        "is_correct": false
+      },
+      {
+        "text": "Next Header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the Payload Length field in the IPv6 header count?",
+    "explanation": "IPv6 puts the fixed 40-byte base header outside the count, so Payload Length covers extension headers and the upper-layer payload together. That differs from the IPv4 Total Length field, which measures the entire packet including its header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Everything after the 40-byte base header, including any extension headers",
+        "is_correct": true
+      },
+      {
+        "text": "Only the TCP or UDP segment",
+        "is_correct": false
+      },
+      {
+        "text": "The base header plus the payload",
+        "is_correct": false
+      },
+      {
+        "text": "The number of extension headers in the packet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IPv6, which device is permitted to fragment a packet?",
+    "explanation": "IPv6 removed router fragmentation. A router that cannot forward an oversized packet sends an ICMPv6 Packet Too Big message, and the source then fragments with a Fragment extension header or reduces its payload. That keeps routers fast and pushes the work to the endpoints.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only the source host, using a Fragment extension header",
+        "is_correct": true
+      },
+      {
+        "text": "Any router whose egress MTU is smaller than the packet",
+        "is_correct": false
+      },
+      {
+        "text": "Only the last router before the destination",
+        "is_correct": false
+      },
+      {
+        "text": "Any device that lowers the path MTU",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Replacing a hub with a switch on the same segment changes which property?",
+    "explanation": "A hub repeats every bit out of every port, so all attached devices share one collision domain and one bandwidth pool. A switch stores and forwards frames per port, so each port is its own collision domain while the broadcast domain stays the same size.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each switch port becomes its own collision domain",
+        "is_correct": true
+      },
+      {
+        "text": "The broadcast domain shrinks to a single port",
+        "is_correct": false
+      },
+      {
+        "text": "The segment gains a routing table",
+        "is_correct": false
+      },
+      {
+        "text": "All ports continue to share one collision domain",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a media converter?",
+    "explanation": "A media converter changes the electrical or optical signalling of one link into another, letting a copper switch port reach a fiber run without replacing the switch. It does not route, NAT, or rewrite VLAN tags.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It connects two different physical media, such as copper Ethernet to fiber",
+        "is_correct": true
+      },
+      {
+        "text": "It translates private IPv4 addresses into public ones",
+        "is_correct": false
+      },
+      {
+        "text": "It rewrites VLAN tags between two switches",
+        "is_correct": false
+      },
+      {
+        "text": "It converts a Layer 3 packet into an Ethernet frame",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of a patch panel in structured cabling?",
+    "explanation": "Horizontal cable is pulled once from the work area to the telecommunications room and terminated on the back of the patch panel. A short, easily replaced patch cord then connects the panel to the switch, so equipment can be moved without disturbing the building wiring.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It terminates the permanent horizontal cable and provides a jack for a short patch cord to the switch",
+        "is_correct": true
+      },
+      {
+        "text": "It regenerates the signal so runs can exceed 100 meters",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns IP addresses to the devices that connect to it",
+        "is_correct": false
+      },
+      {
+        "text": "It converts copper links into fiber links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which capability distinguishes a managed switch from an unmanaged switch?",
+    "explanation": "Both types learn MAC addresses and forward frames. A managed switch adds an interface for configuration and monitoring: VLANs, trunking, STP features, port security, QoS, and SNMP. An unmanaged switch is plug-and-play with no addressable control plane.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Configurable VLANs, spanning tree, and per-port settings through a management interface",
+        "is_correct": true
+      },
+      {
+        "text": "The ability to forward frames using MAC addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Multiple copper ports in one chassis",
+        "is_correct": false
+      },
+      {
+        "text": "A metal chassis that fits a rack",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Using TCP at the transport layer, what are the PDU names at the transport, network, and data-link layers?",
+    "explanation": "TCP hands down a segment, IP encapsulates it into a packet, and the data-link layer wraps that into a frame before the physical layer sends bits. Each layer adds its own header, and the receiver strips them in reverse order.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Segment, packet, frame",
+        "is_correct": true
+      },
+      {
+        "text": "Frame, packet, segment",
+        "is_correct": false
+      },
+      {
+        "text": "Datagram, frame, bit",
+        "is_correct": false
+      },
+      {
+        "text": "Packet, segment, frame",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layer establishes, manages, and terminates dialogues between applications?",
+    "explanation": "The session layer sets up, maintains, and tears down the conversation between two applications, including checkpointing and recovery. The transport layer moves data end to end, while the presentation layer handles formatting and encryption.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Session layer (Layer 5)",
+        "is_correct": true
+      },
+      {
+        "text": "Transport layer (Layer 4)",
+        "is_correct": false
+      },
+      {
+        "text": "Presentation layer (Layer 6)",
+        "is_correct": false
+      },
+      {
+        "text": "Application layer (Layer 7)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layer provides network services such as HTTP and DNS directly to user applications?",
+    "explanation": "The application layer is the boundary the user's software talks to: HTTP, DNS, SMTP, and SSH live here. It does not move bytes itself; it hands data to the presentation and session layers below, which prepare and manage the exchange.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Application layer (Layer 7)",
+        "is_correct": true
+      },
+      {
+        "text": "Presentation layer (Layer 6)",
+        "is_correct": false
+      },
+      {
+        "text": "Session layer (Layer 5)",
+        "is_correct": false
+      },
+      {
+        "text": "Transport layer (Layer 4)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layers are combined into the TCP/IP application layer?",
+    "explanation": "The TCP/IP model collapses the top three OSI layers into one application layer, because protocols such as HTTP and DNS handle their own formatting and session state. Transport maps to transport, and network maps to the internet layer, while data-link and physical map to the network access layer.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Application, presentation, and session",
+        "is_correct": true
+      },
+      {
+        "text": "Transport and network",
+        "is_correct": false
+      },
+      {
+        "text": "Data-link and physical",
+        "is_correct": false
+      },
+      {
+        "text": "Network, data-link, and physical",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is fiber optic cabling preferred in an industrial area with heavy electrical machinery?",
+    "explanation": "Fiber carries modulated light through glass, so motors, welders, and power cables cannot induce noise onto the signal. It also provides electrical isolation between endpoints, which is why it is used on long runs between buildings with different ground potentials.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Light in the fiber is unaffected by electromagnetic interference",
+        "is_correct": true
+      },
+      {
+        "text": "The fiber's copper core cancels induced noise",
+        "is_correct": false
+      },
+      {
+        "text": "The fiber carries a ground reference that absorbs surges",
+        "is_correct": false
+      },
+      {
+        "text": "The fiber transmits at a lower voltage than copper",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of an SFP or SFP+ slot on a switch?",
+    "explanation": "The slot holds a transceiver module that converts the switch's electrical signal to the media in use, such as multimode fiber, single-mode fiber, or a direct-attach copper cable. Changing the module changes the media without replacing the switch.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It accepts a hot-swappable transceiver so the port can support different fiber or copper media",
+        "is_correct": true
+      },
+      {
+        "text": "It supplies Power over Ethernet to attached devices",
+        "is_correct": false
+      },
+      {
+        "text": "It stacks multiple switches into one management domain",
+        "is_correct": false
+      },
+      {
+        "text": "It stores the switch's startup configuration",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is coaxial cable still used on the WAN side of a cable broadband connection?",
+    "explanation": "Cable operators built their access networks on coaxial cable and reuse it with DOCSIS, which modulates Ethernet frames onto the coax spectrum. The modem converts between coax and the subscriber's Ethernet link, so the plant does not need to be replaced with fiber to deliver service.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It carries the DOCSIS signal between the subscriber's modem and the provider's cable network",
+        "is_correct": true
+      },
+      {
+        "text": "It provides a fiber path from the provider to the home",
+        "is_correct": false
+      },
+      {
+        "text": "It is the required medium for all Ethernet WAN services",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for a cable modem",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a twisted-pair Ethernet channel stop at about 100 meters?",
+    "explanation": "The signal weakens as it travels, and near-end crosstalk from adjacent pairs grows relative to it. Beyond roughly 100 meters the signal-to-noise ratio falls below what the receiver needs at the standard data rate. That is a physical limit, not a forwarding rule.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Attenuation and crosstalk grow with distance until the receiver can no longer separate the symbols",
+        "is_correct": true
+      },
+      {
+        "text": "The copper oxidises once the cable passes 100 meters",
+        "is_correct": false
+      },
+      {
+        "text": "Switches cannot forward a frame more than 100 meters",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.3 caps the length to conserve IPv4 addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which device terminates many simultaneous remote-access VPN tunnels from mobile users?",
+    "explanation": "A VPN concentrator is built for scale: hundreds or thousands of encrypted tunnels terminate on one appliance instead of on the router that also runs the WAN. It handles the crypto, the address pool, and per-user policy in one place, whereas a site-to-site tunnel is one link between two fixed peers.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A VPN concentrator",
+        "is_correct": true
+      },
+      {
+        "text": "A Layer 2 access switch",
+        "is_correct": false
+      },
+      {
+        "text": "A media converter",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP relay agent",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an explicit forward proxy provide for internal users browsing the internet?",
+    "explanation": "Users point their browser at the proxy, and it makes the request on their behalf, so the remote site sees the proxy's address rather than the client's. That position lets it cache popular content, log requests, and block categories, and it keeps direct outbound connections off the desktop.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It fetches content on the client's behalf, which hides the client address and enforces caching and filtering policy",
+        "is_correct": true
+      },
+      {
+        "text": "It gives each internal host a public address through static NAT",
+        "is_correct": false
+      },
+      {
+        "text": "It terminates IPsec tunnels from remote branch routers",
+        "is_correct": false
+      },
+      {
+        "text": "It inspects only Layer 2 frames for malformed headers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which control is specific to a web application firewall rather than a stateful packet filter?",
+    "explanation": "A WAF parses HTTP requests and responses, so it can reject an SQL injection string or a cross-site scripting payload inside a request that is otherwise a well-formed TCP connection to port 443. A port-based firewall permits that conversation because the ports and the handshake look normal.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It examines HTTP requests and blocks injection and cross-site scripting payloads",
+        "is_correct": true
+      },
+      {
+        "text": "It tracks TCP connection state to allow return traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It filters traffic by source and destination port number",
+        "is_correct": false
+      },
+      {
+        "text": "It translates private addresses to public addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A firewall is inserted inline in a subnet, has no IP address on its data interfaces, and requires no change to host default gateways. Which deployment mode is this?",
+    "explanation": "In transparent (Layer 2) mode the firewall bridges the segment and filters on MAC and frame content, so the existing addressing plan is untouched. Its management interface still carries an address. Routed mode would require every host to point at the firewall as its gateway.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Transparent Layer 2 mode",
+        "is_correct": true
+      },
+      {
+        "text": "Routed Layer 3 mode",
+        "is_correct": false
+      },
+      {
+        "text": "Tap (promiscuous) monitoring mode",
+        "is_correct": false
+      },
+      {
+        "text": "Full proxy mode with per-host TLS interception",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which flag combination begins an orderly TCP connection teardown by one side?",
+    "explanation": "The closing host sends FIN to say it has no more data, the peer acknowledges with ACK, and each side repeats the exchange for its own direction. That is why a graceful close takes four segments, unlike the three-segment open. A RST would abort the connection instead.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "FIN, followed by an ACK from the peer",
+        "is_correct": true
+      },
+      {
+        "text": "SYN, followed by SYN-ACK",
+        "is_correct": false
+      },
+      {
+        "text": "RST, followed by a second RST",
+        "is_correct": false
+      },
+      {
+        "text": "PSH, followed by URG",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port range is reserved for well-known services such as SSH and HTTP?",
+    "explanation": "Ports 0 through 1023 are the well-known range, assigned to standard services and reachable without elevated privileges only by the system. Registered ports run from 1024 to 49151, and the ephemeral range above that is what a client picks as its source port.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0 to 1023",
+        "is_correct": true
+      },
+      {
+        "text": "1024 to 49151",
+        "is_correct": false
+      },
+      {
+        "text": "49152 to 65535",
+        "is_correct": false
+      },
+      {
+        "text": "1024 to 65535",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What uniquely identifies a single TCP conversation on a host that runs several applications at once?",
+    "explanation": "A socket is the pairing of an IP address and a port, and a connection is the pairing of a source socket with a destination socket. Two browser tabs to the same server differ only in their ephemeral source ports, which is how the host keeps their data streams apart.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The socket: an IP address plus a port number",
+        "is_correct": true
+      },
+      {
+        "text": "The destination MAC address alone",
+        "is_correct": false
+      },
+      {
+        "text": "The sequence number of the first segment",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN identifier of the host's access port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A developer needs a small Linux virtual machine on a Windows laptop for testing. Which hypervisor type fits that use case?",
+    "explanation": "A Type 2 hypervisor installs as an application on the host operating system, so it shares the laptop's drivers and needs no dedicated hardware. A Type 1 hypervisor would take over the whole machine and is what a production server or a bare-metal lab host normally runs.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A Type 2 (hosted) hypervisor installed on the desktop OS",
+        "is_correct": true
+      },
+      {
+        "text": "A Type 1 (bare-metal) hypervisor that replaces the desktop OS",
+        "is_correct": false
+      },
+      {
+        "text": "A container runtime with no virtual machine involved",
+        "is_correct": false
+      },
+      {
+        "text": "A VXLAN gateway on the physical switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does live migration of a virtual machine accomplish?",
+    "explanation": "The hypervisor copies the running VM's memory to the destination host while the VM keeps executing, then briefly pauses it to move the last dirty pages and switch execution. Because downtime is measured in milliseconds, maintenance on a host no longer requires an outage window.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It moves a running VM to another host with only a brief pause, avoiding an outage for host maintenance",
+        "is_correct": true
+      },
+      {
+        "text": "It converts a virtual machine into a container image",
+        "is_correct": false
+      },
+      {
+        "text": "It clones a VM's disk to a backup repository on a schedule",
+        "is_correct": false
+      },
+      {
+        "text": "It spreads one VM's CPU load across every host in the cluster",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do production container deployments rely on an orchestrator rather than starting containers by hand?",
+    "explanation": "An orchestrator holds the desired state: how many replicas, which image, which network, which health check. When a container dies or a node fails it schedules a replacement, and it spreads replicas across hosts. Doing that manually does not scale past a handful of containers.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It maintains the declared replica count, reschedules failed containers, and places them across hosts",
+        "is_correct": true
+      },
+      {
+        "text": "It compiles the application source into a container image",
+        "is_correct": false
+      },
+      {
+        "text": "It replaces the need for a container registry",
+        "is_correct": false
+      },
+      {
+        "text": "It provides the kernel that every container shares",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of a container registry?",
+    "explanation": "Images are built once, pushed to a registry, and pulled by every host or orchestrator that needs to run them. The registry is versioned storage, not a runtime: the container still needs a local engine to unpack and start the image after the pull.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stores and versions container images so hosts can pull them",
+        "is_correct": true
+      },
+      {
+        "text": "It runs the containers on behalf of the cluster",
+        "is_correct": false
+      },
+      {
+        "text": "It allocates the IP addresses used inside the container network",
+        "is_correct": false
+      },
+      {
+        "text": "It converts container images into virtual machine disks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What problem does SD-WAN solve that a traditional set of static WAN circuits does not?",
+    "explanation": "SD-WAN applies a central policy to all transports and picks a path per application, so a video call can ride the low-latency link while bulk backup uses a cheaper one. When a circuit degrades, traffic moves to another transport without reconfiguring each router by hand.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It steers each application over the best available transport and fails over between links from a central policy",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces IP routing with Layer 2 switching across the provider network",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees a fixed committed rate on every internet circuit",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for encryption on links that cross the internet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which characteristic distinguishes a leased line from a broadband internet circuit?",
+    "explanation": "A leased line is a dedicated, symmetric circuit with a committed rate and an SLA, and it does not share capacity with other subscribers. Broadband is oversubscribed and usually asymmetric, which is why it costs less but gives no performance guarantee.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is a dedicated symmetric circuit with a committed rate and an SLA",
+        "is_correct": true
+      },
+      {
+        "text": "It shares provider capacity with other subscribers and has no SLA",
+        "is_correct": false
+      },
+      {
+        "text": "It is always encrypted by the provider at Layer 2",
+        "is_correct": false
+      },
+      {
+        "text": "It provides internet access only, never site-to-site connectivity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A provider offers a Metro Ethernet E-Line service between two sites. What does the customer receive?",
+    "explanation": "E-Line is a point-to-point Ethernet virtual circuit, so the two sites behave as if a cable ran between them. E-LAN is the multipoint service that lets many sites share one bridged domain, and E-Tree is the hub-and-spoke variant.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A point-to-point Ethernet virtual circuit between the two locations",
+        "is_correct": true
+      },
+      {
+        "text": "A multipoint bridged domain shared by every site",
+        "is_correct": false
+      },
+      {
+        "text": "A Layer 3 MPLS VPN with any-to-any routing",
+        "is_correct": false
+      },
+      {
+        "text": "A dedicated internet gateway with a public address block",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the demarcation point at a customer site?",
+    "explanation": "The demarc is where the provider's responsibility ends and the customer's begins, usually the smart jack or the first device the carrier owns. Knowing where it sits settles who must troubleshoot a circuit that will not come up.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The boundary where the service provider's responsibility ends and the customer's begins",
+        "is_correct": true
+      },
+      {
+        "text": "The point where the internal network connects to the DMZ switch",
+        "is_correct": false
+      },
+      {
+        "text": "The router's loopback interface used for management",
+        "is_correct": false
+      },
+      {
+        "text": "The first hop router inside the provider's core",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point runs its entire configuration locally and has no controller. Which deployment model is this?",
+    "explanation": "An autonomous AP is self-contained: it holds its own SSIDs, security, and channel settings, so each AP must be configured and upgraded individually. A lightweight AP holds almost no configuration and receives it from a WLC, which is what makes central management possible.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Autonomous AP deployment",
+        "is_correct": true
+      },
+      {
+        "text": "Lightweight AP deployment managed by a WLC",
+        "is_correct": false
+      },
+      {
+        "text": "FlexConnect deployment with local switching",
+        "is_correct": false
+      },
+      {
+        "text": "Cloud-managed AP deployment",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Radio Resource Management (RRM) do on a Cisco wireless controller?",
+    "explanation": "RRM collects interference and load measurements from the APs and then adjusts channel assignments and transmit power automatically. That keeps neighbouring APs from sitting on the same channel and prevents coverage holes when an AP fails, without an engineer retuning the deployment.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It dynamically adjusts AP channels and transmit power based on measured interference and load",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns IP addresses to wireless clients through DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates clients against a RADIUS server",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts CAPWAP control traffic between APs and the controller",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a guest WLAN often tunnelled to an anchor controller in the DMZ?",
+    "explanation": "Guest traffic must leave the network without touching internal subnets. Tunnelling it from the foreign controller to an anchor in the DMZ means the guest client's VLAN and its egress point both sit outside the internal firewall policy, so a guest cannot reach internal resources by accident.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So guest traffic exits through the DMZ instead of entering internal subnets",
+        "is_correct": true
+      },
+      {
+        "text": "So guest clients receive addresses from the internal DHCP scope",
+        "is_correct": false
+      },
+      {
+        "text": "So guest traffic can be bridged directly onto the internal VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "So the anchor controller can manage the APs' radio settings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An AP sits on a subnet with no broadcast path to the wireless controller. How does it learn the controller's address?",
+    "explanation": "DHCP option 43 carries the controller's address in the lease, so the AP does not need broadcast or a DNS alias to find it. The AP then sends a discovery request unicast to that address. Without the option, the AP would have to rely on a configured DNS name or a static entry.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The DHCP server returns the controller address in option 43",
+        "is_correct": true
+      },
+      {
+        "text": "The AP floods a broadcast on the voice VLAN and waits for a reply",
+        "is_correct": false
+      },
+      {
+        "text": "The switch pushes the address to the AP through CDP",
+        "is_correct": false
+      },
+      {
+        "text": "The AP derives the address from its own default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which access method must an 802.11 station use before it transmits a frame?",
+    "explanation": "Wireless is a shared medium, so a station must sense the channel and wait a random backoff before sending, then wait for an acknowledgement. Collisions are detected by the missing ACK rather than by listening while transmitting, which is why the method is collision avoidance.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Carrier sense with a random backoff, then an acknowledgement from the receiver",
+        "is_correct": true
+      },
+      {
+        "text": "A token that circulates between stations in sequence",
+        "is_correct": false
+      },
+      {
+        "text": "A reservation slot requested from the access point for every frame",
+        "is_correct": false
+      },
+      {
+        "text": "Immediate transmission, with collisions resolved by a retry timer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two clients can each hear the AP but not each other, so their transmissions collide at the AP. Which mechanism mitigates this hidden node problem?",
+    "explanation": "A hidden node cannot sense the other client's carrier, so it transmits whenever the channel looks idle. If the AP first sends a clear-to-send frame that reserves the medium, both clients hear it and hold off, which is why RTS/CTS is enabled in cells with hidden nodes.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Request-to-send and clear-to-send frames that reserve the medium",
+        "is_correct": true
+      },
+      {
+        "text": "A longer preamble on every beacon frame",
+        "is_correct": false
+      },
+      {
+        "text": "Switching the cell to a 40 MHz channel",
+        "is_correct": false
+      },
+      {
+        "text": "Increasing the AP's transmit power only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What information does an 802.11 beacon frame carry to clients?",
+    "explanation": "Beacons are broadcast at a fixed interval and advertise the SSID, supported rates, security settings, and channel so a client can discover the cell and decide whether it can join. A client that receives no beacon can still probe actively, but the beacon is what makes passive discovery work.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The SSID, supported data rates, security settings, and channel of the cell",
+        "is_correct": true
+      },
+      {
+        "text": "The client's IP address and default gateway",
+        "is_correct": false
+      },
+      {
+        "text": "The controller's management address and licence count",
+        "is_correct": false
+      },
+      {
+        "text": "The MAC addresses of every client currently associated",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Place these steps in the order a client follows when joining a wireless network: authentication, association, 802.11 authentication, discovery.",
+    "explanation": "The client first discovers the cell through a beacon or probe response, then completes the open 802.11 authentication exchange, then associates so the AP creates a state entry for it. Only after association can the stronger security exchange and DHCP occur.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Discovery, 802.11 authentication, association",
+        "is_correct": true
+      },
+      {
+        "text": "Association, discovery, 802.11 authentication",
+        "is_correct": false
+      },
+      {
+        "text": "802.11 authentication, discovery, association",
+        "is_correct": false
+      },
+      {
+        "text": "Discovery, association, 802.11 authentication",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which 802.11 amendment operates in the 2.4 GHz band at a maximum rate of 11 Mbps?",
+    "explanation": "802.11b introduced 11 Mbps in the crowded 2.4 GHz band using DSSS, and its 1, 6, and 11 Mbps rates were enough to make wireless practical. 802.11a offered 54 Mbps later but only in 5 GHz, and 802.11g brought 54 Mbps to 2.4 GHz.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11b",
+        "is_correct": true
+      },
+      {
+        "text": "802.11a",
+        "is_correct": false
+      },
+      {
+        "text": "802.11g",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which capability did 802.11n add that earlier amendments did not have?",
+    "explanation": "802.11n was the first amendment to define operation in both 2.4 GHz and 5 GHz, and it added MIMO and optional 40 MHz channels. Running in either band let a client use the cleaner 5 GHz spectrum while older devices stayed on 2.4 GHz.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Operation in both the 2.4 GHz and 5 GHz bands with MIMO and 40 MHz channels",
+        "is_correct": true
+      },
+      {
+        "text": "The 6 GHz band and orthogonal frequency-division multiple access",
+        "is_correct": false
+      },
+      {
+        "text": "A 160 MHz channel width in the 5 GHz band only",
+        "is_correct": false
+      },
+      {
+        "text": "Multi-user MIMO with eight spatial streams in 2.4 GHz",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which band does 802.11ac use, and how is it marketed?",
+    "explanation": "802.11ac is Wi-Fi 5 and operates only in the 5 GHz band, which is why it reaches higher rates than 802.11n but has shorter range and fewer legacy clients. 2.4 GHz support in a Wi-Fi 5 access point comes from a separate 802.11n radio.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "5 GHz only, marketed as Wi-Fi 5",
+        "is_correct": true
+      },
+      {
+        "text": "2.4 GHz only, marketed as Wi-Fi 5",
+        "is_correct": false
+      },
+      {
+        "text": "Both 2.4 GHz and 5 GHz, marketed as Wi-Fi 4",
+        "is_correct": false
+      },
+      {
+        "text": "6 GHz only, marketed as Wi-Fi 6E",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which amendment is marketed as Wi-Fi 7 and introduces multi-link operation?",
+    "explanation": "802.11be is Wi-Fi 7. Multi-link operation lets a client use more than one band with the same access point at the same time, and 320 MHz channels widen the pipe further. It builds on the 6 GHz support that Wi-Fi 6E already added.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11be",
+        "is_correct": true
+      },
+      {
+        "text": "802.11ax",
+        "is_correct": false
+      },
+      {
+        "text": "802.11ac",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix contains the global unicast addresses that are routable on the internet?",
+    "explanation": "2000::/3 covers the global unicast space that IANA allocates to the registries, which in turn assign blocks to providers and enterprises. FE80::/10 is link-local and never routed, FC00::/7 is unique local, and FF00::/8 is multicast.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "2000::/3",
+        "is_correct": true
+      },
+      {
+        "text": "FE80::/10",
+        "is_correct": false
+      },
+      {
+        "text": "FC00::/7",
+        "is_correct": false
+      },
+      {
+        "text": "FF00::/8",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address does a host join so that neighbour solicitation for its address reaches it?",
+    "explanation": "The solicited-node multicast address is FF02::1:FF00:0/104 with the low 24 bits of the target address appended. A node joins it for every address it configures, so neighbour solicitation is delivered only to hosts whose addresses could match instead of to the whole link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The solicited-node multicast address built from the low 24 bits of the target address",
+        "is_correct": true
+      },
+      {
+        "text": "FF02::1, the all-nodes multicast address",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::2, the all-routers multicast address",
+        "is_correct": false
+      },
+      {
+        "text": "The all-nodes address of the link-local prefix",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "During duplicate address detection, which source address does a host use while it verifies that its tentative address is unique?",
+    "explanation": "The host has not yet been allowed to use the tentative address, so it sends the neighbour solicitation from the unspecified address ::. If no neighbour advertisement comes back, it can assign the address. Using the tentative address as the source would defeat the purpose of the check.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The unspecified address, ::",
+        "is_correct": true
+      },
+      {
+        "text": "The loopback address, ::1",
+        "is_correct": false
+      },
+      {
+        "text": "The tentative address being tested",
+        "is_correct": false
+      },
+      {
+        "text": "The link-local address of the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a spine-leaf fabric, which switch connects the fabric to the WAN, firewalls, and load balancers?",
+    "explanation": "Spines exist only to move traffic between leaves, so all off-fabric connectivity is placed on border leafs. That keeps the spine tier uniform and puts routing policy, security zones, and external peering at a defined edge point.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A border leaf",
+        "is_correct": true
+      },
+      {
+        "text": "A spine switch",
+        "is_correct": false
+      },
+      {
+        "text": "A core switch in the campus block",
+        "is_correct": false
+      },
+      {
+        "text": "An out-of-band management switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A leaf has 48 ports at 25 Gbps toward servers and four 100 Gbps uplinks to the spines. What does the resulting oversubscription ratio describe?",
+    "explanation": "Oversubscription compares the bandwidth offered by the downstream ports with the bandwidth available upstream. Here 48 x 25 Gbps is 1.2 Tbps against 400 Gbps of uplink, a 3:1 ratio, which assumes servers will not all demand line rate at once. A lower ratio costs more but reduces contention.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ratio of downstream server bandwidth to upstream uplink bandwidth, here 3:1",
+        "is_correct": true
+      },
+      {
+        "text": "The number of spines a single leaf can join at once",
+        "is_correct": false
+      },
+      {
+        "text": "The number of MAC addresses the leaf can hold in its table",
+        "is_correct": false
+      },
+      {
+        "text": "The ratio of control-plane traffic to data-plane traffic on the spine",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is each link between a leaf and a spine addressed in a routed spine-leaf fabric?",
+    "explanation": "Every leaf-to-spine link is its own point-to-point subnet, commonly a /31, so each link is a separate Layer 3 hop with no shared broadcast domain. That is what allows equal-cost multipathing over all spines and removes spanning tree from the fabric.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As a dedicated point-to-point IP subnet, often a /31, with the leaf and spine as its two endpoints",
+        "is_correct": true
+      },
+      {
+        "text": "As part of one large VLAN shared by every leaf and spine",
+        "is_correct": false
+      },
+      {
+        "text": "With no IP address at all, since the link only switches frames",
+        "is_correct": false
+      },
+      {
+        "text": "From a single management subnet assigned to all fabric ports",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An interface must support at least 1,000 hosts. Which prefix length gives the smallest subnet that still satisfies the requirement?",
+    "explanation": "Work backwards from the host count: 2^10 - 2 = 1,022 usable addresses, which is the first power of two at or above 1,000. Ten host bits means a /22. A /21 would waste 1,022 addresses, and a /23 with only 510 usable hosts falls short.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "/22",
+        "is_correct": true
+      },
+      {
+        "text": "/21",
+        "is_correct": false
+      },
+      {
+        "text": "/23",
+        "is_correct": false
+      },
+      {
+        "text": "/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which address is a valid host address inside the subnet 192.168.44.0/26?",
+    "explanation": "A /26 has a block size of 64, so 192.168.44.0/26 spans .0 through .63. The .0 address names the subnet and .63 is its broadcast, leaving .1 through .62 for hosts. The address .64 belongs to the next subnet and is itself a network address.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "192.168.44.62",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.44.63",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.44.64",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.44.0",
         "is_correct": false
       }
     ]

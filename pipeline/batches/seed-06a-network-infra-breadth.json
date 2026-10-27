@@ -1,0 +1,562 @@
+[
+  {
+    "stem": "A cable must be installed in the return-air space above a suspended ceiling. Which cable rating is required for that location?",
+    "explanation": "A plenum space moves building air, so a fire there would distribute smoke and toxic gas through the whole floor. CMP cable uses a low-smoke, low-flame-spread jacket. CMR is for risers between floors, CMG for general in-wall runs, and CMX for outdoor exposure.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "CMP (plenum-rated)", "is_correct": true },
+      { "text": "CMR (riser-rated)", "is_correct": false },
+      { "text": "CMG (general-purpose)", "is_correct": false },
+      { "text": "CMX (outdoor-rated)", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the primary purpose of the metallic shield in a shielded twisted-pair (STP) cable?",
+    "explanation": "The foil or braid acts as a barrier: interference induces a current in the shield, which is bonded to ground and taken out of the signal path. The pairs must stay twisted and balanced, and the shield does not carry signal return current.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It drains induced electromagnetic interference to ground before it couples onto the pairs", "is_correct": true },
+      { "text": "It increases the cable's tensile strength for long pulls", "is_correct": false },
+      { "text": "It carries the signal return path for each pair", "is_correct": false },
+      { "text": "It prevents the pairs from untwisting inside the jacket", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which Ethernet standard allows 2.5 Gbps over existing Category 5e cabling, typically to uplink a Wi-Fi 6 access point?",
+    "explanation": "IEEE 802.3bz defined 2.5GBASE-T and 5GBASE-T so installed Cat 5e and Cat 6 runs could carry more than 1 Gbps without recabling. It is the usual choice when an access point can exceed a Gigabit uplink but the cable plant will not support 10GBASE-T.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "2.5GBASE-T (IEEE 802.3bz)", "is_correct": true },
+      { "text": "1000BASE-T (IEEE 802.3ab)", "is_correct": false },
+      { "text": "10GBASE-T (IEEE 802.3an)", "is_correct": false },
+      { "text": "40GBASE-T (IEEE 802.3bq)", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A cable tester reports that pairs 1-2 and 3-6 pass, while pairs 4-5 and 7-8 are open. What does this indicate?",
+    "explanation": "10BASE-T and 100BASE-TX use only pairs 1-2 and 3-6. 1000BASE-T and faster use all four pairs, so an open on 4-5 or 7-8 lets the link come up at 100 Mbps and fail Gigabit autonegotiation. A tester that reports per-pair continuity localises the fault to the termination.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Two pairs are broken or mis-pinned, so the link can run 10/100 but not Gigabit", "is_correct": true },
+      { "text": "The cable is a working crossover cable", "is_correct": false },
+      { "text": "The cable is shielded and needs a ground bond", "is_correct": false },
+      { "text": "The link is running at full duplex but half speed", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why are the parallel links between an access switch and its distribution switch usually bundled into an EtherChannel?",
+    "explanation": "Spanning tree blocks redundant parallel links to prevent loops, which wastes half the capacity. An EtherChannel is presented to STP as one port, so all members can forward at once and the bundle's throughput is the sum of its members.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The bundle adds bandwidth while spanning tree sees a single logical link", "is_correct": true },
+      { "text": "The bundle lets each VLAN use a different physical link without STP", "is_correct": false },
+      { "text": "The bundle makes the access switch the spanning-tree root", "is_correct": false },
+      { "text": "The bundle carries only voice traffic and leaves data on one link", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In the Cisco enterprise campus architecture, what is the function of the services block?",
+    "explanation": "The services block holds the servers that every other block depends on: DNS, DHCP, NTP, AAA, and management tools. Keeping them in one module makes them easier to secure and to scale independently of the access and core layers.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It centralises shared services such as DNS, DHCP, NTP, and AAA for the campus", "is_correct": true },
+      { "text": "It terminates the ISP circuits at the internet edge", "is_correct": false },
+      { "text": "It aggregates the building distribution switches", "is_correct": false },
+      { "text": "It provides the wireless client access layer", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is a building block (pod) in a modular campus design?",
+    "explanation": "Modular designs replicate a proven access-plus-distribution unit for each building or floor. Because every pod follows the same template, capacity can be added one pod at a time and a fault inside one pod stays local instead of affecting the whole campus.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A repeatable group of access and distribution switches deployed per building or floor", "is_correct": true },
+      { "text": "The redundant pair of core switches at the centre of the campus", "is_correct": false },
+      { "text": "A single wiring closet with one access switch", "is_correct": false },
+      { "text": "The DMZ segment that faces the internet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the main benefit of making the access-to-distribution uplink a routed Layer 3 link instead of a Layer 2 trunk?",
+    "explanation": "A routed uplink ends the Layer 2 domain at the access switch. With no loop in that segment, spanning tree does not need to block the redundant path, and equal-cost routing can use both links. VLANs stay local, which also shrinks failure domains.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Both uplinks can forward at once because there is no Layer 2 loop for spanning tree to block", "is_correct": true },
+      { "text": "It lets every VLAN extend across the entire campus", "is_correct": false },
+      { "text": "It removes the need for an interior gateway protocol", "is_correct": false },
+      { "text": "It doubles the number of broadcast domains on the access switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A desktop's Ethernet port shows no link light after the cable is connected. Which layer should be checked first?",
+    "explanation": "A missing link light means the two PHYs never established a physical connection, so nothing above Layer 1 can work. Reseat or swap the cable, try another wall jack, and check that the switch port is not shut down or err-disabled before looking at addressing.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Layer 1: the cable, the wall jack, the switch port, and the NIC", "is_correct": true },
+      { "text": "Layer 3: the default gateway address", "is_correct": false },
+      { "text": "Layer 4: the TCP port the application uses", "is_correct": false },
+      { "text": "Layer 7: the DNS server configuration", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A server answers on TCP 22 and TCP 443 but connections to TCP 3306 time out. Which cause best fits?",
+    "explanation": "If other services on the same host respond, the path, addressing, and name resolution are working. A single port that silently times out points to a filter, such as a firewall policy or an ACL, that permits the other ports but not this one.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A firewall or ACL is dropping traffic for that specific port", "is_correct": true },
+      { "text": "The default gateway is missing on the server", "is_correct": false },
+      { "text": "DNS resolution is failing for the server name", "is_correct": false },
+      { "text": "The Ethernet cable is damaged", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A switch interface shows a steadily rising count of CRC and input errors. What is the most likely cause?",
+    "explanation": "CRC errors mean the frame arrived with a bad checksum, which is a physical or link problem: a crushed cable, a dirty or poorly crimped connector, or a duplex mismatch. IP and MAC address issues show up as reachability or flooding problems, not checksum failures.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A damaged cable, bad connector, or duplex mismatch corrupting frames in transit", "is_correct": true },
+      { "text": "An IP address conflict on the VLAN", "is_correct": false },
+      { "text": "A missing default route on the switch", "is_correct": false },
+      { "text": "A duplicate MAC address in the CAM table", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two hosts on the same VLAN are manually configured with the same IPv4 address. What symptom typically appears?",
+    "explanation": "Both hosts answer ARP for the same address, so neighbours cache whichever MAC replied last and traffic alternates between the two machines. Connections reset or stall unpredictably. A DHCP-managed address plan, or DHCP snooping and DAI, prevents the conflict.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Intermittent connectivity and ARP conflicts as each host claims the address", "is_correct": true },
+      { "text": "Both hosts lose link light on their switch ports", "is_correct": false },
+      { "text": "The switch shuts down the entire VLAN", "is_correct": false },
+      { "text": "DNS stops resolving for every host on the VLAN", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In a cloud VPC, what determines whether a subnet's traffic goes to an internet gateway, a NAT gateway, or a peered VPC?",
+    "explanation": "Subnets are associated with a route table, and the longest matching route decides the next hop. Security groups filter whether traffic is allowed, but they do not choose the path. A subnet with no route to an internet gateway stays private even if its security group permits outbound traffic.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The route table associated with the subnet", "is_correct": true },
+      { "text": "The MAC address of the instance's virtual NIC", "is_correct": false },
+      { "text": "The outbound rules in the security group", "is_correct": false },
+      { "text": "The TTL value in the instance's DNS resolver", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two VPCs must exchange traffic over private IP addresses without a VPN or a gateway appliance. Which feature provides that?",
+    "explanation": "VPC peering creates a direct private route between two VPCs, so instances talk using their private addresses and traffic does not leave the provider's network. It is not transitive: if A peers with B and B peers with C, A still cannot reach C without its own peering or a transit gateway.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "VPC peering", "is_correct": true },
+      { "text": "An internet gateway", "is_correct": false },
+      { "text": "A NAT gateway", "is_correct": false },
+      { "text": "A site-to-site VPN connection", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An enterprise has dozens of VPCs plus on-premises connections that must all reach each other. Which component replaces a full mesh of peerings with one hub?",
+    "explanation": "A transit gateway is a regional hub that VPCs and on-premises links attach to, so each network needs one attachment instead of a peering to every other network. That removes the growth of peerings with each new VPC and gives one place to apply routing and segmentation policy.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A transit gateway", "is_correct": true },
+      { "text": "A NAT instance in every VPC", "is_correct": false },
+      { "text": "A public-facing load balancer", "is_correct": false },
+      { "text": "An internet gateway per VPC", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a cloud load balancer do for an application tier that runs on several instances?",
+    "explanation": "The load balancer holds the client-facing address and distributes connections across a target group. Health checks remove an instance that stops responding, so capacity and availability survive a single instance failure. Encryption and addressing are handled by other services.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It spreads incoming requests across healthy targets and stops sending traffic to failed ones", "is_correct": true },
+      { "text": "It assigns private IP addresses to the instances", "is_correct": false },
+      { "text": "It encrypts traffic between the application instances", "is_correct": false },
+      { "text": "It stores the application's session database", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address is the limited broadcast address, which is never forwarded beyond the local link?",
+    "explanation": "255.255.255.255 means every host on this link, and routers do not forward it. A directed broadcast such as 192.168.1.255 targets all hosts in one subnet and can be routed if the router is configured to allow it. 224.0.0.1 is the all-hosts multicast group, and 127.0.0.1 is loopback.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "255.255.255.255", "is_correct": true },
+      { "text": "0.0.0.0", "is_correct": false },
+      { "text": "224.0.0.1", "is_correct": false },
+      { "text": "127.0.0.1", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address range is reserved for multicast group addresses?",
+    "explanation": "Class D space, 224.0.0.0/4, is used for multicast groups, with 224.0.0.0/24 reserved for link-local control traffic such as OSPF and EIGRP hellos. 169.254.0.0/16 is APIPA, 172.16.0.0/12 is RFC 1918 private space, and 100.64.0.0/10 is carrier-grade NAT space.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "224.0.0.0/4", "is_correct": true },
+      { "text": "169.254.0.0/16", "is_correct": false },
+      { "text": "172.16.0.0/12", "is_correct": false },
+      { "text": "100.64.0.0/10", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which address block is reserved for carrier-grade NAT by RFC 6598 and should not be used for enterprise private addressing?",
+    "explanation": "RFC 6598 sets aside 100.64.0.0/10 as the shared address space that a carrier uses between its CGNAT platform and customer edge devices. It is not one of the RFC 1918 private ranges, so an enterprise that also uses it can collide with the carrier's addressing.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "100.64.0.0/10", "is_correct": true },
+      { "text": "10.0.0.0/8", "is_correct": false },
+      { "text": "172.16.0.0/12", "is_correct": false },
+      { "text": "192.168.0.0/16", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a subnet mask tell an IPv4 host?",
+    "explanation": "The mask marks the boundary between the network prefix and the host portion. The host ANDs its address with the mask to learn its own subnet, then compares a destination's masked address to decide whether to send directly or to the default gateway.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Which bits of the address identify the network and which identify the host", "is_correct": true },
+      { "text": "Which default gateway the host should use", "is_correct": false },
+      { "text": "Which DNS server the host should query first", "is_correct": false },
+      { "text": "Which VLAN the host's switch port belongs to", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field tells the destination host which upper-layer protocol should receive the payload?",
+    "explanation": "The Protocol field carries a number such as 6 for TCP, 17 for UDP, or 1 for ICMP. The receiving host uses it to hand the payload to the correct transport or control module. Version identifies IPv4 itself, and Total Length covers the whole packet.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Protocol", "is_correct": true },
+      { "text": "Version", "is_correct": false },
+      { "text": "Total Length", "is_correct": false },
+      { "text": "Header Checksum", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field is used to mark packets so routers can apply QoS treatment?",
+    "explanation": "The DS field, formerly the Type of Service byte, holds the 6-bit Differentiated Services Code Point. A router reads the DSCP to choose a per-hop behaviour, such as expedited forwarding for voice. The other fields support fragmentation and reassembly.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The Differentiated Services field, which carries the DSCP value", "is_correct": true },
+      { "text": "The Identification field", "is_correct": false },
+      { "text": "The Flags field", "is_correct": false },
+      { "text": "The Fragment Offset field", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An IPv4 packet carries options, so its header is longer than 20 bytes. Which field tells a router where the header ends and the payload begins?",
+    "explanation": "IHL counts 32-bit words in the header, so a value of 6 means 24 bytes and the payload starts there. Total Length measures the whole packet, not the header boundary. Without IHL a router could not parse a variable-length header.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Internet Header Length (IHL)", "is_correct": true },
+      { "text": "Total Length", "is_correct": false },
+      { "text": "Fragment Offset", "is_correct": false },
+      { "text": "Header Checksum", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A router drops an oversized packet because the Don't Fragment (DF) bit is set and returns an ICMP fragmentation-needed message. What should the sender do?",
+    "explanation": "Path MTU discovery relies on that ICMP message: the source learns the smallest MTU on the path and shrinks its payload to fit, so no router has to fragment. Clearing DF would let routers fragment, which is exactly what the application was trying to avoid.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Reduce its segment size to the reported MTU and continue using path MTU discovery", "is_correct": true },
+      { "text": "Clear the DF bit and resend without changing the size", "is_correct": false },
+      { "text": "Increase the TTL so the packet survives the path", "is_correct": false },
+      { "text": "Recalculate the header checksum and resend the same packet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does the IPv6 header have no header checksum?",
+    "explanation": "Every router used to decrement the TTL and recompute the IPv4 header checksum, which costs forwarding capacity. IPv6 assumes the link layer or a transport checksum detects bit errors, so it drops the field and lets routers forward with less work.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Link-layer and upper-layer checksums already catch corruption, so the per-hop recalculation was removed to speed forwarding", "is_correct": true },
+      { "text": "IPv6 relies on the Hop Limit field to detect corrupted headers", "is_correct": false },
+      { "text": "The checksum was moved into the extension headers", "is_correct": false },
+      { "text": "IPv6 packets cannot be corrupted in transit", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv6 header field plays the role that the IPv4 DSCP field plays for QoS?",
+    "explanation": "The 8-bit Traffic Class field carries the DSCP marking, so an IPv6 router can classify and queue a packet the same way it would an IPv4 packet. Flow Label is a separate 20-bit field used to identify a flow for special handling.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Traffic Class", "is_correct": true },
+      { "text": "Flow Label", "is_correct": false },
+      { "text": "Payload Length", "is_correct": false },
+      { "text": "Next Header", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does the Payload Length field in the IPv6 header count?",
+    "explanation": "IPv6 puts the fixed 40-byte base header outside the count, so Payload Length covers extension headers and the upper-layer payload together. That differs from the IPv4 Total Length field, which measures the entire packet including its header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Everything after the 40-byte base header, including any extension headers", "is_correct": true },
+      { "text": "Only the TCP or UDP segment", "is_correct": false },
+      { "text": "The base header plus the payload", "is_correct": false },
+      { "text": "The number of extension headers in the packet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In IPv6, which device is permitted to fragment a packet?",
+    "explanation": "IPv6 removed router fragmentation. A router that cannot forward an oversized packet sends an ICMPv6 Packet Too Big message, and the source then fragments with a Fragment extension header or reduces its payload. That keeps routers fast and pushes the work to the endpoints.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Only the source host, using a Fragment extension header", "is_correct": true },
+      { "text": "Any router whose egress MTU is smaller than the packet", "is_correct": false },
+      { "text": "Only the last router before the destination", "is_correct": false },
+      { "text": "Any device that lowers the path MTU", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Replacing a hub with a switch on the same segment changes which property?",
+    "explanation": "A hub repeats every bit out of every port, so all attached devices share one collision domain and one bandwidth pool. A switch stores and forwards frames per port, so each port is its own collision domain while the broadcast domain stays the same size.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Each switch port becomes its own collision domain", "is_correct": true },
+      { "text": "The broadcast domain shrinks to a single port", "is_correct": false },
+      { "text": "The segment gains a routing table", "is_correct": false },
+      { "text": "All ports continue to share one collision domain", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a media converter?",
+    "explanation": "A media converter changes the electrical or optical signalling of one link into another, letting a copper switch port reach a fiber run without replacing the switch. It does not route, NAT, or rewrite VLAN tags.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It connects two different physical media, such as copper Ethernet to fiber", "is_correct": true },
+      { "text": "It translates private IPv4 addresses into public ones", "is_correct": false },
+      { "text": "It rewrites VLAN tags between two switches", "is_correct": false },
+      { "text": "It converts a Layer 3 packet into an Ethernet frame", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the role of a patch panel in structured cabling?",
+    "explanation": "Horizontal cable is pulled once from the work area to the telecommunications room and terminated on the back of the patch panel. A short, easily replaced patch cord then connects the panel to the switch, so equipment can be moved without disturbing the building wiring.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It terminates the permanent horizontal cable and provides a jack for a short patch cord to the switch", "is_correct": true },
+      { "text": "It regenerates the signal so runs can exceed 100 meters", "is_correct": false },
+      { "text": "It assigns IP addresses to the devices that connect to it", "is_correct": false },
+      { "text": "It converts copper links into fiber links", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which capability distinguishes a managed switch from an unmanaged switch?",
+    "explanation": "Both types learn MAC addresses and forward frames. A managed switch adds an interface for configuration and monitoring: VLANs, trunking, STP features, port security, QoS, and SNMP. An unmanaged switch is plug-and-play with no addressable control plane.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Configurable VLANs, spanning tree, and per-port settings through a management interface", "is_correct": true },
+      { "text": "The ability to forward frames using MAC addresses", "is_correct": false },
+      { "text": "Multiple copper ports in one chassis", "is_correct": false },
+      { "text": "A metal chassis that fits a rack", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Using TCP at the transport layer, what are the PDU names at the transport, network, and data-link layers?",
+    "explanation": "TCP hands down a segment, IP encapsulates it into a packet, and the data-link layer wraps that into a frame before the physical layer sends bits. Each layer adds its own header, and the receiver strips them in reverse order.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Segment, packet, frame", "is_correct": true },
+      { "text": "Frame, packet, segment", "is_correct": false },
+      { "text": "Datagram, frame, bit", "is_correct": false },
+      { "text": "Packet, segment, frame", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which OSI layer establishes, manages, and terminates dialogues between applications?",
+    "explanation": "The session layer sets up, maintains, and tears down the conversation between two applications, including checkpointing and recovery. The transport layer moves data end to end, while the presentation layer handles formatting and encryption.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Session layer (Layer 5)", "is_correct": true },
+      { "text": "Transport layer (Layer 4)", "is_correct": false },
+      { "text": "Presentation layer (Layer 6)", "is_correct": false },
+      { "text": "Application layer (Layer 7)", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which OSI layer provides network services such as HTTP and DNS directly to user applications?",
+    "explanation": "The application layer is the boundary the user's software talks to: HTTP, DNS, SMTP, and SSH live here. It does not move bytes itself; it hands data to the presentation and session layers below, which prepare and manage the exchange.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Application layer (Layer 7)", "is_correct": true },
+      { "text": "Presentation layer (Layer 6)", "is_correct": false },
+      { "text": "Session layer (Layer 5)", "is_correct": false },
+      { "text": "Transport layer (Layer 4)", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which OSI layers are combined into the TCP/IP application layer?",
+    "explanation": "The TCP/IP model collapses the top three OSI layers into one application layer, because protocols such as HTTP and DNS handle their own formatting and session state. Transport maps to transport, and network maps to the internet layer, while data-link and physical map to the network access layer.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Application, presentation, and session", "is_correct": true },
+      { "text": "Transport and network", "is_correct": false },
+      { "text": "Data-link and physical", "is_correct": false },
+      { "text": "Network, data-link, and physical", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is fiber optic cabling preferred in an industrial area with heavy electrical machinery?",
+    "explanation": "Fiber carries modulated light through glass, so motors, welders, and power cables cannot induce noise onto the signal. It also provides electrical isolation between endpoints, which is why it is used on long runs between buildings with different ground potentials.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Light in the fiber is unaffected by electromagnetic interference", "is_correct": true },
+      { "text": "The fiber's copper core cancels induced noise", "is_correct": false },
+      { "text": "The fiber carries a ground reference that absorbs surges", "is_correct": false },
+      { "text": "The fiber transmits at a lower voltage than copper", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of an SFP or SFP+ slot on a switch?",
+    "explanation": "The slot holds a transceiver module that converts the switch's electrical signal to the media in use, such as multimode fiber, single-mode fiber, or a direct-attach copper cable. Changing the module changes the media without replacing the switch.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It accepts a hot-swappable transceiver so the port can support different fiber or copper media", "is_correct": true },
+      { "text": "It supplies Power over Ethernet to attached devices", "is_correct": false },
+      { "text": "It stacks multiple switches into one management domain", "is_correct": false },
+      { "text": "It stores the switch's startup configuration", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is coaxial cable still used on the WAN side of a cable broadband connection?",
+    "explanation": "Cable operators built their access networks on coaxial cable and reuse it with DOCSIS, which modulates Ethernet frames onto the coax spectrum. The modem converts between coax and the subscriber's Ethernet link, so the plant does not need to be replaced with fiber to deliver service.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It carries the DOCSIS signal between the subscriber's modem and the provider's cable network", "is_correct": true },
+      { "text": "It provides a fiber path from the provider to the home", "is_correct": false },
+      { "text": "It is the required medium for all Ethernet WAN services", "is_correct": false },
+      { "text": "It removes the need for a cable modem", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does a twisted-pair Ethernet channel stop at about 100 meters?",
+    "explanation": "The signal weakens as it travels, and near-end crosstalk from adjacent pairs grows relative to it. Beyond roughly 100 meters the signal-to-noise ratio falls below what the receiver needs at the standard data rate. That is a physical limit, not a forwarding rule.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Attenuation and crosstalk grow with distance until the receiver can no longer separate the symbols", "is_correct": true },
+      { "text": "The copper oxidises once the cable passes 100 meters", "is_correct": false },
+      { "text": "Switches cannot forward a frame more than 100 meters", "is_correct": false },
+      { "text": "IEEE 802.3 caps the length to conserve IPv4 addresses", "is_correct": false }
+    ]
+  }
+]

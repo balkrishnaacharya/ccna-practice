@@ -1,0 +1,626 @@
+[
+  {
+    "stem": "In Cisco NAT terminology, which address does the term 'inside local' describe?",
+    "explanation": "The inside local address is the private address actually configured on an internal host, for example 10.1.1.10. It exists only inside the organization; NAT rewrites it to an inside global address before the packet leaves the outside interface.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The private address of an internal host as it exists on the inside network",
+        "is_correct": true
+      },
+      {
+        "text": "The public address an internal host appears to use once traffic reaches the internet",
+        "is_correct": false
+      },
+      {
+        "text": "The address of an external host as seen by hosts on the inside network",
+        "is_correct": false
+      },
+      {
+        "text": "The address of the outside interface of the NAT router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An internal web server must always be reachable from the internet at one fixed public address. Which NAT type satisfies that requirement?",
+    "explanation": "Static NAT binds one inside local address to one inside global address permanently, so inbound sessions always land on the same server. Dynamic NAT and PAT reuse addresses from a pool and therefore cannot guarantee that a specific inbound connection reaches a specific host.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Static NAT",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic NAT with a pool of six public addresses",
+        "is_correct": false
+      },
+      {
+        "text": "PAT using the outside interface address",
+        "is_correct": false
+      },
+      {
+        "text": "NAT overload with a rotary pool",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two interface subcommands mark where NAT translation takes place on a Cisco router?",
+    "explanation": "The router has to know which side of itself is private and which is public, so `ip nat inside` goes on every internal-facing interface and `ip nat outside` on the internet-facing one. Without both designations the translation rules are never applied to traffic.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip nat inside` and `ip nat outside`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip nat source` and `ip nat destination`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip nat local` and `ip nat global`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip nat enable` and `ip nat overload`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router reloads overnight while dynamic PAT translations are active. What happens to those translations?",
+    "explanation": "Dynamic and PAT entries live only in the translation table in RAM, so a reload wipes them. Internal hosts simply open new sessions afterward and the router builds fresh entries; static mappings, by contrast, come back from the configuration.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are lost, and hosts rebuild them by opening new sessions",
+        "is_correct": true
+      },
+      {
+        "text": "They are rebuilt from the running configuration on boot",
+        "is_correct": false
+      },
+      {
+        "text": "They persist because they are written to NVRAM",
+        "is_correct": false
+      },
+      {
+        "text": "They convert automatically into static mappings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On which interface should `ip helper-address` be configured to relay DHCP requests from a client VLAN?",
+    "explanation": "The helper must sit on the interface that receives the client's broadcast, which is the VLAN's default gateway (an SVI or a router LAN port). Placing it on the WAN interface would never see the broadcast because broadcasts do not cross the router.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The client-facing interface that acts as that VLAN's default gateway",
+        "is_correct": true
+      },
+      {
+        "text": "The outside interface toward the DHCP server",
+        "is_correct": false
+      },
+      {
+        "text": "Every trunk port in the Layer 2 domain",
+        "is_correct": false
+      },
+      {
+        "text": "The loopback interface used for router management",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why might an engineer configure two `ip helper-address` statements on the same client-facing interface?",
+    "explanation": "Each statement forwards a copy of the DHCP broadcast to a different server. If the first server is down or its scope is exhausted, the second can still answer, and the client simply takes whichever offer arrives first.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To forward requests to a second DHCP server so either one can answer and provide redundancy",
+        "is_correct": true
+      },
+      {
+        "text": "To split the subnet so each server owns half the address range",
+        "is_correct": false
+      },
+      {
+        "text": "To force clients to request two addresses at once",
+        "is_correct": false
+      },
+      {
+        "text": "To load-balance the client's traffic across two default gateways",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement about the scope of `ip helper-address` is correct?",
+    "explanation": "The helper does not relay arbitrary broadcasts. IOS forwards a fixed set of UDP services by default — DHCP, DNS, TFTP, NetBIOS name and datagram services, TACACS, and time — and everything else stays local unless explicitly added.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It relays only a defined set of UDP services such as DHCP, DNS, and TFTP, not all broadcasts",
+        "is_correct": true
+      },
+      {
+        "text": "It relays every broadcast the interface receives",
+        "is_correct": false
+      },
+      {
+        "text": "It relays DHCP only and no other protocol",
+        "is_correct": false
+      },
+      {
+        "text": "It relays broadcasts only when the server is on the same subnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command adds a UDP service that is not part of the default forwarded set to the broadcasts relayed by `ip helper-address`?",
+    "explanation": "`ip forward-protocol udp <port>` extends the list of ports that the helper will relay. It is a global command, and it applies to every interface with a helper address, so it is usually paired with disabling a default entry the network does not need.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip forward-protocol udp <port>`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip helper-address <address> udp <port>`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp relay <port>`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip broadcast-forward udp <port>`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DHCP message does a server send when a client asks for an address the server cannot grant?",
+    "explanation": "A DHCPNAK tells the client its request is refused, usually because the address belongs to another subnet, the lease has expired, or the requested address is wrong for that segment. The client must then restart discovery from DHCPDISCOVER.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPNAK",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPDECLINE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPRELEASE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A client receives a DHCPOFFER, probes the address, and finds another host already using it. Which message does the client send?",
+    "explanation": "The client detects the conflict, typically through an ARP probe or gratuitous ARP, and sends DHCPDECLINE to the server so that address is marked unusable. The client then returns to the discover phase for a different offer.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPDECLINE",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPNAK",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPRELEASE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a DHCP client first attempt to renew a lease that is halfway through its lifetime?",
+    "explanation": "At the T1 timer, 50 percent of the lease, the client unicasts a DHCPREQUEST straight to the server that granted the lease. Only if that fails does it move to the T2 rebinding timer and broadcast to any available server.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It unicasts a DHCPREQUEST to the original server when T1 (50 percent) is reached",
+        "is_correct": true
+      },
+      {
+        "text": "It broadcasts a DHCPDISCOVER when T1 is reached",
+        "is_correct": false
+      },
+      {
+        "text": "It waits for the lease to expire and then sends DHCPDECLINE",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a DHCPINFORM to the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the current DHCP address bindings held by a Cisco IOS router acting as a DHCP server?",
+    "explanation": "`show ip dhcp binding` lists each leased address with the client identifier, lease expiration, and binding type. It is the quickest way to confirm which host holds an address without opening the pool configuration.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip dhcp binding`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip dhcp pool`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp conflict`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp relay`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport and port does NTP use for time synchronization?",
+    "explanation": "NTP runs over UDP port 123. The lightweight, connectionless exchange suits frequent small polls, and the protocol tolerates the occasional lost packet without losing synchronization.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP port 123",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 123",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 37",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes a Cisco router serve time to other devices as an authoritative stratum 2 source?",
+    "explanation": "`ntp master 2` tells the router to act as an NTP server at the stated stratum, using its own clock as the reference. It is common in labs or isolated networks that have no reachable external time source.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ntp master 2`",
+        "is_correct": true
+      },
+      {
+        "text": "`ntp server 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`ntp stratum 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`ntp source 2`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router synchronizes its clock to an NTP server that reports stratum 2. What stratum does the router then report to its own clients?",
+    "explanation": "Stratum counts hops from the reference clock, so each device that syncs from a server is one level further away. A client of a stratum 2 server becomes stratum 3; no device may claim a better stratum than the source it actually trusts.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Stratum 3",
+        "is_correct": true
+      },
+      {
+        "text": "Stratum 1",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 2",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command confirms whether a router's clock is synchronized and identifies the reference it is using?",
+    "explanation": "`show ntp status` reports the synchronization state, the stratum, and the reference clock or upstream server. `show ntp associations` shows the candidate peers and their reachability, which is the next place to look when status shows unsynchronized.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ntp status`",
+        "is_correct": true
+      },
+      {
+        "text": "`show clock detail`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ntp config`",
+        "is_correct": false
+      },
+      {
+        "text": "`debug ntp packets`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDP port do Cisco devices use by default when sending syslog messages to a remote collector?",
+    "explanation": "Syslog uses UDP 514. Messages are fire-and-forget: the device does not wait for an acknowledgement, so a lost UDP datagram simply never reaches the collector and the local log remains the only record.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 514",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 514",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 162",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 601",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command adds the date and millisecond precision to every log message so events can be correlated across devices?",
+    "explanation": "`service timestamps log datetime msec` replaces the default uptime-based timestamp with wall-clock date and milliseconds. Accurate, consistent timestamps matter more than they look: without them, matching a router event to a firewall event in an incident timeline becomes guesswork.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`service timestamps log datetime msec`",
+        "is_correct": true
+      },
+      {
+        "text": "`logging timestamp datetime`",
+        "is_correct": false
+      },
+      {
+        "text": "`clock set msec`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging trap datetime`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands stores syslog messages in router RAM and then displays them?",
+    "explanation": "`logging buffered` keeps a circular log in memory, sized by the value given, and `show logging` prints it. The buffer survives a lost connection to the terminal but not a reload, which is why remote logging is also configured.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`logging buffered <size>` and `show logging`",
+        "is_correct": true
+      },
+      {
+        "text": "`logging console` and `show console`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging monitor` and `show monitor`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging trap` and `show trap`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which syslog severity level indicates that the system is unusable?",
+    "explanation": "Level 0 is emergencies, reserved for conditions that make the device itself unusable. Levels 1 through 7 follow in descending urgency, from alert down to debug, and the lower the number the more severe the event.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Level 0, emergencies",
+        "is_correct": true
+      },
+      {
+        "text": "Level 2, critical",
+        "is_correct": false
+      },
+      {
+        "text": "Level 4, warnings",
+        "is_correct": false
+      },
+      {
+        "text": "Level 7, debugging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two UDP ports does SNMP use for agent requests and for notifications?",
+    "explanation": "Managers send GET and SET requests to the agent on UDP 161, and the agent sends traps and informs to the manager on UDP 162. Both are connectionless, which is why traps can be lost without the agent ever knowing.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 161 for agent requests and UDP 162 for notifications",
+        "is_correct": true
+      },
+      {
+        "text": "UDP 162 for agent requests and UDP 161 for notifications",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 161 for agent requests and TCP 162 for notifications",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 514 for agent requests and UDP 161 for notifications",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a Management Information Base (MIB) in an SNMP-managed device?",
+    "explanation": "The MIB is the hierarchical tree of objects the agent exposes, and each object has a unique object identifier. A manager needs the matching MIB definition to turn a numeric OID into a readable name and value.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A hierarchical tree of managed objects, each addressed by a unique object identifier",
+        "is_correct": true
+      },
+      {
+        "text": "A database of SNMP community strings stored on the manager",
+        "is_correct": false
+      },
+      {
+        "text": "The log file where an agent records traps it has sent",
+        "is_correct": false
+      },
+      {
+        "text": "The address pool an SNMP agent uses for management traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMP operation does a manager use to modify a writable object on an agent?",
+    "explanation": "SET writes a new value into an object the agent marks writable, such as an administrative status or a configuration parameter. GET and GETNEXT only read, so they cannot change device state.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SET",
+        "is_correct": true
+      },
+      {
+        "text": "GET",
+        "is_correct": false
+      },
+      {
+        "text": "GETNEXT",
+        "is_correct": false
+      },
+      {
+        "text": "TRAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which role does a router play when it answers an SNMP manager's request for interface counters?",
+    "explanation": "The router is the agent: it holds the MIB, executes the request against its own data, and returns a response. The manager is the software that polls or receives notifications, and the two roles are defined by who asks and who answers.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMP agent",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP manager",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP proxy forwarder for a third device",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP trap receiver",
+        "is_correct": false
+      }
+    ]
+  }
+]

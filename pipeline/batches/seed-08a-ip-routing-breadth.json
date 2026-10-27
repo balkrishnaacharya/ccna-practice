@@ -1,0 +1,782 @@
+[
+  {
+    "stem": "A static route is configured with only a next-hop address and no exit interface. How does the router decide which interface will carry the traffic?",
+    "explanation": "The router performs a recursive lookup: it searches the routing table for a route covering the next-hop address and forwards out that route's interface. This is why the next hop must itself be reachable — if the recursion fails, the static route never enters the table.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It performs a recursive lookup to find a route that covers the next-hop address",
+        "is_correct": true
+      },
+      {
+        "text": "It ARPs for the next hop simultaneously on every up interface",
+        "is_correct": false
+      },
+      {
+        "text": "It uses the lowest-numbered interface that is up and forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "It requires a default route to be present before the static route can install",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the drawback of a static route that specifies an exit interface but no next-hop address on a multi-access Ethernet segment?",
+    "explanation": "Without a next hop, the router treats every destination inside the prefix as directly connected and issues a separate ARP for each one, instead of resolving a single next-hop MAC. That floods the segment with ARP traffic and consumes adjacency and memory resources as the prefix grows.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router must resolve a MAC address for every destination, so it ARPs once per destination instead of once per next hop",
+        "is_correct": true
+      },
+      {
+        "text": "The route is not installed until the interface receives a DHCP lease",
+        "is_correct": false
+      },
+      {
+        "text": "The route is silently converted into a default route",
+        "is_correct": false
+      },
+      {
+        "text": "The route inherits the administrative distance of the interface and is ignored",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which keyword keeps a static route in the routing table even when its outgoing interface goes down?",
+    "explanation": "The permanent keyword decouples the route from interface state, so it stays installed regardless. It is used where the interface flaps for reasons unrelated to path availability — dial backup links and some floating static designs — and it means the route will attract traffic that cannot actually be delivered.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "permanent",
+        "is_correct": true
+      },
+      {
+        "text": "track",
+        "is_correct": false
+      },
+      {
+        "text": "sticky",
+        "is_correct": false
+      },
+      {
+        "text": "persist",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a static route behave differently from a dynamically learned route when the topology changes?",
+    "explanation": "Nothing recalculates a static route. It remains exactly as configured until an administrator changes or removes it, which is both its strength (predictable, no protocol overhead) and its weakness (no automatic reaction to a failed path).",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It does not react at all; it stays configured and must be changed manually",
+        "is_correct": true
+      },
+      {
+        "text": "It reconverges faster because it has no protocol timers",
+        "is_correct": false
+      },
+      {
+        "text": "It is withdrawn automatically as soon as any link fails",
+        "is_correct": false
+      },
+      {
+        "text": "It is recalculated by the SPF algorithm like any other route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a router-on-a-stick design, how must the switch port facing the router be configured?",
+    "explanation": "The router needs to see the 802.1Q tag for each VLAN, and an access port would strip or reject those tags. The link must therefore be a trunk carrying every VLAN that the router is expected to route between.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As an 802.1Q trunk carrying every VLAN that needs routing",
+        "is_correct": true
+      },
+      {
+        "text": "As an access port in the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "As a routed port with an IP address in each VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "As an access port in VLAN 1, because VLAN 1 carries all VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command converts a switch port into a Layer 3 routed port so that an IP address can be assigned directly to it?",
+    "explanation": "no switchport removes the port from Layer 2 switching and makes it a routed interface, after which ip address applies normally. This is how a multilayer switch builds a point-to-point link toward a router or another L3 switch without consuming a VLAN.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "no switchport",
+        "is_correct": true
+      },
+      {
+        "text": "switchport mode trunk",
+        "is_correct": false
+      },
+      {
+        "text": "no ip address",
+        "is_correct": false
+      },
+      {
+        "text": "encapsulation dot1q native",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures subinterface GigabitEthernet0/0.30 to carry VLAN 30 as the native VLAN while still applying 802.1Q encapsulation?",
+    "explanation": "The native keyword tells the router that frames for this VLAN arrive untagged, matching the switch's native VLAN setting. Without it the router would expect a tag on those frames and drop them.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "encapsulation dot1Q 30 native",
+        "is_correct": true
+      },
+      {
+        "text": "encapsulation dot1Q 30",
+        "is_correct": false
+      },
+      {
+        "text": "switchport trunk native vlan 30",
+        "is_correct": false
+      },
+      {
+        "text": "encapsulation native 30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A multilayer switch has both its VLAN 10 and VLAN 20 interfaces up/up, yet hosts in VLAN 10 cannot reach hosts in VLAN 20. Which global command is missing?",
+    "explanation": "SVIs exist and are up, but a multilayer switch forwards only at Layer 2 until routing is enabled globally. ip routing turns on the Layer 3 forwarding path between SVIs. It is a global command, not a per-interface one, which is why both SVIs look healthy while traffic still fails.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip routing",
+        "is_correct": true
+      },
+      {
+        "text": "ip routing enable",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 unicast-routing",
+        "is_correct": false
+      },
+      {
+        "text": "switchport routing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does route poisoning do when a network becomes unreachable?",
+    "explanation": "Instead of removing the route and saying nothing, the router advertises it with an infinite metric. Neighbors immediately mark the path unusable instead of continuing to believe their own stale entry, which is what prevents a routing loop while the failure propagates.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It advertises the failed network with an infinite metric so neighbors stop using that path",
+        "is_correct": true
+      },
+      {
+        "text": "It deletes the route locally without telling any neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "It re-advertises the failed prefix with a metric of zero",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps advertising the old metric until the hold-down timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can a distance-vector protocol count to infinity after a link fails?",
+    "explanation": "When A loses a directly connected network, B may still advertise a route to it back to A. A accepts B's advertisement, then B accepts A's new advertisement, and the metric climbs one hop at a time. Split horizon, route poisoning, and triggered updates exist precisely to break that mutual belief.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Neighbors keep believing each other's stale advertisements, so the metric increases one hop at a time",
+        "is_correct": true
+      },
+      {
+        "text": "The hop-count field overflows and wraps back to zero",
+        "is_correct": false
+      },
+      {
+        "text": "The update timer expires and duplicates every route in the table",
+        "is_correct": false
+      },
+      {
+        "text": "The topology table loses its successor and floods a query to every neighbor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the fundamental difference between a link-state and a distance-vector routing protocol?",
+    "explanation": "A link-state protocol floods link information so every router builds an identical topology database and independently runs SPF. A distance-vector protocol never sees the topology — it only knows which neighbor offers the best metric to a prefix and trusts that neighbor.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Link-state builds a full topology database and runs SPF; distance-vector only knows routes and metrics learned from neighbors",
+        "is_correct": true
+      },
+      {
+        "text": "Link-state uses hop count as its metric; distance-vector uses bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "Link-state protocols are classful; distance-vector protocols are classless",
+        "is_correct": false
+      },
+      {
+        "text": "Link-state sends its full table every 30 seconds; distance-vector exchanges LSAs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the hold-down timer in a distance-vector routing protocol?",
+    "explanation": "After a route is declared unreachable, the hold-down period suppresses it so a flapping interface or a stale, pre-failure update cannot put the route back into service immediately. The cost is slower reconvergence for a path that recovers quickly.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It suppresses a recently failed route so flapping or stale updates cannot reinstate it immediately",
+        "is_correct": true
+      },
+      {
+        "text": "It delays hello packets so the CPU is not interrupted too often",
+        "is_correct": false
+      },
+      {
+        "text": "It limits how long a router waits for an acknowledgement from a neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "It ages out table entries that have not changed",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single prefix summarizes the contiguous networks 10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, and 10.0.3.0/24?",
+    "explanation": "Four /24 networks align on a four-block boundary, so two bits of prefix are removed: 24 - 2 = 22. The result 10.0.0.0/22 covers exactly 10.0.0.0 through 10.0.3.255 with nothing left over.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "10.0.0.0/22",
+        "is_correct": true
+      },
+      {
+        "text": "10.0.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/21",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is it unsafe to summarize 172.16.1.0/24 and 172.16.3.0/24 as 172.16.0.0/22?",
+    "explanation": "The /22 spans four /24 blocks, and two of them — 172.16.0.0/24 and 172.16.2.0/24 — are not part of the pair being summarized. Advertising the /22 pulls traffic for those two networks toward the summarizer, which then has no route and drops it.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The /22 also covers 172.16.0.0/24 and 172.16.2.0/24, so traffic for those networks is drawn in and dropped",
+        "is_correct": true
+      },
+      {
+        "text": "A summary must always be a /24 or longer to be advertised",
+        "is_correct": false
+      },
+      {
+        "text": "RFC 1918 space cannot be summarized at all",
+        "is_correct": false
+      },
+      {
+        "text": "The two subnets use different administrative distances",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures manual inter-area summarization of 10.1.0.0/16 on an OSPF ABR inside area 1?",
+    "explanation": "The area range command on an ABR collapses matching intra-area prefixes into a single Type 3 LSA for the other areas. The similar-looking summary-address command is different: it summarizes redistributed external prefixes into Type 5 LSAs on an ASBR.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "area 1 range 10.1.0.0 255.255.0.0",
+        "is_correct": true
+      },
+      {
+        "text": "summary-address 10.1.0.0 255.255.0.0",
+        "is_correct": false
+      },
+      {
+        "text": "network 10.1.0.0 0.0.255.255 area 1",
+        "is_correct": false
+      },
+      {
+        "text": "area 1 range 10.1.0.0/16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is 0.0.0.0/0 described as the ultimate summary?",
+    "explanation": "A /0 removes every prefix bit, so the prefix covers the entire IPv4 address space. As a route it therefore matches any destination that no more specific entry matches, which is exactly what a default route does.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It covers every IPv4 address, so it matches anything no more specific prefix covers",
+        "is_correct": true
+      },
+      {
+        "text": "It summarizes only the RFC 1918 private ranges",
+        "is_correct": false
+      },
+      {
+        "text": "It is the shortest prefix a router is allowed to store",
+        "is_correct": false
+      },
+      {
+        "text": "It is generated automatically by every routing protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route must back up an eBGP-learned route. Which administrative distance keeps the static route out of the table while eBGP is healthy?",
+    "explanation": "eBGP is installed with an administrative distance of 20, so the static route needs any value above 20 to lose the comparison. Choosing a value above 200 would still work but would also lose to iBGP, which is a different design intent.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Any value greater than 20",
+        "is_correct": true
+      },
+      {
+        "text": "Any value greater than 90",
+        "is_correct": false
+      },
+      {
+        "text": "Any value greater than 110",
+        "is_correct": false
+      },
+      {
+        "text": "Exactly 255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens to a static route configured with an administrative distance of 255?",
+    "explanation": "255 is the maximum value and reserves the route from ever being installed, because it can never win against any other source. It is a way of writing a route down without activating it, and routes that fail reachability checks appear with this AD in show output.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is never installed in the routing table, no matter what other routes exist",
+        "is_correct": true
+      },
+      {
+        "text": "It becomes the last-resort gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It is installed but immediately marked unreachable",
+        "is_correct": false
+      },
+      {
+        "text": "It is installed only while the outgoing interface is down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands makes a floating static route depend on the result of an IP SLA probe?",
+    "explanation": "The tracked object is defined first, then attached to the route with the track keyword. If the probe fails, the object goes down and the router withdraws the static route even though the local interface is still up — which is the only way to detect a failure that happens beyond the first hop.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "track 1 ip sla 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 track 1",
+        "is_correct": true
+      },
+      {
+        "text": "ip sla 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 permanent",
+        "is_correct": false
+      },
+      {
+        "text": "track 1 interface GigabitEthernet0/0 line-protocol, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250",
+        "is_correct": false
+      },
+      {
+        "text": "ip sla monitor 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 name SLA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two static routes reach the same destination: one with AD 200 via ISP-A and one with AD 210 via ISP-B. Both next hops are reachable. What does the router do?",
+    "explanation": "Only the lowest administrative distance is installed, so the AD 200 route owns the destination and the AD 210 route stays out of the routing table entirely. It is not a standby in the table — it becomes usable only when the AD 200 route disappears.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It installs only the AD 200 route; the AD 210 route is used only if the first one disappears",
+        "is_correct": true
+      },
+      {
+        "text": "It installs both routes and load-balances across the two ISPs",
+        "is_correct": false
+      },
+      {
+        "text": "It installs neither route because their administrative distances disagree",
+        "is_correct": false
+      },
+      {
+        "text": "It installs the AD 210 route because a higher distance is preferred",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the IPv6 routing table on a Cisco router?",
+    "explanation": "IPv6 has its own table, separate from the IPv4 table, and show ipv6 route prints it. The output uses the same route codes — C, L, S, O, D — so the IPv4 reading skills transfer directly.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ipv6 route",
+        "is_correct": true
+      },
+      {
+        "text": "show ip route v6",
+        "is_correct": false
+      },
+      {
+        "text": "show route ipv6",
+        "is_correct": false
+      },
+      {
+        "text": "show ipv6 routing-table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates an IPv6 static route for 2001:db8:2::/48 out GigabitEthernet0/1 with link-local next hop fe80::1?",
+    "explanation": "A link-local next hop is only unique on a single link, so the exit interface must be given alongside it. The keyword form is interface first, then address. Omitting the interface makes the next hop ambiguous and the router rejects the route.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 route 2001:db8:2::/48 GigabitEthernet0/1 fe80::1",
+        "is_correct": true
+      },
+      {
+        "text": "ipv6 route 2001:db8:2::/48 fe80::1",
+        "is_correct": false
+      },
+      {
+        "text": "ip route 2001:db8:2::/48 GigabitEthernet0/1 fe80::1",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 route 2001:db8:2:: 255.255.255.0 GigabitEthernet0/1 fe80::1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route is pointed at the Null0 interface. What is that route used for?",
+    "explanation": "Null0 silently discards anything sent to it, so a route to Null0 black-holes a prefix. The usual reason is to drop traffic for the unused part of a summarized range, preventing the router from following a less specific route and looping those packets.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It silently discards matching traffic, which is used to black-hole unused space inside a summary",
+        "is_correct": true
+      },
+      {
+        "text": "It returns an ICMP error to the source for every matching packet",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards matching traffic to the default gateway instead",
+        "is_correct": false
+      },
+      {
+        "text": "It logs matching packets and then forwards them normally",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is an IPv6 static route with only an exit interface and no next hop acceptable on a point-to-point link but not on a shared Ethernet segment?",
+    "explanation": "On a point-to-point link there is exactly one possible neighbor, so the router can send toward the far end without choosing between candidates. On a multi-access segment there are many neighbors, so the router would have to resolve a link-layer address for each destination and treat the whole prefix as directly attached.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only one neighbor can exist on a point-to-point link, so the far end is unambiguous",
+        "is_correct": true
+      },
+      {
+        "text": "Point-to-point links do not use link-local addresses",
+        "is_correct": false
+      },
+      {
+        "text": "The interface supplies a synthetic next-hop address automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The router converts the route into a connected route on point-to-point links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a static route?",
+    "explanation": "A static route is trusted almost completely — only a directly connected route, at 0, beats it. That is why a mistyped static route can silently override a routing protocol that would have chosen a working path.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "text": "20",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of an EIGRP route learned from outside the local EIGRP autonomous system?",
+    "explanation": "Internal EIGRP is 90 because the whole path is inside one administrative domain. An external route originated elsewhere is only as trustworthy as the protocol it came from, so EIGRP assigns it 170 — worse than OSPF, better than RIP.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "170",
+        "is_correct": true
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "20",
+        "is_correct": false
+      },
+      {
+        "text": "200",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An administrator sets a static route's administrative distance to 5 on Router A, and Router A then redistributes that route into OSPF. What administrative distance do Router A's OSPF neighbors assign to the route?",
+    "explanation": "Administrative distance is purely local. It expresses how much this router trusts a source and is never encoded in a routing update, so neighbors evaluate the route as an OSPF route and apply OSPF's own distance of 110.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "110, because administrative distance is local and is never carried in routing updates",
+        "is_correct": true
+      },
+      {
+        "text": "5, because the original value travels with the route",
+        "is_correct": false
+      },
+      {
+        "text": "20, because redistributed routes become external",
+        "is_correct": false
+      },
+      {
+        "text": "0, because the value is reset at every hop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly compares HSRP and VRRP?",
+    "explanation": "VRRP is defined in an RFC and works between vendors, so it is the choice in mixed environments. HSRP is Cisco-developed and, while widely deployed in all-Cisco networks, does not interoperate with other vendors' first-hop redundancy implementations.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VRRP is an open standard, while HSRP is Cisco-proprietary",
+        "is_correct": true
+      },
+      {
+        "text": "HSRP is an open standard, while VRRP is Cisco-proprietary",
+        "is_correct": false
+      },
+      {
+        "text": "Both are open standards maintained by the IETF",
+        "is_correct": false
+      },
+      {
+        "text": "Both are Cisco-proprietary and interoperate only with each other",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which virtual MAC address format does HSRP version 2 use?",
+    "explanation": "HSRPv1 uses 0000.0c07.acXX, which caps the group number at 255. Version 2 moved to 0000.0c9f.fXXX and encodes the group in the low 10 bits, allowing group numbers far beyond 255.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0000.0c9f.fXXX",
+        "is_correct": true
+      },
+      {
+        "text": "0000.0c07.acXX",
+        "is_correct": false
+      },
+      {
+        "text": "0000.5e00.01XX",
+        "is_correct": false
+      },
+      {
+        "text": "0180.c200.0003",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default hello and hold timers for HSRP version 1?",
+    "explanation": "HSRPv1 sends a hello every 3 seconds and declares the peer dead after 10 seconds without one. The hold time is roughly three hellos, so a single lost packet does not trigger a failover, and both timers must match across the group for it to work.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "3 seconds hello, 10 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "1 second hello, 3 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds hello, 15 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "10 seconds hello, 30 seconds hold",
+        "is_correct": false
+      }
+    ]
+  }
+]

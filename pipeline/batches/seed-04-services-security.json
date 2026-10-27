@@ -1,0 +1,282 @@
+[
+  {
+    "stem": "Which DNS record type maps a hostname to an IPv6 address?",
+    "explanation": "The AAAA record, sometimes spoken as quad-A, holds a 128-bit IPv6 address for a name and is the IPv6 counterpart of the A record. A resolver asking for the IPv6 address of a host receives the AAAA data and ignores A records entirely. Publishing only an A record leaves the name unreachable over IPv6 even when the host has a global address configured.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "AAAA", "is_correct": true },
+      { "text": "A", "is_correct": false },
+      { "text": "PTR", "is_correct": false },
+      { "text": "MX", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which DNS record type supports reverse lookups that translate an IP address into a name?",
+    "explanation": "PTR records live in the in-addr.arpa or ip6.arpa zone and hold the name associated with a specific address. Tools such as traceroute and mail servers use them to label addresses with names. A missing PTR record is not an error, but it makes logs harder to read and can trip reverse-lookup checks on some mail gateways.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "PTR", "is_correct": true },
+      { "text": "CNAME", "is_correct": false },
+      { "text": "SRV", "is_correct": false },
+      { "text": "TXT", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A server is reachable as `mail.example.com` but clients are told the name `smtp.example.com`. Which record type makes the second name resolve without duplicating the address?",
+    "explanation": "A CNAME record declares that one name is an alias for another, so resolvers follow the chain to the canonical name and use its A or AAAA record. Editing the address in one place then updates every alias. A CNAME cannot coexist with other records at the same name, which is why apex names usually use other mechanisms.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "CNAME", "is_correct": true },
+      { "text": "A", "is_correct": false },
+      { "text": "MX", "is_correct": false },
+      { "text": "NS", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which record type tells a remote mail server where to deliver messages for a domain?",
+    "explanation": "MX records list the hosts willing to accept mail for a domain, each with a preference value so senders try the lowest number first. The record points at a name, not an address, and that name still needs its own A or AAAA record. Without an MX record, senders fall back to the domain's own address, which usually fails.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "MX with a preference value per mail host", "is_correct": true },
+      { "text": "A record for each mail host with no preference value", "is_correct": false },
+      { "text": "TXT record listing the mail hosts in order", "is_correct": false },
+      { "text": "SRV record with priority and weight fields", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which statement distinguishes SFTP from FTPS?",
+    "explanation": "SFTP is a subsystem carried inside an SSH session on port 22, so it inherits SSH key-based authentication and encryption. FTPS keeps the FTP command and data channels and wraps them in TLS on ports 990 or 21. The two are unrelated protocols despite the similar names, and a client that speaks one cannot talk to a server that offers only the other.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "SFTP runs inside SSH, while FTPS wraps the FTP protocol in TLS", "is_correct": true },
+      { "text": "SFTP wraps FTP in TLS, while FTPS runs inside an SSH tunnel", "is_correct": false },
+      { "text": "SFTP and FTPS are two names for the same protocol on port 22", "is_correct": false },
+      { "text": "SFTP encrypts only file contents, while FTPS encrypts only credentials", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In FTP passive mode, how is the data connection established?",
+    "explanation": "The client opens the control channel, sends PASV, and the server replies with an address and port it has opened for data. The client then initiates the data connection to that port. Passive mode exists because a client behind NAT or a firewall can make outbound connections but cannot accept an inbound one on an arbitrary port.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The server opens a port and the client connects to it", "is_correct": true },
+      { "text": "The server connects back to a port the client opened", "is_correct": false },
+      { "text": "Both sides use the control channel for data as well", "is_correct": false },
+      { "text": "A third-party relay opens the data channel on request", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A copy using SCP to a Cisco router fails with connection refused even though SSH logins work. Which configuration step is missing?",
+    "explanation": "The SSH server runs by default once keys exist, but the SCP server is a separate service that stays disabled until `ip scp server enable` is issued in global configuration. Because SCP arrives inside an SSH session, an operator can log in successfully while every copy attempt is rejected. Enabling the SCP server also requires AAA authentication to be configured for the copy to be accepted.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The SCP server has not been enabled with `ip scp server enable`", "is_correct": true },
+      { "text": "The router's RSA key pair was never generated", "is_correct": false },
+      { "text": "The VTY lines are configured with `transport input telnet`", "is_correct": false },
+      { "text": "The router needs an ACL permitting TCP port 69 inbound", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is SFTP preferred over FTP when transferring device configurations that contain secrets?",
+    "explanation": "FTP sends both credentials and file contents as cleartext, so anyone with a capture on the path can read the enable secret or pre-shared keys inside the file. SFTP carries the same data inside an encrypted SSH session and authenticates both ends. The choice therefore protects the configuration content, not just the login.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "SFTP encrypts the session, so credentials and file contents cannot be read in transit", "is_correct": true },
+      { "text": "SFTP compresses configurations so secrets are unreadable in a capture", "is_correct": false },
+      { "text": "SFTP stores files with file-level passwords that FTP cannot apply", "is_correct": false },
+      { "text": "SFTP requires the file to be signed before the server accepts it", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does IPsec remote access VPN use tunnel mode rather than transport mode?",
+    "explanation": "A remote client sends traffic from a private address that cannot be routed across the internet, so the original packet must be hidden inside a new packet with the client's public address. Tunnel mode does exactly that by adding a fresh IP header. Transport mode keeps the original header and is suited to host-to-host traffic that already has globally routable addresses.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Tunnel mode encapsulates the whole original packet inside a new IP header", "is_correct": true },
+      { "text": "Tunnel mode encrypts only the payload and leaves the original header intact", "is_correct": false },
+      { "text": "Tunnel mode avoids the need for any key exchange between peers", "is_correct": false },
+      { "text": "Tunnel mode works only between two gateways with public addresses", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPsec protocol authenticates and integrity-checks packets without encrypting them?",
+    "explanation": "The Authentication Header protects the packet with a hash over the payload and the immutable IP header fields, but it performs no encryption, so contents remain readable. Encapsulating Security Payload provides both confidentiality and integrity and has therefore replaced AH in most deployments. AH also breaks under NAT because the address fields it hashes are rewritten in transit.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Authentication Header (AH)", "is_correct": true },
+      { "text": "Encapsulating Security Payload (ESP)", "is_correct": false },
+      { "text": "Internet Key Exchange version 2 (IKEv2)", "is_correct": false },
+      { "text": "Generic Routing Encapsulation (GRE)", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which UDP port carries IPsec traffic when NAT traversal is in use?",
+    "explanation": "NAT devices rewrite addresses and sometimes ports, which breaks the integrity checks IPsec computes over the header. NAT-T detects the translator and wraps ESP inside a UDP header so the flow survives, using UDP 4500 after the initial exchange on UDP 500. Firewalls therefore need both ports open for an IPsec client behind NAT.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "UDP 4500", "is_correct": true },
+      { "text": "UDP 500 only", "is_correct": false },
+      { "text": "TCP 443", "is_correct": false },
+      { "text": "IP protocol 51 without any UDP header", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does MOBIKE add to an IKEv2 remote access deployment?",
+    "explanation": "MOBIKE lets a client change its IP address, for example when moving from Wi-Fi to cellular, and keep the existing IKE and IPsec security associations. Without it the tunnel would have to be torn down and rebuilt with a fresh key exchange, interrupting the session. It also allows the client to move between server addresses.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The client can change its IP address and keep the established tunnel", "is_correct": true },
+      { "text": "The client can use multiple simultaneous pre-shared keys per tunnel", "is_correct": false },
+      { "text": "The tunnel can bypass NAT without any UDP encapsulation", "is_correct": false },
+      { "text": "The gateway can push routes to the client without rekeying", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What determines which traffic a site-to-site IPsec tunnel encrypts?",
+    "explanation": "Each peer references a crypto ACL in its crypto map, and packets permitted by that ACL are routed into the tunnel while everything else is forwarded normally. The two ACLs must mirror each other, so one side's source is the other side's destination. A mismatch here is the classic reason phase 2 never completes even though the IKE SA is up.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The crypto ACL, whose entries must mirror the peer's entries", "is_correct": true },
+      { "text": "The routing protocol's metric for the remote subnet", "is_correct": false },
+      { "text": "The interface MTU, which selects packets large enough to encrypt", "is_correct": false },
+      { "text": "The NAT pool assigned to the tunnel interface", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two IPsec peers establish phase 1 successfully but no IPsec SA is created. Which mismatch explains the failure?",
+    "explanation": "Phase 1 negotiates the IKE SA using the ISAKMP policy, so a completed phase 1 proves encryption, hash, and Diffie-Hellman settings agree. Phase 2 then negotiates the IPsec SA from the transform set and the proxy identities in each crypto ACL. When those proxy identities do not mirror, quick mode fails while phase 1 stays up.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The proxy identities in the crypto ACLs do not mirror each other", "is_correct": true },
+      { "text": "The peers use different Diffie-Hellman groups in the ISAKMP policy", "is_correct": false },
+      { "text": "The peers use different hash algorithms in the ISAKMP policy", "is_correct": false },
+      { "text": "The pre-shared key differs on the two peers", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does perfect forward secrecy provide in an IPsec configuration?",
+    "explanation": "With PFS enabled, each phase 2 negotiation runs a fresh Diffie-Hellman exchange, so every IPsec SA derives keys independent of the others. Compromising one key then reveals only the traffic protected by that SA, not historical or future sessions. The cost is extra processing during rekeying, which is why PFS is a deliberate choice rather than a default everywhere.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Each new IPsec SA derives fresh keys, so one compromised key exposes only that session", "is_correct": true },
+      { "text": "Every packet is re-encrypted with a new key derived from the previous packet", "is_correct": false },
+      { "text": "The tunnel survives a change of public IP address on either peer", "is_correct": false },
+      { "text": "The pre-shared key is rotated automatically on a fixed schedule", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Both IPsec peers have identical encryption, hash, and Diffie-Hellman settings but different IKE lifetimes. What happens when the shorter lifetime expires?",
+    "explanation": "IKEv1 lifetimes that differ do not prevent the tunnel from coming up; the tunnel is negotiated with the shorter value. When that lifetime expires both peers renegotiate, and the mismatch simply shows up as more frequent phase 1 rekeys rather than a failure. Identical values are still recommended so the two sides do not disagree about when the SA is valid.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The tunnel stays up but rekeys at the shorter interval", "is_correct": true },
+      { "text": "Phase 1 fails immediately because lifetimes must match exactly", "is_correct": false },
+      { "text": "The tunnel is built with the longer lifetime on both peers", "is_correct": false },
+      { "text": "The peers fall back to transport mode for the next negotiation", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does IPv6 Router Advertisement Guard do on a switch port?",
+    "explanation": "RA Guard inspects inbound ICMPv6 router advertisement and redirect messages and drops them on ports where a router should not exist, such as ports facing end hosts. That prevents a host from advertising itself as a default gateway and silently becoming a man-in-the-middle. The feature is a Layer 2 control and must be paired with IPv6 snooping to be fully effective.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It drops router advertisement and redirect messages arriving on ports that should face hosts", "is_correct": true },
+      { "text": "It rate-limits every ICMPv6 message sent by hosts on the port", "is_correct": false },
+      { "text": "It rewrites advertised prefixes so all hosts use the switch as a gateway", "is_correct": false },
+      { "text": "It blocks all IPv6 traffic on the port until an address is verified", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which RA Guard policy applies to a switch port that connects only to an end-user workstation?",
+    "explanation": "Host mode states that no legitimate router exists behind the port, so every router advertisement or redirect received on it is dropped. Router mode is used on the uplink toward the real router and permits those messages to pass. Trusting the wrong port either breaks legitimate addressing or leaves the attack surface open.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Host mode, which blocks all router advertisements on that port", "is_correct": true },
+      { "text": "Router mode, which permits advertisements from the attached router", "is_correct": false },
+      { "text": "Monitor mode, which logs advertisements but forwards them", "is_correct": false },
+      { "text": "Trusted mode, which allows advertisements with any prefix", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What can a rogue router advertisement accomplish on a segment with no RA Guard?",
+    "explanation": "The attacker's advertisement can announce a prefix for stateless address configuration and, more damagingly, offer itself as the default router with a long lifetime. Hosts then send their off-link traffic to the attacker, who forwards it while reading it. Because IPv6 hosts prefer a router advertisement over any static configuration, the diversion persists until the advertisement expires.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Hosts install the attacker as their default gateway and send off-link traffic through it", "is_correct": true },
+      { "text": "Hosts are forced to disable IPv6 entirely on the interface", "is_correct": false },
+      { "text": "The switch converts the affected ports into routed ports", "is_correct": false },
+      { "text": "Neighbor Discovery cache entries for the real gateway are refreshed faster", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A network team deploys RA Guard but a rogue DHCPv6 server still hands out addresses. Which conclusion is correct?",
+    "explanation": "RA Guard only filters router advertisement and redirect messages; it says nothing about DHCPv6 server replies. Stopping a rogue DHCPv6 server requires DHCPv6 Guard, which classifies ports as client or server facing, supported by IPv6 snooping to build the binding table. The two features cover different message types and are normally deployed together.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "RA Guard does not filter DHCPv6 replies, so DHCPv6 Guard is also needed", "is_correct": true },
+      { "text": "RA Guard should have blocked the replies, so the policy is misapplied", "is_correct": false },
+      { "text": "DHCPv6 traffic is not affected because it is carried in router advertisements", "is_correct": false },
+      { "text": "RA Guard covers DHCPv6 only when IPv6 snooping is disabled", "is_correct": false }
+    ]
+  }
+]

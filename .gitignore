@@ -18,6 +18,9 @@ src-tauri/gen/android/build/
 *.db-wal
 *.db-shm
 
+# Generated question bank (rebuild with: npm run bank:build)
+pipeline/questions.bank.json
+
 # Secrets
 .env
 .env.local

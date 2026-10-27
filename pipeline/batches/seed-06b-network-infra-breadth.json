@@ -1,0 +1,464 @@
+[
+  {
+    "stem": "Which device terminates many simultaneous remote-access VPN tunnels from mobile users?",
+    "explanation": "A VPN concentrator is built for scale: hundreds or thousands of encrypted tunnels terminate on one appliance instead of on the router that also runs the WAN. It handles the crypto, the address pool, and per-user policy in one place, whereas a site-to-site tunnel is one link between two fixed peers.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A VPN concentrator", "is_correct": true },
+      { "text": "A Layer 2 access switch", "is_correct": false },
+      { "text": "A media converter", "is_correct": false },
+      { "text": "A DHCP relay agent", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does an explicit forward proxy provide for internal users browsing the internet?",
+    "explanation": "Users point their browser at the proxy, and it makes the request on their behalf, so the remote site sees the proxy's address rather than the client's. That position lets it cache popular content, log requests, and block categories, and it keeps direct outbound connections off the desktop.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It fetches content on the client's behalf, which hides the client address and enforces caching and filtering policy", "is_correct": true },
+      { "text": "It gives each internal host a public address through static NAT", "is_correct": false },
+      { "text": "It terminates IPsec tunnels from remote branch routers", "is_correct": false },
+      { "text": "It inspects only Layer 2 frames for malformed headers", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which control is specific to a web application firewall rather than a stateful packet filter?",
+    "explanation": "A WAF parses HTTP requests and responses, so it can reject an SQL injection string or a cross-site scripting payload inside a request that is otherwise a well-formed TCP connection to port 443. A port-based firewall permits that conversation because the ports and the handshake look normal.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It examines HTTP requests and blocks injection and cross-site scripting payloads", "is_correct": true },
+      { "text": "It tracks TCP connection state to allow return traffic", "is_correct": false },
+      { "text": "It filters traffic by source and destination port number", "is_correct": false },
+      { "text": "It translates private addresses to public addresses", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A firewall is inserted inline in a subnet, has no IP address on its data interfaces, and requires no change to host default gateways. Which deployment mode is this?",
+    "explanation": "In transparent (Layer 2) mode the firewall bridges the segment and filters on MAC and frame content, so the existing addressing plan is untouched. Its management interface still carries an address. Routed mode would require every host to point at the firewall as its gateway.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Transparent Layer 2 mode", "is_correct": true },
+      { "text": "Routed Layer 3 mode", "is_correct": false },
+      { "text": "Tap (promiscuous) monitoring mode", "is_correct": false },
+      { "text": "Full proxy mode with per-host TLS interception", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which flag combination begins an orderly TCP connection teardown by one side?",
+    "explanation": "The closing host sends FIN to say it has no more data, the peer acknowledges with ACK, and each side repeats the exchange for its own direction. That is why a graceful close takes four segments, unlike the three-segment open. A RST would abort the connection instead.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "FIN, followed by an ACK from the peer", "is_correct": true },
+      { "text": "SYN, followed by SYN-ACK", "is_correct": false },
+      { "text": "RST, followed by a second RST", "is_correct": false },
+      { "text": "PSH, followed by URG", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which port range is reserved for well-known services such as SSH and HTTP?",
+    "explanation": "Ports 0 through 1023 are the well-known range, assigned to standard services and reachable without elevated privileges only by the system. Registered ports run from 1024 to 49151, and the ephemeral range above that is what a client picks as its source port.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "0 to 1023", "is_correct": true },
+      { "text": "1024 to 49151", "is_correct": false },
+      { "text": "49152 to 65535", "is_correct": false },
+      { "text": "1024 to 65535", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What uniquely identifies a single TCP conversation on a host that runs several applications at once?",
+    "explanation": "A socket is the pairing of an IP address and a port, and a connection is the pairing of a source socket with a destination socket. Two browser tabs to the same server differ only in their ephemeral source ports, which is how the host keeps their data streams apart.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The socket: an IP address plus a port number", "is_correct": true },
+      { "text": "The destination MAC address alone", "is_correct": false },
+      { "text": "The sequence number of the first segment", "is_correct": false },
+      { "text": "The VLAN identifier of the host's access port", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A developer needs a small Linux virtual machine on a Windows laptop for testing. Which hypervisor type fits that use case?",
+    "explanation": "A Type 2 hypervisor installs as an application on the host operating system, so it shares the laptop's drivers and needs no dedicated hardware. A Type 1 hypervisor would take over the whole machine and is what a production server or a bare-metal lab host normally runs.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A Type 2 (hosted) hypervisor installed on the desktop OS", "is_correct": true },
+      { "text": "A Type 1 (bare-metal) hypervisor that replaces the desktop OS", "is_correct": false },
+      { "text": "A container runtime with no virtual machine involved", "is_correct": false },
+      { "text": "A VXLAN gateway on the physical switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does live migration of a virtual machine accomplish?",
+    "explanation": "The hypervisor copies the running VM's memory to the destination host while the VM keeps executing, then briefly pauses it to move the last dirty pages and switch execution. Because downtime is measured in milliseconds, maintenance on a host no longer requires an outage window.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It moves a running VM to another host with only a brief pause, avoiding an outage for host maintenance", "is_correct": true },
+      { "text": "It converts a virtual machine into a container image", "is_correct": false },
+      { "text": "It clones a VM's disk to a backup repository on a schedule", "is_correct": false },
+      { "text": "It spreads one VM's CPU load across every host in the cluster", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why do production container deployments rely on an orchestrator rather than starting containers by hand?",
+    "explanation": "An orchestrator holds the desired state: how many replicas, which image, which network, which health check. When a container dies or a node fails it schedules a replacement, and it spreads replicas across hosts. Doing that manually does not scale past a handful of containers.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It maintains the declared replica count, reschedules failed containers, and places them across hosts", "is_correct": true },
+      { "text": "It compiles the application source into a container image", "is_correct": false },
+      { "text": "It replaces the need for a container registry", "is_correct": false },
+      { "text": "It provides the kernel that every container shares", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the role of a container registry?",
+    "explanation": "Images are built once, pushed to a registry, and pulled by every host or orchestrator that needs to run them. The registry is versioned storage, not a runtime: the container still needs a local engine to unpack and start the image after the pull.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It stores and versions container images so hosts can pull them", "is_correct": true },
+      { "text": "It runs the containers on behalf of the cluster", "is_correct": false },
+      { "text": "It allocates the IP addresses used inside the container network", "is_correct": false },
+      { "text": "It converts container images into virtual machine disks", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What problem does SD-WAN solve that a traditional set of static WAN circuits does not?",
+    "explanation": "SD-WAN applies a central policy to all transports and picks a path per application, so a video call can ride the low-latency link while bulk backup uses a cheaper one. When a circuit degrades, traffic moves to another transport without reconfiguring each router by hand.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It steers each application over the best available transport and fails over between links from a central policy", "is_correct": true },
+      { "text": "It replaces IP routing with Layer 2 switching across the provider network", "is_correct": false },
+      { "text": "It guarantees a fixed committed rate on every internet circuit", "is_correct": false },
+      { "text": "It removes the need for encryption on links that cross the internet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which characteristic distinguishes a leased line from a broadband internet circuit?",
+    "explanation": "A leased line is a dedicated, symmetric circuit with a committed rate and an SLA, and it does not share capacity with other subscribers. Broadband is oversubscribed and usually asymmetric, which is why it costs less but gives no performance guarantee.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is a dedicated symmetric circuit with a committed rate and an SLA", "is_correct": true },
+      { "text": "It shares provider capacity with other subscribers and has no SLA", "is_correct": false },
+      { "text": "It is always encrypted by the provider at Layer 2", "is_correct": false },
+      { "text": "It provides internet access only, never site-to-site connectivity", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A provider offers a Metro Ethernet E-Line service between two sites. What does the customer receive?",
+    "explanation": "E-Line is a point-to-point Ethernet virtual circuit, so the two sites behave as if a cable ran between them. E-LAN is the multipoint service that lets many sites share one bridged domain, and E-Tree is the hub-and-spoke variant.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A point-to-point Ethernet virtual circuit between the two locations", "is_correct": true },
+      { "text": "A multipoint bridged domain shared by every site", "is_correct": false },
+      { "text": "A Layer 3 MPLS VPN with any-to-any routing", "is_correct": false },
+      { "text": "A dedicated internet gateway with a public address block", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the demarcation point at a customer site?",
+    "explanation": "The demarc is where the provider's responsibility ends and the customer's begins, usually the smart jack or the first device the carrier owns. Knowing where it sits settles who must troubleshoot a circuit that will not come up.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The boundary where the service provider's responsibility ends and the customer's begins", "is_correct": true },
+      { "text": "The point where the internal network connects to the DMZ switch", "is_correct": false },
+      { "text": "The router's loopback interface used for management", "is_correct": false },
+      { "text": "The first hop router inside the provider's core", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An access point runs its entire configuration locally and has no controller. Which deployment model is this?",
+    "explanation": "An autonomous AP is self-contained: it holds its own SSIDs, security, and channel settings, so each AP must be configured and upgraded individually. A lightweight AP holds almost no configuration and receives it from a WLC, which is what makes central management possible.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Autonomous AP deployment", "is_correct": true },
+      { "text": "Lightweight AP deployment managed by a WLC", "is_correct": false },
+      { "text": "FlexConnect deployment with local switching", "is_correct": false },
+      { "text": "Cloud-managed AP deployment", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does Radio Resource Management (RRM) do on a Cisco wireless controller?",
+    "explanation": "RRM collects interference and load measurements from the APs and then adjusts channel assignments and transmit power automatically. That keeps neighbouring APs from sitting on the same channel and prevents coverage holes when an AP fails, without an engineer retuning the deployment.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It dynamically adjusts AP channels and transmit power based on measured interference and load", "is_correct": true },
+      { "text": "It assigns IP addresses to wireless clients through DHCP", "is_correct": false },
+      { "text": "It authenticates clients against a RADIUS server", "is_correct": false },
+      { "text": "It encrypts CAPWAP control traffic between APs and the controller", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is a guest WLAN often tunnelled to an anchor controller in the DMZ?",
+    "explanation": "Guest traffic must leave the network without touching internal subnets. Tunnelling it from the foreign controller to an anchor in the DMZ means the guest client's VLAN and its egress point both sit outside the internal firewall policy, so a guest cannot reach internal resources by accident.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "So guest traffic exits through the DMZ instead of entering internal subnets", "is_correct": true },
+      { "text": "So guest clients receive addresses from the internal DHCP scope", "is_correct": false },
+      { "text": "So guest traffic can be bridged directly onto the internal VLAN", "is_correct": false },
+      { "text": "So the anchor controller can manage the APs' radio settings", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An AP sits on a subnet with no broadcast path to the wireless controller. How does it learn the controller's address?",
+    "explanation": "DHCP option 43 carries the controller's address in the lease, so the AP does not need broadcast or a DNS alias to find it. The AP then sends a discovery request unicast to that address. Without the option, the AP would have to rely on a configured DNS name or a static entry.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The DHCP server returns the controller address in option 43", "is_correct": true },
+      { "text": "The AP floods a broadcast on the voice VLAN and waits for a reply", "is_correct": false },
+      { "text": "The switch pushes the address to the AP through CDP", "is_correct": false },
+      { "text": "The AP derives the address from its own default gateway", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which access method must an 802.11 station use before it transmits a frame?",
+    "explanation": "Wireless is a shared medium, so a station must sense the channel and wait a random backoff before sending, then wait for an acknowledgement. Collisions are detected by the missing ACK rather than by listening while transmitting, which is why the method is collision avoidance.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Carrier sense with a random backoff, then an acknowledgement from the receiver", "is_correct": true },
+      { "text": "A token that circulates between stations in sequence", "is_correct": false },
+      { "text": "A reservation slot requested from the access point for every frame", "is_correct": false },
+      { "text": "Immediate transmission, with collisions resolved by a retry timer", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two clients can each hear the AP but not each other, so their transmissions collide at the AP. Which mechanism mitigates this hidden node problem?",
+    "explanation": "A hidden node cannot sense the other client's carrier, so it transmits whenever the channel looks idle. If the AP first sends a clear-to-send frame that reserves the medium, both clients hear it and hold off, which is why RTS/CTS is enabled in cells with hidden nodes.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Request-to-send and clear-to-send frames that reserve the medium", "is_correct": true },
+      { "text": "A longer preamble on every beacon frame", "is_correct": false },
+      { "text": "Switching the cell to a 40 MHz channel", "is_correct": false },
+      { "text": "Increasing the AP's transmit power only", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What information does an 802.11 beacon frame carry to clients?",
+    "explanation": "Beacons are broadcast at a fixed interval and advertise the SSID, supported rates, security settings, and channel so a client can discover the cell and decide whether it can join. A client that receives no beacon can still probe actively, but the beacon is what makes passive discovery work.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The SSID, supported data rates, security settings, and channel of the cell", "is_correct": true },
+      { "text": "The client's IP address and default gateway", "is_correct": false },
+      { "text": "The controller's management address and licence count", "is_correct": false },
+      { "text": "The MAC addresses of every client currently associated", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Place these steps in the order a client follows when joining a wireless network: authentication, association, 802.11 authentication, discovery.",
+    "explanation": "The client first discovers the cell through a beacon or probe response, then completes the open 802.11 authentication exchange, then associates so the AP creates a state entry for it. Only after association can the stronger security exchange and DHCP occur.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Discovery, 802.11 authentication, association", "is_correct": true },
+      { "text": "Association, discovery, 802.11 authentication", "is_correct": false },
+      { "text": "802.11 authentication, discovery, association", "is_correct": false },
+      { "text": "Discovery, association, 802.11 authentication", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which 802.11 amendment operates in the 2.4 GHz band at a maximum rate of 11 Mbps?",
+    "explanation": "802.11b introduced 11 Mbps in the crowded 2.4 GHz band using DSSS, and its 1, 6, and 11 Mbps rates were enough to make wireless practical. 802.11a offered 54 Mbps later but only in 5 GHz, and 802.11g brought 54 Mbps to 2.4 GHz.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "802.11b", "is_correct": true },
+      { "text": "802.11a", "is_correct": false },
+      { "text": "802.11g", "is_correct": false },
+      { "text": "802.11n", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which capability did 802.11n add that earlier amendments did not have?",
+    "explanation": "802.11n was the first amendment to define operation in both 2.4 GHz and 5 GHz, and it added MIMO and optional 40 MHz channels. Running in either band let a client use the cleaner 5 GHz spectrum while older devices stayed on 2.4 GHz.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Operation in both the 2.4 GHz and 5 GHz bands with MIMO and 40 MHz channels", "is_correct": true },
+      { "text": "The 6 GHz band and orthogonal frequency-division multiple access", "is_correct": false },
+      { "text": "A 160 MHz channel width in the 5 GHz band only", "is_correct": false },
+      { "text": "Multi-user MIMO with eight spatial streams in 2.4 GHz", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which band does 802.11ac use, and how is it marketed?",
+    "explanation": "802.11ac is Wi-Fi 5 and operates only in the 5 GHz band, which is why it reaches higher rates than 802.11n but has shorter range and fewer legacy clients. 2.4 GHz support in a Wi-Fi 5 access point comes from a separate 802.11n radio.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "5 GHz only, marketed as Wi-Fi 5", "is_correct": true },
+      { "text": "2.4 GHz only, marketed as Wi-Fi 5", "is_correct": false },
+      { "text": "Both 2.4 GHz and 5 GHz, marketed as Wi-Fi 4", "is_correct": false },
+      { "text": "6 GHz only, marketed as Wi-Fi 6E", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which amendment is marketed as Wi-Fi 7 and introduces multi-link operation?",
+    "explanation": "802.11be is Wi-Fi 7. Multi-link operation lets a client use more than one band with the same access point at the same time, and 320 MHz channels widen the pipe further. It builds on the 6 GHz support that Wi-Fi 6E already added.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "802.11be", "is_correct": true },
+      { "text": "802.11ax", "is_correct": false },
+      { "text": "802.11ac", "is_correct": false },
+      { "text": "802.11n", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix contains the global unicast addresses that are routable on the internet?",
+    "explanation": "2000::/3 covers the global unicast space that IANA allocates to the registries, which in turn assign blocks to providers and enterprises. FE80::/10 is link-local and never routed, FC00::/7 is unique local, and FF00::/8 is multicast.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "2000::/3", "is_correct": true },
+      { "text": "FE80::/10", "is_correct": false },
+      { "text": "FC00::/7", "is_correct": false },
+      { "text": "FF00::/8", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address does a host join so that neighbour solicitation for its address reaches it?",
+    "explanation": "The solicited-node multicast address is FF02::1:FF00:0/104 with the low 24 bits of the target address appended. A node joins it for every address it configures, so neighbour solicitation is delivered only to hosts whose addresses could match instead of to the whole link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The solicited-node multicast address built from the low 24 bits of the target address", "is_correct": true },
+      { "text": "FF02::1, the all-nodes multicast address", "is_correct": false },
+      { "text": "FF02::2, the all-routers multicast address", "is_correct": false },
+      { "text": "The all-nodes address of the link-local prefix", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "During duplicate address detection, which source address does a host use while it verifies that its tentative address is unique?",
+    "explanation": "The host has not yet been allowed to use the tentative address, so it sends the neighbour solicitation from the unspecified address ::. If no neighbour advertisement comes back, it can assign the address. Using the tentative address as the source would defeat the purpose of the check.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The unspecified address, ::", "is_correct": true },
+      { "text": "The loopback address, ::1", "is_correct": false },
+      { "text": "The tentative address being tested", "is_correct": false },
+      { "text": "The link-local address of the default gateway", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In a spine-leaf fabric, which switch connects the fabric to the WAN, firewalls, and load balancers?",
+    "explanation": "Spines exist only to move traffic between leaves, so all off-fabric connectivity is placed on border leafs. That keeps the spine tier uniform and puts routing policy, security zones, and external peering at a defined edge point.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A border leaf", "is_correct": true },
+      { "text": "A spine switch", "is_correct": false },
+      { "text": "A core switch in the campus block", "is_correct": false },
+      { "text": "An out-of-band management switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A leaf has 48 ports at 25 Gbps toward servers and four 100 Gbps uplinks to the spines. What does the resulting oversubscription ratio describe?",
+    "explanation": "Oversubscription compares the bandwidth offered by the downstream ports with the bandwidth available upstream. Here 48 x 25 Gbps is 1.2 Tbps against 400 Gbps of uplink, a 3:1 ratio, which assumes servers will not all demand line rate at once. A lower ratio costs more but reduces contention.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The ratio of downstream server bandwidth to upstream uplink bandwidth, here 3:1", "is_correct": true },
+      { "text": "The number of spines a single leaf can join at once", "is_correct": false },
+      { "text": "The number of MAC addresses the leaf can hold in its table", "is_correct": false },
+      { "text": "The ratio of control-plane traffic to data-plane traffic on the spine", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How is each link between a leaf and a spine addressed in a routed spine-leaf fabric?",
+    "explanation": "Every leaf-to-spine link is its own point-to-point subnet, commonly a /31, so each link is a separate Layer 3 hop with no shared broadcast domain. That is what allows equal-cost multipathing over all spines and removes spanning tree from the fabric.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "As a dedicated point-to-point IP subnet, often a /31, with the leaf and spine as its two endpoints", "is_correct": true },
+      { "text": "As part of one large VLAN shared by every leaf and spine", "is_correct": false },
+      { "text": "With no IP address at all, since the link only switches frames", "is_correct": false },
+      { "text": "From a single management subnet assigned to all fabric ports", "is_correct": false }
+    ]
+  }
+]

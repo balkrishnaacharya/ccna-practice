@@ -1,0 +1,226 @@
+[
+  {
+    "stem": "A hypervisor that runs directly on the server hardware without an underlying host operating system is best described as which type?",
+    "explanation": "Type 1 hypervisors such as ESXi and Hyper-V run bare-metal on the hardware and own the drivers directly. Type 2 hypervisors such as VirtualBox and VMware Workstation run as an application on top of a conventional host OS. Type 1 is the usual choice for data center virtualization because it removes the host OS from the performance and patching path.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Type 1 (bare-metal) hypervisor", "is_correct": true },
+      { "text": "Type 2 (hosted) hypervisor", "is_correct": false },
+      { "text": "Container runtime", "is_correct": false },
+      { "text": "Overlay network gateway", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the key architectural difference between a virtual machine and a container?",
+    "explanation": "Each virtual machine carries its own complete guest operating system and kernel, so the hypervisor must virtualize hardware for every instance. Containers share the host kernel and isolate only the process, filesystem, and network namespace. That shared kernel is why containers start in milliseconds and are far denser than VMs, at the cost of weaker isolation.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A VM includes its own guest OS and kernel; a container shares the host kernel", "is_correct": true },
+      { "text": "A container includes its own guest OS and kernel; a VM shares the host kernel", "is_correct": false },
+      { "text": "A VM cannot have an IP address, while every container must have one", "is_correct": false },
+      { "text": "A container requires a physical network adapter, while a VM does not", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two virtual machines on the same hypervisor host exchange frames through a virtual switch. Which statement describes how that traffic is handled?",
+    "explanation": "A virtual switch forwards frames between virtual NICs in software on the hypervisor, so same-host traffic never needs a physical adapter or an external switch. The frames only traverse a physical uplink when the destination sits outside the host and the port group is bound to an uplink. This is why same-host VM-to-VM throughput can exceed the speed of the physical NIC.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is switched in software on the host and stays local unless the destination is external", "is_correct": true },
+      { "text": "It is always flooded out the physical uplink before reaching the peer VM", "is_correct": false },
+      { "text": "It must be routed by the physical top-of-rack switch in every case", "is_correct": false },
+      { "text": "It is dropped because two VMs cannot share a broadcast domain", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which field in a VXLAN header identifies the individual Layer 2 segment that a frame belongs to?",
+    "explanation": "VXLAN places a 24-bit VNI in its header to identify the tenant or Layer 2 segment, which allows roughly 16 million segments compared with the 4094 VLAN IDs of 802.1Q. The original Ethernet frame is encapsulated inside UDP, normally destination port 4789. The VNI is what lets the same VLAN ID be reused by many isolated tenants on shared physical infrastructure.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The 24-bit VXLAN Network Identifier (VNI)", "is_correct": true },
+      { "text": "The 12-bit 802.1Q VLAN Identifier", "is_correct": false },
+      { "text": "The 8-bit IP Time To Live field", "is_correct": false },
+      { "text": "The 16-bit UDP source port", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A laptop's Ethernet adapter shows a link light but the host has been assigned the address 169.254.37.12. What does this address indicate?",
+    "explanation": "169.254.0.0/16 is the IPv4 link-local range that a host self-assigns when DHCP fails, commonly called APIPA. The link light only proves the physical and data-link layers are up; it says nothing about whether a DHCP server was reachable. The investigator should check VLAN assignment, relay configuration, and DHCP scope exhaustion rather than the cable.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The host could not reach a DHCP server and self-assigned a link-local address", "is_correct": true },
+      { "text": "The host received a valid address from a DHCP server on the local subnet", "is_correct": false },
+      { "text": "The Ethernet cable is faulty and no frames can be transmitted", "is_correct": false },
+      { "text": "The host is using a statically configured public address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A user can successfully ping 8.8.8.8 but cannot open www.example.com. Which cause is most likely?",
+    "explanation": "Reaching an external IP address proves the local link, default gateway, and internet routing all work. Name resolution is the only remaining step that differs between the two tests, so a failed or unreachable DNS server is the prime suspect. Verifying the configured resolver with a direct query confirms it quickly.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Name resolution is failing or the configured DNS server is unreachable", "is_correct": true },
+      { "text": "The default gateway is misconfigured or missing", "is_correct": false },
+      { "text": "The Ethernet duplex setting is mismatched", "is_correct": false },
+      { "text": "The host has an APIPA address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A workstation can reach every host in its own subnet but nothing beyond it. Which configuration should be checked first?",
+    "explanation": "Intra-subnet delivery uses ARP and Layer 2 forwarding only, while every off-subnet destination requires the host to send to its default gateway. A host with a wrong or missing default gateway therefore behaves exactly this way. The subnet mask is worth confirming too, since an overly wide mask makes remote hosts look local.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The default gateway address and the subnet mask", "is_correct": true },
+      { "text": "The DNS search domain suffix", "is_correct": false },
+      { "text": "The duplex and speed settings of the switch port", "is_correct": false },
+      { "text": "The MTU size configured on the NIC", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A wireless client associates successfully but drops connections intermittently while far from the access point. Which action addresses the most likely cause?",
+    "explanation": "A client that associates but disconnects intermittently at range is usually suffering weak signal and high retransmission, not an addressing problem. Improving coverage by relocating or adding an access point, or tuning channel and transmit power, attacks the root cause. Changing IP settings or DNS would not affect radio-layer stability.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Improve radio coverage by relocating or adding an access point and adjusting channel and power", "is_correct": true },
+      { "text": "Assign the client a static IP address in the correct VLAN", "is_correct": false },
+      { "text": "Change the client's DNS servers to a public resolver", "is_correct": false },
+      { "text": "Disable DHCP snooping on the client's VLAN", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An enterprise needs an encrypted connection from its on-premises router to a cloud virtual network across the public internet. Which option fits?",
+    "explanation": "A site-to-site IPsec VPN builds encrypted tunnels over any internet path between the on-premises gateway and the cloud VPN gateway. It needs no dedicated circuit and is the standard low-cost way to connect a branch or data center to a cloud VPC. A dedicated interconnect would bypass the internet entirely rather than encrypt a path across it.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A site-to-site IPsec VPN between the on-premises router and the cloud VPN gateway", "is_correct": true },
+      { "text": "A dedicated private circuit from a carrier that bypasses the internet", "is_correct": false },
+      { "text": "A public DNS zone hosted by the cloud provider", "is_correct": false },
+      { "text": "A Layer 2 trunk extended from the data center over the internet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which connectivity option provides a private, dedicated circuit between an enterprise data center and a cloud provider without traversing the public internet?",
+    "explanation": "Dedicated interconnects such as AWS Direct Connect and Azure ExpressRoute give a private physical or carrier-provided path into the provider's network. Because the traffic bypasses the public internet, these links offer more predictable latency and bandwidth than a VPN over broadband. They are more expensive and take longer to provision than an internet VPN.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A dedicated private interconnect such as Direct Connect or ExpressRoute", "is_correct": true },
+      { "text": "A site-to-site IPsec tunnel over a broadband internet connection", "is_correct": false },
+      { "text": "A remote-access VPN terminated on a cloud host", "is_correct": false },
+      { "text": "A client-to-site SSL portal", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Instances in a cloud private subnet need outbound internet access for software updates but must not accept inbound connections from the internet. Which component provides this?",
+    "explanation": "A NAT gateway performs source NAT for traffic leaving the private subnet, so replies return to the gateway and are forwarded back to the instance. Because no inbound mapping exists, internet hosts cannot initiate a session to those instances. Assigning public IPs or opening the security group inbound would defeat the requirement.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A NAT gateway attached to the private subnet's route table", "is_correct": true },
+      { "text": "A public IP address assigned directly to each instance", "is_correct": false },
+      { "text": "An inbound security group rule permitting all sources", "is_correct": false },
+      { "text": "A virtual private gateway terminating an IPsec tunnel", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a cloud provider's virtual private gateway terminate in a hybrid cloud design?",
+    "explanation": "The virtual private gateway is the provider-side endpoint of the tunnels that connect a virtual network to an on-premises gateway. The customer-side device is the customer gateway, and the two ends form the site-to-site VPN. Route tables then direct traffic for on-premises prefixes into that gateway.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The VPN tunnels that connect the cloud virtual network to the on-premises gateway", "is_correct": true },
+      { "text": "The DNS zone that publishes the cloud application", "is_correct": false },
+      { "text": "The load balancer that distributes traffic across instances", "is_correct": false },
+      { "text": "The object storage bucket that holds virtual machine images", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the maximum supported cable length for 1000BASE-T over Category 5e twisted pair?",
+    "explanation": "1000BASE-T is specified for a 100-meter channel over Category 5e or better, made up of up to 90 meters of horizontal cable plus 10 meters of patch cords. Category 5e was designed to meet the crosstalk requirements that gigabit signaling needs on all four pairs. Longer runs require fiber or an intermediate switch.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "100 meters", "is_correct": true },
+      { "text": "55 meters", "is_correct": false },
+      { "text": "185 meters", "is_correct": false },
+      { "text": "500 meters", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which copper cabling category is rated for 10GBASE-T across the full 100-meter channel?",
+    "explanation": "Category 6a is specified for 10GBASE-T at 100 meters and adds shielding or improved construction to control alien crosstalk. Category 6 can carry 10GBASE-T only up to about 55 meters, and Category 5e is not rated for 10 Gbps at all. For full-length 10-gigabit copper runs, 6a is the minimum.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Category 6a", "is_correct": true },
+      { "text": "Category 6", "is_correct": false },
+      { "text": "Category 5e", "is_correct": false },
+      { "text": "Category 3", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which fiber type is used for the longest campus and metro distances because it carries a single propagation path?",
+    "explanation": "Single-mode fiber has a very small core that supports one propagation mode, which removes modal dispersion and allows links of many kilometers. Multimode fiber has a wider core, is cheaper for short runs inside a building, and suffers modal dispersion over distance. Long-haul and metro links therefore use single-mode with laser optics.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Single-mode fiber", "is_correct": true },
+      { "text": "Multimode fiber", "is_correct": false },
+      { "text": "Category 6a twisted pair", "is_correct": false },
+      { "text": "Twinaxial copper", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A twisted-pair cable is terminated with T568A on one end and T568B on the other. What is this cable?",
+    "explanation": "A straight-through cable uses the same pinout at both ends, while a crossover cable deliberately wires one end to T568A and the other to T568B so the transmit pair at one end lands on the receive pair at the other. It was used to link like devices such as switch-to-switch. Modern ports implement auto-MDIX, so either cable type now works in most cases.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A crossover cable, historically used between like devices", "is_correct": true },
+      { "text": "A straight-through cable, used between unlike devices", "is_correct": false },
+      { "text": "A rollover cable, used for console access", "is_correct": false },
+      { "text": "A fiber patch cord with mismatched connectors", "is_correct": false }
+    ]
+  }
+]

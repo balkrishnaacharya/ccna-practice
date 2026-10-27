@@ -1,0 +1,338 @@
+[
+  {
+    "stem": "What distinguishes an agentic AI system from a single-turn generative AI prompt?",
+    "explanation": "A single prompt produces one response and stops. An agent runs a loop in which it plans, calls tools, observes the results, and revises its approach until the goal is met or a stop condition fires. That loop is what lets it gather device state and act on it rather than only describing what should be done.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It plans, calls tools, observes results, and iterates toward a goal", "is_correct": true },
+      { "text": "It returns a longer response because the model has a larger context window", "is_correct": false },
+      { "text": "It runs without any prompt because the goal is stored in the model weights", "is_correct": false },
+      { "text": "It always executes every tool available to it until none remain unused", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does tool calling let an AI agent act on a network controller?",
+    "explanation": "The model emits a structured request that names a defined function and supplies typed arguments; a runtime outside the model executes that function against the controller and returns the result as context. The model itself never contacts the device, so credentials and permissions stay in the runtime. This separation is what makes the action auditable and refusable.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The model requests a named function with typed arguments, and an external runtime executes it", "is_correct": true },
+      { "text": "The model opens a direct SSH session to the device using embedded credentials", "is_correct": false },
+      { "text": "The model sends raw CLI text and the controller parses it as a tool definition", "is_correct": false },
+      { "text": "The model compiles a plugin that the controller loads into its running image", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why should an agent that can push configuration run under a step limit and an approval gate?",
+    "explanation": "An agent that retries a failing action can loop indefinitely, producing repeated changes, log noise, and cost. A hard step or time limit stops the loop, and an approval gate holds any state-changing action until a human or policy check clears it. Together they bound the blast radius of a wrong plan.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "To bound runaway retries and keep state-changing actions under review", "is_correct": true },
+      { "text": "To reduce the model's context window so responses arrive faster", "is_correct": false },
+      { "text": "To guarantee the plan is correct without any human involvement", "is_correct": false },
+      { "text": "To prevent the model from reading device state between steps", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why must an agent re-read device state before applying a change it already proposed?",
+    "explanation": "The plan was built from context captured earlier, and the device may have changed since, either through another operator or a scheduled job. Reading the current state lets the agent confirm the precondition still holds and turn the action into an idempotent one. Skipping that step is how an agent silently reverts someone else's out-of-band fix.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Because the earlier context may be stale, and current state keeps the action idempotent", "is_correct": true },
+      { "text": "Because the model forgets its plan whenever a tool returns data", "is_correct": false },
+      { "text": "Because reads are required before the controller accepts any write", "is_correct": false },
+      { "text": "Because re-reading resets the agent's approval gate for the next step", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What do few-shot examples contribute to a prompt that generates interface configurations?",
+    "explanation": "Showing two or three worked input-output pairs demonstrates the exact formatting, naming, and level of detail wanted, so the model imitates the pattern instead of inventing one. Consistency improves without lengthening the rules section of the prompt. The examples must be correct, because the model reproduces their mistakes as faithfully as their strengths.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "They demonstrate the desired pattern so output format and style stay consistent", "is_correct": true },
+      { "text": "They increase the model's temperature so responses vary more between runs", "is_correct": false },
+      { "text": "They replace the need for any device state or documentation in the prompt", "is_correct": false },
+      { "text": "They let the model skip the token cost of generating an explanation", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A task requires gathering interfaces, computing subnets, and then emitting configuration. Which prompting approach suits it best?",
+    "explanation": "Breaking the work into explicit ordered steps lets the model complete each stage before moving on, which makes arithmetic and intermediate values visible for checking. A single undifferentiated request tends to skip or merge steps and produce plausible but wrong numbers. The decomposition also gives a natural place to insert tool results between stages.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Ask for an explicit step-by-step decomposition before the final output", "is_correct": true },
+      { "text": "Ask for the final configuration only, so the model cannot make arithmetic errors", "is_correct": false },
+      { "text": "Raise the temperature so the model explores several possible answers", "is_correct": false },
+      { "text": "Repeat the whole request three times and average the responses", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does grounding a prompt with retrieved documentation and live device state reduce errors?",
+    "explanation": "A model asked from memory may recall an older command syntax or invent a feature. Supplying the current configuration and the relevant vendor documentation makes it condition on text that is actually true for this device. The answer is then traceable to a source an operator can check, which is the point of retrieval-augmented generation.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The model conditions on authoritative context instead of recalling an approximation", "is_correct": true },
+      { "text": "Retrieved text is always correct, so the response needs no review", "is_correct": false },
+      { "text": "Grounding removes the need for any output format constraint", "is_correct": false },
+      { "text": "Grounding increases the model's parameter count for the session", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is a low temperature setting preferred when generating device configuration?",
+    "explanation": "Temperature scales how much randomness the sampler introduces, so a low value keeps probability mass on the most likely tokens. The same prompt and context then produce nearly the same answer on every run, which makes results reviewable and testable. Higher settings are useful for brainstorming alternatives, not for output that must be reproducible.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It narrows sampling so identical prompts yield nearly identical output", "is_correct": true },
+      { "text": "It shortens the response so fewer tokens are billed", "is_correct": false },
+      { "text": "It forces the model to cite documentation for every command", "is_correct": false },
+      { "text": "It prevents the model from calling any tools during generation", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does an Infrastructure as Code deployment store its state in a remote backend that supports locking?",
+    "explanation": "The state file records which real objects correspond to which declared resources. If two runs read and write it at once, each can conclude a resource is missing and create a duplicate or delete something the other is building. Remote storage plus a lock serializes those runs so only one mutates state at a time.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Locking serializes concurrent runs so they cannot write conflicting state", "is_correct": true },
+      { "text": "It encrypts the state file so operators cannot read resource names", "is_correct": false },
+      { "text": "It stores the state on each managed device instead of a central location", "is_correct": false },
+      { "text": "It guarantees the apply step never needs a network connection", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a plan or preview stage give an IaC pipeline before it applies changes?",
+    "explanation": "The plan computes the difference between declared and actual state and lists exactly which objects would be created, changed, or destroyed. Reviewers approve or reject that list before anything reaches production. Skipping the stage is the main way an innocuous edit unexpectedly destroys a resource.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A list of the exact create, update, and destroy actions that would occur", "is_correct": true },
+      { "text": "A backup copy of every device configuration on the target network", "is_correct": false },
+      { "text": "A simulated data plane that forwards test traffic through the new design", "is_correct": false },
+      { "text": "A signed artifact proving the code compiles on every platform", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why parameterize one IaC module for many sites instead of copying it per site?",
+    "explanation": "A single definition with per-site variables has one place to fix a bug, so every site receives the same correction on the next run. Copied modules diverge quietly, and the differences are usually discovered during an outage rather than in review. Reuse is what makes large fleets behave consistently.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "One tested definition with per-site variables avoids copies drifting apart", "is_correct": true },
+      { "text": "Modules cannot contain site-specific values, so copying is impossible", "is_correct": false },
+      { "text": "Parameterized modules remove the need for a state file per site", "is_correct": false },
+      { "text": "Reuse reduces the size of the resulting device configuration", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does idempotent mean for an IaC apply operation?",
+    "explanation": "An idempotent apply converges the target to the declared state and changes nothing when it already matches. Running it twice is therefore safe, which is what allows automation to run on a schedule without fear of duplication. It is a property of the operation, not of the tool's programming language.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Repeated runs converge to the same state and change nothing when already matching", "is_correct": true },
+      { "text": "Every run recreates resources so no stale configuration can persist", "is_correct": false },
+      { "text": "The run always produces an identical plan regardless of actual state", "is_correct": false },
+      { "text": "Each run must be followed by a manual rollback to remain consistent", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A campus controller becomes unreachable while the switches keep running. What happens to client traffic?",
+    "explanation": "The controller is part of the management and control plane, not the forwarding path for established client traffic. Managed devices keep forwarding with the last configuration they received, so users usually notice nothing. What stops is new policy deployment, onboarding, and assurance data until the connection returns.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Forwarding continues with the last configuration; new policy pushes stop", "is_correct": true },
+      { "text": "All client traffic stops because authentication must reach the controller", "is_correct": false },
+      { "text": "Devices reload and fall back to their factory default configuration", "is_correct": false },
+      { "text": "Devices begin forwarding all traffic in the clear until trust is restored", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why do controller-based deployments validate a device's certificate during onboarding?",
+    "explanation": "Before a device receives configuration it must prove it is the unit that was ordered for that site, and a signed certificate or trust anchor is how the controller verifies that identity. Without the check, anyone who can reach the onboarding service could register a lookalike device and receive policy intended for real hardware.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The certificate proves the device is genuine before it receives configuration", "is_correct": true },
+      { "text": "The certificate encrypts the device's data plane traffic to its peers", "is_correct": false },
+      { "text": "The certificate assigns the device its management IP address", "is_correct": false },
+      { "text": "The certificate replaces the need for any device credentials", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a controller derive automatically from its managed devices that used to require manual documentation?",
+    "explanation": "Controllers collect neighbor information and interface data from the devices they manage, so they can build a live topology and inventory without an operator drawing it. That view updates as links come and go. The picture is only as complete as the protocol coverage on each device, which is why discovery protocols must stay enabled.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Topology and inventory built from neighbor and interface data reported by devices", "is_correct": true },
+      { "text": "The physical rack elevation of every switch in every closet", "is_correct": false },
+      { "text": "The routing table of every upstream service provider", "is_correct": false },
+      { "text": "A complete map of all traffic flows outside the managed domain", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does out-of-band management access differ from in-band access?",
+    "explanation": "Out-of-band access travels over a separate management network or console server that does not share links with production traffic, so the device stays reachable when the data path is broken. In-band access rides the production network and disappears with it. That is why recovery procedures assume out-of-band reachability.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It uses a separate management path that survives a production outage", "is_correct": true },
+      { "text": "It uses a higher-priority queue on the production links", "is_correct": false },
+      { "text": "It encrypts management traffic while in-band does not", "is_correct": false },
+      { "text": "It requires no authentication because the path is physically separate", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a cloud-managed network differ architecturally from an on-premises controller deployment?",
+    "explanation": "With cloud management the vendor operates the controller software in its own infrastructure, and the network devices reach it over the internet. No local controller appliance or virtual machine is needed, and administrators can work from anywhere. The trade-off is a dependency on internet reachability and on the vendor's subscription terms.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The management plane is hosted by the vendor, so no local controller is required", "is_correct": true },
+      { "text": "All traffic is forwarded through the vendor's cloud before reaching its destination", "is_correct": false },
+      { "text": "Devices require an inbound public address so the dashboard can reach them", "is_correct": false },
+      { "text": "Configuration is stored only on the devices and never leaves the site", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What happens to user traffic if a cloud management dashboard is unreachable?",
+    "explanation": "Cloud-managed devices cache their configuration locally and keep forwarding, so a dashboard or internet outage does not stop the network. Only changes, monitoring, and reporting are suspended. This local forwarding behaviour is why cloud management does not make the site dependent on the WAN for basic connectivity.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Devices continue forwarding using their cached configuration", "is_correct": true },
+      { "text": "Devices drop all traffic until the dashboard confirms policy again", "is_correct": false },
+      { "text": "Devices tunnel user traffic through the vendor cloud as a fallback", "is_correct": false },
+      { "text": "Devices reload and revert to an unconfigured state", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does a cloud-managed device need no inbound firewall opening at the branch?",
+    "explanation": "The device initiates an outbound TLS connection to the vendor's cloud and keeps it open, so management traffic returns over that established session. Nothing has to be reachable from the internet, which avoids publishing management ports. This design also lets the device sit behind NAT without special configuration.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It opens an outbound TLS session that the cloud reuses to manage it", "is_correct": true },
+      { "text": "It uses a VPN concentrator that the vendor connects to on demand", "is_correct": false },
+      { "text": "It polls the dashboard over unencrypted HTTP on a random source port", "is_correct": false },
+      { "text": "It relies on the ISP to proxy management traffic on its behalf", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the consequence of letting a cloud-managed device's subscription lapse?",
+    "explanation": "Cloud management is licensed per device, and once the grace period after expiry passes the device stops serving traffic until licensing is restored. It does not fall back to standalone operation, because the business model and the architecture both assume the subscription. Renewal planning is therefore part of availability, not procurement paperwork.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "After a grace period the device stops passing traffic until it is licensed again", "is_correct": true },
+      { "text": "The device reverts to a fully functional standalone configuration", "is_correct": false },
+      { "text": "Only reporting stops, while all forwarding and configuration continue", "is_correct": false },
+      { "text": "The device continues for a year and then requires a hardware replacement", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which check should AI-generated configuration pass before it reaches a production device?",
+    "explanation": "Generated text is only a proposal, so it must be parsed and rendered against the device's own schema and then exercised in a lab, simulator, or digital twin. Those deterministic checks catch invalid syntax, unsupported features, and dependency errors that reading the text can miss. Only after they pass should the change enter the normal approval path.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Schema or syntax validation plus a run in a lab or digital twin", "is_correct": true },
+      { "text": "A second AI model asked to confirm the first model's answer", "is_correct": false },
+      { "text": "A spelling and grammar check on the explanation text", "is_correct": false },
+      { "text": "Confirmation that the response is shorter than the context window", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why compare AI-generated configuration against the device's running configuration as a diff?",
+    "explanation": "A diff shows precisely which lines would be added and which removed, so an unintended deletion of an existing interface or ACL stands out immediately. Reading the generated block alone hides those deletions because nothing in it looks wrong. The diff is the cheapest way to keep an automated change from silently removing working configuration.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It exposes unintended removals that the generated block alone would hide", "is_correct": true },
+      { "text": "It proves the generated commands are supported by the device platform", "is_correct": false },
+      { "text": "It converts the configuration into a schema-valid document", "is_correct": false },
+      { "text": "It measures how many tokens the model used to produce the change", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What should an automation pipeline do when AI-generated configuration fails validation?",
+    "explanation": "The failure means the proposal is wrong, so it must not be applied under any circumstances. The correct behaviour is to reject the change and return the validator's errors to the model so it can regenerate with that feedback. Applying anyway and fixing afterwards turns a caught error into an outage.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Reject it and feed the validation errors back for regeneration", "is_correct": true },
+      { "text": "Apply it and monitor for problems after the change window", "is_correct": false },
+      { "text": "Apply only the lines that individually parsed correctly", "is_correct": false },
+      { "text": "Raise the model's temperature and resend the same prompt", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why must generated commands be checked against the target platform and software version?",
+    "explanation": "Command syntax and feature support vary across product families and releases, so a line that is valid on one device may be rejected or interpreted differently on another. Version-aware validation catches that before deployment. Validating only against a generic command reference is not enough for a mixed fleet.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Syntax and features differ by family and release, so a valid line may not apply elsewhere", "is_correct": true },
+      { "text": "Devices reject any command that was not typed by a human operator", "is_correct": false },
+      { "text": "Older releases require the configuration to be base64 encoded", "is_correct": false },
+      { "text": "Platform checks only matter when the device is managed by a controller", "is_correct": false }
+    ]
+  }
+]

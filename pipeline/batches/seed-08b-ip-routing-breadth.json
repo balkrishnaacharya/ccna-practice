@@ -1,0 +1,782 @@
+[
+  {
+    "stem": "Two OSPF routers are configured with different process IDs — `router ospf 1` on one and `router ospf 10` on the other. Can they form an adjacency?",
+    "explanation": "The process ID is locally significant and never appears in a hello packet, so it does not have to match between neighbours. It only separates multiple OSPF instances on the same router, each running its own database.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Yes; the process ID is locally significant and is never sent in hellos",
+        "is_correct": true
+      },
+      {
+        "text": "No; both routers must use the same process ID to belong to the same area",
+        "is_correct": false
+      },
+      {
+        "text": "No; a process ID mismatch leaves the neighbours stuck in EXSTART",
+        "is_correct": false
+      },
+      {
+        "text": "Yes, but only after the router IDs are manually synchronised",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF configuration makes every interface passive and then re-enables hellos only on the interfaces that should form adjacencies?",
+    "explanation": "passive-interface default flips the default for the whole process, and no passive-interface carves out the exceptions. This is safer than listing interfaces one at a time because any interface added later starts passive instead of accidentally sending hellos toward an ISP.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "passive-interface default, then no passive-interface on the chosen interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "no passive-interface default, then passive-interface on the chosen interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "passive-interface all, then passive-interface none",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf passive default, then ip ospf passive disable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router already has a static default route and runs OSPF. Which command injects that default into OSPF so other routers learn it?",
+    "explanation": "OSPF does not advertise a default route on its own. default-information originate tells the process to flood a Type 5 default LSA, and adding the always keyword makes it do so even when the local default route is missing.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "default-information originate",
+        "is_correct": true
+      },
+      {
+        "text": "network 0.0.0.0 255.255.255.255 area 0",
+        "is_correct": false
+      },
+      {
+        "text": "redistribute static default",
+        "is_correct": false
+      },
+      {
+        "text": "ip default-network 0.0.0.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command sets the OSPF cost of a single link to 100 without changing the cost of any other interface?",
+    "explanation": "auto-cost reference-bandwidth is a router-wide setting, so it changes every interface's cost at once. ip ospf cost applies to one interface only and takes precedence over the value derived from reference bandwidth and interface bandwidth.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ospf cost 100",
+        "is_correct": true
+      },
+      {
+        "text": "auto-cost reference-bandwidth 100",
+        "is_correct": false
+      },
+      {
+        "text": "ospf cost 100",
+        "is_correct": false
+      },
+      {
+        "text": "bandwidth 100000",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What OSPF network type is assigned by default to a point-to-point serial interface running HDLC?",
+    "explanation": "Cisco treats a point-to-point link as having exactly one possible neighbour, so it defaults to the point-to-point network type. No DR or BDR election happens and hellos are sent every 10 seconds.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Point-to-point",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Non-broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-multipoint",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does OSPF advertise a loopback interface as a /32 host route?",
+    "explanation": "A loopback is given the loopback network type, which OSPF treats as a stub host rather than a shared segment. Advertising it as /32 makes the address reachable from anywhere in the domain without implying that a subnet sits behind it.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the loopback network type advertises it as a stub host",
+        "is_correct": true
+      },
+      {
+        "text": "Because loopback interfaces cannot be configured with a prefix shorter than /32",
+        "is_correct": false
+      },
+      {
+        "text": "Because OSPF summarises every loopback into 0.0.0.0/0",
+        "is_correct": false
+      },
+      {
+        "text": "Because the DR rewrites loopback prefixes as host LSAs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes OSPF treat an NBMA interface as a broadcast medium so a DR election takes place?",
+    "explanation": "Non-broadcast networks send hellos as unicast and elect a DR only on a fully meshed topology. ip ospf network broadcast makes OSPF behave as if the segment supports multicast, so hellos and DR election work as they do on Ethernet — although the medium still has to carry those multicast frames.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ospf network broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "ip ospf network non-broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf priority 1",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf dr-election enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF network type behaves like point-to-multipoint but requires explicit neighbour statements because the medium cannot carry multicast hellos?",
+    "explanation": "Point-to-multipoint sends hellos as multicast, which a Frame Relay or ATM hub cannot replicate to every spoke. The non-broadcast variant keeps the /32 host-route advertisement of point-to-multipoint but needs neighbour commands so the hub can unicast hellos to each spoke individually.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Point-to-multipoint non-broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "Non-broadcast (NBMA)",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must every non-backbone OSPF area touch area 0, or reach it through a virtual link?",
+    "explanation": "Inter-area prefixes are only exchanged through the backbone, so an area with no path to area 0 has no way to receive Type 3 LSAs from any other area. That two-level hierarchy is also what prevents inter-area routing loops, since an area can never learn a prefix from a peer area without it passing through the backbone.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because inter-area LSAs are only exchanged through the backbone, which keeps inter-area routing loop-free",
+        "is_correct": true
+      },
+      {
+        "text": "Because only area 0 routers are permitted to run the SPF algorithm",
+        "is_correct": false
+      },
+      {
+        "text": "Because area 0 is the only area that can authenticate OSPF packets",
+        "is_correct": false
+      },
+      {
+        "text": "Because a non-backbone area may contain only one ABR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF LSA type is generated by the DR on a multi-access segment to represent that segment and the routers attached to it?",
+    "explanation": "Type 1 router LSAs describe each router individually. The Type 2 network LSA is generated by the DR and models the shared segment as a pseudonode, and every other router on the segment references that pseudonode in its own Type 1 LSA so the topology tree collapses the segment into a single node.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 2 network LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 1 router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 3 summary LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 external LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an OSPF not-so-stubby area from a normal stub area?",
+    "explanation": "A stub area refuses Type 5 externals entirely. An NSSA keeps that restriction toward the backbone but lets an ASBR inside the area originate external prefixes as Type 7 LSAs, which the ABR then translates into Type 5 when flooding them into the rest of the domain.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An ASBR inside the area may inject external routes as Type 7 LSAs",
+        "is_correct": true
+      },
+      {
+        "text": "Type 5 LSAs are allowed to flood through it unchanged",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the requirement to connect to area 0",
+        "is_correct": false
+      },
+      {
+        "text": "It disables DR election on all of its segments",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two behaviours define an OSPF stub area?",
+    "explanation": "A stub area blocks Type 5 external LSAs at its border, so routers inside carry a much smaller database. The ABR compensates by injecting a default route, which keeps external destinations reachable even though the external prefixes themselves never enter the area.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It blocks Type 5 LSAs and receives a default route from the ABR",
+        "is_correct": true
+      },
+      {
+        "text": "It blocks Type 3 LSAs and receives a default route from the ASBR",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks Type 1 and Type 2 LSAs within the area",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks every LSA and relies on static routes instead",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address does OSPFv3 use for hellos addressed to the DR and BDR?",
+    "explanation": "FF02::5 reaches every OSPFv3 router on the link, while FF02::6 is the all-DR/BDR group. The DR joins both groups, so it receives the same hello a DROTHER sends to the general group and the adjacency survives the election.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "FF02::6",
+        "is_correct": true
+      },
+      {
+        "text": "FF02::5",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::1",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::9",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which addresses do OSPFv3 neighbours use as the source and destination of their hello packets?",
+    "explanation": "OSPFv3 runs per link rather than per subnet, so it uses the link-local address of the outgoing interface as the source and a link-local multicast group as the destination. Global prefixes are carried inside LSAs but are not needed to build the adjacency.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The link-local addresses of the participating interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The global unicast addresses of the participating interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "The 32-bit router ID of each neighbour",
+        "is_correct": false
+      },
+      {
+        "text": "The unique-local addresses configured on the loopbacks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is OSPFv3 authentication implemented?",
+    "explanation": "OSPFv2 carries its own authentication fields in the packet header. OSPFv3 removed them and relies on IPsec instead — AH for integrity, ESP for confidentiality — applied per interface, which lets the same mechanisms protect OSPFv3 as any other IPv6 traffic.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Through IPsec AH or ESP applied to the interface",
+        "is_correct": true
+      },
+      {
+        "text": "Through MD5 keys configured under the OSPFv3 process",
+        "is_correct": false
+      },
+      {
+        "text": "Through a plaintext password carried in each hello packet",
+        "is_correct": false
+      },
+      {
+        "text": "Through a shared key carried inside the Type 1 router LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPFv3 LSA carries a router's link-local address and the prefixes associated with one link to the neighbours on that link?",
+    "explanation": "OSPFv3 split OSPFv2's router LSA into pieces. Type 8 describes a single link, including the link-local address the neighbours need and any prefixes on it, and its scope is the link itself, so it is never flooded beyond the routers attached to that segment.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 8 link LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 9 intra-area-prefix LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 1 router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 external LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In EIGRP, what is the reported distance of a route?",
+    "explanation": "The reported distance, also called the advertised distance, is the metric the neighbour claims for the destination. EIGRP compares it with the local feasible distance to decide whether the neighbour offers a loop-free backup — a neighbour whose reported distance is higher than the current feasible distance is not trusted as a feasible successor.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The metric the neighbour advertises for the destination",
+        "is_correct": true
+      },
+      {
+        "text": "The metric this router computes for its own best path",
+        "is_correct": false
+      },
+      {
+        "text": "The number of hops between the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "The administrative distance assigned to the EIGRP process",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default EIGRP hello and hold timers on a link of T1 speed or faster?",
+    "explanation": "EIGRP scales its timers to link speed: 5-second hellos with a 15-second hold on links faster than T1, and 60/180 on slower multipoint links. The longer timers on slow links avoid wasting WAN capacity on hellos at the cost of slower failure detection.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "5 seconds hello, 15 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "10 seconds hello, 40 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "30 seconds hello, 120 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "60 seconds hello, 180 seconds hold",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IP protocol number does EIGRP use?",
+    "explanation": "EIGRP is not carried over TCP or UDP. It runs directly over IP with protocol number 88, which is why an ACL that filters only TCP and UDP can silently break EIGRP adjacencies.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "88",
+        "is_correct": true
+      },
+      {
+        "text": "89",
+        "is_correct": false
+      },
+      {
+        "text": "179",
+        "is_correct": false
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two components contribute to the EIGRP composite metric by default?",
+    "explanation": "By default EIGRP sets K1 and K3 to one, so only bandwidth and delay are used. Load and reliability can be added by changing the K-values, but every router in the AS must use identical values or neighbours will disagree about which path is best; MTU is carried in updates but never used in the calculation.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Bandwidth and delay",
+        "is_correct": true
+      },
+      {
+        "text": "Bandwidth and hop count",
+        "is_correct": false
+      },
+      {
+        "text": "Delay and load",
+        "is_correct": false
+      },
+      {
+        "text": "Reliability and MTU",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the OSPF DOWN state mean for a neighbour?",
+    "explanation": "DOWN means no hello has been received from that neighbour within the dead interval, or none has ever arrived. It is the starting state before any adjacency exists, and a neighbour permanently stuck there points to a one-way path, a mismatched area, or a passive interface.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No hello has been received from the neighbour",
+        "is_correct": true
+      },
+      {
+        "text": "Hellos are exchanged but the databases are still synchronising",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour is a DROTHER and will never become adjacent",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour has finished the database exchange",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF neighbour state means link-state requests have been sent and the router is waiting for the matching updates?",
+    "explanation": "In LOADING the router has finished the database description exchange and knows exactly which LSAs it is missing. It sends link-state requests and waits for the replies, so a neighbour stuck here usually means a requested LSA cannot be retrieved.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "LOADING",
+        "is_correct": true
+      },
+      {
+        "text": "EXCHANGE",
+        "is_correct": false
+      },
+      {
+        "text": "EXSTART",
+        "is_correct": false
+      },
+      {
+        "text": "FULL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the OSPF FULL state signify?",
+    "explanation": "FULL means the two routers hold identical link-state databases for the area and can forward traffic through each other. On a broadcast segment only the DR and BDR reach FULL with every other router, while DROTHERs stay at 2-WAY with each other by design.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The databases are synchronised and traffic can be forwarded through the neighbour",
+        "is_correct": true
+      },
+      {
+        "text": "The routers are still comparing database description packets",
+        "is_correct": false
+      },
+      {
+        "text": "The routers have exchanged hellos but no database information",
+        "is_correct": false
+      },
+      {
+        "text": "The routers have agreed on a DR but not on their area IDs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router learns four equal-cost OSPF paths to the same prefix. What does Cisco IOS do by default?",
+    "explanation": "Equal-cost paths are all installed in the routing table and traffic is load-balanced across them, up to the default maximum of four. The maximum-paths command changes that limit; any path beyond it stays out of the table rather than being used as a standby.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It installs up to four paths and load-balances across them",
+        "is_correct": true
+      },
+      {
+        "text": "It installs only the first path learned and discards the rest",
+        "is_correct": false
+      },
+      {
+        "text": "It installs all four but forwards only along the lowest router ID",
+        "is_correct": false
+      },
+      {
+        "text": "It rejects the prefix until the tie is broken manually",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show ip route` output, what does a route marked `S*` represent?",
+    "explanation": "The asterisk flags the route as a candidate default. A static default route therefore appears as S*: the S says static, and the star says this is the entry the router will use when no more specific match exists.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A static route that is a candidate default",
+        "is_correct": true
+      },
+      {
+        "text": "A static route that has been redistributed into a routing protocol",
+        "is_correct": false
+      },
+      {
+        "text": "A static route that is currently inactive",
+        "is_correct": false
+      },
+      {
+        "text": "A summary static route covering several prefixes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A new router joins an OSPF broadcast segment with a higher interface priority than the current DR. What happens?",
+    "explanation": "OSPF does not preempt. The existing DR keeps the role until it fails or the OSPF process is cleared, so the new router waits as a DROTHER no matter how high its priority is.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing; the current DR keeps the role until it fails or the process is cleared",
+        "is_correct": true
+      },
+      {
+        "text": "The new router immediately becomes DR and the old DR becomes BDR",
+        "is_correct": false
+      },
+      {
+        "text": "Both routers become DR and share the pseudonode",
+        "is_correct": false
+      },
+      {
+        "text": "The segment re-runs the election and all adjacencies drop to DOWN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How often does an OSPF router refresh its self-originated LSAs, and why?",
+    "explanation": "Every 30 minutes the originator re-floods each of its LSAs with a fresh sequence number even when nothing has changed. That periodic refresh is what allows a stale LSA to age out eventually — without it, a crashed router's information could persist forever.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every 30 minutes, so the sequence number keeps advancing and stale copies can age out",
+        "is_correct": true
+      },
+      {
+        "text": "Every 5 minutes, to resynchronise the database after each SPF run",
+        "is_correct": false
+      },
+      {
+        "text": "Every 60 minutes, when the LSA reaches max age",
+        "is_correct": false
+      },
+      {
+        "text": "Only when the topology changes, because unchanged LSAs are never re-sent",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows the area, network type, timers, and cost configured for each OSPF-enabled interface?",
+    "explanation": "show ip ospf neighbor only tells you who is adjacent. show ip ospf interface shows the local side of each link — area ID, network type, hello and dead intervals, cost, and DR/BDR roles — which is what you need when two routers refuse to become neighbours.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ip ospf interface",
+        "is_correct": true
+      },
+      {
+        "text": "show ip ospf neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "show ip ospf database",
+        "is_correct": false
+      },
+      {
+        "text": "show ip protocols",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers sit in the same area, on the same subnet, with matching timers, yet the adjacency never leaves DOWN. Both have OSPF authentication configured. What is the most likely cause?",
+    "explanation": "OSPF discards hellos whose authentication does not match, so the neighbour never appears at all — not even in INIT. A key or authentication-type mismatch is invisible in the neighbour table because the packets are dropped before they are recorded.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authentication type or key does not match on the two interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The two routers are using different OSPF process IDs",
+        "is_correct": false
+      },
+      {
+        "text": "The DR election has not completed yet",
+        "is_correct": false
+      },
+      {
+        "text": "One router has a lower OSPF priority than the other",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default BGP KEEPALIVE interval and hold time?",
+    "explanation": "BGP sends a KEEPALIVE every 60 seconds by default and declares the peer dead after 180 seconds without one, so the hold time is three times the keepalive. If the two peers advertise different hold times, the lower value is used.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "60 seconds keepalive, 180 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "30 seconds keepalive, 90 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "10 seconds keepalive, 40 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "180 seconds keepalive, 540 seconds hold",
+        "is_correct": false
+      }
+    ]
+  }
+]

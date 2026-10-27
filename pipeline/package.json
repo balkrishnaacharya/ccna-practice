@@ -5,7 +5,9 @@
   "description": "Question import pipeline for CCNA Practice app",
   "main": "import-questions.js",
   "scripts": {
-    "import": "node import-questions.js"
+    "import": "node import-questions.js",
+    "stats": "node bank-stats.js",
+    "check": "node bank-stats.js --strict"
   },
   "dependencies": {
     "better-sqlite3": "^11.0.0"

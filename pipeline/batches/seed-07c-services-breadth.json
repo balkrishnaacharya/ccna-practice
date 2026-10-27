@@ -1,0 +1,574 @@
+[
+  {
+    "stem": "What is the purpose of IKE phase 1 in an IPsec VPN?",
+    "explanation": "Phase 1 builds an authenticated secure channel between the peers — the ISAKMP SA — and everything in phase 2 is negotiated inside it. No user traffic crosses yet, so a phase 1 failure means no IPsec SA can ever be created.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To build an authenticated secure channel between the peers for negotiating later IPsec parameters",
+        "is_correct": true
+      },
+      {
+        "text": "To encrypt user traffic with the transform set",
+        "is_correct": false
+      },
+      {
+        "text": "To authenticate individual remote users against a RADIUS server",
+        "is_correct": false
+      },
+      {
+        "text": "To exchange routing information across the tunnel",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an IPsec remote-access deployment, how does a client typically obtain its internal IP address?",
+    "explanation": "The headend pushes an address from a configured pool to the client during IKE mode config, the same exchange that can also supply DNS servers and split-tunnel policy. Because internal servers reply to that inner address, it must come from a range the internal network routes back to the headend.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The VPN headend assigns it from a configured pool during IKE mode config",
+        "is_correct": true
+      },
+      {
+        "text": "The client keeps the public address assigned by its ISP",
+        "is_correct": false
+      },
+      {
+        "text": "The internal DHCP server broadcasts an offer through the tunnel before it is established",
+        "is_correct": false
+      },
+      {
+        "text": "The client derives it from its own MAC address using EUI-64",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A remote-access profile has split tunneling disabled. What is the result for the user?",
+    "explanation": "Without split tunneling the client puts every packet into the tunnel, including internet-bound traffic, so it is inspected by the corporate edge and exits from there. That gives consistent policy but spends headend bandwidth and adds latency to ordinary browsing.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "All traffic, including internet-bound traffic, goes through the tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "Only traffic destined for corporate subnets goes through the tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "The client cannot reach corporate resources at all",
+        "is_correct": false
+      },
+      {
+        "text": "The tunnel carries DNS queries only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a clientless SSL VPN differ from an IPsec remote-access tunnel?",
+    "explanation": "A clientless SSL VPN runs in the browser over HTTPS and publishes selected internal web applications through a portal, so nothing is installed on the endpoint. The trade-off is that it cannot carry arbitrary IP protocols the way a full tunnel adapter can.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reaches selected internal web applications through a browser portal without installing a VPN client",
+        "is_correct": true
+      },
+      {
+        "text": "It requires a heavier client than IPsec and encrypts at Layer 2",
+        "is_correct": false
+      },
+      {
+        "text": "It runs only over UDP 500 and cannot use TCP",
+        "is_correct": false
+      },
+      {
+        "text": "It provides full IP-layer reachability to every internal subnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec configuration element defines the encryption, hash, and authentication algorithms offered for the IPsec SA?",
+    "explanation": "The transform set (called an IPsec proposal on some platforms) lists the protocol — ESP or AH — together with the algorithms to offer. Both peers need a matching entry, otherwise phase 2 has nothing to agree on and no SA is created.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The transform set",
+        "is_correct": true
+      },
+      {
+        "text": "The crypto ACL",
+        "is_correct": false
+      },
+      {
+        "text": "The crypto map sequence number",
+        "is_correct": false
+      },
+      {
+        "text": "The ISAKMP policy priority",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the state of IKE phase 1 security associations on a Cisco router?",
+    "explanation": "`show crypto isakmp sa` lists each peer with its state, and QM_IDLE means the ISAKMP SA is established and phase 1 is complete. Phase 2 has its own separate view in `show crypto ipsec sa`.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show crypto isakmp sa`",
+        "is_correct": true
+      },
+      {
+        "text": "`show crypto ipsec sa`",
+        "is_correct": false
+      },
+      {
+        "text": "`show crypto map`",
+        "is_correct": false
+      },
+      {
+        "text": "`show crypto session detail`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A bidirectional IPsec tunnel is established between two routers. How many IPsec security associations exist for that traffic flow?",
+    "explanation": "IPsec SAs are unidirectional, so each direction carries its own keys, sequence counters, and lifetime. That is why the two peers report different counters — each one counts the packets it encrypts on its own outbound SA.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two, one for each direction of the flow",
+        "is_correct": true
+      },
+      {
+        "text": "One, shared by both directions",
+        "is_correct": false
+      },
+      {
+        "text": "Three, one for IKE plus two for the transform set",
+        "is_correct": false
+      },
+      {
+        "text": "Four, two per peer per direction",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Traffic matches the crypto ACL on a router but no IPsec SA exists for the peer yet. How is that traffic handled?",
+    "explanation": "The router never falls back to cleartext for interesting traffic. It starts negotiating and drops the packets until the SA comes up, which is why a tunnel that will not form looks like plain reachability loss instead of unencrypted leakage.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is dropped while negotiation is attempted, and is never sent unencrypted",
+        "is_correct": true
+      },
+      {
+        "text": "It is sent in cleartext until the SA is established",
+        "is_correct": false
+      },
+      {
+        "text": "It is queued in a buffer until the SA is built",
+        "is_correct": false
+      },
+      {
+        "text": "It is routed around the tunnel using the default route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When RA Guard is deployed, which switch port must be marked trusted?",
+    "explanation": "Only the port that leads to the legitimate IPv6 router — normally the uplink or trunk — is trusted, because that is where genuine RAs arrive. Every access port facing end hosts stays untrusted so an RA appearing there is dropped.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The uplink port toward the legitimate IPv6 router",
+        "is_correct": true
+      },
+      {
+        "text": "Every access port with an attached end host",
+        "is_correct": false
+      },
+      {
+        "text": "The port connected to the DHCPv6 server",
+        "is_correct": false
+      },
+      {
+        "text": "All trunk ports, which are trusted by default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ICMPv6 message does RA Guard drop on untrusted ports?",
+    "explanation": "RA Guard filters Router Advertisements, ICMPv6 type 134, arriving on untrusted ports. Router solicitation, neighbor solicitation, and neighbor advertisement are policed by other first-hop features, so RA Guard alone does not touch them.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Router Advertisement, ICMPv6 type 134",
+        "is_correct": true
+      },
+      {
+        "text": "Router Solicitation, ICMPv6 type 133",
+        "is_correct": false
+      },
+      {
+        "text": "Neighbor Advertisement, ICMPv6 type 136",
+        "is_correct": false
+      },
+      {
+        "text": "Echo Request, ICMPv6 type 128",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On which device is an RA Guard policy applied in a typical campus design?",
+    "explanation": "RA Guard runs on the Layer 2 access switch, on the port facing the host, because that port is where a rogue advertisement would first enter the network. The router has no notion of a trusted or untrusted port, so it is not where the policy lives.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Layer 2 access switch port facing the host",
+        "is_correct": true
+      },
+      {
+        "text": "The IPv6 router's LAN interface",
+        "is_correct": false
+      },
+      {
+        "text": "The DHCPv6 server",
+        "is_correct": false
+      },
+      {
+        "text": "The firewall's untrusted interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "RA Guard is configured on only one switch in a Layer 2 path. What weakness remains?",
+    "explanation": "RA Guard inspects only the ports of the switch where it is configured. An attacker plugged into a different switch in the same VLAN sends an advertisement that the unprotected switch floods normally, and hosts receive it even though the guarded switch would have dropped it.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An RA entering through a switch without RA Guard still reaches hosts in the same VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "RA Guard falls back to monitoring mode when a neighboring switch is unprotected",
+        "is_correct": false
+      },
+      {
+        "text": "The router stops sending legitimate advertisements entirely",
+        "is_correct": false
+      },
+      {
+        "text": "Hosts on the protected switch ignore every advertisement, including legitimate ones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which AAA function records what an authenticated user did, when the session started and ended, and how long it lasted?",
+    "explanation": "Accounting produces that audit trail, including session start and stop records and, on some protocols, the individual commands issued. Authentication only proves identity and authorization only decides permissions, so neither generates the record.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Accounting",
+        "is_correct": true
+      },
+      {
+        "text": "Authentication",
+        "is_correct": false
+      },
+      {
+        "text": "Authorization",
+        "is_correct": false
+      },
+      {
+        "text": "Federation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Given the method list `aaa authentication login default group tacacs+ local`, what happens when every TACACS+ server is unreachable?",
+    "explanation": "The methods are tried left to right, so the router falls back to its local username database instead of denying the login. That ordering keeps administrators able to reach the device when the AAA server itself is the failed component.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router falls back to its local user database and the login proceeds",
+        "is_correct": true
+      },
+      {
+        "text": "The login is rejected because the first method failed",
+        "is_correct": false
+      },
+      {
+        "text": "The router drops to rommon mode",
+        "is_correct": false
+      },
+      {
+        "text": "The router accepts any username with the line password",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an 802.1X deployment, which role does the switch port play?",
+    "explanation": "The switch is the authenticator: it keeps the port closed until the supplicant's credentials are verified by the authentication server, then opens the port and applies the authorization result. The client device is the supplicant and the RADIUS server is the authentication server.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authenticator",
+        "is_correct": true
+      },
+      {
+        "text": "The supplicant",
+        "is_correct": false
+      },
+      {
+        "text": "The authentication server",
+        "is_correct": false
+      },
+      {
+        "text": "The policy decision point",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits how many DHCP messages an untrusted port may receive per second?",
+    "explanation": "`ip dhcp snooping limit rate 10` caps the message rate on the interface, so a starvation attack that floods DISCOVER messages is throttled instead of draining the pool. Exceeding the configured rate normally puts the port into the error-disabled state.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping limit rate 10`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dhcp snooping trust rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping max-rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping burst 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command preserves DHCP snooping binding entries across a switch reload?",
+    "explanation": "`ip dhcp snooping database` with a URL writes the bindings to flash or a remote file, so the switch repopulates the table at boot before clients renew. Without it the table starts empty after a reload and features such as DAI and IP Source Guard have nothing to validate against.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping database flash:dhcp-bindings`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dhcp snooping persistent`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping binding save`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping write-memory`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command lists the MAC address, IP address, VLAN, and port for each DHCP snooping entry on a switch?",
+    "explanation": "`show ip dhcp snooping binding` prints the table snooping builds. It is the fastest way to confirm whether a host actually has a binding, which decides whether DAI and IP Source Guard will accept its traffic.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip dhcp snooping binding`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip dhcp snooping`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp binding`",
+        "is_correct": false
+      },
+      {
+        "text": "`show mac address-table`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command marks a switch port as trusted for Dynamic ARP Inspection?",
+    "explanation": "`ip arp inspection trust` exempts the port from ARP validation, which is appropriate for an uplink toward a router or another switch. On untrusted access ports every ARP packet is checked against the binding table or a configured ARP ACL.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip arp inspection trust`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection enable`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip arp inspection allow`",
+        "is_correct": false
+      },
+      {
+        "text": "`arp inspection trust`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A server with a static IP address has no DHCP snooping binding. How can DAI accept its ARP traffic?",
+    "explanation": "An ARP ACL maps the static address pair and is attached with `ip arp inspection filter <name> vlan <id>`, so a matching entry is accepted without any binding. Trusting the port instead would disable validation for every device behind that port, which is the mistake to avoid.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Define an ARP ACL for the static host and apply it as a DAI filter on the VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Trust the port, because the host has no binding to check",
+        "is_correct": false
+      },
+      {
+        "text": "Disable DAI on the whole VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Raise the ARP inspection rate limit until the packet is accepted",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits the rate of incoming ARP packets that DAI will process on an interface?",
+    "explanation": "`ip arp inspection limit rate 15` caps the ARP rate so a flood cannot exhaust the switch's inspection capacity, and the port errs down when the configured burst is exceeded. Trusted ports and ports set to `none` are exempt from the limit.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip arp inspection limit rate 15`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection rate 15`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip arp inspection max 15`",
+        "is_correct": false
+      },
+      {
+        "text": "`arp inspection throttle 15`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does 802.11w Protected Management Frames add to a WLAN?",
+    "explanation": "PMF signs unicast management frames, notably deauthentication and disassociation, so a spoofed frame cannot eject clients from the network. That closes a denial-of-service path that encrypting data frames never covered.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cryptographic protection for management frames such as deauthentication",
+        "is_correct": true
+      },
+      {
+        "text": "Encryption of data frames that WPA2 otherwise leaves in cleartext",
+        "is_correct": false
+      },
+      {
+        "text": "A per-user RADIUS credential exchange for each association",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic channel selection to avoid interference",
+        "is_correct": false
+      }
+    ]
+  }
+]

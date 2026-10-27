@@ -1,0 +1,170 @@
+[
+  {
+    "stem": "A router must forward IPv6 packets, but `ipv6 route` entries are configured and no traffic is being routed. Which global command is missing?",
+    "explanation": "Cisco routers do not forward IPv6 at all until `ipv6 unicast-routing` is enabled globally, even if static routes exist. With it disabled, the router can still hold IPv6 addresses on interfaces but acts as a host rather than a router. Enabling it also starts sending router advertisements on interfaces that have IPv6 configured.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "ipv6 unicast-routing", "is_correct": true },
+      { "text": "ip routing", "is_correct": false },
+      { "text": "ipv6 cef", "is_correct": false },
+      { "text": "ipv6 address autoconfig", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix represents the default route in an `ipv6 route` command?",
+    "explanation": "The IPv6 unspecified address is :: with a prefix length of zero, so ::/0 matches every destination and is the exact equivalent of 0.0.0.0/0 in IPv4. A static default route is written as `ipv6 route ::/0 <next-hop>`. Writing 2000::/3 would match only global unicast space, not every destination.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "::/0", "is_correct": true },
+      { "text": "0.0.0.0/0", "is_correct": false },
+      { "text": "2000::/3", "is_correct": false },
+      { "text": "fe80::/10", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How do IPv6 hosts normally learn a default gateway?",
+    "explanation": "IPv6 hosts rely on router advertisements, which carry the default router as a link-local address and are sent by routers with `ipv6 unicast-routing` enabled. A static default route on the router affects only the router's own forwarding and does not configure the hosts. That is why disabling router advertisements can strand hosts even when the router's routing table looks correct.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "From router advertisement messages sent by a router on the link", "is_correct": true },
+      { "text": "From the static default route configured on the router", "is_correct": false },
+      { "text": "From the DHCPv6 server's MAC address option", "is_correct": false },
+      { "text": "From the Neighbor Discovery duplicate address detection exchange", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "An IPv6 static route is configured with a global unicast next hop, but it never appears in the routing table. What is the most likely reason?",
+    "explanation": "For a global next hop the router must resolve that address recursively through another route, usually a connected subnet. If no route to the next hop exists, the static route stays inactive and is not installed. A link-local next hop avoids this because the exit interface supplies the reachability directly.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The next-hop address is not reachable through any other route in the table", "is_correct": true },
+      { "text": "The route was configured with an administrative distance lower than one", "is_correct": false },
+      { "text": "IPv6 static routes cannot use global unicast next hops", "is_correct": false },
+      { "text": "The destination prefix is longer than the next-hop prefix", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does route summarization accomplish in a routing domain?",
+    "explanation": "Summarization replaces many contiguous, more-specific prefixes with a single shorter prefix, so neighbors carry and process far fewer entries. It also limits the scope of a topology change, because a flapping component network no longer causes updates for each individual prefix. The trade-off is that the summary is only accurate while the covered space is genuinely reachable.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It replaces many specific prefixes with one shorter prefix, shrinking routing tables", "is_correct": true },
+      { "text": "It converts every prefix into a host route so forwarding is more precise", "is_correct": false },
+      { "text": "It encrypts routing updates between neighbouring routers", "is_correct": false },
+      { "text": "It balances traffic across all equal-cost paths automatically", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which single prefix summarizes 172.16.0.0/24 through 172.16.7.0/24?",
+    "explanation": "The eight /24 networks span third-octet values 0 through 7, which fit in three bits, so the summary length is 24 - 3 = 21. The block starts on a /21 boundary, giving 172.16.0.0/21. A /22 would cover only four of the eight networks, and a /20 would include address space beyond the range.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "172.16.0.0/21", "is_correct": true },
+      { "text": "172.16.0.0/22", "is_correct": false },
+      { "text": "172.16.0.0/20", "is_correct": false },
+      { "text": "172.16.7.0/24", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which OSPF router generates summarized Type 3 LSAs for inter-area routes?",
+    "explanation": "The area border router sits between areas, so it is the only device that can replace a set of intra-area prefixes with one summary LSA for another area. Internal routers only hold their own area's topology, and a backbone router that is not an ABR has nothing to summarize. External summarization is a separate function performed at the autonomous system boundary router.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The area border router (ABR)", "is_correct": true },
+      { "text": "Every internal router in the area", "is_correct": false },
+      { "text": "The designated router on each broadcast segment", "is_correct": false },
+      { "text": "The backup designated router on each broadcast segment", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A summary route covers 10.1.0.0/22, but only 10.1.0.0/24 and 10.1.1.0/24 actually exist. What is the risk?",
+    "explanation": "The summary advertises reachability for 10.1.2.0/24 and 10.1.3.0/24 as well, so traffic for those addresses is forwarded toward the summarizing router. With no more-specific route behind it, that traffic is dropped, creating a black hole. Summaries must therefore cover only space that is genuinely reachable, or be paired with a discard route.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Traffic for the unused addresses is drawn to the summarizer and dropped", "is_correct": true },
+      { "text": "The two real networks are removed from the routing table", "is_correct": false },
+      { "text": "The summary is rejected because it is not a power-of-two prefix", "is_correct": false },
+      { "text": "Equal-cost load balancing sends half the traffic the wrong way", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a floating static route provide backup for a dynamically learned route?",
+    "explanation": "The static route is configured with an administrative distance higher than the dynamic protocol's, so it loses the best-path comparison while the learned route exists. Its configuration remains in place but the route is not installed. If the dynamic route is withdrawn, the static route becomes the best candidate and is installed.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It uses a higher administrative distance, so it is installed only when the primary route disappears", "is_correct": true },
+      { "text": "It uses a lower administrative distance, so it always overrides the dynamic route", "is_correct": false },
+      { "text": "It is tagged with a route map that suppresses the dynamic protocol while the link is up", "is_correct": false },
+      { "text": "It is kept in a separate table that the router consults only during convergence", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "While the primary OSPF route is up, where does the configured floating static route appear?",
+    "explanation": "The floating static is present in the running configuration but absent from the IP routing table, because a route with a worse administrative distance never wins the selection. `show ip route` therefore shows only the OSPF entry. `show running-config` is the place to confirm the backup is configured as intended.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "In the running configuration but not in the IP routing table", "is_correct": true },
+      { "text": "In the IP routing table alongside the OSPF route", "is_correct": false },
+      { "text": "In neither the configuration nor the routing table", "is_correct": false },
+      { "text": "In the routing table, marked as a backup path that is never used", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A floating static route is configured with the same administrative distance as the primary OSPF route. What is the result?",
+    "explanation": "Administrative distance is the first tiebreaker, so equal values let the router fall through to metric comparison and, when metrics also match, install both paths for equal-cost load balancing. The static route therefore shares traffic rather than serving as a standby. A backup must be strictly worse, meaning a higher distance than the protocol it protects.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Both routes are installed and traffic is load-balanced instead of backed up", "is_correct": true },
+      { "text": "The static route replaces the OSPF route immediately", "is_correct": false },
+      { "text": "The router rejects the static route as a conflict", "is_correct": false },
+      { "text": "The OSPF route stays active and the static is discarded permanently", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A floating static route points to an ISP next hop, but the primary link fails upstream while the local interface stays up. Why does the backup not take over?",
+    "explanation": "A static route has no way to detect a failure beyond its own interface state, so the router still believes the next hop is reachable. Because the primary route is never withdrawn, the floating static stays inactive. IP SLA object tracking solves this by probing a target and withdrawing the static route when the probe fails.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The router cannot detect the upstream failure without IP SLA tracking to withdraw the primary route", "is_correct": true },
+      { "text": "The static route needs a lower administrative distance to be considered", "is_correct": false },
+      { "text": "Static routes cannot point to an ISP next hop at all", "is_correct": false },
+      { "text": "The backup route is removed whenever the local interface stays up", "is_correct": false }
+    ]
+  }
+]

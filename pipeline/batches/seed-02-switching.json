@@ -1,0 +1,170 @@
+[
+  {
+    "stem": "A wireless client joins a WPA2-Enterprise SSID. Which sequence correctly describes the order of events?",
+    "explanation": "The client first discovers the SSID through beacon and probe frames, then authenticates and associates at Layer 2. Only after 802.1X/EAP succeeds and the four-way handshake installs keys does the client send a DHCP request. A client that associates but never obtains an address has usually failed at the DHCP or VLAN-mapping step, not at radio association.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Discover the SSID, authenticate, associate, then request an address with DHCP", "is_correct": true },
+      { "text": "Request an address with DHCP, associate, authenticate, then discover the SSID", "is_correct": false },
+      { "text": "Associate, request an address with DHCP, then perform the 802.1X exchange", "is_correct": false },
+      { "text": "Authenticate, request an address with DHCP, then discover the SSID and associate", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which statement about the roaming decision for a wireless client moving between access points is correct?",
+    "explanation": "The client, not the infrastructure, decides when to leave one access point for another, usually when its own signal or retry metrics degrade past a threshold it controls. That is why client drivers roam at very different points, and why 802.11k neighbor reports help by handing the client a list of valid candidates. The access point cannot force a standard client to move on its own.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The client decides when to roam, and 802.11k neighbor reports give it candidate access points", "is_correct": true },
+      { "text": "The access point decides when a client roams and forces it to move with a deauth frame", "is_correct": false },
+      { "text": "The wireless LAN controller moves the client whenever it crosses a VLAN boundary", "is_correct": false },
+      { "text": "Roaming occurs only when the client's DHCP lease expires and it must re-request an address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does hiding an SSID provide little real security?",
+    "explanation": "Beacons stop advertising the name, but clients still transmit probe requests containing the SSID when they reconnect, and association frames carry it in the clear. A monitor-mode capture therefore reveals the name quickly. Hiding the SSID also breaks roaming and pushes clients to probe aggressively, which makes them easier to track.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Clients still send the SSID in probe requests and association frames, so it is easily observed", "is_correct": true },
+      { "text": "The access point broadcasts the SSID in every beacon once any client connects", "is_correct": false },
+      { "text": "Hidden SSIDs are encrypted with a weaker key than broadcast SSIDs", "is_correct": false },
+      { "text": "The controller publishes hidden SSIDs in its CAPWAP advertisements", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Wireless clients associate to an SSID but never receive an IP address. Which cause should be investigated?",
+    "explanation": "Association proves the radio and security layers worked, so the failure sits after key installation, where the client sends DHCP. The usual culprits are a missing VLAN on the controller's dynamic interface or the switch trunk, or an absent DHCP scope and helper. Radio coverage and encryption settings cannot explain the pattern.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The client VLAN is not carried to the DHCP server on the controller interface or trunk", "is_correct": true },
+      { "text": "The access point is using the wrong antenna polarization", "is_correct": false },
+      { "text": "The client negotiated a channel width that is too narrow", "is_correct": false },
+      { "text": "The SSID is broadcast on both 2.4 GHz and 5 GHz bands", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a switched port analyzer (SPAN) session do on a Cisco switch?",
+    "explanation": "SPAN copies frames from a source interface, VLAN, or EtherChannel to a designated destination port where a capture tool can receive them. The original traffic is still forwarded normally, so the session is non-disruptive. This is the standard way to feed a protocol analyzer in a switched network where a hub is not available.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It copies traffic from a source interface or VLAN to a destination port for analysis", "is_correct": true },
+      { "text": "It blocks all traffic from the source interface except the analyzed flows", "is_correct": false },
+      { "text": "It redirects the source interface's traffic to the destination port and stops normal forwarding", "is_correct": false },
+      { "text": "It compresses captured frames and stores them in the switch's flash memory", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a remote SPAN (RSPAN) session differ from a local SPAN session?",
+    "explanation": "Local SPAN keeps the destination port on the same switch. RSPAN extends the copy across switches by placing captured frames onto a dedicated RSPAN VLAN that is trunked to the switch holding the destination port. The remote switch then sources its session from that VLAN, so the analysis host does not need to sit on the monitored switch.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "RSPAN carries the copied frames in a dedicated VLAN across trunk links to another switch", "is_correct": true },
+      { "text": "RSPAN encapsulates the copied frames in a GRE tunnel between the switches", "is_correct": false },
+      { "text": "RSPAN copies only frames that have already been dropped by an access control list", "is_correct": false },
+      { "text": "RSPAN requires the capture host to be cabled directly to the monitored switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which capture method transports mirrored traffic to a monitoring device across a routed Layer 3 network?",
+    "explanation": "Encapsulated remote SPAN wraps each copied frame in a GRE tunnel so it can cross router hops that would otherwise drop the original Layer 2 header. Local SPAN and RSPAN both depend on Layer 2 reachability and stop at a routed boundary. ERSPAN therefore lets a central analyzer collect from switches in many subnets.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Encapsulated remote SPAN (ERSPAN), which tunnels copied frames in GRE", "is_correct": true },
+      { "text": "Local SPAN, which forwards copies out a port in the same VLAN", "is_correct": false },
+      { "text": "Remote SPAN (RSPAN), which carries copies in a dedicated Layer 2 VLAN", "is_correct": false },
+      { "text": "Port security, which mirrors frames from unauthorized addresses", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A SPAN session captures traffic from four 10 Gbps interfaces onto a single 10 Gbps destination port. What is the consequence?",
+    "explanation": "The destination port can only transmit at line rate, so any burst above 10 Gbps causes the switch to drop the excess mirrored frames. The capture then shows gaps and missing packets, which is easy to misread as a network fault. Reducing the number of sources, filtering the session, or using a higher-speed destination avoids the oversubscription.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Mirrored frames are dropped when the combined rate exceeds the destination port speed", "is_correct": true },
+      { "text": "The switch rate-limits the four source interfaces to 2.5 Gbps each", "is_correct": false },
+      { "text": "The session automatically fails over to an RSPAN VLAN", "is_correct": false },
+      { "text": "The destination port is placed in an err-disabled state", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a port group on a hypervisor virtual switch?",
+    "explanation": "A port group is a policy container that applies one set of settings, such as VLAN tagging, security options, and uplink teaming, to every virtual NIC attached to it. Administrators therefore configure the policy once and attach many VMs to it. The VM's virtual adapter inherits that policy when it connects.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It applies a shared set of VLAN, security, and teaming policies to attached virtual NICs", "is_correct": true },
+      { "text": "It assigns a physical switch port to every virtual machine on the host", "is_correct": false },
+      { "text": "It stores the MAC address table for the physical uplink ports", "is_correct": false },
+      { "text": "It encrypts all inter-VM traffic with the host's management key", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A virtual machine running a packet analyzer on a hypervisor sees only frames addressed to itself. What must be enabled on its port group?",
+    "explanation": "A virtual switch by default delivers only frames destined for a virtual NIC's own MAC address, much like a hardware switch. Promiscuous mode tells the virtual switch to pass all frames on that port group to the NIC, which is what a capture tool needs. Many hardening guides disable this mode precisely because it exposes other tenants' traffic.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Promiscuous mode on the port group", "is_correct": true },
+      { "text": "MAC address change on the virtual adapter", "is_correct": false },
+      { "text": "Forged transmit on the uplink", "is_correct": false },
+      { "text": "Jumbo frames on the virtual switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a distributed virtual switch differ from a standard virtual switch on a single host?",
+    "explanation": "A distributed switch is configured once at the management plane and its settings are pushed to every member host, so a VM keeps consistent port group policy as it migrates. A standard switch exists per host and must be configured separately on each one. That difference is what makes policy drift across a large cluster unlikely.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is configured once centrally and its policy spans multiple hosts", "is_correct": true },
+      { "text": "It forwards frames in hardware rather than in the hypervisor kernel", "is_correct": false },
+      { "text": "It replaces the physical uplink with an internal loopback interface", "is_correct": false },
+      { "text": "It can only connect virtual machines that reside on the same host", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the role of an uplink on a hypervisor virtual switch?",
+    "explanation": "The uplink binds the virtual switch to one or more physical NICs, which is the only path for VM traffic that must leave the host. Several physical NICs can be assigned to one uplink for redundancy and aggregate throughput. Without an uplink, VMs can talk to each other but cannot reach the physical network.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It binds the virtual switch to physical NICs so VM traffic can reach the physical network", "is_correct": true },
+      { "text": "It assigns IP addresses to virtual machines through an internal DHCP service", "is_correct": false },
+      { "text": "It mirrors all VM traffic to a capture host on another subnet", "is_correct": false },
+      { "text": "It stores the VLAN database that the virtual machines share", "is_correct": false }
+    ]
+  }
+]

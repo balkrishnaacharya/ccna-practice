@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-console.log("=== Building CCNA 2.0 200-Question Bank ===");
+console.log("=== Building CCNA 2.0 Question Bank ===");
 
 const domains = [
   'network_infra',
@@ -37,7 +37,9 @@ console.log("\nRunning strict validator...");
 execSync(`node "${path.join(__dirname, 'validate-questions.js')}" "${bankFile}"`, { stdio: 'inherit' });
 
 console.log("\nImporting questions into database...");
-// Clean slate or add: let's import the full 200-question bank
 execSync(`node "${path.join(__dirname, 'import-questions.js')}" "${bankFile}"`, { stdio: 'inherit' });
 
-console.log("\n=== 200 Question Bank successfully built, validated, and imported! ===");
+console.log("\nBank coverage report:");
+execSync(`node "${path.join(__dirname, 'bank-stats.js')}"`, { stdio: 'inherit' });
+
+console.log(`\n=== ${bank.length} question bank built, validated, and imported ===`);

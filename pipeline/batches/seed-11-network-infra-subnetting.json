@@ -1,0 +1,30 @@
+[
+  {
+    "stem": "An interface must support at least 1,000 hosts. Which prefix length gives the smallest subnet that still satisfies the requirement?",
+    "explanation": "Work backwards from the host count: 2^10 - 2 = 1,022 usable addresses, which is the first power of two at or above 1,000. Ten host bits means a /22. A /21 would waste 1,022 addresses, and a /23 with only 510 usable hosts falls short.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "/22", "is_correct": true },
+      { "text": "/21", "is_correct": false },
+      { "text": "/23", "is_correct": false },
+      { "text": "/24", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which address is a valid host address inside the subnet 192.168.44.0/26?",
+    "explanation": "A /26 has a block size of 64, so 192.168.44.0/26 spans .0 through .63. The .0 address names the subnet and .63 is its broadcast, leaving .1 through .62 for hosts. The address .64 belongs to the next subnet and is itself a network address.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "192.168.44.62", "is_correct": true },
+      { "text": "192.168.44.63", "is_correct": false },
+      { "text": "192.168.44.64", "is_correct": false },
+      { "text": "192.168.44.0", "is_correct": false }
+    ]
+  }
+]

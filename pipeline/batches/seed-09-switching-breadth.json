@@ -1,0 +1,604 @@
+[
+  {
+    "stem": "What is the default DTP administrative mode on a Cisco Catalyst switch port?",
+    "explanation": "Ports ship as dynamic auto, which means they wait for the far end to ask for a trunk. That default is why two untouched switches connected together come up as an access link rather than a trunk.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "dynamic auto", "is_correct": true },
+      { "text": "dynamic desirable", "is_correct": false },
+      { "text": "static trunk", "is_correct": false },
+      { "text": "static access", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which destination MAC address is used by DTP, VTP, CDP, and PAgP frames?",
+    "explanation": "These Cisco protocols share the SNAP-encapsulated multicast group 01:00:0c:cc:cc:cc. Because the frame is addressed to a multicast group rather than a unicast MAC, a switch never has to learn the neighbour's address before it can talk to it.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "01:00:0c:cc:cc:cc", "is_correct": true },
+      { "text": "01:80:c2:00:00:00", "is_correct": false },
+      { "text": "01:00:5e:00:00:05", "is_correct": false },
+      { "text": "ff:ff:ff:ff:ff:ff", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A port in DTP dynamic desirable mode is connected to a device that does not run DTP at all. What does the port settle into?",
+    "explanation": "Dynamic desirable keeps asking for a trunk, but a device that ignores DTP never answers. With no trunk partner to negotiate with, the port falls back to access mode and forwards normal frames untagged.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "An access port", "is_correct": true },
+      { "text": "A trunk port carrying all VLANs", "is_correct": false },
+      { "text": "An err-disabled port", "is_correct": false },
+      { "text": "A port that stays down until DTP is answered", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Both ends of a link are left at the default DTP mode, so the link came up as access but a trunk is required. What is the smallest change that produces a trunk?",
+    "explanation": "Two dynamic auto ports will never negotiate, because neither side offers. Changing one end to static trunk or dynamic desirable gives the other side something to agree with, so the trunk forms without touching both configurations.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Set one end to switchport mode trunk, or to dynamic desirable", "is_correct": true },
+      { "text": "Set both ends to switchport mode access with the same VLAN", "is_correct": false },
+      { "text": "Enable switchport nonegotiate on both ends", "is_correct": false },
+      { "text": "Save the configuration and reload both switches", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a Cisco IP phone learn which VLAN carries its voice traffic?",
+    "explanation": "The switch advertises the voice VLAN to the phone with CDP, which is why the phone needs no manual VLAN configuration. Non-Cisco phones rely on LLDP-MED for the same information, so a vendor-neutral environment needs LLDP enabled on the port.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The switch advertises it with CDP, or LLDP-MED for non-Cisco phones", "is_correct": true },
+      { "text": "The DHCP server returns it in option 150", "is_correct": false },
+      { "text": "The PC attached to the phone passes it in a tagged frame", "is_correct": false },
+      { "text": "It is always hard-coded on the phone and cannot be learned", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A PC is cabled into the PC port of an IP phone, and the switch port has access VLAN 20 and voice VLAN 150. How does the switch treat the PC's untagged frames?",
+    "explanation": "Only the phone tags its own traffic with the voice VLAN. Frames arriving untagged from the daisy-chained PC belong to the access VLAN, so the PC keeps its data scope and QoS policy even though it shares one cable with the phone.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "They are placed in VLAN 20, the access VLAN", "is_correct": true },
+      { "text": "They are placed in VLAN 150, the voice VLAN", "is_correct": false },
+      { "text": "They are dropped because the port expects tagged frames only", "is_correct": false },
+      { "text": "They are tagged with VLAN 150 before leaving the switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which interface command makes the switch trust the CoS value that an IP phone places on its voice frames?",
+    "explanation": "Without a trust statement the switch treats the phone's marking as untrusted and may reset it. Trusting CoS on the phone-facing port preserves the priority the phone assigned, so voice stays in the low-latency queue.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "mls qos trust cos", "is_correct": true },
+      { "text": "mls qos trust dscp", "is_correct": false },
+      { "text": "switchport priority extend trust", "is_correct": false },
+      { "text": "no mls qos", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is voice normally kept in its own VLAN, separate from the data VLAN that serves the PCs?",
+    "explanation": "A dedicated voice VLAN lets the network apply a QoS policy, a security policy, and a DHCP scope to phones alone, and it keeps PC broadcast traffic away from latency-sensitive call signalling. A phone sharing the data VLAN cannot be given different treatment without also treating the PCs that way.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "So QoS, security policy, and the DHCP scope can target phone traffic independently of PC traffic", "is_correct": true },
+      { "text": "Because a phone cannot tag frames unless it is in a separate VLAN", "is_correct": false },
+      { "text": "Because voice VLANs bypass spanning tree to reduce latency", "is_correct": false },
+      { "text": "Because trunking requires at least two VLANs on every port", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A switch receives a frame whose destination MAC address is not present in its MAC address table. What does it do with the frame?",
+    "explanation": "An unknown destination cannot be mapped to a port, so the switch floods the frame out every other port in the same VLAN. That flooding is exactly what a MAC flooding attack exploits, filling the table with bogus entries so legitimate destinations also look unknown.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Floods it out of every other port in the same VLAN", "is_correct": true },
+      { "text": "Drops it and sends an ICMP unreachable message", "is_correct": false },
+      { "text": "Sends it only to the default gateway port", "is_correct": false },
+      { "text": "Holds it until the destination sends a frame and is learned", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command lists the MAC addresses a switch has learned, along with their VLANs and ports?",
+    "explanation": "show mac address-table prints the CAM contents with VLAN, type, and port so you can confirm whether a host was learned on the expected access port. It is the first check when a host is reachable from some parts of the network but not others.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "show mac address-table", "is_correct": true },
+      { "text": "show arp", "is_correct": false },
+      { "text": "show interface status", "is_correct": false },
+      { "text": "show vlan brief", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which statement is true of a MAC address entry created with the mac address-table static command?",
+    "explanation": "Static entries are administrative and are never aged out, unlike dynamically learned ones that disappear after the aging time or a reload. That permanence is useful for pinned server ports, but it also means a stale static entry survives until someone removes it.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is never aged out and remains until it is removed manually", "is_correct": true },
+      { "text": "It ages out after 300 seconds like a dynamic entry", "is_correct": false },
+      { "text": "It is cleared whenever the switch is reloaded", "is_correct": false },
+      { "text": "It can only be created on a trunk port", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A single MAC address keeps appearing on two different switch ports within seconds of each other. What does this most likely indicate?",
+    "explanation": "The switch follows the source address of the newest frame, so the entry bounces between ports as frames arrive from both directions. That flapping is the classic signature of a Layer 2 loop, or of a duplicated MAC such as a cloned VM or a misconfigured NIC team.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A Layer 2 loop or a duplicated MAC address", "is_correct": true },
+      { "text": "Normal ageing behaviour of dynamic entries", "is_correct": false },
+      { "text": "The switch running out of CAM table space", "is_correct": false },
+      { "text": "A mismatch between the native VLANs on a trunk", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command enables storm control for broadcast traffic at 20 percent of the interface bandwidth?",
+    "explanation": "The level keyword takes a percentage of the interface's total bandwidth when no unit is given, and each traffic type is configured separately. Broadcast, multicast, and unknown unicast therefore need three separate statements if all three should be limited.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "storm-control broadcast level 20", "is_correct": true },
+      { "text": "storm-control broadcast 20 mbps", "is_correct": false },
+      { "text": "storm-control level broadcast 20", "is_correct": false },
+      { "text": "switchport storm-control broadcast 20", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which storm-control action keyword takes the port out of service when the configured threshold is exceeded?",
+    "explanation": "The shutdown keyword err-disables the interface, which stops the storm but also drops every legitimate frame on that port. The trap keyword only reports the condition, and plain storm control with no action simply discards the excess traffic while the port stays up.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "shutdown", "is_correct": true },
+      { "text": "trap", "is_correct": false },
+      { "text": "restrict", "is_correct": false },
+      { "text": "protect", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Storm control with the shutdown action placed a port in the err-disabled state. What restores it?",
+    "explanation": "An err-disabled port has to be cycled with shutdown and no shutdown, or recovered automatically if errdisable recovery has been enabled for the storm-control cause. Either way the underlying storm has to be resolved first, or the port will simply be disabled again.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Issue shutdown then no shutdown, or enable errdisable recovery for the storm-control cause", "is_correct": true },
+      { "text": "Clear the MAC address table", "is_correct": false },
+      { "text": "Reload the switch", "is_correct": false },
+      { "text": "Remove the storm-control command from the interface", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which storm-control syntax limits broadcast traffic to a packet rate rather than a percentage of bandwidth?",
+    "explanation": "Adding the pps keyword switches the threshold from a percentage of the interface bandwidth to packets per second, which is far more predictable on links whose speed is not fixed. A percentage on a 10 Gbps port allows an enormous packet rate that may still overwhelm a slow attached device.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "storm-control broadcast level pps 500", "is_correct": true },
+      { "text": "storm-control broadcast rate 500 pps", "is_correct": false },
+      { "text": "storm-control broadcast packets 500", "is_correct": false },
+      { "text": "storm-control broadcast level 500 bps", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What are the default CDP advertisement interval and hold time on a Cisco device?",
+    "explanation": "CDP sends an advertisement every 60 seconds and tells the neighbour to keep the entry for 180 seconds, so three advertisements can be lost before the neighbour is removed. Both values can be changed with the cdp timer and cdp holdtime commands.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "60 seconds interval, 180 seconds hold time", "is_correct": true },
+      { "text": "30 seconds interval, 120 seconds hold time", "is_correct": false },
+      { "text": "120 seconds interval, 360 seconds hold time", "is_correct": false },
+      { "text": "10 seconds interval, 30 seconds hold time", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which interface command stops CDP from advertising on a single port while leaving CDP running globally?",
+    "explanation": "no cdp enable disables CDP on that one interface, which is what a hardening baseline does on ports facing an untrusted network. The global no cdp run would disable the protocol everywhere and break neighbour discovery on every other link.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "no cdp enable", "is_correct": true },
+      { "text": "no cdp run", "is_correct": false },
+      { "text": "no cdp advertise-v2", "is_correct": false },
+      { "text": "cdp disable", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command shows a CDP neighbour's platform, software version, and management address rather than just its name and port?",
+    "explanation": "show cdp neighbors prints one line per neighbour with the local port and the neighbour's port, while the detail keyword adds the platform, IOS version, and address list. Those extra fields are what let you verify a device's software release remotely.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "show cdp neighbors detail", "is_correct": true },
+      { "text": "show cdp neighbors", "is_correct": false },
+      { "text": "show cdp interface", "is_correct": false },
+      { "text": "show cdp traffic", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which two interface commands control whether a port sends and accepts LLDP advertisements?",
+    "explanation": "LLDP is enabled globally with lldp run and then tuned per interface with lldp transmit and lldp receive separately. That split is useful on an edge port where you want to receive neighbour data but not advertise the switch's own identity, or the reverse.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "lldp transmit and lldp receive", "is_correct": true },
+      { "text": "lldp run and no lldp run", "is_correct": false },
+      { "text": "lldp enable and lldp disable", "is_correct": false },
+      { "text": "lldp advertise and lldp listen", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does 802.11r fast BSS transition change about a client roaming between access points?",
+    "explanation": "A normal roam repeats the full authentication and key exchange at the new AP, which is slow enough to break a voice call. 802.11r pre-establishes the security keys across the mobility domain so the client can resume at the new AP with a short handshake instead of a full one.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It pre-establishes keys so the client can rekey quickly at the new access point", "is_correct": true },
+      { "text": "It gives the client a list of neighbour access points to consider", "is_correct": false },
+      { "text": "It encrypts management frames to prevent deauthentication attacks", "is_correct": false },
+      { "text": "It lets the client keep its IP address across different subnets", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Several clients use an SSID successfully, but one laptop can see the SSID and still fails to join. What is the most likely cause?",
+    "explanation": "An SSID that broadcasts correctly but rejects one specific client usually means a policy the client cannot satisfy, such as a WPA3-only WLAN when the adapter only supports WPA2, or a protected management frames requirement the driver does not implement. The radio link is working, so the failure happens at the security stage.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The client does not support the security policy the WLAN requires, such as WPA3 or protected management frames", "is_correct": true },
+      { "text": "The SSID is hidden from that client only", "is_correct": false },
+      { "text": "The client is out of range of every access point", "is_correct": false },
+      { "text": "The DHCP scope for the WLAN is exhausted", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A wireless client joins the correct SSID and gets an address, but it lands in the wrong VLAN. Where is the mapping defined?",
+    "explanation": "The controller decides which VLAN a wireless client belongs to by mapping the WLAN to an interface or VLAN, and the frame is then tagged onto the trunk toward the access switch. A client in the wrong subnet is therefore a mapping mistake on the controller, not a problem with the client or the AP.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "In the WLAN-to-interface mapping on the wireless controller", "is_correct": true },
+      { "text": "In the client's own IP configuration", "is_correct": false },
+      { "text": "In the access point's radio profile", "is_correct": false },
+      { "text": "In the DHCP scope on the client's subnet", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does client exclusion do on a wireless controller?",
+    "explanation": "Client exclusion blocks a specific MAC address for a configured period after repeated authentication or association failures. It limits the damage from a client stuck in a failing retry loop, but it also means a misconfigured device stays off the network even after the configuration is corrected until the timer expires.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It blocks a client's MAC address for a period after repeated failures", "is_correct": true },
+      { "text": "It removes the client from the controller's mobility group", "is_correct": false },
+      { "text": "It permanently denies every client that misses a DHCP request", "is_correct": false },
+      { "text": "It disables the SSID the client was trying to join", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which pair of commands defines a local SPAN session that copies traffic from Gi0/1 to Gi0/2?",
+    "explanation": "A SPAN session always needs both a source and a destination statement under the same session number. The source can be an interface or a VLAN, and the destination is the port where the analyzer is plugged in.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "monitor session 1 source interface Gi0/1, then monitor session 1 destination interface Gi0/2", "is_correct": true },
+      { "text": "span source Gi0/1, then span destination Gi0/2", "is_correct": false },
+      { "text": "monitor capture Gi0/1 both, then monitor export Gi0/2", "is_correct": false },
+      { "text": "interface Gi0/1 monitor, then interface Gi0/2 mirror", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does a port behave while it is the destination of a SPAN session?",
+    "explanation": "A SPAN destination port gives up its normal switching role and transmits only the mirrored copies, so it neither forwards user traffic nor learns addresses. Attaching a device that answers on that port can disturb the capture, which is why analyzers usually just listen.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It stops forwarding normal user traffic and only transmits the mirrored copies", "is_correct": true },
+      { "text": "It forwards user traffic and mirrored copies at the same time by default", "is_correct": false },
+      { "text": "It becomes a trunk carrying the mirrored VLAN", "is_correct": false },
+      { "text": "It shuts down until the session is removed", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a SPAN session capture when its source is configured as a VLAN instead of an interface?",
+    "explanation": "A VLAN source mirrors traffic on every port that belongs to that VLAN, including frames switched between two local hosts that never leave the switch. That makes it useful for capturing a whole segment, at the cost of far more traffic than a single port would generate.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Traffic on every port in that VLAN, including frames switched locally between hosts", "is_correct": true },
+      { "text": "Only traffic that leaves the switch toward the default gateway", "is_correct": false },
+      { "text": "Only broadcast and multicast frames in that VLAN", "is_correct": false },
+      { "text": "Only frames arriving on the trunk ports carrying that VLAN", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which VLAN-level command must be applied to the VLAN that carries mirrored frames in an RSPAN session?",
+    "explanation": "An RSPAN VLAN has to be declared with remote-span so the switches treat it as a transport for mirrored traffic rather than a normal VLAN. Without it the mirrored frames are flooded normally and the session never delivers a clean capture to the destination switch.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "remote-span, entered in VLAN configuration mode", "is_correct": true },
+      { "text": "monitor session 1 remote vlan", "is_correct": false },
+      { "text": "spanning-tree portfast, entered on every port in the VLAN", "is_correct": false },
+      { "text": "vlan dot1q tag native on each trunk", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two virtual machines on the same hypervisor and the same port group exchange frames. Does that traffic reach the physical network?",
+    "explanation": "The virtual switch forwards between vNICs in software, so the frames are delivered without ever touching an uplink. That is why a capture taken on the physical switch sees nothing for this traffic and the analyzer has to run inside the hypervisor instead.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "No; the virtual switch forwards the frames internally in software", "is_correct": true },
+      { "text": "Yes; every frame is sent to the physical switch first", "is_correct": false },
+      { "text": "Only if the two virtual machines are in different VLANs", "is_correct": false },
+      { "text": "Only if promiscuous mode is enabled on the port group", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does NIC teaming provide when several physical adapters are attached to one virtual switch?",
+    "explanation": "Teaming bonds multiple physical NICs into one logical uplink, so a failed adapter does not take the host off the network and the aggregate bandwidth exceeds that of a single link. The exact load-balancing behaviour depends on the policy chosen and on how the physical switch is configured.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Redundancy if an adapter fails and more bandwidth than one link alone", "is_correct": true },
+      { "text": "A separate VLAN for each virtual machine automatically", "is_correct": false },
+      { "text": "Encryption of all traffic leaving the host", "is_correct": false },
+      { "text": "A guarantee that each virtual machine uses a dedicated physical NIC", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which port group security policy stops a virtual machine from presenting a MAC address that was never assigned to it?",
+    "explanation": "The MAC address changes policy governs frames received from the guest, and forged transmits covers frames the guest sends with a source MAC it does not own. Rejecting both closes the spoofing hole that otherwise lets one virtual machine impersonate another on the same segment.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "MAC address changes, together with forged transmits", "is_correct": true },
+      { "text": "Promiscuous mode", "is_correct": false },
+      { "text": "Traffic shaping", "is_correct": false },
+      { "text": "The uplink teaming policy", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How is a virtual machine's traffic placed into a specific VLAN on a standard virtual switch?",
+    "explanation": "The port group carries the VLAN ID and the virtual switch tags frames as they leave toward the uplink, so the guest itself stays VLAN-unaware. The alternative is to give the guest a trunk and let it tag its own frames, which requires the port group to allow VLAN 4095.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The port group holds the VLAN ID and the virtual switch tags the frames", "is_correct": true },
+      { "text": "The guest operating system must tag its own frames in every case", "is_correct": false },
+      { "text": "The physical switch detects the guest and assigns a VLAN dynamically", "is_correct": false },
+      { "text": "Each virtual machine is bound to a dedicated uplink in that VLAN", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which legacy Cisco feature gives an access switch an immediate alternate path when its root port fails?",
+    "explanation": "UplinkFast keeps a secondary uplink ready and moves it straight to forwarding when the root port goes down, instead of waiting through the 802.1D listening and learning timers. It also limits how much the switch can disturb the topology, which is why it is meant only for access-layer switches.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "UplinkFast", "is_correct": true },
+      { "text": "Root Guard", "is_correct": false },
+      { "text": "Loop Guard", "is_correct": false },
+      { "text": "BPDU Guard", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does BPDU Filter do when it is applied to a PortFast interface?",
+    "explanation": "BPDU Filter stops the port from sending BPDUs and ignores any it receives, which effectively removes the port from spanning tree. That is safe only toward an end host; accidentally applying it toward another switch creates exactly the loop spanning tree exists to prevent.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It stops sending BPDUs and ignores received BPDUs, effectively removing the port from spanning tree", "is_correct": true },
+      { "text": "It places the port in the root-inconsistent state when a superior BPDU arrives", "is_correct": false },
+      { "text": "It converts the port into a designated port regardless of topology", "is_correct": false },
+      { "text": "It slows the port's transition to forwarding to detect loops", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command makes a switch automatically re-enable ports that BPDU Guard has err-disabled?",
+    "explanation": "errdisable recovery cause bpduguard enables automatic recovery, and the interval is set separately, defaulting to 300 seconds. Without it, every BPDU Guard violation needs a manual shutdown and no shutdown on the port.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "errdisable recovery cause bpduguard", "is_correct": true },
+      { "text": "spanning-tree bpduguard enable recovery", "is_correct": false },
+      { "text": "no spanning-tree bpduguard default", "is_correct": false },
+      { "text": "errdisable detect cause bpduguard", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which three port states exist in Rapid Spanning Tree Protocol (802.1w)?",
+    "explanation": "RSTP folded the 802.1D disabled, blocking, and listening states into a single discarding state, leaving discarding, learning, and forwarding. Fewer states mean a port can move directly from discarding to forwarding once the proposal and agreement exchange succeeds.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Discarding, learning, and forwarding", "is_correct": true },
+      { "text": "Blocking, listening, and forwarding", "is_correct": false },
+      { "text": "Disabled, blocking, and learning", "is_correct": false },
+      { "text": "Discarding, listening, and forwarding", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does an RSTP edge port behave when a cable is plugged into it?",
+    "explanation": "An edge port assumes an end host is attached, so it moves straight to forwarding without the proposal and agreement exchange and without generating a topology change. It is the RSTP equivalent of PortFast, and the same caution applies: connecting another switch to it invites a loop.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It moves directly to forwarding and does not trigger a topology change", "is_correct": true },
+      { "text": "It waits for the proposal and agreement handshake before forwarding", "is_correct": false },
+      { "text": "It becomes the root port for the segment", "is_correct": false },
+      { "text": "It stays in discarding until a BPDU is received", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How quickly does RSTP conclude that a neighbour on a point-to-point link has failed?",
+    "explanation": "RSTP treats the loss of three consecutive hellos as a failure, which at the default two-second hello interval is about six seconds. That is far faster than 802.1D, which waits out the full max-age timer before even beginning to reconverge.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "After three missed hellos, roughly six seconds at the default interval", "is_correct": true },
+      { "text": "After the 20-second max-age timer expires", "is_correct": false },
+      { "text": "After 30 seconds of listening and learning", "is_correct": false },
+      { "text": "Only when the interface line protocol goes down", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which interface command disables Power over Ethernet delivery on a switch port?",
+    "explanation": "power inline never stops the port from detecting and powering a device, which is what you want on a port that should only ever serve a non-PoE host. It is a per-port setting, so the rest of the switch keeps powering phones and access points normally.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "power inline never", "is_correct": true },
+      { "text": "no power inline", "is_correct": false },
+      { "text": "power inline off", "is_correct": false },
+      { "text": "poe disable", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which mechanism does 802.3at use beyond hardware classification to negotiate power above the 15.4 W class limit?",
+    "explanation": "Hardware classification only carries a few power classes, so 802.3at adds LLDP-based negotiation that lets the powered device and the PSE agree on a higher figure. That is how a PoE+ access point can request 25 W rather than being capped at the class ceiling.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "LLDP power negotiation between the powered device and the PSE", "is_correct": true },
+      { "text": "A second round of resistance detection at a higher voltage", "is_correct": false },
+      { "text": "CDP advertisements carrying a wattage field", "is_correct": false },
+      { "text": "DHCP option 82 in the device's address request", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A powered device draws more current than the PSE allocated to its port. What does the PSE do?",
+    "explanation": "The PSE monitors the port and removes power when the device exceeds its allocation, which protects the switch's power supply and the cabling. The port then has to go through detection again before power is restored, so an undersized allocation looks like a device that keeps rebooting.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It removes power from the port and the device must be detected again", "is_correct": true },
+      { "text": "It delivers the extra power and logs a warning", "is_correct": false },
+      { "text": "It drops the port's data traffic but keeps power applied", "is_correct": false },
+      { "text": "It moves the device to a higher power class automatically", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the default port security violation mode on a Cisco switch?",
+    "explanation": "The default is shutdown, which err-disables the port on the first violation and raises a syslog message. Because that takes the port out of service, many access designs deliberately change it to restrict so a single unauthorised device does not silence a working port.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "shutdown", "is_correct": true },
+      { "text": "restrict", "is_correct": false },
+      { "text": "protect", "is_correct": false },
+      { "text": "trap", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which links carry VTP advertisements between switches?",
+    "explanation": "VTP advertisements are sent only over trunk links, so a switch reachable solely through access ports never learns the domain's VLAN database. That is why a new switch cabled to an access port can sit in the domain with a stale database and no error.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Trunk links only", "is_correct": true },
+      { "text": "Any link between two switches, access or trunk", "is_correct": false },
+      { "text": "Only links configured as EtherChannel members", "is_correct": false },
+      { "text": "Only routed links between Layer 3 switches", "is_correct": false }
+    ]
+  }
+]

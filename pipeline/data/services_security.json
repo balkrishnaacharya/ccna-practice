@@ -1038,5 +1038,3177 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Why is an `ip helper-address` needed when the DHCP server sits on a different subnet from the client?",
+    "explanation": "A client with no address sends DHCPDISCOVER as a broadcast, and routers do not forward broadcasts by default. The helper address makes the router rewrite the broadcast into a unicast toward the server and relay the reply back to the client.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It converts the client's broadcast into a unicast toward the DHCP server and relays the reply",
+        "is_correct": true
+      },
+      {
+        "text": "It encrypts the DHCP exchange between the client and the server",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns the client a static address from the router's local pool",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates the DHCP server before any lease is granted",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What field does the relay agent set so the DHCP server can choose the correct address pool?",
+    "explanation": "The relay inserts the gateway address (giaddr) of the interface where the request arrived. The server then matches that address to a configured scope and leases an address from the right subnet.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The gateway IP address (giaddr) of the client-facing interface",
+        "is_correct": true
+      },
+      {
+        "text": "The client's MAC address, which the server maps to a fixed pool",
+        "is_correct": false
+      },
+      {
+        "text": "The DNS suffix the client should register with",
+        "is_correct": false
+      },
+      {
+        "text": "The hop count remaining before the request is discarded",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DHCP message does a client broadcast first when it has no address at all?",
+    "explanation": "The client broadcasts DHCPDISCOVER to find any available server. It cannot unicast because it does not yet have a source IP address or the server's identity.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCPDISCOVER",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPREQUEST",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPOFFER",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPACK",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the correct order of the four DHCP messages in a successful lease?",
+    "explanation": "The exchange is Discover, Offer, Request, Acknowledge. The client broadcasts a Discover, servers Offer, the client Requests one offer by name, and the chosen server Acknowledges with the lease parameters.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCPDISCOVER, DHCPOFFER, DHCPREQUEST, DHCPACK",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPREQUEST, DHCPOFFER, DHCPDISCOVER, DHCPACK",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPOFFER, DHCPDISCOVER, DHCPACK, DHCPREQUEST",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPDISCOVER, DHCPREQUEST, DHCPACK, DHCPOFFER",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "After receiving an offer, which message does the client send and why is it broadcast?",
+    "explanation": "The client broadcasts DHCPREQUEST so that every server which made an offer learns which one was selected and can release its reservation. That single broadcast both accepts one offer and declines the rest.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCPREQUEST, broadcast so the servers that were not chosen release their offers",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPACK, broadcast so the client can confirm to the entire subnet",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPRELEASE, broadcast so the old lease is removed from every server",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM, broadcast so the client can request only DNS settings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What information does a DHCPACK carry besides the IP address?",
+    "explanation": "The acknowledgement carries the lease duration, subnet mask, default gateway (router option), DNS servers, and any other options in the scope. That bundle is what lets a host become fully operational without further configuration.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Lease duration, subnet mask, default gateway, and DNS servers",
+        "is_correct": true
+      },
+      {
+        "text": "Only the IP address, with all other settings learned from DNS",
+        "is_correct": false
+      },
+      {
+        "text": "The switch port the client is attached to on the access switch",
+        "is_correct": false
+      },
+      {
+        "text": "A copy of the server's own routing table for the client",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does DHCP snooping do on a Layer 2 switch?",
+    "explanation": "It classifies ports as trusted or untrusted. DHCP server messages arriving on untrusted ports are dropped, which stops a rogue server on an access port from handing out addresses. It also builds a binding table of client IP, MAC, port, and VLAN.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It blocks DHCP server messages on untrusted ports and builds a client binding table",
+        "is_correct": true
+      },
+      {
+        "text": "It encrypts all DHCP messages between clients and the legitimate server",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns addresses to clients when the real DHCP server is unreachable",
+        "is_correct": false
+      },
+      {
+        "text": "It converts DHCP broadcasts into unicast toward the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ports should be configured as trusted for DHCP snooping?",
+    "explanation": "Only the ports that lead toward the legitimate DHCP server, typically the uplink to the distribution or core switch. Access ports facing end users stay untrusted so a rogue server cannot answer clients.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Uplinks toward the legitimate DHCP server",
+        "is_correct": true
+      },
+      {
+        "text": "All access ports facing end users",
+        "is_correct": false
+      },
+      {
+        "text": "Only ports in the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Every port on every access switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which security features rely on the DHCP snooping binding table?",
+    "explanation": "Dynamic ARP Inspection uses the bindings to validate ARP packets, and IP Source Guard uses them to filter traffic whose source IP or MAC does not match what DHCP assigned. Both depend on snooping being enabled first.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Dynamic ARP Inspection and IP Source Guard",
+        "is_correct": true
+      },
+      {
+        "text": "Port security and BPDU guard",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning tree root guard and loop guard",
+        "is_correct": false
+      },
+      {
+        "text": "VTP pruning and storm control",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Dynamic ARP Inspection validate?",
+    "explanation": "DAI intercepts ARP packets on untrusted ports and compares the sender's MAC and IP against the DHCP snooping binding table. A mismatch means the packet is spoofed, so it is dropped.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It compares ARP sender MAC and IP against the DHCP snooping binding table",
+        "is_correct": true
+      },
+      {
+        "text": "It checks ARP packets against the switch's MAC address table only",
+        "is_correct": false
+      },
+      {
+        "text": "It verifies that ARP replies are encrypted with the correct key",
+        "is_correct": false
+      },
+      {
+        "text": "It confirms that every ARP request carries a valid VLAN tag",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens to an ARP packet that fails Dynamic ARP Inspection on an untrusted port?",
+    "explanation": "The packet is dropped and a log entry can be generated, but the port itself remains up. This blocks the attacker's poisoning attempt without taking down a legitimate user's link.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The packet is dropped and the port remains up",
+        "is_correct": true
+      },
+      {
+        "text": "The packet is forwarded but the port is shut down",
+        "is_correct": false
+      },
+      {
+        "text": "The packet is rewritten with the correct MAC address and forwarded",
+        "is_correct": false
+      },
+      {
+        "text": "The packet is queued until a valid binding appears",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMP version adds both authentication and encryption of management traffic?",
+    "explanation": "SNMPv3 introduces a user-based security model with authentication and privacy (encryption). Versions 1 and 2c send community strings in clear text, so they offer no real protection.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "SNMPv3",
+        "is_correct": true
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv2c",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv2u",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMP operation does a manager use to retrieve a specific object from an agent?",
+    "explanation": "A GET request asks the agent for the value of one or more object identifiers. GETNEXT walks to the next object in the tree, and GETBULK is the more efficient bulk variant added in SNMPv2c.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "GET",
+        "is_correct": true
+      },
+      {
+        "text": "TRAP",
+        "is_correct": false
+      },
+      {
+        "text": "SET",
+        "is_correct": false
+      },
+      {
+        "text": "RESPONSE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two steps are required before a Cisco device will accept SSH connections?",
+    "explanation": "The device needs an RSA key pair, generated with `crypto key generate rsa`, and the vty lines must permit SSH with `transport input ssh`. A hostname and domain name must also be set before the key can be generated.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Generate an RSA key pair and allow SSH on the vty lines",
+        "is_correct": true
+      },
+      {
+        "text": "Enable SNMPv3 and configure a local user account",
+        "is_correct": false
+      },
+      {
+        "text": "Configure an ACL on the vty lines and enable Telnet",
+        "is_correct": false
+      },
+      {
+        "text": "Set the enable secret and configure NTP authentication",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the minimum RSA modulus size required to run SSH version 2?",
+    "explanation": "SSHv2 requires a modulus of at least 768 bits, and 1024 or 2048 is recommended in practice. If the modulus is too small the device refuses to enable SSH version 2.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "768 bits",
+        "is_correct": true
+      },
+      {
+        "text": "256 bits",
+        "is_correct": false
+      },
+      {
+        "text": "512 bits",
+        "is_correct": false
+      },
+      {
+        "text": "4096 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which encryption and integrity combination does WPA2-Personal use?",
+    "explanation": "WPA2 uses AES with CCMP for both encryption and integrity, keyed by a pre-shared key in Personal mode. WPA (the original) relied on TKIP with RC4, which is deprecated.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "AES with CCMP and a pre-shared key",
+        "is_correct": true
+      },
+      {
+        "text": "TKIP with RC4 and a pre-shared key",
+        "is_correct": false
+      },
+      {
+        "text": "WEP with a 40-bit static key",
+        "is_correct": false
+      },
+      {
+        "text": "DES with 802.1X certificates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port does HTTPS use by default, and why is it preferred over HTTP for device management?",
+    "explanation": "HTTPS runs on TCP 443 and wraps the session in TLS, so credentials and configuration pages are encrypted. Plain HTTP on TCP 80 sends the same data in cleartext, where anyone on the path can read the login and session cookie.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "TCP 443, because TLS encrypts the management session",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 80, because it has lower latency",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 22, because it uses SSH",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 161, because it is polled",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDP port does a network management station use to send SNMP GET requests to an agent?",
+    "explanation": "SNMP polling uses UDP 161 on the agent. Traps and informs travel the other direction to UDP 162 on the manager, which is why ACLs on managed devices usually need both ports opened in opposite directions.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "UDP 161",
+        "is_correct": true
+      },
+      {
+        "text": "UDP 162",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 161",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 514",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an AAA architecture, which function decides what an authenticated user is allowed to do?",
+    "explanation": "Authentication proves identity, authorization grants or denies specific commands and resources once identity is known, and accounting logs what was actually done. Authorization is where privilege levels and command sets are enforced.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Authorization",
+        "is_correct": true
+      },
+      {
+        "text": "Authentication",
+        "is_correct": false
+      },
+      {
+        "text": "Accounting",
+        "is_correct": false
+      },
+      {
+        "text": "Auditing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does configuring `exec-timeout 5 0` on the console and VTY lines accomplish?",
+    "explanation": "It closes an idle session after 5 minutes and 0 seconds. Without it, an unattended terminal left logged in gives anyone with physical or network access a privileged session on the device.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It terminates an idle session after 5 minutes",
+        "is_correct": true
+      },
+      {
+        "text": "It limits each login attempt to 5 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "It disconnects the session after 5 minutes of continuous output",
+        "is_correct": false
+      },
+      {
+        "text": "It allows a maximum of 5 concurrent sessions",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why should NTP authentication be configured on routers that synchronize from external time servers?",
+    "explanation": "NTP authentication uses a keyed hash so the client only accepts time from a server that knows the shared key. Without it, an attacker who can spoof the server address can shift device clocks, which corrupts log timestamps, certificate validation and time-based ACLs.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "To stop a spoofed server from shifting device clocks and corrupting logs and certificate checks",
+        "is_correct": true
+      },
+      {
+        "text": "To encrypt the time value so it cannot be read in transit",
+        "is_correct": false
+      },
+      {
+        "text": "To reduce the polling interval and save bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "To allow the router to serve time to other devices",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the `logging synchronous` line configuration command?",
+    "explanation": "Without it, an asynchronous log message arriving mid-command wipes the line being typed and splits the command in two. `logging synchronous` reprints the prompt and the partial input after the log line so the operator can keep typing.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It reprints the prompt and partial input after a log message so typing is not interrupted",
+        "is_correct": true
+      },
+      {
+        "text": "It buffers log messages until the session logs out",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a copy of every log message to all VTY lines",
+        "is_correct": false
+      },
+      {
+        "text": "It timestamps log messages with millisecond precision",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a rogue access point, and why is it a security risk?",
+    "explanation": "A rogue AP is any access point connected to the corporate network without authorization. It usually has weak or no security, so it gives an attacker a bridge past the wired controls and can lure corporate clients into associating with it.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "An unauthorized AP attached to the corporate network that bypasses wired security controls",
+        "is_correct": true
+      },
+      {
+        "text": "An AP broadcasting more SSIDs than its licence allows",
+        "is_correct": false
+      },
+      {
+        "text": "An AP that has exceeded its PoE power budget",
+        "is_correct": false
+      },
+      {
+        "text": "An AP operating on a channel outside the regulatory domain",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What can a wireless intrusion prevention system (WIPS) do when it detects an evil twin access point?",
+    "explanation": "A WIPS correlates the offending BSSID with the authorized AP list, then can send deauthentication frames to contain the rogue radio while alerting administrators. Detection alone is a WIDS function; containment is what makes it prevention.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Contain the rogue radio with deauthentication frames and alert administrators",
+        "is_correct": true
+      },
+      {
+        "text": "Reconfigure the legitimate AP to a new channel automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Revoke the rogue AP's DHCP lease at the switch",
+        "is_correct": false
+      },
+      {
+        "text": "Rotate the WPA3 pre-shared key for the affected SSID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A standard ACL applied inbound on Gi0/0 denies 10.0.0.0/8, yet pings sourced from the router's own Gi0/0 address to 10.1.1.1 still succeed. Why?",
+    "explanation": "An ACL bound to an interface filters only packets that transit that interface. Traffic the router generates itself is matched against `ip local policy` ACLs or control-plane policing instead, so an interface ACL never blocks the router's own sourced traffic.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Interface ACLs do not filter traffic the router generates itself",
+        "is_correct": true
+      },
+      {
+        "text": "Standard ACLs match only traffic forwarded from directly connected hosts",
+        "is_correct": false
+      },
+      {
+        "text": "The ACL must be applied outbound before it takes effect",
+        "is_correct": false
+      },
+      {
+        "text": "ICMP is never matched by a standard ACL entry",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A deny entry is appended to the end of an existing numbered ACL, but the traffic it targets still passes. What explains this?",
+    "explanation": "ACLs are evaluated top to bottom and stop at the first match, so a broader permit above the new deny wins. Numbered entries are appended rather than inserted, so the fix is to resequence the ACL (`ip access-list resequence`) or use a named ACL with sequence numbers and place the deny above the permit.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "An earlier permit already matched the traffic before the new deny was reached",
+        "is_correct": true
+      },
+      {
+        "text": "Numbered ACLs cannot contain deny entries after a permit",
+        "is_correct": false
+      },
+      {
+        "text": "The implicit `deny any` overrides explicit deny entries",
+        "is_correct": false
+      },
+      {
+        "text": "An ACL must be resequenced before any new entry takes effect",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which EAP method requires a client certificate in addition to a server certificate?",
+    "explanation": "EAP-TLS performs mutual certificate-based authentication, so every supplicant needs its own certificate. PEAP and EAP-FAST require only a server certificate and authenticate the client through an inner method such as MS-CHAPv2 or a PAC.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "EAP-TLS",
+        "is_correct": true
+      },
+      {
+        "text": "PEAPv0 with MS-CHAPv2",
+        "is_correct": false
+      },
+      {
+        "text": "EAP-FAST with a PAC",
+        "is_correct": false
+      },
+      {
+        "text": "LEAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary purpose of the WPA2 four-way handshake?",
+    "explanation": "Both sides start from the PMK, derived from the passphrase via PBKDF2 or delivered by 802.1X, and use the ANonce/SNonce exchange to derive fresh per-session keys. The handshake proves both sides hold the PMK without transmitting it, and its captured messages are what offline dictionary attacks target.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "To derive per-session keys from the PMK and prove both sides hold it",
+        "is_correct": true
+      },
+      {
+        "text": "To exchange the PSK in clear text so both sides can verify it",
+        "is_correct": false
+      },
+      {
+        "text": "To negotiate which cipher suite the access point will use",
+        "is_correct": false
+      },
+      {
+        "text": "To assign the client an IP address before user data can flow",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch running DHCP snooping receives a DHCPOFFER on an untrusted port. What does the switch do?",
+    "explanation": "DHCP snooping drops DHCP server messages such as OFFER and ACK when they arrive on an untrusted port. Only trusted ports, normally the uplink toward the real DHCP server or relay, may carry those messages, which prevents a rogue server on an access port from answering clients.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Drops the message because server messages are not allowed on untrusted ports",
+        "is_correct": true
+      },
+      {
+        "text": "Forwards the message but logs the port as untrusted",
+        "is_correct": false
+      },
+      {
+        "text": "Forwards the message after adding an entry to the snooping binding table",
+        "is_correct": false
+      },
+      {
+        "text": "Converts the port into a trusted port automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port facing end-user workstations is configured as trusted for Dynamic ARP Inspection. What is the security consequence?",
+    "explanation": "Trusted ports are skipped by DAI entirely, so a host behind that port can claim any IP it likes and poison the ARP caches of its neighbors. Trust belongs only on links toward routers or other switches, where a spoofed reply cannot originate from an untrusted host.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ARP packets from those workstations bypass validation and can poison other hosts' caches",
+        "is_correct": true
+      },
+      {
+        "text": "The port enters the error-disabled state until trust is removed",
+        "is_correct": false
+      },
+      {
+        "text": "Only the first ARP packet from each host is inspected",
+        "is_correct": false
+      },
+      {
+        "text": "DAI falls back to validating against the MAC address table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ACL entry matches exactly the addresses 192.168.1.32 through 192.168.1.63?",
+    "explanation": "That range is a /27 block starting at .32, so the wildcard mask is the inverse of 255.255.255.224, which is 0.0.0.31. Writing permit 192.168.1.32 0.0.0.31 matches only .32 through .63; host entries or a .0.0.63 mask would match a different set.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "permit 192.168.1.32 0.0.0.31",
+        "is_correct": true
+      },
+      {
+        "text": "permit 192.168.1.32 0.0.0.63",
+        "is_correct": false
+      },
+      {
+        "text": "permit 192.168.1.0 0.0.0.31",
+        "is_correct": false
+      },
+      {
+        "text": "permit 192.168.1.32 0.0.0.32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement about TACACS+ compared with RADIUS is correct?",
+    "explanation": "TACACS+ runs over TCP port 49, encrypts the entire packet body, and can separate authentication, authorization, and accounting into distinct exchanges. RADIUS runs over UDP and encrypts only the password field, which is why TACACS+ is often preferred for device administration.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It uses TCP and encrypts the entire packet body",
+        "is_correct": true
+      },
+      {
+        "text": "It uses UDP and encrypts only the password field",
+        "is_correct": false
+      },
+      {
+        "text": "It combines all AAA functions into one fixed exchange",
+        "is_correct": false
+      },
+      {
+        "text": "It cannot be used for command authorization on network devices",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol operates over UDP port 67 and port 68 for automatic IP configuration?",
+    "explanation": "The Dynamic Host Configuration Protocol (DHCP) uses UDP port 67 for the server and UDP port 68 for the client. Clients broadcast DHCPDISCOVER messages to discover available servers on the local segment.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCP",
+        "is_correct": true
+      },
+      {
+        "text": "DNS",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which service resolves fully qualified domain names into IP addresses?",
+    "explanation": "DNS maps names such as www.example.com to IP addresses so applications do not need to know the numeric address. It normally uses UDP port 53 for queries, falling back to TCP for large responses.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DNS",
+        "is_correct": true
+      },
+      {
+        "text": "DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "NTP",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which service automatically supplies an IP address, mask, gateway, and DNS server to a host?",
+    "explanation": "DHCP delivers a lease containing the address, subnet mask, default gateway, and DNS servers. Without it, every host would need to be configured manually and re-addressed whenever it moved.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "DHCP",
+        "is_correct": true
+      },
+      {
+        "text": "DNS",
+        "is_correct": false
+      },
+      {
+        "text": "ARP",
+        "is_correct": false
+      },
+      {
+        "text": "Syslog",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a DHCP relay agent do when the client and DHCP server sit on different subnets?",
+    "explanation": "A DHCP DISCOVER is a broadcast and cannot cross a router. With `ip helper-address` configured on the client-facing interface, the router rewrites the request as unicast to the server, then forwards the offer back to the client.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It forwards the client's broadcast request as unicast to the configured DHCP server on another subnet",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns the address itself from a local pool",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the request into a DNS query for the server",
+        "is_correct": false
+      },
+      {
+        "text": "It drops the request and waits for the client to retry on the server subnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type maps a hostname to an IPv6 address?",
+    "explanation": "The AAAA record, sometimes spoken as quad-A, holds a 128-bit IPv6 address for a name and is the IPv6 counterpart of the A record. A resolver asking for the IPv6 address of a host receives the AAAA data and ignores A records entirely. Publishing only an A record leaves the name unreachable over IPv6 even when the host has a global address configured.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "AAAA",
+        "is_correct": true
+      },
+      {
+        "text": "A",
+        "is_correct": false
+      },
+      {
+        "text": "PTR",
+        "is_correct": false
+      },
+      {
+        "text": "MX",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type supports reverse lookups that translate an IP address into a name?",
+    "explanation": "PTR records live in the in-addr.arpa or ip6.arpa zone and hold the name associated with a specific address. Tools such as traceroute and mail servers use them to label addresses with names. A missing PTR record is not an error, but it makes logs harder to read and can trip reverse-lookup checks on some mail gateways.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "PTR",
+        "is_correct": true
+      },
+      {
+        "text": "CNAME",
+        "is_correct": false
+      },
+      {
+        "text": "SRV",
+        "is_correct": false
+      },
+      {
+        "text": "TXT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A server is reachable as `mail.example.com` but clients are told the name `smtp.example.com`. Which record type makes the second name resolve without duplicating the address?",
+    "explanation": "A CNAME record declares that one name is an alias for another, so resolvers follow the chain to the canonical name and use its A or AAAA record. Editing the address in one place then updates every alias. A CNAME cannot coexist with other records at the same name, which is why apex names usually use other mechanisms.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CNAME",
+        "is_correct": true
+      },
+      {
+        "text": "A",
+        "is_correct": false
+      },
+      {
+        "text": "MX",
+        "is_correct": false
+      },
+      {
+        "text": "NS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which record type tells a remote mail server where to deliver messages for a domain?",
+    "explanation": "MX records list the hosts willing to accept mail for a domain, each with a preference value so senders try the lowest number first. The record points at a name, not an address, and that name still needs its own A or AAAA record. Without an MX record, senders fall back to the domain's own address, which usually fails.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MX with a preference value per mail host",
+        "is_correct": true
+      },
+      {
+        "text": "A record for each mail host with no preference value",
+        "is_correct": false
+      },
+      {
+        "text": "TXT record listing the mail hosts in order",
+        "is_correct": false
+      },
+      {
+        "text": "SRV record with priority and weight fields",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement distinguishes SFTP from FTPS?",
+    "explanation": "SFTP is a subsystem carried inside an SSH session on port 22, so it inherits SSH key-based authentication and encryption. FTPS keeps the FTP command and data channels and wraps them in TLS on ports 990 or 21. The two are unrelated protocols despite the similar names, and a client that speaks one cannot talk to a server that offers only the other.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SFTP runs inside SSH, while FTPS wraps the FTP protocol in TLS",
+        "is_correct": true
+      },
+      {
+        "text": "SFTP wraps FTP in TLS, while FTPS runs inside an SSH tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP and FTPS are two names for the same protocol on port 22",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP encrypts only file contents, while FTPS encrypts only credentials",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In FTP passive mode, how is the data connection established?",
+    "explanation": "The client opens the control channel, sends PASV, and the server replies with an address and port it has opened for data. The client then initiates the data connection to that port. Passive mode exists because a client behind NAT or a firewall can make outbound connections but cannot accept an inbound one on an arbitrary port.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The server opens a port and the client connects to it",
+        "is_correct": true
+      },
+      {
+        "text": "The server connects back to a port the client opened",
+        "is_correct": false
+      },
+      {
+        "text": "Both sides use the control channel for data as well",
+        "is_correct": false
+      },
+      {
+        "text": "A third-party relay opens the data channel on request",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A copy using SCP to a Cisco router fails with connection refused even though SSH logins work. Which configuration step is missing?",
+    "explanation": "The SSH server runs by default once keys exist, but the SCP server is a separate service that stays disabled until `ip scp server enable` is issued in global configuration. Because SCP arrives inside an SSH session, an operator can log in successfully while every copy attempt is rejected. Enabling the SCP server also requires AAA authentication to be configured for the copy to be accepted.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The SCP server has not been enabled with `ip scp server enable`",
+        "is_correct": true
+      },
+      {
+        "text": "The router's RSA key pair was never generated",
+        "is_correct": false
+      },
+      {
+        "text": "The VTY lines are configured with `transport input telnet`",
+        "is_correct": false
+      },
+      {
+        "text": "The router needs an ACL permitting TCP port 69 inbound",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is SFTP preferred over FTP when transferring device configurations that contain secrets?",
+    "explanation": "FTP sends both credentials and file contents as cleartext, so anyone with a capture on the path can read the enable secret or pre-shared keys inside the file. SFTP carries the same data inside an encrypted SSH session and authenticates both ends. The choice therefore protects the configuration content, not just the login.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SFTP encrypts the session, so credentials and file contents cannot be read in transit",
+        "is_correct": true
+      },
+      {
+        "text": "SFTP compresses configurations so secrets are unreadable in a capture",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP stores files with file-level passwords that FTP cannot apply",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP requires the file to be signed before the server accepts it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does IPsec remote access VPN use tunnel mode rather than transport mode?",
+    "explanation": "A remote client sends traffic from a private address that cannot be routed across the internet, so the original packet must be hidden inside a new packet with the client's public address. Tunnel mode does exactly that by adding a fresh IP header. Transport mode keeps the original header and is suited to host-to-host traffic that already has globally routable addresses.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Tunnel mode encapsulates the whole original packet inside a new IP header",
+        "is_correct": true
+      },
+      {
+        "text": "Tunnel mode encrypts only the payload and leaves the original header intact",
+        "is_correct": false
+      },
+      {
+        "text": "Tunnel mode avoids the need for any key exchange between peers",
+        "is_correct": false
+      },
+      {
+        "text": "Tunnel mode works only between two gateways with public addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec protocol authenticates and integrity-checks packets without encrypting them?",
+    "explanation": "The Authentication Header protects the packet with a hash over the payload and the immutable IP header fields, but it performs no encryption, so contents remain readable. Encapsulating Security Payload provides both confidentiality and integrity and has therefore replaced AH in most deployments. AH also breaks under NAT because the address fields it hashes are rewritten in transit.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authentication Header (AH)",
+        "is_correct": true
+      },
+      {
+        "text": "Encapsulating Security Payload (ESP)",
+        "is_correct": false
+      },
+      {
+        "text": "Internet Key Exchange version 2 (IKEv2)",
+        "is_correct": false
+      },
+      {
+        "text": "Generic Routing Encapsulation (GRE)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDP port carries IPsec traffic when NAT traversal is in use?",
+    "explanation": "NAT devices rewrite addresses and sometimes ports, which breaks the integrity checks IPsec computes over the header. NAT-T detects the translator and wraps ESP inside a UDP header so the flow survives, using UDP 4500 after the initial exchange on UDP 500. Firewalls therefore need both ports open for an IPsec client behind NAT.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 4500",
+        "is_correct": true
+      },
+      {
+        "text": "UDP 500 only",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 443",
+        "is_correct": false
+      },
+      {
+        "text": "IP protocol 51 without any UDP header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does MOBIKE add to an IKEv2 remote access deployment?",
+    "explanation": "MOBIKE lets a client change its IP address, for example when moving from Wi-Fi to cellular, and keep the existing IKE and IPsec security associations. Without it the tunnel would have to be torn down and rebuilt with a fresh key exchange, interrupting the session. It also allows the client to move between server addresses.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The client can change its IP address and keep the established tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "The client can use multiple simultaneous pre-shared keys per tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "The tunnel can bypass NAT without any UDP encapsulation",
+        "is_correct": false
+      },
+      {
+        "text": "The gateway can push routes to the client without rekeying",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What determines which traffic a site-to-site IPsec tunnel encrypts?",
+    "explanation": "Each peer references a crypto ACL in its crypto map, and packets permitted by that ACL are routed into the tunnel while everything else is forwarded normally. The two ACLs must mirror each other, so one side's source is the other side's destination. A mismatch here is the classic reason phase 2 never completes even though the IKE SA is up.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The crypto ACL, whose entries must mirror the peer's entries",
+        "is_correct": true
+      },
+      {
+        "text": "The routing protocol's metric for the remote subnet",
+        "is_correct": false
+      },
+      {
+        "text": "The interface MTU, which selects packets large enough to encrypt",
+        "is_correct": false
+      },
+      {
+        "text": "The NAT pool assigned to the tunnel interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two IPsec peers establish phase 1 successfully but no IPsec SA is created. Which mismatch explains the failure?",
+    "explanation": "Phase 1 negotiates the IKE SA using the ISAKMP policy, so a completed phase 1 proves encryption, hash, and Diffie-Hellman settings agree. Phase 2 then negotiates the IPsec SA from the transform set and the proxy identities in each crypto ACL. When those proxy identities do not mirror, quick mode fails while phase 1 stays up.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The proxy identities in the crypto ACLs do not mirror each other",
+        "is_correct": true
+      },
+      {
+        "text": "The peers use different Diffie-Hellman groups in the ISAKMP policy",
+        "is_correct": false
+      },
+      {
+        "text": "The peers use different hash algorithms in the ISAKMP policy",
+        "is_correct": false
+      },
+      {
+        "text": "The pre-shared key differs on the two peers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does perfect forward secrecy provide in an IPsec configuration?",
+    "explanation": "With PFS enabled, each phase 2 negotiation runs a fresh Diffie-Hellman exchange, so every IPsec SA derives keys independent of the others. Compromising one key then reveals only the traffic protected by that SA, not historical or future sessions. The cost is extra processing during rekeying, which is why PFS is a deliberate choice rather than a default everywhere.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each new IPsec SA derives fresh keys, so one compromised key exposes only that session",
+        "is_correct": true
+      },
+      {
+        "text": "Every packet is re-encrypted with a new key derived from the previous packet",
+        "is_correct": false
+      },
+      {
+        "text": "The tunnel survives a change of public IP address on either peer",
+        "is_correct": false
+      },
+      {
+        "text": "The pre-shared key is rotated automatically on a fixed schedule",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Both IPsec peers have identical encryption, hash, and Diffie-Hellman settings but different IKE lifetimes. What happens when the shorter lifetime expires?",
+    "explanation": "IKEv1 lifetimes that differ do not prevent the tunnel from coming up; the tunnel is negotiated with the shorter value. When that lifetime expires both peers renegotiate, and the mismatch simply shows up as more frequent phase 1 rekeys rather than a failure. Identical values are still recommended so the two sides do not disagree about when the SA is valid.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The tunnel stays up but rekeys at the shorter interval",
+        "is_correct": true
+      },
+      {
+        "text": "Phase 1 fails immediately because lifetimes must match exactly",
+        "is_correct": false
+      },
+      {
+        "text": "The tunnel is built with the longer lifetime on both peers",
+        "is_correct": false
+      },
+      {
+        "text": "The peers fall back to transport mode for the next negotiation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does IPv6 Router Advertisement Guard do on a switch port?",
+    "explanation": "RA Guard inspects inbound ICMPv6 router advertisement and redirect messages and drops them on ports where a router should not exist, such as ports facing end hosts. That prevents a host from advertising itself as a default gateway and silently becoming a man-in-the-middle. The feature is a Layer 2 control and must be paired with IPv6 snooping to be fully effective.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops router advertisement and redirect messages arriving on ports that should face hosts",
+        "is_correct": true
+      },
+      {
+        "text": "It rate-limits every ICMPv6 message sent by hosts on the port",
+        "is_correct": false
+      },
+      {
+        "text": "It rewrites advertised prefixes so all hosts use the switch as a gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks all IPv6 traffic on the port until an address is verified",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which RA Guard policy applies to a switch port that connects only to an end-user workstation?",
+    "explanation": "Host mode states that no legitimate router exists behind the port, so every router advertisement or redirect received on it is dropped. Router mode is used on the uplink toward the real router and permits those messages to pass. Trusting the wrong port either breaks legitimate addressing or leaves the attack surface open.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Host mode, which blocks all router advertisements on that port",
+        "is_correct": true
+      },
+      {
+        "text": "Router mode, which permits advertisements from the attached router",
+        "is_correct": false
+      },
+      {
+        "text": "Monitor mode, which logs advertisements but forwards them",
+        "is_correct": false
+      },
+      {
+        "text": "Trusted mode, which allows advertisements with any prefix",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What can a rogue router advertisement accomplish on a segment with no RA Guard?",
+    "explanation": "The attacker's advertisement can announce a prefix for stateless address configuration and, more damagingly, offer itself as the default router with a long lifetime. Hosts then send their off-link traffic to the attacker, who forwards it while reading it. Because IPv6 hosts prefer a router advertisement over any static configuration, the diversion persists until the advertisement expires.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hosts install the attacker as their default gateway and send off-link traffic through it",
+        "is_correct": true
+      },
+      {
+        "text": "Hosts are forced to disable IPv6 entirely on the interface",
+        "is_correct": false
+      },
+      {
+        "text": "The switch converts the affected ports into routed ports",
+        "is_correct": false
+      },
+      {
+        "text": "Neighbor Discovery cache entries for the real gateway are refreshed faster",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A network team deploys RA Guard but a rogue DHCPv6 server still hands out addresses. Which conclusion is correct?",
+    "explanation": "RA Guard only filters router advertisement and redirect messages; it says nothing about DHCPv6 server replies. Stopping a rogue DHCPv6 server requires DHCPv6 Guard, which classifies ports as client or server facing, supported by IPv6 snooping to build the binding table. The two features cover different message types and are normally deployed together.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RA Guard does not filter DHCPv6 replies, so DHCPv6 Guard is also needed",
+        "is_correct": true
+      },
+      {
+        "text": "RA Guard should have blocked the replies, so the policy is misapplied",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPv6 traffic is not affected because it is carried in router advertisements",
+        "is_correct": false
+      },
+      {
+        "text": "RA Guard covers DHCPv6 only when IPv6 snooping is disabled",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco NAT terminology, which address does the term 'inside local' describe?",
+    "explanation": "The inside local address is the private address actually configured on an internal host, for example 10.1.1.10. It exists only inside the organization; NAT rewrites it to an inside global address before the packet leaves the outside interface.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The private address of an internal host as it exists on the inside network",
+        "is_correct": true
+      },
+      {
+        "text": "The public address an internal host appears to use once traffic reaches the internet",
+        "is_correct": false
+      },
+      {
+        "text": "The address of an external host as seen by hosts on the inside network",
+        "is_correct": false
+      },
+      {
+        "text": "The address of the outside interface of the NAT router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An internal web server must always be reachable from the internet at one fixed public address. Which NAT type satisfies that requirement?",
+    "explanation": "Static NAT binds one inside local address to one inside global address permanently, so inbound sessions always land on the same server. Dynamic NAT and PAT reuse addresses from a pool and therefore cannot guarantee that a specific inbound connection reaches a specific host.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Static NAT",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic NAT with a pool of six public addresses",
+        "is_correct": false
+      },
+      {
+        "text": "PAT using the outside interface address",
+        "is_correct": false
+      },
+      {
+        "text": "NAT overload with a rotary pool",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two interface subcommands mark where NAT translation takes place on a Cisco router?",
+    "explanation": "The router has to know which side of itself is private and which is public, so `ip nat inside` goes on every internal-facing interface and `ip nat outside` on the internet-facing one. Without both designations the translation rules are never applied to traffic.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip nat inside` and `ip nat outside`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip nat source` and `ip nat destination`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip nat local` and `ip nat global`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip nat enable` and `ip nat overload`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router reloads overnight while dynamic PAT translations are active. What happens to those translations?",
+    "explanation": "Dynamic and PAT entries live only in the translation table in RAM, so a reload wipes them. Internal hosts simply open new sessions afterward and the router builds fresh entries; static mappings, by contrast, come back from the configuration.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are lost, and hosts rebuild them by opening new sessions",
+        "is_correct": true
+      },
+      {
+        "text": "They are rebuilt from the running configuration on boot",
+        "is_correct": false
+      },
+      {
+        "text": "They persist because they are written to NVRAM",
+        "is_correct": false
+      },
+      {
+        "text": "They convert automatically into static mappings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On which interface should `ip helper-address` be configured to relay DHCP requests from a client VLAN?",
+    "explanation": "The helper must sit on the interface that receives the client's broadcast, which is the VLAN's default gateway (an SVI or a router LAN port). Placing it on the WAN interface would never see the broadcast because broadcasts do not cross the router.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The client-facing interface that acts as that VLAN's default gateway",
+        "is_correct": true
+      },
+      {
+        "text": "The outside interface toward the DHCP server",
+        "is_correct": false
+      },
+      {
+        "text": "Every trunk port in the Layer 2 domain",
+        "is_correct": false
+      },
+      {
+        "text": "The loopback interface used for router management",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why might an engineer configure two `ip helper-address` statements on the same client-facing interface?",
+    "explanation": "Each statement forwards a copy of the DHCP broadcast to a different server. If the first server is down or its scope is exhausted, the second can still answer, and the client simply takes whichever offer arrives first.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To forward requests to a second DHCP server so either one can answer and provide redundancy",
+        "is_correct": true
+      },
+      {
+        "text": "To split the subnet so each server owns half the address range",
+        "is_correct": false
+      },
+      {
+        "text": "To force clients to request two addresses at once",
+        "is_correct": false
+      },
+      {
+        "text": "To load-balance the client's traffic across two default gateways",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement about the scope of `ip helper-address` is correct?",
+    "explanation": "The helper does not relay arbitrary broadcasts. IOS forwards a fixed set of UDP services by default — DHCP, DNS, TFTP, NetBIOS name and datagram services, TACACS, and time — and everything else stays local unless explicitly added.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It relays only a defined set of UDP services such as DHCP, DNS, and TFTP, not all broadcasts",
+        "is_correct": true
+      },
+      {
+        "text": "It relays every broadcast the interface receives",
+        "is_correct": false
+      },
+      {
+        "text": "It relays DHCP only and no other protocol",
+        "is_correct": false
+      },
+      {
+        "text": "It relays broadcasts only when the server is on the same subnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command adds a UDP service that is not part of the default forwarded set to the broadcasts relayed by `ip helper-address`?",
+    "explanation": "`ip forward-protocol udp <port>` extends the list of ports that the helper will relay. It is a global command, and it applies to every interface with a helper address, so it is usually paired with disabling a default entry the network does not need.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip forward-protocol udp <port>`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip helper-address <address> udp <port>`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp relay <port>`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip broadcast-forward udp <port>`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DHCP message does a server send when a client asks for an address the server cannot grant?",
+    "explanation": "A DHCPNAK tells the client its request is refused, usually because the address belongs to another subnet, the lease has expired, or the requested address is wrong for that segment. The client must then restart discovery from DHCPDISCOVER.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPNAK",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPDECLINE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPRELEASE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A client receives a DHCPOFFER, probes the address, and finds another host already using it. Which message does the client send?",
+    "explanation": "The client detects the conflict, typically through an ARP probe or gratuitous ARP, and sends DHCPDECLINE to the server so that address is marked unusable. The client then returns to the discover phase for a different offer.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPDECLINE",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPNAK",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPRELEASE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a DHCP client first attempt to renew a lease that is halfway through its lifetime?",
+    "explanation": "At the T1 timer, 50 percent of the lease, the client unicasts a DHCPREQUEST straight to the server that granted the lease. Only if that fails does it move to the T2 rebinding timer and broadcast to any available server.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It unicasts a DHCPREQUEST to the original server when T1 (50 percent) is reached",
+        "is_correct": true
+      },
+      {
+        "text": "It broadcasts a DHCPDISCOVER when T1 is reached",
+        "is_correct": false
+      },
+      {
+        "text": "It waits for the lease to expire and then sends DHCPDECLINE",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a DHCPINFORM to the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the current DHCP address bindings held by a Cisco IOS router acting as a DHCP server?",
+    "explanation": "`show ip dhcp binding` lists each leased address with the client identifier, lease expiration, and binding type. It is the quickest way to confirm which host holds an address without opening the pool configuration.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip dhcp binding`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip dhcp pool`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp conflict`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp relay`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport and port does NTP use for time synchronization?",
+    "explanation": "NTP runs over UDP port 123. The lightweight, connectionless exchange suits frequent small polls, and the protocol tolerates the occasional lost packet without losing synchronization.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP port 123",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 123",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 37",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes a Cisco router serve time to other devices as an authoritative stratum 2 source?",
+    "explanation": "`ntp master 2` tells the router to act as an NTP server at the stated stratum, using its own clock as the reference. It is common in labs or isolated networks that have no reachable external time source.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ntp master 2`",
+        "is_correct": true
+      },
+      {
+        "text": "`ntp server 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`ntp stratum 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`ntp source 2`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router synchronizes its clock to an NTP server that reports stratum 2. What stratum does the router then report to its own clients?",
+    "explanation": "Stratum counts hops from the reference clock, so each device that syncs from a server is one level further away. A client of a stratum 2 server becomes stratum 3; no device may claim a better stratum than the source it actually trusts.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Stratum 3",
+        "is_correct": true
+      },
+      {
+        "text": "Stratum 1",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 2",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command confirms whether a router's clock is synchronized and identifies the reference it is using?",
+    "explanation": "`show ntp status` reports the synchronization state, the stratum, and the reference clock or upstream server. `show ntp associations` shows the candidate peers and their reachability, which is the next place to look when status shows unsynchronized.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ntp status`",
+        "is_correct": true
+      },
+      {
+        "text": "`show clock detail`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ntp config`",
+        "is_correct": false
+      },
+      {
+        "text": "`debug ntp packets`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDP port do Cisco devices use by default when sending syslog messages to a remote collector?",
+    "explanation": "Syslog uses UDP 514. Messages are fire-and-forget: the device does not wait for an acknowledgement, so a lost UDP datagram simply never reaches the collector and the local log remains the only record.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 514",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 514",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 162",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 601",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command adds the date and millisecond precision to every log message so events can be correlated across devices?",
+    "explanation": "`service timestamps log datetime msec` replaces the default uptime-based timestamp with wall-clock date and milliseconds. Accurate, consistent timestamps matter more than they look: without them, matching a router event to a firewall event in an incident timeline becomes guesswork.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`service timestamps log datetime msec`",
+        "is_correct": true
+      },
+      {
+        "text": "`logging timestamp datetime`",
+        "is_correct": false
+      },
+      {
+        "text": "`clock set msec`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging trap datetime`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands stores syslog messages in router RAM and then displays them?",
+    "explanation": "`logging buffered` keeps a circular log in memory, sized by the value given, and `show logging` prints it. The buffer survives a lost connection to the terminal but not a reload, which is why remote logging is also configured.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`logging buffered <size>` and `show logging`",
+        "is_correct": true
+      },
+      {
+        "text": "`logging console` and `show console`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging monitor` and `show monitor`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging trap` and `show trap`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which syslog severity level indicates that the system is unusable?",
+    "explanation": "Level 0 is emergencies, reserved for conditions that make the device itself unusable. Levels 1 through 7 follow in descending urgency, from alert down to debug, and the lower the number the more severe the event.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Level 0, emergencies",
+        "is_correct": true
+      },
+      {
+        "text": "Level 2, critical",
+        "is_correct": false
+      },
+      {
+        "text": "Level 4, warnings",
+        "is_correct": false
+      },
+      {
+        "text": "Level 7, debugging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two UDP ports does SNMP use for agent requests and for notifications?",
+    "explanation": "Managers send GET and SET requests to the agent on UDP 161, and the agent sends traps and informs to the manager on UDP 162. Both are connectionless, which is why traps can be lost without the agent ever knowing.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 161 for agent requests and UDP 162 for notifications",
+        "is_correct": true
+      },
+      {
+        "text": "UDP 162 for agent requests and UDP 161 for notifications",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 161 for agent requests and TCP 162 for notifications",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 514 for agent requests and UDP 161 for notifications",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a Management Information Base (MIB) in an SNMP-managed device?",
+    "explanation": "The MIB is the hierarchical tree of objects the agent exposes, and each object has a unique object identifier. A manager needs the matching MIB definition to turn a numeric OID into a readable name and value.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A hierarchical tree of managed objects, each addressed by a unique object identifier",
+        "is_correct": true
+      },
+      {
+        "text": "A database of SNMP community strings stored on the manager",
+        "is_correct": false
+      },
+      {
+        "text": "The log file where an agent records traps it has sent",
+        "is_correct": false
+      },
+      {
+        "text": "The address pool an SNMP agent uses for management traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMP operation does a manager use to modify a writable object on an agent?",
+    "explanation": "SET writes a new value into an object the agent marks writable, such as an administrative status or a configuration parameter. GET and GETNEXT only read, so they cannot change device state.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SET",
+        "is_correct": true
+      },
+      {
+        "text": "GET",
+        "is_correct": false
+      },
+      {
+        "text": "GETNEXT",
+        "is_correct": false
+      },
+      {
+        "text": "TRAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which role does a router play when it answers an SNMP manager's request for interface counters?",
+    "explanation": "The router is the agent: it holds the MIB, executes the request against its own data, and returns a response. The manager is the software that polls or receives notifications, and the two roles are defined by who asks and who answers.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMP agent",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP manager",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP proxy forwarder for a third device",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP trap receiver",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which TCP port does SSH use by default for management sessions?",
+    "explanation": "SSH listens on TCP 22. Because it is TCP, a completed three-way handshake proves the listener is reachable before any key exchange begins, which is why a firewall rule that permits 22 but blocks the return path fails during handshake rather than at the banner.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP 22",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 23",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 22",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 443",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command restricts a Cisco router to SSH version 2 only?",
+    "explanation": "`ip ssh version 2` disables the older version 1 negotiation, so every client must use the current protocol. Version 1 has known weaknesses in its integrity checking, and leaving it enabled means a client can silently downgrade the session.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip ssh version 2`",
+        "is_correct": true
+      },
+      {
+        "text": "`ssh version 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`transport input sshv2`",
+        "is_correct": false
+      },
+      {
+        "text": "`crypto key generate rsa version 2`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VTY line configuration makes the router check incoming SSH credentials against usernames stored in its own configuration?",
+    "explanation": "`login local` tells the line to authenticate against the local user database created with `username`, instead of the line password. That is what makes per-user credentials and privilege levels possible on SSH sessions.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`login local`",
+        "is_correct": true
+      },
+      {
+        "text": "`password local`",
+        "is_correct": false
+      },
+      {
+        "text": "`authentication local`",
+        "is_correct": false
+      },
+      {
+        "text": "`username local`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows the SSH protocol version, authentication timeout, and retry count in effect on a Cisco router?",
+    "explanation": "`show ip ssh` reports the version, the authentication timeout, and the number of retries, which is exactly the set of values to confirm after tightening a management policy. Connection-level detail belongs to `show ssh`, which lists active sessions.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip ssh`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ssh`",
+        "is_correct": false
+      },
+      {
+        "text": "`show crypto key mypubkey rsa`",
+        "is_correct": false
+      },
+      {
+        "text": "`show running-config | include ssh`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a VLAN access map (VACL) filter that a normal router ACL cannot?",
+    "explanation": "A VACL is applied to a VLAN rather than an interface, so it filters traffic between ports in the same VLAN, including traffic that never leaves the switch. A router ACL only sees traffic that is routed through the device.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Traffic switched between ports inside the same VLAN, without being routed",
+        "is_correct": true
+      },
+      {
+        "text": "Traffic entering the router's WAN interface",
+        "is_correct": false
+      },
+      {
+        "text": "Only broadcast and multicast frames on trunk links",
+        "is_correct": false
+      },
+      {
+        "text": "Only packets generated by the switch's own management process",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a private VLAN provide inside a single IP subnet?",
+    "explanation": "Private VLANs split one VLAN into isolated and community subdomains with a promiscuous uplink port. Hosts on isolated ports can reach only the promiscuous port, which is how a provider stops customers in the same subnet from talking to each other.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Port-level isolation between hosts that still share one subnet and default gateway",
+        "is_correct": true
+      },
+      {
+        "text": "A second default gateway for redundancy inside the same VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Encryption of all frames between access ports",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic assignment of public addresses to internal hosts",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the recommended treatment for switch access ports that are not in use?",
+    "explanation": "An unused port that is still enabled is an open door: anyone who reaches the wall jack gets a working Layer 2 connection. Administratively shutting the port and parking it in a dedicated unused VLAN removes both the physical path and any chance of landing in a production VLAN.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Shut the port down and assign it to an unused VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Leave it enabled so new users can connect without a change request",
+        "is_correct": false
+      },
+      {
+        "text": "Trunk it to every VLAN so it is ready for any device",
+        "is_correct": false
+      },
+      {
+        "text": "Set it to dynamic auto so it negotiates the correct VLAN later",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a DHCP starvation attack accomplish before the attacker introduces a rogue DHCP server?",
+    "explanation": "The attacker floods DHCPDISCOVER messages with fabricated MAC addresses until the legitimate pool has no addresses left. Clients then fail to get a lease and are willing to accept one from the rogue server, which hands out an address whose default gateway points at the attacker.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It exhausts the legitimate DHCP pool with bogus requests so clients accept a rogue server's lease",
+        "is_correct": true
+      },
+      {
+        "text": "It floods the CAM table so the switch forwards frames out every port",
+        "is_correct": false
+      },
+      {
+        "text": "It poisons the ARP cache of the default gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It inserts double-tagged frames to reach another VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command blocks further login attempts for 60 seconds after five failures within 30 seconds?",
+    "explanation": "`login block-for 60 attempts 5 within 30` enables the IOS login-blocking feature: after five failures in a 30-second window, all logins are refused for 60 seconds regardless of source. It turns an unlimited brute-force attempt into a rate-limited one.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`login block-for 60 attempts 5 within 30`",
+        "is_correct": true
+      },
+      {
+        "text": "`login delay 60 attempts 5 within 30`",
+        "is_correct": false
+      },
+      {
+        "text": "`exec-timeout 60 30`",
+        "is_correct": false
+      },
+      {
+        "text": "`aaa authentication fail 5 lock 60`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is `no ip source-route` commonly part of a router hardening baseline?",
+    "explanation": "With source routing enabled, a sender can specify the path a packet takes through the network, which lets an attacker steer traffic around filters or probe internal addresses. Disabling it makes the router drop packets carrying the source-route option.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops packets that try to dictate their own path through the network",
+        "is_correct": true
+      },
+      {
+        "text": "It prevents the router from being used as a DHCP relay",
+        "is_correct": false
+      },
+      {
+        "text": "It disables routing between directly connected subnets",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks all ICMP redirect messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command disables the router's embedded HTTP management server?",
+    "explanation": "`no ip http server` turns off the cleartext web interface, and on platforms that support it `no ip http secure-server` removes the HTTPS one as well. If nobody uses browser-based management, leaving it running only widens the attack surface.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`no ip http server`",
+        "is_correct": true
+      },
+      {
+        "text": "`no ip http client`",
+        "is_correct": false
+      },
+      {
+        "text": "`no web-management enable`",
+        "is_correct": false
+      },
+      {
+        "text": "`no ip management http`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do some hardening baselines disable Cisco Discovery Protocol on ports facing untrusted networks?",
+    "explanation": "CDP advertisements include the device model, IOS version, and management addresses, all of which help an attacker choose an exploit and find a target. Disabling it on edge ports keeps that inventory out of reach while internal management links can still use it.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CDP advertisements disclose device model, software version, and management addresses",
+        "is_correct": true
+      },
+      {
+        "text": "CDP consumes enough bandwidth to starve production traffic",
+        "is_correct": false
+      },
+      {
+        "text": "CDP prevents VLAN trunking from forming",
+        "is_correct": false
+      },
+      {
+        "text": "CDP disables spanning tree on the port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type maps a fully qualified hostname to an IPv4 address?",
+    "explanation": "An A record holds the IPv4 address for a name, and it is the record a resolver returns for a normal forward lookup. IPv6 addresses live in AAAA records, which is why the two are often configured side by side for dual-stack hosts.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A",
+        "is_correct": true
+      },
+      {
+        "text": "AAAA",
+        "is_correct": false
+      },
+      {
+        "text": "PTR",
+        "is_correct": false
+      },
+      {
+        "text": "MX",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type delegates authority for a zone to a set of name servers?",
+    "explanation": "NS records name the authoritative servers for a zone, and the parent zone holds them for each delegation. That is how a resolver follows the chain from the root down to the server that can answer authoritatively for a domain.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "NS",
+        "is_correct": true
+      },
+      {
+        "text": "SOA",
+        "is_correct": false
+      },
+      {
+        "text": "CNAME",
+        "is_correct": false
+      },
+      {
+        "text": "SRV",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type carries free-form text used for sender policy and domain ownership verification?",
+    "explanation": "TXT records hold arbitrary strings, and that flexibility made them the standard carrier for SPF, DKIM, and DMARC policy as well as for proving domain control to cloud providers. Nothing in the record format constrains the content; the consuming service defines the syntax.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TXT",
+        "is_correct": true
+      },
+      {
+        "text": "MX",
+        "is_correct": false
+      },
+      {
+        "text": "PTR",
+        "is_correct": false
+      },
+      {
+        "text": "NS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type lets a client discover both the hostname and the port for a specific service in a domain?",
+    "explanation": "SRV records pair a service and protocol with a target host, a port, and a priority and weight, so clients do not need a hardcoded port. Directory services and voice deployments rely on them to locate domain controllers and SIP endpoints.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SRV",
+        "is_correct": true
+      },
+      {
+        "text": "CNAME",
+        "is_correct": false
+      },
+      {
+        "text": "A",
+        "is_correct": false
+      },
+      {
+        "text": "SOA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many TCP connections does a standard FTP session use, and what is the control connection's port?",
+    "explanation": "FTP separates signalling from data: a control connection stays open on TCP 21 for commands and replies, and a separate data connection is opened for each transfer. Firewalls that inspect only port 21 therefore miss the transfer itself.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two connections, with the control connection on TCP 21",
+        "is_correct": true
+      },
+      {
+        "text": "One connection, using TCP 21 for both commands and data",
+        "is_correct": false
+      },
+      {
+        "text": "Two connections, with the control connection on UDP 21",
+        "is_correct": false
+      },
+      {
+        "text": "Three connections, with the control connection on TCP 20",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In FTP active mode, how is the data connection established?",
+    "explanation": "The client sends a PORT command naming an address and port, and the server opens the data connection back to the client from TCP 20. That inbound connection from the server is exactly what a client-side firewall blocks, which is why passive mode exists.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The server initiates a connection from TCP 20 to a port the client specified",
+        "is_correct": true
+      },
+      {
+        "text": "The client initiates a connection to TCP 20 on the server",
+        "is_correct": false
+      },
+      {
+        "text": "Both sides send data over the existing control connection",
+        "is_correct": false
+      },
+      {
+        "text": "The server sends data over UDP 20 without a handshake",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which TCP port does implicit FTPS use by default?",
+    "explanation": "Implicit FTPS begins TLS as soon as the connection opens on TCP 990, so there is no cleartext command phase at all. Explicit FTPS instead starts on port 21 and upgrades with AUTH TLS, which is why the two variants need different firewall rules.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP 990",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 21",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 22",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 443",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does explicit FTPS establish encryption when it starts on port 21?",
+    "explanation": "Explicit FTPS opens a normal FTP control connection and then the client issues AUTH TLS, which upgrades that session to TLS before any credentials are sent. Because the upgrade is negotiated in-band, the default port stays 21 and existing firewall rules keep working.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The client issues AUTH TLS on the port 21 control connection and the session upgrades to TLS",
+        "is_correct": true
+      },
+      {
+        "text": "The server immediately requires TLS on port 990",
+        "is_correct": false
+      },
+      {
+        "text": "The client opens a separate SSH tunnel on port 22",
+        "is_correct": false
+      },
+      {
+        "text": "The data connection is encrypted while commands remain in cleartext",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of IKE phase 1 in an IPsec VPN?",
+    "explanation": "Phase 1 builds an authenticated secure channel between the peers — the ISAKMP SA — and everything in phase 2 is negotiated inside it. No user traffic crosses yet, so a phase 1 failure means no IPsec SA can ever be created.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To build an authenticated secure channel between the peers for negotiating later IPsec parameters",
+        "is_correct": true
+      },
+      {
+        "text": "To encrypt user traffic with the transform set",
+        "is_correct": false
+      },
+      {
+        "text": "To authenticate individual remote users against a RADIUS server",
+        "is_correct": false
+      },
+      {
+        "text": "To exchange routing information across the tunnel",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an IPsec remote-access deployment, how does a client typically obtain its internal IP address?",
+    "explanation": "The headend pushes an address from a configured pool to the client during IKE mode config, the same exchange that can also supply DNS servers and split-tunnel policy. Because internal servers reply to that inner address, it must come from a range the internal network routes back to the headend.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The VPN headend assigns it from a configured pool during IKE mode config",
+        "is_correct": true
+      },
+      {
+        "text": "The client keeps the public address assigned by its ISP",
+        "is_correct": false
+      },
+      {
+        "text": "The internal DHCP server broadcasts an offer through the tunnel before it is established",
+        "is_correct": false
+      },
+      {
+        "text": "The client derives it from its own MAC address using EUI-64",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A remote-access profile has split tunneling disabled. What is the result for the user?",
+    "explanation": "Without split tunneling the client puts every packet into the tunnel, including internet-bound traffic, so it is inspected by the corporate edge and exits from there. That gives consistent policy but spends headend bandwidth and adds latency to ordinary browsing.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "All traffic, including internet-bound traffic, goes through the tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "Only traffic destined for corporate subnets goes through the tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "The client cannot reach corporate resources at all",
+        "is_correct": false
+      },
+      {
+        "text": "The tunnel carries DNS queries only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a clientless SSL VPN differ from an IPsec remote-access tunnel?",
+    "explanation": "A clientless SSL VPN runs in the browser over HTTPS and publishes selected internal web applications through a portal, so nothing is installed on the endpoint. The trade-off is that it cannot carry arbitrary IP protocols the way a full tunnel adapter can.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reaches selected internal web applications through a browser portal without installing a VPN client",
+        "is_correct": true
+      },
+      {
+        "text": "It requires a heavier client than IPsec and encrypts at Layer 2",
+        "is_correct": false
+      },
+      {
+        "text": "It runs only over UDP 500 and cannot use TCP",
+        "is_correct": false
+      },
+      {
+        "text": "It provides full IP-layer reachability to every internal subnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec configuration element defines the encryption, hash, and authentication algorithms offered for the IPsec SA?",
+    "explanation": "The transform set (called an IPsec proposal on some platforms) lists the protocol — ESP or AH — together with the algorithms to offer. Both peers need a matching entry, otherwise phase 2 has nothing to agree on and no SA is created.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The transform set",
+        "is_correct": true
+      },
+      {
+        "text": "The crypto ACL",
+        "is_correct": false
+      },
+      {
+        "text": "The crypto map sequence number",
+        "is_correct": false
+      },
+      {
+        "text": "The ISAKMP policy priority",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the state of IKE phase 1 security associations on a Cisco router?",
+    "explanation": "`show crypto isakmp sa` lists each peer with its state, and QM_IDLE means the ISAKMP SA is established and phase 1 is complete. Phase 2 has its own separate view in `show crypto ipsec sa`.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show crypto isakmp sa`",
+        "is_correct": true
+      },
+      {
+        "text": "`show crypto ipsec sa`",
+        "is_correct": false
+      },
+      {
+        "text": "`show crypto map`",
+        "is_correct": false
+      },
+      {
+        "text": "`show crypto session detail`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A bidirectional IPsec tunnel is established between two routers. How many IPsec security associations exist for that traffic flow?",
+    "explanation": "IPsec SAs are unidirectional, so each direction carries its own keys, sequence counters, and lifetime. That is why the two peers report different counters — each one counts the packets it encrypts on its own outbound SA.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two, one for each direction of the flow",
+        "is_correct": true
+      },
+      {
+        "text": "One, shared by both directions",
+        "is_correct": false
+      },
+      {
+        "text": "Three, one for IKE plus two for the transform set",
+        "is_correct": false
+      },
+      {
+        "text": "Four, two per peer per direction",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Traffic matches the crypto ACL on a router but no IPsec SA exists for the peer yet. How is that traffic handled?",
+    "explanation": "The router never falls back to cleartext for interesting traffic. It starts negotiating and drops the packets until the SA comes up, which is why a tunnel that will not form looks like plain reachability loss instead of unencrypted leakage.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is dropped while negotiation is attempted, and is never sent unencrypted",
+        "is_correct": true
+      },
+      {
+        "text": "It is sent in cleartext until the SA is established",
+        "is_correct": false
+      },
+      {
+        "text": "It is queued in a buffer until the SA is built",
+        "is_correct": false
+      },
+      {
+        "text": "It is routed around the tunnel using the default route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When RA Guard is deployed, which switch port must be marked trusted?",
+    "explanation": "Only the port that leads to the legitimate IPv6 router — normally the uplink or trunk — is trusted, because that is where genuine RAs arrive. Every access port facing end hosts stays untrusted so an RA appearing there is dropped.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The uplink port toward the legitimate IPv6 router",
+        "is_correct": true
+      },
+      {
+        "text": "Every access port with an attached end host",
+        "is_correct": false
+      },
+      {
+        "text": "The port connected to the DHCPv6 server",
+        "is_correct": false
+      },
+      {
+        "text": "All trunk ports, which are trusted by default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ICMPv6 message does RA Guard drop on untrusted ports?",
+    "explanation": "RA Guard filters Router Advertisements, ICMPv6 type 134, arriving on untrusted ports. Router solicitation, neighbor solicitation, and neighbor advertisement are policed by other first-hop features, so RA Guard alone does not touch them.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Router Advertisement, ICMPv6 type 134",
+        "is_correct": true
+      },
+      {
+        "text": "Router Solicitation, ICMPv6 type 133",
+        "is_correct": false
+      },
+      {
+        "text": "Neighbor Advertisement, ICMPv6 type 136",
+        "is_correct": false
+      },
+      {
+        "text": "Echo Request, ICMPv6 type 128",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On which device is an RA Guard policy applied in a typical campus design?",
+    "explanation": "RA Guard runs on the Layer 2 access switch, on the port facing the host, because that port is where a rogue advertisement would first enter the network. The router has no notion of a trusted or untrusted port, so it is not where the policy lives.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Layer 2 access switch port facing the host",
+        "is_correct": true
+      },
+      {
+        "text": "The IPv6 router's LAN interface",
+        "is_correct": false
+      },
+      {
+        "text": "The DHCPv6 server",
+        "is_correct": false
+      },
+      {
+        "text": "The firewall's untrusted interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "RA Guard is configured on only one switch in a Layer 2 path. What weakness remains?",
+    "explanation": "RA Guard inspects only the ports of the switch where it is configured. An attacker plugged into a different switch in the same VLAN sends an advertisement that the unprotected switch floods normally, and hosts receive it even though the guarded switch would have dropped it.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An RA entering through a switch without RA Guard still reaches hosts in the same VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "RA Guard falls back to monitoring mode when a neighboring switch is unprotected",
+        "is_correct": false
+      },
+      {
+        "text": "The router stops sending legitimate advertisements entirely",
+        "is_correct": false
+      },
+      {
+        "text": "Hosts on the protected switch ignore every advertisement, including legitimate ones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which AAA function records what an authenticated user did, when the session started and ended, and how long it lasted?",
+    "explanation": "Accounting produces that audit trail, including session start and stop records and, on some protocols, the individual commands issued. Authentication only proves identity and authorization only decides permissions, so neither generates the record.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Accounting",
+        "is_correct": true
+      },
+      {
+        "text": "Authentication",
+        "is_correct": false
+      },
+      {
+        "text": "Authorization",
+        "is_correct": false
+      },
+      {
+        "text": "Federation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Given the method list `aaa authentication login default group tacacs+ local`, what happens when every TACACS+ server is unreachable?",
+    "explanation": "The methods are tried left to right, so the router falls back to its local username database instead of denying the login. That ordering keeps administrators able to reach the device when the AAA server itself is the failed component.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router falls back to its local user database and the login proceeds",
+        "is_correct": true
+      },
+      {
+        "text": "The login is rejected because the first method failed",
+        "is_correct": false
+      },
+      {
+        "text": "The router drops to rommon mode",
+        "is_correct": false
+      },
+      {
+        "text": "The router accepts any username with the line password",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an 802.1X deployment, which role does the switch port play?",
+    "explanation": "The switch is the authenticator: it keeps the port closed until the supplicant's credentials are verified by the authentication server, then opens the port and applies the authorization result. The client device is the supplicant and the RADIUS server is the authentication server.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authenticator",
+        "is_correct": true
+      },
+      {
+        "text": "The supplicant",
+        "is_correct": false
+      },
+      {
+        "text": "The authentication server",
+        "is_correct": false
+      },
+      {
+        "text": "The policy decision point",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits how many DHCP messages an untrusted port may receive per second?",
+    "explanation": "`ip dhcp snooping limit rate 10` caps the message rate on the interface, so a starvation attack that floods DISCOVER messages is throttled instead of draining the pool. Exceeding the configured rate normally puts the port into the error-disabled state.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping limit rate 10`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dhcp snooping trust rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping max-rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping burst 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command preserves DHCP snooping binding entries across a switch reload?",
+    "explanation": "`ip dhcp snooping database` with a URL writes the bindings to flash or a remote file, so the switch repopulates the table at boot before clients renew. Without it the table starts empty after a reload and features such as DAI and IP Source Guard have nothing to validate against.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping database flash:dhcp-bindings`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dhcp snooping persistent`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping binding save`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping write-memory`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command lists the MAC address, IP address, VLAN, and port for each DHCP snooping entry on a switch?",
+    "explanation": "`show ip dhcp snooping binding` prints the table snooping builds. It is the fastest way to confirm whether a host actually has a binding, which decides whether DAI and IP Source Guard will accept its traffic.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip dhcp snooping binding`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip dhcp snooping`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip dhcp binding`",
+        "is_correct": false
+      },
+      {
+        "text": "`show mac address-table`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command marks a switch port as trusted for Dynamic ARP Inspection?",
+    "explanation": "`ip arp inspection trust` exempts the port from ARP validation, which is appropriate for an uplink toward a router or another switch. On untrusted access ports every ARP packet is checked against the binding table or a configured ARP ACL.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip arp inspection trust`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection enable`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip arp inspection allow`",
+        "is_correct": false
+      },
+      {
+        "text": "`arp inspection trust`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A server with a static IP address has no DHCP snooping binding. How can DAI accept its ARP traffic?",
+    "explanation": "An ARP ACL maps the static address pair and is attached with `ip arp inspection filter <name> vlan <id>`, so a matching entry is accepted without any binding. Trusting the port instead would disable validation for every device behind that port, which is the mistake to avoid.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Define an ARP ACL for the static host and apply it as a DAI filter on the VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Trust the port, because the host has no binding to check",
+        "is_correct": false
+      },
+      {
+        "text": "Disable DAI on the whole VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Raise the ARP inspection rate limit until the packet is accepted",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits the rate of incoming ARP packets that DAI will process on an interface?",
+    "explanation": "`ip arp inspection limit rate 15` caps the ARP rate so a flood cannot exhaust the switch's inspection capacity, and the port errs down when the configured burst is exceeded. Trusted ports and ports set to `none` are exempt from the limit.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip arp inspection limit rate 15`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection rate 15`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip arp inspection max 15`",
+        "is_correct": false
+      },
+      {
+        "text": "`arp inspection throttle 15`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does 802.11w Protected Management Frames add to a WLAN?",
+    "explanation": "PMF signs unicast management frames, notably deauthentication and disassociation, so a spoofed frame cannot eject clients from the network. That closes a denial-of-service path that encrypting data frames never covered.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cryptographic protection for management frames such as deauthentication",
+        "is_correct": true
+      },
+      {
+        "text": "Encryption of data frames that WPA2 otherwise leaves in cleartext",
+        "is_correct": false
+      },
+      {
+        "text": "A per-user RADIUS credential exchange for each association",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic channel selection to avoid interference",
+        "is_correct": false
+      }
+    ]
   }
 ]

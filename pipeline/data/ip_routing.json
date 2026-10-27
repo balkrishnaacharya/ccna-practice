@@ -1038,5 +1038,2709 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What type of routing protocol is BGP and which transport does it use?",
+    "explanation": "BGP is a path-vector protocol that runs over TCP port 179. Because it uses TCP, it does not need its own reliability mechanism and it can carry very large tables between autonomous systems.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A path-vector protocol over TCP 179",
+        "is_correct": true
+      },
+      {
+        "text": "A distance-vector protocol over UDP 520",
+        "is_correct": false
+      },
+      {
+        "text": "A link-state protocol over IP protocol 89",
+        "is_correct": false
+      },
+      {
+        "text": "A hybrid protocol over TCP 830",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an autonomous system in the context of BGP?",
+    "explanation": "An autonomous system is a set of networks under a single administrative and routing policy, identified by a unique AS number. BGP exchanges reachability between these systems, which is why it is the routing protocol of the internet.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A group of networks under one administrative policy identified by an AS number",
+        "is_correct": true
+      },
+      {
+        "text": "A single OSPF area with more than one designated router",
+        "is_correct": false
+      },
+      {
+        "text": "A VLAN that spans more than one physical switch",
+        "is_correct": false
+      },
+      {
+        "text": "A set of hosts sharing one default gateway address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does router-on-a-stick carry traffic for multiple VLANs over one physical link?",
+    "explanation": "The physical interface is divided into subinterfaces, each with an IP address and `encapsulation dot1Q <vlan>` matching one VLAN. The router then routes between them and returns frames tagged for the correct VLAN.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Subinterfaces on one physical link, each with 802.1Q encapsulation for a VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Separate physical links from the router to each access switch port",
+        "is_correct": false
+      },
+      {
+        "text": "A GRE tunnel per VLAN terminating on the router loopback",
+        "is_correct": false
+      },
+      {
+        "text": "A single subinterface carrying untagged frames for every VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens to untagged frames arriving on a router-on-a-stick trunk with subinterfaces configured?",
+    "explanation": "Untagged frames are treated as belonging to the native VLAN, so they are handled by the subinterface configured with that VLAN ID. If no subinterface matches the native VLAN, the frames are dropped.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "They are handled by the subinterface for the native VLAN, or dropped if none exists",
+        "is_correct": true
+      },
+      {
+        "text": "They are flooded to every configured subinterface",
+        "is_correct": false
+      },
+      {
+        "text": "They are automatically tagged with the highest VLAN ID",
+        "is_correct": false
+      },
+      {
+        "text": "They are routed using the first subinterface in the configuration",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is inter-VLAN routing on a multilayer switch generally preferred over router-on-a-stick?",
+    "explanation": "An SVI forwards in hardware at wire speed and does not funnel every VLAN through one trunk back to an external router. Router-on-a-stick makes that single link both a bandwidth bottleneck and a single point of failure.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "SVIs route in hardware at wire speed instead of sharing one trunk to an external router",
+        "is_correct": true
+      },
+      {
+        "text": "SVIs remove the need to assign an IP address to each VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "SVIs eliminate the need for any default gateway on the hosts",
+        "is_correct": false
+      },
+      {
+        "text": "SVIs allow routing between VLANs without enabling ip routing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command advertises the 10.1.1.0/24 network into OSPF area 0?",
+    "explanation": "OSPF uses a wildcard mask, which is the inverse of the subnet mask. For /24 the mask is 255.255.255.0, so the wildcard is 0.0.0.255, giving `network 10.1.1.0 0.0.0.255 area 0`.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "network 10.1.1.0 0.0.0.255 area 0",
+        "is_correct": true
+      },
+      {
+        "text": "network 10.1.1.0 255.255.255.0 area 0",
+        "is_correct": false
+      },
+      {
+        "text": "network 10.1.1.0/24 area 0",
+        "is_correct": false
+      },
+      {
+        "text": "network 10.1.1.0 mask 255.255.255.0 area 0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the OSPF wildcard mask for a /26 subnet?",
+    "explanation": "A /26 mask is 255.255.255.192. The wildcard is the bitwise inverse, so it becomes 0.0.0.63, and the network command would be written with the /26 boundary address.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "0.0.0.63",
+        "is_correct": true
+      },
+      {
+        "text": "0.0.0.192",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.0.255",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.0.31",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When two routes to the same destination have different prefix lengths, which one is chosen?",
+    "explanation": "Routers always prefer the longest prefix match, because the more specific route describes the destination more precisely. Administrative distance and metric are only compared between routes with the same prefix length.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The route with the longest matching prefix",
+        "is_correct": true
+      },
+      {
+        "text": "The route with the lowest administrative distance",
+        "is_correct": false
+      },
+      {
+        "text": "The route with the lowest metric regardless of prefix length",
+        "is_correct": false
+      },
+      {
+        "text": "The route learned from the most recently booted neighbor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does administrative distance represent?",
+    "explanation": "Administrative distance ranks the trustworthiness of a route's source, so a static route (1) beats an OSPF route (110) to the same prefix. Metrics then break ties between routes from the same protocol.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The trustworthiness of the source that provided the route",
+        "is_correct": true
+      },
+      {
+        "text": "The number of hops between the router and the destination",
+        "is_correct": false
+      },
+      {
+        "text": "The bandwidth of the outgoing interface for the route",
+        "is_correct": false
+      },
+      {
+        "text": "The age of the route entry in the routing table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which destination address do EIGRP hello packets use on an IPv4 network?",
+    "explanation": "EIGRP sends hellos to the multicast address 224.0.0.10 on every EIGRP-enabled interface. Hellos establish and maintain adjacencies, and a router that stops hearing them declares the neighbor down when the hold timer expires.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "224.0.0.10",
+        "is_correct": true
+      },
+      {
+        "text": "224.0.0.5",
+        "is_correct": false
+      },
+      {
+        "text": "224.0.0.9",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.255.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which algorithm does EIGRP run to guarantee loop-free paths and converge without recalculating every route?",
+    "explanation": "EIGRP uses DUAL, the Diffusing Update Algorithm. DUAL tracks a successor and any feasible successors for each destination, so a failed successor is replaced instantly from a feasible successor; only when none exists does the router send queries and enter the active state.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Diffusing Update Algorithm (DUAL)",
+        "is_correct": true
+      },
+      {
+        "text": "Dijkstra Shortest Path First",
+        "is_correct": false
+      },
+      {
+        "text": "Bellman-Ford",
+        "is_correct": false
+      },
+      {
+        "text": "Reverse Path Forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a designated router elected on an OSPF broadcast network?",
+    "explanation": "Without a DR, every router would form a full adjacency with every other router, producing n(n-1)/2 adjacencies and a flood of LSAs. The DR (with a BDR as backup) becomes the single hub for LSA exchange.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "To reduce the number of adjacencies and the flooding of LSAs",
+        "is_correct": true
+      },
+      {
+        "text": "To elect the router responsible for assigning IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "To convert the broadcast segment into a point-to-point link",
+        "is_correct": false
+      },
+      {
+        "text": "To authenticate every hello packet on the segment",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an OSPF area border router?",
+    "explanation": "An ABR has interfaces in more than one area, typically area 0 plus a non-backbone area. It maintains a separate topology database per area and summarizes routes between them.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A router with interfaces in more than one OSPF area",
+        "is_correct": true
+      },
+      {
+        "text": "A router that connects OSPF to a different routing protocol",
+        "is_correct": false
+      },
+      {
+        "text": "A router that only originates the default route into area 0",
+        "is_correct": false
+      },
+      {
+        "text": "A router that has no adjacencies in the backbone area",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the OSPF 2-Way state indicate?",
+    "explanation": "2-Way means each router has seen the other's hello and bidirectional communication is confirmed. On a broadcast network the DR and BDR election has already completed at this point.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Bidirectional communication is confirmed and the DR/BDR election has completed",
+        "is_correct": true
+      },
+      {
+        "text": "The routers are exchanging full link-state databases",
+        "is_correct": false
+      },
+      {
+        "text": "The master/slave relationship for DBD exchange is being negotiated",
+        "is_correct": false
+      },
+      {
+        "text": "The adjacency has failed and the neighbor is being torn down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is negotiated during the OSPF ExStart state?",
+    "explanation": "In ExStart the two routers decide which is master and which is slave by comparing router IDs. The master controls the sequence numbers used for the Database Description packets that follow in Exchange.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Which router is master and which is slave for the database description exchange",
+        "is_correct": true
+      },
+      {
+        "text": "Which router becomes the designated router for the segment",
+        "is_correct": false
+      },
+      {
+        "text": "Which authentication key will protect subsequent hello packets",
+        "is_correct": false
+      },
+      {
+        "text": "Which area the adjacency will be placed into",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF network type elects a DR and BDR but sends hello packets as unicast because the medium does not support broadcast?",
+    "explanation": "NBMA (non-broadcast multi-access) behaves like a broadcast network for DR election, but because the underlying medium cannot carry broadcasts, hellos and LSAs are replicated as unicast to each configured neighbor.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Non-broadcast (NBMA)",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-multipoint non-broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF network type is designed for hub-and-spoke topologies and advertises each neighbor as a /32 host route?",
+    "explanation": "Point-to-multipoint treats the interface as a collection of point-to-point links. There is no DR/BDR election, and each reachable neighbor is advertised as a /32 host route so spokes can reach each other through the hub.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Point-to-multipoint",
+        "is_correct": true
+      },
+      {
+        "text": "Non-broadcast (NBMA)",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address does OSPFv3 use to send hello packets to all OSPF routers on a link?",
+    "explanation": "OSPFv3 sends hellos to FF02::5 (AllSPFRouters). FF02::6 is AllDRouters, used by the DR and BDR to hear updates from each other, while FF02::9 and FF02::A belong to RIPng and EIGRP for IPv6.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "FF02::5",
+        "is_correct": true
+      },
+      {
+        "text": "FF02::6",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::9",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::A",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In OSPFv3, which LSA type carries the IPv6 global prefixes associated with a router, replacing information that OSPFv2 carried inside the router LSA?",
+    "explanation": "OSPFv2 packed interface addresses into the router LSA. OSPFv3 split that out: link LSAs describe local link information and intra-area-prefix LSAs (Type 9) carry the actual IPv6 prefixes, which keeps the protocol independent of any single address family.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Intra-area-prefix LSA (Type 9)",
+        "is_correct": true
+      },
+      {
+        "text": "Network LSA (Type 2)",
+        "is_correct": false
+      },
+      {
+        "text": "Inter-area-prefix LSA (Type 3)",
+        "is_correct": false
+      },
+      {
+        "text": "Link LSA (Type 8)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a directly connected route, and why does it beat every routing protocol?",
+    "explanation": "A connected route has an administrative distance of 0. The router knows the destination is on a live interface, so nothing is more trustworthy; static routes are 1 and every dynamic protocol sits at 90 or above.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "0 — the destination is on a live interface, so nothing is more trusted",
+        "is_correct": true
+      },
+      {
+        "text": "1 — it ties with a static route",
+        "is_correct": false
+      },
+      {
+        "text": "90 — it is preferred over EIGRP",
+        "is_correct": false
+      },
+      {
+        "text": "110 — it is preferred over OSPF",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which BGP message type carries route advertisements and withdrawals between peers?",
+    "explanation": "The UPDATE message is the only BGP message that carries reachability information: it advertises new prefixes with their path attributes and withdraws prefixes that are no longer valid. OPEN negotiates parameters, KEEPALIVE holds the session up, and NOTIFICATION tears it down.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "UPDATE",
+        "is_correct": true
+      },
+      {
+        "text": "OPEN",
+        "is_correct": false
+      },
+      {
+        "text": "KEEPALIVE",
+        "is_correct": false
+      },
+      {
+        "text": "NOTIFICATION",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router has no explicit OSPF router-id and both a loopback and several physical interfaces with IPv4 addresses. Which address becomes the OSPF router ID?",
+    "explanation": "OSPF first looks for the highest IP address on any active loopback interface; only if no loopback exists does it fall back to the highest physical interface address. An explicit `router-id` under the process overrides both.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "The highest IP address on an active loopback interface",
+        "is_correct": true
+      },
+      {
+        "text": "The highest IP address on any physical interface",
+        "is_correct": false
+      },
+      {
+        "text": "The lowest IP address on any interface",
+        "is_correct": false
+      },
+      {
+        "text": "The address of the interface in the highest-numbered area",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers on the same Ethernet segment repeatedly cycle through EXSTART and EXCHANGE. What is the most likely cause?",
+    "explanation": "Those states exist to negotiate database description packets, so a failure there points at the data plane rather than the OSPF parameters. An MTU mismatch makes the larger DBD packet fail silently and the adjacency resets to EXSTART. Area or hello mismatches stop the process earlier, at INIT or 2-WAY.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "An MTU mismatch on the two interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "An area ID mismatch",
+        "is_correct": false
+      },
+      {
+        "text": "A hello or dead timer mismatch",
+        "is_correct": false
+      },
+      {
+        "text": "Duplicate router IDs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does convergence mean for a routing protocol?",
+    "explanation": "Convergence is the state in which every router in the domain has an identical, current view of reachable destinations after a topology change. Until it completes, some routers forward on stale information, which is when loops and black holes appear.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "All routers hold a consistent, up-to-date view of the topology after a change",
+        "is_correct": true
+      },
+      {
+        "text": "All routers use the same administrative distance for every route",
+        "is_correct": false
+      },
+      {
+        "text": "The routing table has stopped accepting new routes",
+        "is_correct": false
+      },
+      {
+        "text": "Every router has negotiated a full adjacency with every other router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers on a shared segment stay stuck in the INIT state. What does INIT indicate?",
+    "explanation": "INIT means the local router has heard a hello from the neighbour, but its own Router ID is missing from that neighbour's hello neighbour list. The path is one-directional, so check for a one-way ACL or OSPF filter, an authentication setting applied on only one side, or a broken return path.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Hellos arrive in one direction only, so the neighbour has not yet seen this router's Router ID in a hello",
+        "is_correct": true
+      },
+      {
+        "text": "Both routers agree on the DR/BDR election but not on the area ID",
+        "is_correct": false
+      },
+      {
+        "text": "The MTU values of the two interfaces do not match",
+        "is_correct": false
+      },
+      {
+        "text": "The routers are exchanging database descriptions but no LSAs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "After `auto-cost reference-bandwidth` is changed on a single router, users report asymmetric routing. Why?",
+    "explanation": "The command only changes how the local router derives interface cost, so the same link is assigned a different cost on each side and each router installs a different shortest path. Cisco recommends configuring an identical reference bandwidth on every OSPF router in the domain.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "That router computes different interface costs, so it prefers a different path than its neighbours",
+        "is_correct": true
+      },
+      {
+        "text": "The change resets every adjacency and they never reform",
+        "is_correct": false
+      },
+      {
+        "text": "The router stops advertising its connected networks",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF refuses to run until all routers use identical values",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must iBGP peers be fully meshed, or use route reflectors or confederations?",
+    "explanation": "iBGP enforces split horizon: a route learned from one iBGP peer is never advertised to another iBGP peer, because the AS_PATH loop check cannot detect a loop inside a single AS. Full mesh, route reflectors, or confederations provide full reachability without loops.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A route learned from one iBGP peer is never advertised on to another iBGP peer",
+        "is_correct": true
+      },
+      {
+        "text": "iBGP requires a direct physical link between every pair of peers",
+        "is_correct": false
+      },
+      {
+        "text": "iBGP peers must share the same Router ID to exchange routes",
+        "is_correct": false
+      },
+      {
+        "text": "iBGP advertises only prefixes learned from eBGP, never IGP routes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An iBGP speaker advertises an eBGP-learned prefix to an internal peer, but that peer cannot use the route. Which command fixes it on the advertising router?",
+    "explanation": "iBGP leaves the NEXT_HOP attribute of eBGP-learned routes unchanged. If the internal peer has no route to that external next hop, the prefix stays unusable, so `neighbor <ip> next-hop-self` rewrites NEXT_HOP to the advertising router's own update-source address.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "neighbor <ip> next-hop-self",
+        "is_correct": true
+      },
+      {
+        "text": "neighbor <ip> ebgp-multihop 2",
+        "is_correct": false
+      },
+      {
+        "text": "neighbor <ip> route-reflector-client",
+        "is_correct": false
+      },
+      {
+        "text": "bgp default local-preference 200",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On an OSPF broadcast segment, two routers that are both DROTHERs remain in the 2-WAY state with each other. Is this a problem?",
+    "explanation": "It is expected behavior. DROTHERs form full adjacencies only with the DR and BDR; between themselves they stop at 2-WAY because there is no reason to exchange complete link-state databases. A stuck 2-WAY between neighbors that should be adjacent is a separate issue.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "No; DROTHERs only form full adjacencies with the DR and BDR",
+        "is_correct": true
+      },
+      {
+        "text": "Yes; every pair on a broadcast segment must reach FULL",
+        "is_correct": false
+      },
+      {
+        "text": "Yes; it means the hello and dead timers disagree",
+        "is_correct": false
+      },
+      {
+        "text": "No; but only because the area is a stub area",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route is intended to back up an OSPF-learned route. What administrative distance should the static route use?",
+    "explanation": "OSPF has an administrative distance of 110, so the static backup must be higher than 110 to stay out of the table while OSPF is healthy. A value such as 200 makes the static route appear only when OSPF withdraws, which is the definition of a floating static.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "A value greater than 110",
+        "is_correct": true
+      },
+      {
+        "text": "A value lower than 110",
+        "is_correct": false
+      },
+      {
+        "text": "Exactly 110",
+        "is_correct": false
+      },
+      {
+        "text": "Exactly 0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does BGP prevent routing loops between autonomous systems?",
+    "explanation": "Every eBGP speaker prepends its own AS number to the AS_PATH. A router that receives an update containing its own AS number in that path rejects it, so a route cannot circle back. iBGP speakers do not prepend within the same AS, which is why additional rules apply inside a domain.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "It rejects any update whose AS_PATH already contains its own AS number",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a hop count that is incremented at every router",
+        "is_correct": false
+      },
+      {
+        "text": "It relies on split horizon within each autonomous system",
+        "is_correct": false
+      },
+      {
+        "text": "It compares router IDs and keeps only the lowest one",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "HSRP group 10 has Router A at priority 120 and Router B at priority 100, with B currently active. A reboots and comes back with preemption disabled. Which router is active afterward?",
+    "explanation": "Without preempt, the first router to become active keeps the role. A's higher priority is only used in an election, and no election occurs while an active router is still healthy, so B remains active until it fails.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "blueprint-bank",
+    "choices": [
+      {
+        "text": "Router B remains active",
+        "is_correct": true
+      },
+      {
+        "text": "Router A takes over because its priority is higher",
+        "is_correct": false
+      },
+      {
+        "text": "Both routers share the active role",
+        "is_correct": false
+      },
+      {
+        "text": "The group resets and priority 100 wins the new election",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router must forward IPv6 packets, but `ipv6 route` entries are configured and no traffic is being routed. Which global command is missing?",
+    "explanation": "Cisco routers do not forward IPv6 at all until `ipv6 unicast-routing` is enabled globally, even if static routes exist. With it disabled, the router can still hold IPv6 addresses on interfaces but acts as a host rather than a router. Enabling it also starts sending router advertisements on interfaces that have IPv6 configured.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 unicast-routing",
+        "is_correct": true
+      },
+      {
+        "text": "ip routing",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 cef",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 address autoconfig",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix represents the default route in an `ipv6 route` command?",
+    "explanation": "The IPv6 unspecified address is :: with a prefix length of zero, so ::/0 matches every destination and is the exact equivalent of 0.0.0.0/0 in IPv4. A static default route is written as `ipv6 route ::/0 <next-hop>`. Writing 2000::/3 would match only global unicast space, not every destination.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "::/0",
+        "is_correct": true
+      },
+      {
+        "text": "0.0.0.0/0",
+        "is_correct": false
+      },
+      {
+        "text": "2000::/3",
+        "is_correct": false
+      },
+      {
+        "text": "fe80::/10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How do IPv6 hosts normally learn a default gateway?",
+    "explanation": "IPv6 hosts rely on router advertisements, which carry the default router as a link-local address and are sent by routers with `ipv6 unicast-routing` enabled. A static default route on the router affects only the router's own forwarding and does not configure the hosts. That is why disabling router advertisements can strand hosts even when the router's routing table looks correct.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "From router advertisement messages sent by a router on the link",
+        "is_correct": true
+      },
+      {
+        "text": "From the static default route configured on the router",
+        "is_correct": false
+      },
+      {
+        "text": "From the DHCPv6 server's MAC address option",
+        "is_correct": false
+      },
+      {
+        "text": "From the Neighbor Discovery duplicate address detection exchange",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 static route is configured with a global unicast next hop, but it never appears in the routing table. What is the most likely reason?",
+    "explanation": "For a global next hop the router must resolve that address recursively through another route, usually a connected subnet. If no route to the next hop exists, the static route stays inactive and is not installed. A link-local next hop avoids this because the exit interface supplies the reachability directly.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The next-hop address is not reachable through any other route in the table",
+        "is_correct": true
+      },
+      {
+        "text": "The route was configured with an administrative distance lower than one",
+        "is_correct": false
+      },
+      {
+        "text": "IPv6 static routes cannot use global unicast next hops",
+        "is_correct": false
+      },
+      {
+        "text": "The destination prefix is longer than the next-hop prefix",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does route summarization accomplish in a routing domain?",
+    "explanation": "Summarization replaces many contiguous, more-specific prefixes with a single shorter prefix, so neighbors carry and process far fewer entries. It also limits the scope of a topology change, because a flapping component network no longer causes updates for each individual prefix. The trade-off is that the summary is only accurate while the covered space is genuinely reachable.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It replaces many specific prefixes with one shorter prefix, shrinking routing tables",
+        "is_correct": true
+      },
+      {
+        "text": "It converts every prefix into a host route so forwarding is more precise",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts routing updates between neighbouring routers",
+        "is_correct": false
+      },
+      {
+        "text": "It balances traffic across all equal-cost paths automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single prefix summarizes 172.16.0.0/24 through 172.16.7.0/24?",
+    "explanation": "The eight /24 networks span third-octet values 0 through 7, which fit in three bits, so the summary length is 24 - 3 = 21. The block starts on a /21 boundary, giving 172.16.0.0/21. A /22 would cover only four of the eight networks, and a /20 would include address space beyond the range.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "172.16.0.0/21",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.0.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.0/20",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.7.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF router generates summarized Type 3 LSAs for inter-area routes?",
+    "explanation": "The area border router sits between areas, so it is the only device that can replace a set of intra-area prefixes with one summary LSA for another area. Internal routers only hold their own area's topology, and a backbone router that is not an ABR has nothing to summarize. External summarization is a separate function performed at the autonomous system boundary router.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The area border router (ABR)",
+        "is_correct": true
+      },
+      {
+        "text": "Every internal router in the area",
+        "is_correct": false
+      },
+      {
+        "text": "The designated router on each broadcast segment",
+        "is_correct": false
+      },
+      {
+        "text": "The backup designated router on each broadcast segment",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A summary route covers 10.1.0.0/22, but only 10.1.0.0/24 and 10.1.1.0/24 actually exist. What is the risk?",
+    "explanation": "The summary advertises reachability for 10.1.2.0/24 and 10.1.3.0/24 as well, so traffic for those addresses is forwarded toward the summarizing router. With no more-specific route behind it, that traffic is dropped, creating a black hole. Summaries must therefore cover only space that is genuinely reachable, or be paired with a discard route.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Traffic for the unused addresses is drawn to the summarizer and dropped",
+        "is_correct": true
+      },
+      {
+        "text": "The two real networks are removed from the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "The summary is rejected because it is not a power-of-two prefix",
+        "is_correct": false
+      },
+      {
+        "text": "Equal-cost load balancing sends half the traffic the wrong way",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a floating static route provide backup for a dynamically learned route?",
+    "explanation": "The static route is configured with an administrative distance higher than the dynamic protocol's, so it loses the best-path comparison while the learned route exists. Its configuration remains in place but the route is not installed. If the dynamic route is withdrawn, the static route becomes the best candidate and is installed.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It uses a higher administrative distance, so it is installed only when the primary route disappears",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a lower administrative distance, so it always overrides the dynamic route",
+        "is_correct": false
+      },
+      {
+        "text": "It is tagged with a route map that suppresses the dynamic protocol while the link is up",
+        "is_correct": false
+      },
+      {
+        "text": "It is kept in a separate table that the router consults only during convergence",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "While the primary OSPF route is up, where does the configured floating static route appear?",
+    "explanation": "The floating static is present in the running configuration but absent from the IP routing table, because a route with a worse administrative distance never wins the selection. `show ip route` therefore shows only the OSPF entry. `show running-config` is the place to confirm the backup is configured as intended.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In the running configuration but not in the IP routing table",
+        "is_correct": true
+      },
+      {
+        "text": "In the IP routing table alongside the OSPF route",
+        "is_correct": false
+      },
+      {
+        "text": "In neither the configuration nor the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "In the routing table, marked as a backup path that is never used",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route is configured with the same administrative distance as the primary OSPF route. What is the result?",
+    "explanation": "Administrative distance is the first tiebreaker, so equal values let the router fall through to metric comparison and, when metrics also match, install both paths for equal-cost load balancing. The static route therefore shares traffic rather than serving as a standby. A backup must be strictly worse, meaning a higher distance than the protocol it protects.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both routes are installed and traffic is load-balanced instead of backed up",
+        "is_correct": true
+      },
+      {
+        "text": "The static route replaces the OSPF route immediately",
+        "is_correct": false
+      },
+      {
+        "text": "The router rejects the static route as a conflict",
+        "is_correct": false
+      },
+      {
+        "text": "The OSPF route stays active and the static is discarded permanently",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route points to an ISP next hop, but the primary link fails upstream while the local interface stays up. Why does the backup not take over?",
+    "explanation": "A static route has no way to detect a failure beyond its own interface state, so the router still believes the next hop is reachable. Because the primary route is never withdrawn, the floating static stays inactive. IP SLA object tracking solves this by probing a target and withdrawing the static route when the probe fails.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router cannot detect the upstream failure without IP SLA tracking to withdraw the primary route",
+        "is_correct": true
+      },
+      {
+        "text": "The static route needs a lower administrative distance to be considered",
+        "is_correct": false
+      },
+      {
+        "text": "Static routes cannot point to an ISP next hop at all",
+        "is_correct": false
+      },
+      {
+        "text": "The backup route is removed whenever the local interface stays up",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static route is configured with only a next-hop address and no exit interface. How does the router decide which interface will carry the traffic?",
+    "explanation": "The router performs a recursive lookup: it searches the routing table for a route covering the next-hop address and forwards out that route's interface. This is why the next hop must itself be reachable — if the recursion fails, the static route never enters the table.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It performs a recursive lookup to find a route that covers the next-hop address",
+        "is_correct": true
+      },
+      {
+        "text": "It ARPs for the next hop simultaneously on every up interface",
+        "is_correct": false
+      },
+      {
+        "text": "It uses the lowest-numbered interface that is up and forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "It requires a default route to be present before the static route can install",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the drawback of a static route that specifies an exit interface but no next-hop address on a multi-access Ethernet segment?",
+    "explanation": "Without a next hop, the router treats every destination inside the prefix as directly connected and issues a separate ARP for each one, instead of resolving a single next-hop MAC. That floods the segment with ARP traffic and consumes adjacency and memory resources as the prefix grows.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router must resolve a MAC address for every destination, so it ARPs once per destination instead of once per next hop",
+        "is_correct": true
+      },
+      {
+        "text": "The route is not installed until the interface receives a DHCP lease",
+        "is_correct": false
+      },
+      {
+        "text": "The route is silently converted into a default route",
+        "is_correct": false
+      },
+      {
+        "text": "The route inherits the administrative distance of the interface and is ignored",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which keyword keeps a static route in the routing table even when its outgoing interface goes down?",
+    "explanation": "The permanent keyword decouples the route from interface state, so it stays installed regardless. It is used where the interface flaps for reasons unrelated to path availability — dial backup links and some floating static designs — and it means the route will attract traffic that cannot actually be delivered.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "permanent",
+        "is_correct": true
+      },
+      {
+        "text": "track",
+        "is_correct": false
+      },
+      {
+        "text": "sticky",
+        "is_correct": false
+      },
+      {
+        "text": "persist",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a static route behave differently from a dynamically learned route when the topology changes?",
+    "explanation": "Nothing recalculates a static route. It remains exactly as configured until an administrator changes or removes it, which is both its strength (predictable, no protocol overhead) and its weakness (no automatic reaction to a failed path).",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It does not react at all; it stays configured and must be changed manually",
+        "is_correct": true
+      },
+      {
+        "text": "It reconverges faster because it has no protocol timers",
+        "is_correct": false
+      },
+      {
+        "text": "It is withdrawn automatically as soon as any link fails",
+        "is_correct": false
+      },
+      {
+        "text": "It is recalculated by the SPF algorithm like any other route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a router-on-a-stick design, how must the switch port facing the router be configured?",
+    "explanation": "The router needs to see the 802.1Q tag for each VLAN, and an access port would strip or reject those tags. The link must therefore be a trunk carrying every VLAN that the router is expected to route between.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As an 802.1Q trunk carrying every VLAN that needs routing",
+        "is_correct": true
+      },
+      {
+        "text": "As an access port in the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "As a routed port with an IP address in each VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "As an access port in VLAN 1, because VLAN 1 carries all VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Before VLAN trunking was available, how was inter-VLAN routing performed with an external router?",
+    "explanation": "The router needed one physical interface cabled to a separate switch port for every VLAN, because each interface can only be a member of one broadcast domain. That is exactly why router-on-a-stick exists — one trunk replaces one cable per VLAN.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One physical router interface per VLAN, each cabled to its own switch port",
+        "is_correct": true
+      },
+      {
+        "text": "A single router interface carrying all VLANs as untagged frames",
+        "is_correct": false
+      },
+      {
+        "text": "A loopback interface per VLAN on the router",
+        "is_correct": false
+      },
+      {
+        "text": "An SVI configured on the external router for each VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures subinterface GigabitEthernet0/0.30 to carry VLAN 30 as the native VLAN while still applying 802.1Q encapsulation?",
+    "explanation": "The native keyword tells the router that frames for this VLAN arrive untagged, matching the switch's native VLAN setting. Without it the router would expect a tag on those frames and drop them.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "encapsulation dot1Q 30 native",
+        "is_correct": true
+      },
+      {
+        "text": "encapsulation dot1Q 30",
+        "is_correct": false
+      },
+      {
+        "text": "switchport trunk native vlan 30",
+        "is_correct": false
+      },
+      {
+        "text": "encapsulation native 30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A multilayer switch has both its VLAN 10 and VLAN 20 interfaces up/up, yet hosts in VLAN 10 cannot reach hosts in VLAN 20. Which global command is missing?",
+    "explanation": "SVIs exist and are up, but a multilayer switch forwards only at Layer 2 until routing is enabled globally. ip routing turns on the Layer 3 forwarding path between SVIs. It is a global command, not a per-interface one, which is why both SVIs look healthy while traffic still fails.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip routing",
+        "is_correct": true
+      },
+      {
+        "text": "ip routing enable",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 unicast-routing",
+        "is_correct": false
+      },
+      {
+        "text": "switchport routing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does route poisoning do when a network becomes unreachable?",
+    "explanation": "Instead of removing the route and saying nothing, the router advertises it with an infinite metric. Neighbors immediately mark the path unusable instead of continuing to believe their own stale entry, which is what prevents a routing loop while the failure propagates.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It advertises the failed network with an infinite metric so neighbors stop using that path",
+        "is_correct": true
+      },
+      {
+        "text": "It deletes the route locally without telling any neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "It re-advertises the failed prefix with a metric of zero",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps advertising the old metric until the hold-down timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can a distance-vector protocol count to infinity after a link fails?",
+    "explanation": "When A loses a directly connected network, B may still advertise a route to it back to A. A accepts B's advertisement, then B accepts A's new advertisement, and the metric climbs one hop at a time. Split horizon, route poisoning, and triggered updates exist precisely to break that mutual belief.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Neighbors keep believing each other's stale advertisements, so the metric increases one hop at a time",
+        "is_correct": true
+      },
+      {
+        "text": "The hop-count field overflows and wraps back to zero",
+        "is_correct": false
+      },
+      {
+        "text": "The update timer expires and duplicates every route in the table",
+        "is_correct": false
+      },
+      {
+        "text": "The topology table loses its successor and floods a query to every neighbor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the fundamental difference between a link-state and a distance-vector routing protocol?",
+    "explanation": "A link-state protocol floods link information so every router builds an identical topology database and independently runs SPF. A distance-vector protocol never sees the topology — it only knows which neighbor offers the best metric to a prefix and trusts that neighbor.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Link-state builds a full topology database and runs SPF; distance-vector only knows routes and metrics learned from neighbors",
+        "is_correct": true
+      },
+      {
+        "text": "Link-state uses hop count as its metric; distance-vector uses bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "Link-state protocols are classful; distance-vector protocols are classless",
+        "is_correct": false
+      },
+      {
+        "text": "Link-state sends its full table every 30 seconds; distance-vector exchanges LSAs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the hold-down timer in a distance-vector routing protocol?",
+    "explanation": "After a route is declared unreachable, the hold-down period suppresses it so a flapping interface or a stale, pre-failure update cannot put the route back into service immediately. The cost is slower reconvergence for a path that recovers quickly.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It suppresses a recently failed route so flapping or stale updates cannot reinstate it immediately",
+        "is_correct": true
+      },
+      {
+        "text": "It delays hello packets so the CPU is not interrupted too often",
+        "is_correct": false
+      },
+      {
+        "text": "It limits how long a router waits for an acknowledgement from a neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "It ages out table entries that have not changed",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single prefix summarizes the contiguous networks 10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, and 10.0.3.0/24?",
+    "explanation": "Four /24 networks align on a four-block boundary, so two bits of prefix are removed: 24 - 2 = 22. The result 10.0.0.0/22 covers exactly 10.0.0.0 through 10.0.3.255 with nothing left over.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "10.0.0.0/22",
+        "is_correct": true
+      },
+      {
+        "text": "10.0.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/21",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is it unsafe to summarize 172.16.1.0/24 and 172.16.3.0/24 as 172.16.0.0/22?",
+    "explanation": "The /22 spans four /24 blocks, and two of them — 172.16.0.0/24 and 172.16.2.0/24 — are not part of the pair being summarized. Advertising the /22 pulls traffic for those two networks toward the summarizer, which then has no route and drops it.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The /22 also covers 172.16.0.0/24 and 172.16.2.0/24, so traffic for those networks is drawn in and dropped",
+        "is_correct": true
+      },
+      {
+        "text": "A summary must always be a /24 or longer to be advertised",
+        "is_correct": false
+      },
+      {
+        "text": "RFC 1918 space cannot be summarized at all",
+        "is_correct": false
+      },
+      {
+        "text": "The two subnets use different administrative distances",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures manual inter-area summarization of 10.1.0.0/16 on an OSPF ABR inside area 1?",
+    "explanation": "The area range command on an ABR collapses matching intra-area prefixes into a single Type 3 LSA for the other areas. The similar-looking summary-address command is different: it summarizes redistributed external prefixes into Type 5 LSAs on an ASBR.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "area 1 range 10.1.0.0 255.255.0.0",
+        "is_correct": true
+      },
+      {
+        "text": "summary-address 10.1.0.0 255.255.0.0",
+        "is_correct": false
+      },
+      {
+        "text": "network 10.1.0.0 0.0.255.255 area 1",
+        "is_correct": false
+      },
+      {
+        "text": "area 1 range 10.1.0.0/16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is 0.0.0.0/0 described as the ultimate summary?",
+    "explanation": "A /0 removes every prefix bit, so the prefix covers the entire IPv4 address space. As a route it therefore matches any destination that no more specific entry matches, which is exactly what a default route does.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It covers every IPv4 address, so it matches anything no more specific prefix covers",
+        "is_correct": true
+      },
+      {
+        "text": "It summarizes only the RFC 1918 private ranges",
+        "is_correct": false
+      },
+      {
+        "text": "It is the shortest prefix a router is allowed to store",
+        "is_correct": false
+      },
+      {
+        "text": "It is generated automatically by every routing protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route must back up an eBGP-learned route. Which administrative distance keeps the static route out of the table while eBGP is healthy?",
+    "explanation": "eBGP is installed with an administrative distance of 20, so the static route needs any value above 20 to lose the comparison. Choosing a value above 200 would still work but would also lose to iBGP, which is a different design intent.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Any value greater than 20",
+        "is_correct": true
+      },
+      {
+        "text": "Any value greater than 90",
+        "is_correct": false
+      },
+      {
+        "text": "Any value greater than 110",
+        "is_correct": false
+      },
+      {
+        "text": "Exactly 255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens to a static route configured with an administrative distance of 255?",
+    "explanation": "255 is the maximum value and reserves the route from ever being installed, because it can never win against any other source. It is a way of writing a route down without activating it, and routes that fail reachability checks appear with this AD in show output.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is never installed in the routing table, no matter what other routes exist",
+        "is_correct": true
+      },
+      {
+        "text": "It becomes the last-resort gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It is installed but immediately marked unreachable",
+        "is_correct": false
+      },
+      {
+        "text": "It is installed only while the outgoing interface is down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands makes a floating static route depend on the result of an IP SLA probe?",
+    "explanation": "The tracked object is defined first, then attached to the route with the track keyword. If the probe fails, the object goes down and the router withdraws the static route even though the local interface is still up — which is the only way to detect a failure that happens beyond the first hop.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "track 1 ip sla 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 track 1",
+        "is_correct": true
+      },
+      {
+        "text": "ip sla 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 permanent",
+        "is_correct": false
+      },
+      {
+        "text": "track 1 interface GigabitEthernet0/0 line-protocol, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250",
+        "is_correct": false
+      },
+      {
+        "text": "ip sla monitor 1, then ip route 10.2.2.0 255.255.255.0 192.168.1.2 250 name SLA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two static routes reach the same destination: one with AD 200 via ISP-A and one with AD 210 via ISP-B. Both next hops are reachable. What does the router do?",
+    "explanation": "Only the lowest administrative distance is installed, so the AD 200 route owns the destination and the AD 210 route stays out of the routing table entirely. It is not a standby in the table — it becomes usable only when the AD 200 route disappears.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It installs only the AD 200 route; the AD 210 route is used only if the first one disappears",
+        "is_correct": true
+      },
+      {
+        "text": "It installs both routes and load-balances across the two ISPs",
+        "is_correct": false
+      },
+      {
+        "text": "It installs neither route because their administrative distances disagree",
+        "is_correct": false
+      },
+      {
+        "text": "It installs the AD 210 route because a higher distance is preferred",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the IPv6 routing table on a Cisco router?",
+    "explanation": "IPv6 has its own table, separate from the IPv4 table, and show ipv6 route prints it. The output uses the same route codes — C, L, S, O, D — so the IPv4 reading skills transfer directly.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ipv6 route",
+        "is_correct": true
+      },
+      {
+        "text": "show ip route v6",
+        "is_correct": false
+      },
+      {
+        "text": "show route ipv6",
+        "is_correct": false
+      },
+      {
+        "text": "show ipv6 routing-table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates an IPv6 static route for 2001:db8:2::/48 out GigabitEthernet0/1 with link-local next hop fe80::1?",
+    "explanation": "A link-local next hop is only unique on a single link, so the exit interface must be given alongside it. The keyword form is interface first, then address. Omitting the interface makes the next hop ambiguous and the router rejects the route.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 route 2001:db8:2::/48 GigabitEthernet0/1 fe80::1",
+        "is_correct": true
+      },
+      {
+        "text": "ipv6 route 2001:db8:2::/48 fe80::1",
+        "is_correct": false
+      },
+      {
+        "text": "ip route 2001:db8:2::/48 GigabitEthernet0/1 fe80::1",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 route 2001:db8:2:: 255.255.255.0 GigabitEthernet0/1 fe80::1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route is pointed at the Null0 interface. What is that route used for?",
+    "explanation": "Null0 silently discards anything sent to it, so a route to Null0 black-holes a prefix. The usual reason is to drop traffic for the unused part of a summarized range, preventing the router from following a less specific route and looping those packets.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It silently discards matching traffic, which is used to black-hole unused space inside a summary",
+        "is_correct": true
+      },
+      {
+        "text": "It returns an ICMP error to the source for every matching packet",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards matching traffic to the default gateway instead",
+        "is_correct": false
+      },
+      {
+        "text": "It logs matching packets and then forwards them normally",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is an IPv6 static route with only an exit interface and no next hop acceptable on a point-to-point link but not on a shared Ethernet segment?",
+    "explanation": "On a point-to-point link there is exactly one possible neighbor, so the router can send toward the far end without choosing between candidates. On a multi-access segment there are many neighbors, so the router would have to resolve a link-layer address for each destination and treat the whole prefix as directly attached.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only one neighbor can exist on a point-to-point link, so the far end is unambiguous",
+        "is_correct": true
+      },
+      {
+        "text": "Point-to-point links do not use link-local addresses",
+        "is_correct": false
+      },
+      {
+        "text": "The interface supplies a synthetic next-hop address automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The router converts the route into a connected route on point-to-point links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router has a static route and an OSPF route for the same prefix 10.1.1.0/24. The OSPF route has a much lower metric. Which route is installed in the routing table?",
+    "explanation": "Administrative distance is compared before metric, and it is compared only between routes from different sources. The static route wins at AD 1 against OSPF's 110, so the OSPF route never reaches the table no matter how attractive its cost is.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The static route, because administrative distance is compared before metric",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPF route, because its metric is lower",
+        "is_correct": false
+      },
+      {
+        "text": "Both routes, and traffic is load-balanced between them",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, until the two sources are given the same administrative distance",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of an EIGRP route learned from outside the local EIGRP autonomous system?",
+    "explanation": "Internal EIGRP is 90 because the whole path is inside one administrative domain. An external route originated elsewhere is only as trustworthy as the protocol it came from, so EIGRP assigns it 170 — worse than OSPF, better than RIP.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "170",
+        "is_correct": true
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "20",
+        "is_correct": false
+      },
+      {
+        "text": "200",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An administrator sets a static route's administrative distance to 5 on Router A, and Router A then redistributes that route into OSPF. What administrative distance do Router A's OSPF neighbors assign to the route?",
+    "explanation": "Administrative distance is purely local. It expresses how much this router trusts a source and is never encoded in a routing update, so neighbors evaluate the route as an OSPF route and apply OSPF's own distance of 110.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "110, because administrative distance is local and is never carried in routing updates",
+        "is_correct": true
+      },
+      {
+        "text": "5, because the original value travels with the route",
+        "is_correct": false
+      },
+      {
+        "text": "20, because redistributed routes become external",
+        "is_correct": false
+      },
+      {
+        "text": "0, because the value is reset at every hop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly compares HSRP and VRRP?",
+    "explanation": "VRRP is defined in an RFC and works between vendors, so it is the choice in mixed environments. HSRP is Cisco-developed and, while widely deployed in all-Cisco networks, does not interoperate with other vendors' first-hop redundancy implementations.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VRRP is an open standard, while HSRP is Cisco-proprietary",
+        "is_correct": true
+      },
+      {
+        "text": "HSRP is an open standard, while VRRP is Cisco-proprietary",
+        "is_correct": false
+      },
+      {
+        "text": "Both are open standards maintained by the IETF",
+        "is_correct": false
+      },
+      {
+        "text": "Both are Cisco-proprietary and interoperate only with each other",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which virtual MAC address format does HSRP version 2 use?",
+    "explanation": "HSRPv1 uses 0000.0c07.acXX, which caps the group number at 255. Version 2 moved to 0000.0c9f.fXXX and encodes the group in the low 10 bits, allowing group numbers far beyond 255.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0000.0c9f.fXXX",
+        "is_correct": true
+      },
+      {
+        "text": "0000.0c07.acXX",
+        "is_correct": false
+      },
+      {
+        "text": "0000.5e00.01XX",
+        "is_correct": false
+      },
+      {
+        "text": "0180.c200.0003",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default hello and hold timers for HSRP version 1?",
+    "explanation": "HSRPv1 sends a hello every 3 seconds and declares the peer dead after 10 seconds without one. The hold time is roughly three hellos, so a single lost packet does not trigger a failover, and both timers must match across the group for it to work.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "3 seconds hello, 10 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "1 second hello, 3 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds hello, 15 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "10 seconds hello, 30 seconds hold",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers are configured with different process IDs — `router ospf 1` on one and `router ospf 10` on the other. Can they form an adjacency?",
+    "explanation": "The process ID is locally significant and never appears in a hello packet, so it does not have to match between neighbours. It only separates multiple OSPF instances on the same router, each running its own database.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Yes; the process ID is locally significant and is never sent in hellos",
+        "is_correct": true
+      },
+      {
+        "text": "No; both routers must use the same process ID to belong to the same area",
+        "is_correct": false
+      },
+      {
+        "text": "No; a process ID mismatch leaves the neighbours stuck in EXSTART",
+        "is_correct": false
+      },
+      {
+        "text": "Yes, but only after the router IDs are manually synchronised",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF configuration makes every interface passive and then re-enables hellos only on the interfaces that should form adjacencies?",
+    "explanation": "passive-interface default flips the default for the whole process, and no passive-interface carves out the exceptions. This is safer than listing interfaces one at a time because any interface added later starts passive instead of accidentally sending hellos toward an ISP.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "passive-interface default, then no passive-interface on the chosen interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "no passive-interface default, then passive-interface on the chosen interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "passive-interface all, then passive-interface none",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf passive default, then ip ospf passive disable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router already has a static default route and runs OSPF. Which command injects that default into OSPF so other routers learn it?",
+    "explanation": "OSPF does not advertise a default route on its own. default-information originate tells the process to flood a Type 5 default LSA, and adding the always keyword makes it do so even when the local default route is missing.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "default-information originate",
+        "is_correct": true
+      },
+      {
+        "text": "network 0.0.0.0 255.255.255.255 area 0",
+        "is_correct": false
+      },
+      {
+        "text": "redistribute static default",
+        "is_correct": false
+      },
+      {
+        "text": "ip default-network 0.0.0.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command sets the OSPF cost of a single link to 100 without changing the cost of any other interface?",
+    "explanation": "auto-cost reference-bandwidth is a router-wide setting, so it changes every interface's cost at once. ip ospf cost applies to one interface only and takes precedence over the value derived from reference bandwidth and interface bandwidth.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ospf cost 100",
+        "is_correct": true
+      },
+      {
+        "text": "auto-cost reference-bandwidth 100",
+        "is_correct": false
+      },
+      {
+        "text": "ospf cost 100",
+        "is_correct": false
+      },
+      {
+        "text": "bandwidth 100000",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What OSPF network type is assigned by default to a point-to-point serial interface running HDLC?",
+    "explanation": "Cisco treats a point-to-point link as having exactly one possible neighbour, so it defaults to the point-to-point network type. No DR or BDR election happens and hellos are sent every 10 seconds.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Point-to-point",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Non-broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-multipoint",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does OSPF advertise a loopback interface as a /32 host route?",
+    "explanation": "A loopback is given the loopback network type, which OSPF treats as a stub host rather than a shared segment. Advertising it as /32 makes the address reachable from anywhere in the domain without implying that a subnet sits behind it.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the loopback network type advertises it as a stub host",
+        "is_correct": true
+      },
+      {
+        "text": "Because loopback interfaces cannot be configured with a prefix shorter than /32",
+        "is_correct": false
+      },
+      {
+        "text": "Because OSPF summarises every loopback into 0.0.0.0/0",
+        "is_correct": false
+      },
+      {
+        "text": "Because the DR rewrites loopback prefixes as host LSAs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes OSPF treat an NBMA interface as a broadcast medium so a DR election takes place?",
+    "explanation": "Non-broadcast networks send hellos as unicast and elect a DR only on a fully meshed topology. ip ospf network broadcast makes OSPF behave as if the segment supports multicast, so hellos and DR election work as they do on Ethernet — although the medium still has to carry those multicast frames.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ospf network broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "ip ospf network non-broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf priority 1",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf dr-election enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF network type behaves like point-to-multipoint but requires explicit neighbour statements because the medium cannot carry multicast hellos?",
+    "explanation": "Point-to-multipoint sends hellos as multicast, which a Frame Relay or ATM hub cannot replicate to every spoke. The non-broadcast variant keeps the /32 host-route advertisement of point-to-multipoint but needs neighbour commands so the hub can unicast hellos to each spoke individually.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Point-to-multipoint non-broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "Non-broadcast (NBMA)",
+        "is_correct": false
+      },
+      {
+        "text": "Point-to-point",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must every non-backbone OSPF area touch area 0, or reach it through a virtual link?",
+    "explanation": "Inter-area prefixes are only exchanged through the backbone, so an area with no path to area 0 has no way to receive Type 3 LSAs from any other area. That two-level hierarchy is also what prevents inter-area routing loops, since an area can never learn a prefix from a peer area without it passing through the backbone.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because inter-area LSAs are only exchanged through the backbone, which keeps inter-area routing loop-free",
+        "is_correct": true
+      },
+      {
+        "text": "Because only area 0 routers are permitted to run the SPF algorithm",
+        "is_correct": false
+      },
+      {
+        "text": "Because area 0 is the only area that can authenticate OSPF packets",
+        "is_correct": false
+      },
+      {
+        "text": "Because a non-backbone area may contain only one ABR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF LSA type is generated by the DR on a multi-access segment to represent that segment and the routers attached to it?",
+    "explanation": "Type 1 router LSAs describe each router individually. The Type 2 network LSA is generated by the DR and models the shared segment as a pseudonode, and every other router on the segment references that pseudonode in its own Type 1 LSA so the topology tree collapses the segment into a single node.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 2 network LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 1 router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 3 summary LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 external LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an OSPF not-so-stubby area from a normal stub area?",
+    "explanation": "A stub area refuses Type 5 externals entirely. An NSSA keeps that restriction toward the backbone but lets an ASBR inside the area originate external prefixes as Type 7 LSAs, which the ABR then translates into Type 5 when flooding them into the rest of the domain.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An ASBR inside the area may inject external routes as Type 7 LSAs",
+        "is_correct": true
+      },
+      {
+        "text": "Type 5 LSAs are allowed to flood through it unchanged",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the requirement to connect to area 0",
+        "is_correct": false
+      },
+      {
+        "text": "It disables DR election on all of its segments",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two behaviours define an OSPF stub area?",
+    "explanation": "A stub area blocks Type 5 external LSAs at its border, so routers inside carry a much smaller database. The ABR compensates by injecting a default route, which keeps external destinations reachable even though the external prefixes themselves never enter the area.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It blocks Type 5 LSAs and receives a default route from the ABR",
+        "is_correct": true
+      },
+      {
+        "text": "It blocks Type 3 LSAs and receives a default route from the ASBR",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks Type 1 and Type 2 LSAs within the area",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks every LSA and relies on static routes instead",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 multicast address does OSPFv3 use for hellos addressed to the DR and BDR?",
+    "explanation": "FF02::5 reaches every OSPFv3 router on the link, while FF02::6 is the all-DR/BDR group. The DR joins both groups, so it receives the same hello a DROTHER sends to the general group and the adjacency survives the election.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "FF02::6",
+        "is_correct": true
+      },
+      {
+        "text": "FF02::5",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::1",
+        "is_correct": false
+      },
+      {
+        "text": "FF02::9",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which addresses do OSPFv3 neighbours use as the source and destination of their hello packets?",
+    "explanation": "OSPFv3 runs per link rather than per subnet, so it uses the link-local address of the outgoing interface as the source and a link-local multicast group as the destination. Global prefixes are carried inside LSAs but are not needed to build the adjacency.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The link-local addresses of the participating interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The global unicast addresses of the participating interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "The 32-bit router ID of each neighbour",
+        "is_correct": false
+      },
+      {
+        "text": "The unique-local addresses configured on the loopbacks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is OSPFv3 authentication implemented?",
+    "explanation": "OSPFv2 carries its own authentication fields in the packet header. OSPFv3 removed them and relies on IPsec instead — AH for integrity, ESP for confidentiality — applied per interface, which lets the same mechanisms protect OSPFv3 as any other IPv6 traffic.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Through IPsec AH or ESP applied to the interface",
+        "is_correct": true
+      },
+      {
+        "text": "Through MD5 keys configured under the OSPFv3 process",
+        "is_correct": false
+      },
+      {
+        "text": "Through a plaintext password carried in each hello packet",
+        "is_correct": false
+      },
+      {
+        "text": "Through a shared key carried inside the Type 1 router LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPFv3 LSA carries a router's link-local address and the prefixes associated with one link to the neighbours on that link?",
+    "explanation": "OSPFv3 split OSPFv2's router LSA into pieces. Type 8 describes a single link, including the link-local address the neighbours need and any prefixes on it, and its scope is the link itself, so it is never flooded beyond the routers attached to that segment.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 8 link LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 9 intra-area-prefix LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 1 router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 external LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In EIGRP, what is the reported distance of a route?",
+    "explanation": "The reported distance, also called the advertised distance, is the metric the neighbour claims for the destination. EIGRP compares it with the local feasible distance to decide whether the neighbour offers a loop-free backup — a neighbour whose reported distance is higher than the current feasible distance is not trusted as a feasible successor.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The metric the neighbour advertises for the destination",
+        "is_correct": true
+      },
+      {
+        "text": "The metric this router computes for its own best path",
+        "is_correct": false
+      },
+      {
+        "text": "The number of hops between the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "The administrative distance assigned to the EIGRP process",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default EIGRP hello and hold timers on a link of T1 speed or faster?",
+    "explanation": "EIGRP scales its timers to link speed: 5-second hellos with a 15-second hold on links faster than T1, and 60/180 on slower multipoint links. The longer timers on slow links avoid wasting WAN capacity on hellos at the cost of slower failure detection.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "5 seconds hello, 15 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "10 seconds hello, 40 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "30 seconds hello, 120 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "60 seconds hello, 180 seconds hold",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IP protocol number does EIGRP use?",
+    "explanation": "EIGRP is not carried over TCP or UDP. It runs directly over IP with protocol number 88, which is why an ACL that filters only TCP and UDP can silently break EIGRP adjacencies.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "88",
+        "is_correct": true
+      },
+      {
+        "text": "89",
+        "is_correct": false
+      },
+      {
+        "text": "179",
+        "is_correct": false
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two components contribute to the EIGRP composite metric by default?",
+    "explanation": "By default EIGRP sets K1 and K3 to one, so only bandwidth and delay are used. Load and reliability can be added by changing the K-values, but every router in the AS must use identical values or neighbours will disagree about which path is best; MTU is carried in updates but never used in the calculation.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Bandwidth and delay",
+        "is_correct": true
+      },
+      {
+        "text": "Bandwidth and hop count",
+        "is_correct": false
+      },
+      {
+        "text": "Delay and load",
+        "is_correct": false
+      },
+      {
+        "text": "Reliability and MTU",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the OSPF DOWN state mean for a neighbour?",
+    "explanation": "DOWN means no hello has been received from that neighbour within the dead interval, or none has ever arrived. It is the starting state before any adjacency exists, and a neighbour permanently stuck there points to a one-way path, a mismatched area, or a passive interface.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No hello has been received from the neighbour",
+        "is_correct": true
+      },
+      {
+        "text": "Hellos are exchanged but the databases are still synchronising",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour is a DROTHER and will never become adjacent",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour has finished the database exchange",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF neighbour state means link-state requests have been sent and the router is waiting for the matching updates?",
+    "explanation": "In LOADING the router has finished the database description exchange and knows exactly which LSAs it is missing. It sends link-state requests and waits for the replies, so a neighbour stuck here usually means a requested LSA cannot be retrieved.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "LOADING",
+        "is_correct": true
+      },
+      {
+        "text": "EXCHANGE",
+        "is_correct": false
+      },
+      {
+        "text": "EXSTART",
+        "is_correct": false
+      },
+      {
+        "text": "FULL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the OSPF FULL state signify?",
+    "explanation": "FULL means the two routers hold identical link-state databases for the area and can forward traffic through each other. On a broadcast segment only the DR and BDR reach FULL with every other router, while DROTHERs stay at 2-WAY with each other by design.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The databases are synchronised and traffic can be forwarded through the neighbour",
+        "is_correct": true
+      },
+      {
+        "text": "The routers are still comparing database description packets",
+        "is_correct": false
+      },
+      {
+        "text": "The routers have exchanged hellos but no database information",
+        "is_correct": false
+      },
+      {
+        "text": "The routers have agreed on a DR but not on their area IDs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router learns four equal-cost OSPF paths to the same prefix. What does Cisco IOS do by default?",
+    "explanation": "Equal-cost paths are all installed in the routing table and traffic is load-balanced across them, up to the default maximum of four. The maximum-paths command changes that limit; any path beyond it stays out of the table rather than being used as a standby.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It installs up to four paths and load-balances across them",
+        "is_correct": true
+      },
+      {
+        "text": "It installs only the first path learned and discards the rest",
+        "is_correct": false
+      },
+      {
+        "text": "It installs all four but forwards only along the lowest router ID",
+        "is_correct": false
+      },
+      {
+        "text": "It rejects the prefix until the tie is broken manually",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show ip route` output, what does a route marked `S*` represent?",
+    "explanation": "The asterisk flags the route as a candidate default. A static default route therefore appears as S*: the S says static, and the star says this is the entry the router will use when no more specific match exists.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A static route that is a candidate default",
+        "is_correct": true
+      },
+      {
+        "text": "A static route that has been redistributed into a routing protocol",
+        "is_correct": false
+      },
+      {
+        "text": "A static route that is currently inactive",
+        "is_correct": false
+      },
+      {
+        "text": "A summary static route covering several prefixes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A new router joins an OSPF broadcast segment with a higher interface priority than the current DR. What happens?",
+    "explanation": "OSPF does not preempt. The existing DR keeps the role until it fails or the OSPF process is cleared, so the new router waits as a DROTHER no matter how high its priority is.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing; the current DR keeps the role until it fails or the process is cleared",
+        "is_correct": true
+      },
+      {
+        "text": "The new router immediately becomes DR and the old DR becomes BDR",
+        "is_correct": false
+      },
+      {
+        "text": "Both routers become DR and share the pseudonode",
+        "is_correct": false
+      },
+      {
+        "text": "The segment re-runs the election and all adjacencies drop to DOWN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How often does an OSPF router refresh its self-originated LSAs, and why?",
+    "explanation": "Every 30 minutes the originator re-floods each of its LSAs with a fresh sequence number even when nothing has changed. That periodic refresh is what allows a stale LSA to age out eventually — without it, a crashed router's information could persist forever.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every 30 minutes, so the sequence number keeps advancing and stale copies can age out",
+        "is_correct": true
+      },
+      {
+        "text": "Every 5 minutes, to resynchronise the database after each SPF run",
+        "is_correct": false
+      },
+      {
+        "text": "Every 60 minutes, when the LSA reaches max age",
+        "is_correct": false
+      },
+      {
+        "text": "Only when the topology changes, because unchanged LSAs are never re-sent",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows the area, network type, timers, and cost configured for each OSPF-enabled interface?",
+    "explanation": "show ip ospf neighbor only tells you who is adjacent. show ip ospf interface shows the local side of each link — area ID, network type, hello and dead intervals, cost, and DR/BDR roles — which is what you need when two routers refuse to become neighbours.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ip ospf interface",
+        "is_correct": true
+      },
+      {
+        "text": "show ip ospf neighbor",
+        "is_correct": false
+      },
+      {
+        "text": "show ip ospf database",
+        "is_correct": false
+      },
+      {
+        "text": "show ip protocols",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers sit in the same area, on the same subnet, with matching timers, yet the adjacency never leaves DOWN. Both have OSPF authentication configured. What is the most likely cause?",
+    "explanation": "OSPF discards hellos whose authentication does not match, so the neighbour never appears at all — not even in INIT. A key or authentication-type mismatch is invisible in the neighbour table because the packets are dropped before they are recorded.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authentication type or key does not match on the two interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The two routers are using different OSPF process IDs",
+        "is_correct": false
+      },
+      {
+        "text": "The DR election has not completed yet",
+        "is_correct": false
+      },
+      {
+        "text": "One router has a lower OSPF priority than the other",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default BGP KEEPALIVE interval and hold time?",
+    "explanation": "BGP sends a KEEPALIVE every 60 seconds by default and declares the peer dead after 180 seconds without one, so the hold time is three times the keepalive. If the two peers advertise different hold times, the lower value is used.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "60 seconds keepalive, 180 seconds hold",
+        "is_correct": true
+      },
+      {
+        "text": "30 seconds keepalive, 90 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "10 seconds keepalive, 40 seconds hold",
+        "is_correct": false
+      },
+      {
+        "text": "180 seconds keepalive, 540 seconds hold",
+        "is_correct": false
+      }
+    ]
   }
 ]
