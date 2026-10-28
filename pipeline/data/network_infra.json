@@ -5354,5 +5354,421 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Instances in a cloud VPC have no public IP addresses but must reach internet destinations. Which component performs the outbound address translation?",
+    "explanation": "A NAT gateway sits in a public subnet and translates the private source addresses of instances in private subnets as their traffic leaves the VPC. Return traffic is mapped back to the originating instance, so no inbound path is created.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A NAT gateway in a public subnet",
+        "is_correct": true
+      },
+      {
+        "text": "An internet gateway alone",
+        "is_correct": false
+      },
+      {
+        "text": "A route table local entry",
+        "is_correct": false
+      },
+      {
+        "text": "A security group outbound rule",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a site-to-site VPN between an on-premises network and a cloud provider, which device is represented by the customer gateway object?",
+    "explanation": "The customer gateway is the cloud-side reference to the customer's own VPN endpoint, normally the on-premises router or firewall that terminates the tunnel. The virtual private gateway is the provider-side endpoint.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The on-premises router or firewall terminating the tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "The provider-side VPN concentrator",
+        "is_correct": false
+      },
+      {
+        "text": "The cloud NAT instance",
+        "is_correct": false
+      },
+      {
+        "text": "The provider's internet gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point is mounted where no power outlet exists. Which connection supplies both data and electrical power to the AP?",
+    "explanation": "The AP's Ethernet uplink connects to a switch port that delivers Power over Ethernet, so a single cable carries the CAPWAP or management traffic and the DC power the AP needs. A local power injector achieves the same result when the switch cannot supply PoE.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Ethernet uplink to a PoE-capable switch port",
+        "is_correct": true
+      },
+      {
+        "text": "The console port",
+        "is_correct": false
+      },
+      {
+        "text": "A USB service port",
+        "is_correct": false
+      },
+      {
+        "text": "The 5 GHz radio interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Where is an edge firewall normally placed in a campus topology?",
+    "explanation": "The edge firewall sits between the ISP handoff and the internal network so every packet entering or leaving the site is inspected and filtered. Placing it inside the core would leave the WAN link itself unprotected.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Between the ISP handoff and the internal network",
+        "is_correct": true
+      },
+      {
+        "text": "Between the access and distribution layers",
+        "is_correct": false
+      },
+      {
+        "text": "On each access switch uplink",
+        "is_correct": false
+      },
+      {
+        "text": "Inside the data center between servers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Widening a 5 GHz channel from 20 MHz to 40 MHz raises the theoretical throughput. What is the main cost of that change?",
+    "explanation": "Bonding two 20 MHz channels consumes twice the spectrum, which halves the number of non-overlapping channels available in the band. In a dense deployment the wider channels overlap more often, so co-channel interference and retries increase.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Fewer non-overlapping channels, so more co-channel interference",
+        "is_correct": true
+      },
+      {
+        "text": "Lower client transmit power",
+        "is_correct": false
+      },
+      {
+        "text": "Loss of WPA2 support",
+        "is_correct": false
+      },
+      {
+        "text": "Inability to use 802.11ac",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an 802.11 station confirm that a unicast data frame arrived intact?",
+    "explanation": "The receiving station waits a short interframe space and returns an acknowledgement frame. If the sender does not receive that ACK it assumes loss and retransmits, which is why wireless throughput falls quickly as retries climb.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The receiver returns an ACK frame after a short interframe space",
+        "is_correct": true
+      },
+      {
+        "text": "The sender waits for a TCP acknowledgement from the client",
+        "is_correct": false
+      },
+      {
+        "text": "The access point broadcasts a delivery report",
+        "is_correct": false
+      },
+      {
+        "text": "The frame's FCS is echoed back in the next beacon",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host sends a packet to a destination on a different subnet. Whose MAC address does it place in the frame?",
+    "explanation": "The host compares the destination against its own mask, sees that the target is off-subnet, and forwards the frame to its default gateway. The destination IP stays the remote host, but the frame carries the gateway MAC so the local segment can deliver it.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The default gateway MAC address",
+        "is_correct": true
+      },
+      {
+        "text": "The remote destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The broadcast MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "Its own MAC address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which dotted-decimal subnet mask corresponds to a /21 prefix?",
+    "explanation": "A /21 keeps 21 network bits, so the mask has 21 ones followed by 11 zeros: 255.255.248.0. The third octet contributes 11111000 in binary, which is 248.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "255.255.248.0",
+        "is_correct": true
+      },
+      {
+        "text": "255.255.240.0",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.252.0",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.224.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the principal trade-off of a collapsed-core campus design?",
+    "explanation": "Collapsing distribution and core into one layer cuts cost, cabling, and hop count, but the same devices now carry all inter-VLAN and WAN traffic. Failure of a collapsed-core switch removes redundancy for a large portion of the campus and limits how far the design can scale.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Lower cost and fewer hops, but reduced redundancy and scaling headroom",
+        "is_correct": true
+      },
+      {
+        "text": "Higher cost but simpler troubleshooting",
+        "is_correct": false
+      },
+      {
+        "text": "Better wireless roaming but no wired VLAN support",
+        "is_correct": false
+      },
+      {
+        "text": "Guaranteed loop-free topology without STP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A laptop is moved from VLAN 10 to VLAN 20 but keeps its old VLAN 10 address. Why does it not simply obtain a new address immediately?",
+    "explanation": "A DHCP client keeps its lease and first tries to renew at the 50 percent timer by unicasting to the original server. That server is no longer reachable in the new broadcast domain, so the client must wait for renewal to fail or be told to release before it broadcasts a fresh discovery.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It renews at the 50 percent timer and the old server is unreachable in the new VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "The switch rewrites the source MAC so DHCP cannot match the request",
+        "is_correct": false
+      },
+      {
+        "text": "ARP caching prevents any broadcast from being sent",
+        "is_correct": false
+      },
+      {
+        "text": "The default gateway blocks all UDP traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router shows an ARP entry in the incomplete state for a next hop. What does that state tell you?",
+    "explanation": "Incomplete means the router sent ARP requests but received no reply, so it has no MAC address to build the frame with. Packets destined through that next hop are dropped until resolution succeeds.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No ARP reply was received, so frames to that next hop cannot be built",
+        "is_correct": true
+      },
+      {
+        "text": "The entry is cached but expired and will refresh from the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "The next hop resolved to a multicast MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is administratively down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What reach does Category 6A twisted-pair cabling support for 10GBASE-T?",
+    "explanation": "Cat 6A is specified for 10GBASE-T over a 100-meter channel because its improved shielding and reduced alien crosstalk keep the signal usable at 500 MHz. Cat 6 is limited to about 55 meters for the same speed.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "100 meters",
+        "is_correct": true
+      },
+      {
+        "text": "55 meters",
+        "is_correct": false
+      },
+      {
+        "text": "220 meters",
+        "is_correct": false
+      },
+      {
+        "text": "500 meters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why are the pairs inside unshielded twisted-pair cable twisted around each other?",
+    "explanation": "The twist rate differs per pair so that externally induced noise and crosstalk from neighbouring pairs couple equally into both conductors. Because the interference appears as a common-mode signal, it cancels at the receiver instead of corrupting the differential data signal.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So induced noise couples equally into both wires and cancels at the receiver",
+        "is_correct": true
+      },
+      {
+        "text": "To increase the cable's tensile strength",
+        "is_correct": false
+      },
+      {
+        "text": "To allow the pairs to carry DC power",
+        "is_correct": false
+      },
+      {
+        "text": "To reduce the cable's capacitance to the building ground",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does TCP slow start increase the amount of data a sender may have in flight?",
+    "explanation": "The sender begins with a small congestion window and grows it by roughly one segment per acknowledgement, effectively doubling the window each round-trip time. Growth continues until the window reaches the slow-start threshold or a loss is detected.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The congestion window doubles each round-trip until the slow-start threshold",
+        "is_correct": true
+      },
+      {
+        "text": "The receive window is fixed and the sender fills it immediately",
+        "is_correct": false
+      },
+      {
+        "text": "The sender retransmits every segment twice to measure loss",
+        "is_correct": false
+      },
+      {
+        "text": "The window grows by one segment per second regardless of acknowledgements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP receiver gets segments 5, 6, 8, and 9 after already receiving segment 4. What does it send back, and why?",
+    "explanation": "The receiver buffers the out-of-order segments and keeps returning duplicate acknowledgements for the last in-order byte, which is segment 4's sequence space. After three duplicate ACKs the sender treats the gap as lost and retransmits segment 7 without waiting for a timer.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Duplicate ACKs for the missing segment, which trigger a fast retransmit",
+        "is_correct": true
+      },
+      {
+        "text": "A reset, because out-of-order delivery is always fatal",
+        "is_correct": false
+      },
+      {
+        "text": "ACKs for segments 8 and 9, discarding segment 7",
+        "is_correct": false
+      },
+      {
+        "text": "Nothing until the retransmission timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a split-MAC wireless architecture, how do the CAPWAP control and data paths differ by default?",
+    "explanation": "The control tunnel runs over UDP 5246 and is DTLS-encrypted to protect management exchanges between AP and controller. The data tunnel uses UDP 5247 and is not encrypted by default, because the client payload is usually already protected by 802.11 encryption.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Control uses UDP 5246 and is DTLS-encrypted; data uses UDP 5247 and is unencrypted by default",
+        "is_correct": true
+      },
+      {
+        "text": "Both tunnels share UDP 5246 and are encrypted by default",
+        "is_correct": false
+      },
+      {
+        "text": "Control uses TCP 5246 and data uses TCP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Data uses UDP 5246 and control uses UDP 5247, both in clear text",
+        "is_correct": false
+      }
+    ]
   }
 ]

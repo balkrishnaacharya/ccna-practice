@@ -4938,5 +4938,213 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which protocol resolves an IPv6 address to a link-layer address, and which messages does it use?",
+    "explanation": "IPv6 Neighbor Discovery performs address resolution with Neighbor Solicitation and Neighbor Advertisement messages carried in ICMPv6. It replaces IPv4 ARP and also handles router discovery and duplicate address detection.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Neighbor Discovery, using neighbour solicitation and advertisement messages",
+        "is_correct": true
+      },
+      {
+        "text": "ARP, using broadcast requests and unicast replies",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPv6, using solicit and advertise messages",
+        "is_correct": false
+      },
+      {
+        "text": "RARP, using the broadcast address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A DHCP client sends a DHCPRELEASE message. What is it telling the server?",
+    "explanation": "DHCPRELEASE is sent when a client gives up its address, for example at shutdown or when the interface goes down. The server can then return the address to the pool instead of holding it until the lease expires.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is giving up the lease and the address can be returned to the pool",
+        "is_correct": true
+      },
+      {
+        "text": "It is requesting an extension of the current lease",
+        "is_correct": false
+      },
+      {
+        "text": "It is declining an address because of a conflict",
+        "is_correct": false
+      },
+      {
+        "text": "It is asking for additional configuration parameters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the log keyword add to an access control entry?",
+    "explanation": "The log keyword makes the router generate a syslog message each time a packet matches that entry, recording the source, destination, and action. It is a troubleshooting aid and should be used sparingly because logging every match can consume significant CPU.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A syslog message for each packet matching the entry",
+        "is_correct": true
+      },
+      {
+        "text": "A counter that resets after each match",
+        "is_correct": false
+      },
+      {
+        "text": "An automatic deny rule for the same traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encryption of the matching packets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a DHCP snooping deployment, which port should be configured as trusted?",
+    "explanation": "The port leading toward the legitimate DHCP server or relay is trusted so its offer and acknowledgement messages are allowed. All client-facing ports stay untrusted, which blocks a rogue server from handing out addresses.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port facing the legitimate DHCP server or relay",
+        "is_correct": true
+      },
+      {
+        "text": "Every access port attached to an end device",
+        "is_correct": false
+      },
+      {
+        "text": "Only the trunk ports between switches",
+        "is_correct": false
+      },
+      {
+        "text": "The port attached to the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the outside global address represent in a NAT translation table?",
+    "explanation": "The outside global address is the address of the external host as it appears on the internet side of the translation. It is distinct from the outside local address, which is how that same host appears to the inside network.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The external host's address as seen on the internet side",
+        "is_correct": true
+      },
+      {
+        "text": "The internal host's address before translation",
+        "is_correct": false
+      },
+      {
+        "text": "The public address assigned to the internal host",
+        "is_correct": false
+      },
+      {
+        "text": "The router interface address used as the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Dynamic ARP Inspection rate limit on an untrusted interface?",
+    "explanation": "Untrusted ports are limited to 15 ARP packets per second by default so that a flood of ARP traffic cannot overwhelm the switch's inspection process. The limit can be raised or lowered per interface with ip arp inspection limit.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "15 packets per second",
+        "is_correct": true
+      },
+      {
+        "text": "1 packet per second",
+        "is_correct": false
+      },
+      {
+        "text": "100 packets per second",
+        "is_correct": false
+      },
+      {
+        "text": "Unlimited",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command copies the running configuration to a TFTP server?",
+    "explanation": "The copy command takes a source and a destination, so copy running-config tftp: prompts for the server address and filename. TFTP runs over UDP 69, so the transfer is unencrypted and should be confined to a management network.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "copy running-config tftp:",
+        "is_correct": true
+      },
+      {
+        "text": "backup running-config tftp:",
+        "is_correct": false
+      },
+      {
+        "text": "write tftp: running-config",
+        "is_correct": false
+      },
+      {
+        "text": "export running-config tftp:",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly compares ESP and AH in IPsec?",
+    "explanation": "ESP can encrypt the payload and also authenticate it, which is why it is used for most IPsec deployments. AH authenticates the packet including the outer IP header but provides no confidentiality, so it cannot hide the data.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ESP can provide encryption and authentication; AH provides authentication only",
+        "is_correct": true
+      },
+      {
+        "text": "AH provides encryption; ESP provides authentication only",
+        "is_correct": false
+      },
+      {
+        "text": "Both provide encryption but AH also compresses the payload",
+        "is_correct": false
+      },
+      {
+        "text": "ESP authenticates the outer header while AH does not",
+        "is_correct": false
+      }
+    ]
   }
 ]

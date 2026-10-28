@@ -5354,5 +5354,421 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is a likely effect of setting the MAC address-table aging time very low on a busy access switch?",
+    "explanation": "Entries expire before hosts stop sending, so frames for active destinations arrive with no matching table entry. The switch floods those unknown-unicast frames out every port in the VLAN, raising unnecessary traffic and CPU load.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "More frames are flooded as unknown unicast",
+        "is_correct": true
+      },
+      {
+        "text": "The switch stops learning MAC addresses entirely",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN traffic is dropped at the trunk",
+        "is_correct": false
+      },
+      {
+        "text": "The CPU disables cut-through forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which forwarding method makes a switch verify a frame's FCS before forwarding it?",
+    "explanation": "Store-and-forward receives the whole frame, checks the frame check sequence, and discards corrupt frames before forwarding. Cut-through begins forwarding after reading the destination MAC, which lowers latency but propagates errors.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Store-and-forward",
+        "is_correct": true
+      },
+      {
+        "text": "Cut-through",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment-free",
+        "is_correct": false
+      },
+      {
+        "text": "Fast-forward",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VLAN is the native VLAN on an 802.1Q trunk by default?",
+    "explanation": "Cisco switches use VLAN 1 as the native VLAN unless it is changed. Frames in the native VLAN cross the trunk untagged, which is why best practice is to move the native VLAN to an unused ID on both ends.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VLAN 1",
+        "is_correct": true
+      },
+      {
+        "text": "VLAN 0",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 1005",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 4095",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can VLANs 1002 through 1005 not be used for user traffic on a Cisco switch?",
+    "explanation": "These IDs are reserved by default for legacy FDDI and Token Ring media translations. They appear in the VLAN database but cannot be assigned to access ports or deleted in normal operation.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are reserved for legacy media translations and cannot be assigned",
+        "is_correct": true
+      },
+      {
+        "text": "They exceed the 802.1Q tag range",
+        "is_correct": false
+      },
+      {
+        "text": "They are reserved for voice traffic only",
+        "is_correct": false
+      },
+      {
+        "text": "They are used internally by VTP version 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is configured with an access VLAN for a workstation and a voice VLAN for an IP phone. How does the port handle the two traffic types?",
+    "explanation": "The phone's own voice frames are tagged with the voice VLAN ID, while frames from the attached PC pass through the phone untagged and land in the access VLAN. This lets one port serve both devices without a second cable.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Voice frames are tagged; PC frames are untagged in the access VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Both traffic types are untagged in the voice VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "PC frames are tagged with the voice VLAN and voice frames are untagged",
+        "is_correct": false
+      },
+      {
+        "text": "The port becomes a trunk and drops untagged frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DSCP value corresponds to the Expedited Forwarding per-hop behaviour used to mark voice payload?",
+    "explanation": "Expedited Forwarding is DSCP 46, written as EF. It maps to the highest-priority queue in most QoS designs, giving voice a low-latency, low-jitter path ahead of data traffic.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "46",
+        "is_correct": true
+      },
+      {
+        "text": "34",
+        "is_correct": false
+      },
+      {
+        "text": "26",
+        "is_correct": false
+      },
+      {
+        "text": "10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits a switch port to three learned MAC addresses?",
+    "explanation": "The maximum parameter sets how many secure MAC addresses the port may learn. Once the limit is reached, any additional source MAC triggers the configured violation action.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "switchport port-security maximum 3",
+        "is_correct": true
+      },
+      {
+        "text": "switchport port-security limit 3",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security mac-address 3",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security aging 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which field of the output from show port-security interface shows how many times the port security rules have been broken?",
+    "explanation": "The Security Violation Count counter increments each time a frame violates the configured maximum, sticky, or static address rules. It is the quickest way to confirm that a port is actually reacting to an offending device.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Security Violation Count",
+        "is_correct": true
+      },
+      {
+        "text": "Port Status",
+        "is_correct": false
+      },
+      {
+        "text": "Maximum MAC Addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Aging Time",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which 802.11 management frame does an access point send to end a client association without implying a security failure?",
+    "explanation": "A disassociation frame ends an existing association, typically because the AP is rebooting, the client is idle, or the session is being torn down administratively. Deauthentication is a stronger statement that the client is no longer authenticated.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Disassociation",
+        "is_correct": true
+      },
+      {
+        "text": "Deauthentication",
+        "is_correct": false
+      },
+      {
+        "text": "Probe response",
+        "is_correct": false
+      },
+      {
+        "text": "Association request",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A wireless client is configured for 802.1X but the RADIUS server rejects its credentials. What is the visible result on the client?",
+    "explanation": "The EAP exchange fails, so the authenticator never moves the port or the wireless session to the authorized state. The client cannot pass traffic even though it may still show the SSID as available or attempt to reconnect.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authentication fails and the client is never authorized to pass traffic",
+        "is_correct": true
+      },
+      {
+        "text": "The client falls back to open authentication automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The AP assigns a static IP address instead",
+        "is_correct": false
+      },
+      {
+        "text": "The client is placed in the voice VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which information does LLDP-MED add beyond basic LLDP for voice endpoints?",
+    "explanation": "LLDP-MED defines extensions such as network policy, power over MDI, inventory, and location identification. Network policy is what lets a phone learn its voice VLAN and QoS markings automatically.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Network policy, power via MDI, inventory, and location TLVs",
+        "is_correct": true
+      },
+      {
+        "text": "A routing table summary for the local subnet",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypted CAPWAP tunnel parameters",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning-tree topology change notifications",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why should CDP be disabled on ports facing untrusted networks?",
+    "explanation": "CDP advertisements expose the device model, software version, platform, and management addresses to anyone who can capture them. That information helps an attacker pick exploits and map the topology, so it is suppressed where the neighbour is not trusted.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reveals device model, software version, and management addresses",
+        "is_correct": true
+      },
+      {
+        "text": "It consumes enough bandwidth to disrupt voice calls",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents STP from converging",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks DHCP snooping from binding addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel is working, then one member interface is changed to a different speed. What happens to the bundle?",
+    "explanation": "All members of a bundle must share speed, duplex, and VLAN parameters. A mismatch makes the offending interface incompatible, so it is suspended and removed from the channel, which can reduce total bandwidth or drop the channel if too few members remain.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The mismatched interface is suspended and removed from the bundle",
+        "is_correct": true
+      },
+      {
+        "text": "The bundle automatically negotiates a common speed",
+        "is_correct": false
+      },
+      {
+        "text": "All members drop to half duplex",
+        "is_correct": false
+      },
+      {
+        "text": "The channel converts to a routed port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must the member interfaces of a Layer 2 EtherChannel be configured consistently before the bundle is relied on?",
+    "explanation": "The switch validates that members agree on speed, duplex, allowed VLANs, and trunk state. Any disagreement causes the port to be suspended as a bundle mismatch, so the channel silently loses capacity instead of forwarding.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Mismatched parameters cause member ports to suspend as bundle inconsistencies",
+        "is_correct": true
+      },
+      {
+        "text": "The switch rewrites the configuration of the first member onto the others",
+        "is_correct": false
+      },
+      {
+        "text": "STP disables the channel if any member differs",
+        "is_correct": false
+      },
+      {
+        "text": "VTP refuses to advertise the VLAN database",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Place the 802.1D port states in the order a blocked port passes through them before it forwards traffic.",
+    "explanation": "A port leaving the blocked state enters listening while it participates in the election, then learning while it populates the MAC table, and only then forwarding. Each transition waits for the forward delay timer, which is why convergence is slow without RSTP.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Blocking, listening, learning, forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "Blocking, learning, listening, forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "Listening, blocking, forwarding, learning",
+        "is_correct": false
+      },
+      {
+        "text": "Learning, blocking, listening, forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A storm-control threshold is configured as a percentage of link bandwidth. What happens to the effective threshold if the interface speed is increased?",
+    "explanation": "The percentage is recalculated against the new link rate, so the same percentage permits a much higher absolute packet or bit rate. A threshold tuned on a 1 Gbps link can allow ten times the traffic after an upgrade to 10 Gbps.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The permitted absolute rate rises with the new link speed",
+        "is_correct": true
+      },
+      {
+        "text": "The threshold stays fixed in packets per second",
+        "is_correct": false
+      },
+      {
+        "text": "Storm control is disabled automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The threshold halves to preserve the same absolute rate",
+        "is_correct": false
+      }
+    ]
   }
 ]

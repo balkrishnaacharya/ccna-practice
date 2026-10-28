@@ -4496,5 +4496,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Why must an IPv6 static route that uses a link-local next hop also specify the outgoing interface?",
+    "explanation": "Link-local addresses are only unique within a single link, so the router cannot tell which interface to use from the address alone. Supplying the exit interface makes the route fully specified and removes the ambiguity.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A link-local address is only unique on one link, so the exit interface is required",
+        "is_correct": true
+      },
+      {
+        "text": "IPv6 does not support next-hop addresses in static routes",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is needed only when the next hop is a global address",
+        "is_correct": false
+      },
+      {
+        "text": "Without it the route becomes a default route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a static route that points to a next-hop address?",
+    "explanation": "A static route with a specified next hop is trusted almost completely and carries AD 1. Only a directly connected route at AD 0 is preferred over it.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does the forwarding information base differ from the routing information base on a router?",
+    "explanation": "The RIB is the control-plane table holding every candidate route learned from connected networks, statics, and routing protocols along with their metrics and distances. The FIB is the derived data-plane table containing only the selected best route for each prefix, and it is what actually drives packet forwarding.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The RIB holds all candidate routes; the FIB holds only the selected best paths used for forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "The RIB holds only connected routes; the FIB holds learned routes",
+        "is_correct": false
+      },
+      {
+        "text": "The FIB is populated before the RIB during convergence",
+        "is_correct": false
+      },
+      {
+        "text": "The RIB is used for IPv6 and the FIB for IPv4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the command show ip route ospf display?",
+    "explanation": "The command filters the routing table to entries whose source is OSPF, showing the OSPF code, the advertising router, and the metric. Connected and static routes are omitted.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only routes learned through OSPF",
+        "is_correct": true
+      },
+      {
+        "text": "The full OSPF link-state database",
+        "is_correct": false
+      },
+      {
+        "text": "Only OSPF neighbor adjacencies",
+        "is_correct": false
+      },
+      {
+        "text": "All routes including connected and static",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates a switched virtual interface for VLAN 10?",
+    "explanation": "The interface vlan 10 command enters SVI configuration, where an IP address can be assigned to provide routing or management access for that VLAN. The SVI is the Layer 3 presence of the VLAN on the switch.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "interface vlan 10",
+        "is_correct": true
+      },
+      {
+        "text": "interface gigabitethernet0/1.10",
+        "is_correct": false
+      },
+      {
+        "text": "vlan 10 interface",
+        "is_correct": false
+      },
+      {
+        "text": "switchport access vlan 10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An SVI is configured with an IP address and no shutdown, yet it stays down/down. What is the most likely cause?",
+    "explanation": "An SVI only comes up when at least one port in that VLAN is up and forwarding, or when the VLAN itself is active on the switch. Without a live access port or trunk carrying the VLAN, there is nothing to bring the interface up.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No active port is assigned to that VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "The SVI needs a default gateway configured",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN must be created with the vlan database command",
+        "is_correct": false
+      },
+      {
+        "text": "An SVI cannot carry an IPv4 address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables OSPFv3 process 1 on a router?",
+    "explanation": "OSPFv3 is configured through the ipv6 router ospf process command, then interfaces are enabled with ipv6 ospf 1 area under each interface. OSPFv3 runs over IPv6 and uses link-local addresses for adjacencies.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 router ospf 1",
+        "is_correct": true
+      },
+      {
+        "text": "router ospf 1",
+        "is_correct": false
+      },
+      {
+        "text": "router ipv6 ospf 1",
+        "is_correct": false
+      },
+      {
+        "text": "ospfv3 1 enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers have OSPFv3 configured on a shared link but form no adjacency. The area IDs match and the link is up. What should be checked next?",
+    "explanation": "OSPFv3 requires the per-interface instance ID to match between neighbours; a mismatch means the packets belong to different OSPFv3 instances and are ignored. Unlike OSPFv2, the process ID is local, but the interface instance ID must agree.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The OSPFv3 instance ID on both interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPFv2 process ID on both routers",
+        "is_correct": false
+      },
+      {
+        "text": "The IPv4 subnet mask on the link",
+        "is_correct": false
+      },
+      {
+        "text": "The global unicast address of each router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single summary route covers 192.168.0.0/24 through 192.168.3.0/24?",
+    "explanation": "The four /24 networks share the first 22 bits, so they aggregate into 192.168.0.0/22. That block spans 192.168.0.0 to 192.168.3.255 and replaces four separate advertisements with one.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "192.168.0.0/22",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0/21",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On an OSPF ASBR, which command summarizes redistributed external routes before they are advertised into the OSPF domain?",
+    "explanation": "The summary-address command is applied in router configuration on the ASBR and creates a single aggregate for a range of external prefixes. Internal area summarization instead uses the area range command on an ABR.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "summary-address",
+        "is_correct": true
+      },
+      {
+        "text": "area range",
+        "is_correct": false
+      },
+      {
+        "text": "ip summary-address eigrp",
+        "is_correct": false
+      },
+      {
+        "text": "auto-summary",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers are connected by a working link but are configured in different areas. What is the result?",
+    "explanation": "OSPF requires both ends of a link to agree on the area ID before they can become neighbours. A mismatch keeps them from progressing past the initial hello exchange, so no adjacency forms and no routes are exchanged.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No adjacency forms because the area IDs must match on the link",
+        "is_correct": true
+      },
+      {
+        "text": "The routers become neighbours but exchange no Type 1 LSAs",
+        "is_correct": false
+      },
+      {
+        "text": "The link is treated as an external connection automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The router with the higher router ID becomes the ABR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a broadcast multi-access OSPF segment, a router shows a neighbour stuck in 2WAY/DROTHER. Is this a fault?",
+    "explanation": "On broadcast and NBMA networks, routers that are neither the DR nor the BDR stay in 2WAY with each other by design. Only a neighbour that should be DR or BDR remaining in 2WAY, or a point-to-point link showing it, indicates a problem.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No; non-DR and non-BDR routers stay in 2WAY on broadcast segments by design",
+        "is_correct": true
+      },
+      {
+        "text": "Yes; every neighbour must reach FULL",
+        "is_correct": false
+      },
+      {
+        "text": "Yes; it means the hello timers differ",
+        "is_correct": false
+      },
+      {
+        "text": "No; 2WAY means the neighbour is the DR",
+        "is_correct": false
+      }
+    ]
   }
 ]

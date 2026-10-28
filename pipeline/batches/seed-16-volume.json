@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "Instances in a cloud VPC have no public IP addresses but must reach internet destinations. Which component performs the outbound address translation?",
+    "explanation": "A NAT gateway sits in a public subnet and translates the private source addresses of instances in private subnets as their traffic leaves the VPC. Return traffic is mapped back to the originating instance, so no inbound path is created.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A NAT gateway in a public subnet",
+        "is_correct": true
+      },
+      {
+        "text": "An internet gateway alone",
+        "is_correct": false
+      },
+      {
+        "text": "A route table local entry",
+        "is_correct": false
+      },
+      {
+        "text": "A security group outbound rule",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a site-to-site VPN between an on-premises network and a cloud provider, which device is represented by the customer gateway object?",
+    "explanation": "The customer gateway is the cloud-side reference to the customer's own VPN endpoint, normally the on-premises router or firewall that terminates the tunnel. The virtual private gateway is the provider-side endpoint.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The on-premises router or firewall terminating the tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "The provider-side VPN concentrator",
+        "is_correct": false
+      },
+      {
+        "text": "The cloud NAT instance",
+        "is_correct": false
+      },
+      {
+        "text": "The provider's internet gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point is mounted where no power outlet exists. Which connection supplies both data and electrical power to the AP?",
+    "explanation": "The AP's Ethernet uplink connects to a switch port that delivers Power over Ethernet, so a single cable carries the CAPWAP or management traffic and the DC power the AP needs. A local power injector achieves the same result when the switch cannot supply PoE.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Ethernet uplink to a PoE-capable switch port",
+        "is_correct": true
+      },
+      {
+        "text": "The console port",
+        "is_correct": false
+      },
+      {
+        "text": "A USB service port",
+        "is_correct": false
+      },
+      {
+        "text": "The 5 GHz radio interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Where is an edge firewall normally placed in a campus topology?",
+    "explanation": "The edge firewall sits between the ISP handoff and the internal network so every packet entering or leaving the site is inspected and filtered. Placing it inside the core would leave the WAN link itself unprotected.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Between the ISP handoff and the internal network",
+        "is_correct": true
+      },
+      {
+        "text": "Between the access and distribution layers",
+        "is_correct": false
+      },
+      {
+        "text": "On each access switch uplink",
+        "is_correct": false
+      },
+      {
+        "text": "Inside the data center between servers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Widening a 5 GHz channel from 20 MHz to 40 MHz raises the theoretical throughput. What is the main cost of that change?",
+    "explanation": "Bonding two 20 MHz channels consumes twice the spectrum, which halves the number of non-overlapping channels available in the band. In a dense deployment the wider channels overlap more often, so co-channel interference and retries increase.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Fewer non-overlapping channels, so more co-channel interference",
+        "is_correct": true
+      },
+      {
+        "text": "Lower client transmit power",
+        "is_correct": false
+      },
+      {
+        "text": "Loss of WPA2 support",
+        "is_correct": false
+      },
+      {
+        "text": "Inability to use 802.11ac",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an 802.11 station confirm that a unicast data frame arrived intact?",
+    "explanation": "The receiving station waits a short interframe space and returns an acknowledgement frame. If the sender does not receive that ACK it assumes loss and retransmits, which is why wireless throughput falls quickly as retries climb.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The receiver returns an ACK frame after a short interframe space",
+        "is_correct": true
+      },
+      {
+        "text": "The sender waits for a TCP acknowledgement from the client",
+        "is_correct": false
+      },
+      {
+        "text": "The access point broadcasts a delivery report",
+        "is_correct": false
+      },
+      {
+        "text": "The frame's FCS is echoed back in the next beacon",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host sends a packet to a destination on a different subnet. Whose MAC address does it place in the frame?",
+    "explanation": "The host compares the destination against its own mask, sees that the target is off-subnet, and forwards the frame to its default gateway. The destination IP stays the remote host, but the frame carries the gateway MAC so the local segment can deliver it.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The default gateway MAC address",
+        "is_correct": true
+      },
+      {
+        "text": "The remote destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The broadcast MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "Its own MAC address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which dotted-decimal subnet mask corresponds to a /21 prefix?",
+    "explanation": "A /21 keeps 21 network bits, so the mask has 21 ones followed by 11 zeros: 255.255.248.0. The third octet contributes 11111000 in binary, which is 248.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "255.255.248.0",
+        "is_correct": true
+      },
+      {
+        "text": "255.255.240.0",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.252.0",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.224.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the principal trade-off of a collapsed-core campus design?",
+    "explanation": "Collapsing distribution and core into one layer cuts cost, cabling, and hop count, but the same devices now carry all inter-VLAN and WAN traffic. Failure of a collapsed-core switch removes redundancy for a large portion of the campus and limits how far the design can scale.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Lower cost and fewer hops, but reduced redundancy and scaling headroom",
+        "is_correct": true
+      },
+      {
+        "text": "Higher cost but simpler troubleshooting",
+        "is_correct": false
+      },
+      {
+        "text": "Better wireless roaming but no wired VLAN support",
+        "is_correct": false
+      },
+      {
+        "text": "Guaranteed loop-free topology without STP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A laptop is moved from VLAN 10 to VLAN 20 but keeps its old VLAN 10 address. Why does it not simply obtain a new address immediately?",
+    "explanation": "A DHCP client keeps its lease and first tries to renew at the 50 percent timer by unicasting to the original server. That server is no longer reachable in the new broadcast domain, so the client must wait for renewal to fail or be told to release before it broadcasts a fresh discovery.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It renews at the 50 percent timer and the old server is unreachable in the new VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "The switch rewrites the source MAC so DHCP cannot match the request",
+        "is_correct": false
+      },
+      {
+        "text": "ARP caching prevents any broadcast from being sent",
+        "is_correct": false
+      },
+      {
+        "text": "The default gateway blocks all UDP traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router shows an ARP entry in the incomplete state for a next hop. What does that state tell you?",
+    "explanation": "Incomplete means the router sent ARP requests but received no reply, so it has no MAC address to build the frame with. Packets destined through that next hop are dropped until resolution succeeds.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No ARP reply was received, so frames to that next hop cannot be built",
+        "is_correct": true
+      },
+      {
+        "text": "The entry is cached but expired and will refresh from the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "The next hop resolved to a multicast MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is administratively down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What reach does Category 6A twisted-pair cabling support for 10GBASE-T?",
+    "explanation": "Cat 6A is specified for 10GBASE-T over a 100-meter channel because its improved shielding and reduced alien crosstalk keep the signal usable at 500 MHz. Cat 6 is limited to about 55 meters for the same speed.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "100 meters",
+        "is_correct": true
+      },
+      {
+        "text": "55 meters",
+        "is_correct": false
+      },
+      {
+        "text": "220 meters",
+        "is_correct": false
+      },
+      {
+        "text": "500 meters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why are the pairs inside unshielded twisted-pair cable twisted around each other?",
+    "explanation": "The twist rate differs per pair so that externally induced noise and crosstalk from neighbouring pairs couple equally into both conductors. Because the interference appears as a common-mode signal, it cancels at the receiver instead of corrupting the differential data signal.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So induced noise couples equally into both wires and cancels at the receiver",
+        "is_correct": true
+      },
+      {
+        "text": "To increase the cable's tensile strength",
+        "is_correct": false
+      },
+      {
+        "text": "To allow the pairs to carry DC power",
+        "is_correct": false
+      },
+      {
+        "text": "To reduce the cable's capacitance to the building ground",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does TCP slow start increase the amount of data a sender may have in flight?",
+    "explanation": "The sender begins with a small congestion window and grows it by roughly one segment per acknowledgement, effectively doubling the window each round-trip time. Growth continues until the window reaches the slow-start threshold or a loss is detected.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The congestion window doubles each round-trip until the slow-start threshold",
+        "is_correct": true
+      },
+      {
+        "text": "The receive window is fixed and the sender fills it immediately",
+        "is_correct": false
+      },
+      {
+        "text": "The sender retransmits every segment twice to measure loss",
+        "is_correct": false
+      },
+      {
+        "text": "The window grows by one segment per second regardless of acknowledgements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP receiver gets segments 5, 6, 8, and 9 after already receiving segment 4. What does it send back, and why?",
+    "explanation": "The receiver buffers the out-of-order segments and keeps returning duplicate acknowledgements for the last in-order byte, which is segment 4's sequence space. After three duplicate ACKs the sender treats the gap as lost and retransmits segment 7 without waiting for a timer.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Duplicate ACKs for the missing segment, which trigger a fast retransmit",
+        "is_correct": true
+      },
+      {
+        "text": "A reset, because out-of-order delivery is always fatal",
+        "is_correct": false
+      },
+      {
+        "text": "ACKs for segments 8 and 9, discarding segment 7",
+        "is_correct": false
+      },
+      {
+        "text": "Nothing until the retransmission timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a split-MAC wireless architecture, how do the CAPWAP control and data paths differ by default?",
+    "explanation": "The control tunnel runs over UDP 5246 and is DTLS-encrypted to protect management exchanges between AP and controller. The data tunnel uses UDP 5247 and is not encrypted by default, because the client payload is usually already protected by 802.11 encryption.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Control uses UDP 5246 and is DTLS-encrypted; data uses UDP 5247 and is unencrypted by default",
+        "is_correct": true
+      },
+      {
+        "text": "Both tunnels share UDP 5246 and are encrypted by default",
+        "is_correct": false
+      },
+      {
+        "text": "Control uses TCP 5246 and data uses TCP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Data uses UDP 5246 and control uses UDP 5247, both in clear text",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a likely effect of setting the MAC address-table aging time very low on a busy access switch?",
+    "explanation": "Entries expire before hosts stop sending, so frames for active destinations arrive with no matching table entry. The switch floods those unknown-unicast frames out every port in the VLAN, raising unnecessary traffic and CPU load.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "More frames are flooded as unknown unicast",
+        "is_correct": true
+      },
+      {
+        "text": "The switch stops learning MAC addresses entirely",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN traffic is dropped at the trunk",
+        "is_correct": false
+      },
+      {
+        "text": "The CPU disables cut-through forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which forwarding method makes a switch verify a frame's FCS before forwarding it?",
+    "explanation": "Store-and-forward receives the whole frame, checks the frame check sequence, and discards corrupt frames before forwarding. Cut-through begins forwarding after reading the destination MAC, which lowers latency but propagates errors.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Store-and-forward",
+        "is_correct": true
+      },
+      {
+        "text": "Cut-through",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment-free",
+        "is_correct": false
+      },
+      {
+        "text": "Fast-forward",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VLAN is the native VLAN on an 802.1Q trunk by default?",
+    "explanation": "Cisco switches use VLAN 1 as the native VLAN unless it is changed. Frames in the native VLAN cross the trunk untagged, which is why best practice is to move the native VLAN to an unused ID on both ends.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VLAN 1",
+        "is_correct": true
+      },
+      {
+        "text": "VLAN 0",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 1005",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 4095",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can VLANs 1002 through 1005 not be used for user traffic on a Cisco switch?",
+    "explanation": "These IDs are reserved by default for legacy FDDI and Token Ring media translations. They appear in the VLAN database but cannot be assigned to access ports or deleted in normal operation.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are reserved for legacy media translations and cannot be assigned",
+        "is_correct": true
+      },
+      {
+        "text": "They exceed the 802.1Q tag range",
+        "is_correct": false
+      },
+      {
+        "text": "They are reserved for voice traffic only",
+        "is_correct": false
+      },
+      {
+        "text": "They are used internally by VTP version 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is configured with an access VLAN for a workstation and a voice VLAN for an IP phone. How does the port handle the two traffic types?",
+    "explanation": "The phone's own voice frames are tagged with the voice VLAN ID, while frames from the attached PC pass through the phone untagged and land in the access VLAN. This lets one port serve both devices without a second cable.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Voice frames are tagged; PC frames are untagged in the access VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Both traffic types are untagged in the voice VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "PC frames are tagged with the voice VLAN and voice frames are untagged",
+        "is_correct": false
+      },
+      {
+        "text": "The port becomes a trunk and drops untagged frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DSCP value corresponds to the Expedited Forwarding per-hop behaviour used to mark voice payload?",
+    "explanation": "Expedited Forwarding is DSCP 46, written as EF. It maps to the highest-priority queue in most QoS designs, giving voice a low-latency, low-jitter path ahead of data traffic.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "46",
+        "is_correct": true
+      },
+      {
+        "text": "34",
+        "is_correct": false
+      },
+      {
+        "text": "26",
+        "is_correct": false
+      },
+      {
+        "text": "10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits a switch port to three learned MAC addresses?",
+    "explanation": "The maximum parameter sets how many secure MAC addresses the port may learn. Once the limit is reached, any additional source MAC triggers the configured violation action.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "switchport port-security maximum 3",
+        "is_correct": true
+      },
+      {
+        "text": "switchport port-security limit 3",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security mac-address 3",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security aging 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which field of the output from show port-security interface shows how many times the port security rules have been broken?",
+    "explanation": "The Security Violation Count counter increments each time a frame violates the configured maximum, sticky, or static address rules. It is the quickest way to confirm that a port is actually reacting to an offending device.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Security Violation Count",
+        "is_correct": true
+      },
+      {
+        "text": "Port Status",
+        "is_correct": false
+      },
+      {
+        "text": "Maximum MAC Addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Aging Time",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which 802.11 management frame does an access point send to end a client association without implying a security failure?",
+    "explanation": "A disassociation frame ends an existing association, typically because the AP is rebooting, the client is idle, or the session is being torn down administratively. Deauthentication is a stronger statement that the client is no longer authenticated.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Disassociation",
+        "is_correct": true
+      },
+      {
+        "text": "Deauthentication",
+        "is_correct": false
+      },
+      {
+        "text": "Probe response",
+        "is_correct": false
+      },
+      {
+        "text": "Association request",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A wireless client is configured for 802.1X but the RADIUS server rejects its credentials. What is the visible result on the client?",
+    "explanation": "The EAP exchange fails, so the authenticator never moves the port or the wireless session to the authorized state. The client cannot pass traffic even though it may still show the SSID as available or attempt to reconnect.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authentication fails and the client is never authorized to pass traffic",
+        "is_correct": true
+      },
+      {
+        "text": "The client falls back to open authentication automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The AP assigns a static IP address instead",
+        "is_correct": false
+      },
+      {
+        "text": "The client is placed in the voice VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which information does LLDP-MED add beyond basic LLDP for voice endpoints?",
+    "explanation": "LLDP-MED defines extensions such as network policy, power over MDI, inventory, and location identification. Network policy is what lets a phone learn its voice VLAN and QoS markings automatically.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Network policy, power via MDI, inventory, and location TLVs",
+        "is_correct": true
+      },
+      {
+        "text": "A routing table summary for the local subnet",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypted CAPWAP tunnel parameters",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning-tree topology change notifications",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why should CDP be disabled on ports facing untrusted networks?",
+    "explanation": "CDP advertisements expose the device model, software version, platform, and management addresses to anyone who can capture them. That information helps an attacker pick exploits and map the topology, so it is suppressed where the neighbour is not trusted.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reveals device model, software version, and management addresses",
+        "is_correct": true
+      },
+      {
+        "text": "It consumes enough bandwidth to disrupt voice calls",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents STP from converging",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks DHCP snooping from binding addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel is working, then one member interface is changed to a different speed. What happens to the bundle?",
+    "explanation": "All members of a bundle must share speed, duplex, and VLAN parameters. A mismatch makes the offending interface incompatible, so it is suspended and removed from the channel, which can reduce total bandwidth or drop the channel if too few members remain.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The mismatched interface is suspended and removed from the bundle",
+        "is_correct": true
+      },
+      {
+        "text": "The bundle automatically negotiates a common speed",
+        "is_correct": false
+      },
+      {
+        "text": "All members drop to half duplex",
+        "is_correct": false
+      },
+      {
+        "text": "The channel converts to a routed port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must the member interfaces of a Layer 2 EtherChannel be configured consistently before the bundle is relied on?",
+    "explanation": "The switch validates that members agree on speed, duplex, allowed VLANs, and trunk state. Any disagreement causes the port to be suspended as a bundle mismatch, so the channel silently loses capacity instead of forwarding.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Mismatched parameters cause member ports to suspend as bundle inconsistencies",
+        "is_correct": true
+      },
+      {
+        "text": "The switch rewrites the configuration of the first member onto the others",
+        "is_correct": false
+      },
+      {
+        "text": "STP disables the channel if any member differs",
+        "is_correct": false
+      },
+      {
+        "text": "VTP refuses to advertise the VLAN database",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Place the 802.1D port states in the order a blocked port passes through them before it forwards traffic.",
+    "explanation": "A port leaving the blocked state enters listening while it participates in the election, then learning while it populates the MAC table, and only then forwarding. Each transition waits for the forward delay timer, which is why convergence is slow without RSTP.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Blocking, listening, learning, forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "Blocking, learning, listening, forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "Listening, blocking, forwarding, learning",
+        "is_correct": false
+      },
+      {
+        "text": "Learning, blocking, listening, forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A storm-control threshold is configured as a percentage of link bandwidth. What happens to the effective threshold if the interface speed is increased?",
+    "explanation": "The percentage is recalculated against the new link rate, so the same percentage permits a much higher absolute packet or bit rate. A threshold tuned on a 1 Gbps link can allow ten times the traffic after an upgrade to 10 Gbps.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The permitted absolute rate rises with the new link speed",
+        "is_correct": true
+      },
+      {
+        "text": "The threshold stays fixed in packets per second",
+        "is_correct": false
+      },
+      {
+        "text": "Storm control is disabled automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The threshold halves to preserve the same absolute rate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must an IPv6 static route that uses a link-local next hop also specify the outgoing interface?",
+    "explanation": "Link-local addresses are only unique within a single link, so the router cannot tell which interface to use from the address alone. Supplying the exit interface makes the route fully specified and removes the ambiguity.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A link-local address is only unique on one link, so the exit interface is required",
+        "is_correct": true
+      },
+      {
+        "text": "IPv6 does not support next-hop addresses in static routes",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is needed only when the next hop is a global address",
+        "is_correct": false
+      },
+      {
+        "text": "Without it the route becomes a default route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a static route that points to a next-hop address?",
+    "explanation": "A static route with a specified next hop is trusted almost completely and carries AD 1. Only a directly connected route at AD 0 is preferred over it.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does the forwarding information base differ from the routing information base on a router?",
+    "explanation": "The RIB is the control-plane table holding every candidate route learned from connected networks, statics, and routing protocols along with their metrics and distances. The FIB is the derived data-plane table containing only the selected best route for each prefix, and it is what actually drives packet forwarding.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The RIB holds all candidate routes; the FIB holds only the selected best paths used for forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "The RIB holds only connected routes; the FIB holds learned routes",
+        "is_correct": false
+      },
+      {
+        "text": "The FIB is populated before the RIB during convergence",
+        "is_correct": false
+      },
+      {
+        "text": "The RIB is used for IPv6 and the FIB for IPv4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the command show ip route ospf display?",
+    "explanation": "The command filters the routing table to entries whose source is OSPF, showing the OSPF code, the advertising router, and the metric. Connected and static routes are omitted.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only routes learned through OSPF",
+        "is_correct": true
+      },
+      {
+        "text": "The full OSPF link-state database",
+        "is_correct": false
+      },
+      {
+        "text": "Only OSPF neighbor adjacencies",
+        "is_correct": false
+      },
+      {
+        "text": "All routes including connected and static",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates a switched virtual interface for VLAN 10?",
+    "explanation": "The interface vlan 10 command enters SVI configuration, where an IP address can be assigned to provide routing or management access for that VLAN. The SVI is the Layer 3 presence of the VLAN on the switch.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "interface vlan 10",
+        "is_correct": true
+      },
+      {
+        "text": "interface gigabitethernet0/1.10",
+        "is_correct": false
+      },
+      {
+        "text": "vlan 10 interface",
+        "is_correct": false
+      },
+      {
+        "text": "switchport access vlan 10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An SVI is configured with an IP address and no shutdown, yet it stays down/down. What is the most likely cause?",
+    "explanation": "An SVI only comes up when at least one port in that VLAN is up and forwarding, or when the VLAN itself is active on the switch. Without a live access port or trunk carrying the VLAN, there is nothing to bring the interface up.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No active port is assigned to that VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "The SVI needs a default gateway configured",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN must be created with the vlan database command",
+        "is_correct": false
+      },
+      {
+        "text": "An SVI cannot carry an IPv4 address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables OSPFv3 process 1 on a router?",
+    "explanation": "OSPFv3 is configured through the ipv6 router ospf process command, then interfaces are enabled with ipv6 ospf 1 area under each interface. OSPFv3 runs over IPv6 and uses link-local addresses for adjacencies.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 router ospf 1",
+        "is_correct": true
+      },
+      {
+        "text": "router ospf 1",
+        "is_correct": false
+      },
+      {
+        "text": "router ipv6 ospf 1",
+        "is_correct": false
+      },
+      {
+        "text": "ospfv3 1 enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers have OSPFv3 configured on a shared link but form no adjacency. The area IDs match and the link is up. What should be checked next?",
+    "explanation": "OSPFv3 requires the per-interface instance ID to match between neighbours; a mismatch means the packets belong to different OSPFv3 instances and are ignored. Unlike OSPFv2, the process ID is local, but the interface instance ID must agree.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The OSPFv3 instance ID on both interfaces",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPFv2 process ID on both routers",
+        "is_correct": false
+      },
+      {
+        "text": "The IPv4 subnet mask on the link",
+        "is_correct": false
+      },
+      {
+        "text": "The global unicast address of each router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single summary route covers 192.168.0.0/24 through 192.168.3.0/24?",
+    "explanation": "The four /24 networks share the first 22 bits, so they aggregate into 192.168.0.0/22. That block spans 192.168.0.0 to 192.168.3.255 and replaces four separate advertisements with one.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "192.168.0.0/22",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0/21",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.0.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On an OSPF ASBR, which command summarizes redistributed external routes before they are advertised into the OSPF domain?",
+    "explanation": "The summary-address command is applied in router configuration on the ASBR and creates a single aggregate for a range of external prefixes. Internal area summarization instead uses the area range command on an ABR.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "summary-address",
+        "is_correct": true
+      },
+      {
+        "text": "area range",
+        "is_correct": false
+      },
+      {
+        "text": "ip summary-address eigrp",
+        "is_correct": false
+      },
+      {
+        "text": "auto-summary",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers are connected by a working link but are configured in different areas. What is the result?",
+    "explanation": "OSPF requires both ends of a link to agree on the area ID before they can become neighbours. A mismatch keeps them from progressing past the initial hello exchange, so no adjacency forms and no routes are exchanged.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No adjacency forms because the area IDs must match on the link",
+        "is_correct": true
+      },
+      {
+        "text": "The routers become neighbours but exchange no Type 1 LSAs",
+        "is_correct": false
+      },
+      {
+        "text": "The link is treated as an external connection automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The router with the higher router ID becomes the ABR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a broadcast multi-access OSPF segment, a router shows a neighbour stuck in 2WAY/DROTHER. Is this a fault?",
+    "explanation": "On broadcast and NBMA networks, routers that are neither the DR nor the BDR stay in 2WAY with each other by design. Only a neighbour that should be DR or BDR remaining in 2WAY, or a point-to-point link showing it, indicates a problem.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No; non-DR and non-BDR routers stay in 2WAY on broadcast segments by design",
+        "is_correct": true
+      },
+      {
+        "text": "Yes; every neighbour must reach FULL",
+        "is_correct": false
+      },
+      {
+        "text": "Yes; it means the hello timers differ",
+        "is_correct": false
+      },
+      {
+        "text": "No; 2WAY means the neighbour is the DR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol resolves an IPv6 address to a link-layer address, and which messages does it use?",
+    "explanation": "IPv6 Neighbor Discovery performs address resolution with Neighbor Solicitation and Neighbor Advertisement messages carried in ICMPv6. It replaces IPv4 ARP and also handles router discovery and duplicate address detection.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Neighbor Discovery, using neighbour solicitation and advertisement messages",
+        "is_correct": true
+      },
+      {
+        "text": "ARP, using broadcast requests and unicast replies",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPv6, using solicit and advertise messages",
+        "is_correct": false
+      },
+      {
+        "text": "RARP, using the broadcast address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A DHCP client sends a DHCPRELEASE message. What is it telling the server?",
+    "explanation": "DHCPRELEASE is sent when a client gives up its address, for example at shutdown or when the interface goes down. The server can then return the address to the pool instead of holding it until the lease expires.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is giving up the lease and the address can be returned to the pool",
+        "is_correct": true
+      },
+      {
+        "text": "It is requesting an extension of the current lease",
+        "is_correct": false
+      },
+      {
+        "text": "It is declining an address because of a conflict",
+        "is_correct": false
+      },
+      {
+        "text": "It is asking for additional configuration parameters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the log keyword add to an access control entry?",
+    "explanation": "The log keyword makes the router generate a syslog message each time a packet matches that entry, recording the source, destination, and action. It is a troubleshooting aid and should be used sparingly because logging every match can consume significant CPU.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A syslog message for each packet matching the entry",
+        "is_correct": true
+      },
+      {
+        "text": "A counter that resets after each match",
+        "is_correct": false
+      },
+      {
+        "text": "An automatic deny rule for the same traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encryption of the matching packets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a DHCP snooping deployment, which port should be configured as trusted?",
+    "explanation": "The port leading toward the legitimate DHCP server or relay is trusted so its offer and acknowledgement messages are allowed. All client-facing ports stay untrusted, which blocks a rogue server from handing out addresses.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port facing the legitimate DHCP server or relay",
+        "is_correct": true
+      },
+      {
+        "text": "Every access port attached to an end device",
+        "is_correct": false
+      },
+      {
+        "text": "Only the trunk ports between switches",
+        "is_correct": false
+      },
+      {
+        "text": "The port attached to the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the outside global address represent in a NAT translation table?",
+    "explanation": "The outside global address is the address of the external host as it appears on the internet side of the translation. It is distinct from the outside local address, which is how that same host appears to the inside network.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The external host's address as seen on the internet side",
+        "is_correct": true
+      },
+      {
+        "text": "The internal host's address before translation",
+        "is_correct": false
+      },
+      {
+        "text": "The public address assigned to the internal host",
+        "is_correct": false
+      },
+      {
+        "text": "The router interface address used as the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Dynamic ARP Inspection rate limit on an untrusted interface?",
+    "explanation": "Untrusted ports are limited to 15 ARP packets per second by default so that a flood of ARP traffic cannot overwhelm the switch's inspection process. The limit can be raised or lowered per interface with ip arp inspection limit.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "15 packets per second",
+        "is_correct": true
+      },
+      {
+        "text": "1 packet per second",
+        "is_correct": false
+      },
+      {
+        "text": "100 packets per second",
+        "is_correct": false
+      },
+      {
+        "text": "Unlimited",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command copies the running configuration to a TFTP server?",
+    "explanation": "The copy command takes a source and a destination, so copy running-config tftp: prompts for the server address and filename. TFTP runs over UDP 69, so the transfer is unencrypted and should be confined to a management network.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "copy running-config tftp:",
+        "is_correct": true
+      },
+      {
+        "text": "backup running-config tftp:",
+        "is_correct": false
+      },
+      {
+        "text": "write tftp: running-config",
+        "is_correct": false
+      },
+      {
+        "text": "export running-config tftp:",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly compares ESP and AH in IPsec?",
+    "explanation": "ESP can encrypt the payload and also authenticate it, which is why it is used for most IPsec deployments. AH authenticates the packet including the outer IP header but provides no confidentiality, so it cannot hide the data.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ESP can provide encryption and authentication; AH provides authentication only",
+        "is_correct": true
+      },
+      {
+        "text": "AH provides encryption; ESP provides authentication only",
+        "is_correct": false
+      },
+      {
+        "text": "Both provide encryption but AH also compresses the payload",
+        "is_correct": false
+      },
+      {
+        "text": "ESP authenticates the outer header while AH does not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a controller's northbound REST API allow a management platform to do?",
+    "explanation": "The REST API exposes controller functions as HTTP resources, so an external system can read inventory, pull telemetry, and push configuration changes programmatically. That is what makes integration with automation and monitoring platforms possible without screen scraping.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Read inventory and telemetry and push configuration changes programmatically",
+        "is_correct": true
+      },
+      {
+        "text": "Replace the need for device-level credentials entirely",
+        "is_correct": false
+      },
+      {
+        "text": "Bypass the controller's policy engine for urgent changes",
+        "is_correct": false
+      },
+      {
+        "text": "Convert CAPWAP tunnels into GRE tunnels",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a controller-based design make policy consistency easier than managing each device individually?",
+    "explanation": "The controller holds the intended configuration and pushes it to every managed device, so a single change propagates uniformly. Device-by-device management invites drift, where one switch keeps an old ACL or VLAN because it was missed during a change window.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One policy definition is pushed to all managed devices, preventing configuration drift",
+        "is_correct": true
+      },
+      {
+        "text": "The controller removes the need for any device configuration",
+        "is_correct": false
+      },
+      {
+        "text": "Devices inherit policy only after a reboot",
+        "is_correct": false
+      },
+      {
+        "text": "Each device pulls a unique policy generated for its model",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When asking a model to modify an existing device configuration, why is requesting a diff better than requesting the full config?",
+    "explanation": "A diff keeps the output short enough to review line by line and limits the change to the intended lines. A full configuration invites unrelated rewrites, makes review impractical, and increases the chance that an accidental omission breaks the device.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It keeps the output reviewable and limits changes to the intended lines",
+        "is_correct": true
+      },
+      {
+        "text": "It lets the model skip validating the existing configuration",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees the model will not hallucinate commands",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for a change window",
+        "is_correct": false
+      }
+    ]
+  }
+]

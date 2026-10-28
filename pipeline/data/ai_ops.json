@@ -3274,5 +3274,83 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What does a controller's northbound REST API allow a management platform to do?",
+    "explanation": "The REST API exposes controller functions as HTTP resources, so an external system can read inventory, pull telemetry, and push configuration changes programmatically. That is what makes integration with automation and monitoring platforms possible without screen scraping.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Read inventory and telemetry and push configuration changes programmatically",
+        "is_correct": true
+      },
+      {
+        "text": "Replace the need for device-level credentials entirely",
+        "is_correct": false
+      },
+      {
+        "text": "Bypass the controller's policy engine for urgent changes",
+        "is_correct": false
+      },
+      {
+        "text": "Convert CAPWAP tunnels into GRE tunnels",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a controller-based design make policy consistency easier than managing each device individually?",
+    "explanation": "The controller holds the intended configuration and pushes it to every managed device, so a single change propagates uniformly. Device-by-device management invites drift, where one switch keeps an old ACL or VLAN because it was missed during a change window.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One policy definition is pushed to all managed devices, preventing configuration drift",
+        "is_correct": true
+      },
+      {
+        "text": "The controller removes the need for any device configuration",
+        "is_correct": false
+      },
+      {
+        "text": "Devices inherit policy only after a reboot",
+        "is_correct": false
+      },
+      {
+        "text": "Each device pulls a unique policy generated for its model",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When asking a model to modify an existing device configuration, why is requesting a diff better than requesting the full config?",
+    "explanation": "A diff keeps the output short enough to review line by line and limits the change to the intended lines. A full configuration invites unrelated rewrites, makes review impractical, and increases the chance that an accidental omission breaks the device.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It keeps the output reviewable and limits changes to the intended lines",
+        "is_correct": true
+      },
+      {
+        "text": "It lets the model skip validating the existing configuration",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees the model will not hallucinate commands",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for a change window",
+        "is_correct": false
+      }
+    ]
   }
 ]
