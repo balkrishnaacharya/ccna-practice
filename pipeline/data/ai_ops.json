@@ -3170,5 +3170,109 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What operational advantage does a cloud management dashboard give a multi-site network?",
+    "explanation": "A cloud dashboard aggregates state from every enrolled device, so a change or fault can be spotted across sites without logging into each one. Forwarding still happens locally on the devices.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One place to see inventory, configuration, and telemetry from every site",
+        "is_correct": true
+      },
+      {
+        "text": "It removes the need for any local forwarding hardware",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees traffic never leaves the branch",
+        "is_correct": false
+      },
+      {
+        "text": "It eliminates the need for device credentials",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of an Ansible role?",
+    "explanation": "A role packages the files and tasks needed for one piece of functionality so playbooks can reuse it across inventories. Variables, templates, and handlers travel with the role instead of being copied into every playbook.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It bundles tasks, defaults, templates, and handlers into a reusable unit",
+        "is_correct": true
+      },
+      {
+        "text": "It stores encrypted credentials for a playbook",
+        "is_correct": false
+      },
+      {
+        "text": "It records which hosts have already been configured",
+        "is_correct": false
+      },
+      {
+        "text": "It compiles YAML into device configuration",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a data source in an IaC tool such as Terraform?",
+    "explanation": "Data sources query providers for facts, such as an existing network or image ID, and expose them to the configuration. Because they only read, they do not add the object to state as a managed resource.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reads information about existing infrastructure without taking ownership of it",
+        "is_correct": true
+      },
+      {
+        "text": "It declares a new resource that the tool must create",
+        "is_correct": false
+      },
+      {
+        "text": "It stores the state file remotely",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts secrets before they are written to state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP methods does a RESTCONF client use to create, read, update, and delete data?",
+    "explanation": "RESTCONF maps YANG data operations onto standard HTTP verbs: GET reads, POST creates, PATCH or PUT updates, and DELETE removes. NETCONF instead uses RPC operations such as edit-config and commit.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "POST, GET, PATCH or PUT, and DELETE",
+        "is_correct": true
+      },
+      {
+        "text": "SET, GET, COMMIT, and ROLLBACK",
+        "is_correct": false
+      },
+      {
+        "text": "CREATE, READ, MODIFY, and DROP",
+        "is_correct": false
+      },
+      {
+        "text": "SUBSCRIBE, NOTIFY, GET, and PUT",
+        "is_correct": false
+      }
+    ]
   }
 ]

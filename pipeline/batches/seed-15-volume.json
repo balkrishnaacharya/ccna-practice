@@ -1,0 +1,702 @@
+[
+  {
+    "stem": "What is the maximum channel length for a twisted-pair Ethernet link such as 100BASE-TX or 1000BASE-T?",
+    "explanation": "The 100-meter channel budget covers up to 90 m of permanently installed horizontal cable plus 10 m of patch cords at each end. Exceeding it causes attenuation and crosstalk failures that show up as CRC errors.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "100 meters", "is_correct": true },
+      { "text": "90 meters", "is_correct": false },
+      { "text": "500 meters", "is_correct": false },
+      { "text": "185 meters", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which fiber medium is required to carry 10GBASE-ER across its full 40-kilometer reach?",
+    "explanation": "10GBASE-ER uses 1550 nm optics over single-mode fiber to reach 40 km. Multimode grades lose too much signal over that distance, so OM1 or OM3 would fall far short.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Single-mode fiber", "is_correct": true },
+      { "text": "OM1 multimode fiber", "is_correct": false },
+      { "text": "OM3 multimode fiber", "is_correct": false },
+      { "text": "Category 6A twisted pair", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How many equal /27 subnets can be carved out of the address block 10.0.0.0/24?",
+    "explanation": "A /27 borrows three host bits from a /24, and two to the third power is eight. Each resulting subnet holds 32 addresses, 30 of which are usable.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "8", "is_correct": true },
+      { "text": "4", "is_correct": false },
+      { "text": "16", "is_correct": false },
+      { "text": "2", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which prefix length provides exactly 62 usable host addresses on a subnet?",
+    "explanation": "A /26 leaves six host bits, so the block contains 64 addresses. Subtracting the network and broadcast addresses leaves 62 usable hosts.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "/26", "is_correct": true },
+      { "text": "/27", "is_correct": false },
+      { "text": "/25", "is_correct": false },
+      { "text": "/28", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In a conventional /64 IPv6 subnet, how many bits make up the interface identifier?",
+    "explanation": "A /64 splits the 128-bit address in half: the first 64 bits are the subnet prefix and the remaining 64 bits identify the interface. That width is what makes stateless address autoconfiguration practical.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "64", "is_correct": true },
+      { "text": "48", "is_correct": false },
+      { "text": "32", "is_correct": false },
+      { "text": "128", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix is reserved for use in documentation and examples?",
+    "explanation": "RFC 3849 sets aside 2001:db8::/32 for documentation so examples never collide with real global unicast space. Lab topologies and textbooks use it for exactly that reason.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "2001:db8::/32", "is_correct": true },
+      { "text": "2001::/32", "is_correct": false },
+      { "text": "fc00::/7", "is_correct": false },
+      { "text": "fe80::/10", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "At which OSI layer does a repeater or hub operate?",
+    "explanation": "A repeater regenerates the electrical signal without reading addresses or headers, so it works purely at the physical layer. That is why a hub extends a collision domain rather than dividing it.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Physical", "is_correct": true },
+      { "text": "Data link", "is_correct": false },
+      { "text": "Network", "is_correct": false },
+      { "text": "Transport", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which two OSI layers correspond to the network access layer of the TCP/IP model?",
+    "explanation": "The TCP/IP network access layer covers everything below IP, so it absorbs the OSI data-link and physical layers. The internet layer maps to OSI network, and the transport layer stays one-to-one.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Data link and physical", "is_correct": true },
+      { "text": "Network and transport", "is_correct": false },
+      { "text": "Session and presentation", "is_correct": false },
+      { "text": "Transport and application", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the role of a CSU/DSU on a legacy serial WAN circuit?",
+    "explanation": "The channel service unit terminates the provider's digital line and the data service unit converts between line signalling and the router's serial interface. Modern handoffs usually fold both functions into the provider demarcation device.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It terminates the digital carrier circuit and presents a serial interface to the router", "is_correct": true },
+      { "text": "It converts copper Ethernet to fiber", "is_correct": false },
+      { "text": "It load-balances traffic across two circuits", "is_correct": false },
+      { "text": "It encrypts traffic before it enters the provider network", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a service level agreement on a business WAN circuit typically guarantee?",
+    "explanation": "An SLA is a contractual performance envelope covering uptime, one-way delay, delay variation, and time to repair. Pricing and CPE management are separate commercial terms.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Availability, latency, jitter, and repair time targets", "is_correct": true },
+      { "text": "A fixed monthly price for all bandwidth upgrades", "is_correct": false },
+      { "text": "That the provider will manage the customer's routers", "is_correct": false },
+      { "text": "Unlimited bandwidth with no committed rate", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a virtual machine snapshot capture?",
+    "explanation": "A snapshot records the current disk, and optionally memory, so the VM can be reverted to that instant. It is not a backup, because it normally lives on the same storage as the running VM.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The VM's disk and memory state at a point in time for rollback", "is_correct": true },
+      { "text": "A full backup copy stored on a remote tape library", "is_correct": false },
+      { "text": "A container image exported for reuse on another host", "is_correct": false },
+      { "text": "A copy of the hypervisor's global configuration only", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why do multiple containers built from the same image use less disk space than the equivalent number of virtual machines?",
+    "explanation": "Container images are stacked read-only layers that many containers can share, with a thin writable layer on top. Virtual machines each carry a complete guest operating system image.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Their read-only image layers are shared and only the writable layer is unique", "is_correct": true },
+      { "text": "Containers compress their filesystems automatically at runtime", "is_correct": false },
+      { "text": "Containers store their data in RAM instead of on disk", "is_correct": false },
+      { "text": "Each container mounts the host filesystem read-only", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a reverse proxy placed in front of web servers provide?",
+    "explanation": "A reverse proxy is the public face of a service: clients connect to it and it relays requests to one or more backends. That hides server topology and centralizes TLS, caching, and request filtering.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It accepts client requests and forwards them to backend servers, hiding the servers and often terminating TLS", "is_correct": true },
+      { "text": "It caches DNS answers for internal clients", "is_correct": false },
+      { "text": "It assigns addresses to guests on the wireless LAN", "is_correct": false },
+      { "text": "It inspects outbound traffic from internal users", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a network access control deployment check before admitting a device to the network?",
+    "explanation": "NAC combines authentication with a posture check, so a known device running outdated antivirus or missing patches can be quarantined. Admission depends on both who the device is and what state it is in.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The device's identity and its compliance with policy such as patch level or endpoint protection", "is_correct": true },
+      { "text": "The device's routing table for a usable default route", "is_correct": false },
+      { "text": "The speed of the switch port the device is plugged into", "is_correct": false },
+      { "text": "Whether the device already holds a DHCP reservation", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Two Cisco switches are both set to dynamic desirable, yet the link stays an access port. Which mismatch would explain that?",
+    "explanation": "DTP can agree on trunking, but the trunk still needs a common encapsulation. A mismatch between 802.1Q on one side and ISL on the other leaves the link unable to form a trunk.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The two ends are configured with different trunk encapsulations", "is_correct": true },
+      { "text": "The two ends have different VTP revision numbers", "is_correct": false },
+      { "text": "The two ends are running different spanning-tree modes", "is_correct": false },
+      { "text": "The two ends have different native VLANs", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In the command `monitor session 1 source interface Gi0/1 rx`, what traffic is copied to the destination port?",
+    "explanation": "The rx keyword restricts the capture to ingress frames, while tx captures egress and both captures the full bidirectional flow. Narrowing the direction halves the mirror volume.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Only frames received on Gi0/1", "is_correct": true },
+      { "text": "Only frames transmitted from Gi0/1", "is_correct": false },
+      { "text": "Both received and transmitted frames on Gi0/1", "is_correct": false },
+      { "text": "All frames in the VLAN that Gi0/1 belongs to", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why would an engineer attach an ACL to a SPAN session?",
+    "explanation": "A filter ACL limits which frames are copied, which keeps a busy source from overrunning a slower destination port. It filters the copy, never the original traffic.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "To capture only the traffic of interest instead of every frame on the source", "is_correct": true },
+      { "text": "To block the mirrored traffic from reaching the destination port", "is_correct": false },
+      { "text": "To encrypt mirrored frames in transit", "is_correct": false },
+      { "text": "To raise the destination port's usable bandwidth", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How many wire pairs does 802.3af Power over Ethernet use to deliver power?",
+    "explanation": "802.3af and 802.3at push power over two pairs, using either the spare pairs or the data pairs depending on the implementation. Four-pair delivery only arrives with 802.3bt.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Two pairs", "is_correct": true },
+      { "text": "All four pairs", "is_correct": false },
+      { "text": "One pair", "is_correct": false },
+      { "text": "Three pairs", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does a PSE run a detection step before applying power to a port?",
+    "explanation": "Detection applies a low voltage and looks for the characteristic signature resistor of a powered device. Without a match the port stays unpowered, which protects ordinary Ethernet NICs.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "To confirm a valid powered device signature so non-PoE equipment is not damaged", "is_correct": true },
+      { "text": "To measure the cable length for billing purposes", "is_correct": false },
+      { "text": "To negotiate the Ethernet speed with the attached device", "is_correct": false },
+      { "text": "To check whether the device supports LLDP", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What distinguishes an RSTP alternate port from a backup port?",
+    "explanation": "Both roles discard, but they differ in what they protect: an alternate port is a standby route to the root bridge, and a backup port is a standby route to a segment the local switch already reaches.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "An alternate port offers another path toward the root, while a backup port offers a redundant path to the same shared segment", "is_correct": true },
+      { "text": "An alternate port is always forwarding, while a backup port always discards", "is_correct": false },
+      { "text": "An alternate port connects to a host, while a backup port connects to a switch", "is_correct": false },
+      { "text": "An alternate port exists only on the root bridge", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "How does RSTP limit the impact of a topology change compared with 802.1D?",
+    "explanation": "RSTP propagates a topology change notification hop by hop and flushes only the CAM entries on the affected links. 802.1D instead ages out addresses across the entire VLAN.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It flushes only the ports affected by the change instead of the whole topology", "is_correct": true },
+      { "text": "It disables MAC learning for the whole VLAN during convergence", "is_correct": false },
+      { "text": "It waits for the maximum aging timer before forwarding again", "is_correct": false },
+      { "text": "It restarts the root election on every bridge", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which three modes can a switch run under VTP version 2?",
+    "explanation": "VTPv2 defines server, client, and transparent modes, and later platforms add an off mode. The root, designated, and alternate set belongs to spanning tree, not VTP.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Server, client, and transparent", "is_correct": true },
+      { "text": "Primary, secondary, and standby", "is_correct": false },
+      { "text": "Master, slave, and monitor", "is_correct": false },
+      { "text": "Root, designated, and alternate", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which capability does VTP version 3 add that version 2 lacks?",
+    "explanation": "VTPv3 introduces the primary server concept, so only one switch is authoritative and every other server is a secondary that cannot change the database. It also adds per-VLAN control, extended VLAN support, and stronger authentication.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A single primary server that must be designated before VLAN changes are accepted", "is_correct": true },
+      { "text": "Support for transparent mode", "is_correct": false },
+      { "text": "Propagation of VLAN additions across trunk links", "is_correct": false },
+      { "text": "A configuration revision number for advertisement comparison", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a VLAN trunking port group on a hypervisor virtual switch allow a guest to do?",
+    "explanation": "A trunking port group passes 802.1Q tags through to the uplink instead of imposing one access VLAN. That lets a virtual firewall or router own several VLANs on a single vNIC.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Tag its own frames with multiple VLAN IDs and have those tags carried to the physical switch", "is_correct": true },
+      { "text": "Bypass the physical switch entirely for inter-VLAN traffic", "is_correct": false },
+      { "text": "Assign itself any MAC address it chooses", "is_correct": false },
+      { "text": "Share a single VLAN with every other guest on the host", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is a separate management network recommended for hypervisor hosts?",
+    "explanation": "Management interfaces control the host itself, so isolating them limits what an attacker sitting on a guest network can reach. It also keeps management traffic from competing with production workloads.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It keeps hypervisor control traffic off guest VLANs so a compromised VM cannot reach the management plane", "is_correct": true },
+      { "text": "It doubles the available bandwidth for virtual machines", "is_correct": false },
+      { "text": "It removes the need for a physical switch uplink", "is_correct": false },
+      { "text": "It allows guests to share the host's IP address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "A multilayer switch routes a packet between two VLANs. What happens to the packet's IP TTL?",
+    "explanation": "Routing a packet is a Layer 3 hop whether the device is called a router or a multilayer switch, so TTL is decremented and the header checksum recalculated. Hardware forwarding changes the speed, not the semantics.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is decremented by one as on any routed hop", "is_correct": true },
+      { "text": "It is reset to 255", "is_correct": false },
+      { "text": "It is left unchanged because the switch forwards in hardware", "is_correct": false },
+      { "text": "It is copied into the new Layer 2 header", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command removes dynamically learned MAC address entries from a switch's table?",
+    "explanation": "The clear command with the dynamic keyword flushes learned entries and leaves static ones in place. A reload also clears dynamic entries because the table lives in RAM.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "clear mac address-table dynamic", "is_correct": true },
+      { "text": "no mac address-table", "is_correct": false },
+      { "text": "delete mac address-table", "is_correct": false },
+      { "text": "reset mac address-table", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why does a switch age out dynamically learned MAC address entries?",
+    "explanation": "Aging keeps the forwarding table consistent with where stations actually are. Without it, a device that moved would keep receiving traffic on its old port until the entry was overwritten.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "To drop entries for stations that have moved or gone away so stale ports are not used", "is_correct": true },
+      { "text": "To free space in the VLAN database", "is_correct": false },
+      { "text": "To force a new spanning-tree election", "is_correct": false },
+      { "text": "To keep the ARP cache synchronized", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In an HSRP group, what address do hosts use as their default gateway?",
+    "explanation": "The virtual address belongs to the group, not to either router, so hosts never need reconfiguration when the active role moves. Each router still keeps its own physical address for management.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The shared virtual IP address", "is_correct": true },
+      { "text": "The active router's physical interface address", "is_correct": false },
+      { "text": "The standby router's physical interface address", "is_correct": false },
+      { "text": "The HSRP group multicast address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does HSRP object tracking accomplish?",
+    "explanation": "Tracking ties group priority to the health of something else, usually the uplink. When the tracked object fails the priority drops below the peer's, and preemption hands the active role to the router that can still forward.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It lowers a router's priority, and thus its chance of staying active, when a tracked interface or object fails", "is_correct": true },
+      { "text": "It raises the hello timer when the uplink is congested", "is_correct": false },
+      { "text": "It synchronizes the HSRP group with a VRRP group", "is_correct": false },
+      { "text": "It authenticates HSRP hello messages", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a totally stubby OSPF area block that an ordinary stub area does not?",
+    "explanation": "A stub area filters type 5 externals but still learns inter-area summaries. A totally stubby area also filters type 3 summaries, leaving a single default route toward area 0.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Type 3 summary LSAs in addition to the external LSAs a stub already blocks", "is_correct": true },
+      { "text": "Only type 1 and type 2 LSAs", "is_correct": false },
+      { "text": "Type 5 LSAs while still allowing type 3 summaries", "is_correct": false },
+      { "text": "All LSAs of every type, including the default route", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What does a type 1 OSPF LSA describe?",
+    "explanation": "Every OSPF router floods one router LSA per area describing its own interfaces and link states. Type 2 covers the multi-access segment, type 3 carries inter-area prefixes, and type 5 carries externals.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The originating router's links, interfaces, and their costs within one area", "is_correct": true },
+      { "text": "The set of routers attached to a multi-access segment", "is_correct": false },
+      { "text": "Networks reachable in other areas of the same domain", "is_correct": false },
+      { "text": "Routes redistributed from outside the OSPF domain", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which command explicitly sets a router's OSPF router ID?",
+    "explanation": "The router-id command under router ospf pins the identifier, which otherwise comes from the highest loopback address or the highest active physical address. A fixed ID keeps adjacencies stable when interfaces change.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "router-id 10.255.255.1 under the OSPF process", "is_correct": true },
+      { "text": "ospf router-id 10.255.255.1 on each interface", "is_correct": false },
+      { "text": "ip ospf id 10.255.255.1 in global configuration", "is_correct": false },
+      { "text": "network 10.255.255.1 0.0.0.0 area 0", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which interface command changes how often OSPF sends hello packets on a single link?",
+    "explanation": "The hello interval is an interface-level OSPF setting, so it is applied with ip ospf hello-interval. Both neighbours must agree on the value or the adjacency will not form.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "ip ospf hello-interval 5", "is_correct": true },
+      { "text": "ospf hello 5", "is_correct": false },
+      { "text": "ip hello-interval ospf 5", "is_correct": false },
+      { "text": "timers hello 5", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a RIP route?",
+    "explanation": "Cisco assigns RIP an administrative distance of 120, which places it below OSPF at 110 and EIGRP at 90. That ordering is why a router prefers almost any other protocol over RIP for the same prefix.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "120", "is_correct": true },
+      { "text": "110", "is_correct": false },
+      { "text": "90", "is_correct": false },
+      { "text": "100", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which BGP neighbour state means the TCP session is up and an OPEN message has been sent but not yet answered?",
+    "explanation": "OpenSent follows a successful TCP handshake, when the local router has transmitted its OPEN and is waiting for the peer's. Receiving that OPEN moves the session to OpenConfirm, and a KEEPALIVE completes it as Established.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "OpenSent", "is_correct": true },
+      { "text": "Idle", "is_correct": false },
+      { "text": "Established", "is_correct": false },
+      { "text": "Connect", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What administrative distance does Cisco assign to an EIGRP summary route?",
+    "explanation": "A summary generated by the local router is preferred over any other source, so it is given an administrative distance of 5. Internal EIGRP routes use 90 and external ones 170.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "5", "is_correct": true },
+      { "text": "90", "is_correct": false },
+      { "text": "170", "is_correct": false },
+      { "text": "255", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is a floating static route made to lose by raising its administrative distance rather than its metric?",
+    "explanation": "A static route and an OSPF route are not comparable by metric because the numbers mean different things. Administrative distance is the cross-protocol tiebreak, so raising it is what keeps the static route out of the table until the dynamic route disappears.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Administrative distance decides between routes from different sources, while metrics are only compared within one protocol", "is_correct": true },
+      { "text": "Static routes have no metric field at all", "is_correct": false },
+      { "text": "A higher metric would make the route preferred", "is_correct": false },
+      { "text": "Metrics only apply to IPv6 routes", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which DHCP message does a server send to propose an address to a requesting client?",
+    "explanation": "The server answers a DISCOVER with an OFFER containing a candidate address and options. The client then sends a REQUEST for one offer, and the server confirms with an ACK.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "DHCPOFFER", "is_correct": true },
+      { "text": "DHCPDISCOVER", "is_correct": false },
+      { "text": "DHCPREQUEST", "is_correct": false },
+      { "text": "DHCPACK", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "When a router relays a DHCP request, which address does it use as the source of the packet it sends to the server?",
+    "explanation": "The relay sources the unicast packet from the client-facing interface so replies come back to a routable address. That same interface address is placed in the giaddr field for pool selection.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The address of the interface that received the request", "is_correct": true },
+      { "text": "The client's tentative address", "is_correct": false },
+      { "text": "The broadcast address 255.255.255.255", "is_correct": false },
+      { "text": "The server's next-hop gateway address", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Besides router advertisements, which ICMPv6 message can a rogue host use to steer a victim's traffic through itself?",
+    "explanation": "A neighbour discovery redirect tells a host that a better first hop for a destination exists, so the host sends that traffic to the attacker. RA Guard does not filter redirects, which is why other ND protections may be needed.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "A neighbour discovery redirect", "is_correct": true },
+      { "text": "A router solicitation", "is_correct": false },
+      { "text": "An ICMPv6 echo request", "is_correct": false },
+      { "text": "A packet too big message", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "In an 802.1X deployment, which role does the supplicant play?",
+    "explanation": "The supplicant is client software on the endpoint. The switch acts as the authenticator, and the RADIUS server behind it is the authentication server that validates the credentials.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "The endpoint that requests access and supplies credentials", "is_correct": true },
+      { "text": "The switch that enforces the authentication result", "is_correct": false },
+      { "text": "The server that validates the credentials", "is_correct": false },
+      { "text": "The VLAN that quarantines failed clients", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why do hardening baselines shut down unused switch ports and move them to an unused VLAN?",
+    "explanation": "An unused port that is still enabled and assigned to a live VLAN is an open door for anyone with physical access. Shutting it down and parking it in an empty VLAN removes that path.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "An active port in a production VLAN lets anyone who plugs in reach that segment", "is_correct": true },
+      { "text": "It reduces the size of the MAC address table", "is_correct": false },
+      { "text": "It speeds up spanning-tree convergence", "is_correct": false },
+      { "text": "It lowers PoE power consumption on the switch", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "When DHCP snooping is enabled on a VLAN, what is the default trust state of its ports?",
+    "explanation": "Every port starts untrusted, so server-sourced DHCP messages are dropped until an administrator marks the uplink toward the real server as trusted. This default keeps a rogue server from working immediately.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "Untrusted", "is_correct": true },
+      { "text": "Trusted", "is_correct": false },
+      { "text": "Trusted only for uplink ports", "is_correct": false },
+      { "text": "Trusted only for access ports", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a DNS zone transfer?",
+    "explanation": "A zone transfer replicates the authoritative database so a secondary can answer queries if the primary is unavailable. Clients never perform one; only authoritative servers do.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "To copy a zone's records from a primary server to a secondary server", "is_correct": true },
+      { "text": "To translate a hostname into an IP address for a client", "is_correct": false },
+      { "text": "To cache answers closer to the resolver", "is_correct": false },
+      { "text": "To sign records with DNSSEC keys", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Why is a lower NTP stratum considered a better time source?",
+    "explanation": "Each stratum level represents one step away from the reference clock, and every step adds delay and jitter. Stratum 1 is directly attached, while higher numbers can still be usable but carry more uncertainty.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It is fewer synchronization hops from the reference clock, so accumulated error is smaller", "is_correct": true },
+      { "text": "It has a larger poll interval and therefore less overhead", "is_correct": false },
+      { "text": "It uses a more accurate UDP port", "is_correct": false },
+      { "text": "It is authenticated by default", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What operational advantage does a cloud management dashboard give a multi-site network?",
+    "explanation": "A cloud dashboard aggregates state from every enrolled device, so a change or fault can be spotted across sites without logging into each one. Forwarding still happens locally on the devices.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "One place to see inventory, configuration, and telemetry from every site", "is_correct": true },
+      { "text": "It removes the need for any local forwarding hardware", "is_correct": false },
+      { "text": "It guarantees traffic never leaves the branch", "is_correct": false },
+      { "text": "It eliminates the need for device credentials", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of an Ansible role?",
+    "explanation": "A role packages the files and tasks needed for one piece of functionality so playbooks can reuse it across inventories. Variables, templates, and handlers travel with the role instead of being copied into every playbook.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It bundles tasks, defaults, templates, and handlers into a reusable unit", "is_correct": true },
+      { "text": "It stores encrypted credentials for a playbook", "is_correct": false },
+      { "text": "It records which hosts have already been configured", "is_correct": false },
+      { "text": "It compiles YAML into device configuration", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a data source in an IaC tool such as Terraform?",
+    "explanation": "Data sources query providers for facts, such as an existing network or image ID, and expose them to the configuration. Because they only read, they do not add the object to state as a managed resource.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "It reads information about existing infrastructure without taking ownership of it", "is_correct": true },
+      { "text": "It declares a new resource that the tool must create", "is_correct": false },
+      { "text": "It stores the state file remotely", "is_correct": false },
+      { "text": "It encrypts secrets before they are written to state", "is_correct": false }
+    ]
+  },
+  {
+    "stem": "Which HTTP methods does a RESTCONF client use to create, read, update, and delete data?",
+    "explanation": "RESTCONF maps YANG data operations onto standard HTTP verbs: GET reads, POST creates, PATCH or PUT updates, and DELETE removes. NETCONF instead uses RPC operations such as edit-config and commit.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      { "text": "POST, GET, PATCH or PUT, and DELETE", "is_correct": true },
+      { "text": "SET, GET, COMMIT, and ROLLBACK", "is_correct": false },
+      { "text": "CREATE, READ, MODIFY, and DROP", "is_correct": false },
+      { "text": "SUBSCRIBE, NOTIFY, GET, and PUT", "is_correct": false }
+    ]
+  }
+]

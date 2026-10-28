@@ -4990,5 +4990,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Two Cisco switches are both set to dynamic desirable, yet the link stays an access port. Which mismatch would explain that?",
+    "explanation": "DTP can agree on trunking, but the trunk still needs a common encapsulation. A mismatch between 802.1Q on one side and ISL on the other leaves the link unable to form a trunk.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The two ends are configured with different trunk encapsulations",
+        "is_correct": true
+      },
+      {
+        "text": "The two ends have different VTP revision numbers",
+        "is_correct": false
+      },
+      {
+        "text": "The two ends are running different spanning-tree modes",
+        "is_correct": false
+      },
+      {
+        "text": "The two ends have different native VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the command `monitor session 1 source interface Gi0/1 rx`, what traffic is copied to the destination port?",
+    "explanation": "The rx keyword restricts the capture to ingress frames, while tx captures egress and both captures the full bidirectional flow. Narrowing the direction halves the mirror volume.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only frames received on Gi0/1",
+        "is_correct": true
+      },
+      {
+        "text": "Only frames transmitted from Gi0/1",
+        "is_correct": false
+      },
+      {
+        "text": "Both received and transmitted frames on Gi0/1",
+        "is_correct": false
+      },
+      {
+        "text": "All frames in the VLAN that Gi0/1 belongs to",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why would an engineer attach an ACL to a SPAN session?",
+    "explanation": "A filter ACL limits which frames are copied, which keeps a busy source from overrunning a slower destination port. It filters the copy, never the original traffic.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To capture only the traffic of interest instead of every frame on the source",
+        "is_correct": true
+      },
+      {
+        "text": "To block the mirrored traffic from reaching the destination port",
+        "is_correct": false
+      },
+      {
+        "text": "To encrypt mirrored frames in transit",
+        "is_correct": false
+      },
+      {
+        "text": "To raise the destination port's usable bandwidth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many wire pairs does 802.3af Power over Ethernet use to deliver power?",
+    "explanation": "802.3af and 802.3at push power over two pairs, using either the spare pairs or the data pairs depending on the implementation. Four-pair delivery only arrives with 802.3bt.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two pairs",
+        "is_correct": true
+      },
+      {
+        "text": "All four pairs",
+        "is_correct": false
+      },
+      {
+        "text": "One pair",
+        "is_correct": false
+      },
+      {
+        "text": "Three pairs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a PSE run a detection step before applying power to a port?",
+    "explanation": "Detection applies a low voltage and looks for the characteristic signature resistor of a powered device. Without a match the port stays unpowered, which protects ordinary Ethernet NICs.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To confirm a valid powered device signature so non-PoE equipment is not damaged",
+        "is_correct": true
+      },
+      {
+        "text": "To measure the cable length for billing purposes",
+        "is_correct": false
+      },
+      {
+        "text": "To negotiate the Ethernet speed with the attached device",
+        "is_correct": false
+      },
+      {
+        "text": "To check whether the device supports LLDP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an RSTP alternate port from a backup port?",
+    "explanation": "Both roles discard, but they differ in what they protect: an alternate port is a standby route to the root bridge, and a backup port is a standby route to a segment the local switch already reaches.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An alternate port offers another path toward the root, while a backup port offers a redundant path to the same shared segment",
+        "is_correct": true
+      },
+      {
+        "text": "An alternate port is always forwarding, while a backup port always discards",
+        "is_correct": false
+      },
+      {
+        "text": "An alternate port connects to a host, while a backup port connects to a switch",
+        "is_correct": false
+      },
+      {
+        "text": "An alternate port exists only on the root bridge",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does RSTP limit the impact of a topology change compared with 802.1D?",
+    "explanation": "RSTP propagates a topology change notification hop by hop and flushes only the CAM entries on the affected links. 802.1D instead ages out addresses across the entire VLAN.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It flushes only the ports affected by the change instead of the whole topology",
+        "is_correct": true
+      },
+      {
+        "text": "It disables MAC learning for the whole VLAN during convergence",
+        "is_correct": false
+      },
+      {
+        "text": "It waits for the maximum aging timer before forwarding again",
+        "is_correct": false
+      },
+      {
+        "text": "It restarts the root election on every bridge",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which three modes can a switch run under VTP version 2?",
+    "explanation": "VTPv2 defines server, client, and transparent modes, and later platforms add an off mode. The root, designated, and alternate set belongs to spanning tree, not VTP.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Server, client, and transparent",
+        "is_correct": true
+      },
+      {
+        "text": "Primary, secondary, and standby",
+        "is_correct": false
+      },
+      {
+        "text": "Master, slave, and monitor",
+        "is_correct": false
+      },
+      {
+        "text": "Root, designated, and alternate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which capability does VTP version 3 add that version 2 lacks?",
+    "explanation": "VTPv3 introduces the primary server concept, so only one switch is authoritative and every other server is a secondary that cannot change the database. It also adds per-VLAN control, extended VLAN support, and stronger authentication.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A single primary server that must be designated before VLAN changes are accepted",
+        "is_correct": true
+      },
+      {
+        "text": "Support for transparent mode",
+        "is_correct": false
+      },
+      {
+        "text": "Propagation of VLAN additions across trunk links",
+        "is_correct": false
+      },
+      {
+        "text": "A configuration revision number for advertisement comparison",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a VLAN trunking port group on a hypervisor virtual switch allow a guest to do?",
+    "explanation": "A trunking port group passes 802.1Q tags through to the uplink instead of imposing one access VLAN. That lets a virtual firewall or router own several VLANs on a single vNIC.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Tag its own frames with multiple VLAN IDs and have those tags carried to the physical switch",
+        "is_correct": true
+      },
+      {
+        "text": "Bypass the physical switch entirely for inter-VLAN traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Assign itself any MAC address it chooses",
+        "is_correct": false
+      },
+      {
+        "text": "Share a single VLAN with every other guest on the host",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a separate management network recommended for hypervisor hosts?",
+    "explanation": "Management interfaces control the host itself, so isolating them limits what an attacker sitting on a guest network can reach. It also keeps management traffic from competing with production workloads.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It keeps hypervisor control traffic off guest VLANs so a compromised VM cannot reach the management plane",
+        "is_correct": true
+      },
+      {
+        "text": "It doubles the available bandwidth for virtual machines",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for a physical switch uplink",
+        "is_correct": false
+      },
+      {
+        "text": "It allows guests to share the host's IP address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A multilayer switch routes a packet between two VLANs. What happens to the packet's IP TTL?",
+    "explanation": "Routing a packet is a Layer 3 hop whether the device is called a router or a multilayer switch, so TTL is decremented and the header checksum recalculated. Hardware forwarding changes the speed, not the semantics.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is decremented by one as on any routed hop",
+        "is_correct": true
+      },
+      {
+        "text": "It is reset to 255",
+        "is_correct": false
+      },
+      {
+        "text": "It is left unchanged because the switch forwards in hardware",
+        "is_correct": false
+      },
+      {
+        "text": "It is copied into the new Layer 2 header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command removes dynamically learned MAC address entries from a switch's table?",
+    "explanation": "The clear command with the dynamic keyword flushes learned entries and leaves static ones in place. A reload also clears dynamic entries because the table lives in RAM.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "clear mac address-table dynamic",
+        "is_correct": true
+      },
+      {
+        "text": "no mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "delete mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "reset mac address-table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a switch age out dynamically learned MAC address entries?",
+    "explanation": "Aging keeps the forwarding table consistent with where stations actually are. Without it, a device that moved would keep receiving traffic on its old port until the entry was overwritten.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To drop entries for stations that have moved or gone away so stale ports are not used",
+        "is_correct": true
+      },
+      {
+        "text": "To free space in the VLAN database",
+        "is_correct": false
+      },
+      {
+        "text": "To force a new spanning-tree election",
+        "is_correct": false
+      },
+      {
+        "text": "To keep the ARP cache synchronized",
+        "is_correct": false
+      }
+    ]
   }
 ]

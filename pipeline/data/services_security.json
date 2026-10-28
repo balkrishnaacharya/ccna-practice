@@ -4730,5 +4730,213 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which DHCP message does a server send to propose an address to a requesting client?",
+    "explanation": "The server answers a DISCOVER with an OFFER containing a candidate address and options. The client then sends a REQUEST for one offer, and the server confirms with an ACK.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPOFFER",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPDISCOVER",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPREQUEST",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPACK",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a router relays a DHCP request, which address does it use as the source of the packet it sends to the server?",
+    "explanation": "The relay sources the unicast packet from the client-facing interface so replies come back to a routable address. That same interface address is placed in the giaddr field for pool selection.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The address of the interface that received the request",
+        "is_correct": true
+      },
+      {
+        "text": "The client's tentative address",
+        "is_correct": false
+      },
+      {
+        "text": "The broadcast address 255.255.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "The server's next-hop gateway address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Besides router advertisements, which ICMPv6 message can a rogue host use to steer a victim's traffic through itself?",
+    "explanation": "A neighbour discovery redirect tells a host that a better first hop for a destination exists, so the host sends that traffic to the attacker. RA Guard does not filter redirects, which is why other ND protections may be needed.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A neighbour discovery redirect",
+        "is_correct": true
+      },
+      {
+        "text": "A router solicitation",
+        "is_correct": false
+      },
+      {
+        "text": "An ICMPv6 echo request",
+        "is_correct": false
+      },
+      {
+        "text": "A packet too big message",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an 802.1X deployment, which role does the supplicant play?",
+    "explanation": "The supplicant is client software on the endpoint. The switch acts as the authenticator, and the RADIUS server behind it is the authentication server that validates the credentials.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The endpoint that requests access and supplies credentials",
+        "is_correct": true
+      },
+      {
+        "text": "The switch that enforces the authentication result",
+        "is_correct": false
+      },
+      {
+        "text": "The server that validates the credentials",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN that quarantines failed clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do hardening baselines shut down unused switch ports and move them to an unused VLAN?",
+    "explanation": "An unused port that is still enabled and assigned to a live VLAN is an open door for anyone with physical access. Shutting it down and parking it in an empty VLAN removes that path.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An active port in a production VLAN lets anyone who plugs in reach that segment",
+        "is_correct": true
+      },
+      {
+        "text": "It reduces the size of the MAC address table",
+        "is_correct": false
+      },
+      {
+        "text": "It speeds up spanning-tree convergence",
+        "is_correct": false
+      },
+      {
+        "text": "It lowers PoE power consumption on the switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When DHCP snooping is enabled on a VLAN, what is the default trust state of its ports?",
+    "explanation": "Every port starts untrusted, so server-sourced DHCP messages are dropped until an administrator marks the uplink toward the real server as trusted. This default keeps a rogue server from working immediately.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Untrusted",
+        "is_correct": true
+      },
+      {
+        "text": "Trusted",
+        "is_correct": false
+      },
+      {
+        "text": "Trusted only for uplink ports",
+        "is_correct": false
+      },
+      {
+        "text": "Trusted only for access ports",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a DNS zone transfer?",
+    "explanation": "A zone transfer replicates the authoritative database so a secondary can answer queries if the primary is unavailable. Clients never perform one; only authoritative servers do.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To copy a zone's records from a primary server to a secondary server",
+        "is_correct": true
+      },
+      {
+        "text": "To translate a hostname into an IP address for a client",
+        "is_correct": false
+      },
+      {
+        "text": "To cache answers closer to the resolver",
+        "is_correct": false
+      },
+      {
+        "text": "To sign records with DNSSEC keys",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a lower NTP stratum considered a better time source?",
+    "explanation": "Each stratum level represents one step away from the reference clock, and every step adds delay and jitter. Stratum 1 is directly attached, while higher numbers can still be usable but carry more uncertainty.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is fewer synchronization hops from the reference clock, so accumulated error is smaller",
+        "is_correct": true
+      },
+      {
+        "text": "It has a larger poll interval and therefore less overhead",
+        "is_correct": false
+      },
+      {
+        "text": "It uses a more accurate UDP port",
+        "is_correct": false
+      },
+      {
+        "text": "It is authenticated by default",
+        "is_correct": false
+      }
+    ]
   }
 ]

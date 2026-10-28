@@ -4236,5 +4236,265 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "In an HSRP group, what address do hosts use as their default gateway?",
+    "explanation": "The virtual address belongs to the group, not to either router, so hosts never need reconfiguration when the active role moves. Each router still keeps its own physical address for management.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The shared virtual IP address",
+        "is_correct": true
+      },
+      {
+        "text": "The active router's physical interface address",
+        "is_correct": false
+      },
+      {
+        "text": "The standby router's physical interface address",
+        "is_correct": false
+      },
+      {
+        "text": "The HSRP group multicast address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does HSRP object tracking accomplish?",
+    "explanation": "Tracking ties group priority to the health of something else, usually the uplink. When the tracked object fails the priority drops below the peer's, and preemption hands the active role to the router that can still forward.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It lowers a router's priority, and thus its chance of staying active, when a tracked interface or object fails",
+        "is_correct": true
+      },
+      {
+        "text": "It raises the hello timer when the uplink is congested",
+        "is_correct": false
+      },
+      {
+        "text": "It synchronizes the HSRP group with a VRRP group",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates HSRP hello messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a totally stubby OSPF area block that an ordinary stub area does not?",
+    "explanation": "A stub area filters type 5 externals but still learns inter-area summaries. A totally stubby area also filters type 3 summaries, leaving a single default route toward area 0.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 3 summary LSAs in addition to the external LSAs a stub already blocks",
+        "is_correct": true
+      },
+      {
+        "text": "Only type 1 and type 2 LSAs",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 LSAs while still allowing type 3 summaries",
+        "is_correct": false
+      },
+      {
+        "text": "All LSAs of every type, including the default route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a type 1 OSPF LSA describe?",
+    "explanation": "Every OSPF router floods one router LSA per area describing its own interfaces and link states. Type 2 covers the multi-access segment, type 3 carries inter-area prefixes, and type 5 carries externals.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The originating router's links, interfaces, and their costs within one area",
+        "is_correct": true
+      },
+      {
+        "text": "The set of routers attached to a multi-access segment",
+        "is_correct": false
+      },
+      {
+        "text": "Networks reachable in other areas of the same domain",
+        "is_correct": false
+      },
+      {
+        "text": "Routes redistributed from outside the OSPF domain",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command explicitly sets a router's OSPF router ID?",
+    "explanation": "The router-id command under router ospf pins the identifier, which otherwise comes from the highest loopback address or the highest active physical address. A fixed ID keeps adjacencies stable when interfaces change.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "router-id 10.255.255.1 under the OSPF process",
+        "is_correct": true
+      },
+      {
+        "text": "ospf router-id 10.255.255.1 on each interface",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf id 10.255.255.1 in global configuration",
+        "is_correct": false
+      },
+      {
+        "text": "network 10.255.255.1 0.0.0.0 area 0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command changes how often OSPF sends hello packets on a single link?",
+    "explanation": "The hello interval is an interface-level OSPF setting, so it is applied with ip ospf hello-interval. Both neighbours must agree on the value or the adjacency will not form.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ospf hello-interval 5",
+        "is_correct": true
+      },
+      {
+        "text": "ospf hello 5",
+        "is_correct": false
+      },
+      {
+        "text": "ip hello-interval ospf 5",
+        "is_correct": false
+      },
+      {
+        "text": "timers hello 5",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a RIP route?",
+    "explanation": "Cisco assigns RIP an administrative distance of 120, which places it below OSPF at 110 and EIGRP at 90. That ordering is why a router prefers almost any other protocol over RIP for the same prefix.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "120",
+        "is_correct": true
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which BGP neighbour state means the TCP session is up and an OPEN message has been sent but not yet answered?",
+    "explanation": "OpenSent follows a successful TCP handshake, when the local router has transmitted its OPEN and is waiting for the peer's. Receiving that OPEN moves the session to OpenConfirm, and a KEEPALIVE completes it as Established.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "OpenSent",
+        "is_correct": true
+      },
+      {
+        "text": "Idle",
+        "is_correct": false
+      },
+      {
+        "text": "Established",
+        "is_correct": false
+      },
+      {
+        "text": "Connect",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What administrative distance does Cisco assign to an EIGRP summary route?",
+    "explanation": "A summary generated by the local router is preferred over any other source, so it is given an administrative distance of 5. Internal EIGRP routes use 90 and external ones 170.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "5",
+        "is_correct": true
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "170",
+        "is_correct": false
+      },
+      {
+        "text": "255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a floating static route made to lose by raising its administrative distance rather than its metric?",
+    "explanation": "A static route and an OSPF route are not comparable by metric because the numbers mean different things. Administrative distance is the cross-protocol tiebreak, so raising it is what keeps the static route out of the table until the dynamic route disappears.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Administrative distance decides between routes from different sources, while metrics are only compared within one protocol",
+        "is_correct": true
+      },
+      {
+        "text": "Static routes have no metric field at all",
+        "is_correct": false
+      },
+      {
+        "text": "A higher metric would make the route preferred",
+        "is_correct": false
+      },
+      {
+        "text": "Metrics only apply to IPv6 routes",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -4990,5 +4990,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is the maximum channel length for a twisted-pair Ethernet link such as 100BASE-TX or 1000BASE-T?",
+    "explanation": "The 100-meter channel budget covers up to 90 m of permanently installed horizontal cable plus 10 m of patch cords at each end. Exceeding it causes attenuation and crosstalk failures that show up as CRC errors.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "100 meters",
+        "is_correct": true
+      },
+      {
+        "text": "90 meters",
+        "is_correct": false
+      },
+      {
+        "text": "500 meters",
+        "is_correct": false
+      },
+      {
+        "text": "185 meters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which fiber medium is required to carry 10GBASE-ER across its full 40-kilometer reach?",
+    "explanation": "10GBASE-ER uses 1550 nm optics over single-mode fiber to reach 40 km. Multimode grades lose too much signal over that distance, so OM1 or OM3 would fall far short.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Single-mode fiber",
+        "is_correct": true
+      },
+      {
+        "text": "OM1 multimode fiber",
+        "is_correct": false
+      },
+      {
+        "text": "OM3 multimode fiber",
+        "is_correct": false
+      },
+      {
+        "text": "Category 6A twisted pair",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many equal /27 subnets can be carved out of the address block 10.0.0.0/24?",
+    "explanation": "A /27 borrows three host bits from a /24, and two to the third power is eight. Each resulting subnet holds 32 addresses, 30 of which are usable.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "8",
+        "is_correct": true
+      },
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "16",
+        "is_correct": false
+      },
+      {
+        "text": "2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which prefix length provides exactly 62 usable host addresses on a subnet?",
+    "explanation": "A /26 leaves six host bits, so the block contains 64 addresses. Subtracting the network and broadcast addresses leaves 62 usable hosts.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "/26",
+        "is_correct": true
+      },
+      {
+        "text": "/27",
+        "is_correct": false
+      },
+      {
+        "text": "/25",
+        "is_correct": false
+      },
+      {
+        "text": "/28",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a conventional /64 IPv6 subnet, how many bits make up the interface identifier?",
+    "explanation": "A /64 splits the 128-bit address in half: the first 64 bits are the subnet prefix and the remaining 64 bits identify the interface. That width is what makes stateless address autoconfiguration practical.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "64",
+        "is_correct": true
+      },
+      {
+        "text": "48",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": false
+      },
+      {
+        "text": "128",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix is reserved for use in documentation and examples?",
+    "explanation": "RFC 3849 sets aside 2001:db8::/32 for documentation so examples never collide with real global unicast space. Lab topologies and textbooks use it for exactly that reason.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "2001:db8::/32",
+        "is_correct": true
+      },
+      {
+        "text": "2001::/32",
+        "is_correct": false
+      },
+      {
+        "text": "fc00::/7",
+        "is_correct": false
+      },
+      {
+        "text": "fe80::/10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "At which OSI layer does a repeater or hub operate?",
+    "explanation": "A repeater regenerates the electrical signal without reading addresses or headers, so it works purely at the physical layer. That is why a hub extends a collision domain rather than dividing it.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Physical",
+        "is_correct": true
+      },
+      {
+        "text": "Data link",
+        "is_correct": false
+      },
+      {
+        "text": "Network",
+        "is_correct": false
+      },
+      {
+        "text": "Transport",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two OSI layers correspond to the network access layer of the TCP/IP model?",
+    "explanation": "The TCP/IP network access layer covers everything below IP, so it absorbs the OSI data-link and physical layers. The internet layer maps to OSI network, and the transport layer stays one-to-one.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Data link and physical",
+        "is_correct": true
+      },
+      {
+        "text": "Network and transport",
+        "is_correct": false
+      },
+      {
+        "text": "Session and presentation",
+        "is_correct": false
+      },
+      {
+        "text": "Transport and application",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of a CSU/DSU on a legacy serial WAN circuit?",
+    "explanation": "The channel service unit terminates the provider's digital line and the data service unit converts between line signalling and the router's serial interface. Modern handoffs usually fold both functions into the provider demarcation device.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It terminates the digital carrier circuit and presents a serial interface to the router",
+        "is_correct": true
+      },
+      {
+        "text": "It converts copper Ethernet to fiber",
+        "is_correct": false
+      },
+      {
+        "text": "It load-balances traffic across two circuits",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts traffic before it enters the provider network",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a service level agreement on a business WAN circuit typically guarantee?",
+    "explanation": "An SLA is a contractual performance envelope covering uptime, one-way delay, delay variation, and time to repair. Pricing and CPE management are separate commercial terms.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Availability, latency, jitter, and repair time targets",
+        "is_correct": true
+      },
+      {
+        "text": "A fixed monthly price for all bandwidth upgrades",
+        "is_correct": false
+      },
+      {
+        "text": "That the provider will manage the customer's routers",
+        "is_correct": false
+      },
+      {
+        "text": "Unlimited bandwidth with no committed rate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a virtual machine snapshot capture?",
+    "explanation": "A snapshot records the current disk, and optionally memory, so the VM can be reverted to that instant. It is not a backup, because it normally lives on the same storage as the running VM.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The VM's disk and memory state at a point in time for rollback",
+        "is_correct": true
+      },
+      {
+        "text": "A full backup copy stored on a remote tape library",
+        "is_correct": false
+      },
+      {
+        "text": "A container image exported for reuse on another host",
+        "is_correct": false
+      },
+      {
+        "text": "A copy of the hypervisor's global configuration only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do multiple containers built from the same image use less disk space than the equivalent number of virtual machines?",
+    "explanation": "Container images are stacked read-only layers that many containers can share, with a thin writable layer on top. Virtual machines each carry a complete guest operating system image.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Their read-only image layers are shared and only the writable layer is unique",
+        "is_correct": true
+      },
+      {
+        "text": "Containers compress their filesystems automatically at runtime",
+        "is_correct": false
+      },
+      {
+        "text": "Containers store their data in RAM instead of on disk",
+        "is_correct": false
+      },
+      {
+        "text": "Each container mounts the host filesystem read-only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a reverse proxy placed in front of web servers provide?",
+    "explanation": "A reverse proxy is the public face of a service: clients connect to it and it relays requests to one or more backends. That hides server topology and centralizes TLS, caching, and request filtering.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It accepts client requests and forwards them to backend servers, hiding the servers and often terminating TLS",
+        "is_correct": true
+      },
+      {
+        "text": "It caches DNS answers for internal clients",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns addresses to guests on the wireless LAN",
+        "is_correct": false
+      },
+      {
+        "text": "It inspects outbound traffic from internal users",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a network access control deployment check before admitting a device to the network?",
+    "explanation": "NAC combines authentication with a posture check, so a known device running outdated antivirus or missing patches can be quarantined. Admission depends on both who the device is and what state it is in.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The device's identity and its compliance with policy such as patch level or endpoint protection",
+        "is_correct": true
+      },
+      {
+        "text": "The device's routing table for a usable default route",
+        "is_correct": false
+      },
+      {
+        "text": "The speed of the switch port the device is plugged into",
+        "is_correct": false
+      },
+      {
+        "text": "Whether the device already holds a DHCP reservation",
+        "is_correct": false
+      }
+    ]
   }
 ]
