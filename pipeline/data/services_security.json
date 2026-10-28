@@ -5146,5 +5146,187 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which syslog severity level corresponds to the number 5?",
+    "explanation": "Numbering runs from 0 (emergencies) to 7 (debugging), so 5 is notice. Notice covers normal but significant conditions, one step less urgent than warning at 4 and one step more urgent than informational at 6.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Notice",
+        "is_correct": false
+      },
+      {
+        "text": "Warning",
+        "is_correct": false
+      },
+      {
+        "text": "Informational",
+        "is_correct": false
+      },
+      {
+        "text": "Error",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMP operation does an SNMP walk repeatedly use to retrieve a subtree of the MIB?",
+    "explanation": "A walk issues GETNEXT requests, each time asking for the object that follows the last one returned, until the agent reports that the subtree is exhausted. GETBULK is the bulk variant, but the classic walk is built from successive GETNEXT calls.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "GETNEXT",
+        "is_correct": false
+      },
+      {
+        "text": "GET",
+        "is_correct": false
+      },
+      {
+        "text": "SET",
+        "is_correct": true
+      },
+      {
+        "text": "TRAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command generates a 2048-bit RSA key pair for SSH on a Cisco router?",
+    "explanation": "The modulus keyword sets the key length, so `crypto key generate rsa modulus 2048` creates a 2048-bit pair. The keys must exist before SSH version 2 can be enabled, and the domain name must already be configured.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "crypto key generate rsa modulus 2048",
+        "is_correct": false
+      },
+      {
+        "text": "crypto key generate rsa 2048",
+        "is_correct": true
+      },
+      {
+        "text": "ssh key generate rsa 2048",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh key modulus 2048",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A guest WLAN is enabled with client isolation. What does that prevent?",
+    "explanation": "Client isolation blocks direct traffic between wireless clients associated to the same SSID or VLAN. Guests can still reach the default gateway and the internet, but cannot attack or scan each other, which is the main reason it is enabled on guest networks.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Guest clients from reaching each other directly",
+        "is_correct": true
+      },
+      {
+        "text": "Guest clients from reaching the default gateway",
+        "is_correct": false
+      },
+      {
+        "text": "Guest clients from obtaining a DHCP address",
+        "is_correct": false
+      },
+      {
+        "text": "Guest clients from associating to the SSID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An RA Guard policy is applied with the monitor keyword. What is the effect on router advertisement messages received on the port?",
+    "explanation": "Monitor mode logs and counts the messages that would have been dropped but still forwards them. It is used to baseline a network before enforcing the policy, so legitimate router ports are identified without breaking IPv6 connectivity.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are logged and permitted rather than dropped",
+        "is_correct": false
+      },
+      {
+        "text": "They are dropped and logged",
+        "is_correct": false
+      },
+      {
+        "text": "They are dropped without being logged",
+        "is_correct": false
+      },
+      {
+        "text": "They are rewritten with the switch own prefix",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What does the TTL value in a DNS record control?",
+    "explanation": "The TTL tells a caching resolver how many seconds it may keep the answer before querying again. A short TTL makes record changes propagate quickly at the cost of more queries; a long TTL reduces query load but delays updates.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "How long a resolver may cache the answer before re-querying",
+        "is_correct": false
+      },
+      {
+        "text": "How long the authoritative server keeps the zone in memory",
+        "is_correct": false
+      },
+      {
+        "text": "How often the client renews its DHCP lease",
+        "is_correct": true
+      },
+      {
+        "text": "How long a TCP connection to the server stays open",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which configuration hardens the auxiliary port on a router that is not used for out-of-band access?",
+    "explanation": "Entering `line aux 0` and disabling exec with `no exec` prevents anyone from getting a prompt over that line, and `transport input none` blocks protocol access entirely. The console port should still be protected with a password under `line con 0`.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "line aux 0, then no exec and transport input none",
+        "is_correct": false
+      },
+      {
+        "text": "line con 0, then no exec and transport input none",
+        "is_correct": true
+      },
+      {
+        "text": "line vty 0 4, then no exec",
+        "is_correct": false
+      },
+      {
+        "text": "interface aux 0, then shutdown",
+        "is_correct": false
+      }
+    ]
   }
 ]

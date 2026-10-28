@@ -5770,5 +5770,473 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is the default VTP operating mode on a Cisco switch?",
+    "explanation": "A switch with no explicit VTP configuration runs in server mode. That is why a new switch with the null domain can join an existing domain and receive the VLAN database, which is also why a stray server can overwrite VLANs across the domain.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Server",
+        "is_correct": false
+      },
+      {
+        "text": "Client",
+        "is_correct": false
+      },
+      {
+        "text": "Transparent",
+        "is_correct": false
+      },
+      {
+        "text": "Off",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Two switches are connected by a trunk and both run VTP server mode, but their VTP domain names differ. What happens?",
+    "explanation": "VTP updates are only accepted from neighbours in the same domain name, so with mismatched names the two databases stay independent. Each switch keeps its own VLAN list and neither synchronises, even though the trunk itself passes traffic normally.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each switch keeps its own VLAN database and no updates are exchanged",
+        "is_correct": false
+      },
+      {
+        "text": "The switch with the higher revision number overwrites the other",
+        "is_correct": false
+      },
+      {
+        "text": "The domain name is negotiated and both adopt the lower value",
+        "is_correct": true
+      },
+      {
+        "text": "The trunk fails because VTP domain mismatch blocks 802.1Q",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two pieces of information does a DTP frame carry that let neighbours decide whether to form a trunk?",
+    "explanation": "DTP advertises the sender VTP domain name and the desired trunk status, along with the neighbour identity and a timestamp. The domain field keeps unrelated switches from negotiating with each other, and the status field drives the auto and desirable state machine.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The VTP domain name and the desired trunk status",
+        "is_correct": true
+      },
+      {
+        "text": "The native VLAN and the allowed VLAN list",
+        "is_correct": false
+      },
+      {
+        "text": "The spanning-tree priority and the bridge ID",
+        "is_correct": false
+      },
+      {
+        "text": "The port speed and the duplex setting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port is left in DTP dynamic auto mode. How does it behave?",
+    "explanation": "Dynamic auto waits passively: it will answer a trunk request from a desirable neighbour but never starts the negotiation itself. Two dynamic auto ports therefore settle as access ports, which is the usual cause of a trunk that will not come up.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It responds to trunk requests but never initiates negotiation",
+        "is_correct": true
+      },
+      {
+        "text": "It initiates negotiation every 30 seconds until a trunk forms",
+        "is_correct": false
+      },
+      {
+        "text": "It always becomes a trunk regardless of the neighbour",
+        "is_correct": false
+      },
+      {
+        "text": "It disables DTP and stays a permanent access port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a multilayer switch derive the MAC address it uses for its switched virtual interfaces?",
+    "explanation": "All SVIs share the switch chassis base MAC burned into the backplane; the SVI does not get a per-interface address. Because every SVI presents the same MAC, a host that moves between VLANs on the same switch still sees one consistent gateway MAC.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reuses the chassis base MAC for every SVI",
+        "is_correct": false
+      },
+      {
+        "text": "It allocates a random MAC per VLAN at boot",
+        "is_correct": false
+      },
+      {
+        "text": "It inherits the MAC of the first port in the VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It queries a pool of MAC addresses from the supervisor",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A switch rejects the command `interface vlan 20` with an address that belongs to the same subnet as VLAN 10. Why?",
+    "explanation": "The configuration is refused because two SVIs cannot hold addresses in the same subnet; each VLAN interface must own a distinct connected network. Overlapping subnets would make the CEF table ambiguous about which interface reaches a destination.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two VLAN interfaces cannot have addresses in the same subnet",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 20 must be created before an SVI can be configured",
+        "is_correct": false
+      },
+      {
+        "text": "The address is in the reserved 10.0.0.0/8 range",
+        "is_correct": true
+      },
+      {
+        "text": "The switch only supports one SVI at a time",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host on VLAN 30 must send a packet to a destination in VLAN 40 on the same multilayer switch. What MAC address does the host place in the frame?",
+    "explanation": "The host compares the destination with its own subnet mask, sees a different network, and ARPs for its default gateway. The reply carries the SVI MAC, so the frame is addressed to the switch, which rewrites the Layer 2 header before forwarding into VLAN 40.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The MAC of its default gateway SVI",
+        "is_correct": false
+      },
+      {
+        "text": "The MAC of the destination host in VLAN 40",
+        "is_correct": true
+      },
+      {
+        "text": "The broadcast address FF:FF:FF:FF:FF:FF",
+        "is_correct": false
+      },
+      {
+        "text": "The chassis base MAC of the destination switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch without PoE support must power an 802.3af access point. What device solves this?",
+    "explanation": "A midspan injector sits on the cable between the switch and the powered device and adds power to the spare pairs or through the data pairs. The switch keeps sending ordinary Ethernet while the injector supplies the 48 V, so no switch replacement is needed.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A midspan power injector placed between the switch and the device",
+        "is_correct": true
+      },
+      {
+        "text": "A crossover cable wired to pass power",
+        "is_correct": false
+      },
+      {
+        "text": "A PoE splitter at the switch end of the cable",
+        "is_correct": false
+      },
+      {
+        "text": "An inline UPS on the switch uplink",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do standards limit the power delivered per port when many PoE cables are bundled together?",
+    "explanation": "Bundled cables trap heat, and the resulting temperature rise increases conductor resistance beyond what a single free-air cable would see. The bundle derating rules reduce the permitted current per pair so the insulation temperature rating is not exceeded.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Trapped heat in the bundle raises conductor temperature and requires derating",
+        "is_correct": false
+      },
+      {
+        "text": "The switch power supply cannot deliver power to adjacent ports",
+        "is_correct": false
+      },
+      {
+        "text": "Bundled cables couple data signals and cause CRC errors",
+        "is_correct": false
+      },
+      {
+        "text": "PoE detection fails when cables touch each other",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Two virtual machines on different ESXi hosts are configured with the same port group name and VLAN. How does their traffic reach each other?",
+    "explanation": "The virtual switch is local to each host, so the frame leaves through the host physical NIC and crosses the physical network. It arrives on the other host and is delivered by that host virtual switch to the destination VM; the shared port group name only keeps the VLAN and policy consistent.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It leaves the host NIC and crosses the physical network to the other host",
+        "is_correct": false
+      },
+      {
+        "text": "It stays inside the local virtual switch of the first host",
+        "is_correct": false
+      },
+      {
+        "text": "It is forwarded by the hypervisor kernel over a shared memory channel",
+        "is_correct": true
+      },
+      {
+        "text": "It is dropped because port groups are host-local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is the MTU on the physical NIC and the virtual switch raised when VXLAN is used?",
+    "explanation": "VXLAN adds roughly 50 bytes of outer headers to each frame, so a 1500-byte guest frame becomes about 1550 bytes on the wire. Raising the underlay MTU, commonly to 1600, prevents fragmentation or drops for full-size guest traffic.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VXLAN encapsulation adds about 50 bytes, so full-size frames need more MTU",
+        "is_correct": false
+      },
+      {
+        "text": "VXLAN compresses frames and needs extra headroom for expansion",
+        "is_correct": true
+      },
+      {
+        "text": "The virtual switch adds a checksum trailer to every frame",
+        "is_correct": false
+      },
+      {
+        "text": "The physical NIC requires an MTU above 1500 to enable VLAN tagging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Rapid PVST+ organise its spanning-tree instances?",
+    "explanation": "Rapid PVST+ runs one 802.1w instance per VLAN, so each VLAN has its own root and its own blocking ports. That allows a different uplink to be active for each VLAN and gives sub-second convergence independently per VLAN.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One instance per VLAN, each with its own root bridge",
+        "is_correct": true
+      },
+      {
+        "text": "One instance for all VLANs sharing a single root",
+        "is_correct": false
+      },
+      {
+        "text": "One instance per physical switch port",
+        "is_correct": false
+      },
+      {
+        "text": "One instance per MST region mapped to all VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which spanning-tree mode is the default on current Cisco IOS switches?",
+    "explanation": "The default mode is Rapid PVST+ on modern Catalyst platforms. Sending `spanning-tree mode rapid-pvst` is normally redundant, though it is still common in configuration templates and exam answers.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Rapid PVST+",
+        "is_correct": false
+      },
+      {
+        "text": "PVST+",
+        "is_correct": false
+      },
+      {
+        "text": "MST",
+        "is_correct": false
+      },
+      {
+        "text": "STP (802.1D)",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What VLAN range is allowed on an 802.1Q trunk by default?",
+    "explanation": "A trunk allows VLANs 1 through 4094 by default, including the reserved and unused IDs in that span. The allowed list can be pruned with `switchport trunk allowed vlan`, but nothing is pruned until that command is issued.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1 through 4094",
+        "is_correct": false
+      },
+      {
+        "text": "1 through 1005",
+        "is_correct": false
+      },
+      {
+        "text": "1 through 1001",
+        "is_correct": true
+      },
+      {
+        "text": "2 through 4094",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command output confirms that a VLAN is allowed on a trunk and forwarding in the spanning tree?",
+    "explanation": "The `show interfaces trunk` output lists the allowed VLANs per trunk and, separately, the VLANs that are active and forwarding in spanning tree. Intersecting those two lists is the quickest check that traffic for a VLAN will actually cross the link.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show interfaces trunk",
+        "is_correct": false
+      },
+      {
+        "text": "show vlan brief",
+        "is_correct": true
+      },
+      {
+        "text": "show spanning-tree summary",
+        "is_correct": false
+      },
+      {
+        "text": "show interfaces switchport",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between `switchport trunk allowed vlan 10,20` and `switchport trunk allowed vlan add 30`?",
+    "explanation": "Without the add keyword the command replaces the entire allowed list with the VLANs named. With add it appends to whatever is already permitted, which is why mixing the two forms out of order silently prunes VLANs.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The first replaces the allowed list, the second appends to it",
+        "is_correct": true
+      },
+      {
+        "text": "The first appends, the second replaces the allowed list",
+        "is_correct": false
+      },
+      {
+        "text": "Both append, but the second applies only to new VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "The first sets the native VLAN, the second the allowed list",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port mirror session copies traffic from a user port to an analyser. What happens to the original frames?",
+    "explanation": "SPAN produces a copy while the switch continues to forward the original frame normally to its real destination. Mirroring is passive: it does not redirect, delay beyond normal switching, or alter the original frame in any way.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are still forwarded normally to their real destination",
+        "is_correct": false
+      },
+      {
+        "text": "They are dropped after the copy is taken",
+        "is_correct": false
+      },
+      {
+        "text": "They are tagged with the mirror VLAN before forwarding",
+        "is_correct": false
+      },
+      {
+        "text": "They are held until the analyser acknowledges the copy",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A capture configured with two SPAN sources, a host access port and the switch uplink, shows every frame from that host twice. Why?",
+    "explanation": "Each SPAN source observes the same frame at a different point along its path, once entering the access port and once leaving the uplink. The analyser receives both copies because the switch does not de-duplicate across sources in a session.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same frame is observed at two separate points along its path",
+        "is_correct": false
+      },
+      {
+        "text": "The analyser NIC receives both the tagged and untagged copy",
+        "is_correct": false
+      },
+      {
+        "text": "SPAN retransmits each frame until it is acknowledged",
+        "is_correct": true
+      },
+      {
+        "text": "The uplink mirrors both ingress and egress of every frame",
+        "is_correct": false
+      }
+    ]
   }
 ]

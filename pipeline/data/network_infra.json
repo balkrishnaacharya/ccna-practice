@@ -5770,5 +5770,473 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which OSI layer is the only one that appends both a header and a trailer to the data it receives from the layer above?",
+    "explanation": "The data-link layer wraps the network-layer packet in a frame header and adds a trailer holding the frame check sequence. No other layer attaches a trailer, which makes the frame the only PDU with fields at both ends.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Data link",
+        "is_correct": false
+      },
+      {
+        "text": "Network",
+        "is_correct": true
+      },
+      {
+        "text": "Transport",
+        "is_correct": false
+      },
+      {
+        "text": "Session",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSI layer defines the voltage levels, connector types, and pin assignments used on a cable?",
+    "explanation": "The physical layer is the only layer concerned with the mechanical and electrical specification of the medium. Voltages, pinouts, and connector shapes are all physical-layer details; framing and addressing sit above it.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Physical",
+        "is_correct": true
+      },
+      {
+        "text": "Data link",
+        "is_correct": false
+      },
+      {
+        "text": "Network",
+        "is_correct": false
+      },
+      {
+        "text": "Transport",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 packet carries a Next Header value of 58. Which protocol does the payload contain?",
+    "explanation": "Value 58 identifies ICMPv6. ICMPv6 carries neighbour discovery, router advertisements, and echo messages, and it is the protocol most IPv6 control-plane functions depend on. TCP is 6 and UDP is 17.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ICMPv6",
+        "is_correct": true
+      },
+      {
+        "text": "TCP",
+        "is_correct": false
+      },
+      {
+        "text": "UDP",
+        "is_correct": false
+      },
+      {
+        "text": "OSPFv3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many bits long is the Flow Label field in the IPv6 base header?",
+    "explanation": "The Flow Label is 20 bits, sitting between the 8-bit Traffic Class and the 16-bit Payload Length. Its combined field of Traffic Class plus Flow Label occupies 28 bits, leaving the version nibble to complete the first 32-bit word.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "20 bits",
+        "is_correct": false
+      },
+      {
+        "text": "8 bits",
+        "is_correct": false
+      },
+      {
+        "text": "16 bits",
+        "is_correct": true
+      },
+      {
+        "text": "32 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement describes the difference between SC and LC fiber connectors?",
+    "explanation": "SC uses a square push-pull body with a 2.5 mm ferrule, while LC is roughly half the size, uses a 1.25 mm ferrule, and latches like an RJ-style clip. LC therefore allows roughly double the port density on a patch panel.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "LC is smaller and latches, SC is larger and pushes straight in",
+        "is_correct": false
+      },
+      {
+        "text": "SC is smaller and latches, LC is larger and pushes straight in",
+        "is_correct": true
+      },
+      {
+        "text": "Both use a 1.25 mm ferrule and differ only in colour",
+        "is_correct": false
+      },
+      {
+        "text": "SC is used only for single-mode and LC only for multimode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a cable category rating such as Cat 6 actually specify?",
+    "explanation": "A category rating specifies the maximum frequency the cable must support and the associated insertion loss, crosstalk, and return-loss limits. It does not mandate a particular Ethernet speed; a standard such as 1000BASE-T is what maps a speed onto a category.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The maximum frequency and performance limits the cable must meet",
+        "is_correct": true
+      },
+      {
+        "text": "The maximum cable length that the standard permits",
+        "is_correct": false
+      },
+      {
+        "text": "The exact Ethernet speed the cable will always run at",
+        "is_correct": false
+      },
+      {
+        "text": "The shielding material used around each conductor pair",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an out-of-band management network reach a switch that has lost all data-plane connectivity?",
+    "explanation": "Out-of-band management connects each device console or aux port to a terminal server, giving a path that does not depend on the production network. Because it uses a separate physical and logical path, it still works when the data plane, routing, or the device IP stack is broken.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Through the console or aux port wired to a terminal server",
+        "is_correct": false
+      },
+      {
+        "text": "Through an SSH session to the management SVI",
+        "is_correct": false
+      },
+      {
+        "text": "Through the loopback address reachable over the routed core",
+        "is_correct": false
+      },
+      {
+        "text": "Through an SNMP trap sent to the NMS server",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "In a routed-access campus design, where does the Layer 2 domain end?",
+    "explanation": "In routed access the access switch itself is the Layer 3 gateway, so the Layer 2 boundary is the access switch uplink. Every uplink to the distribution or core layer is a routed point-to-point link, which removes spanning tree from the campus and shrinks each failure domain to a single closet.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "At the access switch uplink, which is a routed point-to-point link",
+        "is_correct": true
+      },
+      {
+        "text": "At the distribution switch trunk toward the core",
+        "is_correct": false
+      },
+      {
+        "text": "At the core switch where VLANs are terminated",
+        "is_correct": false
+      },
+      {
+        "text": "At the WAN edge router interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A single link between one leaf and one spine fails in a spine-leaf fabric running ECMP. What is the result?",
+    "explanation": "Equal-cost multipathing simply removes the failed path from the hash and spreads flows across the remaining spines. There is no blocked port and no spanning-tree reconvergence, so traffic keeps flowing with only the fabric bisection bandwidth reduced.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Traffic is rehashed over the remaining equal-cost paths with no STP event",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning tree blocks the leaf uplink and reconverges over 30 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "The leaf loses all connectivity until the link is restored",
+        "is_correct": false
+      },
+      {
+        "text": "The fabric elects a new root bridge for that leaf",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is VXLAN typically used on top of a spine-leaf fabric?",
+    "explanation": "VXLAN builds a Layer 2 overlay across a Layer 3 underlay, so segments can span racks and workloads can move without re-addressing. The underlay stays a simple routed fabric where every spine-to-leaf link is forwarding, and the overlay carries the large tenant address space.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It provides a Layer 2 overlay over the Layer 3 underlay for large segments",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces the need for a routing protocol in the underlay",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for MAC address learning on the leaf switches",
+        "is_correct": false
+      },
+      {
+        "text": "It compresses tenant traffic so fewer uplinks are needed",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A container is deleted and recreated from the same image. Which mechanism keeps its data across that cycle?",
+    "explanation": "A persistent volume is storage provisioned outside the container filesystem and mounted into it. Because the volume lifecycle is independent of the container, recreating the container reattaches the same data, whereas the writable layer of the old container is discarded.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A persistent volume mounted into the container",
+        "is_correct": false
+      },
+      {
+        "text": "The writable layer inside the old container",
+        "is_correct": false
+      },
+      {
+        "text": "The container image itself",
+        "is_correct": false
+      },
+      {
+        "text": "The container runtime cache",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A hypervisor is configured to run virtual machines whose combined RAM allocation exceeds the physical memory installed. What makes this possible?",
+    "explanation": "Memory overcommit relies on the hypervisor reclaiming pages that guests have not touched, using ballooning, transparent page sharing, and swapping to a datastore. It works because guests rarely use every allocated byte at the same moment; if they do, performance collapses or the host runs out of memory.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The hypervisor reclaims idle guest pages through ballooning and swapping",
+        "is_correct": false
+      },
+      {
+        "text": "Each guest is given a private copy of physical RAM on demand",
+        "is_correct": false
+      },
+      {
+        "text": "The CPU throttles guests so their memory needs shrink",
+        "is_correct": true
+      },
+      {
+        "text": "The guest operating systems share a single kernel address space",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a service provider WAN, which device is the customer edge?",
+    "explanation": "The customer edge is the equipment on the customer premises that hands off to the provider, typically a router or firewall owned or managed by the customer. The provider edge is the provider-owned device on the other end of that handoff link.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The customer-owned device that hands off to the provider network",
+        "is_correct": false
+      },
+      {
+        "text": "The provider device that terminates the customer access circuit",
+        "is_correct": true
+      },
+      {
+        "text": "The provider backbone router inside the core",
+        "is_correct": false
+      },
+      {
+        "text": "The internet exchange switch shared by many providers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which MEF service type gives a customer any-to-any connectivity among three or more sites?",
+    "explanation": "E-LAN is a multipoint-to-multipoint service, so every site can reach every other site through a single logical LAN. E-Line is point-to-point, and E-Tree is rooted multipoint where leaves may only talk to the root.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "E-LAN, a multipoint-to-multipoint service",
+        "is_correct": true
+      },
+      {
+        "text": "E-Line, a point-to-point service",
+        "is_correct": false
+      },
+      {
+        "text": "E-Tree, a rooted multipoint service",
+        "is_correct": false
+      },
+      {
+        "text": "A dedicated leased line per site pair",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An email gateway flags an attachment as suspicious but cannot identify it from signatures. Which control determines whether it is malicious before delivery?",
+    "explanation": "A sandbox executes the file in an isolated instrumented environment and observes what it attempts to do, such as writing to autorun keys or contacting a command-and-control host. Behavioural detonation catches unknown malware that signature matching cannot classify.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Detonating the file in an isolated sandbox and watching its behaviour",
+        "is_correct": false
+      },
+      {
+        "text": "Matching the file hash against the antivirus signature database",
+        "is_correct": false
+      },
+      {
+        "text": "Blocking the attachment based on its file extension",
+        "is_correct": false
+      },
+      {
+        "text": "Quarantining every attachment that contains macros",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Why must an inline intrusion prevention system decrypt TLS sessions to inspect them?",
+    "explanation": "TLS hides the application payload from anything between the endpoints, so an inline sensor sees only ciphertext and record headers. Decryption, typically through a trusted certificate on the sensor, restores the plaintext the signature engine needs; without it the device can only profile metadata.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The payload is ciphertext, so signatures cannot match without decryption",
+        "is_correct": false
+      },
+      {
+        "text": "The sensor needs the session keys to forward packets upstream",
+        "is_correct": false
+      },
+      {
+        "text": "Decryption is required to preserve the packet ordering",
+        "is_correct": true
+      },
+      {
+        "text": "TLS resets the connection when a passive device observes it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes a public subnet from a private subnet in a cloud VPC?",
+    "explanation": "A public subnet has a route table entry pointing default traffic at an internet gateway, so resources with public addresses are reachable from the internet. A private subnet has no such route and relies on a NAT device for outbound-only access.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Its route table points to an internet gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It uses a different private address range",
+        "is_correct": true
+      },
+      {
+        "text": "It has a larger CIDR block than a private subnet",
+        "is_correct": false
+      },
+      {
+        "text": "Its security groups allow inbound traffic by default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which cloud addressing feature provides a static public IPv4 address that can be detached from one instance and attached to another?",
+    "explanation": "An elastic IP is allocated to the account rather than to an instance, so it can be remapped during failover while clients keep using the same destination address. A normal public address is tied to the instance and released when the instance stops.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An elastic IP address",
+        "is_correct": true
+      },
+      {
+        "text": "A public IPv4 address assigned at launch",
+        "is_correct": false
+      },
+      {
+        "text": "A private address in the VPC CIDR",
+        "is_correct": false
+      },
+      {
+        "text": "A carrier-grade NAT address from the provider",
+        "is_correct": false
+      }
+    ]
   }
 ]

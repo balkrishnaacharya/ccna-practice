@@ -3352,5 +3352,57 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which set of data sources does an AIOps platform typically correlate to detect and explain incidents?",
+    "explanation": "AIOps combines telemetry and metrics, syslog and event streams, flow records, configuration state, and ticketing or change history. Correlating them lets the platform link a symptom to the change or configuration drift that caused it, instead of alerting on each stream in isolation.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Telemetry, logs, flow records, configuration, and change tickets",
+        "is_correct": true
+      },
+      {
+        "text": "Only SNMP traps from the network devices",
+        "is_correct": false
+      },
+      {
+        "text": "Only the configuration archive from the devices",
+        "is_correct": false
+      },
+      {
+        "text": "Only user tickets raised with the service desk",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An automation agent is given the raw output of `show running-config` and asked to propose changes. How should that output be treated?",
+    "explanation": "Device output is untrusted data, so text inside a banner or description could contain instructions aimed at the model. The agent must treat the content as data to analyse, never as commands, and any proposed change must be validated before it is applied to a device.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As untrusted data that must be validated, not as instructions to follow",
+        "is_correct": false
+      },
+      {
+        "text": "As trusted configuration that can be applied as returned",
+        "is_correct": false
+      },
+      {
+        "text": "As a prompt that the model should execute verbatim",
+        "is_correct": false
+      },
+      {
+        "text": "As a schema that defines which commands are permitted",
+        "is_correct": true
+      }
+    ]
   }
 ]
