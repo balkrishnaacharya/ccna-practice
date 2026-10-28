@@ -4288,5 +4288,343 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A frame crosses a router on its way to a remote network. Which part of the original PDU does the router discard and rebuild before forwarding?",
+    "explanation": "A router strips the incoming Layer 2 header and trailer, then builds a new frame header for the outgoing link. The IP packet itself is forwarded unchanged apart from the TTL decrement and header checksum.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The data-link frame header and trailer",
+        "is_correct": true
+      },
+      {
+        "text": "The IP header",
+        "is_correct": false
+      },
+      {
+        "text": "The transport-layer header",
+        "is_correct": false
+      },
+      {
+        "text": "The application payload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the broadcast address of the subnet that contains the host address 172.20.131.200/21?",
+    "explanation": "A /21 mask leaves five host bits in the third octet, so subnets step in blocks of eight. 131 falls inside 128-135, which makes 172.20.135.255 the directed broadcast.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "172.20.135.255",
+        "is_correct": true
+      },
+      {
+        "text": "172.20.131.255",
+        "is_correct": false
+      },
+      {
+        "text": "172.20.143.255",
+        "is_correct": false
+      },
+      {
+        "text": "172.20.128.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host is configured with the IPv6 address 2001:db8:1:2::a1b2:c3d4. Which solicited-node multicast address does the host join for that address?",
+    "explanation": "The solicited-node address is ff02::1:ff followed by the low-order 24 bits of the unicast address. The last 32 bits are a1b2c3d4, so the final 24 bits are b2:c3d4.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ff02::1:ffb2:c3d4",
+        "is_correct": true
+      },
+      {
+        "text": "ff02::1:ffa1:b2c3",
+        "is_correct": false
+      },
+      {
+        "text": "ff02::1:ffc3:d400",
+        "is_correct": false
+      },
+      {
+        "text": "ff02::1:ff00:a1b2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Windows workstation reports the IPv4 address 169.254.37.14 with a mask of 255.255.0.0. What does that address tell a troubleshooter?",
+    "explanation": "169.254.0.0/16 is the link-local range a Windows host self-assigns when it cannot reach a DHCP server. The address works only on the local segment and signals a DHCP reachability problem.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The host could not reach a DHCP server and self-assigned a link-local address",
+        "is_correct": true
+      },
+      {
+        "text": "The host received a valid lease from a DHCP scope in the 169.254.0.0/16 range",
+        "is_correct": false
+      },
+      {
+        "text": "The host is using a manually configured RFC 1918 private address",
+        "is_correct": false
+      },
+      {
+        "text": "The host has been assigned a loopback alias by the operating system",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is Category 6A specified instead of Category 6 for a 10GBASE-T run that must reach the full 100-meter channel?",
+    "explanation": "Category 6A is characterised to 500 MHz and adds alien-crosstalk control that Category 6 lacks, which is what allows 10GBASE-T to reach 100 meters rather than the roughly 55 meters Category 6 supports.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cat 6A is characterised to 500 MHz and controls alien crosstalk, so it carries 10GBASE-T for 100 m",
+        "is_correct": true
+      },
+      {
+        "text": "Cat 6A uses a different pinout that doubles the usable pairs",
+        "is_correct": false
+      },
+      {
+        "text": "Cat 6A is shielded, which lets it exceed the 100-meter channel limit",
+        "is_correct": false
+      },
+      {
+        "text": "Cat 6A is the only category rated for 40GBASE-T at 100 m",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a cloud VPC, how does a security group differ from a network ACL?",
+    "explanation": "A security group is stateful and attaches to an instance network interface with allow-only rules. A network ACL is stateless, applies at the subnet boundary, and supports both allow and deny statements.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A security group is stateful and attached to an instance interface, while a NACL is stateless and applied to a subnet",
+        "is_correct": true
+      },
+      {
+        "text": "A security group is stateless and applied to a subnet, while a NACL is stateful and attached to an instance",
+        "is_correct": false
+      },
+      {
+        "text": "Both are stateful, but only a NACL can contain deny rules",
+        "is_correct": false
+      },
+      {
+        "text": "Both are stateless, but only a security group can contain allow rules",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement best explains why a container starts in under a second while a virtual machine needs far longer?",
+    "explanation": "A container shares the host kernel and carries only the application plus its user-space libraries, so there is no guest operating system to boot. A virtual machine boots a full OS image.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A container shares the host kernel and packages only the application and its user-space dependencies",
+        "is_correct": true
+      },
+      {
+        "text": "A container runs a stripped-down hypervisor inside the guest image",
+        "is_correct": false
+      },
+      {
+        "text": "A container keeps its filesystem in RAM instead of on disk",
+        "is_correct": false
+      },
+      {
+        "text": "A container uses hardware passthrough to skip the boot process",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does 802.11 use carrier sense multiple access with collision avoidance rather than the collision detection used on wired Ethernet?",
+    "explanation": "A radio cannot listen for a collision on the same channel while it is transmitting, so collisions can only be avoided rather than detected. 802.11 relies on random backoff, optional RTS/CTS, and positive acknowledgements.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A wireless station cannot reliably transmit and listen for collisions on the same channel at once",
+        "is_correct": true
+      },
+      {
+        "text": "Wireless frames are too small for collision detection circuitry to resolve",
+        "is_correct": false
+      },
+      {
+        "text": "802.11 has no acknowledgements, so collisions must be prevented entirely",
+        "is_correct": false
+      },
+      {
+        "text": "The access point assigns every station a dedicated time slot with no contention",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A provider sells an MPLS Layer 3 VPN to two customers that both use 10.0.0.0/8 internally. How does the provider keep the overlapping prefixes separate?",
+    "explanation": "Each customer is bound to its own VRF with a private routing table, and route targets control which prefixes are imported into each VRF. Overlapping addresses therefore never share a forwarding table.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each customer is bound to a separate VRF and route targets control which prefixes are imported",
+        "is_correct": true
+      },
+      {
+        "text": "The provider translates both customers into a shared public addressing range",
+        "is_correct": false
+      },
+      {
+        "text": "Each customer receives a unique autonomous system number that overrides the overlap",
+        "is_correct": false
+      },
+      {
+        "text": "The provider relies on longest-prefix match to distinguish two identical 10.0.0.0/8 advertisements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A stateful firewall drops the return packets of a connection it permitted outbound. Forward and return paths are known to traverse different firewalls. What explains the drop?",
+    "explanation": "A stateful firewall only permits return traffic that matches an existing session in its own state table. If the reply arrives at a different firewall that never saw the outbound flow, no session exists and the packet is dropped.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The returning packets reach a firewall that never observed the outbound flow, so no session exists to match",
+        "is_correct": true
+      },
+      {
+        "text": "The firewall ACL is applied in the wrong direction on the inside interface",
+        "is_correct": false
+      },
+      {
+        "text": "The connection uses UDP, which stateful inspection cannot track",
+        "is_correct": false
+      },
+      {
+        "text": "The firewall NAT pool has been exhausted by earlier sessions",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A monitoring host that opens thousands of short-lived HTTP connections to a controller eventually fails new connections with 'Cannot assign requested address'. Which resource is exhausted?",
+    "explanation": "Each outbound connection consumes an ephemeral source port. Sockets lingering in TIME_WAIT hold their four-tuple, so a high churn of short connections exhausts the local ephemeral port range.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ephemeral source port range, held by sockets in TIME_WAIT",
+        "is_correct": true
+      },
+      {
+        "text": "The TCP receive window advertised by the controller",
+        "is_correct": false
+      },
+      {
+        "text": "The local ARP cache entry limit",
+        "is_correct": false
+      },
+      {
+        "text": "The interface maximum transmission unit",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why do campus designs deliberately limit the size of a single Layer 2 domain?",
+    "explanation": "Broadcast and unknown-unicast flooding, MAC table size, and the blast radius of a spanning-tree topology change all grow with the Layer 2 domain. Routing between smaller domains contains those effects.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Flooding volume and spanning-tree convergence scope grow with the size of the domain",
+        "is_correct": true
+      },
+      {
+        "text": "Layer 2 switching cannot forward frames larger than 1500 bytes across a large domain",
+        "is_correct": false
+      },
+      {
+        "text": "A large Layer 2 domain prevents the use of 802.1Q trunks between switches",
+        "is_correct": false
+      },
+      {
+        "text": "MAC addresses must be unique inside a Layer 2 domain and cannot be reused elsewhere",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two switches are joined by a duplex fiber patch cord, but neither interface comes up. Both transceivers are compatible and powered. What is the most likely cause?",
+    "explanation": "Fiber is directional: each strand carries traffic one way. If transmit is cabled to transmit on both ends, neither receiver ever sees light and the link stays down.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The transmit strand at one end is connected to the transmit strand at the other end",
+        "is_correct": true
+      },
+      {
+        "text": "The fiber cable is too short for the transceiver to lock onto the signal",
+        "is_correct": false
+      },
+      {
+        "text": "The two interfaces are configured with different duplex settings",
+        "is_correct": false
+      },
+      {
+        "text": "The SFP modules must both come from the same vendor",
+        "is_correct": false
+      }
+    ]
   }
 ]

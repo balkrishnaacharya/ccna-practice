@@ -4210,5 +4210,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A router must forward TCP 8080 on its public address to an internal web server listening on TCP 80. Which command performs that port translation?",
+    "explanation": "Static PAT maps a public address and port to an inside address and port. The static tcp form with two port numbers rewrites both the destination address and the destination port.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip nat inside source static tcp 10.1.1.50 80 203.0.113.5 8080",
+        "is_correct": true
+      },
+      {
+        "text": "ip nat inside source list 1 interface GigabitEthernet0/0 overload",
+        "is_correct": false
+      },
+      {
+        "text": "ip nat outside source static 203.0.113.5 10.1.1.50",
+        "is_correct": false
+      },
+      {
+        "text": "ip nat pool PUBLIC 203.0.113.5 203.0.113.5 prefix-length 29",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DHCP option does a snooping switch insert so the DHCP server can tell which switch port a request arrived on?",
+    "explanation": "Option 82 is the relay agent information option. The snooping switch appends the port and VLAN details so the server can apply per-port policy or reject requests from untrusted ports.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Option 82",
+        "is_correct": true
+      },
+      {
+        "text": "Option 43",
+        "is_correct": false
+      },
+      {
+        "text": "Option 150",
+        "is_correct": false
+      },
+      {
+        "text": "Option 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Dynamic ARP Inspection is enabled on VLAN 10, but no DHCP snooping bindings exist and no ARP ACL is configured. What happens to ARP packets from dynamically addressed hosts?",
+    "explanation": "DAI validates ARP against the DHCP snooping binding table or a configured ARP ACL. With neither present there is nothing to validate against, so the packets are dropped on untrusted ports.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They are dropped because DAI has no binding to validate them against",
+        "is_correct": true
+      },
+      {
+        "text": "They are permitted because DAI falls back to the local ARP cache",
+        "is_correct": false
+      },
+      {
+        "text": "DAI disables itself automatically on that VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "They are validated against statically configured MAC entries only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router's clock is manually set several hours into the future and NTP is then configured against a valid server. What does NTP do?",
+    "explanation": "When the offset is larger than the step threshold, NTP steps the clock rather than slewing it. The clock jumps backwards to match the server, so log timestamps can appear to go back in time.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It steps the clock back to match the server, so timestamps can jump backwards",
+        "is_correct": true
+      },
+      {
+        "text": "It refuses to adjust a clock that was configured manually",
+        "is_correct": false
+      },
+      {
+        "text": "It slews the clock forward only and never moves it backwards",
+        "is_correct": false
+      },
+      {
+        "text": "It leaves the clock alone until the next reload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The command `logging trap warnings` is configured. Which messages are forwarded to the syslog server?",
+    "explanation": "The trap level is the highest severity number that will still be sent, and severity numbers decrease as severity increases. Level 4 therefore sends levels 0 through 4 inclusive.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Severities 0 through 4",
+        "is_correct": true
+      },
+      {
+        "text": "Severity 4 only",
+        "is_correct": false
+      },
+      {
+        "text": "Severities 4 and 5",
+        "is_correct": false
+      },
+      {
+        "text": "All eight severity levels",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VTY configuration restricts inbound SSH management sessions to the addresses permitted by ACL 10?",
+    "explanation": "On VTY lines the filter is applied with access-class, not ip access-group. The `in` direction matches sessions arriving at the router for management.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "access-class 10 in",
+        "is_correct": true
+      },
+      {
+        "text": "ip access-group 10 in",
+        "is_correct": false
+      },
+      {
+        "text": "access-group 10 in",
+        "is_correct": false
+      },
+      {
+        "text": "ip access-class 10 in",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is `enable secret` preferred over `enable password` in a device hardening baseline?",
+    "explanation": "`enable secret` stores a one-way hash, so the value cannot be read back out of the configuration. `enable password` is stored in clear text unless service password-encryption is enabled, and even then the encoding is reversible.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stores a one-way hash instead of clear text or a reversible encoding",
+        "is_correct": true
+      },
+      {
+        "text": "It encrypts the entire running configuration at rest",
+        "is_correct": false
+      },
+      {
+        "text": "It requires a TACACS+ server to validate the credential",
+        "is_correct": false
+      },
+      {
+        "text": "It limits the number of failed login attempts",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a private VLAN, how does a community port differ from an isolated port?",
+    "explanation": "Both port types reach promiscuous ports, but community ports can also exchange traffic with each other inside the same community VLAN. Isolated ports have no Layer 2 path to any other host port.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Community ports reach each other and promiscuous ports, while isolated ports reach only promiscuous ports",
+        "is_correct": true
+      },
+      {
+        "text": "Isolated ports reach each other and promiscuous ports, while community ports reach only promiscuous ports",
+        "is_correct": false
+      },
+      {
+        "text": "Community ports reach only the router, while isolated ports reach every host",
+        "is_correct": false
+      },
+      {
+        "text": "They behave identically but are assigned different secondary VLAN IDs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record holds the primary name server, the responsible party contact, and the serial number used to drive zone transfers?",
+    "explanation": "The Start of Authority record defines the zone itself. Its serial number tells secondary servers whether their copy is current, and it also names the primary server and the administrative contact.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SOA",
+        "is_correct": true
+      },
+      {
+        "text": "NS",
+        "is_correct": false
+      },
+      {
+        "text": "CNAME",
+        "is_correct": false
+      },
+      {
+        "text": "PTR",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport protocol and port does TACACS+ use?",
+    "explanation": "TACACS+ runs over TCP and uses port 49. TCP lets it detect a lost server quickly, which is one reason it is preferred when device administration accounting matters.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP 49",
+        "is_correct": true
+      },
+      {
+        "text": "UDP 1812",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 1645",
+        "is_correct": false
+      },
+      {
+        "text": "TCP 1813",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does IPsec tunnel mode differ from IPsec transport mode?",
+    "explanation": "Tunnel mode encapsulates the complete original IP packet inside a new IP header with the tunnel endpoints as source and destination. Transport mode keeps the original IP header and protects only the payload above it.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Tunnel mode encapsulates the entire original IP packet inside a new IP header",
+        "is_correct": true
+      },
+      {
+        "text": "Tunnel mode encrypts only the TCP header of the original packet",
+        "is_correct": false
+      },
+      {
+        "text": "Transport mode hides the original source and destination IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Transport mode is used only for site-to-site links between routers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an 802.1X deployment, which role does the client device itself play?",
+    "explanation": "The client runs the supplicant, which presents credentials. The switch port acts as the authenticator and relays those credentials to the RADIUS server acting as the authentication server.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Supplicant",
+        "is_correct": true
+      },
+      {
+        "text": "Authenticator",
+        "is_correct": false
+      },
+      {
+        "text": "Authentication server",
+        "is_correct": false
+      },
+      {
+        "text": "Registrar",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -2988,5 +2988,109 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Why is HTTP POST not considered idempotent while HTTP PUT is?",
+    "explanation": "Repeating a POST can create an additional resource each time. Repeating a PUT with the same representation leaves the target in the same state, so a retry after a timeout is safe.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Repeating a POST can create a second resource, while a repeated PUT leaves the resource in the same state",
+        "is_correct": true
+      },
+      {
+        "text": "POST is always encrypted in transit and PUT is not",
+        "is_correct": false
+      },
+      {
+        "text": "PUT cannot be retried after a timeout because the server rejects duplicates",
+        "is_correct": false
+      },
+      {
+        "text": "POST carries no request body, so the server cannot detect duplicates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In JSON, how does an explicit null value differ from omitting the key entirely?",
+    "explanation": "An explicit null says the key is present and its value is deliberately empty. Omitting the key says nothing about it, which lets a partial update leave the existing value untouched.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Null states the key exists with no value, while omission means the key was not supplied",
+        "is_correct": true
+      },
+      {
+        "text": "They are treated identically by every JSON parser",
+        "is_correct": false
+      },
+      {
+        "text": "Null is not valid inside a JSON object",
+        "is_correct": false
+      },
+      {
+        "text": "Omission forces the parser to substitute an empty string",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of runbook automation in an AIOps platform?",
+    "explanation": "Once an event has been classified, runbook automation executes the predefined remediation steps automatically or with an approval gate. That shortens response time and keeps the fix consistent between operators.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It executes predefined remediation steps after an event is classified, cutting response time",
+        "is_correct": true
+      },
+      {
+        "text": "It trains the anomaly-detection models on historical telemetry",
+        "is_correct": false
+      },
+      {
+        "text": "It replaces the need for a configuration management database",
+        "is_correct": false
+      },
+      {
+        "text": "It converts streaming telemetry into periodic SNMP polls",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In telemetry, how does a counter metric differ from a gauge metric?",
+    "explanation": "A counter is monotonic: it only increases until it wraps or the device resets, so rates come from deltas over time. A gauge can rise and fall, and its current value is meaningful on its own.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A counter only increases or resets, while a gauge can rise and fall",
+        "is_correct": true
+      },
+      {
+        "text": "A gauge only increases, while a counter can rise and fall",
+        "is_correct": false
+      },
+      {
+        "text": "A counter reports a percentage, while a gauge reports a raw value",
+        "is_correct": false
+      },
+      {
+        "text": "They differ only in the sampling interval configured on the device",
+        "is_correct": false
+      }
+    ]
   }
 ]

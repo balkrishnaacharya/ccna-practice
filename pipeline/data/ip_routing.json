@@ -3742,5 +3742,239 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Why is it best practice to specify both the exit interface and the next-hop address in a static route over a multi-access Ethernet link?",
+    "explanation": "With only an exit interface on Ethernet, the router must ARP for every individual destination address it forwards to. Adding the next hop makes it resolve one gateway address and reuse that frame rewrite.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It avoids resolving every destination individually with ARP on that interface",
+        "is_correct": true
+      },
+      {
+        "text": "It lowers the administrative distance of the route",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps the route installed when the interface goes down",
+        "is_correct": false
+      },
+      {
+        "text": "It allows the route to be redistributed into OSPF",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF LSA type is originated only by a designated router on a broadcast multi-access network?",
+    "explanation": "The Type 2 network LSA describes the multi-access segment and the routers attached to it, and only the DR for that segment generates it.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 2 network LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 1 router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 3 summary LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 5 external LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An interface is configured with `passive-interface` under the OSPF process. What is the effect on that interface?",
+    "explanation": "A passive interface still has its network advertised into OSPF, but no hellos are sent and no adjacency forms. It is the standard way to advertise a stub or user-facing subnet.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The network is still advertised but no hellos are sent and no adjacency forms",
+        "is_correct": true
+      },
+      {
+        "text": "The interface is removed from OSPF and its network is no longer advertised",
+        "is_correct": false
+      },
+      {
+        "text": "The interface stops forwarding all user traffic",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is converted into an OSPF stub network type",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which BGP path-selection attribute is evaluated first on a Cisco router?",
+    "explanation": "Cisco evaluates weight before every other attribute. A locally significant value, it is checked first and the highest weight wins before local preference is even considered.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Weight",
+        "is_correct": true
+      },
+      {
+        "text": "Local preference",
+        "is_correct": false
+      },
+      {
+        "text": "AS path length",
+        "is_correct": false
+      },
+      {
+        "text": "Multi-exit discriminator",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which condition must a neighbour's reported distance satisfy before that neighbour can qualify as an EIGRP feasible successor?",
+    "explanation": "The feasibility condition requires the reported distance to be lower than the current feasible distance. That inequality is what guarantees the backup path cannot loop back through the router itself.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Its reported distance must be lower than the current feasible distance",
+        "is_correct": true
+      },
+      {
+        "text": "Its reported distance must equal the current feasible distance",
+        "is_correct": false
+      },
+      {
+        "text": "Its reported distance must be lower than the successor's reported distance",
+        "is_correct": false
+      },
+      {
+        "text": "Its reported distance must be lower than the configured interface bandwidth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single prefix summarises the contiguous networks 10.10.8.0/24 through 10.10.15.0/24?",
+    "explanation": "Eight consecutive /24 networks span 2048 addresses, which is one /21. The first address 10.10.8.0 is aligned on a /21 boundary, so 10.10.8.0/21 covers the whole range.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "10.10.8.0/21",
+        "is_correct": true
+      },
+      {
+        "text": "10.10.8.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "10.10.8.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "10.10.0.0/20",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the line 'Gateway of last resort is 203.0.113.1 to network 0.0.0.0' indicate in `show ip route` output?",
+    "explanation": "It reports that a default route is installed. The router uses it only for destinations that no more specific entry matches, so it never overrides longer prefixes.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A default route is installed and used when no more specific route matches",
+        "is_correct": true
+      },
+      {
+        "text": "The router currently has no routes in its table",
+        "is_correct": false
+      },
+      {
+        "text": "The router is using 203.0.113.1 as its OSPF router ID",
+        "is_correct": false
+      },
+      {
+        "text": "All traffic is sent to 203.0.113.1, overriding more specific routes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "R1 learns 10.7.0.0/16 from OSPF with metric 20 and from internal EIGRP with metric 2,170,112. Which route is installed in the routing table?",
+    "explanation": "Administrative distance is compared before metric, and metrics from different protocols are not comparable. Internal EIGRP at 90 beats OSPF at 110 regardless of the metric values.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The EIGRP route, because its administrative distance of 90 beats OSPF's 110",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPF route, because metric 20 is far lower than 2,170,112",
+        "is_correct": false
+      },
+      {
+        "text": "Both routes, and the router load-balances across them",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, because the two metrics are not comparable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the main scalability limitation of router-on-a-stick inter-VLAN routing?",
+    "explanation": "Every VLAN shares a single physical link and a single router interface, so all inter-VLAN traffic competes for the same bandwidth and the router forwards it in software.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "All inter-VLAN traffic for every VLAN shares one physical link and one router interface",
+        "is_correct": true
+      },
+      {
+        "text": "It supports only two VLANs per subinterface",
+        "is_correct": false
+      },
+      {
+        "text": "It cannot carry 802.1Q tags longer than four bytes",
+        "is_correct": false
+      },
+      {
+        "text": "It requires a separate routing protocol for each VLAN",
+        "is_correct": false
+      }
+    ]
   }
 ]

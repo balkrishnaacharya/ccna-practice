@@ -4262,5 +4262,343 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "On a segment between two non-root switches, one port becomes a root port and the other becomes a designated port. What decides which port is designated?",
+    "explanation": "The port on the switch with the lowest cumulative path cost to the root bridge wins the segment and becomes designated. The losing switch keeps a root port facing the winner.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port on the switch with the lower cumulative path cost to the root bridge becomes designated",
+        "is_correct": true
+      },
+      {
+        "text": "The port with the lower port number on the higher-priority switch becomes designated",
+        "is_correct": false
+      },
+      {
+        "text": "The port on the switch with the higher bridge priority becomes designated",
+        "is_correct": false
+      },
+      {
+        "text": "The port that receives the first BPDU after the topology changes becomes designated",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does RSTP converge a point-to-point link without waiting for the forward-delay timers?",
+    "explanation": "RSTP uses a proposal and agreement handshake. The downstream switch synchronises its other ports and answers with an agreement, so the link moves to forwarding immediately instead of waiting through listening and learning.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The downstream switch synchronises its ports and replies to a proposal with an agreement",
+        "is_correct": true
+      },
+      {
+        "text": "It floods a topology change notification and waits for the forward-delay timer to expire",
+        "is_correct": false
+      },
+      {
+        "text": "It relies on the root bridge to resend configuration BPDUs every two seconds",
+        "is_correct": false
+      },
+      {
+        "text": "It disables the link and re-enables it once the max-age timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many links can be active in one standard LACP EtherChannel bundle, and what happens to additional compatible links?",
+    "explanation": "LACP supports a maximum of eight active links in a bundle. Up to eight more compatible links can be placed in hot-standby and take over if an active member fails.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Eight links are active and up to eight more can sit in hot standby",
+        "is_correct": true
+      },
+      {
+        "text": "Sixteen links are active and none can be held in standby",
+        "is_correct": false
+      },
+      {
+        "text": "Four links are active and the remainder are placed in err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "Two links are active and the remainder are blocked by spanning tree",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel is configured on one switch only, while the neighbouring switch still treats all four links as separate. What is the result?",
+    "explanation": "A bundle needs matching configuration on both ends. With only one side bundled the channel does not form, so the four parallel links look like a loop and spanning tree blocks three of them.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The channel does not form, and spanning tree blocks three of the four links",
+        "is_correct": true
+      },
+      {
+        "text": "The channel forms with one quarter of the expected bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "The channel forms but only one member link passes traffic",
+        "is_correct": false
+      },
+      {
+        "text": "All four links forward at once and create a broadcast storm",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A trunk port's allowed VLAN list contains only VLANs 10 and 20. A frame tagged for VLAN 30 arrives on that port. What does the switch do with it?",
+    "explanation": "The allowed VLAN list is an ingress and egress filter. A tagged frame for a VLAN that is not permitted on the trunk is discarded rather than mapped or flooded.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops the frame",
+        "is_correct": true
+      },
+      {
+        "text": "It forwards the frame into the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It adds VLAN 30 to the allowed list automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It floods the frame to every port in VLAN 30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does VTP pruning accomplish in a switched network?",
+    "explanation": "Pruning stops a VLAN's flooded traffic from crossing trunk links that have no active ports in that VLAN, which saves bandwidth on trunks that do not need the broadcast domain.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stops flooding for a VLAN on trunk links that have no active ports in that VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "It removes unused VLANs from the VLAN database automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It compresses VTP advertisements between switches",
+        "is_correct": false
+      },
+      {
+        "text": "It deletes stale MAC address entries from the CAM table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An 802.3af port allocates 15.4 W at the PSE, yet the standard guarantees only 12.95 W at the powered device. What accounts for the difference?",
+    "explanation": "The 2.45 W gap covers resistive loss in the cable plant over the full 100-meter channel. The PSE must budget for that loss so the device still receives its guaranteed class power.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Power dissipated in the cable plant over a 100-meter run",
+        "is_correct": true
+      },
+      {
+        "text": "Power the powered device must reserve for PoE passthrough",
+        "is_correct": false
+      },
+      {
+        "text": "A reserve held back for LLDP power negotiation",
+        "is_correct": false
+      },
+      {
+        "text": "Derating applied by the PSE when shielded cable is detected",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A multilayer switch receives a frame addressed to its own VLAN 10 SVI MAC address, and the encapsulated packet is destined for a host in VLAN 20. What does the switch do?",
+    "explanation": "A frame addressed to the SVI MAC is destined for the switch itself, so the switch routes it: it strips the Layer 2 header, decrements the TTL, looks up the VLAN 20 destination, and rewrites the frame for that VLAN.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It strips the Layer 2 header, rewrites it for VLAN 20, decrements the TTL, and forwards",
+        "is_correct": true
+      },
+      {
+        "text": "It floods the frame to every access port in VLAN 20",
+        "is_correct": false
+      },
+      {
+        "text": "It drops the frame because SVIs cannot route between VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "It sends the frame back out VLAN 10 toward the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch has a dynamic MAC table entry binding 00:1a:2b:3c:4d:5e to Gi0/4. A frame with that source MAC then arrives on Gi0/9. What does the switch do?",
+    "explanation": "Source addresses are learned on ingress. Seeing the same MAC on a new port means the station moved, so the switch overwrites the existing entry and points it at Gi0/9.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It updates the entry so the MAC now points at Gi0/9",
+        "is_correct": true
+      },
+      {
+        "text": "It drops the frame as a spoofing attempt",
+        "is_correct": false
+      },
+      {
+        "text": "It logs a port security violation and err-disables Gi0/9",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps both entries and load-balances between them",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the command `monitor session 1 source interface Gi0/1 both`, what does the `both` keyword include in the capture?",
+    "explanation": "The direction keyword selects ingress, egress, or both. `both` mirrors frames received on the interface and frames transmitted from it.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames received on and frames transmitted from Gi0/1",
+        "is_correct": true
+      },
+      {
+        "text": "Both unicast and multicast frames",
+        "is_correct": false
+      },
+      {
+        "text": "Both IPv4 and IPv6 frames",
+        "is_correct": false
+      },
+      {
+        "text": "Both tagged and untagged frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two virtual machines run on the same hypervisor but in port groups mapped to VLAN 10 and VLAN 20. How can they exchange traffic?",
+    "explanation": "A virtual switch preserves VLAN separation the same way a physical switch does. Frames cannot cross between VLAN 10 and VLAN 20 inside the host, so the traffic must be routed by a Layer 3 device.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only through a Layer 3 device, because the virtual switch keeps the VLANs separate",
+        "is_correct": true
+      },
+      {
+        "text": "Directly, because a virtual switch ignores VLAN IDs for traffic that stays local",
+        "is_correct": false
+      },
+      {
+        "text": "Only after promiscuous mode is enabled on both port groups",
+        "is_correct": false
+      },
+      {
+        "text": "Only after NIC teaming is configured on the uplink",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Port security is configured with `switchport port-security mac-address sticky` and the switch is then reloaded. What happens to the learned secure addresses?",
+    "explanation": "Sticky learning writes the addresses into the running configuration, not into NVRAM by itself. Unless the configuration was saved before the reload, the addresses are lost and relearned.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They survive only if the running configuration was saved before the reload",
+        "is_correct": true
+      },
+      {
+        "text": "They always survive because sticky entries are written directly to NVRAM",
+        "is_correct": false
+      },
+      {
+        "text": "They are always lost because sticky entries exist only in RAM and never reach the configuration",
+        "is_correct": false
+      },
+      {
+        "text": "They are converted into static entries automatically during the reload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch looks up the destination MAC of an incoming frame and finds it mapped to the very port the frame arrived on. What does the switch do?",
+    "explanation": "If the destination is reached through the ingress port, the destination is on the same segment as the sender and needs no forwarding. The switch filters, meaning it drops the frame.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It filters the frame and sends nothing",
+        "is_correct": true
+      },
+      {
+        "text": "It floods the frame to all other ports in the VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards the frame back out the ingress port",
+        "is_correct": false
+      },
+      {
+        "text": "It clears the entry and then floods the frame",
+        "is_correct": false
+      }
+    ]
   }
 ]
