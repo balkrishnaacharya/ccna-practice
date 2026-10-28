@@ -4132,5 +4132,135 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A phone on a Cisco access port cannot be told the voice VLAN ID, but its 802.1p priority marking must survive. Which voice VLAN option does that?",
+    "explanation": "The dot1p option is for phones that mark priority but not a VLAN: voice frames arrive in a priority tag whose VLAN ID is zero, and the switch reads the CoS bits and places them into the configured voice VLAN. Marking survives even though the phone never learns the VLAN number.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "switchport voice vlan dot1p",
+        "is_correct": true
+      },
+      {
+        "text": "switchport voice vlan untagged",
+        "is_correct": false
+      },
+      {
+        "text": "switchport voice vlan none",
+        "is_correct": false
+      },
+      {
+        "text": "switchport voice vlan priority",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does port security violation mode `protect` differ from `restrict`?",
+    "explanation": "Protect is the quiet mode: frames from unauthorized addresses are dropped exactly as with restrict, but no syslog message, SNMP trap, or violation counter is produced, so a flood of violations cannot fill the log. Restrict offers the same drop behaviour with visibility; shutdown takes the port down instead.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops frames from violating addresses but produces no log, trap, or counter increment",
+        "is_correct": true
+      },
+      {
+        "text": "It shuts the port down and requires manual recovery",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards the violating frames but flags the port as err-disabled",
+        "is_correct": false
+      },
+      {
+        "text": "It disables port security on that port until the next reload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the output of `show storm-control`, what does the Filter State column report?",
+    "explanation": "The level columns show the configured rising and falling thresholds; Filter State says what the switch is doing right now, Forwarding below the threshold and Blocking once the rising threshold is crossed. A port sitting in Blocking with modest levels usually points at a loop or one very chatty host.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Whether traffic of that type is currently forwarded or blocked because the threshold is exceeded",
+        "is_correct": true
+      },
+      {
+        "text": "How many frames have been dropped since the counters were cleared",
+        "is_correct": false
+      },
+      {
+        "text": "Whether the interface is configured with the shutdown action",
+        "is_correct": false
+      },
+      {
+        "text": "The remaining errdisable recovery time for the port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a switch keep a separate MAC address table entry scope for each VLAN instead of one global table?",
+    "explanation": "The table is keyed by VLAN as well as by MAC, so two isolated VLANs can each hold the same address on different ports without colliding. That is also why `show mac address-table vlan <id>` is the useful query when the ports look right but traffic still floods.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the same MAC address can legitimately appear in more than one VLAN, so entries are scoped to the VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Because VLAN tags are longer than MAC addresses and need their own index",
+        "is_correct": false
+      },
+      {
+        "text": "Because each trunk needs a separate copy of the table per tag",
+        "is_correct": false
+      },
+      {
+        "text": "Because the VLAN is only determined after the destination has been resolved",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the effect of the global configuration command `no cdp run` on a switch?",
+    "explanation": "`no cdp run` stops the CDP process device-wide, so per-interface `cdp enable` is moot until the process is restarted with `cdp run`. The per-port alternative, `no cdp enable`, silences one interface while the rest of the switch keeps advertising.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CDP stops on every interface, including those still configured with cdp enable",
+        "is_correct": true
+      },
+      {
+        "text": "CDP stops only on interfaces that lack an explicit cdp enable",
+        "is_correct": false
+      },
+      {
+        "text": "CDP keeps running but only listens, no longer advertising",
+        "is_correct": false
+      },
+      {
+        "text": "CDP stops on trunk ports while access ports keep advertising",
+        "is_correct": false
+      }
+    ]
   }
 ]

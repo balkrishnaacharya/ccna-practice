@@ -4158,5 +4158,135 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "In a server farm behind a load balancer, clients are configured with one address that the balancer owns rather than a server address. What is that address called?",
+    "explanation": "Clients send to the virtual IP and the balancer rewrites the destination, or the source in some modes, to a chosen pool member. That indirection is what lets servers be added, drained, or replaced without reconfiguring a single client.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A virtual IP address (VIP)",
+        "is_correct": true
+      },
+      {
+        "text": "A loopback address configured on every pool member",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP relay address for the server subnet",
+        "is_correct": false
+      },
+      {
+        "text": "A floating static route shared by the servers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is the spanning-tree root bridge normally placed on a core or distribution switch instead of an access switch?",
+    "explanation": "Root placement decides which links get blocked. Put the root in the middle of the topology and the blocked ports land where redundancy is cheapest, between access switches, instead of cutting a core uplink that every VLAN depends on. A root stranded at the edge stretches the tree across the whole campus.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the root sits at the topological centre, so blocked links fall on redundant access paths rather than core links",
+        "is_correct": true
+      },
+      {
+        "text": "Because only core and distribution switches run spanning tree",
+        "is_correct": false
+      },
+      {
+        "text": "Because access switches cannot be configured as root bridges",
+        "is_correct": false
+      },
+      {
+        "text": "Because root placement determines which VLANs an access switch is allowed to carry",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes multimode fiber from single-mode fiber in a campus backbone?",
+    "explanation": "Multimode has a wide core that lets several propagation modes travel at once, which suits building and campus runs of a few hundred metres with cheaper optics. Single-mode has a tiny core that carries one mode, holding signal integrity over kilometres but needing costlier laser transceivers.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Multimode carries several light paths over shorter, cheaper links; single-mode carries one path over long distances",
+        "is_correct": true
+      },
+      {
+        "text": "Multimode uses laser transceivers while single-mode uses LEDs",
+        "is_correct": false
+      },
+      {
+        "text": "Multimode is immune to electromagnetic interference while single-mode is not",
+        "is_correct": false
+      },
+      {
+        "text": "Multimode caps out at 100 Mb/s while single-mode supports 10 Gb/s",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP sender receives three duplicate ACKs for the same sequence number. What does fast retransmit do?",
+    "explanation": "Duplicate ACKs tell the sender that everything after the gap arrived. Three of them is strong enough evidence of loss that the sender resends the missing segment immediately, then halves the window and continues in fast recovery rather than waiting for a retransmission timer or restarting from slow start.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Retransmits the missing segment at once without waiting for the retransmission timer",
+        "is_correct": true
+      },
+      {
+        "text": "Halves the congestion window and restarts from slow start",
+        "is_correct": false
+      },
+      {
+        "text": "Tears down the connection and reopens it",
+        "is_correct": false
+      },
+      {
+        "text": "Retransmits every unacknowledged segment in the window",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 router decrements a packet's Hop Limit to zero. What does the router do with that packet?",
+    "explanation": "Hop Limit is the IPv6 equivalent of TTL: hitting zero means the packet has looped or the path is longer than allowed, so the router drops it and reports ICMPv6 Time Exceeded to the source. Traceroute builds on exactly that response.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Discards it and returns ICMPv6 Time Exceeded to the source",
+        "is_correct": true
+      },
+      {
+        "text": "Forwards it with the Hop Limit reset to 1",
+        "is_correct": false
+      },
+      {
+        "text": "Fragments it and rewrites the Hop Limit",
+        "is_correct": false
+      },
+      {
+        "text": "Holds it in a queue until a shorter path becomes available",
+        "is_correct": false
+      }
+    ]
   }
 ]
