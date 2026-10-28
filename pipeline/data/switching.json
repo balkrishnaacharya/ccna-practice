@@ -4600,5 +4600,395 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A switch port is configured `switchport mode dynamic auto`. What must the neighbour do for the link to become a trunk?",
+    "explanation": "Dynamic auto waits passively. It only forms a trunk when the far end actively asks for one, meaning the neighbour must be in dynamic desirable or hard-coded trunk mode.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Actively request trunking, as dynamic desirable or hard-coded trunk mode does",
+        "is_correct": true
+      },
+      {
+        "text": "Also sit in dynamic auto, because two passive ends agree to trunk",
+        "is_correct": false
+      },
+      {
+        "text": "Send VTP advertisements for the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Be configured as an access port in the same VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Root Guard differ from BPDU Guard?",
+    "explanation": "BPDU Guard err-disables a port the moment any BPDU arrives, because that port should never face a switch. Root Guard only reacts to a superior BPDU, placing the port in root-inconsistent state until the offending BPDUs stop.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Root Guard reacts only to superior BPDUs and blocks the port temporarily, while BPDU Guard err-disables on any BPDU",
+        "is_correct": true
+      },
+      {
+        "text": "Root Guard err-disables the port permanently, while BPDU Guard only logs the event",
+        "is_correct": false
+      },
+      {
+        "text": "Root Guard applies to trunk ports and BPDU Guard applies to routed ports",
+        "is_correct": false
+      },
+      {
+        "text": "They are the same feature under two names on different platforms",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is PortFast considered unsafe on a port that faces another switch?",
+    "explanation": "PortFast skips listening and learning, so the port forwards immediately. Facing another switch, that instant forwarding can create a temporary loop before spanning tree converges.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forwards immediately and can create a temporary loop before spanning tree converges",
+        "is_correct": true
+      },
+      {
+        "text": "It disables BPDU processing on the port entirely",
+        "is_correct": false
+      },
+      {
+        "text": "It lowers the port's path cost and makes the switch root",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the port from ever becoming a trunk",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the global command `spanning-tree portfast default` change?",
+    "explanation": "It makes every access port on the switch run PortFast without per-interface configuration. Trunk ports are unaffected, and the setting still applies only to ports in access mode.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every access port runs PortFast without a per-interface command",
+        "is_correct": true
+      },
+      {
+        "text": "Every port, trunk included, skips the listening and learning states",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning tree is disabled on all VLANs in the VLAN database",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Guard is enabled on every access port automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which frame does a wireless client transmit first when looking for a known SSID?",
+    "explanation": "A client that has a configured profile sends a directed probe request naming the SSID. Access points answer with probe responses, and the client then picks one to authenticate and associate with.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A probe request naming the SSID",
+        "is_correct": true
+      },
+      {
+        "text": "An association request",
+        "is_correct": false
+      },
+      {
+        "text": "A four-way handshake message",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP discover broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the 802.11 join process, what is the correct order of the three management exchanges?",
+    "explanation": "A client first authenticates with the AP under open-system or SAE authentication, then associates so the AP binds it to an SSID, and only after that does the data-confidentiality handshake run.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authentication, association, then the key-exchange handshake",
+        "is_correct": true
+      },
+      {
+        "text": "Association, authentication, then the key-exchange handshake",
+        "is_correct": false
+      },
+      {
+        "text": "Key-exchange handshake, authentication, then association",
+        "is_correct": false
+      },
+      {
+        "text": "Authentication, key-exchange handshake, then association",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows LLDP neighbour details such as system description, capabilities, and management address?",
+    "explanation": "`show lldp neighbors` gives a one-line summary per neighbour. The `detail` keyword adds the advertised system description, enabled capabilities, and management address.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show lldp neighbors detail",
+        "is_correct": true
+      },
+      {
+        "text": "show lldp interface",
+        "is_correct": false
+      },
+      {
+        "text": "show lldp traffic",
+        "is_correct": false
+      },
+      {
+        "text": "show cdp neighbors detail",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default LLDP advertisement timer and hold time on a Cisco device?",
+    "explanation": "LLDP sends an advertisement every 30 seconds and tells neighbours to keep it for 120 seconds, four times the interval. That ratio tolerates three lost advertisements before the entry ages out.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "30 seconds and 120 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "60 seconds and 180 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "30 seconds and 90 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds and 15 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command resets the interface error counters on a switch?",
+    "explanation": "`clear counters` zeroes the counters on all interfaces, or on the one named in the command. Clearing them is the usual first step so that fresh errors can be attributed to a specific change.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "clear counters",
+        "is_correct": true
+      },
+      {
+        "text": "reset interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "no interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "clear interface statistics all",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port reports a growing count of late collisions. What does that indicate?",
+    "explanation": "A late collision is detected after the first 64 bytes of a frame, which should be impossible in a healthy collision domain. It points to a duplex mismatch or a segment longer than the standard allows.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A duplex mismatch or a cable run beyond the standard length",
+        "is_correct": true
+      },
+      {
+        "text": "The interface is receiving frames tagged for an unallowed VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "The port is err-disabled by port security",
+        "is_correct": false
+      },
+      {
+        "text": "The switch is dropping frames because the MAC table is full",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface counter increments when a received frame is larger than the interface MTU allows?",
+    "explanation": "Oversized frames are counted as giants. They usually mean a mismatch between the MTU configured on the two ends, or a jumbo-frame sender talking to a port left at the default.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Giants",
+        "is_correct": true
+      },
+      {
+        "text": "Runts",
+        "is_correct": false
+      },
+      {
+        "text": "CRC errors",
+        "is_correct": false
+      },
+      {
+        "text": "Input discards",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show interfaces status`, what does a port state of `notconnect` mean?",
+    "explanation": "`notconnect` means the port has no link, so nothing is detected on the wire. It is distinct from `err-disabled`, where the port is shut down by a protection feature, and from `connected`, where link is up.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port has no link partner detected on the wire",
+        "is_correct": true
+      },
+      {
+        "text": "The port is administratively shut down",
+        "is_correct": false
+      },
+      {
+        "text": "The port was shut down by a protection feature",
+        "is_correct": false
+      },
+      {
+        "text": "The port is up but has not learned any MAC addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can storm control discard traffic that is not actually a storm?",
+    "explanation": "Storm control counts all traffic of the selected type on the port, so a legitimate high rate of broadcast or multicast, such as video delivery, can cross the threshold and be treated like a flood.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A legitimate high rate of broadcast or multicast traffic can cross the same threshold",
+        "is_correct": true
+      },
+      {
+        "text": "Storm control cannot distinguish tagged from untagged frames",
+        "is_correct": false
+      },
+      {
+        "text": "Storm control only counts frames sourced from the switch itself",
+        "is_correct": false
+      },
+      {
+        "text": "The threshold is measured against CPU load rather than link rate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a storm-control threshold expressed as a percentage measured against interface bandwidth instead of a fixed rate?",
+    "explanation": "A percentage scales with the link, so one policy works on a 1 Gbps access port and a 10 Gbps uplink. A fixed rate would mean something different on every speed and would need re-tuning per port.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same policy then scales automatically across ports of different speeds",
+        "is_correct": true
+      },
+      {
+        "text": "Percentages are the only unit the hardware counters can report",
+        "is_correct": false
+      },
+      {
+        "text": "A fixed rate cannot be configured on trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Percentages ignore the configured duplex setting, which fixed rates do not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which LLDP-MED type-length-value carries the voice VLAN identifier to an IP phone?",
+    "explanation": "The network policy TLV tells the phone which VLAN ID, 802.1p priority, and DSCP value to use for voice. The phone applies those settings and starts tagging its own frames.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The network policy TLV",
+        "is_correct": true
+      },
+      {
+        "text": "The power via MDI TLV",
+        "is_correct": false
+      },
+      {
+        "text": "The inventory management TLV",
+        "is_correct": false
+      },
+      {
+        "text": "The location identification TLV",
+        "is_correct": false
+      }
+    ]
   }
 ]

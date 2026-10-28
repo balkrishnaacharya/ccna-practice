@@ -1,0 +1,1302 @@
+[
+  {
+    "stem": "An IPv4 header carries an IHL field with the value 15. How long is that header?",
+    "explanation": "The IHL field counts 32-bit words, not bytes. A value of 15 therefore means 15 times 4, or 60 bytes, which is the maximum an IPv4 header can be once options are included.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "60 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "15 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "40 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "64 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the Total Length field of an IPv4 header measure?",
+    "explanation": "Total Length covers the header and the payload together, so a full 1500-byte Ethernet payload reports 1500. Subtracting the IHL-derived header size leaves the actual data length.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The header plus the payload, in bytes",
+        "is_correct": true
+      },
+      {
+        "text": "Only the payload, in bytes",
+        "is_correct": false
+      },
+      {
+        "text": "Only the header, in 32-bit words",
+        "is_correct": false
+      },
+      {
+        "text": "The number of routers the packet may still cross",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field lets a destination group fragments that belong to the same original packet?",
+    "explanation": "Every fragment of one datagram carries the same Identification value, and the fragment offset then positions it. Together the two fields allow correct reassembly even when fragments arrive out of order.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Identification",
+        "is_correct": true
+      },
+      {
+        "text": "Total Length",
+        "is_correct": false
+      },
+      {
+        "text": "Header Checksum",
+        "is_correct": false
+      },
+      {
+        "text": "Protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is the upper-layer protocol identified in an IPv6 packet that carries extension headers?",
+    "explanation": "Each extension header ends with its own Next Header field, so the value chains forward header by header. The final Next Header value in the chain names the transport protocol or ICMPv6.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The final Next Header value in the extension-header chain names it",
+        "is_correct": true
+      },
+      {
+        "text": "A fixed field in the base header always names it, whatever extensions follow",
+        "is_correct": false
+      },
+      {
+        "text": "The Flow Label carries the protocol number",
+        "is_correct": false
+      },
+      {
+        "text": "The Payload Length encodes the protocol number",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a routed spine-leaf fabric not need spanning tree across the data center?",
+    "explanation": "Each leaf-to-spine link is its own point-to-point IP subnet, so there is no Layer 2 loop to block. Every uplink can carry traffic at once, and equal-cost multipath spreads flows across them.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every leaf-to-spine link is a routed point-to-point subnet, so no Layer 2 loop exists",
+        "is_correct": true
+      },
+      {
+        "text": "Spine switches run a proprietary loop-prevention protocol instead of STP",
+        "is_correct": false
+      },
+      {
+        "text": "Leaves connect to only one spine at a time, which removes any loop",
+        "is_correct": false
+      },
+      {
+        "text": "Servers handle loop prevention in software before sending frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is eBGP commonly chosen as the routing protocol between leaves and spines in a large fabric?",
+    "explanation": "A per-link eBGP session with a unique ASN per switch gives loop-free paths without flooding link state across the whole fabric, and it scales to thousands of nodes while supporting multipath.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Unique ASNs per switch give loop-free paths with no fabric-wide link-state flooding and easy multipath",
+        "is_correct": true
+      },
+      {
+        "text": "It converges faster than any interior gateway protocol on point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "It is the only protocol that can carry IPv6 prefixes across a fabric",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need to assign IP addresses to leaf-to-spine links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a spine-leaf fabric use spine ports only for fabric uplinks and never for servers?",
+    "explanation": "Leaving servers off the spines keeps each spine a pure transit tier whose full port count adds bisectional bandwidth. Capacity grows by adding spines, and leaves absorb all server attachment.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Keeping spines as pure transit lets every spine port add fabric bandwidth, and growth comes from adding spines",
+        "is_correct": true
+      },
+      {
+        "text": "Spine switches lack the MAC address capacity to attach servers",
+        "is_correct": false
+      },
+      {
+        "text": "Server traffic on a spine would bypass the leaf's access control lists",
+        "is_correct": false
+      },
+      {
+        "text": "Spine ports cannot negotiate server NIC speeds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a mobility group provide in a multi-controller wireless deployment?",
+    "explanation": "Controllers in the same mobility group share client context over mobility tunnels, so a client that roams to an AP on another controller keeps its session and does not re-authenticate.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It shares client context between controllers so roaming clients keep their sessions",
+        "is_correct": true
+      },
+      {
+        "text": "It load-balances CAPWAP control traffic across the wireless management VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It synchronises the WLC configuration database between controllers",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns radio channels and transmit power to access points",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an access point do when it is placed in monitor mode?",
+    "explanation": "A monitor-mode AP stops serving clients and dedicates its radio to passively capturing frames for intrusion detection and site surveys. It is a sensor, not an access point for users.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stops serving clients and passively captures wireless traffic for analysis",
+        "is_correct": true
+      },
+      {
+        "text": "It serves clients but forwards their traffic locally instead of to the controller",
+        "is_correct": false
+      },
+      {
+        "text": "It becomes a backup controller for the APs in its mobility group",
+        "is_correct": false
+      },
+      {
+        "text": "It converts its radio to a dedicated backhaul link between buildings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Ping replies to a remote site are fast, but large file transfers to that site crawl. No interface shows errors and the link is not saturated. What best explains the throughput?",
+    "explanation": "A TCP sender may have only one window in flight per round trip, so throughput is capped near window size divided by RTT. Long paths therefore need a larger window to fill the link, even when latency looks fine to a ping.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Throughput is limited by the TCP window divided by the round-trip time",
+        "is_correct": true
+      },
+      {
+        "text": "The path MTU is smaller than the server's interface MTU, so every frame is dropped",
+        "is_correct": false
+      },
+      {
+        "text": "The remote site's DNS server is answering slowly",
+        "is_correct": false
+      },
+      {
+        "text": "The client NIC is negotiating half duplex with the access switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Users report strong Wi-Fi signal but slow throughput, and the problem worsens as more people join the same area. What is the most likely cause?",
+    "explanation": "Signal strength says nothing about airtime. When many clients share one channel they contend for the same medium, so each station waits longer and aggregate throughput per client falls.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Clients on the same channel are contending for airtime",
+        "is_correct": true
+      },
+      {
+        "text": "The AP transmit power is too low for the coverage area",
+        "is_correct": false
+      },
+      {
+        "text": "The clients are receiving addresses from the wrong DHCP scope",
+        "is_correct": false
+      },
+      {
+        "text": "The SSID is hidden, so clients must probe more often",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which combination of amendment and spectrum defines Wi-Fi 6E?",
+    "explanation": "Wi-Fi 6E is 802.11ax operating in the newly opened 6 GHz band. The PHY is the same as Wi-Fi 6; the E denotes the additional spectrum, which supplies many more non-overlapping channels.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11ax extended into the 6 GHz band",
+        "is_correct": true
+      },
+      {
+        "text": "802.11ac extended into the 6 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "802.11be restricted to the 5 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n extended into the 60 GHz band",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which modulation scheme did 802.11ac introduce that 802.11n does not use?",
+    "explanation": "802.11ac added 256-QAM, carrying eight bits per subcarrier instead of the six of 64-QAM. The denser constellation demands a better signal-to-noise ratio to stay decodable.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "256-QAM",
+        "is_correct": true
+      },
+      {
+        "text": "64-QAM",
+        "is_correct": false
+      },
+      {
+        "text": "DSSS with Barker coding",
+        "is_correct": false
+      },
+      {
+        "text": "Binary phase-shift keying",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the widest channel 802.11n can use?",
+    "explanation": "802.11n introduced channel bonding but caps it at two 20 MHz channels, giving 40 MHz. Wider 80 and 160 MHz channels only arrived with 802.11ac.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "40 MHz",
+        "is_correct": true
+      },
+      {
+        "text": "20 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "80 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "160 MHz",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is configured `switchport mode dynamic auto`. What must the neighbour do for the link to become a trunk?",
+    "explanation": "Dynamic auto waits passively. It only forms a trunk when the far end actively asks for one, meaning the neighbour must be in dynamic desirable or hard-coded trunk mode.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Actively request trunking, as dynamic desirable or hard-coded trunk mode does",
+        "is_correct": true
+      },
+      {
+        "text": "Also sit in dynamic auto, because two passive ends agree to trunk",
+        "is_correct": false
+      },
+      {
+        "text": "Send VTP advertisements for the native VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Be configured as an access port in the same VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Root Guard differ from BPDU Guard?",
+    "explanation": "BPDU Guard err-disables a port the moment any BPDU arrives, because that port should never face a switch. Root Guard only reacts to a superior BPDU, placing the port in root-inconsistent state until the offending BPDUs stop.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Root Guard reacts only to superior BPDUs and blocks the port temporarily, while BPDU Guard err-disables on any BPDU",
+        "is_correct": true
+      },
+      {
+        "text": "Root Guard err-disables the port permanently, while BPDU Guard only logs the event",
+        "is_correct": false
+      },
+      {
+        "text": "Root Guard applies to trunk ports and BPDU Guard applies to routed ports",
+        "is_correct": false
+      },
+      {
+        "text": "They are the same feature under two names on different platforms",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is PortFast considered unsafe on a port that faces another switch?",
+    "explanation": "PortFast skips listening and learning, so the port forwards immediately. Facing another switch, that instant forwarding can create a temporary loop before spanning tree converges.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forwards immediately and can create a temporary loop before spanning tree converges",
+        "is_correct": true
+      },
+      {
+        "text": "It disables BPDU processing on the port entirely",
+        "is_correct": false
+      },
+      {
+        "text": "It lowers the port's path cost and makes the switch root",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the port from ever becoming a trunk",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the global command `spanning-tree portfast default` change?",
+    "explanation": "It makes every access port on the switch run PortFast without per-interface configuration. Trunk ports are unaffected, and the setting still applies only to ports in access mode.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every access port runs PortFast without a per-interface command",
+        "is_correct": true
+      },
+      {
+        "text": "Every port, trunk included, skips the listening and learning states",
+        "is_correct": false
+      },
+      {
+        "text": "Spanning tree is disabled on all VLANs in the VLAN database",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Guard is enabled on every access port automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which frame does a wireless client transmit first when looking for a known SSID?",
+    "explanation": "A client that has a configured profile sends a directed probe request naming the SSID. Access points answer with probe responses, and the client then picks one to authenticate and associate with.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A probe request naming the SSID",
+        "is_correct": true
+      },
+      {
+        "text": "An association request",
+        "is_correct": false
+      },
+      {
+        "text": "A four-way handshake message",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP discover broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the 802.11 join process, what is the correct order of the three management exchanges?",
+    "explanation": "A client first authenticates with the AP under open-system or SAE authentication, then associates so the AP binds it to an SSID, and only after that does the data-confidentiality handshake run.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authentication, association, then the key-exchange handshake",
+        "is_correct": true
+      },
+      {
+        "text": "Association, authentication, then the key-exchange handshake",
+        "is_correct": false
+      },
+      {
+        "text": "Key-exchange handshake, authentication, then association",
+        "is_correct": false
+      },
+      {
+        "text": "Authentication, key-exchange handshake, then association",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows LLDP neighbour details such as system description, capabilities, and management address?",
+    "explanation": "`show lldp neighbors` gives a one-line summary per neighbour. The `detail` keyword adds the advertised system description, enabled capabilities, and management address.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show lldp neighbors detail",
+        "is_correct": true
+      },
+      {
+        "text": "show lldp interface",
+        "is_correct": false
+      },
+      {
+        "text": "show lldp traffic",
+        "is_correct": false
+      },
+      {
+        "text": "show cdp neighbors detail",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default LLDP advertisement timer and hold time on a Cisco device?",
+    "explanation": "LLDP sends an advertisement every 30 seconds and tells neighbours to keep it for 120 seconds, four times the interval. That ratio tolerates three lost advertisements before the entry ages out.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "30 seconds and 120 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "60 seconds and 180 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "30 seconds and 90 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds and 15 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command resets the interface error counters on a switch?",
+    "explanation": "`clear counters` zeroes the counters on all interfaces, or on the one named in the command. Clearing them is the usual first step so that fresh errors can be attributed to a specific change.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "clear counters",
+        "is_correct": true
+      },
+      {
+        "text": "reset interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "no interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "clear interface statistics all",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port reports a growing count of late collisions. What does that indicate?",
+    "explanation": "A late collision is detected after the first 64 bytes of a frame, which should be impossible in a healthy collision domain. It points to a duplex mismatch or a segment longer than the standard allows.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A duplex mismatch or a cable run beyond the standard length",
+        "is_correct": true
+      },
+      {
+        "text": "The interface is receiving frames tagged for an unallowed VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "The port is err-disabled by port security",
+        "is_correct": false
+      },
+      {
+        "text": "The switch is dropping frames because the MAC table is full",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface counter increments when a received frame is larger than the interface MTU allows?",
+    "explanation": "Oversized frames are counted as giants. They usually mean a mismatch between the MTU configured on the two ends, or a jumbo-frame sender talking to a port left at the default.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Giants",
+        "is_correct": true
+      },
+      {
+        "text": "Runts",
+        "is_correct": false
+      },
+      {
+        "text": "CRC errors",
+        "is_correct": false
+      },
+      {
+        "text": "Input discards",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show interfaces status`, what does a port state of `notconnect` mean?",
+    "explanation": "`notconnect` means the port has no link, so nothing is detected on the wire. It is distinct from `err-disabled`, where the port is shut down by a protection feature, and from `connected`, where link is up.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port has no link partner detected on the wire",
+        "is_correct": true
+      },
+      {
+        "text": "The port is administratively shut down",
+        "is_correct": false
+      },
+      {
+        "text": "The port was shut down by a protection feature",
+        "is_correct": false
+      },
+      {
+        "text": "The port is up but has not learned any MAC addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can storm control discard traffic that is not actually a storm?",
+    "explanation": "Storm control counts all traffic of the selected type on the port, so a legitimate high rate of broadcast or multicast, such as video delivery, can cross the threshold and be treated like a flood.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A legitimate high rate of broadcast or multicast traffic can cross the same threshold",
+        "is_correct": true
+      },
+      {
+        "text": "Storm control cannot distinguish tagged from untagged frames",
+        "is_correct": false
+      },
+      {
+        "text": "Storm control only counts frames sourced from the switch itself",
+        "is_correct": false
+      },
+      {
+        "text": "The threshold is measured against CPU load rather than link rate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a storm-control threshold expressed as a percentage measured against interface bandwidth instead of a fixed rate?",
+    "explanation": "A percentage scales with the link, so one policy works on a 1 Gbps access port and a 10 Gbps uplink. A fixed rate would mean something different on every speed and would need re-tuning per port.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same policy then scales automatically across ports of different speeds",
+        "is_correct": true
+      },
+      {
+        "text": "Percentages are the only unit the hardware counters can report",
+        "is_correct": false
+      },
+      {
+        "text": "A fixed rate cannot be configured on trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Percentages ignore the configured duplex setting, which fixed rates do not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which LLDP-MED type-length-value carries the voice VLAN identifier to an IP phone?",
+    "explanation": "The network policy TLV tells the phone which VLAN ID, 802.1p priority, and DSCP value to use for voice. The phone applies those settings and starts tagging its own frames.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The network policy TLV",
+        "is_correct": true
+      },
+      {
+        "text": "The power via MDI TLV",
+        "is_correct": false
+      },
+      {
+        "text": "The inventory management TLV",
+        "is_correct": false
+      },
+      {
+        "text": "The location identification TLV",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A floating static route resolves its next hop through the very route it is meant to back up. Why is that a problem?",
+    "explanation": "If the backup's next hop is only reachable through the primary path, losing that path makes the next hop unresolvable, so the backup route is withdrawn at the same moment it is needed.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "When the primary path fails the next hop becomes unreachable, so the backup disappears too",
+        "is_correct": true
+      },
+      {
+        "text": "The router refuses to install a static route whose next hop is learned dynamically",
+        "is_correct": false
+      },
+      {
+        "text": "The backup inherits the primary route's administrative distance",
+        "is_correct": false
+      },
+      {
+        "text": "The router load-balances between the two routes instead of preferring one",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route points at next hop 2001:db8:10::5, which already falls inside a connected subnet. How does the router treat that next hop?",
+    "explanation": "A next hop that sits inside a connected prefix is on-link, so the router resolves its MAC with neighbour discovery and forwards without another table lookup. An off-link next hop would instead need a separate more specific route to resolve it first.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As an on-link neighbour that neighbour discovery resolves, with no further lookup",
+        "is_correct": true
+      },
+      {
+        "text": "As an off-link address that needs a recursive lookup through another route",
+        "is_correct": false
+      },
+      {
+        "text": "As a link-local address that must be paired with an exit interface",
+        "is_correct": false
+      },
+      {
+        "text": "As unusable, because static next hops must always be link-local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is an IPv6 default route injected into OSPFv3?",
+    "explanation": "OSPFv3 does not originate a default route on its own. The `default-information originate` command under the OSPFv3 process advertises ::/0, optionally only while a default route already exists locally.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "With default-information originate under the OSPFv3 process",
+        "is_correct": true
+      },
+      {
+        "text": "With a static ::/0 route, which OSPFv3 redistributes automatically",
+        "is_correct": false
+      },
+      {
+        "text": "By enabling ipv6 unicast-routing on the area border router",
+        "is_correct": false
+      },
+      {
+        "text": "OSPFv3 always floods a default route from the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default OSPF hello and dead intervals on an NBMA network type?",
+    "explanation": "NBMA uses 30-second hellos and a 120-second dead interval, four times longer than the 10 and 40 seconds used on broadcast and point-to-point links. Mismatched timers prevent adjacency formation.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "30 seconds and 120 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "10 seconds and 40 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds and 20 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "60 seconds and 240 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers remain stuck in the ExStart state. What is the most common cause?",
+    "explanation": "ExStart is where the master and slave agree on the initial database description sequence number, and that exchange is sensitive to MTU. A mismatched interface MTU makes the larger DBD packet fail, so the state never advances.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A mismatched interface MTU between the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "A mismatched OSPF process ID on the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "Different OSPF router IDs on the same segment",
+        "is_correct": false
+      },
+      {
+        "text": "One router configured as a stub area and the other as normal",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF neighbour is stuck permanently in the INIT state. What does that tell you?",
+    "explanation": "INIT means the local router has received a hello but does not see its own router ID listed in it. Hellos are therefore arriving one way only, which points to a filter, a one-way path, or a multicast problem.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hellos are arriving in one direction only, so the local router never sees itself in the neighbour's hello",
+        "is_correct": true
+      },
+      {
+        "text": "The two routers disagree on the area ID",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour is a DROTHER and must stay in INIT by design",
+        "is_correct": false
+      },
+      {
+        "text": "The database description exchange has not started yet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many OSPFv3 adjacencies form on an interface that has three global IPv6 prefixes, and what addresses carry them?",
+    "explanation": "OSPFv3 runs over the link-local address and is effectively per-link rather than per-prefix, so a single adjacency forms. The global prefixes are carried inside the LSAs rather than driving separate sessions.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One adjacency, sourced from the link-local addresses of the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "Three adjacencies, one per global prefix",
+        "is_correct": false
+      },
+      {
+        "text": "Two adjacencies, one per address family",
+        "is_correct": false
+      },
+      {
+        "text": "One adjacency per prefix pair, negotiated by the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does the forwarding table differ from the routing table?",
+    "explanation": "The routing table is the routing protocol's view, holding all candidate routes and their attributes. The forwarding table, or FIB, is the distilled result optimised for line-rate lookup: one best next hop per destination prefix.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The routing table holds all candidate routes, while the forwarding table holds only the selected best next hop per prefix",
+        "is_correct": true
+      },
+      {
+        "text": "The routing table holds only connected routes, while the forwarding table holds learned routes",
+        "is_correct": false
+      },
+      {
+        "text": "The forwarding table holds every route and the routing table holds only the default route",
+        "is_correct": false
+      },
+      {
+        "text": "They are identical, and the names simply differ by platform",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a recursive route lookup?",
+    "explanation": "When a route names a next hop rather than an exit interface, the router looks that next hop up in the table again to find how to reach it. The recursion ends at a route with a directly connected next hop.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Looking up the next-hop address in the table again to find the real exit interface",
+        "is_correct": true
+      },
+      {
+        "text": "Re-reading the routing table every time a packet arrives",
+        "is_correct": false
+      },
+      {
+        "text": "Querying a neighbour for a route it has already advertised",
+        "is_correct": false
+      },
+      {
+        "text": "Recomputing the shortest path tree after every topology change",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routes exist for a destination: 10.1.0.0/16 learned from OSPF and 10.1.4.0/24 learned from EIGRP. Which is used for traffic to 10.1.4.9?",
+    "explanation": "Administrative distance only compares routes for the same prefix. Because the destination falls inside both prefixes, the router first chooses the longest match, which is the /24, regardless of protocol.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The EIGRP /24, because the longest matching prefix wins before distance is considered",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPF /16, because OSPF has the lower administrative distance of the two",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, because the overlapping prefixes make the destination unreachable",
+        "is_correct": false
+      },
+      {
+        "text": "Both, and the router load-balances across the two paths",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a DHCP client do when 87.5 percent of its lease has elapsed without a renewal?",
+    "explanation": "At the rebinding timer the client stops unicasting to its original server and broadcasts a request so any server can extend the lease. If nothing answers before the lease expires, the address must be abandoned.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It broadcasts a request so any available DHCP server can extend the lease",
+        "is_correct": true
+      },
+      {
+        "text": "It keeps unicasting to the original server until the lease expires",
+        "is_correct": false
+      },
+      {
+        "text": "It releases the address immediately and restarts discovery",
+        "is_correct": false
+      },
+      {
+        "text": "It self-assigns a link-local address and stops requesting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the Cisco IOS command `lease 7`, what does the value 7 configure?",
+    "explanation": "A single value after `lease` is interpreted as days, so the pool hands out seven-day leases. Two values are days and hours, and three are days, hours, and minutes.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A lease duration of seven days",
+        "is_correct": true
+      },
+      {
+        "text": "A lease duration of seven hours",
+        "is_correct": false
+      },
+      {
+        "text": "Seven addresses reserved for static assignment",
+        "is_correct": false
+      },
+      {
+        "text": "A renewal interval of seven minutes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does DNS fall back to TCP when a response is too large for a single UDP datagram?",
+    "explanation": "A UDP response that exceeds the advertised buffer is sent truncated with the TC bit set, and the resolver retries over TCP. TCP also carries zone transfers, which routinely exceed datagram size.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The UDP answer is truncated and the resolver retries so the full record set arrives reliably",
+        "is_correct": true
+      },
+      {
+        "text": "TCP is faster than UDP for every query, so clients always retry",
+        "is_correct": false
+      },
+      {
+        "text": "DNS servers refuse UDP queries larger than 512 bytes for security",
+        "is_correct": false
+      },
+      {
+        "text": "TCP is used only when DNSSEC is enabled on the zone",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a recursive DNS query differ from an iterative one?",
+    "explanation": "With recursion the resolver takes full responsibility and returns a final answer, chasing referrals itself. With iteration the server returns the best referral it has and the asker continues the walk.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A recursive query returns a final answer, while an iterative query returns a referral to try next",
+        "is_correct": true
+      },
+      {
+        "text": "A recursive query uses TCP and an iterative query uses UDP",
+        "is_correct": false
+      },
+      {
+        "text": "A recursive query is answered only by the root servers",
+        "is_correct": false
+      },
+      {
+        "text": "An iterative query is cached and a recursive query never is",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does IKE phase 2 negotiate in an IPsec VPN?",
+    "explanation": "Phase 1 builds the secure management channel, then phase 2 uses it to negotiate the IPsec security associations that actually protect user traffic: protocol, encryption, integrity, and lifetime.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The IPsec security associations that protect user traffic",
+        "is_correct": true
+      },
+      {
+        "text": "The pre-shared key used to authenticate the peers",
+        "is_correct": false
+      },
+      {
+        "text": "The Diffie-Hellman group used for the management tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "The internal IP address pool handed to remote clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What problem does dead peer detection solve in an IPsec remote-access deployment?",
+    "explanation": "DPD sends periodic probes and tears down the tunnel when a peer stops answering. Without it a tunnel to a client that vanished can linger, holding resources and black-holing traffic until the SA lifetime expires.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It detects a peer that has silently disappeared and removes the stale tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "It accelerates rekeying of the phase 2 security associations",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates clients against the RADIUS server",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the same client from opening two tunnels at once",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables the SCP server on a Cisco IOS router?",
+    "explanation": "SCP rides on the SSH server, but IOS requires the SCP service to be enabled separately with `ip scp server enable`. Until then SCP transfers are refused even though SSH logins succeed.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip scp server enable",
+        "is_correct": true
+      },
+      {
+        "text": "transport input scp",
+        "is_correct": false
+      },
+      {
+        "text": "crypto key generate scp",
+        "is_correct": false
+      },
+      {
+        "text": "file transfer scp enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an object identifier (OID) in SNMP?",
+    "explanation": "An OID is a dotted numeric path through the MIB tree that names one managed object, such as an interface counter. Both manager and agent use the same OID to mean the same data item.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A dotted numeric path that uniquely names a managed object in the MIB tree",
+        "is_correct": true
+      },
+      {
+        "text": "The community string used to authenticate a manager",
+        "is_correct": false
+      },
+      {
+        "text": "The engine identifier assigned to each SNMPv3 agent",
+        "is_correct": false
+      },
+      {
+        "text": "The sequence number carried in an SNMP trap",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a temperature setting near zero preferred when a model generates device configuration?",
+    "explanation": "Low temperature narrows sampling toward the most probable tokens, so the same prompt yields nearly the same output. That reproducibility is what lets a pipeline validate a command set once and trust it later.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It makes output nearly deterministic, so the same prompt produces the same commands",
+        "is_correct": true
+      },
+      {
+        "text": "It increases the number of tokens the model can accept as input",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the model from reading the prompt as untrusted input",
+        "is_correct": false
+      },
+      {
+        "text": "It reduces the cost of each API call by shortening the response",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why should an agent stop and escalate when it repeats the same action with the same result?",
+    "explanation": "A repeated identical action and observation means the loop is making no progress. Continuing burns steps and may hammer a device, so the agent should surface the stall rather than keep retrying.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No progress is being made, so continuing only wastes steps and may repeat side effects",
+        "is_correct": true
+      },
+      {
+        "text": "Repeated actions always indicate the tool definitions are invalid",
+        "is_correct": false
+      },
+      {
+        "text": "The model's context window has already been exceeded",
+        "is_correct": false
+      },
+      {
+        "text": "A repeated call proves the credentials have expired",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must AI-generated commands be checked against the configuration hierarchy they will run in?",
+    "explanation": "Many commands are only valid under a specific mode, such as interface configuration. A syntactically perfect command issued at the wrong prompt either errors out or, worse, applies to the wrong object.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same command may be invalid or apply to the wrong object when entered in the wrong mode",
+        "is_correct": true
+      },
+      {
+        "text": "Hierarchy does not matter because IOS accepts any command at any prompt",
+        "is_correct": false
+      },
+      {
+        "text": "Commands are validated only by their character encoding",
+        "is_correct": false
+      },
+      {
+        "text": "Entering a command at the wrong level always triggers a reload prompt",
+        "is_correct": false
+      }
+    ]
+  }
+]

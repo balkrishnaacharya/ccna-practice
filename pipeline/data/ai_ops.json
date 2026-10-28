@@ -3092,5 +3092,83 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Why is a temperature setting near zero preferred when a model generates device configuration?",
+    "explanation": "Low temperature narrows sampling toward the most probable tokens, so the same prompt yields nearly the same output. That reproducibility is what lets a pipeline validate a command set once and trust it later.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It makes output nearly deterministic, so the same prompt produces the same commands",
+        "is_correct": true
+      },
+      {
+        "text": "It increases the number of tokens the model can accept as input",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the model from reading the prompt as untrusted input",
+        "is_correct": false
+      },
+      {
+        "text": "It reduces the cost of each API call by shortening the response",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why should an agent stop and escalate when it repeats the same action with the same result?",
+    "explanation": "A repeated identical action and observation means the loop is making no progress. Continuing burns steps and may hammer a device, so the agent should surface the stall rather than keep retrying.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No progress is being made, so continuing only wastes steps and may repeat side effects",
+        "is_correct": true
+      },
+      {
+        "text": "Repeated actions always indicate the tool definitions are invalid",
+        "is_correct": false
+      },
+      {
+        "text": "The model's context window has already been exceeded",
+        "is_correct": false
+      },
+      {
+        "text": "A repeated call proves the credentials have expired",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must AI-generated commands be checked against the configuration hierarchy they will run in?",
+    "explanation": "Many commands are only valid under a specific mode, such as interface configuration. A syntactically perfect command issued at the wrong prompt either errors out or, worse, applies to the wrong object.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same command may be invalid or apply to the wrong object when entered in the wrong mode",
+        "is_correct": true
+      },
+      {
+        "text": "Hierarchy does not matter because IOS accepts any command at any prompt",
+        "is_correct": false
+      },
+      {
+        "text": "Commands are validated only by their character encoding",
+        "is_correct": false
+      },
+      {
+        "text": "Entering a command at the wrong level always triggers a reload prompt",
+        "is_correct": false
+      }
+    ]
   }
 ]

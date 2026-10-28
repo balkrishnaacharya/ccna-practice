@@ -3976,5 +3976,265 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A floating static route resolves its next hop through the very route it is meant to back up. Why is that a problem?",
+    "explanation": "If the backup's next hop is only reachable through the primary path, losing that path makes the next hop unresolvable, so the backup route is withdrawn at the same moment it is needed.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "When the primary path fails the next hop becomes unreachable, so the backup disappears too",
+        "is_correct": true
+      },
+      {
+        "text": "The router refuses to install a static route whose next hop is learned dynamically",
+        "is_correct": false
+      },
+      {
+        "text": "The backup inherits the primary route's administrative distance",
+        "is_correct": false
+      },
+      {
+        "text": "The router load-balances between the two routes instead of preferring one",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route points at next hop 2001:db8:10::5, which already falls inside a connected subnet. How does the router treat that next hop?",
+    "explanation": "A next hop that sits inside a connected prefix is on-link, so the router resolves its MAC with neighbour discovery and forwards without another table lookup. An off-link next hop would instead need a separate more specific route to resolve it first.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As an on-link neighbour that neighbour discovery resolves, with no further lookup",
+        "is_correct": true
+      },
+      {
+        "text": "As an off-link address that needs a recursive lookup through another route",
+        "is_correct": false
+      },
+      {
+        "text": "As a link-local address that must be paired with an exit interface",
+        "is_correct": false
+      },
+      {
+        "text": "As unusable, because static next hops must always be link-local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is an IPv6 default route injected into OSPFv3?",
+    "explanation": "OSPFv3 does not originate a default route on its own. The `default-information originate` command under the OSPFv3 process advertises ::/0, optionally only while a default route already exists locally.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "With default-information originate under the OSPFv3 process",
+        "is_correct": true
+      },
+      {
+        "text": "With a static ::/0 route, which OSPFv3 redistributes automatically",
+        "is_correct": false
+      },
+      {
+        "text": "By enabling ipv6 unicast-routing on the area border router",
+        "is_correct": false
+      },
+      {
+        "text": "OSPFv3 always floods a default route from the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the default OSPF hello and dead intervals on an NBMA network type?",
+    "explanation": "NBMA uses 30-second hellos and a 120-second dead interval, four times longer than the 10 and 40 seconds used on broadcast and point-to-point links. Mismatched timers prevent adjacency formation.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "30 seconds and 120 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "10 seconds and 40 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "5 seconds and 20 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "60 seconds and 240 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two OSPF routers remain stuck in the ExStart state. What is the most common cause?",
+    "explanation": "ExStart is where the master and slave agree on the initial database description sequence number, and that exchange is sensitive to MTU. A mismatched interface MTU makes the larger DBD packet fail, so the state never advances.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A mismatched interface MTU between the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "A mismatched OSPF process ID on the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "Different OSPF router IDs on the same segment",
+        "is_correct": false
+      },
+      {
+        "text": "One router configured as a stub area and the other as normal",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF neighbour is stuck permanently in the INIT state. What does that tell you?",
+    "explanation": "INIT means the local router has received a hello but does not see its own router ID listed in it. Hellos are therefore arriving one way only, which points to a filter, a one-way path, or a multicast problem.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hellos are arriving in one direction only, so the local router never sees itself in the neighbour's hello",
+        "is_correct": true
+      },
+      {
+        "text": "The two routers disagree on the area ID",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour is a DROTHER and must stay in INIT by design",
+        "is_correct": false
+      },
+      {
+        "text": "The database description exchange has not started yet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many OSPFv3 adjacencies form on an interface that has three global IPv6 prefixes, and what addresses carry them?",
+    "explanation": "OSPFv3 runs over the link-local address and is effectively per-link rather than per-prefix, so a single adjacency forms. The global prefixes are carried inside the LSAs rather than driving separate sessions.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One adjacency, sourced from the link-local addresses of the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "Three adjacencies, one per global prefix",
+        "is_correct": false
+      },
+      {
+        "text": "Two adjacencies, one per address family",
+        "is_correct": false
+      },
+      {
+        "text": "One adjacency per prefix pair, negotiated by the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does the forwarding table differ from the routing table?",
+    "explanation": "The routing table is the routing protocol's view, holding all candidate routes and their attributes. The forwarding table, or FIB, is the distilled result optimised for line-rate lookup: one best next hop per destination prefix.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The routing table holds all candidate routes, while the forwarding table holds only the selected best next hop per prefix",
+        "is_correct": true
+      },
+      {
+        "text": "The routing table holds only connected routes, while the forwarding table holds learned routes",
+        "is_correct": false
+      },
+      {
+        "text": "The forwarding table holds every route and the routing table holds only the default route",
+        "is_correct": false
+      },
+      {
+        "text": "They are identical, and the names simply differ by platform",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a recursive route lookup?",
+    "explanation": "When a route names a next hop rather than an exit interface, the router looks that next hop up in the table again to find how to reach it. The recursion ends at a route with a directly connected next hop.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Looking up the next-hop address in the table again to find the real exit interface",
+        "is_correct": true
+      },
+      {
+        "text": "Re-reading the routing table every time a packet arrives",
+        "is_correct": false
+      },
+      {
+        "text": "Querying a neighbour for a route it has already advertised",
+        "is_correct": false
+      },
+      {
+        "text": "Recomputing the shortest path tree after every topology change",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routes exist for a destination: 10.1.0.0/16 learned from OSPF and 10.1.4.0/24 learned from EIGRP. Which is used for traffic to 10.1.4.9?",
+    "explanation": "Administrative distance only compares routes for the same prefix. Because the destination falls inside both prefixes, the router first chooses the longest match, which is the /24, regardless of protocol.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The EIGRP /24, because the longest matching prefix wins before distance is considered",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPF /16, because OSPF has the lower administrative distance of the two",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, because the overlapping prefixes make the destination unreachable",
+        "is_correct": false
+      },
+      {
+        "text": "Both, and the router load-balances across the two paths",
+        "is_correct": false
+      }
+    ]
   }
 ]

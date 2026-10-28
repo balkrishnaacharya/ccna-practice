@@ -4522,5 +4522,213 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What does a DHCP client do when 87.5 percent of its lease has elapsed without a renewal?",
+    "explanation": "At the rebinding timer the client stops unicasting to its original server and broadcasts a request so any server can extend the lease. If nothing answers before the lease expires, the address must be abandoned.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It broadcasts a request so any available DHCP server can extend the lease",
+        "is_correct": true
+      },
+      {
+        "text": "It keeps unicasting to the original server until the lease expires",
+        "is_correct": false
+      },
+      {
+        "text": "It releases the address immediately and restarts discovery",
+        "is_correct": false
+      },
+      {
+        "text": "It self-assigns a link-local address and stops requesting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the Cisco IOS command `lease 7`, what does the value 7 configure?",
+    "explanation": "A single value after `lease` is interpreted as days, so the pool hands out seven-day leases. Two values are days and hours, and three are days, hours, and minutes.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A lease duration of seven days",
+        "is_correct": true
+      },
+      {
+        "text": "A lease duration of seven hours",
+        "is_correct": false
+      },
+      {
+        "text": "Seven addresses reserved for static assignment",
+        "is_correct": false
+      },
+      {
+        "text": "A renewal interval of seven minutes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does DNS fall back to TCP when a response is too large for a single UDP datagram?",
+    "explanation": "A UDP response that exceeds the advertised buffer is sent truncated with the TC bit set, and the resolver retries over TCP. TCP also carries zone transfers, which routinely exceed datagram size.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The UDP answer is truncated and the resolver retries so the full record set arrives reliably",
+        "is_correct": true
+      },
+      {
+        "text": "TCP is faster than UDP for every query, so clients always retry",
+        "is_correct": false
+      },
+      {
+        "text": "DNS servers refuse UDP queries larger than 512 bytes for security",
+        "is_correct": false
+      },
+      {
+        "text": "TCP is used only when DNSSEC is enabled on the zone",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a recursive DNS query differ from an iterative one?",
+    "explanation": "With recursion the resolver takes full responsibility and returns a final answer, chasing referrals itself. With iteration the server returns the best referral it has and the asker continues the walk.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A recursive query returns a final answer, while an iterative query returns a referral to try next",
+        "is_correct": true
+      },
+      {
+        "text": "A recursive query uses TCP and an iterative query uses UDP",
+        "is_correct": false
+      },
+      {
+        "text": "A recursive query is answered only by the root servers",
+        "is_correct": false
+      },
+      {
+        "text": "An iterative query is cached and a recursive query never is",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does IKE phase 2 negotiate in an IPsec VPN?",
+    "explanation": "Phase 1 builds the secure management channel, then phase 2 uses it to negotiate the IPsec security associations that actually protect user traffic: protocol, encryption, integrity, and lifetime.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The IPsec security associations that protect user traffic",
+        "is_correct": true
+      },
+      {
+        "text": "The pre-shared key used to authenticate the peers",
+        "is_correct": false
+      },
+      {
+        "text": "The Diffie-Hellman group used for the management tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "The internal IP address pool handed to remote clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What problem does dead peer detection solve in an IPsec remote-access deployment?",
+    "explanation": "DPD sends periodic probes and tears down the tunnel when a peer stops answering. Without it a tunnel to a client that vanished can linger, holding resources and black-holing traffic until the SA lifetime expires.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It detects a peer that has silently disappeared and removes the stale tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "It accelerates rekeying of the phase 2 security associations",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates clients against the RADIUS server",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents the same client from opening two tunnels at once",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables the SCP server on a Cisco IOS router?",
+    "explanation": "SCP rides on the SSH server, but IOS requires the SCP service to be enabled separately with `ip scp server enable`. Until then SCP transfers are refused even though SSH logins succeed.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip scp server enable",
+        "is_correct": true
+      },
+      {
+        "text": "transport input scp",
+        "is_correct": false
+      },
+      {
+        "text": "crypto key generate scp",
+        "is_correct": false
+      },
+      {
+        "text": "file transfer scp enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is an object identifier (OID) in SNMP?",
+    "explanation": "An OID is a dotted numeric path through the MIB tree that names one managed object, such as an interface counter. Both manager and agent use the same OID to mean the same data item.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A dotted numeric path that uniquely names a managed object in the MIB tree",
+        "is_correct": true
+      },
+      {
+        "text": "The community string used to authenticate a manager",
+        "is_correct": false
+      },
+      {
+        "text": "The engine identifier assigned to each SNMPv3 agent",
+        "is_correct": false
+      },
+      {
+        "text": "The sequence number carried in an SNMP trap",
+        "is_correct": false
+      }
+    ]
   }
 ]

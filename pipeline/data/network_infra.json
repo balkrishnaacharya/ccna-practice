@@ -4626,5 +4626,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "An IPv4 header carries an IHL field with the value 15. How long is that header?",
+    "explanation": "The IHL field counts 32-bit words, not bytes. A value of 15 therefore means 15 times 4, or 60 bytes, which is the maximum an IPv4 header can be once options are included.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "60 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "15 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "40 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "64 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the Total Length field of an IPv4 header measure?",
+    "explanation": "Total Length covers the header and the payload together, so a full 1500-byte Ethernet payload reports 1500. Subtracting the IHL-derived header size leaves the actual data length.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The header plus the payload, in bytes",
+        "is_correct": true
+      },
+      {
+        "text": "Only the payload, in bytes",
+        "is_correct": false
+      },
+      {
+        "text": "Only the header, in 32-bit words",
+        "is_correct": false
+      },
+      {
+        "text": "The number of routers the packet may still cross",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 header field lets a destination group fragments that belong to the same original packet?",
+    "explanation": "Every fragment of one datagram carries the same Identification value, and the fragment offset then positions it. Together the two fields allow correct reassembly even when fragments arrive out of order.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Identification",
+        "is_correct": true
+      },
+      {
+        "text": "Total Length",
+        "is_correct": false
+      },
+      {
+        "text": "Header Checksum",
+        "is_correct": false
+      },
+      {
+        "text": "Protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How is the upper-layer protocol identified in an IPv6 packet that carries extension headers?",
+    "explanation": "Each extension header ends with its own Next Header field, so the value chains forward header by header. The final Next Header value in the chain names the transport protocol or ICMPv6.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The final Next Header value in the extension-header chain names it",
+        "is_correct": true
+      },
+      {
+        "text": "A fixed field in the base header always names it, whatever extensions follow",
+        "is_correct": false
+      },
+      {
+        "text": "The Flow Label carries the protocol number",
+        "is_correct": false
+      },
+      {
+        "text": "The Payload Length encodes the protocol number",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a routed spine-leaf fabric not need spanning tree across the data center?",
+    "explanation": "Each leaf-to-spine link is its own point-to-point IP subnet, so there is no Layer 2 loop to block. Every uplink can carry traffic at once, and equal-cost multipath spreads flows across them.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every leaf-to-spine link is a routed point-to-point subnet, so no Layer 2 loop exists",
+        "is_correct": true
+      },
+      {
+        "text": "Spine switches run a proprietary loop-prevention protocol instead of STP",
+        "is_correct": false
+      },
+      {
+        "text": "Leaves connect to only one spine at a time, which removes any loop",
+        "is_correct": false
+      },
+      {
+        "text": "Servers handle loop prevention in software before sending frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is eBGP commonly chosen as the routing protocol between leaves and spines in a large fabric?",
+    "explanation": "A per-link eBGP session with a unique ASN per switch gives loop-free paths without flooding link state across the whole fabric, and it scales to thousands of nodes while supporting multipath.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Unique ASNs per switch give loop-free paths with no fabric-wide link-state flooding and easy multipath",
+        "is_correct": true
+      },
+      {
+        "text": "It converges faster than any interior gateway protocol on point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "It is the only protocol that can carry IPv6 prefixes across a fabric",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need to assign IP addresses to leaf-to-spine links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a spine-leaf fabric use spine ports only for fabric uplinks and never for servers?",
+    "explanation": "Leaving servers off the spines keeps each spine a pure transit tier whose full port count adds bisectional bandwidth. Capacity grows by adding spines, and leaves absorb all server attachment.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Keeping spines as pure transit lets every spine port add fabric bandwidth, and growth comes from adding spines",
+        "is_correct": true
+      },
+      {
+        "text": "Spine switches lack the MAC address capacity to attach servers",
+        "is_correct": false
+      },
+      {
+        "text": "Server traffic on a spine would bypass the leaf's access control lists",
+        "is_correct": false
+      },
+      {
+        "text": "Spine ports cannot negotiate server NIC speeds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a mobility group provide in a multi-controller wireless deployment?",
+    "explanation": "Controllers in the same mobility group share client context over mobility tunnels, so a client that roams to an AP on another controller keeps its session and does not re-authenticate.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It shares client context between controllers so roaming clients keep their sessions",
+        "is_correct": true
+      },
+      {
+        "text": "It load-balances CAPWAP control traffic across the wireless management VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "It synchronises the WLC configuration database between controllers",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns radio channels and transmit power to access points",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an access point do when it is placed in monitor mode?",
+    "explanation": "A monitor-mode AP stops serving clients and dedicates its radio to passively capturing frames for intrusion detection and site surveys. It is a sensor, not an access point for users.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stops serving clients and passively captures wireless traffic for analysis",
+        "is_correct": true
+      },
+      {
+        "text": "It serves clients but forwards their traffic locally instead of to the controller",
+        "is_correct": false
+      },
+      {
+        "text": "It becomes a backup controller for the APs in its mobility group",
+        "is_correct": false
+      },
+      {
+        "text": "It converts its radio to a dedicated backhaul link between buildings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Ping replies to a remote site are fast, but large file transfers to that site crawl. No interface shows errors and the link is not saturated. What best explains the throughput?",
+    "explanation": "A TCP sender may have only one window in flight per round trip, so throughput is capped near window size divided by RTT. Long paths therefore need a larger window to fill the link, even when latency looks fine to a ping.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Throughput is limited by the TCP window divided by the round-trip time",
+        "is_correct": true
+      },
+      {
+        "text": "The path MTU is smaller than the server's interface MTU, so every frame is dropped",
+        "is_correct": false
+      },
+      {
+        "text": "The remote site's DNS server is answering slowly",
+        "is_correct": false
+      },
+      {
+        "text": "The client NIC is negotiating half duplex with the access switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Users report strong Wi-Fi signal but slow throughput, and the problem worsens as more people join the same area. What is the most likely cause?",
+    "explanation": "Signal strength says nothing about airtime. When many clients share one channel they contend for the same medium, so each station waits longer and aggregate throughput per client falls.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Clients on the same channel are contending for airtime",
+        "is_correct": true
+      },
+      {
+        "text": "The AP transmit power is too low for the coverage area",
+        "is_correct": false
+      },
+      {
+        "text": "The clients are receiving addresses from the wrong DHCP scope",
+        "is_correct": false
+      },
+      {
+        "text": "The SSID is hidden, so clients must probe more often",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which combination of amendment and spectrum defines Wi-Fi 6E?",
+    "explanation": "Wi-Fi 6E is 802.11ax operating in the newly opened 6 GHz band. The PHY is the same as Wi-Fi 6; the E denotes the additional spectrum, which supplies many more non-overlapping channels.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11ax extended into the 6 GHz band",
+        "is_correct": true
+      },
+      {
+        "text": "802.11ac extended into the 6 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "802.11be restricted to the 5 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n extended into the 60 GHz band",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which modulation scheme did 802.11ac introduce that 802.11n does not use?",
+    "explanation": "802.11ac added 256-QAM, carrying eight bits per subcarrier instead of the six of 64-QAM. The denser constellation demands a better signal-to-noise ratio to stay decodable.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "256-QAM",
+        "is_correct": true
+      },
+      {
+        "text": "64-QAM",
+        "is_correct": false
+      },
+      {
+        "text": "DSSS with Barker coding",
+        "is_correct": false
+      },
+      {
+        "text": "Binary phase-shift keying",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the widest channel 802.11n can use?",
+    "explanation": "802.11n introduced channel bonding but caps it at two 20 MHz channels, giving 40 MHz. Wider 80 and 160 MHz channels only arrived with 802.11ac.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "40 MHz",
+        "is_correct": true
+      },
+      {
+        "text": "20 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "80 MHz",
+        "is_correct": false
+      },
+      {
+        "text": "160 MHz",
+        "is_correct": false
+      }
+    ]
   }
 ]
