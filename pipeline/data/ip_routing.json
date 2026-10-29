@@ -5068,5 +5068,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A VRRP group and an HSRP group are both left at their default settings after a higher-priority router reboots and rejoins. How do the two behave?",
+    "explanation": "VRRP preempts by default, so the returning router with the higher priority takes the master role back. HSRP has preemption disabled unless the preempt command is configured, so the router that took over stays active.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both preempt and restore the original active router",
+        "is_correct": false
+      },
+      {
+        "text": "VRRP preempts and HSRP does not, unless preempt is configured",
+        "is_correct": true
+      },
+      {
+        "text": "Neither preempts without explicit configuration",
+        "is_correct": false
+      },
+      {
+        "text": "HSRP preempts and VRRP does not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static route points to next hop 192.0.2.1, and 192.0.2.0/24 is itself learned through OSPF. What must the router do before that static route can enter the table?",
+    "explanation": "The router performs a recursive lookup: it looks for a route that resolves the next-hop address before installing the static route, then borrows that route's outbound interface. Because 192.0.2.1 is reachable through the OSPF entry, the static route is installed against the OSPF path. If nothing in the table resolves the next hop, the static route is never installed at all.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing; a static next hop is installed regardless of reachability",
+        "is_correct": false
+      },
+      {
+        "text": "Resolve the next hop recursively through another route already in the table",
+        "is_correct": true
+      },
+      {
+        "text": "Convert the static route into a connected route",
+        "is_correct": false
+      },
+      {
+        "text": "Redistribute 192.0.2.0/24 into OSPF first",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route points at link-local next hop fe80::1 on Gi0/2, but the neighbour cache holds no entry for fe80::1. What must happen before the route becomes usable?",
+    "explanation": "The router needs the next hop's link-layer address to build the frame, so it sends a Neighbor Solicitation on Gi0/2 for fe80::1. Once the Neighbor Advertisement populates the cache, the route can forward; if the neighbour never answers, the route stays unresolved.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing, the route is usable immediately",
+        "is_correct": false
+      },
+      {
+        "text": "The router resolves fe80::1 through neighbour discovery on Gi0/2",
+        "is_correct": true
+      },
+      {
+        "text": "The router floods the packet on all interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "The router falls back to the global unicast next hop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An interface is configured with OSPF network type non-broadcast. Which behaviour distinguishes it from the broadcast type?",
+    "explanation": "Non-broadcast does not send multicast hellos, so neighbours must be defined manually with neighbour statements. It still elects a DR and BDR, unlike point-to-point, which skips the election entirely.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DR election is disabled",
+        "is_correct": false
+      },
+      {
+        "text": "Neighbours must be configured manually",
+        "is_correct": true
+      },
+      {
+        "text": "Hello timers become shorter",
+        "is_correct": false
+      },
+      {
+        "text": "Only one neighbour is supported",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF interface runs at 100 Mbps and the reference bandwidth is left at its default. What cost does OSPF assign to it?",
+    "explanation": "Cost is the reference bandwidth divided by the interface bandwidth, so 100 Mbps divided by 100 Mbps gives 1. Because 1 is the floor, every link of 100 Mbps or faster ties at cost 1 until the reference bandwidth is raised.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "10",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF neighbour on an NBMA interface sits permanently in the ATTEMPT state. What does that state mean?",
+    "explanation": "ATTEMPT exists only on NBMA and point-to-multipoint non-broadcast media, where hellos cannot be multicast. The router is sending unicast hellos to a statically configured neighbour but has not yet received one back, so the neighbour is either misaddressed or not answering.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router is waiting for a DR election to finish",
+        "is_correct": false
+      },
+      {
+        "text": "Unicast hellos are being sent to a configured neighbour but none has been received",
+        "is_correct": true
+      },
+      {
+        "text": "The database description exchange has stalled",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour has been authenticated but not authorised",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The command `variance 2` is configured under an EIGRP process. What does it change?",
+    "explanation": "Variance widens the set of paths that may be installed: a feasible successor is used for unequal-cost load balancing when its metric is at most the successor metric multiplied by the variance. The path must still pass the feasibility condition, so variance alone never admits a loop-prone route.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It doubles the hello interval on slow links",
+        "is_correct": false
+      },
+      {
+        "text": "It lets feasible successors within twice the successor metric be installed",
+        "is_correct": true
+      },
+      {
+        "text": "It multiplies the composite metric by two",
+        "is_correct": false
+      },
+      {
+        "text": "It forces a new diffusing computation every 2 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does an iBGP-learned route often fail the next-hop reachability check on a router that did not originate it?",
+    "explanation": "iBGP does not rewrite the next hop, so the address learned from the external peer is carried unchanged into the autonomous system. Unless that address is reachable through the IGP or the originating router uses next-hop-self, the receiving router cannot resolve it and the route is never installed.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "iBGP rewrites the next hop to the local router",
+        "is_correct": false
+      },
+      {
+        "text": "iBGP leaves the external next hop unchanged, so it may be unreachable inside the AS",
+        "is_correct": true
+      },
+      {
+        "text": "eBGP is required before any route can be resolved",
+        "is_correct": false
+      },
+      {
+        "text": "The route is discarded by split horizon",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two networks in a routing domain, 10.1.0.0/24 and 10.3.0.0/24, are not contiguous. What does that mean for summarization?",
+    "explanation": "A single summary must cover every address between the lowest and highest member, so summarizing these two would also advertise 10.2.0.0/24, which is not part of the domain. The correct approach is either two separate advertisements or a deliberate discard route for the gap.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They can be summarized as 10.1.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "A single summary would also cover the unused 10.2.0.0/24 in between",
+        "is_correct": true
+      },
+      {
+        "text": "They summarize cleanly as 10.0.0.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "Summarization is impossible for any private addressing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A routing table holds 10.0.0.0/8 via R1, 10.1.0.0/16 via R2, and 10.1.1.0/24 via R3. Which path carries a packet destined for 10.1.1.55?",
+    "explanation": "Longest prefix match is applied before administrative distance or metric, so the /24 through R3 is selected. The /8 and /16 entries remain in the table for other destinations but never compete for this address.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "R1, because the /8 is the least specific and most stable",
+        "is_correct": false
+      },
+      {
+        "text": "R2, because the /16 is the natural boundary",
+        "is_correct": false
+      },
+      {
+        "text": "R3, because the /24 is the longest match",
+        "is_correct": true
+      },
+      {
+        "text": "All three, shared by equal-cost multipathing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A higher-priority HSRP router boots after another router is already active. By default it does not take over the active role. Which command changes that?",
+    "explanation": "Preemption is disabled by default, so an established active router keeps the role. The standby preempt command lets a higher-priority router reclaim it; configuring a priority alone does not force a takeover.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "standby track",
+        "is_correct": false
+      },
+      {
+        "text": "standby preempt",
+        "is_correct": true
+      },
+      {
+        "text": "standby priority 200",
+        "is_correct": false
+      },
+      {
+        "text": "standby timers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which static route matches a destination when no more specific entry exists?",
+    "explanation": "0.0.0.0/0 has a prefix length of zero, so it matches every destination while always losing to any longer match. That property makes it the default route, not a fallback that only activates when other routes fail.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0.0.0.0/0",
+        "is_correct": true
+      },
+      {
+        "text": "255.255.255.255/32",
+        "is_correct": false
+      },
+      {
+        "text": "127.0.0.0/8",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/8",
+        "is_correct": false
+      }
+    ]
   }
 ]

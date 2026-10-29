@@ -6238,5 +6238,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Two switches are joined by an 802.1Q trunk. One side uses native VLAN 1 and the other native VLAN 99. What is the immediate consequence?",
+    "explanation": "802.1Q does not tag frames belonging to the native VLAN, so each switch delivers them into whatever it considers native. The result is that VLAN 1 and VLAN 99 become one broadcast domain across the link, and CDP reports a native VLAN mismatch.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The trunk fails to come up",
+        "is_correct": false
+      },
+      {
+        "text": "Untagged frames land in mismatched VLANs, merging two broadcast domains",
+        "is_correct": true
+      },
+      {
+        "text": "All tagged frames are dropped",
+        "is_correct": false
+      },
+      {
+        "text": "DTP disables the link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A 24-port access switch has a total PoE budget of 370 W. Sixteen ports already deliver 15.4 W each to 802.3af phones. What happens when a seventeenth phone is plugged in?",
+    "explanation": "Sixteen ports at 15.4 W consume about 246 W, so roughly 124 W remain. The switch's power manager admits the seventeenth device only if its class fits the remaining budget, and refuses power on ports once the budget is exhausted - the link may come up while the phone never boots.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing changes, every port can always deliver full power",
+        "is_correct": false
+      },
+      {
+        "text": "Power is refused on the new port if the remaining budget cannot cover its class",
+        "is_correct": true
+      },
+      {
+        "text": "The switch reboots to rebalance the budget",
+        "is_correct": false
+      },
+      {
+        "text": "All ports drop to 7 W to make room",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Three switches advertise bridge priorities of 32768, 32768 and 28672 and all have different MAC addresses. Which switch becomes the root bridge?",
+    "explanation": "Root election compares bridge IDs, and a bridge ID is priority followed by MAC address. Because 28672 is lower than 32768, that switch wins outright and the MAC addresses never enter the comparison.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The one with the lowest MAC address among the two at 32768",
+        "is_correct": false
+      },
+      {
+        "text": "The switch advertising priority 28672",
+        "is_correct": true
+      },
+      {
+        "text": "The oldest switch in the topology",
+        "is_correct": false
+      },
+      {
+        "text": "The switch with the highest bridge ID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Rapid PVST+ converges faster than classic 802.1D primarily because of which mechanism?",
+    "explanation": "RSTP adds the proposal and agreement handshake plus edge-port roles, allowing a new link to move to forwarding in a few hundred milliseconds instead of waiting out the listening and learning timers. Default hello and forward-delay values are unchanged.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Shorter hello timers",
+        "is_correct": false
+      },
+      {
+        "text": "The proposal and agreement handshake",
+        "is_correct": true
+      },
+      {
+        "text": "Disabling STP on edge ports",
+        "is_correct": false
+      },
+      {
+        "text": "Using BPDU guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One side of an EtherChannel is configured as LACP active and the other as LACP passive. What is the outcome?",
+    "explanation": "LACP active initiates negotiation and passive responds, so the pair forms a bundle. Two passive ports never form because neither speaks first, and an unconditional on port fails to bundle with an LACP port because on does not run the protocol.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No bundle, because both sides must be active",
+        "is_correct": false
+      },
+      {
+        "text": "A working bundle, because active can initiate with passive",
+        "is_correct": true
+      },
+      {
+        "text": "A bundle negotiated with PAgP",
+        "is_correct": false
+      },
+      {
+        "text": "The ports are placed in err-disabled state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port is configured with port-security aging and the aging type set to inactivity. What does that do?",
+    "explanation": "Inactivity aging removes a secure MAC address when it has not been seen for the configured aging time, freeing the slot for a different device. The default absolute type instead removes every secure address once the timer expires regardless of traffic, which can lock out an active host.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It clears the whole table at every reload",
+        "is_correct": false
+      },
+      {
+        "text": "It removes a secure address that has been silent for the aging time",
+        "is_correct": true
+      },
+      {
+        "text": "It disables port security after the first violation",
+        "is_correct": false
+      },
+      {
+        "text": "It converts secure addresses to sticky entries",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The MAC address table maps host X to Gi0/5 inside VLAN 20. A frame destined to host X arrives on Gi0/9 inside VLAN 10. How does the switch handle it?",
+    "explanation": "Table entries are scoped per VLAN, so the lookup in VLAN 10 misses even though a matching address exists for VLAN 20. The switch therefore treats the frame as unknown unicast and floods it only inside VLAN 10, which keeps the two broadcast domains separate.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forwards the frame out Gi0/5",
+        "is_correct": false
+      },
+      {
+        "text": "It floods the frame inside VLAN 10 only",
+        "is_correct": true
+      },
+      {
+        "text": "It floods the frame in both VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "It drops the frame as a MAC move",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A blocked port receives an inferior BPDU after a failure somewhere upstream. Which feature lets the switch release that port immediately instead of waiting out the maximum age timer?",
+    "explanation": "Classic STP cannot tell from a single inferior BPDU whether the topology really changed, so it waits 20 seconds for max age to expire. BackboneFast probes the neighbour for an alternate path to the root bridge and, when one exists, ages the blocked port out at once. UplinkFast only speeds up failover on the switch that loses its own uplink, and Loop Guard prevents a blocked port from being unblocked at all.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UplinkFast",
+        "is_correct": false
+      },
+      {
+        "text": "BackboneFast",
+        "is_correct": true
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Filter",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is cabled to a PC with a straight-through cable, yet the link comes up and passes traffic. What feature explains this?",
+    "explanation": "Auto-MDIX senses which pin pairs are transmitting and which are receiving, then swaps them inside the port, so a straight-through or crossover cable both work. It depends on the port's speed and duplex being set to auto; hard-coding either one disables the detection and the wrong cable type leaves the link down.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The switch always accepts a straight-through cable on access ports and reserves crossover cables for trunks",
+        "is_correct": false
+      },
+      {
+        "text": "Auto-MDIX detects the transmit and receive pin pairs and swaps them inside the port",
+        "is_correct": true
+      },
+      {
+        "text": "Spanning tree reconfigures the port into a crossover mode when the link fails to come up",
+        "is_correct": false
+      },
+      {
+        "text": "The PC's network card inverts its pinout automatically, so only the host side matters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch relays a frame from one access port to another. Which header fields does it rewrite?",
+    "explanation": "Neither MAC address changes and the TTL is not decremented, because a transparent bridge does not participate in the routed path. The frame is forwarded with the original source and destination addresses, which is why a capture taken on the far side of a switch shows the sender's real hardware address rather than the switch's.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both the source and destination MAC addresses",
+        "is_correct": false
+      },
+      {
+        "text": "The destination MAC address only",
+        "is_correct": false
+      },
+      {
+        "text": "The source MAC address and the TTL",
+        "is_correct": false
+      },
+      {
+        "text": "Neither MAC address; the frame is relayed unchanged",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A non-root switch running classic 802.1D STP detects a topology change on one of its ports. How does that information reach the rest of the bridged network?",
+    "explanation": "The detecting bridge sends a Topology Change Notification BPDU out its root port, and each upstream bridge relays it toward the root. The root bridge responds by setting the topology change flag in its configuration BPDUs for max_age plus forward_delay seconds, which shortens the aging time everywhere so stale MAC entries are flushed quickly. The non-root bridge never floods the notification directly to every switch.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The detecting switch floods a topology change BPDU to every bridge on the segment",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a TCN BPDU toward the root, which then sets the topology change flag in its configuration BPDUs",
+        "is_correct": true
+      },
+      {
+        "text": "It recalculates the topology locally and sends the full new topology in a single BPDU",
+        "is_correct": false
+      },
+      {
+        "text": "It waits silently for the MAC aging timer to expire and lets the entries age out normally",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which discovery protocol is vendor-neutral and reports a neighbour port ID and system name across mixed-vendor equipment?",
+    "explanation": "LLDP is the IEEE 802.1AB standard and is implemented by most vendors, while CDP is Cisco proprietary. Both operate at the data link layer and can be disabled per interface when neighbour information should not be advertised.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CDP",
+        "is_correct": false
+      },
+      {
+        "text": "LLDP",
+        "is_correct": true
+      },
+      {
+        "text": "VTP",
+        "is_correct": false
+      },
+      {
+        "text": "DTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An engineer creates VLAN 10 and assigns it the name Sales. What is true of the result?",
+    "explanation": "Creating a VLAN only registers it in the VLAN database. Ports stay in whatever VLAN they were previously in, so traffic reaches VLAN 10 only after an interface is moved with switchport access vlan 10 or the VLAN is added to a trunk allowed list. The name is a local label and does not affect forwarding.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every access port is moved into VLAN 10 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN exists, but no port belongs to it until one is assigned",
+        "is_correct": true
+      },
+      {
+        "text": "The name must match the VTP server or the VLAN stays suspended",
+        "is_correct": false
+      },
+      {
+        "text": "Ports carry the label Sales in CDP advertisements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel carries four active member links. How is one large TCP conversation distributed across them?",
+    "explanation": "EtherChannel hashes chosen header fields - source and destination MAC, IP, or Layer 4 ports depending on the configured method and platform - and pins every frame of a given flow to the single link the hash selects. That keeps packet order intact, but it also means a handful of heavy flows can saturate one member while the others sit idle, so adding links helps only when the traffic is spread over many distinct flows.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames rotate round-robin across all four links",
+        "is_correct": false
+      },
+      {
+        "text": "Every frame in the flow uses the same link, chosen by a header hash",
+        "is_correct": true
+      },
+      {
+        "text": "The conversation is split in half across two links",
+        "is_correct": false
+      },
+      {
+        "text": "All traffic uses the first link until it fails",
+        "is_correct": false
+      }
+    ]
   }
 ]

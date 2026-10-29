@@ -3404,5 +3404,109 @@
         "is_correct": true
       }
     ]
+  },
+  {
+    "stem": "Which HTTP method is defined as idempotent, so repeating the same request leaves the server in the same state as a single call?",
+    "explanation": "PUT replaces the resource at a known URI, so sending the identical request twice produces the same result. POST is not idempotent because each call may create a new resource and return a different identifier.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "POST",
+        "is_correct": false
+      },
+      {
+        "text": "PUT",
+        "is_correct": true
+      },
+      {
+        "text": "PATCH",
+        "is_correct": false
+      },
+      {
+        "text": "CONNECT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which encoding is schema-less, human readable, and parsed natively by a browser without an extra library?",
+    "explanation": "JSON syntax is a subset of JavaScript object literal syntax, so a browser parses it directly with JSON.parse and no schema. YAML is also readable but needs a parser, and Protobuf is a binary format requiring a schema.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "XML",
+        "is_correct": false
+      },
+      {
+        "text": "JSON",
+        "is_correct": true
+      },
+      {
+        "text": "YAML",
+        "is_correct": false
+      },
+      {
+        "text": "Protobuf",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol carries XML-encoded RPCs over an SSH subsystem and is defined by RFC 6241?",
+    "explanation": "NETCONF runs over an SSH subsystem, encodes operations as XML RPCs, and defines candidate configuration, commit, and rollback. RESTCONF exposes the same data models over HTTP with JSON or XML, and gNMI is a gRPC-based alternative.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RESTCONF",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF",
+        "is_correct": true
+      },
+      {
+        "text": "gNMI",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Asked for interface error counters, a model reports a field named `input crc-stomped frames` that no Cisco platform reports. What is this failure and why does it occur?",
+    "explanation": "The model emits the most probable sequence of tokens rather than text checked against a parser or the vendor documentation, so it can invent a plausible-sounding field that does not exist. Nothing fails at generation time - the error surfaces only when a human or a script tries to use the output - which is why generated detail must be verified against the source of truth.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A context window overflow, because the prompt was too long",
+        "is_correct": false
+      },
+      {
+        "text": "A hallucination: invented detail the model never verified against its source",
+        "is_correct": true
+      },
+      {
+        "text": "A temperature setting too low to explore alternative phrasings",
+        "is_correct": false
+      },
+      {
+        "text": "A tokenisation fault that corrupts the command string",
+        "is_correct": false
+      }
+    ]
   }
 ]

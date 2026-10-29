@@ -6238,5 +6238,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "An engineer must divide 10.20.0.0/16 into exactly 12 equal-sized subnets and keep as many hosts per subnet as possible. Which mask should be used?",
+    "explanation": "Twelve subnets needs at least 4 subnet bits, because 2^4 gives 16 and 2^3 gives only 8. Borrowing 4 bits from the 16-bit host portion yields /20, which still leaves 12 host bits and 4094 usable addresses. A /19 would produce only 8 subnets and a /21 would waste host space.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "/19",
+        "is_correct": false
+      },
+      {
+        "text": "/20",
+        "is_correct": true
+      },
+      {
+        "text": "/21",
+        "is_correct": false
+      },
+      {
+        "text": "/21 and /22 combined",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A point-to-point link between two routers is addressed with a /31 prefix. How many usable host addresses does that subnet provide under RFC 3021?",
+    "explanation": "RFC 3021 permits /31 on point-to-point links, where both addresses are usable because no network or broadcast address is reserved. A /30 wastes two of its four addresses for exactly that purpose, which is why /31 is preferred on router-to-router links.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host has the address 192.168.1.130 with mask 255.255.255.192. Which address is its directed broadcast address?",
+    "explanation": "A /26 mask splits the last octet into 64-address blocks, so 130 falls inside the 128 to 191 range. The network address is 192.168.1.128 and the broadcast is 192.168.1.191; 192.168.1.255 would be the broadcast only under a /24 mask.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "192.168.1.191",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.1.255",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.1.129",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.1.190",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 host must resolve a neighbour link-layer address. To which address does it send the Neighbor Solicitation?",
+    "explanation": "Neighbor Solicitation goes to the target's solicited-node multicast address, formed from ff02::1:ff00:0/104 plus the low 24 bits of the target address. Only the intended host and a small set of others process the message, instead of every node on the link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ff02::1",
+        "is_correct": false
+      },
+      {
+        "text": "The target solicited-node multicast address",
+        "is_correct": true
+      },
+      {
+        "text": "ff02::2",
+        "is_correct": false
+      },
+      {
+        "text": "The target link-local unicast address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router advertisement carries a prefix length of /72. Why does this break stateless address autoconfiguration on the attached hosts?",
+    "explanation": "SLAAC builds the interface identifier in the low 64 bits and takes the remaining bits from the advertised prefix, so the prefix must be exactly /64. A /72 leaves only 56 bits for the identifier and hosts reject or misapply the prefix, which is why non-/64 RAs are not supported for SLAAC.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SLAAC requires a /64 so the 64-bit interface identifier fits",
+        "is_correct": true
+      },
+      {
+        "text": "/72 prefixes are reserved for point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "Hosts reject any prefix longer than /48",
+        "is_correct": false
+      },
+      {
+        "text": "It disables Duplicate Address Detection but not addressing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 packet carries both a Hop-by-Hop Options header and a Destination Options header. Which one must appear first?",
+    "explanation": "RFC 8200 requires Hop-by-Hop Options to be the first extension header so every router along the path can act on it. Destination Options meant only for the final destination come later, after any routing header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hop-by-Hop Options",
+        "is_correct": true
+      },
+      {
+        "text": "Destination Options",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment",
+        "is_correct": false
+      },
+      {
+        "text": "Either order is acceptable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP receiver advertises a window size of zero. What must the sender do?",
+    "explanation": "A zero window means the receive buffer is full, so the sender stops transmitting data and periodically sends zero-window probes to learn when space is available. Continuing to retransmit would only add load to a receiver that is already unable to accept data.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Retransmit the last segment immediately",
+        "is_correct": false
+      },
+      {
+        "text": "Stop sending and send zero-window probes",
+        "is_correct": true
+      },
+      {
+        "text": "Tear down the connection",
+        "is_correct": false
+      },
+      {
+        "text": "Halve the maximum segment size",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP sender using path MTU discovery receives an ICMP fragmentation-needed message. Why does it reduce its maximum segment size?",
+    "explanation": "The ICMP message reports the smallest MTU on the path, which is below the segment size the sender was using. Because the Don't Fragment bit prevented fragmentation, the packet could not be forwarded at all, so the sender must shrink its segments to fit that link.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ICMP errors always halve the congestion window",
+        "is_correct": false
+      },
+      {
+        "text": "The reported MTU is smaller than the segment size, so packets could not be forwarded unfragmented",
+        "is_correct": true
+      },
+      {
+        "text": "The receiver buffer is full",
+        "is_correct": false
+      },
+      {
+        "text": "The retransmission timer expired",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which property makes single-mode fiber suitable for links several kilometres long while multimode fiber is limited to shorter runs?",
+    "explanation": "Single-mode fiber has a very small core that supports essentially one propagation path, so modal dispersion is negligible and the signal stays readable over long distances. Multimode fiber carries many paths that arrive at slightly different times, which smears the pulse and caps the distance.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Single-mode uses cheaper light sources",
+        "is_correct": false
+      },
+      {
+        "text": "Single-mode has a small core carrying one propagation mode, so modal dispersion is negligible",
+        "is_correct": true
+      },
+      {
+        "text": "Multimode has lower attenuation per kilometre",
+        "is_correct": false
+      },
+      {
+        "text": "Single-mode carries several wavelengths at once",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "802.11n raised throughput over 802.11g mainly through which pair of techniques?",
+    "explanation": "802.11n introduced MIMO spatial streams and optional 40 MHz channels, both of which increase the amount of data sent per unit of airtime. OFDMA and MU-MIMO belong to 802.11ax, while 1024-QAM and 160 MHz channels belong to 802.11ac.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "OFDMA and MU-MIMO",
+        "is_correct": false
+      },
+      {
+        "text": "MIMO spatial streams and 40 MHz channel bonding",
+        "is_correct": true
+      },
+      {
+        "text": "1024-QAM and 160 MHz channels",
+        "is_correct": false
+      },
+      {
+        "text": "SAE and protected management frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A unified wireless deployment uses CAPWAP. Which statement describes the split between its two channels?",
+    "explanation": "CAPWAP control runs over UDP 5246 and the optional data tunnel over UDP 5247. The control channel carries join requests, configuration, and keepalives, while the data channel carries client frames only when the WLAN is centrally switched rather than locally switched.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Control on UDP 5246 and data on UDP 5247",
+        "is_correct": true
+      },
+      {
+        "text": "Control on TCP 5246 and data on TCP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Both channels share UDP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Control on UDP 5247 and data on UDP 5246",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which device marks the boundary between the service provider responsibility and the enterprise responsibility on a WAN circuit?",
+    "explanation": "The network interface device, often called the demarc or smart jack, is the demarcation point. Beyond it the provider owns and maintains the circuit; inside it the enterprise owns the cabling and the terminating equipment.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The core switch",
+        "is_correct": false
+      },
+      {
+        "text": "The network interface device at the demarc",
+        "is_correct": true
+      },
+      {
+        "text": "The edge router LAN interface",
+        "is_correct": false
+      },
+      {
+        "text": "The firewall outside interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch forwards a frame without inspecting its payload. Which layers of the OSI model are actually involved in that decision?",
+    "explanation": "The switch receives bits at Layer 1 and reads the frame header at Layer 2 to find the destination hardware address. The network-layer payload is never examined, which is exactly why a VLAN can carry IPv4, IPv6, or any other protocol transparently.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Layers 1 and 2",
+        "is_correct": true
+      },
+      {
+        "text": "Layers 2 and 3",
+        "is_correct": false
+      },
+      {
+        "text": "Layers 1, 2 and 3",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 2 only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A workstation on a user VLAN cannot reach any server and reports the address 169.254.14.9/16. Which conclusion is best supported by that address?",
+    "explanation": "169.254.0.0/16 is the link-local range a host self-assigns when no DHCP server answers. The interface is up and has an address, so the fault lies in DHCP reachability or in the relay configuration rather than in the physical link.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only the default gateway is down",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP did not deliver a lease, so the host self-assigned a link-local address",
+        "is_correct": true
+      },
+      {
+        "text": "The host received a valid public address",
+        "is_correct": false
+      },
+      {
+        "text": "Routing works but NAT is failing",
+        "is_correct": false
+      }
+    ]
   }
 ]

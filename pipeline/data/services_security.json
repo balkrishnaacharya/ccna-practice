@@ -5328,5 +5328,291 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "An ACL contains only the entry permit 10.1.0.0 0.0.255.255. What happens to traffic sourced from 192.168.5.5?",
+    "explanation": "Every ACL ends with an implicit deny any. A single permit statement therefore protects one source range and silently discards everything else, which is a common reason an ACL that looks correct stops traffic.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is permitted",
+        "is_correct": false
+      },
+      {
+        "text": "It is denied by the implicit deny any at the end",
+        "is_correct": true
+      },
+      {
+        "text": "It is permitted only when routed",
+        "is_correct": false
+      },
+      {
+        "text": "It is dropped and logged",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Twenty internal hosts share one public address through NAT overload. How does the router tell their return traffic apart?",
+    "explanation": "Overload translation rewrites the source port as well as the address, so the translation table can map each flow back to a distinct inside host. That port range is also why a single host is limited in how many concurrent sessions it can open.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "By the source MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "By the translated source port recorded in the translation table",
+        "is_correct": true
+      },
+      {
+        "text": "By the TTL value",
+        "is_correct": false
+      },
+      {
+        "text": "By the VLAN tag",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Clients on a remote VLAN cannot obtain a lease because their DHCPDISCOVER is a broadcast that the router will not forward. What resolves this?",
+    "explanation": "An ip helper-address on the client-facing SVI converts the broadcast into a unicast to the DHCP server and relays the reply back. That bridges the broadcast boundary without deploying a local server on every VLAN.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Enable proxy ARP on the SVI",
+        "is_correct": false
+      },
+      {
+        "text": "Configure ip helper-address on the client-facing SVI",
+        "is_correct": true
+      },
+      {
+        "text": "Add a static route to the DHCP server",
+        "is_correct": false
+      },
+      {
+        "text": "Enable NAT overload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPsec peer receives an ESP packet whose sequence number is older than the trailing edge of its receive window. What does the peer do with the packet?",
+    "explanation": "ESP carries a monotonically increasing 32-bit sequence number per security association, and the receiver keeps a sliding window of recently accepted values. Anything behind the window is treated as a replay and discarded silently, even if its integrity check would pass, which is what stops an attacker from capturing valid ciphertext and re-sending it. The counter cannot wrap, so the SA is rekeyed before it runs out.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Decrypts and forwards it, because the integrity check passed",
+        "is_correct": false
+      },
+      {
+        "text": "Discards it as a replay",
+        "is_correct": true
+      },
+      {
+        "text": "Tears down the SA and renegotiates phase 2",
+        "is_correct": false
+      },
+      {
+        "text": "Holds it until the window advances and then forwards it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Dynamic ARP Inspection validates ARP packets against which source of truth?",
+    "explanation": "DAI compares the sender MAC and IP in each ARP packet with the DHCP snooping binding table and drops mismatches. Snooping must therefore be enabled and populated first; static hosts need explicit ARP ACLs or static bindings.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port security table",
+        "is_correct": false
+      },
+      {
+        "text": "The DHCP snooping binding table",
+        "is_correct": true
+      },
+      {
+        "text": "The spanning tree topology",
+        "is_correct": false
+      },
+      {
+        "text": "The VTP database",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router is producing log messages, yet an administrator connected over SSH sees none of them in the session. Which command displays them on that session?",
+    "explanation": "By default log messages are written to the console and to the logging buffer, not to VTY lines. The terminal monitor command enables log and debug output on the current session, and terminal no monitor turns it off again. Because the setting is per session, it must be reissued after reconnecting.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "logging buffered",
+        "is_correct": false
+      },
+      {
+        "text": "terminal monitor",
+        "is_correct": true
+      },
+      {
+        "text": "logging console",
+        "is_correct": false
+      },
+      {
+        "text": "logging synchronous",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The method list `aaa authentication login default group radius local` is in use. The RADIUS servers are reachable but reject the credentials. What does the device do next?",
+    "explanation": "The local database is consulted only when the group method produces no response, not when it produces a rejection. A reachable server that denies the user ends the attempt, so a valid local account with the same name still cannot log in.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It retries the same server twice",
+        "is_correct": false
+      },
+      {
+        "text": "It falls back to the local database",
+        "is_correct": false
+      },
+      {
+        "text": "It denies the login, because fallback happens only when the server is unreachable",
+        "is_correct": true
+      },
+      {
+        "text": "It switches to the enable secret",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A device synchronises to a stratum 3 NTP server. What does that stratum value express?",
+    "explanation": "Stratum counts the number of NTP hops between a server and the authoritative reference clock, so a lower value means closer to the source. It is a topology measure, not an accuracy or priority score.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Accuracy in milliseconds",
+        "is_correct": false
+      },
+      {
+        "text": "Distance in hops from the reference clock",
+        "is_correct": true
+      },
+      {
+        "text": "The server priority in the election",
+        "is_correct": false
+      },
+      {
+        "text": "The configured poll interval",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMPv3 security level provides both message authentication and encryption?",
+    "explanation": "authPriv authenticates each message with a hash and encrypts the payload, protecting both integrity and confidentiality. authNoPriv only authenticates, and noAuthNoPriv provides neither, leaving the community-style exposure intact.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "noAuthNoPriv",
+        "is_correct": false
+      },
+      {
+        "text": "authNoPriv",
+        "is_correct": false
+      },
+      {
+        "text": "authPriv",
+        "is_correct": true
+      },
+      {
+        "text": "privAuth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec protocol provides confidentiality but leaves the outer IP header unprotected?",
+    "explanation": "ESP encrypts and authenticates the payload while leaving the outer header readable, which is what allows it to traverse NAT. AH authenticates the entire packet including the IP header but encrypts nothing, so it fails behind NAT.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "AH",
+        "is_correct": false
+      },
+      {
+        "text": "ESP",
+        "is_correct": true
+      },
+      {
+        "text": "GRE",
+        "is_correct": false
+      },
+      {
+        "text": "IKE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "WPA3 replaces the completely open authentication of a guest network with which mechanism?",
+    "explanation": "Enhanced Open uses Opportunistic Wireless Encryption, which runs a per-client Diffie-Hellman exchange so a network with no shared password still encrypts each client's traffic. That defeats passive eavesdropping on public Wi-Fi, but because no credential is verified it does not authenticate users and is no substitute for 802.1X.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Simultaneous Authentication of Equals",
+        "is_correct": false
+      },
+      {
+        "text": "Opportunistic Wireless Encryption",
+        "is_correct": true
+      },
+      {
+        "text": "Protected Management Frames",
+        "is_correct": false
+      },
+      {
+        "text": "802.1X with EAP-TLS",
+        "is_correct": false
+      }
+    ]
   }
 ]

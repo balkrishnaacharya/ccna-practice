@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "An engineer must divide 10.20.0.0/16 into exactly 12 equal-sized subnets and keep as many hosts per subnet as possible. Which mask should be used?",
+    "explanation": "Twelve subnets needs at least 4 subnet bits, because 2^4 gives 16 and 2^3 gives only 8. Borrowing 4 bits from the 16-bit host portion yields /20, which still leaves 12 host bits and 4094 usable addresses. A /19 would produce only 8 subnets and a /21 would waste host space.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "/19",
+        "is_correct": false
+      },
+      {
+        "text": "/20",
+        "is_correct": true
+      },
+      {
+        "text": "/21",
+        "is_correct": false
+      },
+      {
+        "text": "/21 and /22 combined",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A point-to-point link between two routers is addressed with a /31 prefix. How many usable host addresses does that subnet provide under RFC 3021?",
+    "explanation": "RFC 3021 permits /31 on point-to-point links, where both addresses are usable because no network or broadcast address is reserved. A /30 wastes two of its four addresses for exactly that purpose, which is why /31 is preferred on router-to-router links.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A host has the address 192.168.1.130 with mask 255.255.255.192. Which address is its directed broadcast address?",
+    "explanation": "A /26 mask splits the last octet into 64-address blocks, so 130 falls inside the 128 to 191 range. The network address is 192.168.1.128 and the broadcast is 192.168.1.191; 192.168.1.255 would be the broadcast only under a /24 mask.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "192.168.1.191",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.1.255",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.1.129",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.1.190",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 host must resolve a neighbour link-layer address. To which address does it send the Neighbor Solicitation?",
+    "explanation": "Neighbor Solicitation goes to the target's solicited-node multicast address, formed from ff02::1:ff00:0/104 plus the low 24 bits of the target address. Only the intended host and a small set of others process the message, instead of every node on the link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ff02::1",
+        "is_correct": false
+      },
+      {
+        "text": "The target solicited-node multicast address",
+        "is_correct": true
+      },
+      {
+        "text": "ff02::2",
+        "is_correct": false
+      },
+      {
+        "text": "The target link-local unicast address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router advertisement carries a prefix length of /72. Why does this break stateless address autoconfiguration on the attached hosts?",
+    "explanation": "SLAAC builds the interface identifier in the low 64 bits and takes the remaining bits from the advertised prefix, so the prefix must be exactly /64. A /72 leaves only 56 bits for the identifier and hosts reject or misapply the prefix, which is why non-/64 RAs are not supported for SLAAC.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SLAAC requires a /64 so the 64-bit interface identifier fits",
+        "is_correct": true
+      },
+      {
+        "text": "/72 prefixes are reserved for point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "Hosts reject any prefix longer than /48",
+        "is_correct": false
+      },
+      {
+        "text": "It disables Duplicate Address Detection but not addressing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 packet carries both a Hop-by-Hop Options header and a Destination Options header. Which one must appear first?",
+    "explanation": "RFC 8200 requires Hop-by-Hop Options to be the first extension header so every router along the path can act on it. Destination Options meant only for the final destination come later, after any routing header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hop-by-Hop Options",
+        "is_correct": true
+      },
+      {
+        "text": "Destination Options",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment",
+        "is_correct": false
+      },
+      {
+        "text": "Either order is acceptable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP receiver advertises a window size of zero. What must the sender do?",
+    "explanation": "A zero window means the receive buffer is full, so the sender stops transmitting data and periodically sends zero-window probes to learn when space is available. Continuing to retransmit would only add load to a receiver that is already unable to accept data.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Retransmit the last segment immediately",
+        "is_correct": false
+      },
+      {
+        "text": "Stop sending and send zero-window probes",
+        "is_correct": true
+      },
+      {
+        "text": "Tear down the connection",
+        "is_correct": false
+      },
+      {
+        "text": "Halve the maximum segment size",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A TCP sender using path MTU discovery receives an ICMP fragmentation-needed message. Why does it reduce its maximum segment size?",
+    "explanation": "The ICMP message reports the smallest MTU on the path, which is below the segment size the sender was using. Because the Don't Fragment bit prevented fragmentation, the packet could not be forwarded at all, so the sender must shrink its segments to fit that link.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ICMP errors always halve the congestion window",
+        "is_correct": false
+      },
+      {
+        "text": "The reported MTU is smaller than the segment size, so packets could not be forwarded unfragmented",
+        "is_correct": true
+      },
+      {
+        "text": "The receiver buffer is full",
+        "is_correct": false
+      },
+      {
+        "text": "The retransmission timer expired",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which property makes single-mode fiber suitable for links several kilometres long while multimode fiber is limited to shorter runs?",
+    "explanation": "Single-mode fiber has a very small core that supports essentially one propagation path, so modal dispersion is negligible and the signal stays readable over long distances. Multimode fiber carries many paths that arrive at slightly different times, which smears the pulse and caps the distance.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Single-mode uses cheaper light sources",
+        "is_correct": false
+      },
+      {
+        "text": "Single-mode has a small core carrying one propagation mode, so modal dispersion is negligible",
+        "is_correct": true
+      },
+      {
+        "text": "Multimode has lower attenuation per kilometre",
+        "is_correct": false
+      },
+      {
+        "text": "Single-mode carries several wavelengths at once",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "802.11n raised throughput over 802.11g mainly through which pair of techniques?",
+    "explanation": "802.11n introduced MIMO spatial streams and optional 40 MHz channels, both of which increase the amount of data sent per unit of airtime. OFDMA and MU-MIMO belong to 802.11ax, while 1024-QAM and 160 MHz channels belong to 802.11ac.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "OFDMA and MU-MIMO",
+        "is_correct": false
+      },
+      {
+        "text": "MIMO spatial streams and 40 MHz channel bonding",
+        "is_correct": true
+      },
+      {
+        "text": "1024-QAM and 160 MHz channels",
+        "is_correct": false
+      },
+      {
+        "text": "SAE and protected management frames",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A unified wireless deployment uses CAPWAP. Which statement describes the split between its two channels?",
+    "explanation": "CAPWAP control runs over UDP 5246 and the optional data tunnel over UDP 5247. The control channel carries join requests, configuration, and keepalives, while the data channel carries client frames only when the WLAN is centrally switched rather than locally switched.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Control on UDP 5246 and data on UDP 5247",
+        "is_correct": true
+      },
+      {
+        "text": "Control on TCP 5246 and data on TCP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Both channels share UDP 5247",
+        "is_correct": false
+      },
+      {
+        "text": "Control on UDP 5247 and data on UDP 5246",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which device marks the boundary between the service provider responsibility and the enterprise responsibility on a WAN circuit?",
+    "explanation": "The network interface device, often called the demarc or smart jack, is the demarcation point. Beyond it the provider owns and maintains the circuit; inside it the enterprise owns the cabling and the terminating equipment.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The core switch",
+        "is_correct": false
+      },
+      {
+        "text": "The network interface device at the demarc",
+        "is_correct": true
+      },
+      {
+        "text": "The edge router LAN interface",
+        "is_correct": false
+      },
+      {
+        "text": "The firewall outside interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch forwards a frame without inspecting its payload. Which layers of the OSI model are actually involved in that decision?",
+    "explanation": "The switch receives bits at Layer 1 and reads the frame header at Layer 2 to find the destination hardware address. The network-layer payload is never examined, which is exactly why a VLAN can carry IPv4, IPv6, or any other protocol transparently.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Layers 1 and 2",
+        "is_correct": true
+      },
+      {
+        "text": "Layers 2 and 3",
+        "is_correct": false
+      },
+      {
+        "text": "Layers 1, 2 and 3",
+        "is_correct": false
+      },
+      {
+        "text": "Layer 2 only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A workstation on a user VLAN cannot reach any server and reports the address 169.254.14.9/16. Which conclusion is best supported by that address?",
+    "explanation": "169.254.0.0/16 is the link-local range a host self-assigns when no DHCP server answers. The interface is up and has an address, so the fault lies in DHCP reachability or in the relay configuration rather than in the physical link.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Only the default gateway is down",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP did not deliver a lease, so the host self-assigned a link-local address",
+        "is_correct": true
+      },
+      {
+        "text": "The host received a valid public address",
+        "is_correct": false
+      },
+      {
+        "text": "Routing works but NAT is failing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two switches are joined by an 802.1Q trunk. One side uses native VLAN 1 and the other native VLAN 99. What is the immediate consequence?",
+    "explanation": "802.1Q does not tag frames belonging to the native VLAN, so each switch delivers them into whatever it considers native. The result is that VLAN 1 and VLAN 99 become one broadcast domain across the link, and CDP reports a native VLAN mismatch.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The trunk fails to come up",
+        "is_correct": false
+      },
+      {
+        "text": "Untagged frames land in mismatched VLANs, merging two broadcast domains",
+        "is_correct": true
+      },
+      {
+        "text": "All tagged frames are dropped",
+        "is_correct": false
+      },
+      {
+        "text": "DTP disables the link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A 24-port access switch has a total PoE budget of 370 W. Sixteen ports already deliver 15.4 W each to 802.3af phones. What happens when a seventeenth phone is plugged in?",
+    "explanation": "Sixteen ports at 15.4 W consume about 246 W, so roughly 124 W remain. The switch's power manager admits the seventeenth device only if its class fits the remaining budget, and refuses power on ports once the budget is exhausted - the link may come up while the phone never boots.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing changes, every port can always deliver full power",
+        "is_correct": false
+      },
+      {
+        "text": "Power is refused on the new port if the remaining budget cannot cover its class",
+        "is_correct": true
+      },
+      {
+        "text": "The switch reboots to rebalance the budget",
+        "is_correct": false
+      },
+      {
+        "text": "All ports drop to 7 W to make room",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Three switches advertise bridge priorities of 32768, 32768 and 28672 and all have different MAC addresses. Which switch becomes the root bridge?",
+    "explanation": "Root election compares bridge IDs, and a bridge ID is priority followed by MAC address. Because 28672 is lower than 32768, that switch wins outright and the MAC addresses never enter the comparison.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The one with the lowest MAC address among the two at 32768",
+        "is_correct": false
+      },
+      {
+        "text": "The switch advertising priority 28672",
+        "is_correct": true
+      },
+      {
+        "text": "The oldest switch in the topology",
+        "is_correct": false
+      },
+      {
+        "text": "The switch with the highest bridge ID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Rapid PVST+ converges faster than classic 802.1D primarily because of which mechanism?",
+    "explanation": "RSTP adds the proposal and agreement handshake plus edge-port roles, allowing a new link to move to forwarding in a few hundred milliseconds instead of waiting out the listening and learning timers. Default hello and forward-delay values are unchanged.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Shorter hello timers",
+        "is_correct": false
+      },
+      {
+        "text": "The proposal and agreement handshake",
+        "is_correct": true
+      },
+      {
+        "text": "Disabling STP on edge ports",
+        "is_correct": false
+      },
+      {
+        "text": "Using BPDU guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One side of an EtherChannel is configured as LACP active and the other as LACP passive. What is the outcome?",
+    "explanation": "LACP active initiates negotiation and passive responds, so the pair forms a bundle. Two passive ports never form because neither speaks first, and an unconditional on port fails to bundle with an LACP port because on does not run the protocol.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No bundle, because both sides must be active",
+        "is_correct": false
+      },
+      {
+        "text": "A working bundle, because active can initiate with passive",
+        "is_correct": true
+      },
+      {
+        "text": "A bundle negotiated with PAgP",
+        "is_correct": false
+      },
+      {
+        "text": "The ports are placed in err-disabled state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port is configured with port-security aging and the aging type set to inactivity. What does that do?",
+    "explanation": "Inactivity aging removes a secure MAC address when it has not been seen for the configured aging time, freeing the slot for a different device. The default absolute type instead removes every secure address once the timer expires regardless of traffic, which can lock out an active host.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It clears the whole table at every reload",
+        "is_correct": false
+      },
+      {
+        "text": "It removes a secure address that has been silent for the aging time",
+        "is_correct": true
+      },
+      {
+        "text": "It disables port security after the first violation",
+        "is_correct": false
+      },
+      {
+        "text": "It converts secure addresses to sticky entries",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The MAC address table maps host X to Gi0/5 inside VLAN 20. A frame destined to host X arrives on Gi0/9 inside VLAN 10. How does the switch handle it?",
+    "explanation": "Table entries are scoped per VLAN, so the lookup in VLAN 10 misses even though a matching address exists for VLAN 20. The switch therefore treats the frame as unknown unicast and floods it only inside VLAN 10, which keeps the two broadcast domains separate.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forwards the frame out Gi0/5",
+        "is_correct": false
+      },
+      {
+        "text": "It floods the frame inside VLAN 10 only",
+        "is_correct": true
+      },
+      {
+        "text": "It floods the frame in both VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "It drops the frame as a MAC move",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A blocked port receives an inferior BPDU after a failure somewhere upstream. Which feature lets the switch release that port immediately instead of waiting out the maximum age timer?",
+    "explanation": "Classic STP cannot tell from a single inferior BPDU whether the topology really changed, so it waits 20 seconds for max age to expire. BackboneFast probes the neighbour for an alternate path to the root bridge and, when one exists, ages the blocked port out at once. UplinkFast only speeds up failover on the switch that loses its own uplink, and Loop Guard prevents a blocked port from being unblocked at all.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UplinkFast",
+        "is_correct": false
+      },
+      {
+        "text": "BackboneFast",
+        "is_correct": true
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      },
+      {
+        "text": "BPDU Filter",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is cabled to a PC with a straight-through cable, yet the link comes up and passes traffic. What feature explains this?",
+    "explanation": "Auto-MDIX senses which pin pairs are transmitting and which are receiving, then swaps them inside the port, so a straight-through or crossover cable both work. It depends on the port's speed and duplex being set to auto; hard-coding either one disables the detection and the wrong cable type leaves the link down.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The switch always accepts a straight-through cable on access ports and reserves crossover cables for trunks",
+        "is_correct": false
+      },
+      {
+        "text": "Auto-MDIX detects the transmit and receive pin pairs and swaps them inside the port",
+        "is_correct": true
+      },
+      {
+        "text": "Spanning tree reconfigures the port into a crossover mode when the link fails to come up",
+        "is_correct": false
+      },
+      {
+        "text": "The PC's network card inverts its pinout automatically, so only the host side matters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch relays a frame from one access port to another. Which header fields does it rewrite?",
+    "explanation": "Neither MAC address changes and the TTL is not decremented, because a transparent bridge does not participate in the routed path. The frame is forwarded with the original source and destination addresses, which is why a capture taken on the far side of a switch shows the sender's real hardware address rather than the switch's.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both the source and destination MAC addresses",
+        "is_correct": false
+      },
+      {
+        "text": "The destination MAC address only",
+        "is_correct": false
+      },
+      {
+        "text": "The source MAC address and the TTL",
+        "is_correct": false
+      },
+      {
+        "text": "Neither MAC address; the frame is relayed unchanged",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A non-root switch running classic 802.1D STP detects a topology change on one of its ports. How does that information reach the rest of the bridged network?",
+    "explanation": "The detecting bridge sends a Topology Change Notification BPDU out its root port, and each upstream bridge relays it toward the root. The root bridge responds by setting the topology change flag in its configuration BPDUs for max_age plus forward_delay seconds, which shortens the aging time everywhere so stale MAC entries are flushed quickly. The non-root bridge never floods the notification directly to every switch.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The detecting switch floods a topology change BPDU to every bridge on the segment",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a TCN BPDU toward the root, which then sets the topology change flag in its configuration BPDUs",
+        "is_correct": true
+      },
+      {
+        "text": "It recalculates the topology locally and sends the full new topology in a single BPDU",
+        "is_correct": false
+      },
+      {
+        "text": "It waits silently for the MAC aging timer to expire and lets the entries age out normally",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which discovery protocol is vendor-neutral and reports a neighbour port ID and system name across mixed-vendor equipment?",
+    "explanation": "LLDP is the IEEE 802.1AB standard and is implemented by most vendors, while CDP is Cisco proprietary. Both operate at the data link layer and can be disabled per interface when neighbour information should not be advertised.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CDP",
+        "is_correct": false
+      },
+      {
+        "text": "LLDP",
+        "is_correct": true
+      },
+      {
+        "text": "VTP",
+        "is_correct": false
+      },
+      {
+        "text": "DTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An engineer creates VLAN 10 and assigns it the name Sales. What is true of the result?",
+    "explanation": "Creating a VLAN only registers it in the VLAN database. Ports stay in whatever VLAN they were previously in, so traffic reaches VLAN 10 only after an interface is moved with switchport access vlan 10 or the VLAN is added to a trunk allowed list. The name is a local label and does not affect forwarding.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Every access port is moved into VLAN 10 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "The VLAN exists, but no port belongs to it until one is assigned",
+        "is_correct": true
+      },
+      {
+        "text": "The name must match the VTP server or the VLAN stays suspended",
+        "is_correct": false
+      },
+      {
+        "text": "Ports carry the label Sales in CDP advertisements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel carries four active member links. How is one large TCP conversation distributed across them?",
+    "explanation": "EtherChannel hashes chosen header fields - source and destination MAC, IP, or Layer 4 ports depending on the configured method and platform - and pins every frame of a given flow to the single link the hash selects. That keeps packet order intact, but it also means a handful of heavy flows can saturate one member while the others sit idle, so adding links helps only when the traffic is spread over many distinct flows.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames rotate round-robin across all four links",
+        "is_correct": false
+      },
+      {
+        "text": "Every frame in the flow uses the same link, chosen by a header hash",
+        "is_correct": true
+      },
+      {
+        "text": "The conversation is split in half across two links",
+        "is_correct": false
+      },
+      {
+        "text": "All traffic uses the first link until it fails",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A VRRP group and an HSRP group are both left at their default settings after a higher-priority router reboots and rejoins. How do the two behave?",
+    "explanation": "VRRP preempts by default, so the returning router with the higher priority takes the master role back. HSRP has preemption disabled unless the preempt command is configured, so the router that took over stays active.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Both preempt and restore the original active router",
+        "is_correct": false
+      },
+      {
+        "text": "VRRP preempts and HSRP does not, unless preempt is configured",
+        "is_correct": true
+      },
+      {
+        "text": "Neither preempts without explicit configuration",
+        "is_correct": false
+      },
+      {
+        "text": "HSRP preempts and VRRP does not",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static route points to next hop 192.0.2.1, and 192.0.2.0/24 is itself learned through OSPF. What must the router do before that static route can enter the table?",
+    "explanation": "The router performs a recursive lookup: it looks for a route that resolves the next-hop address before installing the static route, then borrows that route's outbound interface. Because 192.0.2.1 is reachable through the OSPF entry, the static route is installed against the OSPF path. If nothing in the table resolves the next hop, the static route is never installed at all.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing; a static next hop is installed regardless of reachability",
+        "is_correct": false
+      },
+      {
+        "text": "Resolve the next hop recursively through another route already in the table",
+        "is_correct": true
+      },
+      {
+        "text": "Convert the static route into a connected route",
+        "is_correct": false
+      },
+      {
+        "text": "Redistribute 192.0.2.0/24 into OSPF first",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A static IPv6 route points at link-local next hop fe80::1 on Gi0/2, but the neighbour cache holds no entry for fe80::1. What must happen before the route becomes usable?",
+    "explanation": "The router needs the next hop's link-layer address to build the frame, so it sends a Neighbor Solicitation on Gi0/2 for fe80::1. Once the Neighbor Advertisement populates the cache, the route can forward; if the neighbour never answers, the route stays unresolved.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing, the route is usable immediately",
+        "is_correct": false
+      },
+      {
+        "text": "The router resolves fe80::1 through neighbour discovery on Gi0/2",
+        "is_correct": true
+      },
+      {
+        "text": "The router floods the packet on all interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "The router falls back to the global unicast next hop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An interface is configured with OSPF network type non-broadcast. Which behaviour distinguishes it from the broadcast type?",
+    "explanation": "Non-broadcast does not send multicast hellos, so neighbours must be defined manually with neighbour statements. It still elects a DR and BDR, unlike point-to-point, which skips the election entirely.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Network Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DR election is disabled",
+        "is_correct": false
+      },
+      {
+        "text": "Neighbours must be configured manually",
+        "is_correct": true
+      },
+      {
+        "text": "Hello timers become shorter",
+        "is_correct": false
+      },
+      {
+        "text": "Only one neighbour is supported",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF interface runs at 100 Mbps and the reference bandwidth is left at its default. What cost does OSPF assign to it?",
+    "explanation": "Cost is the reference bandwidth divided by the interface bandwidth, so 100 Mbps divided by 100 Mbps gives 1. Because 1 is the floor, every link of 100 Mbps or faster ties at cost 1 until the reference bandwidth is raised.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "10",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An OSPF neighbour on an NBMA interface sits permanently in the ATTEMPT state. What does that state mean?",
+    "explanation": "ATTEMPT exists only on NBMA and point-to-multipoint non-broadcast media, where hellos cannot be multicast. The router is sending unicast hellos to a statically configured neighbour but has not yet received one back, so the neighbour is either misaddressed or not answering.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router is waiting for a DR election to finish",
+        "is_correct": false
+      },
+      {
+        "text": "Unicast hellos are being sent to a configured neighbour but none has been received",
+        "is_correct": true
+      },
+      {
+        "text": "The database description exchange has stalled",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour has been authenticated but not authorised",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The command `variance 2` is configured under an EIGRP process. What does it change?",
+    "explanation": "Variance widens the set of paths that may be installed: a feasible successor is used for unequal-cost load balancing when its metric is at most the successor metric multiplied by the variance. The path must still pass the feasibility condition, so variance alone never admits a loop-prone route.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It doubles the hello interval on slow links",
+        "is_correct": false
+      },
+      {
+        "text": "It lets feasible successors within twice the successor metric be installed",
+        "is_correct": true
+      },
+      {
+        "text": "It multiplies the composite metric by two",
+        "is_correct": false
+      },
+      {
+        "text": "It forces a new diffusing computation every 2 seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does an iBGP-learned route often fail the next-hop reachability check on a router that did not originate it?",
+    "explanation": "iBGP does not rewrite the next hop, so the address learned from the external peer is carried unchanged into the autonomous system. Unless that address is reachable through the IGP or the originating router uses next-hop-self, the receiving router cannot resolve it and the route is never installed.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "iBGP rewrites the next hop to the local router",
+        "is_correct": false
+      },
+      {
+        "text": "iBGP leaves the external next hop unchanged, so it may be unreachable inside the AS",
+        "is_correct": true
+      },
+      {
+        "text": "eBGP is required before any route can be resolved",
+        "is_correct": false
+      },
+      {
+        "text": "The route is discarded by split horizon",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two networks in a routing domain, 10.1.0.0/24 and 10.3.0.0/24, are not contiguous. What does that mean for summarization?",
+    "explanation": "A single summary must cover every address between the lowest and highest member, so summarizing these two would also advertise 10.2.0.0/24, which is not part of the domain. The correct approach is either two separate advertisements or a deliberate discard route for the gap.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They can be summarized as 10.1.0.0/23",
+        "is_correct": false
+      },
+      {
+        "text": "A single summary would also cover the unused 10.2.0.0/24 in between",
+        "is_correct": true
+      },
+      {
+        "text": "They summarize cleanly as 10.0.0.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "Summarization is impossible for any private addressing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A routing table holds 10.0.0.0/8 via R1, 10.1.0.0/16 via R2, and 10.1.1.0/24 via R3. Which path carries a packet destined for 10.1.1.55?",
+    "explanation": "Longest prefix match is applied before administrative distance or metric, so the /24 through R3 is selected. The /8 and /16 entries remain in the table for other destinations but never compete for this address.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "R1, because the /8 is the least specific and most stable",
+        "is_correct": false
+      },
+      {
+        "text": "R2, because the /16 is the natural boundary",
+        "is_correct": false
+      },
+      {
+        "text": "R3, because the /24 is the longest match",
+        "is_correct": true
+      },
+      {
+        "text": "All three, shared by equal-cost multipathing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A higher-priority HSRP router boots after another router is already active. By default it does not take over the active role. Which command changes that?",
+    "explanation": "Preemption is disabled by default, so an established active router keeps the role. The standby preempt command lets a higher-priority router reclaim it; configuring a priority alone does not force a takeover.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "standby track",
+        "is_correct": false
+      },
+      {
+        "text": "standby preempt",
+        "is_correct": true
+      },
+      {
+        "text": "standby priority 200",
+        "is_correct": false
+      },
+      {
+        "text": "standby timers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which static route matches a destination when no more specific entry exists?",
+    "explanation": "0.0.0.0/0 has a prefix length of zero, so it matches every destination while always losing to any longer match. That property makes it the default route, not a fallback that only activates when other routes fail.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0.0.0.0/0",
+        "is_correct": true
+      },
+      {
+        "text": "255.255.255.255/32",
+        "is_correct": false
+      },
+      {
+        "text": "127.0.0.0/8",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.0/8",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An ACL contains only the entry permit 10.1.0.0 0.0.255.255. What happens to traffic sourced from 192.168.5.5?",
+    "explanation": "Every ACL ends with an implicit deny any. A single permit statement therefore protects one source range and silently discards everything else, which is a common reason an ACL that looks correct stops traffic.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is permitted",
+        "is_correct": false
+      },
+      {
+        "text": "It is denied by the implicit deny any at the end",
+        "is_correct": true
+      },
+      {
+        "text": "It is permitted only when routed",
+        "is_correct": false
+      },
+      {
+        "text": "It is dropped and logged",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Twenty internal hosts share one public address through NAT overload. How does the router tell their return traffic apart?",
+    "explanation": "Overload translation rewrites the source port as well as the address, so the translation table can map each flow back to a distinct inside host. That port range is also why a single host is limited in how many concurrent sessions it can open.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "By the source MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "By the translated source port recorded in the translation table",
+        "is_correct": true
+      },
+      {
+        "text": "By the TTL value",
+        "is_correct": false
+      },
+      {
+        "text": "By the VLAN tag",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Clients on a remote VLAN cannot obtain a lease because their DHCPDISCOVER is a broadcast that the router will not forward. What resolves this?",
+    "explanation": "An ip helper-address on the client-facing SVI converts the broadcast into a unicast to the DHCP server and relays the reply back. That bridges the broadcast boundary without deploying a local server on every VLAN.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Enable proxy ARP on the SVI",
+        "is_correct": false
+      },
+      {
+        "text": "Configure ip helper-address on the client-facing SVI",
+        "is_correct": true
+      },
+      {
+        "text": "Add a static route to the DHCP server",
+        "is_correct": false
+      },
+      {
+        "text": "Enable NAT overload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPsec peer receives an ESP packet whose sequence number is older than the trailing edge of its receive window. What does the peer do with the packet?",
+    "explanation": "ESP carries a monotonically increasing 32-bit sequence number per security association, and the receiver keeps a sliding window of recently accepted values. Anything behind the window is treated as a replay and discarded silently, even if its integrity check would pass, which is what stops an attacker from capturing valid ciphertext and re-sending it. The counter cannot wrap, so the SA is rekeyed before it runs out.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Decrypts and forwards it, because the integrity check passed",
+        "is_correct": false
+      },
+      {
+        "text": "Discards it as a replay",
+        "is_correct": true
+      },
+      {
+        "text": "Tears down the SA and renegotiates phase 2",
+        "is_correct": false
+      },
+      {
+        "text": "Holds it until the window advances and then forwards it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Dynamic ARP Inspection validates ARP packets against which source of truth?",
+    "explanation": "DAI compares the sender MAC and IP in each ARP packet with the DHCP snooping binding table and drops mismatches. Snooping must therefore be enabled and populated first; static hosts need explicit ARP ACLs or static bindings.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port security table",
+        "is_correct": false
+      },
+      {
+        "text": "The DHCP snooping binding table",
+        "is_correct": true
+      },
+      {
+        "text": "The spanning tree topology",
+        "is_correct": false
+      },
+      {
+        "text": "The VTP database",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router is producing log messages, yet an administrator connected over SSH sees none of them in the session. Which command displays them on that session?",
+    "explanation": "By default log messages are written to the console and to the logging buffer, not to VTY lines. The terminal monitor command enables log and debug output on the current session, and terminal no monitor turns it off again. Because the setting is per session, it must be reissued after reconnecting.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "logging buffered",
+        "is_correct": false
+      },
+      {
+        "text": "terminal monitor",
+        "is_correct": true
+      },
+      {
+        "text": "logging console",
+        "is_correct": false
+      },
+      {
+        "text": "logging synchronous",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "The method list `aaa authentication login default group radius local` is in use. The RADIUS servers are reachable but reject the credentials. What does the device do next?",
+    "explanation": "The local database is consulted only when the group method produces no response, not when it produces a rejection. A reachable server that denies the user ends the attempt, so a valid local account with the same name still cannot log in.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It retries the same server twice",
+        "is_correct": false
+      },
+      {
+        "text": "It falls back to the local database",
+        "is_correct": false
+      },
+      {
+        "text": "It denies the login, because fallback happens only when the server is unreachable",
+        "is_correct": true
+      },
+      {
+        "text": "It switches to the enable secret",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A device synchronises to a stratum 3 NTP server. What does that stratum value express?",
+    "explanation": "Stratum counts the number of NTP hops between a server and the authoritative reference clock, so a lower value means closer to the source. It is a topology measure, not an accuracy or priority score.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Accuracy in milliseconds",
+        "is_correct": false
+      },
+      {
+        "text": "Distance in hops from the reference clock",
+        "is_correct": true
+      },
+      {
+        "text": "The server priority in the election",
+        "is_correct": false
+      },
+      {
+        "text": "The configured poll interval",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which SNMPv3 security level provides both message authentication and encryption?",
+    "explanation": "authPriv authenticates each message with a hash and encrypts the payload, protecting both integrity and confidentiality. authNoPriv only authenticates, and noAuthNoPriv provides neither, leaving the community-style exposure intact.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "noAuthNoPriv",
+        "is_correct": false
+      },
+      {
+        "text": "authNoPriv",
+        "is_correct": false
+      },
+      {
+        "text": "authPriv",
+        "is_correct": true
+      },
+      {
+        "text": "privAuth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec protocol provides confidentiality but leaves the outer IP header unprotected?",
+    "explanation": "ESP encrypts and authenticates the payload while leaving the outer header readable, which is what allows it to traverse NAT. AH authenticates the entire packet including the IP header but encrypts nothing, so it fails behind NAT.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "AH",
+        "is_correct": false
+      },
+      {
+        "text": "ESP",
+        "is_correct": true
+      },
+      {
+        "text": "GRE",
+        "is_correct": false
+      },
+      {
+        "text": "IKE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "WPA3 replaces the completely open authentication of a guest network with which mechanism?",
+    "explanation": "Enhanced Open uses Opportunistic Wireless Encryption, which runs a per-client Diffie-Hellman exchange so a network with no shared password still encrypts each client's traffic. That defeats passive eavesdropping on public Wi-Fi, but because no credential is verified it does not authenticate users and is no substitute for 802.1X.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Simultaneous Authentication of Equals",
+        "is_correct": false
+      },
+      {
+        "text": "Opportunistic Wireless Encryption",
+        "is_correct": true
+      },
+      {
+        "text": "Protected Management Frames",
+        "is_correct": false
+      },
+      {
+        "text": "802.1X with EAP-TLS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP method is defined as idempotent, so repeating the same request leaves the server in the same state as a single call?",
+    "explanation": "PUT replaces the resource at a known URI, so sending the identical request twice produces the same result. POST is not idempotent because each call may create a new resource and return a different identifier.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "POST",
+        "is_correct": false
+      },
+      {
+        "text": "PUT",
+        "is_correct": true
+      },
+      {
+        "text": "PATCH",
+        "is_correct": false
+      },
+      {
+        "text": "CONNECT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which encoding is schema-less, human readable, and parsed natively by a browser without an extra library?",
+    "explanation": "JSON syntax is a subset of JavaScript object literal syntax, so a browser parses it directly with JSON.parse and no schema. YAML is also readable but needs a parser, and Protobuf is a binary format requiring a schema.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "XML",
+        "is_correct": false
+      },
+      {
+        "text": "JSON",
+        "is_correct": true
+      },
+      {
+        "text": "YAML",
+        "is_correct": false
+      },
+      {
+        "text": "Protobuf",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol carries XML-encoded RPCs over an SSH subsystem and is defined by RFC 6241?",
+    "explanation": "NETCONF runs over an SSH subsystem, encodes operations as XML RPCs, and defines candidate configuration, commit, and rollback. RESTCONF exposes the same data models over HTTP with JSON or XML, and gNMI is a gRPC-based alternative.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RESTCONF",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF",
+        "is_correct": true
+      },
+      {
+        "text": "gNMI",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Asked for interface error counters, a model reports a field named `input crc-stomped frames` that no Cisco platform reports. What is this failure and why does it occur?",
+    "explanation": "The model emits the most probable sequence of tokens rather than text checked against a parser or the vendor documentation, so it can invent a plausible-sounding field that does not exist. Nothing fails at generation time - the error surfaces only when a human or a script tries to use the output - which is why generated detail must be verified against the source of truth.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A context window overflow, because the prompt was too long",
+        "is_correct": false
+      },
+      {
+        "text": "A hallucination: invented detail the model never verified against its source",
+        "is_correct": true
+      },
+      {
+        "text": "A temperature setting too low to explore alternative phrasings",
+        "is_correct": false
+      },
+      {
+        "text": "A tokenisation fault that corrupts the command string",
+        "is_correct": false
+      }
+    ]
+  }
+]
