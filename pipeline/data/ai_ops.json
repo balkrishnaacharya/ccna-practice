@@ -3950,5 +3950,109 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is a single source of truth in a network automation architecture?",
+    "explanation": "The single source of truth is the authoritative store of intended configuration, from which device configurations are rendered. Devices are outputs of that intent, not the reference themselves. Backups and monitoring record observed state, which is useful for comparison but is not the source.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authoritative repository holding the intended configuration, from which device configurations are generated",
+        "is_correct": true
+      },
+      {
+        "text": "The running configuration on each device, which is always the reference",
+        "is_correct": false
+      },
+      {
+        "text": "A server that stores nightly copies of device configurations",
+        "is_correct": false
+      },
+      {
+        "text": "The monitoring system that records interface state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a JSON Schema, which keywords restrict a string property to a fixed set of values or to a regular-expression pattern?",
+    "explanation": "`enum` lists the only permitted values for the property, and `pattern` requires the value to match a regular expression. `required` names the properties that must be present, `type` constrains the JSON type, and `minimum` and `maximum` apply to numbers rather than strings.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "enum and pattern",
+        "is_correct": true
+      },
+      {
+        "text": "required and type",
+        "is_correct": false
+      },
+      {
+        "text": "minimum and maximum",
+        "is_correct": false
+      },
+      {
+        "text": "$ref and $id",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Ansible Vault provide?",
+    "explanation": "Vault encrypts files and individual values with a password or a vault-ID key, so secrets such as passwords and API tokens can live in the repository alongside the playbooks without being readable. It protects data at rest; it does not checksum playbooks, control access on the control node, or roll back failed runs.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Encryption of variable files and other content so secrets can be stored in the repository",
+        "is_correct": true
+      },
+      {
+        "text": "A checksum of each playbook that detects configuration drift",
+        "is_correct": false
+      },
+      {
+        "text": "A role-based access control layer for the control node",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic rollback of a failed playbook run",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A compliance tool reports drift on every run although nobody has changed anything. It compares the stored configuration text against the device output. What is the most likely cause?",
+    "explanation": "Volatile lines such as the last-configuration-change banner, timestamps, counters, or ordering differences appear in every capture, so a raw text comparison always finds a difference. The comparison has to normalize or ignore those lines, or better, compare structured models instead of text. Real drift would be intermittent, not identical on every run.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Volatile lines such as timestamps and last-change banners differ between captures, so they must be normalized out",
+        "is_correct": true
+      },
+      {
+        "text": "The device is genuinely rewriting its configuration every minute",
+        "is_correct": false
+      },
+      {
+        "text": "The tool reads the running configuration instead of the startup configuration",
+        "is_correct": false
+      },
+      {
+        "text": "The repository uses the wrong character encoding",
+        "is_correct": false
+      }
+    ]
   }
 ]

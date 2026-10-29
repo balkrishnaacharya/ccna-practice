@@ -6056,5 +6056,291 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is the effect of a successful ARP cache poisoning attack?",
+    "explanation": "The attacker sends forged ARP replies that bind the gateway's IP address to the attacker's MAC, so the victim sends its traffic to the attacker, who can read, modify, or drop it before forwarding it on. Dynamic ARP Inspection defends against this by validating ARP packets against the DHCP snooping binding table.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The victim's traffic goes to the attacker's MAC address, letting the attacker intercept or alter it",
+        "is_correct": true
+      },
+      {
+        "text": "The DHCP server leases the victim's address to a different host",
+        "is_correct": false
+      },
+      {
+        "text": "The victim's switch port is placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "The victim's DNS queries are answered by a rogue server",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is WEP considered broken even when a long key is configured?",
+    "explanation": "WEP concatenates a 24-bit initialization vector with the key and runs RC4, with no per-packet key mixing. Only 16 million IV values exist, so IVs repeat on a busy network and the same keystream encrypts different plaintexts; collecting enough frames with known plaintext recovers the keystream and eventually the key. Key length does not fix a design flaw in the IV.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reuses short 24-bit IVs with RC4, so keystreams repeat and can be recovered from captured traffic",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a 128-bit AES key that is too short for modern hardware",
+        "is_correct": false
+      },
+      {
+        "text": "It sends the pre-shared key in every beacon frame",
+        "is_correct": false
+      },
+      {
+        "text": "It depends on 802.1X, which WEP does not support",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does accurate NTP synchronization matter for troubleshooting?",
+    "explanation": "Correlating events across routers, switches, and servers depends on timestamps that agree. If clocks are offset by minutes, the order of a multi-device failure cannot be reconstructed and syslog records become misleading. Accurate time also matters for certificate validation and for log retention and forensic work.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Correlating events across devices requires agreeing timestamps, or the order of a multi-device failure cannot be established",
+        "is_correct": true
+      },
+      {
+        "text": "NTP must be synchronized before syslog messages can be generated",
+        "is_correct": false
+      },
+      {
+        "text": "Unsynchronized clocks cause SNMP traps to be dropped",
+        "is_correct": false
+      },
+      {
+        "text": "NTP keeps the MAC address tables consistent between switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command copies the running configuration to the server 10.1.1.50 as the user `admin`, using SCP?",
+    "explanation": "SCP is used as a URL in the usual copy syntax, with the credentials and path in the URL: `scp://admin@10.1.1.50/config.txt`. The command copies from the local running configuration to the remote file. Reversing the two arguments would pull a file from the server into the running configuration instead.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "copy running-config scp://admin@10.1.1.50/config.txt",
+        "is_correct": true
+      },
+      {
+        "text": "copy running-config tftp://admin@10.1.1.50/config.txt",
+        "is_correct": false
+      },
+      {
+        "text": "copy scp://admin@10.1.1.50/config.txt running-config",
+        "is_correct": false
+      },
+      {
+        "text": "archive scp://admin@10.1.1.50/config.txt",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command keeps the router's hardware calendar synchronized with the time learned from NTP?",
+    "explanation": "NTP synchronizes the software clock by default. `ntp update-calendar` additionally writes the learned time into the hardware calendar, so the device comes up with a roughly correct time after a reload and before NTP converges. The other commands either set the clock manually or do not exist.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ntp update-calendar",
+        "is_correct": true
+      },
+      {
+        "text": "clock update-calendar",
+        "is_correct": false
+      },
+      {
+        "text": "ntp calendar sync",
+        "is_correct": false
+      },
+      {
+        "text": "clock set ntp",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes syslog messages sent to a remote collector carry the address of Loopback0 as their source?",
+    "explanation": "`logging source-interface Loopback0` fixes the source address of syslog packets so the collector always sees the same sender and any ACL along the path can permit a single stable address. Without it, the source follows the egress interface and changes with the path.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "logging source-interface Loopback0",
+        "is_correct": true
+      },
+      {
+        "text": "logging host 10.1.1.10 transport udp port 514",
+        "is_correct": false
+      },
+      {
+        "text": "service timestamps log datetime",
+        "is_correct": false
+      },
+      {
+        "text": "logging trap informational",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between static NAT and dynamic NAT?",
+    "explanation": "Static NAT creates a permanent one-to-one binding between an inside local and an inside global address, which is what inbound connections need. Dynamic NAT draws from a pool and assigns mappings as inside hosts start sessions, releasing them when the translations time out. PAT, a form of dynamic NAT, multiplexes many hosts onto one address using port numbers.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Static NAT permanently binds one inside local address to one inside global address; dynamic NAT assigns from a pool as sessions start",
+        "is_correct": true
+      },
+      {
+        "text": "Static NAT uses a pool; dynamic NAT creates permanent one-to-one bindings",
+        "is_correct": false
+      },
+      {
+        "text": "Static NAT translates ports; dynamic NAT translates only addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Static NAT requires PAT; dynamic NAT never uses PAT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits how many authentication attempts a client may make on a single SSH connection?",
+    "explanation": "`ip ssh authentication-retries` sets the number of attempts allowed per connection before the session is dropped. `ip ssh time-out` controls how long the negotiation may take, and `ip ssh version 2` selects the protocol version; neither limits attempts.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ssh authentication-retries 3",
+        "is_correct": true
+      },
+      {
+        "text": "ip ssh time-out 60",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 followed by login local",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh version 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the `logging discriminator` feature let you do?",
+    "explanation": "A discriminator applies a named regular expression to the message text or to the mnemonic and then either drops matching messages or rate-limits them. It filters at the source, before messages are sent to the collector, which is how noisy recurring messages are suppressed without changing severity levels or touching the collector's rules.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Drop or rate-limit syslog messages at the device based on a regex match on the text or mnemonic",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypt syslog messages before they reach the collector",
+        "is_correct": false
+      },
+      {
+        "text": "Assign a different severity level to messages that match a pattern",
+        "is_correct": false
+      },
+      {
+        "text": "Send matching messages through a different VRF",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why configure `ip tftp source-interface Loopback0` on a router that backs up its configuration to a TFTP server?",
+    "explanation": "When several paths can reach the server, the source address would otherwise follow whichever egress interface the route selects, changing unpredictably. Pinning it to a loopback gives the server's ACLs and return path one stable address to work with. The option changes addressing only; TFTP itself stays unencrypted.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So the requests use a stable source address that the server's ACL and return routing can rely on",
+        "is_correct": true
+      },
+      {
+        "text": "So the TFTP transfer is encrypted",
+        "is_correct": false
+      },
+      {
+        "text": "So the router can use a different default gateway for TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "So the server can push configurations to the router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly describes IKEv2 compared with IKEv1?",
+    "explanation": "IKEv2 completes its initial exchange in four messages, IKE_SA_INIT followed by IKE_AUTH, rather than the six-message main mode of IKEv1. It also supports MOBIKE, which lets a client change its IP address, for example moving between Wi-Fi and cellular, without rebuilding the tunnel. That combination is why it dominates remote-access designs.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It uses a four-message exchange and supports MOBIKE so a client can change address without renegotiating",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a six-message aggressive-mode exchange and offers no client mobility",
+        "is_correct": false
+      },
+      {
+        "text": "It uses a two-message exchange and requires certificates for every session",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps the eight-message main-mode exchange and only adds AES-GCM",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -7356,5 +7356,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A host sends a TCP segment with the RST flag set on a connection that is already established. What is the effect?",
+    "explanation": "RST is the abort signal. Unlike the graceful FIN exchange, it tears the connection down at once: both sides flush queued data, free the socket, and no closing handshake takes place. Applications see this as a connection reset.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The connection is torn down immediately and any queued data is discarded",
+        "is_correct": true
+      },
+      {
+        "text": "The receiver retransmits the last unacknowledged segment",
+        "is_correct": false
+      },
+      {
+        "text": "The segment is held until the receive window opens",
+        "is_correct": false
+      },
+      {
+        "text": "Only the sequence number is reset and the connection continues",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a residential DSL circuit described as asymmetric?",
+    "explanation": "ADSL divides the copper pair into frequency bands and allocates far more spectrum to the downstream direction than to the upstream direction, matching consumer behaviour where downloads dominate. The asymmetry is a provisioning choice, not a limitation of the line itself.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because downstream throughput is provisioned higher than upstream throughput",
+        "is_correct": true
+      },
+      {
+        "text": "Because upstream and downstream share a single frequency band",
+        "is_correct": false
+      },
+      {
+        "text": "Because the circuit can serve only one host at a time",
+        "is_correct": false
+      },
+      {
+        "text": "Because the line is always on and never dials",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a Cisco ASA, traffic moves from a security-level 100 interface to a security-level 50 interface and no ACL is applied. What happens by default?",
+    "explanation": "The ASA permits traffic from a higher security level to a lower one without an ACL. The reverse direction is denied unless an ACL permits it or inspection state already exists from the outbound flow. That default is what makes the inside-to-outside path work out of the box.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is permitted, because higher-to-lower is allowed by default",
+        "is_correct": true
+      },
+      {
+        "text": "It is dropped by the implicit deny",
+        "is_correct": false
+      },
+      {
+        "text": "It is permitted only if it matches an established return flow",
+        "is_correct": false
+      },
+      {
+        "text": "It is inspected, then dropped unless an ACL permits it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A traceroute prints `* * *` for one hop and then resolves later hops normally. What does that tell you?",
+    "explanation": "Routers commonly rate-limit or filter the generation of ICMP time-exceeded messages while still forwarding packets. Since later hops answer, the path is working; a bare `* * *` alone is not evidence of a forwarding failure.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That hop did not return an ICMP time-exceeded reply, which by itself does not mean forwarding is broken",
+        "is_correct": true
+      },
+      {
+        "text": "That the destination is unreachable and the trace should be abandoned",
+        "is_correct": false
+      },
+      {
+        "text": "That the hop has no route back to the source, so it drops all transit traffic",
+        "is_correct": false
+      },
+      {
+        "text": "That the hop is administratively shut down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a lightweight access point in local mode handle client data traffic?",
+    "explanation": "Local mode is centralized data forwarding: the AP encapsulates client frames in CAPWAP and sends them to the WLC, which bridges them to the wired network. FlexConnect is the mode that switches traffic locally at the AP instead.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It encapsulates the client frames in CAPWAP and sends them to the WLC",
+        "is_correct": true
+      },
+      {
+        "text": "It bridges them directly onto the access switch at the AP",
+        "is_correct": false
+      },
+      {
+        "text": "It drops them unless local switching is enabled",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards them between clients without involving the WLC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A provider assigns the prefix 2001:db8:acad:1200::/56. How many /64 subnets can the customer create from it?",
+    "explanation": "The difference between /56 and /64 is 8 bits, and 2^8 is 256. Each of those /64s has 64 host bits available, which is the standard subnet size for SLAAC.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "256",
+        "is_correct": true
+      },
+      {
+        "text": "16",
+        "is_correct": false
+      },
+      {
+        "text": "65,536",
+        "is_correct": false
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a VXLAN overlay, what does a VTEP do?",
+    "explanation": "The VXLAN Tunnel Endpoint encapsulates the original Layer 2 frame inside a UDP/IP packet stamped with a VNI and sends it across the routed underlay; the remote VTEP strips the outer headers and delivers the original frame. The underlay only ever routes the outer IP header.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It encapsulates the original Layer 2 frame in UDP/IP and forwards it across the underlay",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns IP addresses to the virtual machines on the segment",
+        "is_correct": false
+      },
+      {
+        "text": "It terminates the storage area network for the hypervisor cluster",
+        "is_correct": false
+      },
+      {
+        "text": "It load-balances traffic between the physical leaf switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of the standby controller in an N+1 wireless design?",
+    "explanation": "N+1 means one backup controller covers N primaries. The standby stays synchronized and ready to accept access points if a primary fails, but while the primary is healthy it carries no client traffic. That is different from an active/active pair that shares load.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stays ready to take over the access points if the primary fails, carrying no client traffic while the primary is healthy",
+        "is_correct": true
+      },
+      {
+        "text": "It shares the access point load evenly with the primary at all times",
+        "is_correct": false
+      },
+      {
+        "text": "It serves only guest SSIDs while the primary serves corporate SSIDs",
+        "is_correct": false
+      },
+      {
+        "text": "It offers management access only and cannot join access points",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a cloud scrubbing center do during a volumetric DDoS attack?",
+    "explanation": "The customer advertises the attacked prefix to the scrubbing provider over BGP, traffic is drawn to the provider's cleaning infrastructure, malicious flows are dropped, and clean traffic is returned, usually through a tunnel. The origin never sees the flood.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It attracts the attacked prefix, filters out malicious traffic, and returns only the clean traffic",
+        "is_correct": true
+      },
+      {
+        "text": "It blackholes all traffic to the prefix until the attack ends",
+        "is_correct": false
+      },
+      {
+        "text": "It rate-limits each source address at the customer edge router",
+        "is_correct": false
+      },
+      {
+        "text": "It rewrites the destination address to a honeypot",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A client reports a signal level of -67 dBm and a noise floor of -92 dBm. What is the SNR?",
+    "explanation": "SNR is the difference between signal and noise in dB: -67 minus -92 equals 25 dB. Because both figures are already logarithmic, they are subtracted rather than divided, and 25 dB is a healthy margin for typical data rates.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "25 dB",
+        "is_correct": true
+      },
+      {
+        "text": "-25 dB",
+        "is_correct": false
+      },
+      {
+        "text": "159 dB",
+        "is_correct": false
+      },
+      {
+        "text": "1.37 dB",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a passive twinax DAC cable used for?",
+    "explanation": "A direct-attach copper assembly is factory-terminated twinax with fixed transceivers on both ends. It carries 10, 25, 40, or 100 Gbps over a few metres between adjacent switches or servers at lower cost and power than optical modules. Being passive, it has no active electronics to equalize the signal.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Short-reach 10/25/40/100 Gbps links between nearby equipment, using a fixed copper assembly terminated on both ends",
+        "is_correct": true
+      },
+      {
+        "text": "Long-haul links over single-mode fiber between buildings",
+        "is_correct": false
+      },
+      {
+        "text": "Connecting analog telephones to a voice gateway",
+        "is_correct": false
+      },
+      {
+        "text": "Extending a link past 100 m by converting to optical at each end",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In DMVPN Phase 3, how does one spoke learn the public address of another spoke so it can build a direct tunnel?",
+    "explanation": "The spoke asks NHRP on the hub, which acts as the next-hop server and returns the peer's NBMA address; the spoke then builds a direct mGRE tunnel to that address. Phase 3 also has the hub send a redirect so the first packets do not have to be relayed.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It queries NHRP on the hub, which returns the peer mapping, and then builds a direct tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "The hub relays every packet between spokes for the life of the session",
+        "is_correct": false
+      },
+      {
+        "text": "The spokes exchange routes only through a full mesh of static tunnels",
+        "is_correct": false
+      },
+      {
+        "text": "The provider assigns a shared anycast address that all spokes use",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement describes how WMM (802.11e) prioritizes wireless traffic?",
+    "explanation": "WMM sorts frames into four access categories (voice, video, best effort, background) and gives each its own EDCA parameters: a shorter arbitration inter-frame spacing and a smaller contention window for the higher categories, so they win the medium more often. Upstream, DSCP or 802.1p values are mapped into those categories at the edge.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames fall into four access categories that contend with different arbitration inter-frame spacing and contention windows",
+        "is_correct": true
+      },
+      {
+        "text": "Each SSID is assigned a fixed percentage of airtime by the controller",
+        "is_correct": false
+      },
+      {
+        "text": "The access point inserts a priority tag in every data frame that the client must echo back",
+        "is_correct": false
+      },
+      {
+        "text": "Priority comes only from the IP DSCP field, and the access point ignores the 802.11 header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A path offers 100 Mbps of bandwidth with an 80 ms round-trip time. What is the approximate bandwidth-delay product?",
+    "explanation": "100 Mbps is 12.5 MB/s, and multiplying by 0.08 s gives about 1 MB. That is how much data must be in flight to keep the pipe full, so a TCP window smaller than roughly 1,000,000 bytes caps throughput well below the link rate no matter how much bandwidth is available.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "About 1,000,000 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "About 8,000,000 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "About 125,000 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "About 12,500 bytes",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -7356,5 +7356,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which command reports how many MAC addresses are currently learned, broken down by VLAN?",
+    "explanation": "`show mac address-table count` prints the number of dynamic, static, and secure entries per VLAN along with the table limit. It is the quick check when you suspect a CAM table is filling up or a VLAN is learning far more addresses than expected.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show mac address-table count",
+        "is_correct": true
+      },
+      {
+        "text": "show mac address-table aging-time",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table static",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a standard virtual switch inside a hypervisor not run Spanning Tree Protocol?",
+    "explanation": "A standard vSwitch is a software learning bridge whose ports are virtual NICs and uplinks; it has no mesh of physical links to converge and it does not participate in the physical switches' STP domain. Loop prevention for the physical topology stays with the physical switches, while uplink redundancy is handled by teaming or by the upstream design.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is a software bridge with virtual ports and no physical loop topology to resolve, so STP is not part of its operation",
+        "is_correct": true
+      },
+      {
+        "text": "It runs a proprietary loop-prevention protocol instead of STP",
+        "is_correct": false
+      },
+      {
+        "text": "It joins the physical switch's STP instance through each uplink",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks all but one uplink to prevent loops",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port shows a steadily rising output-drops counter while the link stays up at the expected speed. What does that counter indicate?",
+    "explanation": "Output drops mean frames were discarded on egress because the output queue was full, which is congestion, not a cabling fault. Cable problems show up as input errors, CRC/FCS errors, or late collisions instead. If one queue is starved while another is busy, QoS configuration is usually the next thing to check.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames were discarded on egress because the output queue filled during congestion",
+        "is_correct": true
+      },
+      {
+        "text": "Frames arrived corrupted because of a bad cable",
+        "is_correct": false
+      },
+      {
+        "text": "The port negotiated the wrong duplex setting",
+        "is_correct": false
+      },
+      {
+        "text": "The port received frames larger than the MTU",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A guest joins an open SSID and every HTTP request is redirected to a page asking for a room number before other traffic is allowed. What is this called?",
+    "explanation": "That is a captive portal: the client is intercepted and held at a web page until it authenticates or accepts terms, after which the controller or gateway opens the session. It is common for guest WLANs and for web authentication on a WLC.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A captive portal",
+        "is_correct": true
+      },
+      {
+        "text": "A pre-shared key handshake",
+        "is_correct": false
+      },
+      {
+        "text": "An 802.1X EAP exchange",
+        "is_correct": false
+      },
+      {
+        "text": "MAC authentication bypass",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Approximately how long can classic 802.1D STP take to converge after a topology change?",
+    "explanation": "The legacy timers are 20 seconds of max age plus 15 seconds listening and 15 seconds learning, so up to about 50 seconds before traffic flows again. That is precisely the delay RSTP and Rapid PVST+ were designed to remove.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Up to about 50 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "Up to about 3 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "Up to about 200 milliseconds",
+        "is_correct": false
+      },
+      {
+        "text": "Up to about 5 minutes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A PC is attached to the access port of an IP phone on a trunking voice setup. Which command makes the phone rewrite the PC's CoS to 0 so PC traffic cannot claim voice priority?",
+    "explanation": "`switchport priority extend cos 0` tells the phone what to do with frames arriving from the device behind it: here it overwrites their CoS with 0. The alternative, `switchport priority extend trust`, passes the PC's own CoS through, which lets an untrusted host mark its traffic as voice.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "switchport priority extend cos 0",
+        "is_correct": true
+      },
+      {
+        "text": "switchport voice vlan dot1p",
+        "is_correct": false
+      },
+      {
+        "text": "mls qos trust cos",
+        "is_correct": false
+      },
+      {
+        "text": "switchport priority extend trust",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel bundles four links and `lacp min-links 2` is configured. Only one member link remains up. What happens?",
+    "explanation": "min-links protects the design assumption that a minimum amount of bandwidth is available. When the number of active links falls below the threshold the port channel is brought down, so traffic fails over to another path instead of silently running at a quarter of the intended capacity.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port channel goes down so traffic fails over instead of running at reduced bandwidth",
+        "is_correct": true
+      },
+      {
+        "text": "The channel stays up and forwards over the single surviving link",
+        "is_correct": false
+      },
+      {
+        "text": "The surviving link is placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "LACP renegotiates the bundle with a new channel group",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes a switch err-disable EtherChannel ports when it detects that the two sides disagree about the bundle?",
+    "explanation": "`spanning-tree etherchannel guard misconfig` watches for inconsistencies such as one side bundling links that the other side treats as separate, and err-disables the affected ports. On the other side of the same family, `spanning-tree guard loop` and `spanning-tree guard root` protect against unidirectional links and rogue root bridges.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "spanning-tree etherchannel guard misconfig",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree guard loop",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree portfast bpduguard default",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree loopguard default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One switch in a domain computes costs with the short pathcost method and another uses the long method. What is the likely result?",
+    "explanation": "Path cost is computed locally on each switch; there is no negotiation of the method. The same gigabit link is cost 4 under the short method and 20,000 under the long method, so the two switches can disagree about which port is cheapest and elect an unintended root port or designated port.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same link gets different costs on each switch, so root-port and designated-port election can disagree",
+        "is_correct": true
+      },
+      {
+        "text": "STP stops converging because the BPDUs carry incompatible version fields",
+        "is_correct": false
+      },
+      {
+        "text": "The switch using the long method blocks every port",
+        "is_correct": false
+      },
+      {
+        "text": "The switches negotiate a common cost method automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch needs more forwarding-table space for IPv4 routes than for Layer 2 MAC entries. Which action changes that allocation?",
+    "explanation": "SDM templates repartition the switch's TCAM between Layer 2, IPv4, and IPv6 tables. You select a template that favors routing and reload, because the new partition only takes effect after the switch restarts. Freeing MAC entries or enabling `ip routing` does not resize the hardware tables.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Configure an `sdm prefer` template that favors routing, then reload",
+        "is_correct": true
+      },
+      {
+        "text": "Clear the dynamic MAC address table to free space",
+        "is_correct": false
+      },
+      {
+        "text": "Enable `ip routing` and the tables resize automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Convert the port to a routed port with `no switchport`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between `power inline auto` and `power inline static` on a PoE port?",
+    "explanation": "`auto` is the default: the port detects a powered device, classifies it, and only then allocates power. `static` reserves the configured wattage for the port up front whether or not anything is drawing it, which is useful for devices that do not answer detection reliably, at the cost of budget that is held even when the port is idle.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`auto` allocates power after detection, while `static` reserves the configured power whether or not a device is drawing it",
+        "is_correct": true
+      },
+      {
+        "text": "`auto` reserves full class power at all times, while `static` waits for detection",
+        "is_correct": false
+      },
+      {
+        "text": "`static` allows only 802.3af devices, while `auto` allows 802.3at",
+        "is_correct": false
+      },
+      {
+        "text": "`static` disables PoE until a device is plugged in",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch is configured with `config-register 0x2142`. How does it behave at the next reload?",
+    "explanation": "The configuration register controls boot behaviour. Setting bit 6 makes the router or switch ignore the saved startup configuration in NVRAM and come up with an empty configuration, which is the standard first step of password recovery. The normal value, 0x2102, loads startup-config.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It boots normally but ignores the saved startup configuration, coming up empty",
+        "is_correct": true
+      },
+      {
+        "text": "It stops in ROMMON and does not load an IOS image",
+        "is_correct": false
+      },
+      {
+        "text": "It loads startup-config and skips POST",
+        "is_correct": false
+      },
+      {
+        "text": "It boots the backup image stored in flash",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "After a live migration moves a VM to a host attached to a different access switch, the VM is briefly unreachable even though its MAC and IP are unchanged. What explains the outage?",
+    "explanation": "The physical switches still associate that MAC with the old port, so frames for the VM are sent down the wrong link until the entries age out. Live migration normally triggers a reverse ARP or gratuitous ARP from the new location so the upstream tables relearn immediately; if that is suppressed, the black hole lasts until aging completes.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Upstream switches still map the MAC to the old port until the entries age out or an RARP refreshes them",
+        "is_correct": true
+      },
+      {
+        "text": "The VM lost its address during the migration and had to request a new one",
+        "is_correct": false
+      },
+      {
+        "text": "STP reconverged and blocked the new host's uplink",
+        "is_correct": false
+      },
+      {
+        "text": "The virtual switch moved the VM into a different VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two switches are cabled together and both run MST, but one is configured with region name CORP and revision 1 while the other uses CORP and revision 2. What is the result?",
+    "explanation": "MST region membership requires the region name, the revision number, and the VLAN-to-instance mapping to match exactly. Because the revision differs, the two switches belong to separate regions and the connecting ports become boundary ports: each region keeps its own internal spanning-tree instances, and only the common spanning tree spans the link. Connectivity still works, but the per-VLAN instances no longer share one topology, so the intended load sharing does not extend across that link.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They form two separate MST regions; the link becomes a boundary and only the common spanning tree spans it",
+        "is_correct": true
+      },
+      {
+        "text": "The switch with the higher revision number pushes its region configuration to the other switch",
+        "is_correct": false
+      },
+      {
+        "text": "The link is placed in an err-disabled state until the region attributes match",
+        "is_correct": false
+      },
+      {
+        "text": "Both switches fall back to Rapid PVST+ for every VLAN on the mismatched link",
+        "is_correct": false
+      }
+    ]
   }
 ]

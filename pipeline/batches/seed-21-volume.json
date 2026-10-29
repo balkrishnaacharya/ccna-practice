@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "A host sends a TCP segment with the RST flag set on a connection that is already established. What is the effect?",
+    "explanation": "RST is the abort signal. Unlike the graceful FIN exchange, it tears the connection down at once: both sides flush queued data, free the socket, and no closing handshake takes place. Applications see this as a connection reset.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The connection is torn down immediately and any queued data is discarded",
+        "is_correct": true
+      },
+      {
+        "text": "The receiver retransmits the last unacknowledged segment",
+        "is_correct": false
+      },
+      {
+        "text": "The segment is held until the receive window opens",
+        "is_correct": false
+      },
+      {
+        "text": "Only the sequence number is reset and the connection continues",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a residential DSL circuit described as asymmetric?",
+    "explanation": "ADSL divides the copper pair into frequency bands and allocates far more spectrum to the downstream direction than to the upstream direction, matching consumer behaviour where downloads dominate. The asymmetry is a provisioning choice, not a limitation of the line itself.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because downstream throughput is provisioned higher than upstream throughput",
+        "is_correct": true
+      },
+      {
+        "text": "Because upstream and downstream share a single frequency band",
+        "is_correct": false
+      },
+      {
+        "text": "Because the circuit can serve only one host at a time",
+        "is_correct": false
+      },
+      {
+        "text": "Because the line is always on and never dials",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a Cisco ASA, traffic moves from a security-level 100 interface to a security-level 50 interface and no ACL is applied. What happens by default?",
+    "explanation": "The ASA permits traffic from a higher security level to a lower one without an ACL. The reverse direction is denied unless an ACL permits it or inspection state already exists from the outbound flow. That default is what makes the inside-to-outside path work out of the box.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is permitted, because higher-to-lower is allowed by default",
+        "is_correct": true
+      },
+      {
+        "text": "It is dropped by the implicit deny",
+        "is_correct": false
+      },
+      {
+        "text": "It is permitted only if it matches an established return flow",
+        "is_correct": false
+      },
+      {
+        "text": "It is inspected, then dropped unless an ACL permits it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A traceroute prints `* * *` for one hop and then resolves later hops normally. What does that tell you?",
+    "explanation": "Routers commonly rate-limit or filter the generation of ICMP time-exceeded messages while still forwarding packets. Since later hops answer, the path is working; a bare `* * *` alone is not evidence of a forwarding failure.",
+    "domain": "network_infra",
+    "subtopic": "Client Connectivity Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That hop did not return an ICMP time-exceeded reply, which by itself does not mean forwarding is broken",
+        "is_correct": true
+      },
+      {
+        "text": "That the destination is unreachable and the trace should be abandoned",
+        "is_correct": false
+      },
+      {
+        "text": "That the hop has no route back to the source, so it drops all transit traffic",
+        "is_correct": false
+      },
+      {
+        "text": "That the hop is administratively shut down",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a lightweight access point in local mode handle client data traffic?",
+    "explanation": "Local mode is centralized data forwarding: the AP encapsulates client frames in CAPWAP and sends them to the WLC, which bridges them to the wired network. FlexConnect is the mode that switches traffic locally at the AP instead.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It encapsulates the client frames in CAPWAP and sends them to the WLC",
+        "is_correct": true
+      },
+      {
+        "text": "It bridges them directly onto the access switch at the AP",
+        "is_correct": false
+      },
+      {
+        "text": "It drops them unless local switching is enabled",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards them between clients without involving the WLC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A provider assigns the prefix 2001:db8:acad:1200::/56. How many /64 subnets can the customer create from it?",
+    "explanation": "The difference between /56 and /64 is 8 bits, and 2^8 is 256. Each of those /64s has 64 host bits available, which is the standard subnet size for SLAAC.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "256",
+        "is_correct": true
+      },
+      {
+        "text": "16",
+        "is_correct": false
+      },
+      {
+        "text": "65,536",
+        "is_correct": false
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a VXLAN overlay, what does a VTEP do?",
+    "explanation": "The VXLAN Tunnel Endpoint encapsulates the original Layer 2 frame inside a UDP/IP packet stamped with a VNI and sends it across the routed underlay; the remote VTEP strips the outer headers and delivers the original frame. The underlay only ever routes the outer IP header.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It encapsulates the original Layer 2 frame in UDP/IP and forwards it across the underlay",
+        "is_correct": true
+      },
+      {
+        "text": "It assigns IP addresses to the virtual machines on the segment",
+        "is_correct": false
+      },
+      {
+        "text": "It terminates the storage area network for the hypervisor cluster",
+        "is_correct": false
+      },
+      {
+        "text": "It load-balances traffic between the physical leaf switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the role of the standby controller in an N+1 wireless design?",
+    "explanation": "N+1 means one backup controller covers N primaries. The standby stays synchronized and ready to accept access points if a primary fails, but while the primary is healthy it carries no client traffic. That is different from an active/active pair that shares load.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It stays ready to take over the access points if the primary fails, carrying no client traffic while the primary is healthy",
+        "is_correct": true
+      },
+      {
+        "text": "It shares the access point load evenly with the primary at all times",
+        "is_correct": false
+      },
+      {
+        "text": "It serves only guest SSIDs while the primary serves corporate SSIDs",
+        "is_correct": false
+      },
+      {
+        "text": "It offers management access only and cannot join access points",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does a cloud scrubbing center do during a volumetric DDoS attack?",
+    "explanation": "The customer advertises the attacked prefix to the scrubbing provider over BGP, traffic is drawn to the provider's cleaning infrastructure, malicious flows are dropped, and clean traffic is returned, usually through a tunnel. The origin never sees the flood.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It attracts the attacked prefix, filters out malicious traffic, and returns only the clean traffic",
+        "is_correct": true
+      },
+      {
+        "text": "It blackholes all traffic to the prefix until the attack ends",
+        "is_correct": false
+      },
+      {
+        "text": "It rate-limits each source address at the customer edge router",
+        "is_correct": false
+      },
+      {
+        "text": "It rewrites the destination address to a honeypot",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A client reports a signal level of -67 dBm and a noise floor of -92 dBm. What is the SNR?",
+    "explanation": "SNR is the difference between signal and noise in dB: -67 minus -92 equals 25 dB. Because both figures are already logarithmic, they are subtracted rather than divided, and 25 dB is a healthy margin for typical data rates.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "25 dB",
+        "is_correct": true
+      },
+      {
+        "text": "-25 dB",
+        "is_correct": false
+      },
+      {
+        "text": "159 dB",
+        "is_correct": false
+      },
+      {
+        "text": "1.37 dB",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a passive twinax DAC cable used for?",
+    "explanation": "A direct-attach copper assembly is factory-terminated twinax with fixed transceivers on both ends. It carries 10, 25, 40, or 100 Gbps over a few metres between adjacent switches or servers at lower cost and power than optical modules. Being passive, it has no active electronics to equalize the signal.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Short-reach 10/25/40/100 Gbps links between nearby equipment, using a fixed copper assembly terminated on both ends",
+        "is_correct": true
+      },
+      {
+        "text": "Long-haul links over single-mode fiber between buildings",
+        "is_correct": false
+      },
+      {
+        "text": "Connecting analog telephones to a voice gateway",
+        "is_correct": false
+      },
+      {
+        "text": "Extending a link past 100 m by converting to optical at each end",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In DMVPN Phase 3, how does one spoke learn the public address of another spoke so it can build a direct tunnel?",
+    "explanation": "The spoke asks NHRP on the hub, which acts as the next-hop server and returns the peer's NBMA address; the spoke then builds a direct mGRE tunnel to that address. Phase 3 also has the hub send a redirect so the first packets do not have to be relayed.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It queries NHRP on the hub, which returns the peer mapping, and then builds a direct tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "The hub relays every packet between spokes for the life of the session",
+        "is_correct": false
+      },
+      {
+        "text": "The spokes exchange routes only through a full mesh of static tunnels",
+        "is_correct": false
+      },
+      {
+        "text": "The provider assigns a shared anycast address that all spokes use",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement describes how WMM (802.11e) prioritizes wireless traffic?",
+    "explanation": "WMM sorts frames into four access categories (voice, video, best effort, background) and gives each its own EDCA parameters: a shorter arbitration inter-frame spacing and a smaller contention window for the higher categories, so they win the medium more often. Upstream, DSCP or 802.1p values are mapped into those categories at the edge.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames fall into four access categories that contend with different arbitration inter-frame spacing and contention windows",
+        "is_correct": true
+      },
+      {
+        "text": "Each SSID is assigned a fixed percentage of airtime by the controller",
+        "is_correct": false
+      },
+      {
+        "text": "The access point inserts a priority tag in every data frame that the client must echo back",
+        "is_correct": false
+      },
+      {
+        "text": "Priority comes only from the IP DSCP field, and the access point ignores the 802.11 header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A path offers 100 Mbps of bandwidth with an 80 ms round-trip time. What is the approximate bandwidth-delay product?",
+    "explanation": "100 Mbps is 12.5 MB/s, and multiplying by 0.08 s gives about 1 MB. That is how much data must be in flight to keep the pipe full, so a TCP window smaller than roughly 1,000,000 bytes caps throughput well below the link rate no matter how much bandwidth is available.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "About 1,000,000 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "About 8,000,000 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "About 125,000 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "About 12,500 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command reports how many MAC addresses are currently learned, broken down by VLAN?",
+    "explanation": "`show mac address-table count` prints the number of dynamic, static, and secure entries per VLAN along with the table limit. It is the quick check when you suspect a CAM table is filling up or a VLAN is learning far more addresses than expected.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show mac address-table count",
+        "is_correct": true
+      },
+      {
+        "text": "show mac address-table aging-time",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table static",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a standard virtual switch inside a hypervisor not run Spanning Tree Protocol?",
+    "explanation": "A standard vSwitch is a software learning bridge whose ports are virtual NICs and uplinks; it has no mesh of physical links to converge and it does not participate in the physical switches' STP domain. Loop prevention for the physical topology stays with the physical switches, while uplink redundancy is handled by teaming or by the upstream design.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is a software bridge with virtual ports and no physical loop topology to resolve, so STP is not part of its operation",
+        "is_correct": true
+      },
+      {
+        "text": "It runs a proprietary loop-prevention protocol instead of STP",
+        "is_correct": false
+      },
+      {
+        "text": "It joins the physical switch's STP instance through each uplink",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks all but one uplink to prevent loops",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port shows a steadily rising output-drops counter while the link stays up at the expected speed. What does that counter indicate?",
+    "explanation": "Output drops mean frames were discarded on egress because the output queue was full, which is congestion, not a cabling fault. Cable problems show up as input errors, CRC/FCS errors, or late collisions instead. If one queue is starved while another is busy, QoS configuration is usually the next thing to check.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Frames were discarded on egress because the output queue filled during congestion",
+        "is_correct": true
+      },
+      {
+        "text": "Frames arrived corrupted because of a bad cable",
+        "is_correct": false
+      },
+      {
+        "text": "The port negotiated the wrong duplex setting",
+        "is_correct": false
+      },
+      {
+        "text": "The port received frames larger than the MTU",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A guest joins an open SSID and every HTTP request is redirected to a page asking for a room number before other traffic is allowed. What is this called?",
+    "explanation": "That is a captive portal: the client is intercepted and held at a web page until it authenticates or accepts terms, after which the controller or gateway opens the session. It is common for guest WLANs and for web authentication on a WLC.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A captive portal",
+        "is_correct": true
+      },
+      {
+        "text": "A pre-shared key handshake",
+        "is_correct": false
+      },
+      {
+        "text": "An 802.1X EAP exchange",
+        "is_correct": false
+      },
+      {
+        "text": "MAC authentication bypass",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Approximately how long can classic 802.1D STP take to converge after a topology change?",
+    "explanation": "The legacy timers are 20 seconds of max age plus 15 seconds listening and 15 seconds learning, so up to about 50 seconds before traffic flows again. That is precisely the delay RSTP and Rapid PVST+ were designed to remove.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Up to about 50 seconds",
+        "is_correct": true
+      },
+      {
+        "text": "Up to about 3 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "Up to about 200 milliseconds",
+        "is_correct": false
+      },
+      {
+        "text": "Up to about 5 minutes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A PC is attached to the access port of an IP phone on a trunking voice setup. Which command makes the phone rewrite the PC's CoS to 0 so PC traffic cannot claim voice priority?",
+    "explanation": "`switchport priority extend cos 0` tells the phone what to do with frames arriving from the device behind it: here it overwrites their CoS with 0. The alternative, `switchport priority extend trust`, passes the PC's own CoS through, which lets an untrusted host mark its traffic as voice.",
+    "domain": "switching",
+    "subtopic": "Voice VLANs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "switchport priority extend cos 0",
+        "is_correct": true
+      },
+      {
+        "text": "switchport voice vlan dot1p",
+        "is_correct": false
+      },
+      {
+        "text": "mls qos trust cos",
+        "is_correct": false
+      },
+      {
+        "text": "switchport priority extend trust",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An EtherChannel bundles four links and `lacp min-links 2` is configured. Only one member link remains up. What happens?",
+    "explanation": "min-links protects the design assumption that a minimum amount of bandwidth is available. When the number of active links falls below the threshold the port channel is brought down, so traffic fails over to another path instead of silently running at a quarter of the intended capacity.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port channel goes down so traffic fails over instead of running at reduced bandwidth",
+        "is_correct": true
+      },
+      {
+        "text": "The channel stays up and forwards over the single surviving link",
+        "is_correct": false
+      },
+      {
+        "text": "The surviving link is placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "LACP renegotiates the bundle with a new channel group",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes a switch err-disable EtherChannel ports when it detects that the two sides disagree about the bundle?",
+    "explanation": "`spanning-tree etherchannel guard misconfig` watches for inconsistencies such as one side bundling links that the other side treats as separate, and err-disables the affected ports. On the other side of the same family, `spanning-tree guard loop` and `spanning-tree guard root` protect against unidirectional links and rogue root bridges.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "spanning-tree etherchannel guard misconfig",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree guard loop",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree portfast bpduguard default",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree loopguard default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One switch in a domain computes costs with the short pathcost method and another uses the long method. What is the likely result?",
+    "explanation": "Path cost is computed locally on each switch; there is no negotiation of the method. The same gigabit link is cost 4 under the short method and 20,000 under the long method, so the two switches can disagree about which port is cheapest and elect an unintended root port or designated port.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The same link gets different costs on each switch, so root-port and designated-port election can disagree",
+        "is_correct": true
+      },
+      {
+        "text": "STP stops converging because the BPDUs carry incompatible version fields",
+        "is_correct": false
+      },
+      {
+        "text": "The switch using the long method blocks every port",
+        "is_correct": false
+      },
+      {
+        "text": "The switches negotiate a common cost method automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch needs more forwarding-table space for IPv4 routes than for Layer 2 MAC entries. Which action changes that allocation?",
+    "explanation": "SDM templates repartition the switch's TCAM between Layer 2, IPv4, and IPv6 tables. You select a template that favors routing and reload, because the new partition only takes effect after the switch restarts. Freeing MAC entries or enabling `ip routing` does not resize the hardware tables.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Configure an `sdm prefer` template that favors routing, then reload",
+        "is_correct": true
+      },
+      {
+        "text": "Clear the dynamic MAC address table to free space",
+        "is_correct": false
+      },
+      {
+        "text": "Enable `ip routing` and the tables resize automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Convert the port to a routed port with `no switchport`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between `power inline auto` and `power inline static` on a PoE port?",
+    "explanation": "`auto` is the default: the port detects a powered device, classifies it, and only then allocates power. `static` reserves the configured wattage for the port up front whether or not anything is drawing it, which is useful for devices that do not answer detection reliably, at the cost of budget that is held even when the port is idle.",
+    "domain": "switching",
+    "subtopic": "PoE Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`auto` allocates power after detection, while `static` reserves the configured power whether or not a device is drawing it",
+        "is_correct": true
+      },
+      {
+        "text": "`auto` reserves full class power at all times, while `static` waits for detection",
+        "is_correct": false
+      },
+      {
+        "text": "`static` allows only 802.3af devices, while `auto` allows 802.3at",
+        "is_correct": false
+      },
+      {
+        "text": "`static` disables PoE until a device is plugged in",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch is configured with `config-register 0x2142`. How does it behave at the next reload?",
+    "explanation": "The configuration register controls boot behaviour. Setting bit 6 makes the router or switch ignore the saved startup configuration in NVRAM and come up with an empty configuration, which is the standard first step of password recovery. The normal value, 0x2102, loads startup-config.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It boots normally but ignores the saved startup configuration, coming up empty",
+        "is_correct": true
+      },
+      {
+        "text": "It stops in ROMMON and does not load an IOS image",
+        "is_correct": false
+      },
+      {
+        "text": "It loads startup-config and skips POST",
+        "is_correct": false
+      },
+      {
+        "text": "It boots the backup image stored in flash",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "After a live migration moves a VM to a host attached to a different access switch, the VM is briefly unreachable even though its MAC and IP are unchanged. What explains the outage?",
+    "explanation": "The physical switches still associate that MAC with the old port, so frames for the VM are sent down the wrong link until the entries age out. Live migration normally triggers a reverse ARP or gratuitous ARP from the new location so the upstream tables relearn immediately; if that is suppressed, the black hole lasts until aging completes.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Upstream switches still map the MAC to the old port until the entries age out or an RARP refreshes them",
+        "is_correct": true
+      },
+      {
+        "text": "The VM lost its address during the migration and had to request a new one",
+        "is_correct": false
+      },
+      {
+        "text": "STP reconverged and blocked the new host's uplink",
+        "is_correct": false
+      },
+      {
+        "text": "The virtual switch moved the VM into a different VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two switches are cabled together and both run MST, but one is configured with region name CORP and revision 1 while the other uses CORP and revision 2. What is the result?",
+    "explanation": "MST region membership requires the region name, the revision number, and the VLAN-to-instance mapping to match exactly. Because the revision differs, the two switches belong to separate regions and the connecting ports become boundary ports: each region keeps its own internal spanning-tree instances, and only the common spanning tree spans the link. Connectivity still works, but the per-VLAN instances no longer share one topology, so the intended load sharing does not extend across that link.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They form two separate MST regions; the link becomes a boundary and only the common spanning tree spans it",
+        "is_correct": true
+      },
+      {
+        "text": "The switch with the higher revision number pushes its region configuration to the other switch",
+        "is_correct": false
+      },
+      {
+        "text": "The link is placed in an err-disabled state until the region attributes match",
+        "is_correct": false
+      },
+      {
+        "text": "Both switches fall back to Rapid PVST+ for every VLAN on the mismatched link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which AS number range is reserved for private use in BGP?",
+    "explanation": "The 16-bit private range is 64512 through 65534, with 65535 reserved. The 32-bit equivalent is 4200000000 through 4294967294. Private AS numbers are stripped or replaced before advertisements leave the administrative domain.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "64512 through 65534",
+        "is_correct": true
+      },
+      {
+        "text": "1 through 1023",
+        "is_correct": false
+      },
+      {
+        "text": "32768 through 64511",
+        "is_correct": false
+      },
+      {
+        "text": "65535 through 131071",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In VRRP, what is the router currently forwarding traffic for the virtual IP address called?",
+    "explanation": "VRRP uses master and backup terminology: the master owns the virtual address and forwards for it, and a backup takes over if the master stops sending advertisements. HSRP uses active and standby for the same roles, while designated router is an OSPF concept.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The master",
+        "is_correct": true
+      },
+      {
+        "text": "The active",
+        "is_correct": false
+      },
+      {
+        "text": "The standby",
+        "is_correct": false
+      },
+      {
+        "text": "The designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One router is configured with `router eigrp 10` and a directly connected neighbour with `router eigrp 20`. What is the result?",
+    "explanation": "The autonomous system number is part of the EIGRP instance identity, and it is carried in the hello. Routers with different AS numbers ignore each other's hellos, so no adjacency forms. Matching K values matter too, but only after the AS numbers agree.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They do not form an adjacency, because the AS numbers differ",
+        "is_correct": true
+      },
+      {
+        "text": "They form an adjacency but exchange no routes",
+        "is_correct": false
+      },
+      {
+        "text": "They form an adjacency and exchange routes normally",
+        "is_correct": false
+      },
+      {
+        "text": "They form an adjacency only if the K values match",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly distinguishes a routed protocol from a routing protocol?",
+    "explanation": "A routed protocol carries user data and has a network-layer address, such as IP or IPv6. A routing protocol is the control-plane conversation between routers, such as OSPF, EIGRP, or BGP, that fills the table used to forward the routed protocol. The two work together but do different jobs.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A routed protocol carries user data with a network-layer address; a routing protocol exchanges reachability information between routers",
+        "is_correct": true
+      },
+      {
+        "text": "A routed protocol runs between routers; a routing protocol runs between hosts",
+        "is_correct": false
+      },
+      {
+        "text": "A routed protocol is connection-oriented; a routing protocol is connectionless",
+        "is_correct": false
+      },
+      {
+        "text": "A routed protocol assigns MAC addresses; a routing protocol assigns IP addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of interface commands enables OSPFv2 MD5 authentication with key ID 1 and the secret `C1sco`?",
+    "explanation": "`ip ospf authentication message-digest` switches the interface to MD5, and `ip ospf message-digest-key 1 md5 C1sco` defines the key ID and secret. Both values must match on the neighbour. Plaintext authentication instead uses `ip ospf authentication-key` together with `ip ospf authentication`.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip ospf authentication message-digest` and `ip ospf message-digest-key 1 md5 C1sco`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip ospf authentication-key C1sco` and `ip ospf authentication`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip ospf md5 key 1 C1sco` and `ip ospf authentication md5`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip ospf message-digest-key 1 sha256 C1sco` and `ip ospf authentication`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router redistributes static routes into OSPF without specifying a metric. What metric do those external routes carry by default?",
+    "explanation": "Redistributed routes enter OSPF as external type 2 with a seed metric of 20. The `default-metric` command changes that value for all redistributed sources. A metric of 1 is what a redistributed connected route would carry if explicitly set that way, and 110 is the administrative distance of OSPF itself.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "20",
+        "is_correct": true
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two interface commands configure EIGRP MD5 authentication in AS 10 using the key chain named `EIGRP-KEYS`?",
+    "explanation": "`ip authentication mode eigrp 10 md5` selects MD5 for the AS, and `ip authentication key-chain eigrp 10 EIGRP-KEYS` binds the chain that holds the keys and their lifetimes. The chain itself is built globally with `key chain` and `key` statements. Swapping the two command names is the usual mistake.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip authentication mode eigrp 10 md5` and `ip authentication key-chain eigrp 10 EIGRP-KEYS`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip authentication mode eigrp 10 sha256` and `ip authentication key-chain eigrp 10 EIGRP-KEYS`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip eigrp authentication md5 EIGRP-KEYS` and `ip eigrp key 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip authentication key-chain eigrp 10 md5` and `ip authentication mode eigrp 10 EIGRP-KEYS`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A route carries the well-known BGP community `no-export`. How far does it propagate?",
+    "explanation": "`no-export` keeps the route inside the local autonomous system, though it may still cross a confederation boundary. `no-advertise` is stricter and prevents the route from being sent to any peer at all. Both are well-known communities, so every compliant implementation honours them without extra configuration.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is advertised within the local AS and its confederation but not to external peers",
+        "is_correct": true
+      },
+      {
+        "text": "It is advertised to every peer, including external ones",
+        "is_correct": false
+      },
+      {
+        "text": "It is not advertised to any peer",
+        "is_correct": false
+      },
+      {
+        "text": "It is advertised only to route-reflector clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router running EIGRP with auto-summary enabled has 172.16.1.0/24 and 172.16.2.0/24 on different interfaces. What summary does it advertise?",
+    "explanation": "Auto-summary collapses routes to their classful major network, and both of these are subnets of the class B network 172.16.0.0/16. The summary can black-hole traffic when the subnets are discontiguous, which is why auto-summary is disabled in most modern designs.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "172.16.0.0/16",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.0.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.0/24",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.1.0/23",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers refuse to form an OSPF adjacency. One interface sits in a stub area and the other in an NSSA. What is the cause?",
+    "explanation": "The area type is signalled in the Options field of the hello through the E bit. A stub area clears it, while an NSSA keeps it set and adds the N bit, so the two routers see incompatible options and discard each other's hellos. Area ID, timers, and MTU all have to match as well, but they are not the issue here.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The stub and NSSA settings disagree on the E bit in the hello, so each router rejects the other",
+        "is_correct": true
+      },
+      {
+        "text": "The area IDs differ, so the hello is rejected",
+        "is_correct": false
+      },
+      {
+        "text": "The hello and dead intervals do not match",
+        "is_correct": false
+      },
+      {
+        "text": "Both routers use the same router ID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an OSPF E1 external route from an E2 external route?",
+    "explanation": "For E1, the cost of the internal path to the ASBR is added to the redistributed metric, so the total grows as the route crosses the domain. E2, the default, carries the external metric alone and ignores the internal cost, which makes all E2 copies look equal in cost. `metric-type 1` on the redistribution switches to E1.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "E1 adds the internal cost to reach the ASBR; E2 uses the external metric alone by default",
+        "is_correct": true
+      },
+      {
+        "text": "E1 uses the external metric alone; E2 adds the internal cost to the ASBR",
+        "is_correct": false
+      },
+      {
+        "text": "E1 routes come only from BGP; E2 routes come only from connected networks",
+        "is_correct": false
+      },
+      {
+        "text": "E1 is used inside stub areas; E2 is used in normal areas",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router executes `redistribute connected` under `router ospf 1` and has a connected interface on 10.1.5.0/24. What happens to that subnet?",
+    "explanation": "Without the `subnets` keyword, OSPF redistributes only classful networks, so a subnet of a class A major network is skipped. The connected route stays in the routing table and is reachable locally, but it never appears in OSPF. Adding `subnets` is the fix; `passive-interface` only suppresses hellos and does not affect redistribution.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is not redistributed, because without `subnets` only classful networks are advertised",
+        "is_correct": true
+      },
+      {
+        "text": "It is redistributed as 10.0.0.0/8 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It is redistributed as 10.1.5.0/24 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It is redistributed only if the interface is passive",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the effect of a successful ARP cache poisoning attack?",
+    "explanation": "The attacker sends forged ARP replies that bind the gateway's IP address to the attacker's MAC, so the victim sends its traffic to the attacker, who can read, modify, or drop it before forwarding it on. Dynamic ARP Inspection defends against this by validating ARP packets against the DHCP snooping binding table.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The victim's traffic goes to the attacker's MAC address, letting the attacker intercept or alter it",
+        "is_correct": true
+      },
+      {
+        "text": "The DHCP server leases the victim's address to a different host",
+        "is_correct": false
+      },
+      {
+        "text": "The victim's switch port is placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "The victim's DNS queries are answered by a rogue server",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is WEP considered broken even when a long key is configured?",
+    "explanation": "WEP concatenates a 24-bit initialization vector with the key and runs RC4, with no per-packet key mixing. Only 16 million IV values exist, so IVs repeat on a busy network and the same keystream encrypts different plaintexts; collecting enough frames with known plaintext recovers the keystream and eventually the key. Key length does not fix a design flaw in the IV.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It reuses short 24-bit IVs with RC4, so keystreams repeat and can be recovered from captured traffic",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a 128-bit AES key that is too short for modern hardware",
+        "is_correct": false
+      },
+      {
+        "text": "It sends the pre-shared key in every beacon frame",
+        "is_correct": false
+      },
+      {
+        "text": "It depends on 802.1X, which WEP does not support",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does accurate NTP synchronization matter for troubleshooting?",
+    "explanation": "Correlating events across routers, switches, and servers depends on timestamps that agree. If clocks are offset by minutes, the order of a multi-device failure cannot be reconstructed and syslog records become misleading. Accurate time also matters for certificate validation and for log retention and forensic work.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Correlating events across devices requires agreeing timestamps, or the order of a multi-device failure cannot be established",
+        "is_correct": true
+      },
+      {
+        "text": "NTP must be synchronized before syslog messages can be generated",
+        "is_correct": false
+      },
+      {
+        "text": "Unsynchronized clocks cause SNMP traps to be dropped",
+        "is_correct": false
+      },
+      {
+        "text": "NTP keeps the MAC address tables consistent between switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command copies the running configuration to the server 10.1.1.50 as the user `admin`, using SCP?",
+    "explanation": "SCP is used as a URL in the usual copy syntax, with the credentials and path in the URL: `scp://admin@10.1.1.50/config.txt`. The command copies from the local running configuration to the remote file. Reversing the two arguments would pull a file from the server into the running configuration instead.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "copy running-config scp://admin@10.1.1.50/config.txt",
+        "is_correct": true
+      },
+      {
+        "text": "copy running-config tftp://admin@10.1.1.50/config.txt",
+        "is_correct": false
+      },
+      {
+        "text": "copy scp://admin@10.1.1.50/config.txt running-config",
+        "is_correct": false
+      },
+      {
+        "text": "archive scp://admin@10.1.1.50/config.txt",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command keeps the router's hardware calendar synchronized with the time learned from NTP?",
+    "explanation": "NTP synchronizes the software clock by default. `ntp update-calendar` additionally writes the learned time into the hardware calendar, so the device comes up with a roughly correct time after a reload and before NTP converges. The other commands either set the clock manually or do not exist.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ntp update-calendar",
+        "is_correct": true
+      },
+      {
+        "text": "clock update-calendar",
+        "is_correct": false
+      },
+      {
+        "text": "ntp calendar sync",
+        "is_correct": false
+      },
+      {
+        "text": "clock set ntp",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command makes syslog messages sent to a remote collector carry the address of Loopback0 as their source?",
+    "explanation": "`logging source-interface Loopback0` fixes the source address of syslog packets so the collector always sees the same sender and any ACL along the path can permit a single stable address. Without it, the source follows the egress interface and changes with the path.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "logging source-interface Loopback0",
+        "is_correct": true
+      },
+      {
+        "text": "logging host 10.1.1.10 transport udp port 514",
+        "is_correct": false
+      },
+      {
+        "text": "service timestamps log datetime",
+        "is_correct": false
+      },
+      {
+        "text": "logging trap informational",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between static NAT and dynamic NAT?",
+    "explanation": "Static NAT creates a permanent one-to-one binding between an inside local and an inside global address, which is what inbound connections need. Dynamic NAT draws from a pool and assigns mappings as inside hosts start sessions, releasing them when the translations time out. PAT, a form of dynamic NAT, multiplexes many hosts onto one address using port numbers.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Static NAT permanently binds one inside local address to one inside global address; dynamic NAT assigns from a pool as sessions start",
+        "is_correct": true
+      },
+      {
+        "text": "Static NAT uses a pool; dynamic NAT creates permanent one-to-one bindings",
+        "is_correct": false
+      },
+      {
+        "text": "Static NAT translates ports; dynamic NAT translates only addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Static NAT requires PAT; dynamic NAT never uses PAT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command limits how many authentication attempts a client may make on a single SSH connection?",
+    "explanation": "`ip ssh authentication-retries` sets the number of attempts allowed per connection before the session is dropped. `ip ssh time-out` controls how long the negotiation may take, and `ip ssh version 2` selects the protocol version; neither limits attempts.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ssh authentication-retries 3",
+        "is_correct": true
+      },
+      {
+        "text": "ip ssh time-out 60",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 followed by login local",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh version 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the `logging discriminator` feature let you do?",
+    "explanation": "A discriminator applies a named regular expression to the message text or to the mnemonic and then either drops matching messages or rate-limits them. It filters at the source, before messages are sent to the collector, which is how noisy recurring messages are suppressed without changing severity levels or touching the collector's rules.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Drop or rate-limit syslog messages at the device based on a regex match on the text or mnemonic",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypt syslog messages before they reach the collector",
+        "is_correct": false
+      },
+      {
+        "text": "Assign a different severity level to messages that match a pattern",
+        "is_correct": false
+      },
+      {
+        "text": "Send matching messages through a different VRF",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why configure `ip tftp source-interface Loopback0` on a router that backs up its configuration to a TFTP server?",
+    "explanation": "When several paths can reach the server, the source address would otherwise follow whichever egress interface the route selects, changing unpredictably. Pinning it to a loopback gives the server's ACLs and return path one stable address to work with. The option changes addressing only; TFTP itself stays unencrypted.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So the requests use a stable source address that the server's ACL and return routing can rely on",
+        "is_correct": true
+      },
+      {
+        "text": "So the TFTP transfer is encrypted",
+        "is_correct": false
+      },
+      {
+        "text": "So the router can use a different default gateway for TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "So the server can push configurations to the router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly describes IKEv2 compared with IKEv1?",
+    "explanation": "IKEv2 completes its initial exchange in four messages, IKE_SA_INIT followed by IKE_AUTH, rather than the six-message main mode of IKEv1. It also supports MOBIKE, which lets a client change its IP address, for example moving between Wi-Fi and cellular, without rebuilding the tunnel. That combination is why it dominates remote-access designs.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It uses a four-message exchange and supports MOBIKE so a client can change address without renegotiating",
+        "is_correct": true
+      },
+      {
+        "text": "It uses a six-message aggressive-mode exchange and offers no client mobility",
+        "is_correct": false
+      },
+      {
+        "text": "It uses a two-message exchange and requires certificates for every session",
+        "is_correct": false
+      },
+      {
+        "text": "It keeps the eight-message main-mode exchange and only adds AES-GCM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a single source of truth in a network automation architecture?",
+    "explanation": "The single source of truth is the authoritative store of intended configuration, from which device configurations are rendered. Devices are outputs of that intent, not the reference themselves. Backups and monitoring record observed state, which is useful for comparison but is not the source.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The authoritative repository holding the intended configuration, from which device configurations are generated",
+        "is_correct": true
+      },
+      {
+        "text": "The running configuration on each device, which is always the reference",
+        "is_correct": false
+      },
+      {
+        "text": "A server that stores nightly copies of device configurations",
+        "is_correct": false
+      },
+      {
+        "text": "The monitoring system that records interface state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a JSON Schema, which keywords restrict a string property to a fixed set of values or to a regular-expression pattern?",
+    "explanation": "`enum` lists the only permitted values for the property, and `pattern` requires the value to match a regular expression. `required` names the properties that must be present, `type` constrains the JSON type, and `minimum` and `maximum` apply to numbers rather than strings.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "enum and pattern",
+        "is_correct": true
+      },
+      {
+        "text": "required and type",
+        "is_correct": false
+      },
+      {
+        "text": "minimum and maximum",
+        "is_correct": false
+      },
+      {
+        "text": "$ref and $id",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Ansible Vault provide?",
+    "explanation": "Vault encrypts files and individual values with a password or a vault-ID key, so secrets such as passwords and API tokens can live in the repository alongside the playbooks without being readable. It protects data at rest; it does not checksum playbooks, control access on the control node, or roll back failed runs.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Encryption of variable files and other content so secrets can be stored in the repository",
+        "is_correct": true
+      },
+      {
+        "text": "A checksum of each playbook that detects configuration drift",
+        "is_correct": false
+      },
+      {
+        "text": "A role-based access control layer for the control node",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic rollback of a failed playbook run",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A compliance tool reports drift on every run although nobody has changed anything. It compares the stored configuration text against the device output. What is the most likely cause?",
+    "explanation": "Volatile lines such as the last-configuration-change banner, timestamps, counters, or ordering differences appear in every capture, so a raw text comparison always finds a difference. The comparison has to normalize or ignore those lines, or better, compare structured models instead of text. Real drift would be intermittent, not identical on every run.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Volatile lines such as timestamps and last-change banners differ between captures, so they must be normalized out",
+        "is_correct": true
+      },
+      {
+        "text": "The device is genuinely rewriting its configuration every minute",
+        "is_correct": false
+      },
+      {
+        "text": "The tool reads the running configuration instead of the startup configuration",
+        "is_correct": false
+      },
+      {
+        "text": "The repository uses the wrong character encoding",
+        "is_correct": false
+      }
+    ]
+  }
+]

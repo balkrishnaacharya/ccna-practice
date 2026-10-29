@@ -5848,5 +5848,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which AS number range is reserved for private use in BGP?",
+    "explanation": "The 16-bit private range is 64512 through 65534, with 65535 reserved. The 32-bit equivalent is 4200000000 through 4294967294. Private AS numbers are stripped or replaced before advertisements leave the administrative domain.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "64512 through 65534",
+        "is_correct": true
+      },
+      {
+        "text": "1 through 1023",
+        "is_correct": false
+      },
+      {
+        "text": "32768 through 64511",
+        "is_correct": false
+      },
+      {
+        "text": "65535 through 131071",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In VRRP, what is the router currently forwarding traffic for the virtual IP address called?",
+    "explanation": "VRRP uses master and backup terminology: the master owns the virtual address and forwards for it, and a backup takes over if the master stops sending advertisements. HSRP uses active and standby for the same roles, while designated router is an OSPF concept.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The master",
+        "is_correct": true
+      },
+      {
+        "text": "The active",
+        "is_correct": false
+      },
+      {
+        "text": "The standby",
+        "is_correct": false
+      },
+      {
+        "text": "The designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One router is configured with `router eigrp 10` and a directly connected neighbour with `router eigrp 20`. What is the result?",
+    "explanation": "The autonomous system number is part of the EIGRP instance identity, and it is carried in the hello. Routers with different AS numbers ignore each other's hellos, so no adjacency forms. Matching K values matter too, but only after the AS numbers agree.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They do not form an adjacency, because the AS numbers differ",
+        "is_correct": true
+      },
+      {
+        "text": "They form an adjacency but exchange no routes",
+        "is_correct": false
+      },
+      {
+        "text": "They form an adjacency and exchange routes normally",
+        "is_correct": false
+      },
+      {
+        "text": "They form an adjacency only if the K values match",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly distinguishes a routed protocol from a routing protocol?",
+    "explanation": "A routed protocol carries user data and has a network-layer address, such as IP or IPv6. A routing protocol is the control-plane conversation between routers, such as OSPF, EIGRP, or BGP, that fills the table used to forward the routed protocol. The two work together but do different jobs.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A routed protocol carries user data with a network-layer address; a routing protocol exchanges reachability information between routers",
+        "is_correct": true
+      },
+      {
+        "text": "A routed protocol runs between routers; a routing protocol runs between hosts",
+        "is_correct": false
+      },
+      {
+        "text": "A routed protocol is connection-oriented; a routing protocol is connectionless",
+        "is_correct": false
+      },
+      {
+        "text": "A routed protocol assigns MAC addresses; a routing protocol assigns IP addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of interface commands enables OSPFv2 MD5 authentication with key ID 1 and the secret `C1sco`?",
+    "explanation": "`ip ospf authentication message-digest` switches the interface to MD5, and `ip ospf message-digest-key 1 md5 C1sco` defines the key ID and secret. Both values must match on the neighbour. Plaintext authentication instead uses `ip ospf authentication-key` together with `ip ospf authentication`.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip ospf authentication message-digest` and `ip ospf message-digest-key 1 md5 C1sco`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip ospf authentication-key C1sco` and `ip ospf authentication`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip ospf md5 key 1 C1sco` and `ip ospf authentication md5`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip ospf message-digest-key 1 sha256 C1sco` and `ip ospf authentication`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router redistributes static routes into OSPF without specifying a metric. What metric do those external routes carry by default?",
+    "explanation": "Redistributed routes enter OSPF as external type 2 with a seed metric of 20. The `default-metric` command changes that value for all redistributed sources. A metric of 1 is what a redistributed connected route would carry if explicitly set that way, and 110 is the administrative distance of OSPF itself.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "20",
+        "is_correct": true
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two interface commands configure EIGRP MD5 authentication in AS 10 using the key chain named `EIGRP-KEYS`?",
+    "explanation": "`ip authentication mode eigrp 10 md5` selects MD5 for the AS, and `ip authentication key-chain eigrp 10 EIGRP-KEYS` binds the chain that holds the keys and their lifetimes. The chain itself is built globally with `key chain` and `key` statements. Swapping the two command names is the usual mistake.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip authentication mode eigrp 10 md5` and `ip authentication key-chain eigrp 10 EIGRP-KEYS`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip authentication mode eigrp 10 sha256` and `ip authentication key-chain eigrp 10 EIGRP-KEYS`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip eigrp authentication md5 EIGRP-KEYS` and `ip eigrp key 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip authentication key-chain eigrp 10 md5` and `ip authentication mode eigrp 10 EIGRP-KEYS`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A route carries the well-known BGP community `no-export`. How far does it propagate?",
+    "explanation": "`no-export` keeps the route inside the local autonomous system, though it may still cross a confederation boundary. `no-advertise` is stricter and prevents the route from being sent to any peer at all. Both are well-known communities, so every compliant implementation honours them without extra configuration.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is advertised within the local AS and its confederation but not to external peers",
+        "is_correct": true
+      },
+      {
+        "text": "It is advertised to every peer, including external ones",
+        "is_correct": false
+      },
+      {
+        "text": "It is not advertised to any peer",
+        "is_correct": false
+      },
+      {
+        "text": "It is advertised only to route-reflector clients",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router running EIGRP with auto-summary enabled has 172.16.1.0/24 and 172.16.2.0/24 on different interfaces. What summary does it advertise?",
+    "explanation": "Auto-summary collapses routes to their classful major network, and both of these are subnets of the class B network 172.16.0.0/16. The summary can black-hole traffic when the subnets are discontiguous, which is why auto-summary is disabled in most modern designs.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "172.16.0.0/16",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.0.0/22",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.0/24",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.1.0/23",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers refuse to form an OSPF adjacency. One interface sits in a stub area and the other in an NSSA. What is the cause?",
+    "explanation": "The area type is signalled in the Options field of the hello through the E bit. A stub area clears it, while an NSSA keeps it set and adds the N bit, so the two routers see incompatible options and discard each other's hellos. Area ID, timers, and MTU all have to match as well, but they are not the issue here.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The stub and NSSA settings disagree on the E bit in the hello, so each router rejects the other",
+        "is_correct": true
+      },
+      {
+        "text": "The area IDs differ, so the hello is rejected",
+        "is_correct": false
+      },
+      {
+        "text": "The hello and dead intervals do not match",
+        "is_correct": false
+      },
+      {
+        "text": "Both routers use the same router ID",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an OSPF E1 external route from an E2 external route?",
+    "explanation": "For E1, the cost of the internal path to the ASBR is added to the redistributed metric, so the total grows as the route crosses the domain. E2, the default, carries the external metric alone and ignores the internal cost, which makes all E2 copies look equal in cost. `metric-type 1` on the redistribution switches to E1.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "E1 adds the internal cost to reach the ASBR; E2 uses the external metric alone by default",
+        "is_correct": true
+      },
+      {
+        "text": "E1 uses the external metric alone; E2 adds the internal cost to the ASBR",
+        "is_correct": false
+      },
+      {
+        "text": "E1 routes come only from BGP; E2 routes come only from connected networks",
+        "is_correct": false
+      },
+      {
+        "text": "E1 is used inside stub areas; E2 is used in normal areas",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router executes `redistribute connected` under `router ospf 1` and has a connected interface on 10.1.5.0/24. What happens to that subnet?",
+    "explanation": "Without the `subnets` keyword, OSPF redistributes only classful networks, so a subnet of a class A major network is skipped. The connected route stays in the routing table and is reachable locally, but it never appears in OSPF. Adding `subnets` is the fix; `passive-interface` only suppresses hellos and does not affect redistribution.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is not redistributed, because without `subnets` only classful networks are advertised",
+        "is_correct": true
+      },
+      {
+        "text": "It is redistributed as 10.0.0.0/8 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It is redistributed as 10.1.5.0/24 automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It is redistributed only if the interface is passive",
+        "is_correct": false
+      }
+    ]
   }
 ]
