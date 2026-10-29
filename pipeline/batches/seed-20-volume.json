@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "A switch records the source address 00:1A:2B:3C:4D:5E. Which portion of that address was assigned by the IEEE to identify the manufacturer?",
+    "explanation": "The first 24 bits are the Organizationally Unique Identifier, burned in by the IEEE to the vendor; the vendor assigns the remaining 24 bits per interface. That is why one vendor's adapters share the first three bytes and differ in the last three.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The first 24 bits, which form the Organizationally Unique Identifier",
+        "is_correct": true
+      },
+      {
+        "text": "The last 24 bits, which are reserved for the vendor",
+        "is_correct": false
+      },
+      {
+        "text": "The first 8 bits, which encode the device type",
+        "is_correct": false
+      },
+      {
+        "text": "All 48 bits, because the whole address is registered to one vendor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 address is written as eight groups of four hexadecimal digits. How many bits does that represent?",
+    "explanation": "Eight groups of 16 bits is 128 bits. That is four times the IPv4 address space width, which is why an IPv6 subnet is normally a /64 and still leaves 64 host bits.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "32 bits",
+        "is_correct": false
+      },
+      {
+        "text": "64 bits",
+        "is_correct": false
+      },
+      {
+        "text": "128 bits",
+        "is_correct": true
+      },
+      {
+        "text": "256 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a structured campus cabling design, what is the role of an IDF?",
+    "explanation": "The intermediate distribution frame is the floor or building wiring closet that terminates horizontal cabling from end devices and uplinks to the main distribution frame. The MDF is the campus cross-connect where the WAN demarc and core meet.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is the floor-level wiring closet that aggregates horizontal cabling and uplinks to the MDF",
+        "is_correct": true
+      },
+      {
+        "text": "It is the single cross-connect where the carrier demarcation and core switching meet",
+        "is_correct": false
+      },
+      {
+        "text": "It is the redundant core switch pair that forwards inter-VLAN traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It is the device that terminates the ISP circuit and performs NAT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why would a factory run machine-vision inference on a server on the plant floor instead of in a distant public cloud region?",
+    "explanation": "That is edge computing: processing happens near the data source, so control decisions are not delayed by a WAN round trip and the volume of raw video that must be uploaded drops sharply. Cloud is still used for training and long-term storage.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To cut the round-trip latency to the process and avoid uploading every raw frame",
+        "is_correct": true
+      },
+      {
+        "text": "Because cloud compute is always more expensive than on-premises hardware",
+        "is_correct": false
+      },
+      {
+        "text": "Because inference models cannot be licensed for cloud use",
+        "is_correct": false
+      },
+      {
+        "text": "To avoid having to encrypt traffic between the plant and the cloud",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is an on-site RF survey preferred over a predictive model for a warehouse with tall metal racking?",
+    "explanation": "Racking blocks and reflects 5 GHz energy in ways a floor-plan model cannot capture, so measured signal, interference, and channel reuse at the actual mounting points is the only reliable basis for AP placement and power settings.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because metal racking attenuates and reflects RF unpredictably, so placement must be validated with real measurements",
+        "is_correct": true
+      },
+      {
+        "text": "Because predictive tools cannot calculate coverage for more than one floor",
+        "is_correct": false
+      },
+      {
+        "text": "Because a survey is required before any 802.11ax access point can be powered",
+        "is_correct": false
+      },
+      {
+        "text": "Because an on-site survey removes the need to plan channel reuse",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Clients are spread evenly around an access point mounted in the center of an open office floor. Which antenna pattern suits that placement?",
+    "explanation": "An omnidirectional antenna radiates roughly equally in all horizontal directions, forming a doughnut-shaped pattern, which covers clients surrounding the AP. A patch or Yagi concentrates energy in one direction and is used for corridors or point-to-point bridges.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A directional patch aimed across the floor",
+        "is_correct": false
+      },
+      {
+        "text": "An omnidirectional antenna radiating in all horizontal directions",
+        "is_correct": true
+      },
+      {
+        "text": "A Yagi aimed at a distant building",
+        "is_correct": false
+      },
+      {
+        "text": "A parabolic dish pointed down at the desks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Under the cloud shared-responsibility model, which task stays with the customer in an IaaS deployment?",
+    "explanation": "The provider owns the facility, hardware, and hypervisor; the customer owns the guest operating system, its patching, the identities, the data, and the security-group rules. The split moves up the stack for PaaS and SaaS but never disappears.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Patching the guest operating system and hardening the workloads",
+        "is_correct": true
+      },
+      {
+        "text": "Physical security of the data center building",
+        "is_correct": false
+      },
+      {
+        "text": "Firmware updates on the hypervisor hosts",
+        "is_correct": false
+      },
+      {
+        "text": "Maintenance of the underlying storage arrays",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is CSMA/CD not needed on a modern full-duplex switched Ethernet link?",
+    "explanation": "Full duplex gives the interface separate transmit and receive paths, so a station can send and receive at the same time and a collision cannot occur. CSMA/CD exists only to arbitrate a shared half-duplex medium.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because full duplex uses separate transmit and receive paths, so collisions cannot occur",
+        "is_correct": true
+      },
+      {
+        "text": "Because switches buffer every frame and retransmit any that are damaged",
+        "is_correct": false
+      },
+      {
+        "text": "Because the Ethernet frame no longer carries a preamble or start frame delimiter",
+        "is_correct": false
+      },
+      {
+        "text": "Because CSMA/CD was replaced by CSMA/CA on copper links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A branch has only a geostationary satellite link, with the satellite about 36,000 km away. Which round-trip latency should be expected?",
+    "explanation": "The signal travels about 36,000 km up and 36,000 km down at roughly 300,000 km/s, so each hop costs about 120 ms and the station-to-station path is about 240 ms one way. A round trip is therefore in the 500-600 ms range once processing is added.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Under 5 ms",
+        "is_correct": false
+      },
+      {
+        "text": "20 to 40 ms",
+        "is_correct": false
+      },
+      {
+        "text": "500 to 600 ms",
+        "is_correct": true
+      },
+      {
+        "text": "Over 2,000 ms",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team stores nightly device backups that must be retrieved by key over an HTTPS API from any region and never modified in place. Which storage type fits?",
+    "explanation": "Object storage keeps each item with metadata and a unique key in a flat namespace and is reached over HTTP, which suits immutable backups and archives. Block storage presents a raw volume that only an attached host can mount.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Object storage addressed by key over an HTTP API",
+        "is_correct": true
+      },
+      {
+        "text": "A block volume attached to a single virtual machine",
+        "is_correct": false
+      },
+      {
+        "text": "A file share mounted over NFS inside one VPC",
+        "is_correct": false
+      },
+      {
+        "text": "A RAM disk on the hypervisor host",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An engineer must carve 100, 50, 25, and 10 host subnets out of 192.168.10.0/24 with VLSM. Why allocate the 100-host subnet first?",
+    "explanation": "Every subnet must sit on a boundary that matches its own mask, so allocating the largest block first guarantees it a contiguous aligned range and leaves the remainder splittable into the smaller blocks. Starting small scatters prefixes across the space and can leave no aligned range large enough for the big subnet.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the largest subnet must always be given the lowest usable address",
+        "is_correct": false
+      },
+      {
+        "text": "Because taking the largest aligned block first prevents fragmentation from leaving no room for it",
+        "is_correct": true
+      },
+      {
+        "text": "Because the first subnet allocated automatically becomes the summary route",
+        "is_correct": false
+      },
+      {
+        "text": "Because smaller subnets cannot be entered in the routing table before larger ones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One switch port is hardcoded to 100 Mb/s full duplex while its peer is left on auto. The link comes up at 100 Mb/s half duplex. Why?",
+    "explanation": "A hardcoded port sends no fast link pulses, so the auto side has nothing to negotiate against and falls back to parallel detection, which can only infer speed from the received signal. With no duplex information available it defaults to half duplex, which produces a mismatch that shows up as late collisions on one side and FCS errors on the other.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the auto side falls back to parallel detection, which learns speed only and defaults the duplex to half",
+        "is_correct": true
+      },
+      {
+        "text": "Because 100 Mb/s Ethernet does not support full-duplex operation",
+        "is_correct": false
+      },
+      {
+        "text": "Because the hardcoded side advertises half duplex as its highest priority",
+        "is_correct": false
+      },
+      {
+        "text": "Because the cable is wired as a crossover instead of a straight-through",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point transmits at 20 dBm, the cable and connectors lose 3 dB, and the antenna has 9 dBi of gain. What is the effective isotropic radiated power?",
+    "explanation": "EIRP is transmit power minus cable loss plus antenna gain: 20 - 3 + 9 = 26 dBm. The figure is what regulatory limits are written against, so it is the number that must be compared to the local cap rather than the radio's configured power.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "23 dBm",
+        "is_correct": false
+      },
+      {
+        "text": "26 dBm",
+        "is_correct": true
+      },
+      {
+        "text": "32 dBm",
+        "is_correct": false
+      },
+      {
+        "text": "14 dBm",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enters interface configuration mode for FastEthernet 0/1 through 0/12 in one step?",
+    "explanation": "`interface range fa0/1 - 12` selects the whole contiguous range so a single set of commands is applied to every member. That is the standard way to configure a block of access ports without repeating the configuration twelve times.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`interface range fa0/1 - 12`",
+        "is_correct": true
+      },
+      {
+        "text": "`interface fa0/1-12`",
+        "is_correct": false
+      },
+      {
+        "text": "`interface range fa0/1 , fa0/12`",
+        "is_correct": false
+      },
+      {
+        "text": "`interface vlan 1-12`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single interface command enables PortFast, forces access mode, and disables trunk negotiation at the same time?",
+    "explanation": "`switchport host` is a macro that applies `spanning-tree portfast`, `switchport mode access`, and `switchport nonegotiate`. It is the quick way to prepare a port for a single workstation or server.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport host`",
+        "is_correct": true
+      },
+      {
+        "text": "`spanning-tree portfast`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport mode access`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree portfast default`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a platform that supports both ISL and 802.1Q, which command must be set before the port will accept `switchport mode trunk`?",
+    "explanation": "The trunk encapsulation has to be chosen explicitly on those platforms, otherwise the mode change is rejected because the encapsulation is still in its auto state. `switchport trunk encapsulation dot1q` fixes it, and 802.1Q is the only option on platforms that dropped ISL.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport trunk encapsulation dot1q`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport trunk native vlan 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport nonegotiate`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport mode access`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows the VTP operating mode, the domain name, and the current configuration revision number?",
+    "explanation": "`show vtp status` is the verification command for VTP: it prints the mode, domain, version, the revision counter, and how many VLANs the switch knows. The revision number is the field to watch when a switch is about to overwrite the domain.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show vtp status`",
+        "is_correct": true
+      },
+      {
+        "text": "`show vlan brief`",
+        "is_correct": false
+      },
+      {
+        "text": "`show spanning-tree vlan 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`show interfaces trunk`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which value in the 802.1Q tag tells a receiving switch that the frame carries VLAN information?",
+    "explanation": "The Tag Protocol Identifier occupies the EtherType position and is set to 0x8100. A receiver that reads 0x8100 instead of 0x0800 or 0x86DD knows the next two bytes are tag control information and not the start of the payload.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0x8100",
+        "is_correct": true
+      },
+      {
+        "text": "0x0800",
+        "is_correct": false
+      },
+      {
+        "text": "0x86DD",
+        "is_correct": false
+      },
+      {
+        "text": "0x8847",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A trunk must carry frames of 1,600 bytes. Which setting raises the maximum frame size the switch will forward?",
+    "explanation": "The global `system mtu` value sets the largest frame all switch ports accept, and on many Catalyst platforms changing it requires a reload. `ip mtu` only affects packets routed off an SVI or routed port, so it does not solve a switched frame that is too large.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The global `system mtu` value, which raises the limit for all switch ports",
+        "is_correct": true
+      },
+      {
+        "text": "The `ip mtu` value on the management SVI",
+        "is_correct": false
+      },
+      {
+        "text": "The native VLAN MTU on the trunk",
+        "is_correct": false
+      },
+      {
+        "text": "The EtherChannel load-balancing method",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port connects to a virtualization host that carries tagged frames for many VLANs. Which command lets the port skip listening and learning without giving up trunking?",
+    "explanation": "`spanning-tree portfast trunk` enables PortFast on a port that stays a trunk, which is what a hypervisor or a trunked server NIC needs. Plain `spanning-tree portfast` is meant for access ports and does not have the intended effect once the port is trunking.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`spanning-tree portfast trunk`",
+        "is_correct": true
+      },
+      {
+        "text": "`spanning-tree portfast`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree portfast default`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree bpdufilter enable`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which legacy Cisco feature assigned a VLAN to a port based on the MAC address of whatever device connected to it?",
+    "explanation": "VMPS, the VLAN Membership Policy Server, held a database mapping MAC addresses to VLANs and told the switch which VLAN to apply when a device appeared. It has been deprecated in favour of 802.1X-based dynamic VLAN assignment by a RADIUS server.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VMPS",
+        "is_correct": true
+      },
+      {
+        "text": "VTP pruning",
+        "is_correct": false
+      },
+      {
+        "text": "DTP",
+        "is_correct": false
+      },
+      {
+        "text": "802.1ad QinQ",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does `vtp mode off` differ from `vtp mode transparent`?",
+    "explanation": "A transparent switch keeps its VLAN database local but still relays advertisements it receives from other switches. A switch in off mode stops participating altogether and does not forward advertisements, which on newer code also removes VTP from the configuration entirely.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Off mode relays advertisements but does not apply them; transparent mode drops them",
+        "is_correct": false
+      },
+      {
+        "text": "Off mode stops participating in VTP and does not forward advertisements, while transparent mode keeps its database local but still relays them",
+        "is_correct": true
+      },
+      {
+        "text": "Off mode deletes the VLAN database, while transparent mode preserves it",
+        "is_correct": false
+      },
+      {
+        "text": "Off mode forces VTP version 3, while transparent mode stays on version 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDLD mode err-disables a port after eight unanswered echo checks instead of only flagging the link?",
+    "explanation": "Aggressive mode resends its echo every second and, after eight failures, shuts the port down so traffic cannot keep flowing one way into a black hole. Normal mode only marks the port as undetermined and leaves it forwarding, which is why aggressive is the usual choice on fibre uplinks.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Aggressive mode, enabled with the global `udld aggressive` command",
+        "is_correct": true
+      },
+      {
+        "text": "Normal mode, enabled by default on fibre ports",
+        "is_correct": false
+      },
+      {
+        "text": "Passive mode, which waits for the neighbour to initiate",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard, which blocks the port when BPDUs stop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch with BPDU skew detection enabled logs that the last BPDU on a root port arrived later than expected. What does that indicate?",
+    "explanation": "Skew detection timestamps BPDUs and compares the arrival interval against the expected hello timing. A late BPDU points at control-plane congestion or loss on the path, so the fix is to look at CPU load and link quality upstream rather than at the STP topology itself.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That BPDU delivery is late, which points to congestion or loss on the path rather than an STP loop",
+        "is_correct": true
+      },
+      {
+        "text": "That a new root bridge has been elected",
+        "is_correct": false
+      },
+      {
+        "text": "That the port is about to be placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "That this switch has become the root bridge for the VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A service provider carries a customer's tagged frames across its backbone without interpreting the customer VLAN IDs. Which mechanism makes that possible?",
+    "explanation": "802.1ad, usually called QinQ, pushes an outer service-provider tag in front of the customer tag. Provider switches forward on the outer tag only, so overlapping or unknown customer VLAN IDs stay transparent end to end.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.1ad QinQ, which pushes an outer provider tag and leaves the customer tag intact",
+        "is_correct": true
+      },
+      {
+        "text": "802.1Q native VLAN tagging on the provider edge",
+        "is_correct": false
+      },
+      {
+        "text": "VTP pruning of the customer VLANs at the provider edge",
+        "is_correct": false
+      },
+      {
+        "text": "DTP negotiation between the customer and provider switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a switch inserts an 802.1Q tag as a frame leaves a trunk port, why must it also recalculate the frame check sequence?",
+    "explanation": "The FCS is computed over the whole frame, header included. Adding four bytes of tag changes the covered bytes, so the FCS the sender computed no longer describes the frame and the receiver would discard it as corrupt. The egress switch rebuilds the FCS after inserting the tag.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the tag itself carries a copy of the original FCS",
+        "is_correct": false
+      },
+      {
+        "text": "Because the FCS covers the entire frame, so the inserted four bytes invalidate the old value and it must be recomputed",
+        "is_correct": true
+      },
+      {
+        "text": "Because inserting the tag rewrites the destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "Because the preamble has to be regenerated for every hop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does `traceroute` discover the routers along a path?",
+    "explanation": "It sends probes with a TTL that starts at one and increases by one per round. Each router that decrements the TTL to zero drops the packet and returns ICMP Time Exceeded, which reveals its address without needing access to any router's configuration.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It raises the TTL on each round and collects ICMP Time Exceeded messages from each hop",
+        "is_correct": true
+      },
+      {
+        "text": "It reads each router's routing table over SNMP",
+        "is_correct": false
+      },
+      {
+        "text": "It sends one packet with TTL 255 and records the final destination address",
+        "is_correct": false
+      },
+      {
+        "text": "It issues an ARP request for every address in the path",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command reports how many routes the router holds from each source, such as connected, static, and OSPF?",
+    "explanation": "`show ip route summary` prints a per-source breakdown of route counts plus the total, which is the fastest way to see whether a protocol is contributing routes at all. `show ip route` lists the entries themselves.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip route summary`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip route`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip protocols`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip interface brief`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `ip route 10.10.0.0 255.255.0.0 192.168.1.1 name BACKUP`, what does the `name BACKUP` portion do?",
+    "explanation": "It attaches a text label that appears in the running configuration and in `show ip route` output. It is documentation only: it does not change the administrative distance, the metric, or whether the route is preferred.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It sets a lower administrative distance for the route",
+        "is_correct": false
+      },
+      {
+        "text": "It labels the route for documentation without affecting path selection",
+        "is_correct": true
+      },
+      {
+        "text": "It names the outgoing interface that the route will use",
+        "is_correct": false
+      },
+      {
+        "text": "It makes the route a floating static route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Policy-based routing bypasses the normal destination lookup. What matches the traffic and chooses its path?",
+    "explanation": "A route map bound to the interface with `ip policy route-map` matches on an ACL, prefix list, or packet attributes and then sets a next hop or an outgoing interface. Only traffic that matches no clause falls back to the routing table.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A route map applied with `ip policy route-map`, matching with ACLs and setting a next hop",
+        "is_correct": true
+      },
+      {
+        "text": "An ACL applied with `ip access-group in` on the interface",
+        "is_correct": false
+      },
+      {
+        "text": "A static route with a lower administrative distance than the learned route",
+        "is_correct": false
+      },
+      {
+        "text": "A distribute-list applied to the interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why would a route map used during redistribution set a tag on routes learned from OSPF?",
+    "explanation": "The tag travels with the route as an attribute, so a later router can match it and refuse to redistribute those routes back into OSPF. That is the standard way to block a mutual-redistribution loop between two domains.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To mark the routes so they can be matched later, for example to block them from being redistributed back into OSPF",
+        "is_correct": true
+      },
+      {
+        "text": "To raise their administrative distance above the OSPF routes",
+        "is_correct": false
+      },
+      {
+        "text": "To summarize them into a single less-specific prefix",
+        "is_correct": false
+      },
+      {
+        "text": "To rewrite their next hop to the null interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does `distribute-list 10 in` under an EIGRP process actually filter?",
+    "explanation": "An inbound distribute-list filters which routes from the topology table are installed in the routing table. The router still receives and stores the routes; it simply does not use them, so it will not advertise them onward either.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Which routes from the topology table are installed in the routing table",
+        "is_correct": true
+      },
+      {
+        "text": "Which networks the router advertises to its EIGRP neighbours",
+        "is_correct": false
+      },
+      {
+        "text": "Which data packets are forwarded out of the interface",
+        "is_correct": false
+      },
+      {
+        "text": "Which EIGRP metrics are accepted from neighbours",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "`network 203.0.113.0 mask 255.255.255.0` is configured under `router bgp`, yet nothing appears in the BGP table. What is the most likely cause?",
+    "explanation": "BGP originates a prefix from a network statement only when an exactly matching prefix and mask already exists in the IP routing table, whether from a connected interface, a static route, or another protocol. A missing or differently masked entry means the statement does nothing.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No exact prefix and mask combination exists in the IP routing table",
+        "is_correct": true
+      },
+      {
+        "text": "The neighbour has not yet reached the Established state",
+        "is_correct": false
+      },
+      {
+        "text": "BGP requires `default-information originate` before any prefix can be advertised",
+        "is_correct": false
+      },
+      {
+        "text": "The autonomous system number is in the private range",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two EIGRP routers share an autonomous system and sit on the same subnet, yet they never become neighbours. Which mismatch explains it?",
+    "explanation": "EIGRP neighbours must agree on the metric weights K1 through K5 in addition to the AS number. A differing K value makes each router reject the other's hello, and the log records a K-value mismatch rather than a timer or authentication problem.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The K-values, that is the metric weights, differ between the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "The interface bandwidths differ between the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "One router has the link configured as a passive interface",
+        "is_correct": false
+      },
+      {
+        "text": "The two router IDs are in different subnets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers should peer over their loopback addresses in the same AS, the loopbacks are reachable, but the session stays in Active. `neighbor 10.0.0.2 remote-as 65000` is the only neighbour configuration. What is missing?",
+    "explanation": "Without `neighbor 10.0.0.2 update-source Loopback0` the router sources its TCP connection from the outgoing physical interface. The peer compares that source against its configured neighbour address, sees a mismatch, and refuses the connection, so the session never leaves Active.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`neighbor 10.0.0.2 update-source Loopback0`",
+        "is_correct": true
+      },
+      {
+        "text": "`neighbor 10.0.0.2 ebgp-multihop 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`no synchronization`",
+        "is_correct": false
+      },
+      {
+        "text": "`neighbor 10.0.0.2 next-hop-self`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which global configuration command makes a router query 8.8.8.8 when it needs to resolve a name?",
+    "explanation": "`ip name-server 8.8.8.8` adds the address to the resolver list, and `ip domain lookup` controls whether the router resolves names at all. The pair is what lets commands such as `ping www.example.com` work from the CLI.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip name-server 8.8.8.8`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dns server 8.8.8.8`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip domain-lookup 8.8.8.8`",
+        "is_correct": false
+      },
+      {
+        "text": "`dns forwarder 8.8.8.8`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command sets the message shown to anyone who connects, before any login prompt appears?",
+    "explanation": "`banner motd` defines the message of the day, displayed before authentication to every connecting session. `banner exec` is shown after login, so it cannot carry a pre-login legal warning.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`banner motd #Authorized access only#`",
+        "is_correct": true
+      },
+      {
+        "text": "`banner exec #Authorized access only#`",
+        "is_correct": false
+      },
+      {
+        "text": "`banner incoming #Authorized access only#`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging synchronous #Authorized access only#`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command refuses any new password shorter than ten characters?",
+    "explanation": "`security passwords min-length 10` enforces the minimum on passwords created afterwards, including enable secrets and local users. Existing credentials are not shortened or invalidated, but they must meet the rule the next time they are set.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`security passwords min-length 10`",
+        "is_correct": true
+      },
+      {
+        "text": "`service password-encryption 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`enable secret 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`password length 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What can a named IP ACL do that a numbered one generally cannot?",
+    "explanation": "Inside `ip access-list` configuration mode each entry carries a sequence number, so an entry can be inserted or deleted without rebuilding the whole list. A numbered ACL is edited by removing and re-entering it, which is why production lists are usually named.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Insert or delete individual entries in place by sequence number",
+        "is_correct": true
+      },
+      {
+        "text": "Match on TCP and UDP port numbers",
+        "is_correct": false
+      },
+      {
+        "text": "Apply to an interface in the outbound direction",
+        "is_correct": false
+      },
+      {
+        "text": "Omit the implicit deny at the end of the list",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command applies an IPv6 ACL to traffic entering the port?",
+    "explanation": "IPv6 ACLs are bound with `ipv6 traffic-filter name in|out`. The IPv4 form `ip access-group` does not apply IPv6 entries, and `ipv6 access-class` is used on VTY lines rather than on interfaces.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ipv6 traffic-filter IN in`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip access-group IN in`",
+        "is_correct": false
+      },
+      {
+        "text": "`ipv6 access-class IN in`",
+        "is_correct": false
+      },
+      {
+        "text": "`ipv6 inspect IN in`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables IP Source Guard so a host can only send traffic using the address bound to its snooping entry?",
+    "explanation": "`ip verify source` on the interface checks the source address of each frame against the DHCP snooping binding table and drops anything that does not match. Adding port security to the same port extends the check to the source MAC.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip verify source`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection trust`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping limit rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport port-security`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a time-based ACL stop permitting web access outside business hours?",
+    "explanation": "A `time-range` defines the periodic days and hours, and any ACE that references it is only in effect inside that window. The router clock has to be accurate, so NTP is a prerequisite for the schedule to behave as intended.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ACE references a `time-range` and is only active during that window",
+        "is_correct": true
+      },
+      {
+        "text": "A scheduler reloads the ACL at the start and end of each shift",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is shut down outside business hours",
+        "is_correct": false
+      },
+      {
+        "text": "The ACL sequence numbers expire when the window closes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Strict unicast RPF drops a packet whose source fails the reverse-path check. Where can it be enabled without breaking legitimate traffic?",
+    "explanation": "Strict mode requires the route back to the source to point out the same interface the packet arrived on, which holds on a single-homed link with a symmetric path. Where traffic is asymmetric, strict mode drops valid packets and loose mode is the correct choice.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "On a single-homed interface whose return path is symmetric",
+        "is_correct": true
+      },
+      {
+        "text": "On any interface that carries asymmetric traffic between sites",
+        "is_correct": false
+      },
+      {
+        "text": "Only on 802.1Q trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Only on loopback interfaces",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A controller's API expects a bearer token in the request header. Which header is correct?",
+    "explanation": "`Authorization: Bearer <token>` is the standard form for a bearer token, sent over HTTPS on every request. The server maps the token to an identity, so the client never resends a username and password.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`Authorization: Bearer <token>`",
+        "is_correct": true
+      },
+      {
+        "text": "`Authentication: Token <token>`",
+        "is_correct": false
+      },
+      {
+        "text": "`Authorization: Basic <token>`",
+        "is_correct": false
+      },
+      {
+        "text": "`X-Auth: <token>`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An API returns `{ \"items\": [...], \"next\": \"/devices?offset=100\" }`. How should a client collect every page?",
+    "explanation": "Follow the `next` link until the response carries none. Constructing offsets locally breaks as soon as the server changes page size or ordering, whereas the supplied link always points at the next valid page.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Request the `next` link repeatedly until no further link is returned",
+        "is_correct": true
+      },
+      {
+        "text": "Request offset 0 once with a very large page size",
+        "is_correct": false
+      },
+      {
+        "text": "Loop a fixed ten times and stop",
+        "is_correct": false
+      },
+      {
+        "text": "Wait for the server to push the remaining pages as webhooks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does NAPALM give a script that has to configure several vendors' devices?",
+    "explanation": "NAPOLM exposes one Python API — get_config, load_merge_candidate, compare_config, commit_config — with a driver per network OS, so the calling code does not branch on vendor CLI syntax. It is a library, not an orchestrator or a data model.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A vendor-neutral Python API with one driver per network operating system",
+        "is_correct": true
+      },
+      {
+        "text": "A compiler that turns YANG models into CLI",
+        "is_correct": false
+      },
+      {
+        "text": "An SNMP polling daemon for performance data",
+        "is_correct": false
+      },
+      {
+        "text": "A REST gateway that fronts the vendor APIs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco framework logs into devices, parses `show` output, and asserts on the result in an automated test?",
+    "explanation": "pyATS is Cisco's test automation framework, and its Genie parsers turn `show` output into structured data that a test can assert against. It is commonly used to validate state before and after a change.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "pyATS with Genie parsers",
+        "is_correct": true
+      },
+      {
+        "text": "NAPOLM",
+        "is_correct": false
+      },
+      {
+        "text": "Ansible",
+        "is_correct": false
+      },
+      {
+        "text": "Terraform",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a long document split into chunks before it is stored for retrieval?",
+    "explanation": "Each chunk has to fit the embedding model's input limit, and smaller passages make retrieval precise: the model receives the few passages that match the question instead of a document that would overflow the context window.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So each passage can be embedded and retrieved individually within the model's input limit",
+        "is_correct": true
+      },
+      {
+        "text": "So the document can be compressed without losing any information",
+        "is_correct": false
+      },
+      {
+        "text": "So the model can be fine-tuned on the document",
+        "is_correct": false
+      },
+      {
+        "text": "So the text can be encrypted before storage",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A prompt template contains `{{device}}` and `{{show_output}}` instead of pasted values. What is the main advantage?",
+    "explanation": "Fixed slots keep the instructions and the untrusted data in separate places, so device output cannot be mistaken for part of the instruction. The same template is also reusable and the values can be substituted by code, which makes runs comparable.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Instructions and untrusted data occupy fixed slots, so the template is reusable and data cannot be read as instructions",
+        "is_correct": true
+      },
+      {
+        "text": "It makes the model's output deterministic",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need to validate the model's output",
+        "is_correct": false
+      },
+      {
+        "text": "It increases the model's context window",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does an agent keep a memory of the steps it has already taken instead of re-planning from nothing every turn?",
+    "explanation": "Memory carries intermediate results, tool output, and earlier decisions forward, so the agent does not repeat work or contradict a decision it already made. It is not training: the memory lives in the prompt context and is bounded by the context window.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It preserves intermediate results and earlier decisions so the agent does not repeat steps or contradict itself",
+        "is_correct": true
+      },
+      {
+        "text": "It retrains the model's weights on every task",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees that the plan the agent produced is correct",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for tool calls",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an embedding of a text represent?",
+    "explanation": "An embedding is a fixed-length vector positioned so that texts with similar meaning land close together. That geometry is what lets a search find a passage that answers a question phrased in completely different words.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A vector whose distance to other vectors reflects semantic similarity",
+        "is_correct": true
+      },
+      {
+        "text": "A compressed copy of the original text that can be decompressed exactly",
+        "is_correct": false
+      },
+      {
+        "text": "A hash of the document used to detect duplicates",
+        "is_correct": false
+      },
+      {
+        "text": "The number of tokens the input contains",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does observability add beyond traditional monitoring?",
+    "explanation": "Monitoring answers questions that were defined in advance through dashboards and thresholds. Observability means the metrics, logs, and traces are rich and correlated enough to answer a question nobody anticipated when the collection was designed.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ability to investigate an unanticipated failure by querying metrics, logs, and traces together",
+        "is_correct": true
+      },
+      {
+        "text": "A longer retention period for interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "Agentless collection through SNMP instead of an agent",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic remediation of any alert that fires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly distinguishes MTTR from MTBF?",
+    "explanation": "MTTR is the mean time to repair, the average time taken to restore service after a failure. MTBF is the mean time between failures, the average interval a system runs before failing. Lowering MTTR and raising MTBF both improve availability.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MTTR is the average time to restore service; MTBF is the average interval between failures",
+        "is_correct": true
+      },
+      {
+        "text": "MTTR is the average interval between failures; MTBF is the average time to restore service",
+        "is_correct": false
+      },
+      {
+        "text": "Both measure the average time spent repairing a fault",
+        "is_correct": false
+      },
+      {
+        "text": "MTTR is the uptime percentage; MTBF is the downtime percentage",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A controller signs each webhook body with an HMAC and sends the digest in a header. Why must the receiver verify it?",
+    "explanation": "The HMAC, computed with a secret shared only with the controller, proves both the origin and the integrity of the body. Without that check anyone who discovers the endpoint URL could post a forged event and trigger the automation.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To prove the payload came from the sender and was not altered on the way",
+        "is_correct": true
+      },
+      {
+        "text": "To encrypt the payload so intermediaries cannot read it",
+        "is_correct": false
+      },
+      {
+        "text": "To confirm that the receiver's endpoint is reachable",
+        "is_correct": false
+      },
+      {
+        "text": "To compress the body before it is stored",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team tunes prompts against the same 200 examples it then uses to report final accuracy. Why is that score misleading?",
+    "explanation": "The examples shaped the prompts, so they are no longer held out and the score measures fit to the tuning data rather than generalisation to unseen input. An honest estimate needs a separate holdout set, or a fresh sample, that was never used during design.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The test set influenced the design, so the score reflects fit to the tuning data rather than generalisation",
+        "is_correct": true
+      },
+      {
+        "text": "Accuracy figures are only valid when the sample is larger than 200 examples",
+        "is_correct": false
+      },
+      {
+        "text": "Two hundred examples are too few to compute any metric at all",
+        "is_correct": false
+      },
+      {
+        "text": "Tuning a prompt always reduces accuracy on the tuning set",
+        "is_correct": false
+      }
+    ]
+  }
+]

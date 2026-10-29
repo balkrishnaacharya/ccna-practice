@@ -7018,5 +7018,343 @@
         "is_correct": true
       }
     ]
+  },
+  {
+    "stem": "Which command enters interface configuration mode for FastEthernet 0/1 through 0/12 in one step?",
+    "explanation": "`interface range fa0/1 - 12` selects the whole contiguous range so a single set of commands is applied to every member. That is the standard way to configure a block of access ports without repeating the configuration twelve times.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`interface range fa0/1 - 12`",
+        "is_correct": true
+      },
+      {
+        "text": "`interface fa0/1-12`",
+        "is_correct": false
+      },
+      {
+        "text": "`interface range fa0/1 , fa0/12`",
+        "is_correct": false
+      },
+      {
+        "text": "`interface vlan 1-12`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which single interface command enables PortFast, forces access mode, and disables trunk negotiation at the same time?",
+    "explanation": "`switchport host` is a macro that applies `spanning-tree portfast`, `switchport mode access`, and `switchport nonegotiate`. It is the quick way to prepare a port for a single workstation or server.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport host`",
+        "is_correct": true
+      },
+      {
+        "text": "`spanning-tree portfast`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport mode access`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree portfast default`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a platform that supports both ISL and 802.1Q, which command must be set before the port will accept `switchport mode trunk`?",
+    "explanation": "The trunk encapsulation has to be chosen explicitly on those platforms, otherwise the mode change is rejected because the encapsulation is still in its auto state. `switchport trunk encapsulation dot1q` fixes it, and 802.1Q is the only option on platforms that dropped ISL.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport trunk encapsulation dot1q`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport trunk native vlan 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport nonegotiate`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport mode access`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command shows the VTP operating mode, the domain name, and the current configuration revision number?",
+    "explanation": "`show vtp status` is the verification command for VTP: it prints the mode, domain, version, the revision counter, and how many VLANs the switch knows. The revision number is the field to watch when a switch is about to overwrite the domain.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show vtp status`",
+        "is_correct": true
+      },
+      {
+        "text": "`show vlan brief`",
+        "is_correct": false
+      },
+      {
+        "text": "`show spanning-tree vlan 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`show interfaces trunk`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which value in the 802.1Q tag tells a receiving switch that the frame carries VLAN information?",
+    "explanation": "The Tag Protocol Identifier occupies the EtherType position and is set to 0x8100. A receiver that reads 0x8100 instead of 0x0800 or 0x86DD knows the next two bytes are tag control information and not the start of the payload.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0x8100",
+        "is_correct": true
+      },
+      {
+        "text": "0x0800",
+        "is_correct": false
+      },
+      {
+        "text": "0x86DD",
+        "is_correct": false
+      },
+      {
+        "text": "0x8847",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A trunk must carry frames of 1,600 bytes. Which setting raises the maximum frame size the switch will forward?",
+    "explanation": "The global `system mtu` value sets the largest frame all switch ports accept, and on many Catalyst platforms changing it requires a reload. `ip mtu` only affects packets routed off an SVI or routed port, so it does not solve a switched frame that is too large.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The global `system mtu` value, which raises the limit for all switch ports",
+        "is_correct": true
+      },
+      {
+        "text": "The `ip mtu` value on the management SVI",
+        "is_correct": false
+      },
+      {
+        "text": "The native VLAN MTU on the trunk",
+        "is_correct": false
+      },
+      {
+        "text": "The EtherChannel load-balancing method",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port connects to a virtualization host that carries tagged frames for many VLANs. Which command lets the port skip listening and learning without giving up trunking?",
+    "explanation": "`spanning-tree portfast trunk` enables PortFast on a port that stays a trunk, which is what a hypervisor or a trunked server NIC needs. Plain `spanning-tree portfast` is meant for access ports and does not have the intended effect once the port is trunking.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`spanning-tree portfast trunk`",
+        "is_correct": true
+      },
+      {
+        "text": "`spanning-tree portfast`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree portfast default`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree bpdufilter enable`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which legacy Cisco feature assigned a VLAN to a port based on the MAC address of whatever device connected to it?",
+    "explanation": "VMPS, the VLAN Membership Policy Server, held a database mapping MAC addresses to VLANs and told the switch which VLAN to apply when a device appeared. It has been deprecated in favour of 802.1X-based dynamic VLAN assignment by a RADIUS server.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VMPS",
+        "is_correct": true
+      },
+      {
+        "text": "VTP pruning",
+        "is_correct": false
+      },
+      {
+        "text": "DTP",
+        "is_correct": false
+      },
+      {
+        "text": "802.1ad QinQ",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does `vtp mode off` differ from `vtp mode transparent`?",
+    "explanation": "A transparent switch keeps its VLAN database local but still relays advertisements it receives from other switches. A switch in off mode stops participating altogether and does not forward advertisements, which on newer code also removes VTP from the configuration entirely.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Off mode relays advertisements but does not apply them; transparent mode drops them",
+        "is_correct": false
+      },
+      {
+        "text": "Off mode stops participating in VTP and does not forward advertisements, while transparent mode keeps its database local but still relays them",
+        "is_correct": true
+      },
+      {
+        "text": "Off mode deletes the VLAN database, while transparent mode preserves it",
+        "is_correct": false
+      },
+      {
+        "text": "Off mode forces VTP version 3, while transparent mode stays on version 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which UDLD mode err-disables a port after eight unanswered echo checks instead of only flagging the link?",
+    "explanation": "Aggressive mode resends its echo every second and, after eight failures, shuts the port down so traffic cannot keep flowing one way into a black hole. Normal mode only marks the port as undetermined and leaves it forwarding, which is why aggressive is the usual choice on fibre uplinks.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Aggressive mode, enabled with the global `udld aggressive` command",
+        "is_correct": true
+      },
+      {
+        "text": "Normal mode, enabled by default on fibre ports",
+        "is_correct": false
+      },
+      {
+        "text": "Passive mode, which waits for the neighbour to initiate",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard, which blocks the port when BPDUs stop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch with BPDU skew detection enabled logs that the last BPDU on a root port arrived later than expected. What does that indicate?",
+    "explanation": "Skew detection timestamps BPDUs and compares the arrival interval against the expected hello timing. A late BPDU points at control-plane congestion or loss on the path, so the fix is to look at CPU load and link quality upstream rather than at the STP topology itself.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That BPDU delivery is late, which points to congestion or loss on the path rather than an STP loop",
+        "is_correct": true
+      },
+      {
+        "text": "That a new root bridge has been elected",
+        "is_correct": false
+      },
+      {
+        "text": "That the port is about to be placed in the err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "That this switch has become the root bridge for the VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A service provider carries a customer's tagged frames across its backbone without interpreting the customer VLAN IDs. Which mechanism makes that possible?",
+    "explanation": "802.1ad, usually called QinQ, pushes an outer service-provider tag in front of the customer tag. Provider switches forward on the outer tag only, so overlapping or unknown customer VLAN IDs stay transparent end to end.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.1ad QinQ, which pushes an outer provider tag and leaves the customer tag intact",
+        "is_correct": true
+      },
+      {
+        "text": "802.1Q native VLAN tagging on the provider edge",
+        "is_correct": false
+      },
+      {
+        "text": "VTP pruning of the customer VLANs at the provider edge",
+        "is_correct": false
+      },
+      {
+        "text": "DTP negotiation between the customer and provider switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a switch inserts an 802.1Q tag as a frame leaves a trunk port, why must it also recalculate the frame check sequence?",
+    "explanation": "The FCS is computed over the whole frame, header included. Adding four bytes of tag changes the covered bytes, so the FCS the sender computed no longer describes the frame and the receiver would discard it as corrupt. The egress switch rebuilds the FCS after inserting the tag.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the tag itself carries a copy of the original FCS",
+        "is_correct": false
+      },
+      {
+        "text": "Because the FCS covers the entire frame, so the inserted four bytes invalidate the old value and it must be recomputed",
+        "is_correct": true
+      },
+      {
+        "text": "Because inserting the tag rewrites the destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "Because the preamble has to be regenerated for every hop",
+        "is_correct": false
+      }
+    ]
   }
 ]

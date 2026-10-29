@@ -7018,5 +7018,343 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A switch records the source address 00:1A:2B:3C:4D:5E. Which portion of that address was assigned by the IEEE to identify the manufacturer?",
+    "explanation": "The first 24 bits are the Organizationally Unique Identifier, burned in by the IEEE to the vendor; the vendor assigns the remaining 24 bits per interface. That is why one vendor's adapters share the first three bytes and differ in the last three.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The first 24 bits, which form the Organizationally Unique Identifier",
+        "is_correct": true
+      },
+      {
+        "text": "The last 24 bits, which are reserved for the vendor",
+        "is_correct": false
+      },
+      {
+        "text": "The first 8 bits, which encode the device type",
+        "is_correct": false
+      },
+      {
+        "text": "All 48 bits, because the whole address is registered to one vendor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An IPv6 address is written as eight groups of four hexadecimal digits. How many bits does that represent?",
+    "explanation": "Eight groups of 16 bits is 128 bits. That is four times the IPv4 address space width, which is why an IPv6 subnet is normally a /64 and still leaves 64 host bits.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "32 bits",
+        "is_correct": false
+      },
+      {
+        "text": "64 bits",
+        "is_correct": false
+      },
+      {
+        "text": "128 bits",
+        "is_correct": true
+      },
+      {
+        "text": "256 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a structured campus cabling design, what is the role of an IDF?",
+    "explanation": "The intermediate distribution frame is the floor or building wiring closet that terminates horizontal cabling from end devices and uplinks to the main distribution frame. The MDF is the campus cross-connect where the WAN demarc and core meet.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is the floor-level wiring closet that aggregates horizontal cabling and uplinks to the MDF",
+        "is_correct": true
+      },
+      {
+        "text": "It is the single cross-connect where the carrier demarcation and core switching meet",
+        "is_correct": false
+      },
+      {
+        "text": "It is the redundant core switch pair that forwards inter-VLAN traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It is the device that terminates the ISP circuit and performs NAT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why would a factory run machine-vision inference on a server on the plant floor instead of in a distant public cloud region?",
+    "explanation": "That is edge computing: processing happens near the data source, so control decisions are not delayed by a WAN round trip and the volume of raw video that must be uploaded drops sharply. Cloud is still used for training and long-term storage.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To cut the round-trip latency to the process and avoid uploading every raw frame",
+        "is_correct": true
+      },
+      {
+        "text": "Because cloud compute is always more expensive than on-premises hardware",
+        "is_correct": false
+      },
+      {
+        "text": "Because inference models cannot be licensed for cloud use",
+        "is_correct": false
+      },
+      {
+        "text": "To avoid having to encrypt traffic between the plant and the cloud",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is an on-site RF survey preferred over a predictive model for a warehouse with tall metal racking?",
+    "explanation": "Racking blocks and reflects 5 GHz energy in ways a floor-plan model cannot capture, so measured signal, interference, and channel reuse at the actual mounting points is the only reliable basis for AP placement and power settings.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because metal racking attenuates and reflects RF unpredictably, so placement must be validated with real measurements",
+        "is_correct": true
+      },
+      {
+        "text": "Because predictive tools cannot calculate coverage for more than one floor",
+        "is_correct": false
+      },
+      {
+        "text": "Because a survey is required before any 802.11ax access point can be powered",
+        "is_correct": false
+      },
+      {
+        "text": "Because an on-site survey removes the need to plan channel reuse",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Clients are spread evenly around an access point mounted in the center of an open office floor. Which antenna pattern suits that placement?",
+    "explanation": "An omnidirectional antenna radiates roughly equally in all horizontal directions, forming a doughnut-shaped pattern, which covers clients surrounding the AP. A patch or Yagi concentrates energy in one direction and is used for corridors or point-to-point bridges.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A directional patch aimed across the floor",
+        "is_correct": false
+      },
+      {
+        "text": "An omnidirectional antenna radiating in all horizontal directions",
+        "is_correct": true
+      },
+      {
+        "text": "A Yagi aimed at a distant building",
+        "is_correct": false
+      },
+      {
+        "text": "A parabolic dish pointed down at the desks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Under the cloud shared-responsibility model, which task stays with the customer in an IaaS deployment?",
+    "explanation": "The provider owns the facility, hardware, and hypervisor; the customer owns the guest operating system, its patching, the identities, the data, and the security-group rules. The split moves up the stack for PaaS and SaaS but never disappears.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Patching the guest operating system and hardening the workloads",
+        "is_correct": true
+      },
+      {
+        "text": "Physical security of the data center building",
+        "is_correct": false
+      },
+      {
+        "text": "Firmware updates on the hypervisor hosts",
+        "is_correct": false
+      },
+      {
+        "text": "Maintenance of the underlying storage arrays",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is CSMA/CD not needed on a modern full-duplex switched Ethernet link?",
+    "explanation": "Full duplex gives the interface separate transmit and receive paths, so a station can send and receive at the same time and a collision cannot occur. CSMA/CD exists only to arbitrate a shared half-duplex medium.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because full duplex uses separate transmit and receive paths, so collisions cannot occur",
+        "is_correct": true
+      },
+      {
+        "text": "Because switches buffer every frame and retransmit any that are damaged",
+        "is_correct": false
+      },
+      {
+        "text": "Because the Ethernet frame no longer carries a preamble or start frame delimiter",
+        "is_correct": false
+      },
+      {
+        "text": "Because CSMA/CD was replaced by CSMA/CA on copper links",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A branch has only a geostationary satellite link, with the satellite about 36,000 km away. Which round-trip latency should be expected?",
+    "explanation": "The signal travels about 36,000 km up and 36,000 km down at roughly 300,000 km/s, so each hop costs about 120 ms and the station-to-station path is about 240 ms one way. A round trip is therefore in the 500-600 ms range once processing is added.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Under 5 ms",
+        "is_correct": false
+      },
+      {
+        "text": "20 to 40 ms",
+        "is_correct": false
+      },
+      {
+        "text": "500 to 600 ms",
+        "is_correct": true
+      },
+      {
+        "text": "Over 2,000 ms",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team stores nightly device backups that must be retrieved by key over an HTTPS API from any region and never modified in place. Which storage type fits?",
+    "explanation": "Object storage keeps each item with metadata and a unique key in a flat namespace and is reached over HTTP, which suits immutable backups and archives. Block storage presents a raw volume that only an attached host can mount.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Object storage addressed by key over an HTTP API",
+        "is_correct": true
+      },
+      {
+        "text": "A block volume attached to a single virtual machine",
+        "is_correct": false
+      },
+      {
+        "text": "A file share mounted over NFS inside one VPC",
+        "is_correct": false
+      },
+      {
+        "text": "A RAM disk on the hypervisor host",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An engineer must carve 100, 50, 25, and 10 host subnets out of 192.168.10.0/24 with VLSM. Why allocate the 100-host subnet first?",
+    "explanation": "Every subnet must sit on a boundary that matches its own mask, so allocating the largest block first guarantees it a contiguous aligned range and leaves the remainder splittable into the smaller blocks. Starting small scatters prefixes across the space and can leave no aligned range large enough for the big subnet.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the largest subnet must always be given the lowest usable address",
+        "is_correct": false
+      },
+      {
+        "text": "Because taking the largest aligned block first prevents fragmentation from leaving no room for it",
+        "is_correct": true
+      },
+      {
+        "text": "Because the first subnet allocated automatically becomes the summary route",
+        "is_correct": false
+      },
+      {
+        "text": "Because smaller subnets cannot be entered in the routing table before larger ones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "One switch port is hardcoded to 100 Mb/s full duplex while its peer is left on auto. The link comes up at 100 Mb/s half duplex. Why?",
+    "explanation": "A hardcoded port sends no fast link pulses, so the auto side has nothing to negotiate against and falls back to parallel detection, which can only infer speed from the received signal. With no duplex information available it defaults to half duplex, which produces a mismatch that shows up as late collisions on one side and FCS errors on the other.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Because the auto side falls back to parallel detection, which learns speed only and defaults the duplex to half",
+        "is_correct": true
+      },
+      {
+        "text": "Because 100 Mb/s Ethernet does not support full-duplex operation",
+        "is_correct": false
+      },
+      {
+        "text": "Because the hardcoded side advertises half duplex as its highest priority",
+        "is_correct": false
+      },
+      {
+        "text": "Because the cable is wired as a crossover instead of a straight-through",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point transmits at 20 dBm, the cable and connectors lose 3 dB, and the antenna has 9 dBi of gain. What is the effective isotropic radiated power?",
+    "explanation": "EIRP is transmit power minus cable loss plus antenna gain: 20 - 3 + 9 = 26 dBm. The figure is what regulatory limits are written against, so it is the number that must be compared to the local cap rather than the radio's configured power.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "23 dBm",
+        "is_correct": false
+      },
+      {
+        "text": "26 dBm",
+        "is_correct": true
+      },
+      {
+        "text": "32 dBm",
+        "is_correct": false
+      },
+      {
+        "text": "14 dBm",
+        "is_correct": false
+      }
+    ]
   }
 ]

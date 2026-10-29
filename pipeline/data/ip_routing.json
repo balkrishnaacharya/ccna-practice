@@ -5614,5 +5614,239 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "How does `traceroute` discover the routers along a path?",
+    "explanation": "It sends probes with a TTL that starts at one and increases by one per round. Each router that decrements the TTL to zero drops the packet and returns ICMP Time Exceeded, which reveals its address without needing access to any router's configuration.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It raises the TTL on each round and collects ICMP Time Exceeded messages from each hop",
+        "is_correct": true
+      },
+      {
+        "text": "It reads each router's routing table over SNMP",
+        "is_correct": false
+      },
+      {
+        "text": "It sends one packet with TTL 255 and records the final destination address",
+        "is_correct": false
+      },
+      {
+        "text": "It issues an ARP request for every address in the path",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command reports how many routes the router holds from each source, such as connected, static, and OSPF?",
+    "explanation": "`show ip route summary` prints a per-source breakdown of route counts plus the total, which is the fastest way to see whether a protocol is contributing routes at all. `show ip route` lists the entries themselves.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show ip route summary`",
+        "is_correct": true
+      },
+      {
+        "text": "`show ip route`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip protocols`",
+        "is_correct": false
+      },
+      {
+        "text": "`show ip interface brief`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `ip route 10.10.0.0 255.255.0.0 192.168.1.1 name BACKUP`, what does the `name BACKUP` portion do?",
+    "explanation": "It attaches a text label that appears in the running configuration and in `show ip route` output. It is documentation only: it does not change the administrative distance, the metric, or whether the route is preferred.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It sets a lower administrative distance for the route",
+        "is_correct": false
+      },
+      {
+        "text": "It labels the route for documentation without affecting path selection",
+        "is_correct": true
+      },
+      {
+        "text": "It names the outgoing interface that the route will use",
+        "is_correct": false
+      },
+      {
+        "text": "It makes the route a floating static route",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Policy-based routing bypasses the normal destination lookup. What matches the traffic and chooses its path?",
+    "explanation": "A route map bound to the interface with `ip policy route-map` matches on an ACL, prefix list, or packet attributes and then sets a next hop or an outgoing interface. Only traffic that matches no clause falls back to the routing table.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A route map applied with `ip policy route-map`, matching with ACLs and setting a next hop",
+        "is_correct": true
+      },
+      {
+        "text": "An ACL applied with `ip access-group in` on the interface",
+        "is_correct": false
+      },
+      {
+        "text": "A static route with a lower administrative distance than the learned route",
+        "is_correct": false
+      },
+      {
+        "text": "A distribute-list applied to the interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why would a route map used during redistribution set a tag on routes learned from OSPF?",
+    "explanation": "The tag travels with the route as an attribute, so a later router can match it and refuse to redistribute those routes back into OSPF. That is the standard way to block a mutual-redistribution loop between two domains.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To mark the routes so they can be matched later, for example to block them from being redistributed back into OSPF",
+        "is_correct": true
+      },
+      {
+        "text": "To raise their administrative distance above the OSPF routes",
+        "is_correct": false
+      },
+      {
+        "text": "To summarize them into a single less-specific prefix",
+        "is_correct": false
+      },
+      {
+        "text": "To rewrite their next hop to the null interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does `distribute-list 10 in` under an EIGRP process actually filter?",
+    "explanation": "An inbound distribute-list filters which routes from the topology table are installed in the routing table. The router still receives and stores the routes; it simply does not use them, so it will not advertise them onward either.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Which routes from the topology table are installed in the routing table",
+        "is_correct": true
+      },
+      {
+        "text": "Which networks the router advertises to its EIGRP neighbours",
+        "is_correct": false
+      },
+      {
+        "text": "Which data packets are forwarded out of the interface",
+        "is_correct": false
+      },
+      {
+        "text": "Which EIGRP metrics are accepted from neighbours",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "`network 203.0.113.0 mask 255.255.255.0` is configured under `router bgp`, yet nothing appears in the BGP table. What is the most likely cause?",
+    "explanation": "BGP originates a prefix from a network statement only when an exactly matching prefix and mask already exists in the IP routing table, whether from a connected interface, a static route, or another protocol. A missing or differently masked entry means the statement does nothing.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "No exact prefix and mask combination exists in the IP routing table",
+        "is_correct": true
+      },
+      {
+        "text": "The neighbour has not yet reached the Established state",
+        "is_correct": false
+      },
+      {
+        "text": "BGP requires `default-information originate` before any prefix can be advertised",
+        "is_correct": false
+      },
+      {
+        "text": "The autonomous system number is in the private range",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two EIGRP routers share an autonomous system and sit on the same subnet, yet they never become neighbours. Which mismatch explains it?",
+    "explanation": "EIGRP neighbours must agree on the metric weights K1 through K5 in addition to the AS number. A differing K value makes each router reject the other's hello, and the log records a K-value mismatch rather than a timer or authentication problem.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The K-values, that is the metric weights, differ between the two routers",
+        "is_correct": true
+      },
+      {
+        "text": "The interface bandwidths differ between the two routers",
+        "is_correct": false
+      },
+      {
+        "text": "One router has the link configured as a passive interface",
+        "is_correct": false
+      },
+      {
+        "text": "The two router IDs are in different subnets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two routers should peer over their loopback addresses in the same AS, the loopbacks are reachable, but the session stays in Active. `neighbor 10.0.0.2 remote-as 65000` is the only neighbour configuration. What is missing?",
+    "explanation": "Without `neighbor 10.0.0.2 update-source Loopback0` the router sources its TCP connection from the outgoing physical interface. The peer compares that source against its configured neighbour address, sees a mismatch, and refuses the connection, so the session never leaves Active.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`neighbor 10.0.0.2 update-source Loopback0`",
+        "is_correct": true
+      },
+      {
+        "text": "`neighbor 10.0.0.2 ebgp-multihop 2`",
+        "is_correct": false
+      },
+      {
+        "text": "`no synchronization`",
+        "is_correct": false
+      },
+      {
+        "text": "`neighbor 10.0.0.2 next-hop-self`",
+        "is_correct": false
+      }
+    ]
   }
 ]

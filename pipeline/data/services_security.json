@@ -5848,5 +5848,213 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which global configuration command makes a router query 8.8.8.8 when it needs to resolve a name?",
+    "explanation": "`ip name-server 8.8.8.8` adds the address to the resolver list, and `ip domain lookup` controls whether the router resolves names at all. The pair is what lets commands such as `ping www.example.com` work from the CLI.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip name-server 8.8.8.8`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip dns server 8.8.8.8`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip domain-lookup 8.8.8.8`",
+        "is_correct": false
+      },
+      {
+        "text": "`dns forwarder 8.8.8.8`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command sets the message shown to anyone who connects, before any login prompt appears?",
+    "explanation": "`banner motd` defines the message of the day, displayed before authentication to every connecting session. `banner exec` is shown after login, so it cannot carry a pre-login legal warning.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`banner motd #Authorized access only#`",
+        "is_correct": true
+      },
+      {
+        "text": "`banner exec #Authorized access only#`",
+        "is_correct": false
+      },
+      {
+        "text": "`banner incoming #Authorized access only#`",
+        "is_correct": false
+      },
+      {
+        "text": "`logging synchronous #Authorized access only#`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command refuses any new password shorter than ten characters?",
+    "explanation": "`security passwords min-length 10` enforces the minimum on passwords created afterwards, including enable secrets and local users. Existing credentials are not shortened or invalidated, but they must meet the rule the next time they are set.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`security passwords min-length 10`",
+        "is_correct": true
+      },
+      {
+        "text": "`service password-encryption 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`enable secret 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`password length 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What can a named IP ACL do that a numbered one generally cannot?",
+    "explanation": "Inside `ip access-list` configuration mode each entry carries a sequence number, so an entry can be inserted or deleted without rebuilding the whole list. A numbered ACL is edited by removing and re-entering it, which is why production lists are usually named.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Insert or delete individual entries in place by sequence number",
+        "is_correct": true
+      },
+      {
+        "text": "Match on TCP and UDP port numbers",
+        "is_correct": false
+      },
+      {
+        "text": "Apply to an interface in the outbound direction",
+        "is_correct": false
+      },
+      {
+        "text": "Omit the implicit deny at the end of the list",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command applies an IPv6 ACL to traffic entering the port?",
+    "explanation": "IPv6 ACLs are bound with `ipv6 traffic-filter name in|out`. The IPv4 form `ip access-group` does not apply IPv6 entries, and `ipv6 access-class` is used on VTY lines rather than on interfaces.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ipv6 traffic-filter IN in`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip access-group IN in`",
+        "is_correct": false
+      },
+      {
+        "text": "`ipv6 access-class IN in`",
+        "is_correct": false
+      },
+      {
+        "text": "`ipv6 inspect IN in`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables IP Source Guard so a host can only send traffic using the address bound to its snooping entry?",
+    "explanation": "`ip verify source` on the interface checks the source address of each frame against the DHCP snooping binding table and drops anything that does not match. Adding port security to the same port extends the check to the source MAC.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip verify source`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip arp inspection trust`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping limit rate 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport port-security`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a time-based ACL stop permitting web access outside business hours?",
+    "explanation": "A `time-range` defines the periodic days and hours, and any ACE that references it is only in effect inside that window. The router clock has to be accurate, so NTP is a prerequisite for the schedule to behave as intended.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ACE references a `time-range` and is only active during that window",
+        "is_correct": true
+      },
+      {
+        "text": "A scheduler reloads the ACL at the start and end of each shift",
+        "is_correct": false
+      },
+      {
+        "text": "The interface is shut down outside business hours",
+        "is_correct": false
+      },
+      {
+        "text": "The ACL sequence numbers expire when the window closes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Strict unicast RPF drops a packet whose source fails the reverse-path check. Where can it be enabled without breaking legitimate traffic?",
+    "explanation": "Strict mode requires the route back to the source to point out the same interface the packet arrived on, which holds on a single-homed link with a symmetric path. Where traffic is asymmetric, strict mode drops valid packets and loose mode is the correct choice.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "On a single-homed interface whose return path is symmetric",
+        "is_correct": true
+      },
+      {
+        "text": "On any interface that carries asymmetric traffic between sites",
+        "is_correct": false
+      },
+      {
+        "text": "Only on 802.1Q trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Only on loopback interfaces",
+        "is_correct": false
+      }
+    ]
   }
 ]

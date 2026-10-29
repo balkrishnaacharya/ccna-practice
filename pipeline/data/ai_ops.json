@@ -3638,5 +3638,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A controller's API expects a bearer token in the request header. Which header is correct?",
+    "explanation": "`Authorization: Bearer <token>` is the standard form for a bearer token, sent over HTTPS on every request. The server maps the token to an identity, so the client never resends a username and password.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`Authorization: Bearer <token>`",
+        "is_correct": true
+      },
+      {
+        "text": "`Authentication: Token <token>`",
+        "is_correct": false
+      },
+      {
+        "text": "`Authorization: Basic <token>`",
+        "is_correct": false
+      },
+      {
+        "text": "`X-Auth: <token>`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An API returns `{ \"items\": [...], \"next\": \"/devices?offset=100\" }`. How should a client collect every page?",
+    "explanation": "Follow the `next` link until the response carries none. Constructing offsets locally breaks as soon as the server changes page size or ordering, whereas the supplied link always points at the next valid page.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Request the `next` link repeatedly until no further link is returned",
+        "is_correct": true
+      },
+      {
+        "text": "Request offset 0 once with a very large page size",
+        "is_correct": false
+      },
+      {
+        "text": "Loop a fixed ten times and stop",
+        "is_correct": false
+      },
+      {
+        "text": "Wait for the server to push the remaining pages as webhooks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does NAPALM give a script that has to configure several vendors' devices?",
+    "explanation": "NAPOLM exposes one Python API — get_config, load_merge_candidate, compare_config, commit_config — with a driver per network OS, so the calling code does not branch on vendor CLI syntax. It is a library, not an orchestrator or a data model.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A vendor-neutral Python API with one driver per network operating system",
+        "is_correct": true
+      },
+      {
+        "text": "A compiler that turns YANG models into CLI",
+        "is_correct": false
+      },
+      {
+        "text": "An SNMP polling daemon for performance data",
+        "is_correct": false
+      },
+      {
+        "text": "A REST gateway that fronts the vendor APIs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco framework logs into devices, parses `show` output, and asserts on the result in an automated test?",
+    "explanation": "pyATS is Cisco's test automation framework, and its Genie parsers turn `show` output into structured data that a test can assert against. It is commonly used to validate state before and after a change.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "pyATS with Genie parsers",
+        "is_correct": true
+      },
+      {
+        "text": "NAPOLM",
+        "is_correct": false
+      },
+      {
+        "text": "Ansible",
+        "is_correct": false
+      },
+      {
+        "text": "Terraform",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a long document split into chunks before it is stored for retrieval?",
+    "explanation": "Each chunk has to fit the embedding model's input limit, and smaller passages make retrieval precise: the model receives the few passages that match the question instead of a document that would overflow the context window.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So each passage can be embedded and retrieved individually within the model's input limit",
+        "is_correct": true
+      },
+      {
+        "text": "So the document can be compressed without losing any information",
+        "is_correct": false
+      },
+      {
+        "text": "So the model can be fine-tuned on the document",
+        "is_correct": false
+      },
+      {
+        "text": "So the text can be encrypted before storage",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A prompt template contains `{{device}}` and `{{show_output}}` instead of pasted values. What is the main advantage?",
+    "explanation": "Fixed slots keep the instructions and the untrusted data in separate places, so device output cannot be mistaken for part of the instruction. The same template is also reusable and the values can be substituted by code, which makes runs comparable.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Instructions and untrusted data occupy fixed slots, so the template is reusable and data cannot be read as instructions",
+        "is_correct": true
+      },
+      {
+        "text": "It makes the model's output deterministic",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need to validate the model's output",
+        "is_correct": false
+      },
+      {
+        "text": "It increases the model's context window",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does an agent keep a memory of the steps it has already taken instead of re-planning from nothing every turn?",
+    "explanation": "Memory carries intermediate results, tool output, and earlier decisions forward, so the agent does not repeat work or contradict a decision it already made. It is not training: the memory lives in the prompt context and is bounded by the context window.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It preserves intermediate results and earlier decisions so the agent does not repeat steps or contradict itself",
+        "is_correct": true
+      },
+      {
+        "text": "It retrains the model's weights on every task",
+        "is_correct": false
+      },
+      {
+        "text": "It guarantees that the plan the agent produced is correct",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need for tool calls",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does an embedding of a text represent?",
+    "explanation": "An embedding is a fixed-length vector positioned so that texts with similar meaning land close together. That geometry is what lets a search find a passage that answers a question phrased in completely different words.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A vector whose distance to other vectors reflects semantic similarity",
+        "is_correct": true
+      },
+      {
+        "text": "A compressed copy of the original text that can be decompressed exactly",
+        "is_correct": false
+      },
+      {
+        "text": "A hash of the document used to detect duplicates",
+        "is_correct": false
+      },
+      {
+        "text": "The number of tokens the input contains",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does observability add beyond traditional monitoring?",
+    "explanation": "Monitoring answers questions that were defined in advance through dashboards and thresholds. Observability means the metrics, logs, and traces are rich and correlated enough to answer a question nobody anticipated when the collection was designed.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ability to investigate an unanticipated failure by querying metrics, logs, and traces together",
+        "is_correct": true
+      },
+      {
+        "text": "A longer retention period for interface counters",
+        "is_correct": false
+      },
+      {
+        "text": "Agentless collection through SNMP instead of an agent",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic remediation of any alert that fires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement correctly distinguishes MTTR from MTBF?",
+    "explanation": "MTTR is the mean time to repair, the average time taken to restore service after a failure. MTBF is the mean time between failures, the average interval a system runs before failing. Lowering MTTR and raising MTBF both improve availability.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MTTR is the average time to restore service; MTBF is the average interval between failures",
+        "is_correct": true
+      },
+      {
+        "text": "MTTR is the average interval between failures; MTBF is the average time to restore service",
+        "is_correct": false
+      },
+      {
+        "text": "Both measure the average time spent repairing a fault",
+        "is_correct": false
+      },
+      {
+        "text": "MTTR is the uptime percentage; MTBF is the downtime percentage",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A controller signs each webhook body with an HMAC and sends the digest in a header. Why must the receiver verify it?",
+    "explanation": "The HMAC, computed with a secret shared only with the controller, proves both the origin and the integrity of the body. Without that check anyone who discovers the endpoint URL could post a forged event and trigger the automation.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To prove the payload came from the sender and was not altered on the way",
+        "is_correct": true
+      },
+      {
+        "text": "To encrypt the payload so intermediaries cannot read it",
+        "is_correct": false
+      },
+      {
+        "text": "To confirm that the receiver's endpoint is reachable",
+        "is_correct": false
+      },
+      {
+        "text": "To compress the body before it is stored",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team tunes prompts against the same 200 examples it then uses to report final accuracy. Why is that score misleading?",
+    "explanation": "The examples shaped the prompts, so they are no longer held out and the score measures fit to the tuning data rather than generalisation to unseen input. An honest estimate needs a separate holdout set, or a fresh sample, that was never used during design.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The test set influenced the design, so the score reflects fit to the tuning data rather than generalisation",
+        "is_correct": true
+      },
+      {
+        "text": "Accuracy figures are only valid when the sample is larger than 200 examples",
+        "is_correct": false
+      },
+      {
+        "text": "Two hundred examples are too few to compute any metric at all",
+        "is_correct": false
+      },
+      {
+        "text": "Tuning a prompt always reduces accuracy on the tuning set",
+        "is_correct": false
+      }
+    ]
   }
 ]
