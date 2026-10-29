@@ -7720,5 +7720,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "In a two-tier spine-leaf fabric, a host on one leaf sends a frame to a host on a different leaf. How many spine switches does that traffic cross?",
+    "explanation": "Every leaf is cabled to every spine and there are no spine-to-spine links, so a leaf-to-leaf path is exactly two hops: leaf to one spine and back down to the other leaf. Which spine is chosen is decided per flow by equal-cost multipathing, but it is always a single spine for that flow.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Exactly one, because the path is leaf to one spine and back down to the other leaf",
+        "is_correct": true
+      },
+      {
+        "text": "Every spine in the fabric, because the frame is flooded to all of them",
+        "is_correct": false
+      },
+      {
+        "text": "Zero, because leaf switches are directly cabled to each other",
+        "is_correct": false
+      },
+      {
+        "text": "Two, because the fabric always traverses a primary and a backup spine",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which term describes the coverage area of a single access point radio, within which a client can associate and pass traffic?",
+    "explanation": "The basic service area is the physical footprint of one AP radio cell. The basic service set is the set of stations inside it, the BSSID names that AP radio, and an extended service set is several BSAs joined by the distribution system.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Basic service area (BSA)",
+        "is_correct": true
+      },
+      {
+        "text": "Extended service set (ESS)",
+        "is_correct": false
+      },
+      {
+        "text": "Basic service set identifier (BSSID)",
+        "is_correct": false
+      },
+      {
+        "text": "Distribution system (DS)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How many usable host addresses does an IPv4 /30 subnet provide?",
+    "explanation": "A /30 leaves two host bits, so the block holds four addresses. One is the network address and one is the broadcast, which leaves two usable addresses. That is why /30 is popular on point-to-point links.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      },
+      {
+        "text": "30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which device sits in a hardened segment and is the only host administrators may log into before reaching servers in a protected internal network?",
+    "explanation": "A bastion host, also called a jump host, is deliberately exposed and hardened so it can be the single controlled entry point for management access. Administrators hop through it into the protected network, so the internal servers never accept direct administrative sessions from untrusted networks.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A bastion (jump) host",
+        "is_correct": true
+      },
+      {
+        "text": "An inline intrusion prevention system",
+        "is_correct": false
+      },
+      {
+        "text": "A server load balancer",
+        "is_correct": false
+      },
+      {
+        "text": "A Layer 2 access switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "TIA/EIA structured cabling limits a horizontal copper cable run from the telecommunications room to the work area outlet to what maximum length?",
+    "explanation": "The permanent link is capped at 90 m. The 10 m of patch cords at the two ends bring the full channel to the familiar 100 m limit, which is why the two numbers are often confused.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "90 m",
+        "is_correct": true
+      },
+      {
+        "text": "100 m",
+        "is_correct": false
+      },
+      {
+        "text": "185 m",
+        "is_correct": false
+      },
+      {
+        "text": "500 m",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a fiber-optic cable, what is the function of the cladding around the core?",
+    "explanation": "The core has the higher refractive index and the cladding the lower one. Light arriving at that boundary at a shallow angle is totally internally reflected back into the core, which is what turns the fiber into a waveguide. Strength members and buffers protect the cable but do not guide light.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It has a lower refractive index than the core, so light is reflected back into the core",
+        "is_correct": true
+      },
+      {
+        "text": "It provides a metallic shield that blocks electromagnetic interference",
+        "is_correct": false
+      },
+      {
+        "text": "It carries a second signal channel in parallel with the core",
+        "is_correct": false
+      },
+      {
+        "text": "It adds tensile strength only and has no optical role",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A campus is being redesigned so that each building routes to the core instead of extending VLANs across the whole campus. What is the main benefit of pushing Layer 3 closer to the access layer?",
+    "explanation": "Routing at each building bounds both the broadcast domain and the spanning-tree topology to that building. A loop or a broadcast storm in one closet then cannot take down a campus-wide VLAN. Extending VLANs between buildings does exactly the opposite and is what the redesign is moving away from.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Broadcast domains stay small and a failure is contained to one building instead of a campus-wide VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "Every VLAN must still span the core so host addressing stays consistent",
+        "is_correct": false
+      },
+      {
+        "text": "It removes the need to configure a default gateway on the hosts",
+        "is_correct": false
+      },
+      {
+        "text": "It converts all access ports into trunk ports automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A firewall is inserted into an existing subnet without readdressing any hosts or changing their default gateway. Which operating mode does this require?",
+    "explanation": "In transparent mode the firewall bridges its interfaces, so it holds no address on the data path and hosts keep the same gateway. Routed mode would make the firewall the gateway and force readdressing or gateway changes; tap and promiscuous modes only observe traffic and cannot enforce policy.",
+    "domain": "network_infra",
+    "subtopic": "Security Devices",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Transparent (Layer 2) mode",
+        "is_correct": true
+      },
+      {
+        "text": "Routed (Layer 3) mode",
+        "is_correct": false
+      },
+      {
+        "text": "Passive tap mode",
+        "is_correct": false
+      },
+      {
+        "text": "Promiscuous intrusion-detection mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An access point advertises the same SSID on 2.4 GHz and 5 GHz. Clients at the far edge of the cell associate on 2.4 GHz but fail on 5 GHz. Why?",
+    "explanation": "Free-space path loss rises with frequency, so at equal transmit power a 5 GHz signal simply does not travel as far and is absorbed more by walls and furnishings. Channel overlap is a 2.4 GHz problem, where only three channels do not overlap, and regulatory power limits vary by region rather than being the general cause.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Higher frequencies attenuate faster, so 5 GHz has a smaller cell at the same transmit power",
+        "is_correct": true
+      },
+      {
+        "text": "5 GHz is limited to a lower transmit power by law in every region",
+        "is_correct": false
+      },
+      {
+        "text": "5 GHz channels overlap each other and interfere",
+        "is_correct": false
+      },
+      {
+        "text": "5 GHz requires a stronger encryption cipher than 2.4 GHz",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a spine-leaf fabric, which role does a border leaf perform?",
+    "explanation": "Ordinary leafs only attach servers and storage. The border leaf provides the fabric's exit point to external networks such as a WAN router or the internet edge. The fabric is normally routed with equal-cost multipathing, so there is no spanning-tree root election and no single aggregation link.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It connects the fabric to devices outside it, such as a WAN router or the internet edge",
+        "is_correct": true
+      },
+      {
+        "text": "It is the only leaf permitted to carry storage traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It is elected as the spanning-tree root for the whole fabric",
+        "is_correct": false
+      },
+      {
+        "text": "It aggregates all leaf-to-leaf traffic through one link",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An application runs as several identical instances in one public cloud region. Why should they be placed in different availability zones rather than all in one?",
+    "explanation": "An availability zone is an isolated fault domain with its own power, cooling, and networking. Spreading instances across zones means a datacenter-level failure removes only part of the capacity. A region contains multiple zones, cross-zone traffic is often billed, and public addressing is not tied to zones.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each zone has independent power, cooling, and networking, so one zone's failure does not take down the whole application",
+        "is_correct": true
+      },
+      {
+        "text": "Zones are the only place where public IP addresses can be assigned",
+        "is_correct": false
+      },
+      {
+        "text": "Traffic between zones is always free of charge",
+        "is_correct": false
+      },
+      {
+        "text": "A region can host instances in only one zone at a time",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An administrator needs a second, independently running copy of a virtual machine for a test lab. Which operation produces that?",
+    "explanation": "A clone is a complete independent copy with its own virtual disks and its own lifecycle, so it can be powered on, changed, or deleted without touching the original. A snapshot, called a checkpoint in Hyper-V, captures a point in time of the existing VM for rollback and keeps sharing its disk chain.",
+    "domain": "network_infra",
+    "subtopic": "Virtualization and Containers",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cloning the virtual machine",
+        "is_correct": true
+      },
+      {
+        "text": "Taking a snapshot of the virtual machine",
+        "is_correct": false
+      },
+      {
+        "text": "Creating a checkpoint of the virtual machine",
+        "is_correct": false
+      },
+      {
+        "text": "Exporting the virtual machine's console log",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a modular chassis switch place the control plane on a supervisor engine that is separate from the line cards?",
+    "explanation": "The line cards hold the ports and the forwarding hardware, while the supervisor runs routing, management, and the control plane once for the whole chassis. That split lets an individual card be swapped without rebuilding the control plane and lets a redundant supervisor take over. Forwarding stays in hardware on the cards rather than being switched by a central CPU.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The supervisor runs routing and management for all line cards, so a card can be replaced without rebuilding the control plane",
+        "is_correct": true
+      },
+      {
+        "text": "Line cards cannot forward frames unless the supervisor switches each frame in software",
+        "is_correct": false
+      },
+      {
+        "text": "The supervisor exists only to supply power to the line cards",
+        "is_correct": false
+      },
+      {
+        "text": "Each line card must run its own independent routing process with no shared state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two VPCs both use 10.0.0.0/16. A request to peer them is rejected. What is the reason?",
+    "explanation": "A peering connection is a route between two private address spaces. If both sides claim 10.0.0.0/16, the routing table cannot tell which VPC owns a given address, so the provider refuses the connection. One side has to be readdressed, or the overlap must be reached through NAT or a private endpoint instead. Peering works across regions and supports IPv4.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Peering routes between the two private ranges, so identical prefixes would make every destination ambiguous",
+        "is_correct": true
+      },
+      {
+        "text": "Peering requires both VPCs to be in the same region",
+        "is_correct": false
+      },
+      {
+        "text": "Peering only supports IPv6 CIDR blocks",
+        "is_correct": false
+      },
+      {
+        "text": "A VPC may have at most two peering connections",
+        "is_correct": false
+      }
+    ]
   }
 ]

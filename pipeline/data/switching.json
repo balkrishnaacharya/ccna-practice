@@ -7720,5 +7720,369 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Storm control is configured on an interface. Which direction of traffic does it measure?",
+    "explanation": "Storm control polices the rate at which broadcast, multicast, or unknown-unicast frames arrive on the port, so it measures ingress only. There is no equivalent egress counter, and the feature is about frame rates rather than interface error counters.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Ingress only",
+        "is_correct": true
+      },
+      {
+        "text": "Egress only",
+        "is_correct": false
+      },
+      {
+        "text": "Both ingress and egress",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, because it counts interface errors instead",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a working EtherChannel bundle appear to spanning tree?",
+    "explanation": "The port channel is presented to STP as one logical port. That is precisely why bundling works: the member links are not seen as parallel links, so STP does not block all but one of them.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As a single logical link, so STP sees one port rather than the individual members",
+        "is_correct": true
+      },
+      {
+        "text": "As one link per member, each in its own STP state",
+        "is_correct": false
+      },
+      {
+        "text": "As a loop that STP must block",
+        "is_correct": false
+      },
+      {
+        "text": "As a trunk that STP ignores completely",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which statement about VLAN 1 on a Cisco switch is true?",
+    "explanation": "VLAN 1 exists by default, is the default native VLAN, and carries control-plane traffic such as CDP and VTP. The CLI refuses to delete or rename it, which is why it cannot be removed like a user-created VLAN.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is the default VLAN and cannot be deleted",
+        "is_correct": true
+      },
+      {
+        "text": "It can be deleted once another VLAN has been created",
+        "is_correct": false
+      },
+      {
+        "text": "It is reserved for voice traffic only",
+        "is_correct": false
+      },
+      {
+        "text": "It exists only when VTP is in server mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A PVST+ network carries VLANs 10, 20, and 30. How many root bridges exist?",
+    "explanation": "PVST+ runs a separate spanning-tree instance per VLAN, and each instance elects its own root. The same physical switch often holds all three root roles by design, but conceptually there is one root per VLAN instance, not one per switch block.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One per VLAN, so up to three",
+        "is_correct": true
+      },
+      {
+        "text": "One for the whole switch block regardless of VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "One per access switch",
+        "is_correct": false
+      },
+      {
+        "text": "None, because PVST+ uses a single shared tree",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command reports the IOS image version, the hardware model, and how long the device has been running?",
+    "explanation": "`show version` prints the IOS version and image file, the platform and memory, the configuration register, and the uptime since the last reload. `show interfaces status` covers port state, `show running-config` shows the active configuration, and `show flash:` lists filesystem contents.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show version`",
+        "is_correct": true
+      },
+      {
+        "text": "`show interfaces status`",
+        "is_correct": false
+      },
+      {
+        "text": "`show running-config`",
+        "is_correct": false
+      },
+      {
+        "text": "`show flash:`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A frame arrives at a switch with a source MAC address that has the group (multicast) bit set. What does the switch do with that address?",
+    "explanation": "A source address must be a unicast address. With the group bit set the value cannot be a real station address, so the switch refuses to learn it. That check is one small defence against poisoning the table with bogus source addresses.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It does not add it to the MAC address table",
+        "is_correct": true
+      },
+      {
+        "text": "It learns it as a normal dynamic entry",
+        "is_correct": false
+      },
+      {
+        "text": "It installs it as a static entry",
+        "is_correct": false
+      },
+      {
+        "text": "It floods the frame back out the receiving port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When spanning tree detects a topology change, why does the switch age out dynamic MAC entries faster than the normal aging time?",
+    "explanation": "A topology change means a destination that used to be reached out one port may now be out another. Shortening the aging timer forces relearning from the new topology instead of black-holing traffic toward a stale port. Memory pressure and VLAN assignment play no part in it.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hosts may now be reachable through a different port, so stale entries would forward frames the wrong way",
+        "is_correct": true
+      },
+      {
+        "text": "The table is cleared to free memory for the new topology",
+        "is_correct": false
+      },
+      {
+        "text": "Faster aging reduces the CPU cost of the STP recalculation",
+        "is_correct": false
+      },
+      {
+        "text": "The entries must be removed so the switch can relearn VLAN assignments",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch stops receiving BPDUs on a port that had been its root port. What finally causes it to stop trusting the stored information?",
+    "explanation": "Every BPDU refreshes the stored topology information, and max-age is the lifetime of that information, 20 seconds by default. When it expires the switch discards the old root path and recomputes. Hello is the send interval and forward delay governs the listening and learning phases.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The max-age timer expires because no new BPDU refreshed it",
+        "is_correct": true
+      },
+      {
+        "text": "The forward-delay timer expires twice in a row",
+        "is_correct": false
+      },
+      {
+        "text": "The hello timer expires once",
+        "is_correct": false
+      },
+      {
+        "text": "The hold-time timer expires",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command confirms that a local port is receiving LACPDUs from the expected partner and shows that partner's system ID and port state?",
+    "explanation": "`show lacp neighbor` lists, per member link, the partner's system ID, port number, age, and flags. `show etherchannel summary` reports the aggregate bundle state but not the neighbour detail, and the spanning-tree and trunk commands answer different questions.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show lacp neighbor`",
+        "is_correct": true
+      },
+      {
+        "text": "`show etherchannel summary`",
+        "is_correct": false
+      },
+      {
+        "text": "`show spanning-tree interface`",
+        "is_correct": false
+      },
+      {
+        "text": "`show interfaces trunk`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a virtual switch inside a hypervisor, what is the role of an uplink port?",
+    "explanation": "Guest ports, grouped into port groups, attach virtual machines to the virtual switch. The uplink binds that virtual switch to a physical NIC so frames can reach the physical network. VLAN tagging and the management address are separate configuration items.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It carries traffic from the virtual switch out to the physical network",
+        "is_correct": true
+      },
+      {
+        "text": "It connects two virtual machines directly to each other",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns VLAN tags to virtual machine traffic",
+        "is_correct": false
+      },
+      {
+        "text": "It provides the management IP address for the hypervisor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An 802.1Q trunk must send the native VLAN tagged instead of untagged. Which command enables that?",
+    "explanation": "`vlan dot1q tag native` is a global command that makes 802.1Q trunks tag frames in the native VLAN too, closing the untagged-native-VLAN hopping gap. Both ends must agree. `dot1q-tunnel` is QinQ, and `switchport trunk native vlan` only sets which VLAN is native.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`vlan dot1q tag native`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport trunk native vlan tag`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport mode dot1q-tunnel`",
+        "is_correct": false
+      },
+      {
+        "text": "`encapsulation dot1q native`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A port security port serves an IP phone with a PC daisy-chained behind it. Which setting allows both devices to be learned?",
+    "explanation": "One secure MAC address is the default, but a phone plus a downstream PC presents two source MAC addresses on the same port, so the maximum must be raised to at least 2. Violation mode and aging settings change what happens to a violation, not how many addresses may be learned.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport port-security maximum 2`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport port-security maximum 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport port-security violation protect`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport port-security aging static`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Port security is enabled with a sticky MAC on an access port. An attacker on that same port copies the authorized host's MAC address. What can port security do about it?",
+    "explanation": "Port security authenticates an address on a port, not a person. Once the attacker uses the permitted MAC on the permitted port, every check passes and traffic is allowed. Defending against that needs an identity-based control such as 802.1X rather than a Layer 2 address filter.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Nothing, because the spoofed address is exactly the address the port is already configured to allow",
+        "is_correct": true
+      },
+      {
+        "text": "It err-disables the port because two hosts now share one MAC",
+        "is_correct": false
+      },
+      {
+        "text": "It moves the entry to a different port automatically",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the sticky entry to a static entry and blocks the new host",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why can a switch apply an ACL to every frame at line rate without slowing down?",
+    "explanation": "The ACL is compiled into ternary content-addressable memory, which compares a packet's fields against all entries in parallel in a single lookup. The result is available at forwarding speed. Sending the traffic to the CPU would be far too slow, and per-flow caching is a software firewall technique rather than how switch ACLs work.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The ACL is compiled into ternary content-addressable memory and evaluated in hardware as the frame is forwarded",
+        "is_correct": true
+      },
+      {
+        "text": "The ACL is evaluated only for the first packet of each flow and the result is cached",
+        "is_correct": false
+      },
+      {
+        "text": "The switch sends all ACL-bound traffic to the CPU for a software lookup",
+        "is_correct": false
+      },
+      {
+        "text": "The ACL is applied only to management traffic by design",
+        "is_correct": false
+      }
+    ]
   }
 ]

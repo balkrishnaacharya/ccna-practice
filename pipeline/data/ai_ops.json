@@ -4054,5 +4054,109 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which transport and port does RESTCONF use?",
+    "explanation": "RESTCONF is the HTTP-based model-driven interface and rides HTTPS on TCP 443, with JSON or XML payloads. NETCONF is its SSH-based sibling on TCP 830. Plain HTTP on 80 is not the standard secure default.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HTTPS over TCP 443",
+        "is_correct": true
+      },
+      {
+        "text": "SSH over TCP 22",
+        "is_correct": false
+      },
+      {
+        "text": "HTTP over TCP 80 only",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF over TCP 830",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An AIOps tool baselines interface utilisation over a fixed 24-hour window. Every Monday morning it raises false anomalies. What is the flaw?",
+    "explanation": "A one-day baseline learns only the daily pattern, so a recurring weekly peak falls outside it and looks anomalous. A baseline has to span the period over which behaviour actually repeats, a week or a month, so scheduled peaks become part of normal. Fixed thresholds are the thing baselining is meant to replace.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The baseline must cover a full business cycle, such as a week, so recurring weekly peaks count as normal",
+        "is_correct": true
+      },
+      {
+        "text": "The window is too long and therefore hides real incidents",
+        "is_correct": false
+      },
+      {
+        "text": "Interface utilisation cannot be baselined statistically",
+        "is_correct": false
+      },
+      {
+        "text": "The tool should use a fixed threshold instead of a baseline",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An agent automatically retries a failed tool call. Why should the tool be idempotent?",
+    "explanation": "If the first call actually succeeded but its response was lost, the retry must not create a second VLAN or a duplicate ticket. An idempotent tool leaves the system in the same state no matter how many times it is invoked, which is what makes an automatic retry safe. Speed, argument validation, and provider-side caching are unrelated concerns.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So a repeated call leaves the system in the same state instead of applying the change twice",
+        "is_correct": true
+      },
+      {
+        "text": "So the tool returns faster on the second attempt",
+        "is_correct": false
+      },
+      {
+        "text": "So the model can skip validating the arguments",
+        "is_correct": false
+      },
+      {
+        "text": "So the call can be cached by the model provider",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A long prompt places a critical formatting rule in the middle of thousands of tokens of reference material. The model follows the rule only some of the time. What is the most likely explanation?",
+    "explanation": "This is the lost-in-the-middle effect: recall for content in the middle of a long context is measurably worse than for content at the start or the end. Restating the rule near the top or the bottom, or moving it into the system message, is the usual fix. If the context window were exceeded the request would fail outright rather than degrade intermittently.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Models attend most reliably to the beginning and end of a context, so a rule buried in the middle is often missed",
+        "is_correct": true
+      },
+      {
+        "text": "The rule is too short to be tokenized correctly",
+        "is_correct": false
+      },
+      {
+        "text": "The model's context window is smaller than the prompt",
+        "is_correct": false
+      },
+      {
+        "text": "The rule contradicts the system message",
+        "is_correct": false
+      }
+    ]
   }
 ]

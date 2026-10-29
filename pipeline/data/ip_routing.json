@@ -6160,5 +6160,317 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which OSPF router type has every one of its interfaces in the same area?",
+    "explanation": "An internal router keeps all interfaces in one area and therefore holds a single link-state database. An area border router straddles two or more areas, an autonomous system boundary router redistributes external routes, and a designated router is a per-segment role rather than a router classification.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Internal router",
+        "is_correct": true
+      },
+      {
+        "text": "Area border router",
+        "is_correct": false
+      },
+      {
+        "text": "Autonomous system boundary router",
+        "is_correct": false
+      },
+      {
+        "text": "Designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the OSPF Hello packet?",
+    "explanation": "Hellos are sent on a timer so neighbours can be discovered and so each side can prove the other is still alive. The parameters inside them must match before an adjacency can form. The database description, request, update, and acknowledgment packets are the ones that carry the link-state database.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To discover neighbours and keep the adjacency alive",
+        "is_correct": true
+      },
+      {
+        "text": "To carry the full link-state database to a neighbour",
+        "is_correct": false
+      },
+      {
+        "text": "To request specific LSAs from a neighbour",
+        "is_correct": false
+      },
+      {
+        "text": "To acknowledge every received LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Hosts use a first-hop redundancy virtual IP as their default gateway. Which device answers their ARP request for that IP?",
+    "explanation": "The active router, called the master in VRRP, owns the virtual IP and the virtual MAC and answers ARP so hosts map the gateway to the shared MAC. If it fails, the standby takes over the same virtual MAC and hosts never notice.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The active (master) router of the group",
+        "is_correct": true
+      },
+      {
+        "text": "Every router in the group, in turn",
+        "is_correct": false
+      },
+      {
+        "text": "The standby router only",
+        "is_correct": false
+      },
+      {
+        "text": "The switch that hosts the SVI",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A routing table entry reads `O 10.5.0.0/16 [110/20] via 192.168.1.2`. What does 192.168.1.2 represent?",
+    "explanation": "`via` is the next hop: the address of the adjacent router that will forward the packet, reachable over a connected subnet. The prefix is the destination, the local interface address would appear as the outgoing interface, and the router ID is a separate 32-bit identifier that never appears in this field.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The next-hop address of the router that will forward the packet",
+        "is_correct": true
+      },
+      {
+        "text": "The destination host that is being routed to",
+        "is_correct": false
+      },
+      {
+        "text": "The local interface address of this router",
+        "is_correct": false
+      },
+      {
+        "text": "The OSPF router ID of the neighbour",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does an area border router maintain a separate link-state database for each area it belongs to?",
+    "explanation": "Topology is described per area, so each area's database covers only that area's links. The ABR keeps one database per area and injects summarized inter-area routes instead of leaking full topology across the boundary. That containment is the whole point of splitting a domain into areas.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Each area has its own topology, so the ABR runs a separate SPF per area and summarizes between them",
+        "is_correct": true
+      },
+      {
+        "text": "The ABR stores one database and filters it per area on output",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF requires a physically separate process for every area",
+        "is_correct": false
+      },
+      {
+        "text": "All areas share one database and differ only in metric",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two sources offer a route to 10.1.0.0/16: OSPF with metric 20 and EIGRP with metric 409600. Which route is installed?",
+    "explanation": "Different protocols measure cost in unrelated units, so IOS first compares administrative distance: EIGRP is 90 and OSPF is 110. EIGRP therefore wins, even though its raw metric number is larger. Metrics are only compared between routes from the same protocol.",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The EIGRP route, because administrative distance is compared before metric",
+        "is_correct": true
+      },
+      {
+        "text": "The OSPF route, because 20 is the lower metric",
+        "is_correct": false
+      },
+      {
+        "text": "Both, because the two metrics cannot be compared",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, until the metrics are normalized to a common scale",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In EIGRP, what is the successor for a destination?",
+    "explanation": "The successor is the best loop-free path, chosen by the composite metric, and it is the one installed in the routing table. A feasible successor is the loop-free backup path that is kept in the topology table and promoted if the successor fails.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The lowest-metric loop-free path, which is installed in the routing table",
+        "is_correct": true
+      },
+      {
+        "text": "Any path whose reported distance is higher than the feasible distance",
+        "is_correct": false
+      },
+      {
+        "text": "The backup path that is kept only in the topology table",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbour with the highest interface bandwidth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router has `ip route 10.16.0.0 255.255.0.0 Null0`. What happens to a packet for 10.16.5.5 when no more specific route exists?",
+    "explanation": "A static route pointing at Null0 is a discard route. Any packet that matches the summary and has no longer match is dropped. It is used to black-hole the unallocated space inside an advertised summary and so prevent routing loops.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is discarded, because the summary matches and Null0 drops the traffic",
+        "is_correct": true
+      },
+      {
+        "text": "It is flooded out every interface",
+        "is_correct": false
+      },
+      {
+        "text": "It is forwarded to the default gateway",
+        "is_correct": false
+      },
+      {
+        "text": "It triggers an ICMP redirect toward the source",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What problem does a first-hop redundancy protocol solve?",
+    "explanation": "Hosts are configured with a single default gateway address. FHRP makes that address virtual so a standby router can take it over when the active one fails, removing the gateway as a single point of failure. Spanning tree, load balancing, and admission control are separate problems.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A host has one default gateway, so its failure would cut the host off from other subnets",
+        "is_correct": true
+      },
+      {
+        "text": "It prevents spanning-tree loops between access switches",
+        "is_correct": false
+      },
+      {
+        "text": "It distributes inbound traffic across several servers",
+        "is_correct": false
+      },
+      {
+        "text": "It authenticates hosts before they may use the gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router subinterface is numbered `.30` but is configured with `encapsulation dot1q 40`. Which VLAN's traffic does it handle?",
+    "explanation": "The subinterface number is only a local label. The argument to `encapsulation dot1q` is what tags and matches the traffic, so this subinterface handles VLAN 40. Mismatched numbering is confusing but functional, which is exactly why it makes a good exam trap.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "VLAN 40, because the encapsulation command supplies the VLAN ID",
+        "is_correct": true
+      },
+      {
+        "text": "VLAN 30, because the subinterface number is the VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "Both VLAN 30 and VLAN 40",
+        "is_correct": false
+      },
+      {
+        "text": "Neither, until the subinterface is renumbered to match",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An interface is configured with 192.168.1.1/24, and the table shows both 192.168.1.0/24 connected and 192.168.1.1/32 local. Why is the /32 entry there?",
+    "explanation": "The connected route covers the whole subnet, but a packet addressed to the router's own address must be delivered locally rather than forwarded back out an interface. The /32 local route marks that address as belonging to the device, so the router punts it to itself.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It identifies the router's own address so traffic to it is received locally instead of being forwarded",
+        "is_correct": true
+      },
+      {
+        "text": "It reserves the broadcast address for the subnet",
+        "is_correct": false
+      },
+      {
+        "text": "It is a leftover artifact of the ARP cache",
+        "is_correct": false
+      },
+      {
+        "text": "It is the route used to reach the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does HSRP use a virtual MAC address instead of the active router's burned-in address?",
+    "explanation": "Hosts cache the gateway's MAC in their ARP table. If the group used the active router's burned-in address, a failover would change the MAC and every host would have to re-ARP before it could send. A shared virtual MAC (0000.0c07.acXX) moves with the active role, so failover is invisible to the hosts.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "So the standby can take over the same MAC and hosts need no ARP refresh or gateway change",
+        "is_correct": true
+      },
+      {
+        "text": "So the virtual MAC can be routed across a WAN link",
+        "is_correct": false
+      },
+      {
+        "text": "Because a burned-in address cannot legally appear in an ARP reply",
+        "is_correct": false
+      },
+      {
+        "text": "Because the virtual MAC encrypts the HSRP hello messages",
+        "is_correct": false
+      }
+    ]
   }
 ]

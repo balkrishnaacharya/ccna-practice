@@ -6342,5 +6342,291 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "In SNMPv2c, how is the community string sent between the manager and the agent?",
+    "explanation": "Version 2c has no encryption at all. The community is a plaintext string that doubles as the access credential, which is the main reason SNMPv3 with authentication and privacy exists. Hashing and encryption belong to v3.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In cleartext inside every request and response",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypted with a pre-shared key",
+        "is_correct": false
+      },
+      {
+        "text": "Hashed with MD5 to form a digest",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypted inside a TLS tunnel",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the command `crypto key zeroize rsa` do?",
+    "explanation": "`zeroize` destroys the local RSA key pair. SSH needs that key pair for its session handshake, so SSH stops working until `crypto key generate rsa` creates new keys. It has no effect on data stored on clients.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Deletes the router's RSA key pair, which disables SSH until new keys are generated",
+        "is_correct": true
+      },
+      {
+        "text": "Clears the RSA keys cached by connected SSH clients",
+        "is_correct": false
+      },
+      {
+        "text": "Resets the RSA counter used for accounting",
+        "is_correct": false
+      },
+      {
+        "text": "Removes the RSA signature from the running configuration only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A clientless SSL VPN is reached with nothing but a web browser. Which protocol and port does the client use?",
+    "explanation": "Clientless SSL VPN runs in the browser over HTTPS on TCP 443, so it needs no client software and usually passes restrictive firewalls. ESP, IKE, and L2TP belong to tunnels that require a client or a dialer.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HTTPS over TCP 443",
+        "is_correct": true
+      },
+      {
+        "text": "IPsec ESP over IP protocol 50",
+        "is_correct": false
+      },
+      {
+        "text": "IKE over UDP 500",
+        "is_correct": false
+      },
+      {
+        "text": "L2TP over UDP 1701",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a Cisco router, when is inside source NAT applied to an outbound packet relative to the routing lookup?",
+    "explanation": "IOS routes the packet first, then translates the inside source as the packet leaves the outside interface. The reverse translation on returning traffic happens on ingress, before the routing lookup. That asymmetry is why inside ACLs see pre-translation addresses while outside ACLs see post-translation addresses.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "After the routing decision, as the packet leaves the outside interface",
+        "is_correct": true
+      },
+      {
+        "text": "Before routing, so the destination can be translated first",
+        "is_correct": false
+      },
+      {
+        "text": "Only after the packet has been dropped for lack of a route",
+        "is_correct": false
+      },
+      {
+        "text": "On the ingress interface, before any ACL is evaluated",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "With no logging configuration at all, what is the default severity level for messages shown on the console?",
+    "explanation": "`logging console` defaults to debugging, level 7, so everything from level 0 through 7 is printed. That is why a busy debug session can lock up a console session until the console logging level is raised.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Debugging (level 7)",
+        "is_correct": true
+      },
+      {
+        "text": "Informational (level 6)",
+        "is_correct": false
+      },
+      {
+        "text": "Warnings (level 4)",
+        "is_correct": false
+      },
+      {
+        "text": "Errors (level 3)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default DHCP lease duration on a Cisco IOS router acting as a DHCP server?",
+    "explanation": "The default is one day. `lease infinite` exists but is not the default, and shorter leases raise the volume of renew traffic without any benefit on a stable network.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "One day",
+        "is_correct": true
+      },
+      {
+        "text": "One hour",
+        "is_correct": false
+      },
+      {
+        "text": "One week",
+        "is_correct": false
+      },
+      {
+        "text": "Infinite",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port does IKE use to establish the phase 1 security association for an IPsec VPN?",
+    "explanation": "IKE negotiates the phase 1 association over UDP 500. UDP 4500 carries NAT-traversal encapsulated ESP, and IP protocol 50 is ESP itself, which is the data path rather than the negotiation.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP 500",
+        "is_correct": true
+      },
+      {
+        "text": "TCP 500",
+        "is_correct": false
+      },
+      {
+        "text": "UDP 4500",
+        "is_correct": false
+      },
+      {
+        "text": "IP protocol 50",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which reverse DNS zone name corresponds to the network 192.168.1.0/24?",
+    "explanation": "Reverse zones reverse the octets of the network and append `in-addr.arpa`. So 192.168.1.0/24 becomes 1.168.192.in-addr.arpa, and the PTR records inside it are named for the final octet of each host address.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1.168.192.in-addr.arpa",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.1.in-addr.arpa",
+        "is_correct": false
+      },
+      {
+        "text": "in-addr.arpa.192.168.1",
+        "is_correct": false
+      },
+      {
+        "text": "1.192.168.in-addr.arpa",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "DHCP snooping is enabled and option 82 insertion is configured. A DHCP request arrives on an untrusted port already carrying option 82. What does the switch do?",
+    "explanation": "Option 82 records the relay agent and port that injected it. A client-side untrusted port must not supply it, so a packet that already carries option 82 on an untrusted port is treated as spoofed and dropped. Trusted ports and the switch's own insertion are the legitimate ways for the field to appear.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops the packet, because option 82 from an untrusted source is not allowed",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces the existing option 82 with its own and forwards the packet",
+        "is_correct": false
+      },
+      {
+        "text": "It forwards the packet unchanged to the DHCP server",
+        "is_correct": false
+      },
+      {
+        "text": "It strips option 82 and forwards the request",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is `snmp-server ifindex persist` configured on a switch?",
+    "explanation": "Interface indexes are normally assigned at boot and can change after a reload, which would make an NMS attribute old data to a different port. Persisting them writes the mapping to NVRAM so the ifIndex values a poller already knows stay valid. The command says nothing about communities, engine IDs, or counters.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To keep each interface's ifIndex stable across reboots so the NMS does not misattribute collected data",
+        "is_correct": true
+      },
+      {
+        "text": "To save SNMP community strings in NVRAM",
+        "is_correct": false
+      },
+      {
+        "text": "To fix the SNMP engine ID for version 3",
+        "is_correct": false
+      },
+      {
+        "text": "To write interface counters to flash before a reload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which AAA command records the privileged-level commands an administrator runs, including when each one started and stopped?",
+    "explanation": "`aaa accounting commands 15` logs command execution at privilege level 15, and `start-stop` sends a start record before the command and a stop record after it, which captures duration. `accounting exec` covers login sessions rather than individual commands, and authentication and authorization do not produce accounting records.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`aaa accounting commands 15 default start-stop group tacacs+`",
+        "is_correct": true
+      },
+      {
+        "text": "`aaa authentication commands 15 default group tacacs+`",
+        "is_correct": false
+      },
+      {
+        "text": "`aaa authorization commands 15 default group tacacs+`",
+        "is_correct": false
+      },
+      {
+        "text": "`aaa accounting exec default start-stop group tacacs+`",
+        "is_correct": false
+      }
+    ]
   }
 ]
