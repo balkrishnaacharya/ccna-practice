@@ -6602,5 +6602,421 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which standard defines Multiple Spanning Tree Protocol, where several VLANs can be mapped onto one spanning-tree instance?",
+    "explanation": "802.1s defines MST, which runs a small number of instances and lets you map many VLANs to each one. 802.1D is the original STP, 802.1w is RSTP, and 802.1Q defines VLAN tagging.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.1D",
+        "is_correct": false
+      },
+      {
+        "text": "802.1w",
+        "is_correct": false
+      },
+      {
+        "text": "802.1s",
+        "is_correct": true
+      },
+      {
+        "text": "802.1Q",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command names the standby port of a FlexLink pair on a Cisco switch?",
+    "explanation": "FlexLink pairs an active and a backup interface without involving STP: the backup stays down until the active link fails, then takes over in under a second. The command is `switchport backup interface Gi0/2` entered on the active port.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`backup interface Gi0/2`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport backup interface Gi0/2`",
+        "is_correct": true
+      },
+      {
+        "text": "`flexlink backup Gi0/2`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree backup interface Gi0/2`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which LACP parameter decides which switch's port priorities determine the links that become active in a bundle?",
+    "explanation": "LACP compares system priority first, and the lower value wins; a tie is broken by the lower system MAC. The winning switch's port priorities then select the active links, while the administrative key only has to match for ports to be eligible.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "System priority",
+        "is_correct": true
+      },
+      {
+        "text": "Port priority",
+        "is_correct": false
+      },
+      {
+        "text": "Administrative key",
+        "is_correct": false
+      },
+      {
+        "text": "Load-balancing hash",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command starts a time-domain reflectometer test to locate an open or short in a copper cable attached to a switch port?",
+    "explanation": "`test cable-diagnostics tdr interface Gi0/1` runs the test, and `show cable-diagnostics tdr interface Gi0/1` reads the result, which reports the fault type and the distance to it. The transceiver and controller commands report hardware details rather than cable faults.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show interface Gi0/1 transceiver`",
+        "is_correct": false
+      },
+      {
+        "text": "`show controllers Gi0/1`",
+        "is_correct": false
+      },
+      {
+        "text": "`show cable-diagnostics tdr`",
+        "is_correct": false
+      },
+      {
+        "text": "`test cable-diagnostics tdr interface Gi0/1`",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between a capture filter and a display filter in a packet analyzer?",
+    "explanation": "A capture filter is compiled into BPF and applied as packets arrive, so anything it rejects is never written and cannot be recovered. A display filter only hides packets from the view and can be changed freely against the saved capture.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A capture filter only hides packets from the view, while a display filter decides what is written to disk",
+        "is_correct": false
+      },
+      {
+        "text": "A capture filter decides which packets are recorded, while a display filter only hides packets already in the capture",
+        "is_correct": true
+      },
+      {
+        "text": "Both filters use identical syntax and differ only in where they are applied",
+        "is_correct": false
+      },
+      {
+        "text": "A display filter reduces the size of the saved capture file",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Cisco StackWise provide?",
+    "explanation": "StackWise joins up to several physical switches through special stacking cables so they share one control plane and act as a single logical switch with one management address. It is a stacking technology, not server virtualization or inter-VLAN routing.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Several physical switches act as one logical switch with a single management address",
+        "is_correct": true
+      },
+      {
+        "text": "A single switch runs multiple independent routing tables",
+        "is_correct": false
+      },
+      {
+        "text": "Two switches share one power supply through the PoE budget",
+        "is_correct": false
+      },
+      {
+        "text": "A switch forwards between VLANs without a router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a lightweight access point establish its relationship with a wireless LAN controller?",
+    "explanation": "The AP first sends a discovery request, by broadcast, multicast, or a configured unicast address, and the WLC answers with a discovery response. The AP then sends a join request, and after the join response the control and data CAPWAP tunnels are built inside DTLS.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It waits for the WLC to send it a join request",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a join request first and a discovery request only if that fails",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a discovery request and then a join request once a WLC replies",
+        "is_correct": true
+      },
+      {
+        "text": "It relies on DHCP option 43 alone and sends no CAPWAP messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch is managed over its management VLAN and must reach a management station on another subnet. Which command sets the next hop it should use?",
+    "explanation": "A Layer 2 switch has no routing table, so `ip route 0.0.0.0 0.0.0.0` is not available to it and the management path is set with `ip default-gateway 10.1.1.1`. A default route only becomes meaningful once `ip routing` is enabled and the device is forwarding as a Layer 3 switch.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip default-gateway 10.1.1.1`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip route 0.0.0.0 0.0.0.0 10.1.1.1`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip default-network 10.1.1.1`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip helper-address 10.1.1.1`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the interface command `switchport nonegotiate` do?",
+    "explanation": "It stops the port from sending DTP frames, which means the far end cannot learn the mode from the link and the trunk must be configured statically. It is commonly paired with `switchport mode trunk` and removes the chance of an unintended trunk forming.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It disables the port until DTP negotiation succeeds",
+        "is_correct": false
+      },
+      {
+        "text": "It forces the port into dynamic auto mode",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the port into a static access port",
+        "is_correct": false
+      },
+      {
+        "text": "It stops DTP frames from being sent, so the trunk must be configured statically at both ends",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which VTP advertisement type carries the complete list of VLAN IDs and names so that a client can build its local VLAN database?",
+    "explanation": "A subset advertisement lists the VLANs themselves, so a client builds its vlan.dat from it. A summary advertisement carries only the VTP domain, the revision number, and the information needed to follow up, while an advertisement request is the message a client sends when it needs the server to transmit either type.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A summary advertisement",
+        "is_correct": false
+      },
+      {
+        "text": "A subset advertisement",
+        "is_correct": true
+      },
+      {
+        "text": "An advertisement request",
+        "is_correct": false
+      },
+      {
+        "text": "A client announcement",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is already the destination of a local SPAN session. What happens if you try to configure that same port as the source of another SPAN session?",
+    "explanation": "A SPAN destination port only transmits copied frames. A port that is mirroring traffic out cannot simultaneously mirror traffic in, so the configuration is rejected. One port may serve as the destination for more than one session, but it must not also be a source.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port is rejected as a source, because a destination port can only transmit copied frames",
+        "is_correct": true
+      },
+      {
+        "text": "The two sessions merge and the port mirrors traffic in both directions",
+        "is_correct": false
+      },
+      {
+        "text": "The port stops being a destination and becomes a source automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Both sessions work, but the copied frames are interleaved on the same output",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Several switches in a Cisco StackWise stack all boot with the default stack priority. How is the stack master determined?",
+    "explanation": "The member with the highest stack priority becomes master; when the priorities tie, the lowest MAC address wins. The remaining members take the standby and slave roles, and each keeps its own running configuration until a new master is elected after a failure.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The lowest priority value wins, and ties go to the highest MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The highest priority value wins, and ties go to the lowest MAC address",
+        "is_correct": true
+      },
+      {
+        "text": "The switch in the lowest numbered member slot always wins",
+        "is_correct": false
+      },
+      {
+        "text": "The master is whichever member finishes booting first",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does band steering do on a dual-band wireless network?",
+    "explanation": "Band steering nudges clients that support both bands onto 5 GHz, where there are more non-overlapping channels and less interference, by delaying or suppressing probe responses on the 2.4 GHz radio. It does not force single-band clients away from 2.4 GHz.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forces every client onto the 2.4 GHz radio for better range",
+        "is_correct": false
+      },
+      {
+        "text": "It balances load between two different SSIDs",
+        "is_correct": false
+      },
+      {
+        "text": "It encourages dual-band clients onto 5 GHz to relieve 2.4 GHz congestion",
+        "is_correct": true
+      },
+      {
+        "text": "It moves clients between controllers during roaming",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Where does a Cisco switch keep its VLAN database while it is in VTP server or client mode?",
+    "explanation": "VLAN definitions live in the vlan.dat file in flash rather than in startup-config, which is why deleting that file and reloading returns the switch to the default VLANs. VTP transparent mode and VTP version 3 in some platforms keep VLANs in the running configuration instead.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In NVRAM as part of startup-config",
+        "is_correct": false
+      },
+      {
+        "text": "In the vlan.dat file in flash",
+        "is_correct": true
+      },
+      {
+        "text": "Only in the running configuration",
+        "is_correct": false
+      },
+      {
+        "text": "In ROM monitor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command prevents unknown multicast frames from being flooded to a port?",
+    "explanation": "`switchport block multicast` filters multicast frames whose group has no registered receivers, and `switchport block unicast` does the same for unknown unicast. Storm control rate-limits a traffic type instead of blocking unknown flooding, and a protected port cannot talk to other protected ports.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport block multicast`",
+        "is_correct": true
+      },
+      {
+        "text": "`storm-control multicast level 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport protected`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport nonegotiate`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two clients report RSSI values of -58 dBm and -84 dBm. Which client has the stronger signal?",
+    "explanation": "RSSI is reported in dBm, a negative scale, so values closer to zero mean more received power. Anything near -30 dBm is excellent, around -67 dBm is good, about -70 dBm is marginal for voice, and near -90 dBm is effectively unusable.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The -84 dBm client, because a larger magnitude means more signal",
+        "is_correct": false
+      },
+      {
+        "text": "Both are equal because RSSI is a relative scale",
+        "is_correct": false
+      },
+      {
+        "text": "Neither can be compared without knowing the SNR",
+        "is_correct": false
+      },
+      {
+        "text": "The -58 dBm client, because values closer to zero indicate a stronger signal",
+        "is_correct": true
+      }
+    ]
   }
 ]

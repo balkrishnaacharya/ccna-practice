@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "An IPv4 header contains options, so the header is padded with zeros before the payload begins. What does that padding guarantee?",
+    "explanation": "The Header Length field counts 32-bit words, so options must be padded to a whole word. Without the padding the IHL value could not describe the header exactly, and the receiver would misplace the start of the payload.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That the Total Length field stays a whole number of bytes",
+        "is_correct": false
+      },
+      {
+        "text": "That the header checksum covers the options",
+        "is_correct": false
+      },
+      {
+        "text": "That the header ends on a 32-bit boundary so the payload starts at a known offset",
+        "is_correct": true
+      },
+      {
+        "text": "That routers can fragment the packet on any byte boundary",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an ad hoc wireless network, how do the client stations communicate?",
+    "explanation": "An ad hoc network is an independent basic service set (IBSS): the stations talk directly to each other with no access point and no distribution system. An infrastructure BSS instead sends every frame through an AP, which is how a home or enterprise WLAN normally works.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They send all traffic through a central access point",
+        "is_correct": false
+      },
+      {
+        "text": "They communicate directly with each other without an access point or distribution system",
+        "is_correct": true
+      },
+      {
+        "text": "They tunnel frames to a wireless LAN controller inside CAPWAP",
+        "is_correct": false
+      },
+      {
+        "text": "They forward frames between radios using the switch MAC address table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A fragment arrives with the IPv4 Fragment Offset field set to 185. At what byte offset in the original datagram does this fragment's payload begin?",
+    "explanation": "Fragment Offset is expressed in 8-byte units, so the byte offset is 185 x 8 = 1,480. Interpretation in bytes directly is the classic mistake; the field is 13 bits wide.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "185",
+        "is_correct": false
+      },
+      {
+        "text": "370",
+        "is_correct": false
+      },
+      {
+        "text": "1,480",
+        "is_correct": true
+      },
+      {
+        "text": "5,920",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which value appears in the Version field of an IPv4 header?",
+    "explanation": "The Version field is 4 bits and holds 4 for IPv4 and 6 for IPv6. 20 is the minimum header length in bytes without options, and 32 is the bit width of an IPv4 address, not a Version value.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "4",
+        "is_correct": true
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      },
+      {
+        "text": "20",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which portion of an IPv4 packet does the header checksum protect?",
+    "explanation": "The header checksum covers only the header. Every router that decrements TTL must recompute it, so protecting the payload with it would force a full recalculation at each hop; payload integrity is left to the TCP or UDP checksum.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The entire packet including the payload",
+        "is_correct": false
+      },
+      {
+        "text": "The payload only",
+        "is_correct": false
+      },
+      {
+        "text": "The header only",
+        "is_correct": true
+      },
+      {
+        "text": "The header and the first 8 bytes of payload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interframe space is the shortest, and is used by a station that must send an immediate response such as an ACK?",
+    "explanation": "SIFS is the shortest interframe space, which gives ACKs, CTS frames, and fragment bursts priority over stations waiting through DIFS for normal contention. DIFS is used for new transmissions, and PIFS and EIFS are longer still.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DIFS",
+        "is_correct": false
+      },
+      {
+        "text": "PIFS",
+        "is_correct": false
+      },
+      {
+        "text": "EIFS",
+        "is_correct": false
+      },
+      {
+        "text": "SIFS",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which set of channels is the only non-overlapping group in the 2.4 GHz band in North America?",
+    "explanation": "2.4 GHz channels are spaced only 5 MHz apart while a 20 MHz channel needs roughly 20 to 22 MHz, so 1, 6, and 11 are the non-overlapping set. Channels 36, 40, and 44 belong to the 5 GHz band.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1, 5, 9",
+        "is_correct": false
+      },
+      {
+        "text": "1, 6, 11",
+        "is_correct": true
+      },
+      {
+        "text": "2, 7, 12",
+        "is_correct": false
+      },
+      {
+        "text": "36, 40, 44",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an autonomous access point differ from a lightweight access point?",
+    "explanation": "An autonomous AP holds its own configuration, bridges client traffic locally, and is managed one device at a time. A lightweight AP keeps almost no configuration of its own and depends on a wireless LAN controller for its configuration and for the CAPWAP tunnels that carry client traffic.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An autonomous AP is configured individually and handles its own switching and management, while a lightweight AP relies on a WLC",
+        "is_correct": true
+      },
+      {
+        "text": "An autonomous AP cannot function without a WLC managing its radios",
+        "is_correct": false
+      },
+      {
+        "text": "A lightweight AP keeps its full configuration locally and only reports statistics to the WLC",
+        "is_correct": false
+      },
+      {
+        "text": "An autonomous AP can only operate in monitor mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team rents virtual machines and then installs and patches its own operating system, middleware, and runtime. Which cloud service model is this?",
+    "explanation": "In IaaS the provider supplies virtualized compute, storage, and networking, while the customer manages everything from the guest OS upward. PaaS would supply the runtime, SaaS would supply the whole application, and FaaS would supply only function execution.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SaaS",
+        "is_correct": false
+      },
+      {
+        "text": "PaaS",
+        "is_correct": false
+      },
+      {
+        "text": "IaaS",
+        "is_correct": true
+      },
+      {
+        "text": "FaaS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which cable type connects a workstation's serial port to a Cisco device's console port?",
+    "explanation": "A rollover cable reverses the pin order from one end to the other, pairing pin 1 with pin 8, and is used with a terminal emulator for out-of-band console access. Straight-through and crossover cables are for Ethernet, not console access.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Straight-through",
+        "is_correct": false
+      },
+      {
+        "text": "Crossover",
+        "is_correct": false
+      },
+      {
+        "text": "Rollover",
+        "is_correct": true
+      },
+      {
+        "text": "Coaxial",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the receiving host doing when it removes the header, and trailer where present, that the sender added at each layer?",
+    "explanation": "De-encapsulation is the reverse of encapsulation: each layer strips its own control information and passes the payload up. Encapsulation happens on transmit, while segmentation and multiplexing describe how data is divided and shared, not how headers are removed.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Encapsulation",
+        "is_correct": false
+      },
+      {
+        "text": "De-encapsulation",
+        "is_correct": true
+      },
+      {
+        "text": "Segmentation",
+        "is_correct": false
+      },
+      {
+        "text": "Multiplexing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an IPv6 anycast address from a unicast address?",
+    "explanation": "An anycast address is assigned to several interfaces, and the routing system delivers each packet to whichever member is nearest by routing metric. Multicast is the one-to-many service, and fe80::/10 is the link-local unicast range.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is delivered to every interface that shares the address",
+        "is_correct": false
+      },
+      {
+        "text": "It is only valid on point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "It must be configured from the fe80::/10 range",
+        "is_correct": false
+      },
+      {
+        "text": "It is assigned to multiple interfaces and delivered to the nearest one",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the 7-byte preamble and the 1-byte start frame delimiter at the beginning of an Ethernet frame?",
+    "explanation": "The alternating bits of the preamble let the receiver lock its clock onto the incoming signal, and the final 10101011 pattern of the SFD marks where the frame proper begins. Addresses and EtherType follow in the frame header, and error detection is done by the trailing FCS.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They carry the destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "They let the receiver synchronize its clock to the bit stream and mark the start of the frame",
+        "is_correct": true
+      },
+      {
+        "text": "They provide the frame check sequence for the payload",
+        "is_correct": false
+      },
+      {
+        "text": "They identify the EtherType of the encapsulated protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which MAC address prefix is used for IPv4 multicast frames on Ethernet?",
+    "explanation": "IPv4 multicast maps into the 01:00:5e:00:00:00/24 range, with the low 23 bits of the group address copied into the MAC. 33:33 is the IPv6 multicast prefix, and ff:ff:ff:ff:ff:ff is the broadcast address.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "01:00:5e",
+        "is_correct": true
+      },
+      {
+        "text": "33:33",
+        "is_correct": false
+      },
+      {
+        "text": "ff:ff:ff",
+        "is_correct": false
+      },
+      {
+        "text": "00:1b:2f",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the SX designation in 1000BASE-SX indicate?",
+    "explanation": "SX means short wavelength: an 850 nm laser over multimode fiber, typically reaching 220 to 550 m depending on the fiber grade. LX is the 1310 nm long-wavelength variant, T is twisted pair, and CX is twinaxial copper.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Single-mode fiber with a 1310 nm laser",
+        "is_correct": false
+      },
+      {
+        "text": "Twinaxial copper cable",
+        "is_correct": false
+      },
+      {
+        "text": "Category 5e twisted pair",
+        "is_correct": false
+      },
+      {
+        "text": "Multimode fiber with an 850 nm short-wavelength laser",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "How are ARP request and ARP reply frames addressed at layer 2?",
+    "explanation": "The request must reach every station on the segment because the sender does not yet know the target's MAC, so it is broadcast. The reply goes straight back to the station that asked, so it is unicast even though the requester's address was learned from a broadcast.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The request is broadcast and the reply is unicast to the sender",
+        "is_correct": true
+      },
+      {
+        "text": "Both are broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "The request is unicast and the reply is broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Both are unicast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which standard defines Multiple Spanning Tree Protocol, where several VLANs can be mapped onto one spanning-tree instance?",
+    "explanation": "802.1s defines MST, which runs a small number of instances and lets you map many VLANs to each one. 802.1D is the original STP, 802.1w is RSTP, and 802.1Q defines VLAN tagging.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.1D",
+        "is_correct": false
+      },
+      {
+        "text": "802.1w",
+        "is_correct": false
+      },
+      {
+        "text": "802.1s",
+        "is_correct": true
+      },
+      {
+        "text": "802.1Q",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command names the standby port of a FlexLink pair on a Cisco switch?",
+    "explanation": "FlexLink pairs an active and a backup interface without involving STP: the backup stays down until the active link fails, then takes over in under a second. The command is `switchport backup interface Gi0/2` entered on the active port.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`backup interface Gi0/2`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport backup interface Gi0/2`",
+        "is_correct": true
+      },
+      {
+        "text": "`flexlink backup Gi0/2`",
+        "is_correct": false
+      },
+      {
+        "text": "`spanning-tree backup interface Gi0/2`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which LACP parameter decides which switch's port priorities determine the links that become active in a bundle?",
+    "explanation": "LACP compares system priority first, and the lower value wins; a tie is broken by the lower system MAC. The winning switch's port priorities then select the active links, while the administrative key only has to match for ports to be eligible.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "System priority",
+        "is_correct": true
+      },
+      {
+        "text": "Port priority",
+        "is_correct": false
+      },
+      {
+        "text": "Administrative key",
+        "is_correct": false
+      },
+      {
+        "text": "Load-balancing hash",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command starts a time-domain reflectometer test to locate an open or short in a copper cable attached to a switch port?",
+    "explanation": "`test cable-diagnostics tdr interface Gi0/1` runs the test, and `show cable-diagnostics tdr interface Gi0/1` reads the result, which reports the fault type and the distance to it. The transceiver and controller commands report hardware details rather than cable faults.",
+    "domain": "switching",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`show interface Gi0/1 transceiver`",
+        "is_correct": false
+      },
+      {
+        "text": "`show controllers Gi0/1`",
+        "is_correct": false
+      },
+      {
+        "text": "`show cable-diagnostics tdr`",
+        "is_correct": false
+      },
+      {
+        "text": "`test cable-diagnostics tdr interface Gi0/1`",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between a capture filter and a display filter in a packet analyzer?",
+    "explanation": "A capture filter is compiled into BPF and applied as packets arrive, so anything it rejects is never written and cannot be recovered. A display filter only hides packets from the view and can be changed freely against the saved capture.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A capture filter only hides packets from the view, while a display filter decides what is written to disk",
+        "is_correct": false
+      },
+      {
+        "text": "A capture filter decides which packets are recorded, while a display filter only hides packets already in the capture",
+        "is_correct": true
+      },
+      {
+        "text": "Both filters use identical syntax and differ only in where they are applied",
+        "is_correct": false
+      },
+      {
+        "text": "A display filter reduces the size of the saved capture file",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Cisco StackWise provide?",
+    "explanation": "StackWise joins up to several physical switches through special stacking cables so they share one control plane and act as a single logical switch with one management address. It is a stacking technology, not server virtualization or inter-VLAN routing.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Several physical switches act as one logical switch with a single management address",
+        "is_correct": true
+      },
+      {
+        "text": "A single switch runs multiple independent routing tables",
+        "is_correct": false
+      },
+      {
+        "text": "Two switches share one power supply through the PoE budget",
+        "is_correct": false
+      },
+      {
+        "text": "A switch forwards between VLANs without a router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does a lightweight access point establish its relationship with a wireless LAN controller?",
+    "explanation": "The AP first sends a discovery request, by broadcast, multicast, or a configured unicast address, and the WLC answers with a discovery response. The AP then sends a join request, and after the join response the control and data CAPWAP tunnels are built inside DTLS.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It waits for the WLC to send it a join request",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a join request first and a discovery request only if that fails",
+        "is_correct": false
+      },
+      {
+        "text": "It sends a discovery request and then a join request once a WLC replies",
+        "is_correct": true
+      },
+      {
+        "text": "It relies on DHCP option 43 alone and sends no CAPWAP messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A Layer 2 switch is managed over its management VLAN and must reach a management station on another subnet. Which command sets the next hop it should use?",
+    "explanation": "A Layer 2 switch has no routing table, so `ip route 0.0.0.0 0.0.0.0` is not available to it and the management path is set with `ip default-gateway 10.1.1.1`. A default route only becomes meaningful once `ip routing` is enabled and the device is forwarding as a Layer 3 switch.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip default-gateway 10.1.1.1`",
+        "is_correct": true
+      },
+      {
+        "text": "`ip route 0.0.0.0 0.0.0.0 10.1.1.1`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip default-network 10.1.1.1`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip helper-address 10.1.1.1`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the interface command `switchport nonegotiate` do?",
+    "explanation": "It stops the port from sending DTP frames, which means the far end cannot learn the mode from the link and the trunk must be configured statically. It is commonly paired with `switchport mode trunk` and removes the chance of an unintended trunk forming.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It disables the port until DTP negotiation succeeds",
+        "is_correct": false
+      },
+      {
+        "text": "It forces the port into dynamic auto mode",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the port into a static access port",
+        "is_correct": false
+      },
+      {
+        "text": "It stops DTP frames from being sent, so the trunk must be configured statically at both ends",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which VTP advertisement type carries the complete list of VLAN IDs and names so that a client can build its local VLAN database?",
+    "explanation": "A subset advertisement lists the VLANs themselves, so a client builds its vlan.dat from it. A summary advertisement carries only the VTP domain, the revision number, and the information needed to follow up, while an advertisement request is the message a client sends when it needs the server to transmit either type.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A summary advertisement",
+        "is_correct": false
+      },
+      {
+        "text": "A subset advertisement",
+        "is_correct": true
+      },
+      {
+        "text": "An advertisement request",
+        "is_correct": false
+      },
+      {
+        "text": "A client announcement",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A switch port is already the destination of a local SPAN session. What happens if you try to configure that same port as the source of another SPAN session?",
+    "explanation": "A SPAN destination port only transmits copied frames. A port that is mirroring traffic out cannot simultaneously mirror traffic in, so the configuration is rejected. One port may serve as the destination for more than one session, but it must not also be a source.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port is rejected as a source, because a destination port can only transmit copied frames",
+        "is_correct": true
+      },
+      {
+        "text": "The two sessions merge and the port mirrors traffic in both directions",
+        "is_correct": false
+      },
+      {
+        "text": "The port stops being a destination and becomes a source automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Both sessions work, but the copied frames are interleaved on the same output",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Several switches in a Cisco StackWise stack all boot with the default stack priority. How is the stack master determined?",
+    "explanation": "The member with the highest stack priority becomes master; when the priorities tie, the lowest MAC address wins. The remaining members take the standby and slave roles, and each keeps its own running configuration until a new master is elected after a failure.",
+    "domain": "switching",
+    "subtopic": "Virtual Switches",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The lowest priority value wins, and ties go to the highest MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "The highest priority value wins, and ties go to the lowest MAC address",
+        "is_correct": true
+      },
+      {
+        "text": "The switch in the lowest numbered member slot always wins",
+        "is_correct": false
+      },
+      {
+        "text": "The master is whichever member finishes booting first",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does band steering do on a dual-band wireless network?",
+    "explanation": "Band steering nudges clients that support both bands onto 5 GHz, where there are more non-overlapping channels and less interference, by delaying or suppressing probe responses on the 2.4 GHz radio. It does not force single-band clients away from 2.4 GHz.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It forces every client onto the 2.4 GHz radio for better range",
+        "is_correct": false
+      },
+      {
+        "text": "It balances load between two different SSIDs",
+        "is_correct": false
+      },
+      {
+        "text": "It encourages dual-band clients onto 5 GHz to relieve 2.4 GHz congestion",
+        "is_correct": true
+      },
+      {
+        "text": "It moves clients between controllers during roaming",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Where does a Cisco switch keep its VLAN database while it is in VTP server or client mode?",
+    "explanation": "VLAN definitions live in the vlan.dat file in flash rather than in startup-config, which is why deleting that file and reloading returns the switch to the default VLANs. VTP transparent mode and VTP version 3 in some platforms keep VLANs in the running configuration instead.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In NVRAM as part of startup-config",
+        "is_correct": false
+      },
+      {
+        "text": "In the vlan.dat file in flash",
+        "is_correct": true
+      },
+      {
+        "text": "Only in the running configuration",
+        "is_correct": false
+      },
+      {
+        "text": "In ROM monitor",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface command prevents unknown multicast frames from being flooded to a port?",
+    "explanation": "`switchport block multicast` filters multicast frames whose group has no registered receivers, and `switchport block unicast` does the same for unknown unicast. Storm control rate-limits a traffic type instead of blocking unknown flooding, and a protected port cannot talk to other protected ports.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`switchport block multicast`",
+        "is_correct": true
+      },
+      {
+        "text": "`storm-control multicast level 1`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport protected`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport nonegotiate`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Two clients report RSSI values of -58 dBm and -84 dBm. Which client has the stronger signal?",
+    "explanation": "RSSI is reported in dBm, a negative scale, so values closer to zero mean more received power. Anything near -30 dBm is excellent, around -67 dBm is good, about -70 dBm is marginal for voice, and near -90 dBm is effectively unusable.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The -84 dBm client, because a larger magnitude means more signal",
+        "is_correct": false
+      },
+      {
+        "text": "Both are equal because RSSI is a relative scale",
+        "is_correct": false
+      },
+      {
+        "text": "Neither can be compared without knowing the SNR",
+        "is_correct": false
+      },
+      {
+        "text": "The -58 dBm client, because values closer to zero indicate a stronger signal",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "`show ip eigrp topology` lists a path to 10.2.0.0/16 that is absent from the routing table. What does that path represent?",
+    "explanation": "The topology table holds every successor and feasible successor, but only the least-cost successor is installed in the routing table. A feasible successor already satisfies the feasibility condition, so it can be promoted the moment the current successor is lost.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A route that failed the feasibility condition and can never be used",
+        "is_correct": false
+      },
+      {
+        "text": "A feasible successor kept in reserve and ready to be installed if the current successor fails",
+        "is_correct": true
+      },
+      {
+        "text": "A route advertised to EIGRP neighbours but never used locally for any destination",
+        "is_correct": false
+      },
+      {
+        "text": "A stale entry that is waiting for the hold timer to expire",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router must advertise one 10.0.0.0/8 summary to its EIGRP neighbors instead of the component routes. Which command is entered on the interface facing those neighbors?",
+    "explanation": "`ip summary-address eigrp 100 10.0.0.0 255.0.0.0` creates the summary on the interface and installs a matching discard route locally. `area 0 range` summarises at an OSPF area boundary, `network` enables EIGRP on an interface, and a static route to null0 only creates a black hole without advertising anything.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`area 0 range 10.0.0.0 255.0.0.0`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip summary-address eigrp 100 10.0.0.0 255.0.0.0`",
+        "is_correct": true
+      },
+      {
+        "text": "`network 10.0.0.0 0.255.255.255`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip route 10.0.0.0 255.0.0.0 null0`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which first-hop redundancy protocol can share client traffic across more than one forwarding router at the same time?",
+    "explanation": "GLBP elects an active virtual gateway that hands out up to four virtual MAC addresses, each backed by a different active virtual forwarder, so hosts on the same subnet can be balanced across routers. HSRP and VRRP keep one router forwarding per group.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HSRP",
+        "is_correct": false
+      },
+      {
+        "text": "VRRP",
+        "is_correct": false
+      },
+      {
+        "text": "IRDP",
+        "is_correct": false
+      },
+      {
+        "text": "GLBP",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "In the command `network 10.1.0.0 0.0.255.255 area 0`, what does the second address represent?",
+    "explanation": "The second address is a wildcard mask, the inverse of a subnet mask, in which a 0 bit must match the address and a 1 bit is ignored. The pair above matches every interface address in 10.1.0.0/16 and places those interfaces in area 0.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A wildcard mask in which a 0 bit must match the address",
+        "is_correct": true
+      },
+      {
+        "text": "A subnet mask applied to the network address",
+        "is_correct": false
+      },
+      {
+        "text": "The area ID written in dotted decimal",
+        "is_correct": false
+      },
+      {
+        "text": "The router ID of the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a router-on-a-stick link, which subinterface command marks VLAN 10 as the untagged VLAN?",
+    "explanation": "`encapsulation dot1q 10 native` tells the router that frames for that subinterface arrive without a tag, which must match the switch's native VLAN on the trunk. Without the keyword the router expects VLAN 10 frames to be tagged, and `switchport` commands do not exist on a routed port.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`encapsulation dot1q 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport trunk native vlan 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`encapsulation dot1q 10 native`",
+        "is_correct": true
+      },
+      {
+        "text": "`encapsulation native 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a static route that points out a broadcast multi-access interface also need a next-hop address?",
+    "explanation": "On a point-to-point link there is only one possible neighbour, so naming the interface is enough. On a shared segment many devices are reachable, so the router would have to ARP for every destination and could never learn which neighbour should receive the packet without an explicit next hop.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IOS refuses any static route that names only an interface",
+        "is_correct": false
+      },
+      {
+        "text": "Many neighbours share the segment, so the router cannot tell which one should receive the packet without a next hop",
+        "is_correct": true
+      },
+      {
+        "text": "ARP cannot be used on a broadcast medium",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast media do not support recursive route lookup",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show ip route` output, which code letter marks a route learned through OSPF?",
+    "explanation": "OSPF routes carry O, EIGRP uses D, static routes use S, and connected networks use C, with L for the local /32 address on each interface. O IA and O E distinguish inter-area and external OSPF routes.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "D",
+        "is_correct": false
+      },
+      {
+        "text": "S",
+        "is_correct": false
+      },
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "C",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which BGP attribute is Cisco-proprietary, stays local to the router, and wins path selection when it is set higher?",
+    "explanation": "Weight is evaluated first in the decision process and is never advertised to a neighbour, so it is only useful for steering a single router's choice. Local preference is the first attribute compared across the whole autonomous system, and MED is passed between autonomous systems.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Local preference",
+        "is_correct": false
+      },
+      {
+        "text": "MED",
+        "is_correct": false
+      },
+      {
+        "text": "AS path",
+        "is_correct": false
+      },
+      {
+        "text": "Weight",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A router holds both an intra-area and an inter-area OSPF route to the same prefix. Which one is used?",
+    "explanation": "OSPF prefers the intra-area route, marked O, over an inter-area route, marked O IA, before it ever compares metrics. A destination inside the area is considered better understood than one reached through an ABR.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The intra-area route",
+        "is_correct": true
+      },
+      {
+        "text": "The inter-area route",
+        "is_correct": false
+      },
+      {
+        "text": "Whichever has the lower cost regardless of area",
+        "is_correct": false
+      },
+      {
+        "text": "Both routes are installed and traffic is load-balanced",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol carries 802.1X authentication messages between the supplicant and the authenticator?",
+    "explanation": "EAPOL, EAP over LAN, runs between the client and the switch on the local segment. The switch then relays the EAP conversation to the authentication server inside RADIUS, which is why RADIUS is the server-side protocol and not the one the client speaks.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RADIUS",
+        "is_correct": false
+      },
+      {
+        "text": "EAPOL",
+        "is_correct": true
+      },
+      {
+        "text": "TACACS+",
+        "is_correct": false
+      },
+      {
+        "text": "CAPWAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enters configuration mode for the five default VTY lines on a switch?",
+    "explanation": "`line vty 0 4` selects the default five virtual terminal lines, where `transport input ssh` and an authentication method are then applied. `line console 0` is the physical console and `line aux 0` the auxiliary port.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`line console 0`",
+        "is_correct": false
+      },
+      {
+        "text": "`line aux 0`",
+        "is_correct": false
+      },
+      {
+        "text": "`line vty 0 4`",
+        "is_correct": true
+      },
+      {
+        "text": "`line vty 5 15`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates a local user that lands directly in privileged EXEC mode after login?",
+    "explanation": "The `privilege 15` keyword sets the user's privilege level, so no `enable` step is needed. Without it the user starts at privilege 1, and `secret` stores a hash while `password` stores a weak, reversible form.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`username admin privilege 15 secret Str0ng!`",
+        "is_correct": true
+      },
+      {
+        "text": "`username admin secret Str0ng!`",
+        "is_correct": false
+      },
+      {
+        "text": "`enable secret Str0ng!`",
+        "is_correct": false
+      },
+      {
+        "text": "`username admin password Str0ng!`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ACL entry permits HTTPS traffic from any source to the host 10.1.1.5?",
+    "explanation": "`permit tcp any host 10.1.1.5 eq 443` matches TCP with destination port 443 on that single host. Placing the host before the port would make 10.1.1.5 the source, and `permit ip` cannot take a port operator.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`permit udp any host 10.1.1.5 eq 443`",
+        "is_correct": false
+      },
+      {
+        "text": "`permit tcp host 10.1.1.5 any eq 443`",
+        "is_correct": false
+      },
+      {
+        "text": "`permit tcp any host 10.1.1.5 eq 443`",
+        "is_correct": true
+      },
+      {
+        "text": "`permit ip any host 10.1.1.5 eq 443`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command defines a read-only SNMP community string named monitor?",
+    "explanation": "`snmp-server community monitor ro` creates the string with read-only access, optionally followed by an ACL to restrict who may use it. The `rw` keyword would allow SET operations, and `snmp-server host` only names a trap receiver.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`snmp-server community monitor ro`",
+        "is_correct": true
+      },
+      {
+        "text": "`snmp-server community monitor rw`",
+        "is_correct": false
+      },
+      {
+        "text": "`snmp-server host monitor ro`",
+        "is_correct": false
+      },
+      {
+        "text": "`snmp-server enable traps monitor`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the command `aaa authorization exec default group tacacs+ local` control?",
+    "explanation": "Authorization exec decides whether an authenticated user may start an interactive EXEC session and, through TACACS+ attributes, at what privilege level. Per-command rights come from authorization commands, credential checking is authentication login, and idle timeouts come from exec-timeout.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Which commands a user may run inside configuration mode",
+        "is_correct": false
+      },
+      {
+        "text": "Whether credentials are checked against the local database first",
+        "is_correct": false
+      },
+      {
+        "text": "How long an idle session may remain open",
+        "is_correct": false
+      },
+      {
+        "text": "Whether an authenticated user may start an interactive EXEC shell, and at what privilege level",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables DHCP snooping for VLANs 10 through 20?",
+    "explanation": "`ip dhcp snooping vlan 10-20` turns snooping on for that VLAN range and is paired with the global `ip dhcp snooping` command. Uplinks toward the real DHCP server then need `ip dhcp snooping trust` so their offers are not dropped.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping vlan 10 20`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping vlan 10-20`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport dhcp snooping vlan 10-20`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping trust vlan 10-20`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands turns on 802.1X for the whole switch and requires a port to authenticate before it forwards traffic?",
+    "explanation": "`dot1x system-auth-control` enables 802.1X device-wide, and each switch port then needs `authentication port-control auto` (or the older `dot1x port-control auto`) so the port stays unauthorized until the supplicant authenticates. The RADIUS server is defined separately, for example with `radius-server host`.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`dot1x system-auth-control` globally and `authentication port-control auto` on the port",
+        "is_correct": true
+      },
+      {
+        "text": "`dot1x port-control force-authorized` on the port only",
+        "is_correct": false
+      },
+      {
+        "text": "`aaa new-model` globally and `ip dhcp snooping` on the port",
+        "is_correct": false
+      },
+      {
+        "text": "`radius-server host` globally and `switchport port-security` on the port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a syslog message, what does the facility value identify?",
+    "explanation": "The facility, 0 through 23, names the subsystem or process that produced the message, and Cisco devices default to local7. Severity is the separate 0-through-7 condition level, set per destination with `logging trap`.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The severity of the condition",
+        "is_correct": false
+      },
+      {
+        "text": "The subsystem or process that generated the message",
+        "is_correct": true
+      },
+      {
+        "text": "The hostname of the sending device",
+        "is_correct": false
+      },
+      {
+        "text": "The timestamp of the event",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A summarisation assistant follows instructions written inside a pasted customer message instead of its own system instructions. What is this failure called?",
+    "explanation": "That is prompt injection: untrusted content placed in the prompt is treated as instruction. Separating untrusted data into its own role, marking it as data, and constraining what the model may do with the output are the practical mitigations.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Model drift",
+        "is_correct": false
+      },
+      {
+        "text": "Overfitting",
+        "is_correct": false
+      },
+      {
+        "text": "Prompt injection",
+        "is_correct": true
+      },
+      {
+        "text": "Rate limiting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the main benefit of constraining a model response to a JSON schema?",
+    "explanation": "A schema-constrained response can be parsed without guesswork and each field can be type-checked before an automation workflow acts on it, so a malformed answer fails loudly instead of being half-applied. It says nothing about whether the content is factually correct.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The response can be parsed reliably and its fields validated before the automation acts on it",
+        "is_correct": true
+      },
+      {
+        "text": "The model can no longer state incorrect facts",
+        "is_correct": false
+      },
+      {
+        "text": "The API no longer needs authentication",
+        "is_correct": false
+      },
+      {
+        "text": "The request always uses fewer tokens",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which control best limits the damage an autonomous network automation agent can cause when it misreads a request?",
+    "explanation": "Guardrails are enforced outside the model: scope the credentials and tools the agent may use, allow-list the actions, and require approval or a dry run before anything destructive. Raising temperature makes behaviour less predictable, and logging is detective only, catching the damage after it is done.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Raising the temperature so the agent explores more options",
+        "is_correct": false
+      },
+      {
+        "text": "Scoping the tools and credentials the agent may use and requiring approval before destructive actions",
+        "is_correct": true
+      },
+      {
+        "text": "Logging the agent's output after the change has been applied",
+        "is_correct": false
+      },
+      {
+        "text": "Giving the agent a larger context window",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a webhook usually preferred over polling for near-real-time notifications from a controller?",
+    "explanation": "A webhook pushes an HTTP request to a receiver the moment the event occurs, so latency is low and no requests are wasted when nothing changes. It requires a reachable HTTPS endpoint and signature validation so that forged notifications are rejected.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A webhook encrypts the payload while polling does not",
+        "is_correct": false
+      },
+      {
+        "text": "Polling does not require authentication",
+        "is_correct": false
+      },
+      {
+        "text": "A webhook is a blocking request the sender waits on",
+        "is_correct": false
+      },
+      {
+        "text": "The receiver is notified when the event occurs instead of asking repeatedly, which cuts latency and wasted requests",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "When is fine-tuning a better choice than improving the prompt for a network operations assistant?",
+    "explanation": "Fine-tuning shapes behaviour and format from labeled examples, so it wins when the output structure has to be reproduced consistently and prompting cannot get there. It cannot supply today's inventory, because learned weights are frozen at training time; retrieval is the tool for live facts.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "When the assistant must know today's device inventory",
+        "is_correct": false
+      },
+      {
+        "text": "When the task needs a consistent output style or format that prompting cannot reproduce reliably and labeled examples exist",
+        "is_correct": true
+      },
+      {
+        "text": "When inference latency of the current model is too high",
+        "is_correct": false
+      },
+      {
+        "text": "When you want to reduce the number of API calls per request",
+        "is_correct": false
+      }
+    ]
+  }
+]

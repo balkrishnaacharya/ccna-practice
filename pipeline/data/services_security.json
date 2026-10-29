@@ -5614,5 +5614,239 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which protocol carries 802.1X authentication messages between the supplicant and the authenticator?",
+    "explanation": "EAPOL, EAP over LAN, runs between the client and the switch on the local segment. The switch then relays the EAP conversation to the authentication server inside RADIUS, which is why RADIUS is the server-side protocol and not the one the client speaks.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RADIUS",
+        "is_correct": false
+      },
+      {
+        "text": "EAPOL",
+        "is_correct": true
+      },
+      {
+        "text": "TACACS+",
+        "is_correct": false
+      },
+      {
+        "text": "CAPWAP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enters configuration mode for the five default VTY lines on a switch?",
+    "explanation": "`line vty 0 4` selects the default five virtual terminal lines, where `transport input ssh` and an authentication method are then applied. `line console 0` is the physical console and `line aux 0` the auxiliary port.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`line console 0`",
+        "is_correct": false
+      },
+      {
+        "text": "`line aux 0`",
+        "is_correct": false
+      },
+      {
+        "text": "`line vty 0 4`",
+        "is_correct": true
+      },
+      {
+        "text": "`line vty 5 15`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command creates a local user that lands directly in privileged EXEC mode after login?",
+    "explanation": "The `privilege 15` keyword sets the user's privilege level, so no `enable` step is needed. Without it the user starts at privilege 1, and `secret` stores a hash while `password` stores a weak, reversible form.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`username admin privilege 15 secret Str0ng!`",
+        "is_correct": true
+      },
+      {
+        "text": "`username admin secret Str0ng!`",
+        "is_correct": false
+      },
+      {
+        "text": "`enable secret Str0ng!`",
+        "is_correct": false
+      },
+      {
+        "text": "`username admin password Str0ng!`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ACL entry permits HTTPS traffic from any source to the host 10.1.1.5?",
+    "explanation": "`permit tcp any host 10.1.1.5 eq 443` matches TCP with destination port 443 on that single host. Placing the host before the port would make 10.1.1.5 the source, and `permit ip` cannot take a port operator.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`permit udp any host 10.1.1.5 eq 443`",
+        "is_correct": false
+      },
+      {
+        "text": "`permit tcp host 10.1.1.5 any eq 443`",
+        "is_correct": false
+      },
+      {
+        "text": "`permit tcp any host 10.1.1.5 eq 443`",
+        "is_correct": true
+      },
+      {
+        "text": "`permit ip any host 10.1.1.5 eq 443`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command defines a read-only SNMP community string named monitor?",
+    "explanation": "`snmp-server community monitor ro` creates the string with read-only access, optionally followed by an ACL to restrict who may use it. The `rw` keyword would allow SET operations, and `snmp-server host` only names a trap receiver.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`snmp-server community monitor ro`",
+        "is_correct": true
+      },
+      {
+        "text": "`snmp-server community monitor rw`",
+        "is_correct": false
+      },
+      {
+        "text": "`snmp-server host monitor ro`",
+        "is_correct": false
+      },
+      {
+        "text": "`snmp-server enable traps monitor`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the command `aaa authorization exec default group tacacs+ local` control?",
+    "explanation": "Authorization exec decides whether an authenticated user may start an interactive EXEC session and, through TACACS+ attributes, at what privilege level. Per-command rights come from authorization commands, credential checking is authentication login, and idle timeouts come from exec-timeout.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Which commands a user may run inside configuration mode",
+        "is_correct": false
+      },
+      {
+        "text": "Whether credentials are checked against the local database first",
+        "is_correct": false
+      },
+      {
+        "text": "How long an idle session may remain open",
+        "is_correct": false
+      },
+      {
+        "text": "Whether an authenticated user may start an interactive EXEC shell, and at what privilege level",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables DHCP snooping for VLANs 10 through 20?",
+    "explanation": "`ip dhcp snooping vlan 10-20` turns snooping on for that VLAN range and is paired with the global `ip dhcp snooping` command. Uplinks toward the real DHCP server then need `ip dhcp snooping trust` so their offers are not dropped.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`ip dhcp snooping vlan 10 20`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping vlan 10-20`",
+        "is_correct": true
+      },
+      {
+        "text": "`switchport dhcp snooping vlan 10-20`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip dhcp snooping trust vlan 10-20`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which pair of commands turns on 802.1X for the whole switch and requires a port to authenticate before it forwards traffic?",
+    "explanation": "`dot1x system-auth-control` enables 802.1X device-wide, and each switch port then needs `authentication port-control auto` (or the older `dot1x port-control auto`) so the port stays unauthorized until the supplicant authenticates. The RADIUS server is defined separately, for example with `radius-server host`.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`dot1x system-auth-control` globally and `authentication port-control auto` on the port",
+        "is_correct": true
+      },
+      {
+        "text": "`dot1x port-control force-authorized` on the port only",
+        "is_correct": false
+      },
+      {
+        "text": "`aaa new-model` globally and `ip dhcp snooping` on the port",
+        "is_correct": false
+      },
+      {
+        "text": "`radius-server host` globally and `switchport port-security` on the port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a syslog message, what does the facility value identify?",
+    "explanation": "The facility, 0 through 23, names the subsystem or process that produced the message, and Cisco devices default to local7. Severity is the separate 0-through-7 condition level, set per destination with `logging trap`.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The severity of the condition",
+        "is_correct": false
+      },
+      {
+        "text": "The subsystem or process that generated the message",
+        "is_correct": true
+      },
+      {
+        "text": "The hostname of the sending device",
+        "is_correct": false
+      },
+      {
+        "text": "The timestamp of the event",
+        "is_correct": false
+      }
+    ]
   }
 ]

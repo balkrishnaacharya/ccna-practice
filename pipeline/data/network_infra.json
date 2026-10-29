@@ -6602,5 +6602,421 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "An IPv4 header contains options, so the header is padded with zeros before the payload begins. What does that padding guarantee?",
+    "explanation": "The Header Length field counts 32-bit words, so options must be padded to a whole word. Without the padding the IHL value could not describe the header exactly, and the receiver would misplace the start of the payload.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "That the Total Length field stays a whole number of bytes",
+        "is_correct": false
+      },
+      {
+        "text": "That the header checksum covers the options",
+        "is_correct": false
+      },
+      {
+        "text": "That the header ends on a 32-bit boundary so the payload starts at a known offset",
+        "is_correct": true
+      },
+      {
+        "text": "That routers can fragment the packet on any byte boundary",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an ad hoc wireless network, how do the client stations communicate?",
+    "explanation": "An ad hoc network is an independent basic service set (IBSS): the stations talk directly to each other with no access point and no distribution system. An infrastructure BSS instead sends every frame through an AP, which is how a home or enterprise WLAN normally works.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They send all traffic through a central access point",
+        "is_correct": false
+      },
+      {
+        "text": "They communicate directly with each other without an access point or distribution system",
+        "is_correct": true
+      },
+      {
+        "text": "They tunnel frames to a wireless LAN controller inside CAPWAP",
+        "is_correct": false
+      },
+      {
+        "text": "They forward frames between radios using the switch MAC address table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A fragment arrives with the IPv4 Fragment Offset field set to 185. At what byte offset in the original datagram does this fragment's payload begin?",
+    "explanation": "Fragment Offset is expressed in 8-byte units, so the byte offset is 185 x 8 = 1,480. Interpretation in bytes directly is the classic mistake; the field is 13 bits wide.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "185",
+        "is_correct": false
+      },
+      {
+        "text": "370",
+        "is_correct": false
+      },
+      {
+        "text": "1,480",
+        "is_correct": true
+      },
+      {
+        "text": "5,920",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which value appears in the Version field of an IPv4 header?",
+    "explanation": "The Version field is 4 bits and holds 4 for IPv4 and 6 for IPv6. 20 is the minimum header length in bytes without options, and 32 is the bit width of an IPv4 address, not a Version value.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "4",
+        "is_correct": true
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      },
+      {
+        "text": "20",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which portion of an IPv4 packet does the header checksum protect?",
+    "explanation": "The header checksum covers only the header. Every router that decrements TTL must recompute it, so protecting the payload with it would force a full recalculation at each hop; payload integrity is left to the TCP or UDP checksum.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The entire packet including the payload",
+        "is_correct": false
+      },
+      {
+        "text": "The payload only",
+        "is_correct": false
+      },
+      {
+        "text": "The header only",
+        "is_correct": true
+      },
+      {
+        "text": "The header and the first 8 bytes of payload",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interframe space is the shortest, and is used by a station that must send an immediate response such as an ACK?",
+    "explanation": "SIFS is the shortest interframe space, which gives ACKs, CTS frames, and fragment bursts priority over stations waiting through DIFS for normal contention. DIFS is used for new transmissions, and PIFS and EIFS are longer still.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DIFS",
+        "is_correct": false
+      },
+      {
+        "text": "PIFS",
+        "is_correct": false
+      },
+      {
+        "text": "EIFS",
+        "is_correct": false
+      },
+      {
+        "text": "SIFS",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which set of channels is the only non-overlapping group in the 2.4 GHz band in North America?",
+    "explanation": "2.4 GHz channels are spaced only 5 MHz apart while a 20 MHz channel needs roughly 20 to 22 MHz, so 1, 6, and 11 are the non-overlapping set. Channels 36, 40, and 44 belong to the 5 GHz band.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1, 5, 9",
+        "is_correct": false
+      },
+      {
+        "text": "1, 6, 11",
+        "is_correct": true
+      },
+      {
+        "text": "2, 7, 12",
+        "is_correct": false
+      },
+      {
+        "text": "36, 40, 44",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does an autonomous access point differ from a lightweight access point?",
+    "explanation": "An autonomous AP holds its own configuration, bridges client traffic locally, and is managed one device at a time. A lightweight AP keeps almost no configuration of its own and depends on a wireless LAN controller for its configuration and for the CAPWAP tunnels that carry client traffic.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An autonomous AP is configured individually and handles its own switching and management, while a lightweight AP relies on a WLC",
+        "is_correct": true
+      },
+      {
+        "text": "An autonomous AP cannot function without a WLC managing its radios",
+        "is_correct": false
+      },
+      {
+        "text": "A lightweight AP keeps its full configuration locally and only reports statistics to the WLC",
+        "is_correct": false
+      },
+      {
+        "text": "An autonomous AP can only operate in monitor mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A team rents virtual machines and then installs and patches its own operating system, middleware, and runtime. Which cloud service model is this?",
+    "explanation": "In IaaS the provider supplies virtualized compute, storage, and networking, while the customer manages everything from the guest OS upward. PaaS would supply the runtime, SaaS would supply the whole application, and FaaS would supply only function execution.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SaaS",
+        "is_correct": false
+      },
+      {
+        "text": "PaaS",
+        "is_correct": false
+      },
+      {
+        "text": "IaaS",
+        "is_correct": true
+      },
+      {
+        "text": "FaaS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which cable type connects a workstation's serial port to a Cisco device's console port?",
+    "explanation": "A rollover cable reverses the pin order from one end to the other, pairing pin 1 with pin 8, and is used with a terminal emulator for out-of-band console access. Straight-through and crossover cables are for Ethernet, not console access.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Straight-through",
+        "is_correct": false
+      },
+      {
+        "text": "Crossover",
+        "is_correct": false
+      },
+      {
+        "text": "Rollover",
+        "is_correct": true
+      },
+      {
+        "text": "Coaxial",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the receiving host doing when it removes the header, and trailer where present, that the sender added at each layer?",
+    "explanation": "De-encapsulation is the reverse of encapsulation: each layer strips its own control information and passes the payload up. Encapsulation happens on transmit, while segmentation and multiplexing describe how data is divided and shared, not how headers are removed.",
+    "domain": "network_infra",
+    "subtopic": "OSI Reference Model",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Encapsulation",
+        "is_correct": false
+      },
+      {
+        "text": "De-encapsulation",
+        "is_correct": true
+      },
+      {
+        "text": "Segmentation",
+        "is_correct": false
+      },
+      {
+        "text": "Multiplexing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What distinguishes an IPv6 anycast address from a unicast address?",
+    "explanation": "An anycast address is assigned to several interfaces, and the routing system delivers each packet to whichever member is nearest by routing metric. Multicast is the one-to-many service, and fe80::/10 is the link-local unicast range.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It is delivered to every interface that shares the address",
+        "is_correct": false
+      },
+      {
+        "text": "It is only valid on point-to-point links",
+        "is_correct": false
+      },
+      {
+        "text": "It must be configured from the fe80::/10 range",
+        "is_correct": false
+      },
+      {
+        "text": "It is assigned to multiple interfaces and delivered to the nearest one",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the 7-byte preamble and the 1-byte start frame delimiter at the beginning of an Ethernet frame?",
+    "explanation": "The alternating bits of the preamble let the receiver lock its clock onto the incoming signal, and the final 10101011 pattern of the SFD marks where the frame proper begins. Addresses and EtherType follow in the frame header, and error detection is done by the trailing FCS.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "They carry the destination MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "They let the receiver synchronize its clock to the bit stream and mark the start of the frame",
+        "is_correct": true
+      },
+      {
+        "text": "They provide the frame check sequence for the payload",
+        "is_correct": false
+      },
+      {
+        "text": "They identify the EtherType of the encapsulated protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which MAC address prefix is used for IPv4 multicast frames on Ethernet?",
+    "explanation": "IPv4 multicast maps into the 01:00:5e:00:00:00/24 range, with the low 23 bits of the group address copied into the MAC. 33:33 is the IPv6 multicast prefix, and ff:ff:ff:ff:ff:ff is the broadcast address.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "01:00:5e",
+        "is_correct": true
+      },
+      {
+        "text": "33:33",
+        "is_correct": false
+      },
+      {
+        "text": "ff:ff:ff",
+        "is_correct": false
+      },
+      {
+        "text": "00:1b:2f",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the SX designation in 1000BASE-SX indicate?",
+    "explanation": "SX means short wavelength: an 850 nm laser over multimode fiber, typically reaching 220 to 550 m depending on the fiber grade. LX is the 1310 nm long-wavelength variant, T is twisted pair, and CX is twinaxial copper.",
+    "domain": "network_infra",
+    "subtopic": "Physical Media",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Single-mode fiber with a 1310 nm laser",
+        "is_correct": false
+      },
+      {
+        "text": "Twinaxial copper cable",
+        "is_correct": false
+      },
+      {
+        "text": "Category 5e twisted pair",
+        "is_correct": false
+      },
+      {
+        "text": "Multimode fiber with an 850 nm short-wavelength laser",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "How are ARP request and ARP reply frames addressed at layer 2?",
+    "explanation": "The request must reach every station on the segment because the sender does not yet know the target's MAC, so it is broadcast. The reply goes straight back to the station that asked, so it is unicast even though the requester's address was learned from a broadcast.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The request is broadcast and the reply is unicast to the sender",
+        "is_correct": true
+      },
+      {
+        "text": "Both are broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "The request is unicast and the reply is broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "Both are unicast",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -5380,5 +5380,239 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "`show ip eigrp topology` lists a path to 10.2.0.0/16 that is absent from the routing table. What does that path represent?",
+    "explanation": "The topology table holds every successor and feasible successor, but only the least-cost successor is installed in the routing table. A feasible successor already satisfies the feasibility condition, so it can be promoted the moment the current successor is lost.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A route that failed the feasibility condition and can never be used",
+        "is_correct": false
+      },
+      {
+        "text": "A feasible successor kept in reserve and ready to be installed if the current successor fails",
+        "is_correct": true
+      },
+      {
+        "text": "A route advertised to EIGRP neighbours but never used locally for any destination",
+        "is_correct": false
+      },
+      {
+        "text": "A stale entry that is waiting for the hold timer to expire",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A router must advertise one 10.0.0.0/8 summary to its EIGRP neighbors instead of the component routes. Which command is entered on the interface facing those neighbors?",
+    "explanation": "`ip summary-address eigrp 100 10.0.0.0 255.0.0.0` creates the summary on the interface and installs a matching discard route locally. `area 0 range` summarises at an OSPF area boundary, `network` enables EIGRP on an interface, and a static route to null0 only creates a black hole without advertising anything.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`area 0 range 10.0.0.0 255.0.0.0`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip summary-address eigrp 100 10.0.0.0 255.0.0.0`",
+        "is_correct": true
+      },
+      {
+        "text": "`network 10.0.0.0 0.255.255.255`",
+        "is_correct": false
+      },
+      {
+        "text": "`ip route 10.0.0.0 255.0.0.0 null0`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which first-hop redundancy protocol can share client traffic across more than one forwarding router at the same time?",
+    "explanation": "GLBP elects an active virtual gateway that hands out up to four virtual MAC addresses, each backed by a different active virtual forwarder, so hosts on the same subnet can be balanced across routers. HSRP and VRRP keep one router forwarding per group.",
+    "domain": "ip_routing",
+    "subtopic": "FHRP (HSRP/VRRP)",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HSRP",
+        "is_correct": false
+      },
+      {
+        "text": "VRRP",
+        "is_correct": false
+      },
+      {
+        "text": "IRDP",
+        "is_correct": false
+      },
+      {
+        "text": "GLBP",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "In the command `network 10.1.0.0 0.0.255.255 area 0`, what does the second address represent?",
+    "explanation": "The second address is a wildcard mask, the inverse of a subnet mask, in which a 0 bit must match the address and a 1 bit is ignored. The pair above matches every interface address in 10.1.0.0/16 and places those interfaces in area 0.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A wildcard mask in which a 0 bit must match the address",
+        "is_correct": true
+      },
+      {
+        "text": "A subnet mask applied to the network address",
+        "is_correct": false
+      },
+      {
+        "text": "The area ID written in dotted decimal",
+        "is_correct": false
+      },
+      {
+        "text": "The router ID of the designated router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a router-on-a-stick link, which subinterface command marks VLAN 10 as the untagged VLAN?",
+    "explanation": "`encapsulation dot1q 10 native` tells the router that frames for that subinterface arrive without a tag, which must match the switch's native VLAN on the trunk. Without the keyword the router expects VLAN 10 frames to be tagged, and `switchport` commands do not exist on a routed port.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "`encapsulation dot1q 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`switchport trunk native vlan 10`",
+        "is_correct": false
+      },
+      {
+        "text": "`encapsulation dot1q 10 native`",
+        "is_correct": true
+      },
+      {
+        "text": "`encapsulation native 10`",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why does a static route that points out a broadcast multi-access interface also need a next-hop address?",
+    "explanation": "On a point-to-point link there is only one possible neighbour, so naming the interface is enough. On a shared segment many devices are reachable, so the router would have to ARP for every destination and could never learn which neighbour should receive the packet without an explicit next hop.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IOS refuses any static route that names only an interface",
+        "is_correct": false
+      },
+      {
+        "text": "Many neighbours share the segment, so the router cannot tell which one should receive the packet without a next hop",
+        "is_correct": true
+      },
+      {
+        "text": "ARP cannot be used on a broadcast medium",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast media do not support recursive route lookup",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In `show ip route` output, which code letter marks a route learned through OSPF?",
+    "explanation": "OSPF routes carry O, EIGRP uses D, static routes use S, and connected networks use C, with L for the local /32 address on each interface. O IA and O E distinguish inter-area and external OSPF routes.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "D",
+        "is_correct": false
+      },
+      {
+        "text": "S",
+        "is_correct": false
+      },
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "C",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which BGP attribute is Cisco-proprietary, stays local to the router, and wins path selection when it is set higher?",
+    "explanation": "Weight is evaluated first in the decision process and is never advertised to a neighbour, so it is only useful for steering a single router's choice. Local preference is the first attribute compared across the whole autonomous system, and MED is passed between autonomous systems.",
+    "domain": "ip_routing",
+    "subtopic": "BGP Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Local preference",
+        "is_correct": false
+      },
+      {
+        "text": "MED",
+        "is_correct": false
+      },
+      {
+        "text": "AS path",
+        "is_correct": false
+      },
+      {
+        "text": "Weight",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "A router holds both an intra-area and an inter-area OSPF route to the same prefix. Which one is used?",
+    "explanation": "OSPF prefers the intra-area route, marked O, over an inter-area route, marked O IA, before it ever compares metrics. A destination inside the area is considered better understood than one reached through an ABR.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The intra-area route",
+        "is_correct": true
+      },
+      {
+        "text": "The inter-area route",
+        "is_correct": false
+      },
+      {
+        "text": "Whichever has the lower cost regardless of area",
+        "is_correct": false
+      },
+      {
+        "text": "Both routes are installed and traffic is load-balanced",
+        "is_correct": false
+      }
+    ]
   }
 ]

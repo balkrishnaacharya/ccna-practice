@@ -3508,5 +3508,135 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "A summarisation assistant follows instructions written inside a pasted customer message instead of its own system instructions. What is this failure called?",
+    "explanation": "That is prompt injection: untrusted content placed in the prompt is treated as instruction. Separating untrusted data into its own role, marking it as data, and constraining what the model may do with the output are the practical mitigations.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Model drift",
+        "is_correct": false
+      },
+      {
+        "text": "Overfitting",
+        "is_correct": false
+      },
+      {
+        "text": "Prompt injection",
+        "is_correct": true
+      },
+      {
+        "text": "Rate limiting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the main benefit of constraining a model response to a JSON schema?",
+    "explanation": "A schema-constrained response can be parsed without guesswork and each field can be type-checked before an automation workflow acts on it, so a malformed answer fails loudly instead of being half-applied. It says nothing about whether the content is factually correct.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The response can be parsed reliably and its fields validated before the automation acts on it",
+        "is_correct": true
+      },
+      {
+        "text": "The model can no longer state incorrect facts",
+        "is_correct": false
+      },
+      {
+        "text": "The API no longer needs authentication",
+        "is_correct": false
+      },
+      {
+        "text": "The request always uses fewer tokens",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which control best limits the damage an autonomous network automation agent can cause when it misreads a request?",
+    "explanation": "Guardrails are enforced outside the model: scope the credentials and tools the agent may use, allow-list the actions, and require approval or a dry run before anything destructive. Raising temperature makes behaviour less predictable, and logging is detective only, catching the damage after it is done.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Raising the temperature so the agent explores more options",
+        "is_correct": false
+      },
+      {
+        "text": "Scoping the tools and credentials the agent may use and requiring approval before destructive actions",
+        "is_correct": true
+      },
+      {
+        "text": "Logging the agent's output after the change has been applied",
+        "is_correct": false
+      },
+      {
+        "text": "Giving the agent a larger context window",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is a webhook usually preferred over polling for near-real-time notifications from a controller?",
+    "explanation": "A webhook pushes an HTTP request to a receiver the moment the event occurs, so latency is low and no requests are wasted when nothing changes. It requires a reachable HTTPS endpoint and signature validation so that forged notifications are rejected.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A webhook encrypts the payload while polling does not",
+        "is_correct": false
+      },
+      {
+        "text": "Polling does not require authentication",
+        "is_correct": false
+      },
+      {
+        "text": "A webhook is a blocking request the sender waits on",
+        "is_correct": false
+      },
+      {
+        "text": "The receiver is notified when the event occurs instead of asking repeatedly, which cuts latency and wasted requests",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "When is fine-tuning a better choice than improving the prompt for a network operations assistant?",
+    "explanation": "Fine-tuning shapes behaviour and format from labeled examples, so it wins when the output structure has to be reproduced consistently and prompting cannot get there. It cannot supply today's inventory, because learned weights are frozen at training time; retrieval is the tool for live facts.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "When the assistant must know today's device inventory",
+        "is_correct": false
+      },
+      {
+        "text": "When the task needs a consistent output style or format that prompting cannot reproduce reliably and labeled examples exist",
+        "is_correct": true
+      },
+      {
+        "text": "When inference latency of the current model is too high",
+        "is_correct": false
+      },
+      {
+        "text": "When you want to reduce the number of API calls per request",
+        "is_correct": false
+      }
+    ]
   }
 ]
