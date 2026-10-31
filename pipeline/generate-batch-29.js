@@ -1,0 +1,799 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+
+const questions = [
+  // ==========================================
+  // NETWORK_INFRA (14 questions)
+  // ==========================================
+  {
+    stem: "What is the loopback IPv6 address used by a host to test its own internal TCP/IP software stack, and what is its prefix length?",
+    explanation: "The IPv6 loopback address is ::1 with a prefix length of /128 (::1/128). It functions identically to the IPv4 loopback address 127.0.0.1.",
+    domain: "network_infra",
+    subtopic: "IPv6 Addressing",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "::1/128", is_correct: true },
+      { text: "::/128", is_correct: false },
+      { text: "fe80::1/64", is_correct: false },
+      { text: "ff02::1/16", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which IPv6 multicast prefix block is designated for Solicited-Node Multicast Addresses, used by Neighbor Discovery for Layer 2 address resolution instead of broadcast ARP?",
+    explanation: "Solicited-Node Multicast addresses use the prefix FF02::1:FF00:0/104, appending the low-order 24 bits of the device's unicast IPv6 address. This enables NICs to filter traffic at the hardware layer without disturbing all hosts.",
+    domain: "network_infra",
+    subtopic: "IPv6 Addressing",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "FF02::1:FF00:0/104", is_correct: true },
+      { text: "FF02::1/128", is_correct: false },
+      { text: "FF02::2/128", is_correct: false },
+      { text: "FC00::/7", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does the IPv6 protocol accommodate optional packet handling directives (such as routing, fragmentation, and security) without using a variable-length base header?",
+    explanation: "IPv6 uses a fixed 40-byte base header and accommodates optional parameters via daisy-chained Extension Headers inserted between the base header and the transport-layer payload, linked by the 'Next Header' field.",
+    domain: "network_infra",
+    subtopic: "IPv6 Header",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Through daisy-chained Extension Headers inserted between the fixed base header and the upper-layer payload", is_correct: true },
+      { text: "By expanding the base header up to 128 bytes on an as-needed basis", is_correct: false },
+      { text: "By embedding options directly inside the TCP sequence number field", is_correct: false },
+      { text: "By negotiating options out-of-band using ICMPv6 Echo Requests", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the special function of the IPv4 address 255.255.255.255 in computer networking?",
+    explanation: "255.255.255.255 is the IPv4 limited broadcast address. Frames containing this destination IP are delivered to all hosts on the local physical link but are never forwarded by routers across subnet boundaries.",
+    domain: "network_infra",
+    subtopic: "IPv4 Addressing",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Local limited broadcast address, received by all hosts on the local link and never forwarded by routers", is_correct: true },
+      { text: "Public multicast address used for video conferencing streams", is_correct: false },
+      { text: "Default gateway address automatically assigned by APIPA", is_correct: false },
+      { text: "Loopback test address for internal diagnostic pings", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an IPv4 packet header, how is the 8-bit Differentiated Services (DS) field divided to support Quality of Service (QoS)?",
+    explanation: "The DS field (formerly Type of Service / ToS) uses the high-order 6 bits for Differentiated Services Code Point (DSCP, allowing 64 classification levels) and the low-order 2 bits for Explicit Congestion Notification (ECN).",
+    domain: "network_infra",
+    subtopic: "IPv4 Header",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "6 bits for Differentiated Services Code Point (DSCP) and 2 bits for Explicit Congestion Notification (ECN)", is_correct: true },
+      { text: "4 bits for Class of Service (CoS) and 4 bits for IP precedence", is_correct: false },
+      { text: "7 bits for priority level and 1 bit for drop eligibility", is_correct: false },
+      { text: "5 bits for TTL verification and 3 bits for flow control", is_correct: false }
+    ]
+  },
+  {
+    stem: "At which layer of the OSI 7-layer model do protocols like TCP and UDP operate to deliver end-to-end process-to-process communication and port multiplexing?",
+    explanation: "Layer 4 (Transport Layer) manages end-to-end process-to-process communication, connection establishment, error detection, flow control, and port-based multiplexing (TCP and UDP).",
+    domain: "network_infra",
+    subtopic: "OSI Reference Model",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Transport Layer (Layer 4)", is_correct: true },
+      { text: "Network Layer (Layer 3)", is_correct: false },
+      { text: "Session Layer (Layer 5)", is_correct: false },
+      { text: "Data Link Layer (Layer 2)", is_correct: false }
+    ]
+  },
+  {
+    stem: "During the encapsulation process when a host transmits an Ethernet packet, at which layer is the 4-byte Frame Check Sequence (FCS) trailer appended?",
+    explanation: "The Data Link layer (Layer 2) appends a trailer containing the Frame Check Sequence (FCS), which uses a 32-bit Cyclic Redundancy Check (CRC) to detect transmission errors across the physical media.",
+    domain: "network_infra",
+    subtopic: "OSI Reference Model",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Data Link Layer (Layer 2)", is_correct: true },
+      { text: "Physical Layer (Layer 1)", is_correct: false },
+      { text: "Network Layer (Layer 3)", is_correct: false },
+      { text: "Transport Layer (Layer 4)", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a modern data center two-tier Leaf-Spine topology, where do endpoint servers, hypervisor hosts, and storage appliances physically connect?",
+    explanation: "In Leaf-Spine architecture, all end systems (servers, firewalls, load balancers, storage arrays) connect strictly to Leaf switches. Spine switches connect exclusively to Leaf switches.",
+    domain: "network_infra",
+    subtopic: "Spine-Leaf Architecture",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Exclusively to Leaf switches", is_correct: true },
+      { text: "Directly to Spine switches", is_correct: false },
+      { text: "Simultaneously to both Spine and Leaf switches", is_correct: false },
+      { text: "To dedicated out-of-band Core distribution switches only", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary operational advantage of East-West traffic flow optimization in a data center Leaf-Spine fabric compared to a legacy 3-tier hierarchical tree?",
+    explanation: "East-West traffic between servers in different racks always traverses exactly three hops (ingress leaf -> spine -> egress leaf), delivering consistent, predictable, ultra-low latency with full ECMP bisectional bandwidth.",
+    domain: "network_infra",
+    subtopic: "Spine-Leaf Architecture",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Traffic between any two servers across different racks traverses a consistent three-hop path with predictable latency and no blocked links", is_correct: true },
+      { text: "It replaces all routed IP packets with unencrypted Frame Relay frames", is_correct: false },
+      { text: "It reduces the required power consumption of server cooling fans by 50%", is_correct: false },
+      { text: "It eliminates the need for Layer 2 VLAN tagging on hypervisors", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is an Autonomous (Stand-Alone) Access Point architecture, and how does it differ from a Lightweight AP architecture?",
+    explanation: "An Autonomous AP is fully self-contained, handling all RF management, client authentication, 802.11 bridging, and security policies locally on the device itself without requiring a centralized Wireless LAN Controller (WLC).",
+    domain: "network_infra",
+    subtopic: "Wireless Architecture",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Autonomous APs manage all RF, client association, and security policies locally on the AP hardware without requiring a central controller", is_correct: true },
+      { text: "Autonomous APs operate without physical power by harvesting ambient radio frequencies", is_correct: false },
+      { text: "Autonomous APs can only broadcast 2.4 GHz channels and do not support 5 GHz", is_correct: false },
+      { text: "Autonomous APs require continuous CAPWAP tunnel connections to operate", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco enterprise wireless networks, what is the difference between Layer 2 Roaming (Intra-VLAN) and Layer 3 Roaming (Inter-VLAN) across Wireless LAN Controllers?",
+    explanation: "In Layer 2 roaming, the client moves between APs that map to the same VLAN/subnet and keeps its IP without tunneling. In Layer 3 roaming, the client moves to an AP in a different VLAN/subnet, but retains its original IP via an asymmetric CAPWAP mobility tunnel established between the Foreign and Anchor WLCs.",
+    domain: "network_infra",
+    subtopic: "Wireless Architecture",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "In Layer 2 roaming the client remains in the same subnet; in Layer 3 roaming the client moves to a different subnet but preserves its IP via a mobility tunnel", is_correct: true },
+      { text: "Layer 2 roaming requires re-authenticating with 802.1X; Layer 3 roaming does not", is_correct: false },
+      { text: "Layer 3 roaming works on 2.4 GHz only; Layer 2 roaming works on 5 GHz only", is_correct: false },
+      { text: "Layer 2 roaming uses BGP EVPN; Layer 3 roaming uses Spanning Tree", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary role of a Network Interface Card (NIC) in an end-user host device?",
+    explanation: "A NIC provides the physical hardware interface and transceiver to transmit and receive signals over network media (copper, fiber, or wireless), maintaining the physical MAC address and handling Layer 1/2 framing.",
+    domain: "network_infra",
+    subtopic: "Network Components",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Provides physical transceiver connectivity and a hardware Layer 2 MAC address to transmit and receive frames across the media", is_correct: true },
+      { text: "Assigns dynamic IP addresses to neighboring host workstations", is_correct: false },
+      { text: "Maintains the BGP routing table for the local operating system", is_correct: false },
+      { text: "Translates private IP addresses to public IPs via stateful PAT", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is a Small Form-Factor Pluggable (SFP/SFP+) optical transceiver, and what physical layer role does it perform on a switch port?",
+    explanation: "An SFP/SFP+ transceiver is a modular, hot-swappable hardware module that converts electrical data signals from the switch ASIC into optical light signals for transmission over fiber-optic cabling (and vice versa).",
+    domain: "network_infra",
+    subtopic: "Network Components",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A hot-swappable modular transceiver that converts electrical data signals into optical pulses for transmission over fiber cables", is_correct: true },
+      { text: "An internal power supply unit that distributes 48V DC power across the switch backplane", is_correct: false },
+      { text: "A dedicated crypto-processor used to encrypt OSPF Hello packets", is_correct: false },
+      { text: "A physical passive splitter used to duplicate Ethernet frames to an IDS", is_correct: false }
+    ]
+  },
+  {
+    stem: "When troubleshooting an Ethernet link between two switches connected with a Cat 6 UTP cable, both port link LEDs remain completely dark (off). What physical layer troubleshooting step should be performed first?",
+    explanation: "Dark link LEDs indicate no physical carrier signal is detected at Layer 1. The first step is to verify cable seating, check for damaged connectors or pins, verify port administrative status, and test with a known-good patch cable.",
+    domain: "network_infra",
+    subtopic: "Client Connectivity Troubleshooting",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Check physical cable connections, inspect for damaged RJ-45 pins, and test with a known-good patch cable", is_correct: true },
+      { text: "Reconfigure OSPF area numbers to match on both switches", is_correct: false },
+      { text: "Clear the dynamic ARP cache on the default gateway router", is_correct: false },
+      { text: "Change the VTP domain name to uppercase letters", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SWITCHING (14 questions)
+  // ==========================================
+  {
+    stem: "When configuring a SPAN session on a Cisco Catalyst switch, what traffic direction is captured by the command 'monitor session 1 source interface Gi0/1 both'?",
+    explanation: "The keyword `both` directs the switch to mirror both ingress (received) and egress (transmitted) frames on interface GigabitEthernet0/1 to the SPAN destination port.",
+    domain: "switching",
+    subtopic: "Packet Capture",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Both ingress (received) and egress (transmitted) frames traversing the interface", is_correct: true },
+      { text: "Only frames that match both an IP and a MAC access list", is_correct: false },
+      { text: "Broadcast and multicast frames only, excluding unicast frames", is_correct: false },
+      { text: "Frames on both VLAN 1 and the native VLAN simultaneously", is_correct: false }
+    ]
+  },
+  {
+    stem: "On a Cisco switch port, in addition to percentage of total interface bandwidth, which two metrics can be used to set Storm Control thresholds?",
+    explanation: "Cisco Storm Control thresholds can be configured as a percentage of total interface bandwidth (`storm-control broadcast level <percent>`), in packets per second (`pps <rate>`), or in bits per second (`bps <rate>`).",
+    domain: "switching",
+    subtopic: "Storm Control",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Packets per second (pps) and bits per second (bps)", is_correct: true },
+      { text: "Frames per minute and CRC errors per hour", is_correct: false },
+      { text: "TCP window size and MTU bytes", is_correct: false },
+      { text: "Latency in milliseconds and jitter in microseconds", is_correct: false }
+    ]
+  },
+  {
+    stem: "In virtualization networking, what is 'NIC Teaming' (uplink teaming) on a hypervisor virtual switch (vSwitch)?",
+    explanation: "NIC Teaming bonds multiple physical network adapters (uplinks) on the host server to a single vSwitch to provide link redundancy, automatic failover, and load-balancing of VM traffic across the physical network.",
+    domain: "switching",
+    subtopic: "Virtual Switches",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Combining multiple physical host NICs into a logical group to provide link redundancy and outbound load-balancing for virtual machines", is_correct: true },
+      { text: "Allowing virtual machines to assign virtual MAC addresses dynamically via DHCP", is_correct: false },
+      { text: "Configuring an 802.1Q trunk directly between two guest operating systems", is_correct: false },
+      { text: "Disabling Spanning Tree Protocol across all physical core switches", is_correct: false }
+    ]
+  },
+  {
+    stem: "In hypervisor virtualization, what security risk arises when a vSwitch port group has 'Promiscuous Mode' set to Accept?",
+    explanation: "In Promiscuous Mode, the vSwitch forwards all frames traversing that port group to any connected virtual machine, allowing an attacker on a compromised VM to sniff traffic belonging to other VMs on that segment.",
+    domain: "switching",
+    subtopic: "Virtual Switches",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Any virtual machine on that port group can inspect and capture all traffic traversing the segment, not just frames destined to its own MAC address", is_correct: true },
+      { text: "Virtual machines are prevented from communicating with the physical default gateway", is_correct: false },
+      { text: "The hypervisor CPU immediately throttles all clock cycles by 50%", is_correct: false },
+      { text: "Switch ports connecting the hypervisor enter an err-disabled broadcast storm state", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of enabling QoS trust on a switch access port connected to a Cisco IP Phone (e.g., 'mls qos trust cos')?",
+    explanation: "Trusting Class of Service (CoS) instructs the switch port to accept and honor the 802.1p priority marking (CoS 5 for voice) generated by the IP phone rather than resetting or overwriting the QoS markings to 0 (best-effort).",
+    domain: "switching",
+    subtopic: "Voice VLANs",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It directs the switch to honor and preserve the 802.1p priority markings applied by the IP phone rather than remarking them to best-effort", is_correct: true },
+      { text: "It allows the phone to bypass 802.1X port security authentication", is_correct: false },
+      { text: "It forces the phone to encrypt all voice calls using TLS 1.3", is_correct: false },
+      { text: "It enables the phone to dynamically create new VLANs in the switch database", is_correct: false }
+    ]
+  },
+  {
+    stem: "In WPA2/WPA3-Personal wireless onboarding, what is the primary security objective of the 4-way handshake?",
+    explanation: "The 4-way handshake allows the client and AP to prove possession of the Pre-Shared Key (or SAE secret) without transmitting it over the air, and securely derives the Pairwise Transient Key (PTK) and Group Temporal Key (GTK) for data encryption.",
+    domain: "switching",
+    subtopic: "Wireless Client Onboarding",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Deriving transient session encryption keys (PTK and GTK) while confirming both client and AP possess the shared secret without transmitting it", is_correct: true },
+      { text: "Assigning an IPv4 address and default gateway to the wireless client via DHCP", is_correct: false },
+      { text: "Negotiating channel bandwidth between 20 MHz and 160 MHz", is_correct: false },
+      { text: "Synchronizing system clocks using Network Time Protocol", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default Dynamic Trunking Protocol (DTP) mode on older Cisco Catalyst switch models that actively initiates trunking negotiation frames?",
+    explanation: "On older Catalyst switches (like the 2960/3560), the default mode was `dynamic desirable`, which actively transmits DTP negotiation frames. Newer switches default to `dynamic auto`.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "dynamic desirable", is_correct: true },
+      { text: "dynamic auto", is_correct: false },
+      { text: "trunk", is_correct: false },
+      { text: "nonegotiate", is_correct: false }
+    ]
+  },
+  {
+    stem: "What operational trunking state results if both connected switch interfaces on a point-to-point link are configured in 'switchport mode dynamic auto'?",
+    explanation: "`dynamic auto` is passive; it will form a trunk if the remote peer initiates, but it will never initiate negotiation itself. If both ends are set to `dynamic auto`, neither initiates, so the link remains an Access port.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "The link remains in access mode because neither switch initiates DTP trunk negotiation", is_correct: true },
+      { text: "The link automatically establishes an 802.1Q trunk link after 30 seconds", is_correct: false },
+      { text: "The ports enter an err-disabled mode due to a DTP mode conflict", is_correct: false },
+      { text: "The link alternates continuously between access and trunk mode", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a multilayer switch determine whether an incoming Ethernet frame should be switched at Layer 2 or forwarded at Layer 3?",
+    explanation: "If the frame's destination MAC address matches the switch's own MAC address (such as an SVI or routed port), the switch strips the L2 header and passes the packet to the L3 routing engine. If the destination MAC is another host, it is switched at L2.",
+    domain: "switching",
+    subtopic: "Layer 3 Switching",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "If the destination MAC address matches the switch's local SVI or routed port MAC, it is routed at Layer 3; otherwise, it is switched at Layer 2", is_correct: true },
+      { text: "If the EtherType is 0x0800, it is always switched at Layer 2 regardless of destination MAC", is_correct: false },
+      { text: "Frames on access ports are routed, while frames on trunk ports are switched", is_correct: false },
+      { text: "Multilayer switches route all unicast frames and switch all broadcast frames", is_correct: false }
+    ]
+  },
+  {
+    stem: "When configuring port security with 'switchport port-security mac-address sticky', what happens to dynamically learned MAC addresses?",
+    explanation: "Sticky MAC addresses are learned dynamically from incoming frames and immediately converted into static secure entries appended to the running configuration. If the running-config is saved to startup-config, they persist across switch reboots.",
+    domain: "switching",
+    subtopic: "Port Security",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "They are dynamically learned and immediately added to the running configuration as static secure MAC addresses", is_correct: true },
+      { text: "They are purged from memory after the 300-second MAC aging timer expires", is_correct: false },
+      { text: "They are transmitted to the TACACS+ server for user verification", is_correct: false },
+      { text: "They are saved only on the local flash drive as a binary file", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default aging time for dynamically learned MAC address table entries on a Cisco Catalyst switch?",
+    explanation: "By default, Cisco Catalyst switches age out dynamic MAC address table entries after 300 seconds (5 minutes) of inactivity.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "300 seconds (5 minutes)", is_correct: true },
+      { text: "60 seconds (1 minute)", is_correct: false },
+      { text: "180 seconds (3 minutes)", is_correct: false },
+      { text: "3600 seconds (1 hour)", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco proprietary Port Aggregation Protocol (PAgP), which two modes actively negotiate or passively respond to bundle formation?",
+    explanation: "In PAgP, `desirable` actively initiates negotiation packets, while `auto` passively responds to PAgP packets without initiating. At least one side must be in `desirable` mode to form an EtherChannel.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Desirable (actively initiates) and Auto (passively responds)", is_correct: true },
+      { text: "Active (actively initiates) and Passive (passively responds)", is_correct: false },
+      { text: "On (forces bundle) and Off (disables bundle)", is_correct: false },
+      { text: "Dynamic (initiates) and Static (responds)", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which TLV (Type-Length-Value) in LLDP-MED enables a switch to dynamically advertise and negotiate fine-grained PoE power requirements with an IP phone?",
+    explanation: "The Power via MDI TLV (and Extended Power-via-MDI) in LLDP-MED enables advanced power management, allowing endpoints to request precise milliwatt power allocations from the switch PSE.",
+    domain: "switching",
+    subtopic: "Discovery Protocols",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Power via MDI TLV", is_correct: true },
+      { text: "Network Policy TLV", is_correct: false },
+      { text: "Inventory Management TLV", is_correct: false },
+      { text: "Location Identification TLV", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary function of the 802.1Q Native VLAN on an Ethernet trunk link?",
+    explanation: "The Native VLAN carries untagged Ethernet frames across the trunk link without inserting an 802.1Q tag header. By default on Cisco switches, VLAN 1 is the native VLAN.",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It carries untagged frames across the trunk link without adding an 802.1Q tag header", is_correct: true },
+      { text: "It encrypts all management traffic using AES-128", is_correct: false },
+      { text: "It isolates VoIP traffic from end-user PC data traffic", is_correct: false },
+      { text: "It automatically negotiates trunking using DTP packets", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // IP_ROUTING (11 questions)
+  // ==========================================
+  {
+    stem: "Which two destination IPv4 multicast addresses are used by OSPFv2 for 'All OSPF Routers' and 'All Designated Routers (DR/BDR)' respectively?",
+    explanation: "OSPFv2 uses 224.0.0.5 to communicate with All OSPF Routers, and 224.0.0.6 to communicate with All Designated Routers (DR and BDR).",
+    domain: "ip_routing",
+    subtopic: "OSPF Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "224.0.0.5 (All OSPF Routers) and 224.0.0.6 (All DR/BDR)", is_correct: true },
+      { text: "224.0.0.9 (All OSPF Routers) and 224.0.0.10 (All DR/BDR)", is_correct: false },
+      { text: "224.0.0.1 (All OSPF Routers) and 224.0.0.2 (All DR/BDR)", is_correct: false },
+      { text: "224.0.0.102 (All OSPF Routers) and 224.0.0.105 (All DR/BDR)", is_correct: false }
+    ]
+  },
+  {
+    stem: "What happens to an OSPF interface metric if an administrator modifies the interface speed parameter using the 'bandwidth <kbps>' interface command?",
+    explanation: "OSPF calculates interface cost as (Reference Bandwidth / Interface Bandwidth). Changing the interface `bandwidth` command recalculates the metric for routing decisions without altering the actual physical clock rate.",
+    domain: "ip_routing",
+    subtopic: "OSPF Operations",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "The router recalculates the interface OSPF cost using the formula (Reference Bandwidth / Configured Bandwidth) without changing physical clock speed", is_correct: true },
+      { text: "The physical hardware transceiver rate is throttled to match the configured kbps value", is_correct: false },
+      { text: "OSPF drops the neighbor adjacency due to a bandwidth negotiation mismatch", is_correct: false },
+      { text: "The administrative distance of the OSPF process is lowered to 90", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which destination IPv6 multicast addresses are used by OSPFv3 for 'All OSPF Routers' and 'All DR/BDR Routers' respectively?",
+    explanation: "In OSPFv3, FF02::5 is the link-local scope multicast address for All OSPF Routers, and FF02::6 is the multicast address for All DR/BDR Routers.",
+    domain: "ip_routing",
+    subtopic: "OSPFv3",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "FF02::5 (All OSPF Routers) and FF02::6 (All DR/BDR)", is_correct: true },
+      { text: "FF02::9 (All OSPF Routers) and FF02::10 (All DR/BDR)", is_correct: false },
+      { text: "FF02::1 (All OSPF Routers) and FF02::2 (All DR/BDR)", is_correct: false },
+      { text: "FF05::5 (All OSPF Routers) and FF05::6 (All DR/BDR)", is_correct: false }
+    ]
+  },
+  {
+    stem: "A network administrator configures a floating static route alongside an active EIGRP route for prefix 10.0.0.0/8 by assigning an AD of 130. Under what condition will this floating static route appear in the routing table?",
+    explanation: "EIGRP internal routes have an AD of 90, which is preferred over AD 130. The floating static route will only be installed into the routing table if the primary EIGRP route is withdrawn or fails.",
+    domain: "ip_routing",
+    subtopic: "Floating Static Routes",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Only when the primary EIGRP route is withdrawn or fails", is_correct: true },
+      { text: "Immediately alongside EIGRP, load-balancing traffic 50/50", is_correct: false },
+      { text: "Only when EIGRP interface bandwidth utilization exceeds 80%", is_correct: false },
+      { text: "Permanently as long as the next-hop IP is reachable via ARP", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is a Switched Virtual Interface (SVI) on a Cisco multilayer Catalyst switch?",
+    explanation: "An SVI is a virtual Layer 3 routed interface associated with a specific VLAN (`interface Vlan <id>`). It provides Layer 3 processing and default gateway routing services for all switch ports assigned to that VLAN.",
+    domain: "ip_routing",
+    subtopic: "Inter-VLAN Routing",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "A virtual routed interface representing an entire VLAN that serves as the default gateway for hosts in that VLAN", is_correct: true },
+      { text: "A physical port configured with 'no switchport' and an assigned IP address", is_correct: false },
+      { text: "A loopback interface used strictly for BGP router ID election", is_correct: false },
+      { text: "A subinterface on a router running 802.1Q encapsulation", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS command configures a floating IPv6 static route to network 2001:db8:cafe::/48 with next-hop 2001:db8::2 and an Administrative Distance of 150?",
+    explanation: "The command syntax is `ipv6 route <prefix/length> <next-hop> [distance]`. Therefore: `ipv6 route 2001:db8:cafe::/48 2001:db8::2 150`.",
+    domain: "ip_routing",
+    subtopic: "IPv6 Static Routing",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "ipv6 route 2001:db8:cafe::/48 2001:db8::2 150", is_correct: true },
+      { text: "ipv6 static route 2001:db8:cafe::/48 2001:db8::2 ad 150", is_correct: false },
+      { text: "ip route ipv6 2001:db8:cafe::/48 2001:db8::2 metric 150", is_correct: false },
+      { text: "ipv6 route 2001:db8:cafe::/48 2001:db8::2 distance 150 floating", is_correct: false }
+    ]
+  },
+  {
+    stem: "What occurs between two OSPF neighbor routers during the 'Loading' state?",
+    explanation: "In the Loading state, routers send Link-State Request (LSR) packets to request any new or updated LSAs identified during the Exchange state. The neighbor router responds with Link-State Update (LSU) packets containing the requested LSAs.",
+    domain: "ip_routing",
+    subtopic: "OSPF Neighbor States",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Routers send Link-State Requests (LSRs) to obtain more complete LSA information, receiving Link-State Updates (LSUs) in return", is_correct: true },
+      { text: "Routers elect the Designated Router and Backup Designated Router", is_correct: false },
+      { text: "Routers send Hello packets to confirm bidirectional communication", is_correct: false },
+      { text: "Routers run Dijkstra's SPF algorithm to calculate the shortest paths", is_correct: false }
+    ]
+  },
+  {
+    stem: "On an OSPF interface configured with 'ip ospf network point-to-multipoint', what are the default Hello and Dead timers, and is a DR/BDR elected?",
+    explanation: "Point-to-multipoint networks treat the segment as a collection of point-to-point links. Hello timer is 30 seconds, Dead timer is 120 seconds, and NO DR or BDR is elected.",
+    domain: "ip_routing",
+    subtopic: "OSPF Network Types",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Hello: 30 seconds, Dead: 120 seconds; NO DR/BDR is elected", is_correct: true },
+      { text: "Hello: 10 seconds, Dead: 40 seconds; DR/BDR is elected", is_correct: false },
+      { text: "Hello: 10 seconds, Dead: 40 seconds; NO DR/BDR is elected", is_correct: false },
+      { text: "Hello: 30 seconds, Dead: 120 seconds; DR/BDR is elected", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary operational advantage of implementing Route Summarization in enterprise networks?",
+    explanation: "Route summarization reduces the number of entries in routing tables, conserving router memory and CPU processing. It also limits the propagation of route flaps, as instability within a summarized subnet is masked from outside areas.",
+    domain: "ip_routing",
+    subtopic: "Route Summarization",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It reduces routing table size, conserves router memory and CPU, and isolates localized route flapping from impacting other areas", is_correct: true },
+      { text: "It converts IPv4 routes directly into IPv6 prefixes", is_correct: false },
+      { text: "It automatically increases physical serial interface clock rates", is_correct: false },
+      { text: "It replaces dynamic routing protocols with static default routes", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco IOS 'show ip route' output, what is the distinction between route entries marked with code 'C' versus code 'L'?",
+    explanation: "'C' indicates a directly connected network subnet (e.g. 192.168.1.0/24), while 'L' indicates the local host /32 IP address assigned to the physical or logical router interface itself (e.g. 192.168.1.1/32).",
+    domain: "ip_routing",
+    subtopic: "Routing Table Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "'C' represents a directly connected network subnet, while 'L' represents the local /32 host IP address assigned to the router interface", is_correct: true },
+      { text: "'C' represents an OSPF route, while 'L' represents an EIGRP route", is_correct: false },
+      { text: "'C' represents a static route, while 'L' represents a dynamic route", is_correct: false },
+      { text: "'C' represents an active trunk link, while 'L' represents an access link", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why do network engineers configure static discard routes to the 'Null0' virtual interface on core and border routers?",
+    explanation: "A static route to `Null0` discards packets destined to unallocated IP addresses within a summarized address block, preventing packets from looping back and forth between interior routers and default gateways until TTL expires.",
+    domain: "ip_routing",
+    subtopic: "Static Routing",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "To prevent routing loops by blackholing packets destined to unallocated subnets within an aggregated summary block", is_correct: true },
+      { text: "To mirror suspicious packets to a remote Wireshark analysis station", is_correct: false },
+      { text: "To assign dynamic IP addresses to unauthorized client workstations", is_correct: false },
+      { text: "To bypass Access Control Lists for high-priority network management traffic", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SERVICES_SECURITY (11 questions)
+  // ==========================================
+  {
+    stem: "In the Cisco AAA security framework, which component determines the specific configuration commands, privilege levels, and network services an authenticated user is permitted to access?",
+    explanation: "Authorization determines what a verified user can do (e.g. restrict access to specific commands via TACACS+ command authorization or assign specific VLANs via RADIUS).",
+    domain: "services_security",
+    subtopic: "AAA Security",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Authorization", is_correct: true },
+      { text: "Authentication", is_correct: false },
+      { text: "Accounting", is_correct: false },
+      { text: "Administration", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the purpose of DHCP Option 67 in enterprise client deployment workflows?",
+    explanation: "DHCP Option 67 specifies the Bootfile name (such as pxelinux.0 or bootx64.efi), used in conjunction with Option 66 (TFTP boot server IP) to enable PXE network booting of operating systems.",
+    domain: "services_security",
+    subtopic: "DHCP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Specifies the bootfile name used by PXE network boot clients", is_correct: true },
+      { text: "Provides the primary domain name search list", is_correct: false },
+      { text: "Assigns the NTP time server IPv4 address", is_correct: false },
+      { text: "Configures the default router gateway address", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which protocol and port number is NOT among the standard UDP broadcast services forwarded by default when 'ip helper-address' is configured on a Cisco router interface?",
+    explanation: "By default, `ip helper-address` forwards 8 UDP services: TFTP (69), DNS (53), Time (37), TACACS (49), BOOTP Server (67), BOOTP Client (68), NetBIOS Name Service (137), and NetBIOS Datagram (138). It does NOT forward HTTP (TCP 80) or NTP (UDP 123).",
+    domain: "services_security",
+    subtopic: "DHCP and Helper Address",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "NTP (UDP port 123)", is_correct: true },
+      { text: "TFTP (UDP port 69)", is_correct: false },
+      { text: "DNS (UDP port 53)", is_correct: false },
+      { text: "Time (UDP port 37)", is_correct: false }
+    ]
+  },
+  {
+    stem: "What action does a switch configured with IPv6 RA Guard take when an ICMPv6 Type 134 Router Advertisement packet is received on an untrusted access port?",
+    explanation: "IPv6 RA Guard inspects incoming packets on untrusted ports. If an ICMPv6 Router Advertisement (Type 134) or Router Redirect (Type 137) message is detected, the switch drops the packet to prevent rogue router attacks.",
+    domain: "services_security",
+    subtopic: "IPv6 RA Guard",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It drops the packet and blocks the rogue advertisement from altering client routing tables", is_correct: true },
+      { text: "It forwards the packet onto the voice VLAN with high priority", is_correct: false },
+      { text: "It converts the ICMPv6 packet into an IPv4 ARP reply", is_correct: false },
+      { text: "It modifies the advertised prefix to 2001:db8::/32", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco IOS NTP configuration, what is the operational difference between the 'ntp server <ip>' command and the 'ntp peer <ip>' command?",
+    explanation: "`ntp server` configures client-server mode, where the local router syncs its time from the server but will not sync the server. `ntp peer` establishes a symmetric active relationship where either device can sync from the other.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "'ntp server' configures client mode where the local device only receives time; 'ntp peer' enables symmetric synchronization where either device can synchronize the other", is_correct: true },
+      { text: "'ntp server' uses UDP port 123; 'ntp peer' uses TCP port 123", is_correct: false },
+      { text: "'ntp peer' requires Stratum 0 atomic clock hardware attached directly to the chassis", is_correct: false },
+      { text: "'ntp server' encrypts time packets using SSH; 'ntp peer' sends plain text", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco Network Address Translation (NAT) terminology, what is the 'Inside Local' address versus the 'Inside Global' address?",
+    explanation: "An Inside Local address is the private IPv4 address configured on an internal host on the inside network. An Inside Global address is the registered public IPv4 address that represents that internal host to the outside world.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Inside Local is the private IP configured on the inside host; Inside Global is the public IP representing the inside host to the outside network", is_correct: true },
+      { text: "Inside Local is the public IP; Inside Global is the private RFC 1918 IP", is_correct: false },
+      { text: "Inside Local is the switch SVI MAC address; Inside Global is the ISP default gateway MAC", is_correct: false },
+      { text: "Inside Local is the loopback interface IP; Inside Global is the physical WAN interface IP", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which transport layer protocol and well-known destination port does Hypertext Transfer Protocol Secure (HTTPS) use to encrypt web traffic via TLS?",
+    explanation: "HTTPS uses TCP port 443 (HTTP uses TCP port 80).",
+    domain: "services_security",
+    subtopic: "Network Services",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "TCP port 443", is_correct: true },
+      { text: "UDP port 443", is_correct: false },
+      { text: "TCP port 80", is_correct: false },
+      { text: "TCP port 8443", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS global configuration command forces the router to exclusively support SSH Version 2 and reject vulnerable SSH Version 1 fallback connections?",
+    explanation: "The command `ip ssh version 2` configures the router to accept only SSHv2 connections, preventing downgrade attacks to vulnerable SSHv1.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "ip ssh version 2", is_correct: true },
+      { text: "ssh v2 enforce", is_correct: false },
+      { text: "crypto key generate rsa version 2", is_correct: false },
+      { text: "transport input sshv2", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS command configures Login Enhancements to block brute-force authentication attacks by locking out login attempts for 60 seconds if 3 failed attempts occur within 30 seconds?",
+    explanation: "The command `login block-for 60 attempts 3 within 30` instructs Cisco IOS to block all incoming login attempts for 60 seconds if 3 consecutive failures occur within a 30-second window.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "login block-for 60 attempts 3 within 30", is_correct: true },
+      { text: "security authentication lockout 60 3 30", is_correct: false },
+      { text: "line vty 0 4 password-lockout 3 attempts 60", is_correct: false },
+      { text: "login failure-threshold 3 time 30 block 60", is_correct: false }
+    ]
+  },
+  {
+    stem: "What are the standard numeric ranges reserved in Cisco IOS for traditional numbered standard IPv4 ACLs versus extended IPv4 ACLs?",
+    explanation: "Standard ACLs (filter source IP only) use ranges 1–99 and 1300–1999. Extended ACLs (filter source, destination, protocol, and port) use ranges 100–199 and 2000–2699.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Standard ACLs: 1–99 and 1300–1999; Extended ACLs: 100–199 and 2000–2699", is_correct: true },
+      { text: "Standard ACLs: 100–199; Extended ACLs: 1–99", is_correct: false },
+      { text: "Standard ACLs: 1–500; Extended ACLs: 501–1000", is_correct: false },
+      { text: "Standard ACLs: 10–99; Extended ACLs: 100–999", is_correct: false }
+    ]
+  },
+  {
+    stem: "When an administrator is connected to a Cisco switch via an RS-232 / USB console cable, which destination displays system syslog messages by default?",
+    explanation: "By default, Cisco IOS sends syslog messages directly to the physical console line (`logging console`). For remote VTY (Telnet/SSH) sessions, `terminal monitor` must be enabled manually.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Directly to the active console session screen", is_correct: true },
+      { text: "To an external TFTP server on UDP port 69", is_correct: false },
+      { text: "To the local hard drive as a compressed zip archive", is_correct: false },
+      { text: "Directly to all connected VTY Telnet sessions automatically", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // AI_OPS (5 questions)
+  // ==========================================
+  {
+    stem: "In cloud-managed enterprise networking, what is Zero-Touch Provisioning (ZTP)?",
+    explanation: "ZTP enables network hardware to be deployed and configured automatically without manual on-site CLI configuration: when connected to the network, the device obtains an IP via DHCP, contacts its cloud controller, downloads its configuration and firmware, and becomes operational.",
+    domain: "ai_ops",
+    subtopic: "Cloud-Managed Networking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "An automated provisioning process where an unconfigured device connects to power/network, contacts its cloud controller, and pulls its configuration automatically", is_correct: true },
+      { text: "A biometric access control method for data center server racks", is_correct: false },
+      { text: "A protocol that disables all physical switch ports until manually activated", is_correct: false },
+      { text: "An automated cable-testing sequence performed by PoE switches", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco Catalyst Center (formerly DNA Center), what is the function of the 'Assurance' module?",
+    explanation: "Cisco Catalyst Center Assurance ingests telemetry across all network devices, wireless controllers, and clients. Using AI and machine learning, it calculates health scores, provides root-cause analysis for anomalies, and suggests guided remediation actions.",
+    domain: "ai_ops",
+    subtopic: "Controller-Based Management",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It continuously collects network telemetry to provide client/device health scores, AI-driven root-cause analysis, and guided remediation", is_correct: true },
+      { text: "It distributes software licenses and handles monthly billing invoicing", is_correct: false },
+      { text: "It encrypts all copper Ethernet cables using quantum key distribution", is_correct: false },
+      { text: "It acts as a primary Authoritative DNS root nameserver", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is Terraform, and what domain-specific configuration language does it use to define infrastructure resources?",
+    explanation: "Terraform is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp that uses declarative HashiCorp Configuration Language (HCL) to provision and manage cloud and network resources.",
+    domain: "ai_ops",
+    subtopic: "Infrastructure as Code",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "An open-source Infrastructure as Code tool that utilizes HashiCorp Configuration Language (HCL)", is_correct: true },
+      { text: "A Python web framework that uses Jinja2 HTML templates", is_correct: false },
+      { text: "A hardware network emulator running proprietary Cisco ASIC microcode", is_correct: false },
+      { text: "A relational database query engine based on SQL-92", is_correct: false }
+    ]
+  },
+  {
+    stem: "In continuous integration and continuous deployment (CI/CD) pipelines for network automation, what is a 'Canary Deployment'?",
+    explanation: "A Canary Deployment introduces a configuration or firmware change to a tiny subset of devices or a single branch site first. Automated monitoring evaluates its performance before rolling out the update to the broader network.",
+    domain: "ai_ops",
+    subtopic: "Network Automation Architecture",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Rolling out changes to a small initial group of test devices to validate real-world performance before full production deployment", is_correct: true },
+      { text: "Deploying changes strictly during a weekend maintenance window without rollback scripts", is_correct: false },
+      { text: "Simultaneously rebooting all enterprise core switches to clear RAM caches", is_correct: false },
+      { text: "Rewriting all Python scripts in Rust to maximize CPU efficiency", is_correct: false }
+    ]
+  },
+  {
+    stem: "In prompt engineering for network troubleshooting with Large Language Models, what is 'Chain-of-Thought' (CoT) prompting?",
+    explanation: "Chain-of-Thought (CoT) prompting encourages the model to generate intermediate step-by-step reasoning steps before arriving at a final answer (e.g. 'explain your reasoning step by step'), which dramatically improves diagnostic accuracy on complex networking problems.",
+    domain: "ai_ops",
+    subtopic: "Prompt Engineering",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Instructing the model to articulate intermediate step-by-step reasoning before stating its final conclusion, improving accuracy on complex diagnostic tasks", is_correct: true },
+      { text: "Connecting multiple LLM models together using optical InfiniBand cables", is_correct: false },
+      { text: "Limiting the prompt length to fewer than 10 words", is_correct: false },
+      { text: "Forcing the model to output answers exclusively in hexadecimal notation", is_correct: false }
+    ]
+  }
+];
+
+const batchPath = path.join(__dirname, 'batches', 'seed-29-volume.json');
+fs.writeFileSync(batchPath, JSON.stringify(questions, null, 2) + '\n');
+console.log(`Generated ${questions.length} questions in ${batchPath}`);

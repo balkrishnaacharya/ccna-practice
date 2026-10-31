@@ -152,14 +152,14 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
 
   return (
     <div
-      className="fixed bottom-3 sm:bottom-6 inset-x-0 z-50 flex justify-center px-3 sm:px-4 pointer-events-none"
+      className="fixed bottom-4 inset-x-0 z-50 flex justify-center px-3 sm:px-4 pointer-events-none"
       style={{ paddingBottom: "var(--safe-bottom)" }}
     >
       <nav
         ref={navRef}
         data-tour="bottom-navigation"
         aria-label="Bottom Navigation"
-        className="pointer-events-auto relative w-full max-w-lg mx-auto bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-full px-2 sm:px-3 py-1.5 shadow-dock flex items-center justify-between overflow-visible"
+        className="pointer-events-auto relative w-full max-w-lg mx-auto bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-full px-2 sm:px-3 py-2 shadow-dock flex items-center justify-between overflow-visible"
       >
         {/* Continuous Sliding Background Active Pill (transform-only motion) */}
         <div
@@ -197,12 +197,12 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
         {/* Center Floating "EXAM" Action Button (Positioned absolutely over center) */}
         <div
           data-tour="exam-button"
-          className="absolute left-1/2 -translate-x-1/2 -top-6 flex flex-col items-center pointer-events-auto z-20"
+          className="absolute left-1/2 -translate-x-1/2 -top-7 flex flex-col items-center pointer-events-auto z-20"
         >
           <button
             type="button"
             onClick={onOpenExamModal}
-            className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#8E6319] via-gold to-[#D8A243] border-2 border-dark-bg text-dark-bg shadow-gold-glow flex items-center justify-center transition-transform duration-150 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-gold/50 cursor-pointer"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#8E6319] via-gold to-[#D8A243] border-2 border-dark-bg text-dark-bg shadow-gold-glow flex items-center justify-center transition-transform duration-150 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-gold/50 cursor-pointer"
             title="Take Full CCNA Exam"
             aria-label="Take Full CCNA Exam"
           >

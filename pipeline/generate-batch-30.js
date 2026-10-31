@@ -1,0 +1,799 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+
+const questions = [
+  // ==========================================
+  // NETWORK_INFRA (14 questions)
+  // ==========================================
+  {
+    stem: "Which legacy IEEE 802.11 standard operated exclusively in the 5 GHz frequency band using OFDM to provide data rates up to 54 Mbps?",
+    explanation: "IEEE 802.11a operated strictly in the 5 GHz band, achieving up to 54 Mbps using Orthogonal Frequency Division Multiplexing (OFDM). (802.11b operated in 2.4 GHz up to 11 Mbps; 802.11g brought OFDM to 2.4 GHz).",
+    domain: "network_infra",
+    subtopic: "Wireless Standards",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "IEEE 802.11a", is_correct: true },
+      { text: "IEEE 802.11b", is_correct: false },
+      { text: "IEEE 802.11g", is_correct: false },
+      { text: "IEEE 802.11d", is_correct: false }
+    ]
+  },
+  {
+    stem: "In IEEE 802.11ac (Wi-Fi 5) Wave 2 networks, which feature allows an Access Point to transmit data streams simultaneously to multiple client devices on the downstream link?",
+    explanation: "Downlink Multi-User MIMO (DL MU-MIMO) enables an AP to transmit spatial streams simultaneously to up to four client devices, greatly increasing spectral efficiency compared to single-user MIMO.",
+    domain: "network_infra",
+    subtopic: "Wireless Standards",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Downlink Multi-User MIMO (DL MU-MIMO)", is_correct: true },
+      { text: "Orthogonal Frequency Division Multiple Access (OFDMA)", is_correct: false },
+      { text: "Dynamic Frequency Selection (DFS)", is_correct: false },
+      { text: "Carrier Sense Multiple Access with Collision Detection (CSMA/CD)", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a classical three-tier hierarchical campus network design, what is the primary engineering objective of the Core layer?",
+    explanation: "The Core layer is designed to provide high-speed, non-blocking packet switching across disparate campus distribution nodes. Packet filtering, ACLs, and QoS remarking are avoided at the core to prevent latency.",
+    domain: "network_infra",
+    subtopic: "Campus Architectures",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "High-speed, non-blocking packet transport across campus distribution switches with minimal packet manipulation", is_correct: true },
+      { text: "Enforcing complex ingress security ACLs and dynamic ARP inspection", is_correct: false },
+      { text: "Connecting desktop computers, IP phones, and wireless access points", is_correct: false },
+      { text: "Providing Power over Ethernet (PoE) to edge endpoints", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco Software-Defined Access (SD-Access), what is the function of a 'Border Node'?",
+    explanation: "A Border Node in an SD-Access fabric connects the internal fabric overlay network to external networks outside the fabric domain, such as the enterprise WAN, public Internet, data center, or non-fabric campus LAN.",
+    domain: "network_infra",
+    subtopic: "Campus Architectures",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It connects the internal SD-Access fabric overlay to external networks such as the WAN, data center, or Internet", is_correct: true },
+      { text: "It authenticates wireless client endpoints using pre-shared keys", is_correct: false },
+      { text: "It generates optical clock signals for SFP transceivers", is_correct: false },
+      { text: "It acts as a primary TFTP server for firmware distribution", is_correct: false }
+    ]
+  },
+  {
+    stem: "When establishing external BGP peering across a dedicated cloud direct connect link (e.g. AWS Direct Connect), which BGP Autonomous System Numbers (ASNs) can be utilized on the customer router?",
+    explanation: "Cloud direct connect services support customer-side BGP peering using either publicly registered routable ASNs or 2-byte/4-byte Private ASNs (such as 64512 to 65534).",
+    domain: "network_infra",
+    subtopic: "Cloud Connectivity",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Either a publicly owned ASN or a private ASN within the 64512 to 65534 range", is_correct: true },
+      { text: "Exclusively public ASNs assigned by ARIN; private ASNs are rejected", is_correct: false },
+      { text: "Exclusively ASN 0 or ASN 65535", is_correct: false },
+      { text: "BGP does not use ASNs across cloud direct connect circuits", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary architectural purpose of a cloud transit hub (such as AWS Transit Gateway or Azure Virtual WAN)?",
+    explanation: "A cloud transit gateway acts as a centralized cloud router connecting multiple Virtual Private Clouds (VPCs) and on-premises branch/data center networks in a clean hub-and-spoke topology, eliminating complex peer-to-peer VPC meshes.",
+    domain: "network_infra",
+    subtopic: "Cloud Connectivity",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It provides a centralized virtual routing hub connecting multiple VPCs and on-premise networks in a hub-and-spoke model", is_correct: true },
+      { text: "It converts IPv6 cloud addresses to IPv4 using hardware NAT-PT", is_correct: false },
+      { text: "It hosts on-premise physical blade servers inside the public cloud", is_correct: false },
+      { text: "It terminates unencrypted telnet connections to cloud databases", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the core diameter of standard Single-Mode Fiber (SMF) compared to Multimode Fiber (MMF)?",
+    explanation: "Single-Mode Fiber (SMF) has a narrow core diameter of approximately 8 to 10 microns (typically 9 µm). Multimode Fiber (MMF) has a much wider core of 50 or 62.5 microns.",
+    domain: "network_infra",
+    subtopic: "Physical Media",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "SMF core is ~9 microns; MMF core is 50 or 62.5 microns", is_correct: true },
+      { text: "SMF core is 50 microns; MMF core is 9 microns", is_correct: false },
+      { text: "SMF core is 100 microns; MMF core is 250 microns", is_correct: false },
+      { text: "Both SMF and MMF have identical 62.5-micron cores", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary cause of 'Attenuation' (signal loss) in optical fiber communication?",
+    explanation: "Attenuation is the reduction of light signal strength as it travels through optical fiber, caused primarily by intrinsic glass absorption (impurities in silica) and Rayleigh scattering.",
+    domain: "network_infra",
+    subtopic: "Physical Media",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Scattering and absorption of light pulses as they travel through the silica glass core", is_correct: true },
+      { text: "Electromagnetic interference (EMI) from adjacent copper electrical cabling", is_correct: false },
+      { text: "Radio frequency interference (RFI) from 2.4 GHz microwave transmitters", is_correct: false },
+      { text: "Excessive clock speed negotiated between router ASICs", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which specialized security appliance is designed to inspect email protocols (SMTP) to detect phishing campaigns, spam, malicious URLs, and infected attachments?",
+    explanation: "Cisco Secure Email (formerly Cisco Email Security Appliance / ESA) is a specialized application gateway that inspects incoming and outgoing SMTP traffic for spam, malware, phishing, and data loss prevention (DLP).",
+    domain: "network_infra",
+    subtopic: "Security Devices",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Email Security Appliance (ESA / Cisco Secure Email)", is_correct: true },
+      { text: "Web Security Appliance (WSA)", is_correct: false },
+      { text: "Next-Generation Intrusion Prevention System (NGIPS)", is_correct: false },
+      { text: "Identity Services Engine (ISE)", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a Web Application Firewall (WAF) differ fundamentally from a standard Layer 4 network firewall?",
+    explanation: "A standard network firewall inspects IP addresses and port numbers (Layers 3 and 4). A WAF specifically analyzes Layer 7 HTTP/HTTPS payloads, protecting web servers against application-layer attacks like SQL injection, Cross-Site Scripting (XSS), and cookie poisoning.",
+    domain: "network_infra",
+    subtopic: "Security Devices",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "A WAF inspects Layer 7 HTTP/HTTPS payloads to stop application attacks (like SQLi and XSS), whereas network firewalls filter Layers 3 and 4", is_correct: true },
+      { text: "A WAF routes Layer 3 IP packets; a network firewall operates only at Layer 1", is_correct: false },
+      { text: "A WAF encrypts traffic using IPsec; a network firewall uses WPA3", is_correct: false },
+      { text: "A WAF monitors physical server room temperatures via SNMP", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the broadcast IPv4 address for the subnet 172.16.32.0/20?",
+    explanation: "A /20 subnet mask (255.255.240.0) has a block size of 16 in the third octet (256 - 240 = 16). Starting at 172.16.32.0, the next subnet is 172.16.48.0. Therefore, the broadcast address is 172.16.47.255.",
+    domain: "network_infra",
+    subtopic: "IPv4 Addressing",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "172.16.47.255", is_correct: true },
+      { text: "172.16.32.255", is_correct: false },
+      { text: "172.16.63.255", is_correct: false },
+      { text: "172.16.255.255", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an IPv4 packet header, how many bits are allocated to each of the Source IP Address and Destination IP Address fields?",
+    explanation: "IPv4 addresses are 32 bits (4 bytes) in length. In the standard 20-byte IPv4 header, 32 bits are dedicated to the source address and 32 bits to the destination address.",
+    domain: "network_infra",
+    subtopic: "IPv4 Header",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "32 bits each", is_correct: true },
+      { text: "48 bits each", is_correct: false },
+      { text: "64 bits each", is_correct: false },
+      { text: "128 bits each", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the operational function of the 8-bit 'Traffic Class' field in the base IPv6 header?",
+    explanation: "The 8-bit Traffic Class field in IPv6 corresponds to the IPv4 Differentiated Services (DS) field, containing a 6-bit DSCP value for QoS packet classification and a 2-bit ECN value for congestion notification.",
+    domain: "network_infra",
+    subtopic: "IPv6 Header",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It is used for Quality of Service (QoS) packet marking, housing the 6-bit DSCP and 2-bit ECN values", is_correct: true },
+      { text: "It counts the number of router hops remaining before the packet is discarded", is_correct: false },
+      { text: "It indicates the length of extension headers following the base header", is_correct: false },
+      { text: "It provides a 16-bit checksum to verify header payload integrity", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco SD-WAN architecture, what protocol is used by the centralized vSmart controllers to exchange routing, security keys, and policy information with WAN Edge routers?",
+    explanation: "Overlay Management Protocol (OMP) is the centralized routing and control protocol in Cisco SD-WAN. It runs inside TLS/DTLS tunnels between WAN Edge routers and vSmart controllers to exchange reachability, transport locators (TLOCs), and IPsec keys.",
+    domain: "network_infra",
+    subtopic: "WAN Architectures",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Overlay Management Protocol (OMP)", is_correct: true },
+      { text: "Border Gateway Protocol (BGP)", is_correct: false },
+      { text: "Open Shortest Path First (OSPF)", is_correct: false },
+      { text: "Dynamic Trunking Protocol (DTP)", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SWITCHING (14 questions)
+  // ==========================================
+  {
+    stem: "An engineer inspects interface counters on a switch port and notes increasing 'late collisions'. What is the most common operational root cause?",
+    explanation: "Late collisions occur when a collision is detected after the first 64 bytes (512 bits) of a frame have been transmitted. The most common cause is a duplex mismatch (one end full-duplex, the other half-duplex) or excessive cable length exceeding 100 meters.",
+    domain: "switching",
+    subtopic: "Interface Troubleshooting",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A duplex mismatch between connected devices or excessive cable length exceeding the 100-meter Ethernet limit", is_correct: true },
+      { text: "A mismatch between OSPF hello timer intervals", is_correct: false },
+      { text: "Broadcast storm suppression dropping multicast traffic", is_correct: false },
+      { text: "The switch port being configured as a SPAN destination port", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS privileged exec command provides a concise, single-line-per-interface status summary showing interface name, IP address, line status, and protocol status?",
+    explanation: "The `show ip interface brief` command provides a concise table showing interface name, assigned IP address, 'OK?' status, method, and Layer 1 (Status) / Layer 2 (Protocol) operational states.",
+    domain: "switching",
+    subtopic: "Interface Troubleshooting",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "show ip interface brief", is_correct: true },
+      { text: "show interfaces summary", is_correct: false },
+      { text: "show ip route summary", is_correct: false },
+      { text: "show running-config interface brief", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a Layer 2 switch forward an incoming Ethernet frame when the destination MAC address is FF:FF:FF:FF:FF:FF?",
+    explanation: "FF:FF:FF:FF:FF:FF is the Ethernet broadcast address. The switch floods broadcast frames out all active switch ports assigned to the same VLAN, except the interface on which the frame arrived.",
+    domain: "switching",
+    subtopic: "MAC Address Table",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It floods the frame out all active interfaces belonging to the same VLAN except the receiving port", is_correct: true },
+      { text: "It drops the frame and sends an ICMP Destination Unreachable message to the sender", is_correct: false },
+      { text: "It forwards the frame only to the default gateway router port", is_correct: false },
+      { text: "It forwards the frame unicast out port 1 exclusively", is_correct: false }
+    ]
+  },
+  {
+    stem: "What physical connector standard is universally used to deliver Power over Ethernet (PoE) to VoIP phones, APs, and cameras over twisted-pair copper cabling?",
+    explanation: "PoE standards (802.3af, 802.3at, 802.3bt) utilize standard 8-pin RJ-45 modular connectors over unshielded or shielded twisted-pair cabling.",
+    domain: "switching",
+    subtopic: "PoE Standards",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "RJ-45 connector", is_correct: true },
+      { text: "RJ-11 connector", is_correct: false },
+      { text: "LC optical connector", is_correct: false },
+      { text: "DB-9 serial connector", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Layer 2 feature protects fiber switch interconnects against unidirectional link failures caused by a damaged transmit fiber strand?",
+    explanation: "UniDirectional Link Detection (UDLD) monitors fiber connections to verify that traffic is flowing bidirectionally. If a broken transmit strand prevents return traffic, UDLD disables the port to prevent Spanning Tree loops.",
+    domain: "switching",
+    subtopic: "STP Features",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "UDLD (UniDirectional Link Detection)", is_correct: true },
+      { text: "PortFast", is_correct: false },
+      { text: "Storm Control", is_correct: false },
+      { text: "DTP (Dynamic Trunking Protocol)", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default Bridge Priority value configured on a Cisco switch running standard PVST+ or Rapid PVST+?",
+    explanation: "The default Bridge Priority is 32768. In PVST+, the actual priority advertised includes the Extended System ID (VLAN ID), e.g. 32769 for VLAN 1.",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "32768", is_correct: true },
+      { text: "4096", is_correct: false },
+      { text: "1", is_correct: false },
+      { text: "65535", is_correct: false }
+    ]
+  },
+  {
+    stem: "Due to the 12-bit Extended System ID field used in 802.1t / PVST+, in what increments must the Bridge Priority be configured?",
+    explanation: "Because the lowest 12 bits of the 16-bit priority field are reserved for the VLAN ID (Extended System ID), the 4 priority bits change in multiples of 2^12 = 4096 (e.g., 0, 4096, 8192, ..., 61440).",
+    domain: "switching",
+    subtopic: "Spanning Tree Protocol",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Multiples of 4096", is_correct: true },
+      { text: "Multiples of 100", is_correct: false },
+      { text: "Multiples of 256", is_correct: false },
+      { text: "Multiples of 1024", is_correct: false }
+    ]
+  },
+  {
+    stem: "How many bytes does an IEEE 802.1Q tag add to an Ethernet frame header, and how many bits in that tag are dedicated to the VLAN ID field?",
+    explanation: "An 802.1Q tag inserts 4 bytes (32 bits) into the Ethernet frame header: 16 bits for TPID (0x8100), 3 bits for Priority (PCP/CoS), 1 bit for DEI, and 12 bits for the VLAN ID (allowing 4,096 VLANs).",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "4 bytes added; 12 bits dedicated to the VLAN ID", is_correct: true },
+      { text: "2 bytes added; 8 bits dedicated to the VLAN ID", is_correct: false },
+      { text: "8 bytes added; 16 bits dedicated to the VLAN ID", is_correct: false },
+      { text: "30 bytes added; 10 bits dedicated to the VLAN ID", is_correct: false }
+    ]
+  },
+  {
+    stem: "What action does an 802.1Q trunk port take when it receives an untagged Ethernet frame on a trunk configured with Native VLAN 99?",
+    explanation: "Untagged frames arriving on an 802.1Q trunk port are automatically classified and forwarded into the configured Native VLAN (in this case, VLAN 99).",
+    domain: "switching",
+    subtopic: "VLANs and Trunking",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It associates the untagged frame with VLAN 99 internally", is_correct: true },
+      { text: "It discards the frame because all trunk traffic must be tagged", is_correct: false },
+      { text: "It tags the frame with VLAN 1 by default", is_correct: false },
+      { text: "It places the trunk interface into err-disabled state", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS interface command configures a switch port to deliver voice traffic to an IP phone on VLAN 50?",
+    explanation: "The command `switchport voice vlan 50` instructs the switch port to inform the attached IP phone (via CDP/LLDP) to tag its voice frames into VLAN 50.",
+    domain: "switching",
+    subtopic: "Voice VLANs",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "switchport voice vlan 50", is_correct: true },
+      { text: "voice vlan enable 50", is_correct: false },
+      { text: "switchport access vlan 50 voice", is_correct: false },
+      { text: "mls qos voice vlan 50", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an enterprise 802.1X wireless deployment, which RADIUS IETF attributes are returned by Cisco ISE to dynamically assign a client station to a specific VLAN?",
+    explanation: "RADIUS uses three IETF attributes for dynamic VLAN assignment: Tunnel-Type (64 = VLAN), Tunnel-Medium-Type (65 = 802), and Tunnel-Private-Group-ID (81 = VLAN ID or name).",
+    domain: "switching",
+    subtopic: "Wireless Client Onboarding",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Tunnel-Type, Tunnel-Medium-Type, and Tunnel-Private-Group-ID", is_correct: true },
+      { text: "Framed-IP-Address and Framed-Route", is_correct: false },
+      { text: "Service-Type and Login-Service", is_correct: false },
+      { text: "NAS-Port and NAS-Identifier", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco Switched Port Analyzer (SPAN), what is a 'source port'?",
+    explanation: "A SPAN source port is a physical switch interface or VLAN whose traffic (ingress, egress, or both) is mirrored and forwarded to a destination monitoring port.",
+    domain: "switching",
+    subtopic: "Packet Capture",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "A monitored interface or VLAN whose traffic is duplicated and sent to a destination port", is_correct: true },
+      { text: "The dedicated port where a Wireshark protocol analyzer is connected", is_correct: false },
+      { text: "The switch port that receives incoming DHCP Discover requests", is_correct: false },
+      { text: "The root port elected by Spanning Tree Protocol", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a switch port configured with Broadcast Storm Control treat incoming unicast data packets?",
+    explanation: "Broadcast Storm Control specifically monitors and suppresses broadcast traffic when its threshold is exceeded. Regular unicast traffic is unaffected and forwarded normally.",
+    domain: "switching",
+    subtopic: "Storm Control",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Unicast packets are unaffected and forwarded normally without rate suppression", is_correct: true },
+      { text: "Unicast packets are dropped immediately along with broadcast packets", is_correct: false },
+      { text: "Unicast packets are redirected to the SPAN destination port", is_correct: false },
+      { text: "Unicast packets are fragmented into 64-byte chunks", is_correct: false }
+    ]
+  },
+  {
+    stem: "If a switch port is configured with 'switchport mode access', what is its behavior regarding Dynamic Trunking Protocol (DTP)?",
+    explanation: "Configuring `switchport mode access` permanently sets the port into non-trunking access mode. It will not become a trunk even if the connected neighbor requests it.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The port is permanently fixed in access mode and will not negotiate a trunk", is_correct: true },
+      { text: "The port actively sends DTP packets requesting trunk negotiation", is_correct: false },
+      { text: "The port automatically transitions to a trunk if connected to a router", is_correct: false },
+      { text: "The port disables all frame forwarding until an 802.1Q tag is received", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // IP_ROUTING (11 questions)
+  // ==========================================
+  {
+    stem: "In OSPFv3 for IPv6, which Link-State Advertisement (LSA) type is responsible for advertising IPv6 prefix information associated with a router or link (replacing prefix carrying in Type 1/2 LSAs)?",
+    explanation: "In OSPFv3, Type 1 and Type 2 LSAs carry topology information only without IP prefixes. Type 9 Intra-Area-Prefix LSAs are introduced to carry IPv6 prefix information within an area.",
+    domain: "ip_routing",
+    subtopic: "OSPFv3",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Type 9 Intra-Area-Prefix LSA", is_correct: true },
+      { text: "Type 3 Summary LSA", is_correct: false },
+      { text: "Type 7 NSSA External LSA", is_correct: false },
+      { text: "Type 4 ASBR Summary LSA", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary operational difference between a 'Routed Protocol' and a 'Routing Protocol'?",
+    explanation: "A Routed Protocol (e.g. IPv4, IPv6) provides the addressing format and packet structure used to transport user data across networks. A Routing Protocol (e.g. OSPF, EIGRP, BGP) dynamically determines best paths and builds routing tables.",
+    domain: "ip_routing",
+    subtopic: "Routing Concepts",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A routed protocol (IPv4/IPv6) carries user payload data, while a routing protocol (OSPF/EIGRP) dynamically learns paths and builds routing tables", is_correct: true },
+      { text: "A routed protocol runs on switches; a routing protocol runs on firewalls", is_correct: false },
+      { text: "A routing protocol uses MAC addresses; a routed protocol uses port numbers", is_correct: false },
+      { text: "A routed protocol operates at Layer 7; a routing protocol operates at Layer 1", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary role of Border Gateway Protocol (BGP) in computer networking?",
+    explanation: "BGP is the exterior path-vector routing protocol designed to exchange routing and reachability information between different Autonomous Systems (ASes) across the global Internet.",
+    domain: "ip_routing",
+    subtopic: "BGP Fundamentals",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "To exchange routing and reachability information between different Autonomous Systems across the global Internet", is_correct: true },
+      { text: "To dynamically assign IPv4 host addresses to branch office client workstations", is_correct: false },
+      { text: "To calculate shortest spanning tree paths to prevent Layer 2 switching loops", is_correct: false },
+      { text: "To encrypt point-to-point wireless bridge connections using AES-256", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Cisco BGP best path selection, which attribute is evaluated first when a router chooses between multiple routes to the same destination prefix?",
+    explanation: "Cisco BGP evaluates 'Weight' first. Weight is a Cisco-proprietary attribute local to the router (not advertised to peers), where the path with the highest weight (default 0, or 32768 for locally originated routes) wins. (Next is Local Preference).",
+    domain: "ip_routing",
+    subtopic: "BGP Fundamentals",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Highest Weight (Cisco-proprietary local attribute)", is_correct: true },
+      { text: "Shortest AS-Path length", is_correct: false },
+      { text: "Lowest Multi-Exit Discriminator (MED)", is_correct: false },
+      { text: "Lowest Origin code (IGP < EGP < Incomplete)", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which mathematical algorithm does Cisco Enhanced Interior Gateway Routing Protocol (EIGRP) employ to calculate loop-free paths and achieve rapid convergence?",
+    explanation: "EIGRP uses the Diffusing Update Algorithm (DUAL) to calculate the shortest loop-free paths and maintain pre-computed backup paths (Feasible Successors).",
+    domain: "ip_routing",
+    subtopic: "EIGRP Fundamentals",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "DUAL (Diffusing Update Algorithm)", is_correct: true },
+      { text: "Dijkstra's SPF Algorithm", is_correct: false },
+      { text: "Bellman-Ford Algorithm", is_correct: false },
+      { text: "Spanning Tree Algorithm (STA)", is_correct: false }
+    ]
+  },
+  {
+    stem: "In EIGRP routing terminology, what is a 'Feasible Successor'?",
+    explanation: "A Feasible Successor is a pre-calculated backup loop-free path to a destination. To qualify, its Reported Distance (RD) must be strictly less than the Feasible Distance (FD) of the primary Successor path (Feasibility Condition).",
+    domain: "ip_routing",
+    subtopic: "EIGRP Fundamentals",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A backup loop-free route whose Reported Distance is strictly lower than the primary route's Feasible Distance", is_correct: true },
+      { text: "The primary active route installed in the routing table with lowest metric", is_correct: false },
+      { text: "A route advertised by an adjacent non-EIGRP autonomous system", is_correct: false },
+      { text: "A route that has entered the Active stuck-in-active query state", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the standard virtual MAC address format used by Cisco Hot Standby Router Protocol Version 1 (HSRPv1) for standby group 1?",
+    explanation: "HSRPv1 virtual MAC addresses use the format 0000.0c07.acXX, where 'XX' is the HSRP group number in two hexadecimal digits. For group 1, the virtual MAC is 0000.0c07.ac01.",
+    domain: "ip_routing",
+    subtopic: "FHRP (HSRP/VRRP)",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "0000.0c07.ac01", is_correct: true },
+      { text: "0000.5e00.0101", is_correct: false },
+      { text: "0007.b400.0101", is_correct: false },
+      { text: "ffff.ffff.ffff", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is a primary operational distinction between Cisco proprietary HSRP and the vendor-neutral Virtual Router Redundancy Protocol (VRRP)?",
+    explanation: "VRRP is an open IETF standard (RFC 5798). In VRRP, the active router is called the 'Master' (vs. 'Active' in HSRP), and VRRP allows the virtual router IP address to be identical to a physical interface's IP address.",
+    domain: "ip_routing",
+    subtopic: "FHRP (HSRP/VRRP)",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "VRRP is an open standard that designates the forwarding router as 'Master' and allows using a physical interface IP as the virtual IP", is_correct: true },
+      { text: "HSRP runs on UDP port 123, while VRRP runs on TCP port 443", is_correct: false },
+      { text: "HSRP supports IPv6, whereas VRRP is strictly limited to IPv4", is_correct: false },
+      { text: "VRRP requires dedicated coaxial cabling between redundant routers", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary architectural bottleneck of a legacy Router-on-a-Stick inter-VLAN routing design compared to a Multilayer Switch?",
+    explanation: "In Router-on-a-Stick, all inter-VLAN traffic must traverse the same physical uplink to the external router and back (hairpinning), creating a bandwidth bottleneck and incurring software routing latency compared to hardware ASIC wire-speed multilayer switching.",
+    domain: "ip_routing",
+    subtopic: "Inter-VLAN Routing",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "All inter-VLAN traffic must traverse the single physical router link and back, causing bandwidth contention and software routing latency", is_correct: true },
+      { text: "Router-on-a-stick cannot support more than two total VLANs", is_correct: false },
+      { text: "Router-on-a-stick requires replacing Ethernet switches with optical patch panels", is_correct: false },
+      { text: "Subinterfaces cannot be assigned IPv4 addresses", is_correct: false }
+    ]
+  },
+  {
+    stem: "In OSPF, what is an Area Border Router (ABR)?",
+    explanation: "An ABR is an OSPF router with interfaces attached to multiple areas, at least one of which must be Area 0 (the backbone area). It maintains separate LSDBs for each attached area.",
+    domain: "ip_routing",
+    subtopic: "OSPF Architecture",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "A router with interfaces connected to two or more OSPF areas, at least one of which is Area 0", is_correct: true },
+      { text: "A router that redistributes routes between OSPF and BGP", is_correct: false },
+      { text: "The router with the highest IP address in an isolated single area", is_correct: false },
+      { text: "A router that has all interfaces in a stub area", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which wildcard mask corresponds to a /26 subnet mask (255.255.255.192) when configuring an OSPF 'network' statement in Cisco IOS?",
+    explanation: "Wildcard mask = 255.255.255.255 - Subnet Mask. 255.255.255.255 - 255.255.255.192 = 0.0.0.63.",
+    domain: "ip_routing",
+    subtopic: "OSPF Configuration",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "0.0.0.63", is_correct: true },
+      { text: "0.0.0.31", is_correct: false },
+      { text: "0.0.0.127", is_correct: false },
+      { text: "0.0.0.255", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SERVICES_SECURITY (11 questions)
+  // ==========================================
+  {
+    stem: "How does Secure Copy Protocol (SCP) authenticate users and encrypt file transfers to and from Cisco network switches?",
+    explanation: "SCP operates on top of Secure Shell (SSH, TCP port 22). It relies on SSH for user authentication (passwords or public keys) and encrypts all transferred data payloads using symmetric ciphers (e.g. AES).",
+    domain: "services_security",
+    subtopic: "Secure File Transfer",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It runs over SSH (TCP port 22), utilizing SSH authentication and cryptographic encryption", is_correct: true },
+      { text: "It runs over TFTP UDP port 69 using MD5 checksum signatures", is_correct: false },
+      { text: "It establishes an unencrypted FTP data session on port 20", is_correct: false },
+      { text: "It encapsulates files inside SNMPv1 community strings", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS global configuration command enables Dynamic ARP Inspection across VLANs 10, 20, and 30?",
+    explanation: "The global configuration command to activate DAI for specific VLANs is `ip arp inspection vlan <vlan-list>` (e.g., `ip arp inspection vlan 10,20,30`).",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "ip arp inspection vlan 10,20,30", is_correct: true },
+      { text: "arp inspection enable 10 20 30", is_correct: false },
+      { text: "set dai vlan 10-30", is_correct: false },
+      { text: "ip dhcp snooping arp vlan 10,20,30", is_correct: false }
+    ]
+  },
+  {
+    stem: "When Dynamic ARP Inspection (DAI) is activated on a switch, how should the uplink port connecting to the default gateway router be configured?",
+    explanation: "Because the gateway router legitimately answers ARP requests for its own IP and does not register via DHCP snooping, its connecting switch port must be configured as trusted using `ip arp inspection trust`.",
+    domain: "services_security",
+    subtopic: "Dynamic ARP Inspection",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Configured as trusted using 'ip arp inspection trust'", is_correct: true },
+      { text: "Configured as untrusted using 'ip arp inspection untrusted'", is_correct: false },
+      { text: "Configured with 'switchport port-security violation shutdown'", is_correct: false },
+      { text: "Configured as a SPAN destination monitor port", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which remote access VPN mode allows users to access internal web-based corporate applications using only a standard web browser without requiring a pre-installed software client?",
+    explanation: "Clientless SSL/TLS VPN allows users to securely access web-based applications, portal shares, and email through a standard web browser without installing client software.",
+    domain: "services_security",
+    subtopic: "IPsec Remote Access",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Clientless SSL VPN", is_correct: true },
+      { text: "Full Tunnel IPsec VPN", is_correct: false },
+      { text: "GRE over IPsec tunnel", is_correct: false },
+      { text: "DMVPN Phase 3", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of NAT Traversal (NAT-T) in IPsec Remote Access VPNs?",
+    explanation: "NAT Traversal encapsulates IPsec ESP packets inside UDP port 4500 headers. This prevents NAT devices from dropping or failing to translate ESP packets, which lack Layer 4 port numbers.",
+    domain: "services_security",
+    subtopic: "IPsec Remote Access",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It encapsulates IPsec ESP packets in UDP port 4500 to allow them to pass through intermediate PAT/NAT routers", is_correct: true },
+      { text: "It converts IPv4 VPN connections to IPv6 without cryptographic overhead", is_correct: false },
+      { text: "It compresses video data streams across low-bandwidth WAN connections", is_correct: false },
+      { text: "It assigns dynamic public IP addresses to client workstations", is_correct: false }
+    ]
+  },
+  {
+    stem: "In IPsec architecture, what is a Security Association (SA)?",
+    explanation: "A Security Association (SA) is a simplex (one-way) logical agreement between two communicating IPsec peers that defines the encryption algorithms, cryptographic keys, and parameters used to protect data.",
+    domain: "services_security",
+    subtopic: "IPsec Site-to-Site",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "A one-way agreement between two peers establishing the shared encryption keys and security parameters for data transmission", is_correct: true },
+      { text: "A physical fiber patch panel connecting redundant routers", is_correct: false },
+      { text: "A digital certificate issued by an external public Certificate Authority", is_correct: false },
+      { text: "An access control list applied to the external WAN interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the function of a DNS Pointer (PTR) resource record in domain name resolution?",
+    explanation: "A PTR record enables Reverse DNS lookups, mapping an IP address back to its corresponding canonical Fully Qualified Domain Name (FQDN) in the `in-addr.arpa` (IPv4) or `ip6.arpa` (IPv6) zones.",
+    domain: "services_security",
+    subtopic: "DNS Record Types",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It maps an IP address back to a domain hostname (Reverse DNS lookup)", is_correct: true },
+      { text: "It creates an alias pointing one domain name to another domain name", is_correct: false },
+      { text: "It specifies the primary authoritative name server for a DNS zone", is_correct: false },
+      { text: "It verifies domain ownership for TLS/SSL certificates", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which standard AAA protocol uses UDP, combines authentication and authorization into a single transaction, and encrypts only the password field within the packet?",
+    explanation: "RADIUS (Remote Authentication Dial-In User Service) uses UDP (ports 1812/1813 or 1645/1646), combines authentication and authorization, and encrypts only the user password. TACACS+ uses TCP port 49, separates AAA, and encrypts the entire payload.",
+    domain: "services_security",
+    subtopic: "AAA Security",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "RADIUS", is_correct: true },
+      { text: "TACACS+", is_correct: false },
+      { text: "Kerberos", is_correct: false },
+      { text: "Diameter", is_correct: false }
+    ]
+  },
+  {
+    stem: "When a host operating system attempts to renew its existing DHCP IP lease at the T1 timer, how does it transmit the DHCPREQUEST message?",
+    explanation: "At the T1 renewal point, the client sends a unicast DHCPREQUEST directly to the IP address of the DHCP server that originally granted the lease.",
+    domain: "services_security",
+    subtopic: "DHCP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "As a unicast packet directly to the leasing DHCP server", is_correct: true },
+      { text: "As a broadcast packet sent to 255.255.255.255", is_correct: false },
+      { text: "As an all-routers multicast packet sent to 224.0.0.2", is_correct: false },
+      { text: "As an encrypted IPsec payload over UDP port 4500", is_correct: false }
+    ]
+  },
+  {
+    stem: "When a router configured with 'ip helper-address' relays a client's DHCP request, which header field does it populate with its own local interface IP address?",
+    explanation: "The router inserts its own incoming interface IP address into the GIADDR (Gateway IP Address / Relay Agent IP Address) field of the DHCP message. The DHCP server uses GIADDR to select the appropriate address pool.",
+    domain: "services_security",
+    subtopic: "DHCP and Helper Address",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "GIADDR (Gateway IP Address field)", is_correct: true },
+      { text: "CHADDR (Client Hardware Address field)", is_correct: false },
+      { text: "YIADDR ('Your' Client IP Address field)", is_correct: false },
+      { text: "SIADDR (Next Server IP Address field)", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an extended Cisco IPv4 ACL, what is the meaning of the operator 'eq 80' in the statement 'permit tcp 192.168.1.0 0.0.0.255 any eq 80'?",
+    explanation: "The operator `eq` stands for 'equal to'. It filters packets whose destination TCP port number is exactly equal to 80 (HTTP).",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Matches packets whose destination port is strictly equal to TCP port 80 (HTTP)", is_correct: true },
+      { text: "Matches packets whose source IP address equals 80", is_correct: false },
+      { text: "Permits packets with a TTL value equal to 80", is_correct: false },
+      { text: "Limits bandwidth throughput to 80 percent of line rate", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // AI_OPS (5 questions)
+  // ==========================================
+  {
+    stem: "What default destination port is standardly used by gRPC-based Model-Driven Telemetry streaming over TLS on Cisco network devices?",
+    explanation: "gRPC Network Management Interface (gNMI) and dial-in model-driven telemetry standardly use TCP port 57400 (or 57344 for cleartext gRPC).",
+    domain: "ai_ops",
+    subtopic: "Telemetry and Monitoring",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "TCP port 57400", is_correct: true },
+      { text: "UDP port 161", is_correct: false },
+      { text: "TCP port 8080", is_correct: false },
+      { text: "UDP port 514", is_correct: false }
+    ]
+  },
+  {
+    stem: "In network AIOps operations, what is 'Event Correlation' and why is it critical for modern Network Operations Centers (NOCs)?",
+    explanation: "When a major network link fails, hundreds of secondary alarms trigger across dependent devices. AIOps Event Correlation groups these related alerts together using topological awareness, identifying the single root cause and eliminating alert fatigue.",
+    domain: "ai_ops",
+    subtopic: "AIOps Fundamentals",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It analyzes thousands of simultaneous device alerts, identifies their topological relationship, and consolidates them into a single root-cause incident", is_correct: true },
+      { text: "It translates CLI show commands into Python dictionary objects", is_correct: false },
+      { text: "It measures the physical temperature of fiber optic patch cords", is_correct: false },
+      { text: "It encrypts syslog messages before sending them to the logging server", is_correct: false }
+    ]
+  },
+  {
+    stem: "Before deploying a network automation Python script generated by an AI assistant to production switches, what is the mandatory NetDevOps validation practice?",
+    explanation: "AI-generated code must undergo peer review, syntax checking, and dry-run testing against virtualized models or digital twins (such as Cisco CML or pyATS) in a sandbox environment to verify correctness and safety before production execution.",
+    domain: "ai_ops",
+    subtopic: "AI Output Validation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Conduct code review and test execution in a virtualized sandbox or simulation lab (e.g. pyATS or CML) before production deployment", is_correct: true },
+      { text: "Execute the script directly on the production core switch with privilege level 15", is_correct: false },
+      { text: "Convert the script into an unmanaged bash binary file", is_correct: false },
+      { text: "Reboot all access switches prior to script execution", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Agentic AI architecture, how does the 'ReAct' (Reasoning + Acting) pattern solve network diagnostics?",
+    explanation: "In ReAct, an AI agent alternates between 'Thought' (reasoning about what the current network state means), 'Action' (calling a specific tool, API, or CLI command), and 'Observation' (analyzing tool output), iterating systematically until resolving the problem.",
+    domain: "ai_ops",
+    subtopic: "Agentic AI",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "The agent alternates between reasoning thoughts, taking tool actions (e.g. running show commands), and observing outputs to systematically resolve issues", is_correct: true },
+      { text: "The agent generates hundreds of random passwords to brute-force router access", is_correct: false },
+      { text: "The agent operates as a reactive rule-based static script without reasoning", is_correct: false },
+      { text: "The agent continuously pings the default gateway until line protocol recovers", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Puppet and Chef configuration management architectures, what component must be installed locally on managed nodes to enforce configuration state?",
+    explanation: "Puppet and Chef rely on an 'agent' software daemon running locally on the managed target system to communicate with the master server, pull policy manifests, and enforce state. (Ansible, by contrast, is agentless over SSH).",
+    domain: "ai_ops",
+    subtopic: "Configuration Management",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "An Agent software daemon", is_correct: true },
+      { text: "A physical hardware crypto-token", is_correct: false },
+      { text: "A dedicated optical transceiver", is_correct: false },
+      { text: "An SNMP Trap receiver", is_correct: false }
+    ]
+  }
+];
+
+const batchPath = path.join(__dirname, 'batches', 'seed-30-volume.json');
+fs.writeFileSync(batchPath, JSON.stringify(questions, null, 2) + '\n');
+console.log(`Generated ${questions.length} questions in ${batchPath}`);

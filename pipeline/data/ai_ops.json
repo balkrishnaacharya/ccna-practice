@@ -4158,5 +4158,1309 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "In a cloud-managed networking architecture such as Cisco Meraki, what is the separation between the control/management plane and the data plane?",
+    "explanation": "In cloud-managed networks, the management and control plane functions reside centrally in the cloud dashboard, while the data plane remains distributed locally on on-premises switches, APs, and security appliances to forward client packets without cloud latency.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Management and control are centralized in the cloud, while the data plane remains local on physical devices",
+        "is_correct": true
+      },
+      {
+        "text": "All user data frames are tunneled through the cloud provider before local delivery",
+        "is_correct": false
+      },
+      {
+        "text": "The data plane runs in cloud VMs while physical devices only function as management monitors",
+        "is_correct": false
+      },
+      {
+        "text": "Control and data planes are merged into physical firmware, with cloud serving only for periodic billing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What key characteristic distinguishes declarative Infrastructure as Code (IaC) tools like Terraform from imperative configuration scripts?",
+    "explanation": "Declarative IaC allows engineers to define the desired end state of infrastructure (what it should look like), and the tool automatically determines the steps to achieve it. Imperative scripts require defining the exact sequence of CLI commands and steps to execute.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Declarative tools specify the desired end state, leaving the tool to compute required changes, whereas imperative tools require explicit procedural commands",
+        "is_correct": true
+      },
+      {
+        "text": "Declarative tools can only configure cloud instances, while imperative tools configure physical Cisco switches",
+        "is_correct": false
+      },
+      {
+        "text": "Declarative tools require Python code execution, whereas imperative tools use YAML or JSON formatting",
+        "is_correct": false
+      },
+      {
+        "text": "Declarative tools do not maintain state files, whereas imperative tools require central state tracking",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In software-defined controller-based architectures like Cisco Catalyst Center (formerly DNA Center), which communication channel connects the controller to managed network devices such as switches and routers?",
+    "explanation": "Southbound APIs (SBIs) connect the SDN controller to physical network elements using protocols like NETCONF, RESTCONF, SSH, and SNMP. Northbound APIs (NBIs) connect the controller upward to business applications and orchestration platforms.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Southbound APIs (SBIs)",
+        "is_correct": true
+      },
+      {
+        "text": "Northbound APIs (NBIs)",
+        "is_correct": false
+      },
+      {
+        "text": "Eastbound orchestration buses",
+        "is_correct": false
+      },
+      {
+        "text": "Westbound telemetry sockets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does model-driven streaming telemetry fundamentally improve on traditional SNMP polling for real-time network monitoring and AIOps analytics?",
+    "explanation": "Unlike periodic SNMP polling (pull model) which creates CPU spikes and delayed visibility, streaming telemetry uses a push model where devices continuously stream structured YANG-modeled data at near real-time intervals over gRPC or NETCONF.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It uses a push model that continuously streams structured, YANG-modeled data in near real time, eliminating polling overhead and latency",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces TCP with UDP broadcast packets to eliminate network transmission handshakes",
+        "is_correct": false
+      },
+      {
+        "text": "It requires manual MIB compiling on every network collector before receiving metric alerts",
+        "is_correct": false
+      },
+      {
+        "text": "It only sends operational updates when an interface experiences a physical link-down event",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When using generative AI agents to draft network configuration changes for production routers, why is automated pre-deployment syntax validation and synthetic testing essential?",
+    "explanation": "LLMs can produce confident hallucinations, syntax errors, or subtle logical misconfigurations (like inverted ACL logic or invalid route targets). Automated linting, syntax validation, and sandbox digital twin simulation ensure safety before touching production gear.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To protect against model hallucinations, inverted ACL logic, and unsupported syntax before applying configurations to production devices",
+        "is_correct": true
+      },
+      {
+        "text": "Because AI models cannot output Cisco IOS configuration without an intermediary Python parser",
+        "is_correct": false
+      },
+      {
+        "text": "To satisfy IEEE 802.1X cryptographic requirements for machine-generated CLI scripts",
+        "is_correct": false
+      },
+      {
+        "text": "Because modern routers reject any SSH session initiated by an automated process",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In cloud-managed networking environments, what outbound communication protocol and destination port does a Cisco Meraki device use to maintain its persistent control connection to the Meraki Cloud Dashboard?",
+    "explanation": "Cisco Meraki devices initiate an outbound secure management tunnel to the Meraki Cloud Dashboard over UDP port 7351 (for hardware cloud tunnel connectivity) and HTTPS TCP port 443 (for backups and firmware downloads).",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Outbound UDP port 7351 and TCP port 443",
+        "is_correct": true
+      },
+      {
+        "text": "Inbound TCP port 22 and UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "Inbound TCP port 80 and TCP port 8080",
+        "is_correct": false
+      },
+      {
+        "text": "Outbound GRE encapsulation over IP protocol 47",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What transport protocol, encoding standard, and default port are utilized by RESTCONF (RFC 8040) for model-driven network configuration?",
+    "explanation": "RESTCONF (RFC 8040) operates over HTTPS (HTTP/1.1 or HTTP/2 over TLS) typically on TCP port 443 (or 80), using YANG data models with data encoded in either JSON or XML.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HTTPS (TCP port 443), with JSON or XML data encoding",
+        "is_correct": true
+      },
+      {
+        "text": "SSH (TCP port 830), with XML data encoding only",
+        "is_correct": false
+      },
+      {
+        "text": "gRPC (TCP port 50051), with Protocol Buffers encoding",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP (UDP port 161), with ASN.1 BER encoding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP verb in RESTCONF is used to create a new resource or execute a Remote Procedure Call (RPC) operation defined in a YANG model?",
+    "explanation": "In RESTCONF, POST is used to create a top-level resource or instantiate a child resource within a container/list, and to invoke RPC operations. GET reads, PUT replaces or creates, PATCH updates specific fields, and DELETE removes.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "POST",
+        "is_correct": true
+      },
+      {
+        "text": "GET",
+        "is_correct": false
+      },
+      {
+        "text": "PATCH",
+        "is_correct": false
+      },
+      {
+        "text": "HEAD",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What configuration management tools traditionally require an agent software daemon installed on the managed node to pull configuration manifests from a central master server?",
+    "explanation": "Puppet and Chef traditionally utilize an agent-based architecture where an agent installed on the managed node periodically contacts the central master (Puppet Master or Chef Server) to pull and enforce desired configuration state.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Puppet and Chef",
+        "is_correct": true
+      },
+      {
+        "text": "Ansible and Terraform",
+        "is_correct": false
+      },
+      {
+        "text": "RESTCONF and NETCONF",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP and Syslog",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In modern AIOps and network automation workflows, what is the role of a 'digital twin' sandbox environment prior to executing configuration changes on production equipment?",
+    "explanation": "A digital twin is a software replica or virtualized simulation of the production network topology. It allows automated pipelines to test proposed AI-generated changes, routing configurations, and security policies for unintended consequences before touching physical infrastructure.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Provides a virtualized simulation replica of the production network to validate changes and detect anomalies prior to live deployment",
+        "is_correct": true
+      },
+      {
+        "text": "Acts as a primary cloud backup repository for archiving running configuration text files",
+        "is_correct": false
+      },
+      {
+        "text": "Monitors physical datacenter rack temperatures using IoT thermal sensors",
+        "is_correct": false
+      },
+      {
+        "text": "Translates IPv4 packets to IPv6 using stateful NAT64 translation tables",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In network telemetry architectures, what is the difference between dial-in and dial-out model-driven telemetry?",
+    "explanation": "In dial-in telemetry, the network management station (collector) establishes a session to the router and requests data. In dial-out telemetry, the network device (router) initiates the session to the configured collector and pushes telemetry streams, simplifying firewall traversal.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In dial-in, the collector initiates the session to the router; in dial-out, the router initiates the session and streams data to the collector",
+        "is_correct": true
+      },
+      {
+        "text": "Dial-in uses UDP transport while dial-out uses TCP transport only",
+        "is_correct": false
+      },
+      {
+        "text": "Dial-in is supported only on serial WAN connections, while dial-out is supported on Ethernet only",
+        "is_correct": false
+      },
+      {
+        "text": "Dial-in transmits SNMP MIB traps while dial-out transmits raw syslog messages",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In cloud-managed networks, what happens to local LAN traffic forwarding on a Cisco Meraki switch if its internet uplink to the Meraki Cloud Dashboard is temporarily severed?",
+    "explanation": "Because control plane and data plane operations are decoupled, Meraki devices continue to forward all local Layer 2 and Layer 3 traffic normally using their cached running configuration even if the connection to the cloud dashboard is lost.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Local traffic forwarding continues uninterrupted using cached configuration settings",
+        "is_correct": true
+      },
+      {
+        "text": "All switch ports immediately shut down and enter err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "The switch reboots continuously until an internet connection is re-established",
+        "is_correct": false
+      },
+      {
+        "text": "The switch resets its configuration to factory defaults",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Software-Defined Networking (SDN), what is the difference between Southbound APIs and Northbound APIs on a network controller?",
+    "explanation": "Southbound APIs allow the SDN controller to program and monitor the underlying physical and virtual network data plane devices. Northbound APIs provide RESTful interfaces for external applications, DevOps scripts, and policy orchestrators.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Southbound APIs (e.g., OpenFlow, NETCONF) communicate between the controller and network devices; Northbound APIs (e.g., REST) communicate between the controller and business applications/orchestrators",
+        "is_correct": true
+      },
+      {
+        "text": "Southbound APIs connect to public cloud providers; Northbound APIs manage local hardware ASICs",
+        "is_correct": false
+      },
+      {
+        "text": "Southbound APIs provide graphical web dashboards; Northbound APIs stream telemetry to time-series databases",
+        "is_correct": false
+      },
+      {
+        "text": "Southbound APIs operate over UDP; Northbound APIs operate exclusively over Coaxial cables",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the principle of 'Idempotence' mean when executing Ansible playbooks or Terraform configurations on network devices?",
+    "explanation": "Idempotence is the property where executing an automation task repeatedly produces the exact same end state as executing it once, only applying changes when the current state diverges from the desired state.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Applying the configuration multiple times results in the same intended system state without making unintended changes or duplicate entries",
+        "is_correct": true
+      },
+      {
+        "text": "The automation script automatically rolls back to factory default if any device fails to reboot within 60 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "The configuration compiles directly into hardware microcode on router network interface cards",
+        "is_correct": false
+      },
+      {
+        "text": "All configuration variables are encrypted using asymmetric RSA key pairs before execution",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a cloud-managed network architecture (such as Cisco Meraki), where does the Management and Control plane reside versus the Data (Forwarding) plane?",
+    "explanation": "In cloud-managed networks, configuration, monitoring, and AI analytics (management and control) are hosted centrally in the cloud. Local hardware switches, APs, and firewalls retain the data plane and forward user packets locally at line rate.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Management and Control planes reside centrally in the cloud vendor's data center; Data plane forwarding resides locally on physical devices at the customer site",
+        "is_correct": true
+      },
+      {
+        "text": "All three planes (Management, Control, and Data) reside exclusively inside the public cloud",
+        "is_correct": false
+      },
+      {
+        "text": "Data plane resides in the cloud, while Management plane resides on local hardware switches",
+        "is_correct": false
+      },
+      {
+        "text": "Management plane resides on a dedicated on-premise hardware appliance in each wiring closet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is Git-based version control considered essential in modern NetDevOps and Infrastructure as Code (IaC) workflows?",
+    "explanation": "Storing network configurations and automation scripts as code in Git enables change tracking, rollback capabilities, collaborative peer reviews (PRs), and automated testing pipelines (CI/CD) before pushing changes to production.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It provides an auditable history of network configuration changes, enables peer code reviews via pull requests, and supports automated CI/CD validation testing before deployment",
+        "is_correct": true
+      },
+      {
+        "text": "It eliminates the need for dynamic routing protocols by computing static routing tables in software",
+        "is_correct": false
+      },
+      {
+        "text": "It replaces hardware switch forwarding tables with distributed hash tables stored on GitHub",
+        "is_correct": false
+      },
+      {
+        "text": "It automatically converts IPv4 routing configurations to IPv6 without manual intervention",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When using a Large Language Model (LLM) to generate Cisco IOS ACL configuration snippets, why is 'few-shot prompting' (providing 2-3 examples of input criteria and desired syntax) more effective than 'zero-shot prompting'?",
+    "explanation": "Few-shot prompting provides contextual demonstration pairs within the prompt. This guides the generative model to conform to the exact required syntax, command structure, and style rules, minimizing hallucinations.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It establishes the precise syntax format, naming conventions, and constraints for the model to follow, dramatically reducing hallucinations and syntax errors",
+        "is_correct": true
+      },
+      {
+        "text": "It permanently fine-tunes the underlying model weights on the remote server",
+        "is_correct": false
+      },
+      {
+        "text": "It bypasses the LLM token context window limit by compressing the model weights",
+        "is_correct": false
+      },
+      {
+        "text": "It forces the LLM to execute the configuration directly on the production router via SSH",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Software-Defined Access (SD-Access), what constitutes the Underlay network versus the Overlay network?",
+    "explanation": "The underlay consists of the physical networking hardware and routed IP fabric (typically IS-IS or OSPF) providing basic IP reachability. The overlay is the logical virtualized network (using VXLAN for data plane encapsulation and LISP for control plane) running on top.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Underlay is the physical routed IP network; Overlay is the virtualized logical topology encapsulated via VXLAN tunnels",
+        "is_correct": true
+      },
+      {
+        "text": "Underlay is the cloud dashboard GUI; Overlay is the copper cabling connecting access switches",
+        "is_correct": false
+      },
+      {
+        "text": "Underlay handles Layer 7 inspection; Overlay handles physical fiber optics",
+        "is_correct": false
+      },
+      {
+        "text": "Underlay is the remote branch WAN; Overlay is the enterprise data center SAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the core distinction between Declarative and Imperative configuration management paradigms in network automation?",
+    "explanation": "Declarative tools (like Terraform and Ansible) describe the desired final state of the system without specifying how to achieve it. Imperative tools describe the exact sequence of individual commands required to reach the target state.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Declarative specifies the desired end-state; Imperative specifies the sequential step-by-step procedures to achieve it",
+        "is_correct": true
+      },
+      {
+        "text": "Declarative requires Python runtime; Imperative requires Bash shell exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Declarative runs only on edge switches; Imperative runs only on core routers",
+        "is_correct": false
+      },
+      {
+        "text": "Declarative requires proprietary licensing; Imperative is always open source",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is Model-Driven Streaming Telemetry superior to legacy SNMP polling for large-scale enterprise network monitoring?",
+    "explanation": "Streaming telemetry is push-based, streaming structured data (modeled in YANG) continuously at sub-second intervals directly from network ASICs. SNMP is pull-based, requiring periodic polling requests that burden device CPUs and miss transient spikes.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It pushes real-time, continuous YANG-structured data at high frequency without the CPU overhead of repetitive polling requests",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces Ethernet cabling with optical satellite links",
+        "is_correct": false
+      },
+      {
+        "text": "It converts all binary packets into plain-text ASCII log files",
+        "is_correct": false
+      },
+      {
+        "text": "It operates without requiring IP addresses on network interfaces",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In network AIOps platforms, how does machine-learning-based Anomaly Detection assist with dynamic baseline drift?",
+    "explanation": "Rather than relying on static alert thresholds (e.g. CPU > 80%), ML algorithms learn normal diurnal traffic patterns, seasons, and shifts, dynamically adjusting alert baselines to detect real anomalies while eliminating false positives.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It continuously learns operational patterns and dynamically adjusts threshold boundaries to identify genuine deviations while suppressing false alerts",
+        "is_correct": true
+      },
+      {
+        "text": "It automatically purchases replacement hardware switches when interface errors exceed 5%",
+        "is_correct": false
+      },
+      {
+        "text": "It converts IPv4 routing protocols to BGP without human intervention",
+        "is_correct": false
+      },
+      {
+        "text": "It reboots all distribution switches simultaneously when memory usage reaches 50%",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When utilizing an LLM to generate network configuration changes, why is automated pre-flight validation (such as using Batfish or pyATS) critical in a NetDevOps pipeline?",
+    "explanation": "Automated pre-flight validation models and tests configuration changes against a digital twin or virtual representation before deployment, detecting AI hallucinations, syntax bugs, or potential routing blackholes before production impact.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To verify syntax and simulate forwarding behavior against a network model, catching hallucinations or routing loops prior to production deployment",
+        "is_correct": true
+      },
+      {
+        "text": "To compress configuration text files so they fit onto 1.44 MB floppy disks",
+        "is_correct": false
+      },
+      {
+        "text": "To translate Cisco IOS CLI syntax into proprietary mainframe assembly code",
+        "is_correct": false
+      },
+      {
+        "text": "To encrypt the running configuration with a single-use OTP password",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In network automation and modern NetDevOps, what defines an 'Agentic AI' system?",
+    "explanation": "An Agentic AI system possesses autonomous reasoning and tool-use capabilities. Rather than simply answering text prompts, it can decompose complex objectives, query telemetry APIs, execute CLI or REST commands, evaluate responses, and take iterative corrective actions.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An autonomous AI workflow that plans multi-step actions, invokes tools/APIs, and verifies execution results against a target goal",
+        "is_correct": true
+      },
+      {
+        "text": "A software daemon installed permanently on legacy IOS 12.2 access switches",
+        "is_correct": false
+      },
+      {
+        "text": "A specialized hardware coprocessor used strictly for AES-256 IPsec encryption",
+        "is_correct": false
+      },
+      {
+        "text": "A proprietary Cisco routing protocol that replaces OSPF and EIGRP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Ansible network automation, what data serialization format is used to write Playbooks, and what transport protocol is typically used to execute modules on Cisco switches?",
+    "explanation": "Ansible Playbooks are written in YAML (human-readable data format). For Cisco network devices, Ansible connects agentlessly over SSH to execute commands and gather facts.",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "YAML for Playbooks, connecting over SSH to execute commands",
+        "is_correct": true
+      },
+      {
+        "text": "XML for Playbooks, connecting over SNMP UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "JSON for Playbooks, connecting over TFTP port 69",
+        "is_correct": false
+      },
+      {
+        "text": "Python scripts, connecting exclusively over optical fiber console cables",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which lightweight data serialization format represents structured data using key-value pairs inside curly braces '{}' and ordered lists inside square brackets '[]'?",
+    "explanation": "JSON (JavaScript Object Notation) is a ubiquitous lightweight data-interchange format where objects are enclosed in curly braces `{}` and arrays are enclosed in square brackets `[]`.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "JSON (JavaScript Object Notation)",
+        "is_correct": true
+      },
+      {
+        "text": "XML (Extensible Markup Language)",
+        "is_correct": false
+      },
+      {
+        "text": "YAML (YAML Ain't Markup Language)",
+        "is_correct": false
+      },
+      {
+        "text": "CSV (Comma-Separated Values)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In enterprise NetDevOps, what is Retrieval-Augmented Generation (RAG) and why is it beneficial for network troubleshooting chatbots?",
+    "explanation": "RAG retrieves authoritative private network topology maps, hardware manuals, and live device state from a vector database and includes them in the LLM prompt. This grounds the AI's responses with real facts, reducing hallucinations and providing context-aware troubleshooting advice.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It augments an LLM prompt by retrieving private network documentation and state from external databases, grounding AI responses in factual context",
+        "is_correct": true
+      },
+      {
+        "text": "It retrains the LLM foundation weights every 5 minutes using high-speed optical transceivers",
+        "is_correct": false
+      },
+      {
+        "text": "It translates natural language questions into raw machine assembly code",
+        "is_correct": false
+      },
+      {
+        "text": "It replaces hardware switch forwarding ASICs with generative neural network processors",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which data modeling language is standardized by the IETF (RFC 6020/7950) to describe the configuration and state data structures utilized by NETCONF and RESTCONF?",
+    "explanation": "YANG (Yet Another Next Generation) is the standard data modeling language used to define configuration and operational state data sent over network management protocols like NETCONF and RESTCONF.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "YANG (Yet Another Next Generation)",
+        "is_correct": true
+      },
+      {
+        "text": "HTML5",
+        "is_correct": false
+      },
+      {
+        "text": "SQL",
+        "is_correct": false
+      },
+      {
+        "text": "GraphQL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In cloud-managed enterprise networking, what is Zero-Touch Provisioning (ZTP)?",
+    "explanation": "ZTP enables network hardware to be deployed and configured automatically without manual on-site CLI configuration: when connected to the network, the device obtains an IP via DHCP, contacts its cloud controller, downloads its configuration and firmware, and becomes operational.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An automated provisioning process where an unconfigured device connects to power/network, contacts its cloud controller, and pulls its configuration automatically",
+        "is_correct": true
+      },
+      {
+        "text": "A biometric access control method for data center server racks",
+        "is_correct": false
+      },
+      {
+        "text": "A protocol that disables all physical switch ports until manually activated",
+        "is_correct": false
+      },
+      {
+        "text": "An automated cable-testing sequence performed by PoE switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Catalyst Center (formerly DNA Center), what is the function of the 'Assurance' module?",
+    "explanation": "Cisco Catalyst Center Assurance ingests telemetry across all network devices, wireless controllers, and clients. Using AI and machine learning, it calculates health scores, provides root-cause analysis for anomalies, and suggests guided remediation actions.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It continuously collects network telemetry to provide client/device health scores, AI-driven root-cause analysis, and guided remediation",
+        "is_correct": true
+      },
+      {
+        "text": "It distributes software licenses and handles monthly billing invoicing",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts all copper Ethernet cables using quantum key distribution",
+        "is_correct": false
+      },
+      {
+        "text": "It acts as a primary Authoritative DNS root nameserver",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is Terraform, and what domain-specific configuration language does it use to define infrastructure resources?",
+    "explanation": "Terraform is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp that uses declarative HashiCorp Configuration Language (HCL) to provision and manage cloud and network resources.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An open-source Infrastructure as Code tool that utilizes HashiCorp Configuration Language (HCL)",
+        "is_correct": true
+      },
+      {
+        "text": "A Python web framework that uses Jinja2 HTML templates",
+        "is_correct": false
+      },
+      {
+        "text": "A hardware network emulator running proprietary Cisco ASIC microcode",
+        "is_correct": false
+      },
+      {
+        "text": "A relational database query engine based on SQL-92",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In continuous integration and continuous deployment (CI/CD) pipelines for network automation, what is a 'Canary Deployment'?",
+    "explanation": "A Canary Deployment introduces a configuration or firmware change to a tiny subset of devices or a single branch site first. Automated monitoring evaluates its performance before rolling out the update to the broader network.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Rolling out changes to a small initial group of test devices to validate real-world performance before full production deployment",
+        "is_correct": true
+      },
+      {
+        "text": "Deploying changes strictly during a weekend maintenance window without rollback scripts",
+        "is_correct": false
+      },
+      {
+        "text": "Simultaneously rebooting all enterprise core switches to clear RAM caches",
+        "is_correct": false
+      },
+      {
+        "text": "Rewriting all Python scripts in Rust to maximize CPU efficiency",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In prompt engineering for network troubleshooting with Large Language Models, what is 'Chain-of-Thought' (CoT) prompting?",
+    "explanation": "Chain-of-Thought (CoT) prompting encourages the model to generate intermediate step-by-step reasoning steps before arriving at a final answer (e.g. 'explain your reasoning step by step'), which dramatically improves diagnostic accuracy on complex networking problems.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Instructing the model to articulate intermediate step-by-step reasoning before stating its final conclusion, improving accuracy on complex diagnostic tasks",
+        "is_correct": true
+      },
+      {
+        "text": "Connecting multiple LLM models together using optical InfiniBand cables",
+        "is_correct": false
+      },
+      {
+        "text": "Limiting the prompt length to fewer than 10 words",
+        "is_correct": false
+      },
+      {
+        "text": "Forcing the model to output answers exclusively in hexadecimal notation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What default destination port is standardly used by gRPC-based Model-Driven Telemetry streaming over TLS on Cisco network devices?",
+    "explanation": "gRPC Network Management Interface (gNMI) and dial-in model-driven telemetry standardly use TCP port 57400 (or 57344 for cleartext gRPC).",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP port 57400",
+        "is_correct": true
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 8080",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 514",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In network AIOps operations, what is 'Event Correlation' and why is it critical for modern Network Operations Centers (NOCs)?",
+    "explanation": "When a major network link fails, hundreds of secondary alarms trigger across dependent devices. AIOps Event Correlation groups these related alerts together using topological awareness, identifying the single root cause and eliminating alert fatigue.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It analyzes thousands of simultaneous device alerts, identifies their topological relationship, and consolidates them into a single root-cause incident",
+        "is_correct": true
+      },
+      {
+        "text": "It translates CLI show commands into Python dictionary objects",
+        "is_correct": false
+      },
+      {
+        "text": "It measures the physical temperature of fiber optic patch cords",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts syslog messages before sending them to the logging server",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Before deploying a network automation Python script generated by an AI assistant to production switches, what is the mandatory NetDevOps validation practice?",
+    "explanation": "AI-generated code must undergo peer review, syntax checking, and dry-run testing against virtualized models or digital twins (such as Cisco CML or pyATS) in a sandbox environment to verify correctness and safety before production execution.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Conduct code review and test execution in a virtualized sandbox or simulation lab (e.g. pyATS or CML) before production deployment",
+        "is_correct": true
+      },
+      {
+        "text": "Execute the script directly on the production core switch with privilege level 15",
+        "is_correct": false
+      },
+      {
+        "text": "Convert the script into an unmanaged bash binary file",
+        "is_correct": false
+      },
+      {
+        "text": "Reboot all access switches prior to script execution",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Agentic AI architecture, how does the 'ReAct' (Reasoning + Acting) pattern solve network diagnostics?",
+    "explanation": "In ReAct, an AI agent alternates between 'Thought' (reasoning about what the current network state means), 'Action' (calling a specific tool, API, or CLI command), and 'Observation' (analyzing tool output), iterating systematically until resolving the problem.",
+    "domain": "ai_ops",
+    "subtopic": "Agentic AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The agent alternates between reasoning thoughts, taking tool actions (e.g. running show commands), and observing outputs to systematically resolve issues",
+        "is_correct": true
+      },
+      {
+        "text": "The agent generates hundreds of random passwords to brute-force router access",
+        "is_correct": false
+      },
+      {
+        "text": "The agent operates as a reactive rule-based static script without reasoning",
+        "is_correct": false
+      },
+      {
+        "text": "The agent continuously pings the default gateway until line protocol recovers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Puppet and Chef configuration management architectures, what component must be installed locally on managed nodes to enforce configuration state?",
+    "explanation": "Puppet and Chef rely on an 'agent' software daemon running locally on the managed target system to communicate with the master server, pull policy manifests, and enforce state. (Ansible, by contrast, is agentless over SSH).",
+    "domain": "ai_ops",
+    "subtopic": "Configuration Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An Agent software daemon",
+        "is_correct": true
+      },
+      {
+        "text": "A physical hardware crypto-token",
+        "is_correct": false
+      },
+      {
+        "text": "A dedicated optical transceiver",
+        "is_correct": false
+      },
+      {
+        "text": "An SNMP Trap receiver",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How do cloud-managed networking hardware devices (such as Cisco Meraki switches) establish and maintain secure control plane communications with the cloud management dashboard through corporate firewalls?",
+    "explanation": "Cloud-managed devices initiate outbound TLS/HTTPS connections (typically TCP port 443) to the cloud dashboard. Because the connection is outbound-initiated, it requires no inbound firewall pinholes or port-forwarding rules.",
+    "domain": "ai_ops",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "By establishing outbound TLS/HTTPS management tunnels (TCP 443) from the device to the cloud controller, requiring no inbound firewall pinholes",
+        "is_correct": true
+      },
+      {
+        "text": "By opening inbound TCP port 23 (Telnet) on the boundary enterprise firewall",
+        "is_correct": false
+      },
+      {
+        "text": "By establishing unencrypted UDP broadcasts across public ISP links",
+        "is_correct": false
+      },
+      {
+        "text": "By requiring dedicated physical fiber circuits directly to the cloud provider's data center",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Catalyst Center (DNA Center) automation workflows, what is the purpose of the Network Plug and Play (PnP) agent embedded in Cisco IOS-XE devices?",
+    "explanation": "The embedded PnP agent automatically contacts the Catalyst Center controller when a new device boots up out-of-the-box, automating initial onboarding, software image upgrades, and initial configuration deployment without manual console intervention.",
+    "domain": "ai_ops",
+    "subtopic": "Controller-Based Management",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It automatically contacts the Catalyst Center controller upon initial boot to automate device onboarding, firmware upgrades, and configuration provisioning",
+        "is_correct": true
+      },
+      {
+        "text": "It generates dynamic BGP peering sessions with public cloud gateways",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts all copper patch cables using MACsec hardware acceleration",
+        "is_correct": false
+      },
+      {
+        "text": "It tests physical Ethernet cables for late collision faults",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In YAML syntax commonly used in Ansible playbooks, how are hierarchical structures, parent-child relationships, and nested dictionaries denoted?",
+    "explanation": "YAML represents hierarchy and nesting strictly through consistent whitespace indentation (using spaces, never tabs).",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Through consistent whitespace indentation using spaces",
+        "is_correct": true
+      },
+      {
+        "text": "Through matching pairs of curly braces '{}'",
+        "is_correct": false
+      },
+      {
+        "text": "Through XML-style opening and closing tags (<tag></tag>)",
+        "is_correct": false
+      },
+      {
+        "text": "Through semicolons at the end of each line",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When using an AI assistant to analyze voluminous multi-megabyte router syslog files, what is 'Context Window Limit' and how does it impact diagnostic analysis?",
+    "explanation": "The context window represents the maximum token capacity an LLM can process in a single prompt. If log files exceed this limit, earlier entries are truncated or dropped, requiring chunking or preprocessing.",
+    "domain": "ai_ops",
+    "subtopic": "Generative AI",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The maximum number of tokens the model can accept in a single prompt; exceeding it truncates log data and requires preprocessing or chunking",
+        "is_correct": true
+      },
+      {
+        "text": "The physical RAM limit of the network switch supervisor engine",
+        "is_correct": false
+      },
+      {
+        "text": "The maximum TCP window size negotiated during SSH file transfers",
+        "is_correct": false
+      },
+      {
+        "text": "The screen resolution limit of the monitoring console",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Git-based NetDevOps automation workflows, what is the role of a 'Pull Request' (PR) / Merge Request?",
+    "explanation": "A Pull Request provides a formal workflow for team members to inspect, comment on, and run automated CI/CD pipeline tests (linting, syntax validation, security checks) on proposed network changes before merging them into the production branch.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It provides a formal mechanism for peer code review and automated CI/CD testing before configuration changes are merged into the production branch",
+        "is_correct": true
+      },
+      {
+        "text": "It downloads the latest Cisco IOS-XE binary images directly from Cisco.com",
+        "is_correct": false
+      },
+      {
+        "text": "It pulls dynamic routing updates from neighboring BGP peers",
+        "is_correct": false
+      },
+      {
+        "text": "It forces all network switches to revert to factory default settings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In network Infrastructure as Code (IaC), what is 'Configuration Drift'?",
+    "explanation": "Configuration drift occurs when manual CLI or ad-hoc changes are made directly on network devices, causing the actual device configuration to diverge from the source of truth stored in the Git repository.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The gradual divergence between the actual device configuration and the declared state stored in the Git repository due to ad-hoc manual changes",
+        "is_correct": true
+      },
+      {
+        "text": "The physical degradation of copper patch cords over multiple years",
+        "is_correct": false
+      },
+      {
+        "text": "The shift in system clock time between NTP stratum servers",
+        "is_correct": false
+      },
+      {
+        "text": "The fluctuation of radio frequency channels in Wi-Fi networks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is 'Zero-Shot Prompting' when using a Large Language Model (LLM) for network automation or troubleshooting?",
+    "explanation": "Zero-shot prompting refers to asking the LLM to solve a problem or generate code directly without providing any prior contextual examples or demonstrations in the prompt.",
+    "domain": "ai_ops",
+    "subtopic": "Prompt Engineering",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Prompting the model to perform a task directly without providing any examples or reference demonstrations in the prompt",
+        "is_correct": true
+      },
+      {
+        "text": "Executing a script without passing any command-line arguments",
+        "is_correct": false
+      },
+      {
+        "text": "Rebooting a router without saving the running configuration to NVRAM",
+        "is_correct": false
+      },
+      {
+        "text": "Deploying automation without running unit tests",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which HTTP request method is used in RESTful APIs to retrieve configuration or operational data from a network controller without modifying server state?",
+    "explanation": "The HTTP `GET` method is safe and idempotent, used in REST APIs to retrieve resources or data without causing side effects or modifying server state.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "GET",
+        "is_correct": true
+      },
+      {
+        "text": "POST",
+        "is_correct": false
+      },
+      {
+        "text": "PUT",
+        "is_correct": false
+      },
+      {
+        "text": "DELETE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Model-Driven Telemetry, what is the difference between 'cadence-based' (periodic) telemetry and 'on-change' (event-driven) telemetry?",
+    "explanation": "Cadence-based telemetry streams structured device data continuously at fixed periodic intervals (e.g. interface counters every 10 seconds). On-change telemetry transmits data only when an operational event or state change occurs (e.g. interface status changes from up to down).",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cadence-based streams data at fixed periodic intervals; on-change streams data only when a state transition or threshold event occurs",
+        "is_correct": true
+      },
+      {
+        "text": "Cadence-based uses UDP; on-change uses TCP exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Cadence-based runs on switches; on-change runs on firewalls",
+        "is_correct": false
+      },
+      {
+        "text": "Cadence-based requires an optical fiber connection; on-change requires Wi-Fi",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which data encoding format is strictly whitespace/indentation-sensitive and commonly used for human-readable Ansible playbooks and Docker Compose configuration files?",
+    "explanation": "YAML (YAML Ain't Markup Language) uses strict indentation with spaces to indicate hierarchy and data structures. It is widely preferred over XML and JSON for human-authored configuration files like Ansible playbooks.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "YAML",
+        "is_correct": true
+      },
+      {
+        "text": "JSON",
+        "is_correct": false
+      },
+      {
+        "text": "XML",
+        "is_correct": false
+      },
+      {
+        "text": "HTML",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-24-volume.json"
+  },
+  {
+    "stem": "What character sequence is used in JSON (JavaScript Object Notation) to enclose an ordered collection of values (an array)?",
+    "explanation": "In JSON syntax, square brackets '[' and ']' enclose an ordered list or array of values. Curly braces '{' and '}' enclose unordered key-value pairs (an object).",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Square brackets [ ]",
+        "is_correct": true
+      },
+      {
+        "text": "Curly braces { }",
+        "is_correct": false
+      },
+      {
+        "text": "Angle brackets < >",
+        "is_correct": false
+      },
+      {
+        "text": "Parentheses ( )",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-24-volume.json"
+  },
+  {
+    "stem": "Which configuration management tool is agentless, uses SSH for communication with Cisco IOS-XE devices, and executes human-readable tasks written in YAML playbooks?",
+    "explanation": "Ansible is agentless (requiring no software installed on managed network devices), connects over standard SSH, and uses YAML playbooks to automate network and system configuration.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Ansible",
+        "is_correct": true
+      },
+      {
+        "text": "Puppet",
+        "is_correct": false
+      },
+      {
+        "text": "Chef",
+        "is_correct": false
+      },
+      {
+        "text": "SaltStack (in default minion mode)",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-25-volume.json"
+  },
+  {
+    "stem": "Which transport protocol and standard TCP destination port does the Network Configuration Protocol (NETCONF) use to establish secure management sessions to devices?",
+    "explanation": "NETCONF (RFC 6241) standardly operates over an encrypted SSH connection using TCP port 830 (or optionally over TLS).",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SSH over TCP port 830",
+        "is_correct": true
+      },
+      {
+        "text": "HTTP over TCP port 80",
+        "is_correct": false
+      },
+      {
+        "text": "Telnet over TCP port 23",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP over UDP port 69",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-32-volume.json"
   }
 ]

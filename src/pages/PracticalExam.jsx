@@ -44,8 +44,9 @@ export default function PracticalExam() {
   useEffect(() => { recordSession(scenarios); }, []);
 
   function refreshDevices(devices) {
-    activeScenario.devices = devices;
-    setScenarios((old) => [...old]);
+    setScenarios((old) =>
+      old.map((s, i) => (i === activeIndex ? { ...s, devices } : s))
+    );
   }
 
   function gradeExam() {

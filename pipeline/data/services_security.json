@@ -1976,32 +1976,6 @@
     ]
   },
   {
-    "stem": "Which DNS record type maps a hostname to an IPv6 address?",
-    "explanation": "The AAAA record, sometimes spoken as quad-A, holds a 128-bit IPv6 address for a name and is the IPv6 counterpart of the A record. A resolver asking for the IPv6 address of a host receives the AAAA data and ignores A records entirely. Publishing only an A record leaves the name unreachable over IPv6 even when the host has a global address configured.",
-    "domain": "services_security",
-    "subtopic": "DNS Record Types",
-    "difficulty": "easy",
-    "source": "ai-generated",
-    "choices": [
-      {
-        "text": "AAAA",
-        "is_correct": true
-      },
-      {
-        "text": "A",
-        "is_correct": false
-      },
-      {
-        "text": "PTR",
-        "is_correct": false
-      },
-      {
-        "text": "MX",
-        "is_correct": false
-      }
-    ]
-  },
-  {
     "stem": "Which DNS record type supports reverse lookups that translate an IP address into a name?",
     "explanation": "PTR records live in the in-addr.arpa or ip6.arpa zone and hold the name associated with a specific address. Tools such as traceroute and mail servers use them to label addresses with names. A missing PTR record is not an error, but it makes logs harder to read and can trip reverse-lookup checks on some mail gateways.",
     "domain": "services_security",
@@ -6628,5 +6602,3801 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which switch security feature intercepts and inspects IPv6 Router Advertisement (RA) messages on Layer 2 access ports to prevent unauthorized rogue routers from advertising prefixes or default gateways?",
+    "explanation": "IPv6 RA Guard (Router Advertisement Guard) operates at Layer 2 to inspect RA messages. When configured on access ports connecting to clients, it drops unauthorized RA packets, protecting the network from rogue gateway and SLAAC spoofing attacks.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IPv6 RA Guard",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic ARP Inspection",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPv6 Snooping Guard",
+        "is_correct": false
+      },
+      {
+        "text": "IPv6 Source Guard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An administrator wants to configure IPv6 RA Guard policy 'BLOCK-ROGUE' on access VLANs 20 and 30 using Cisco IOS-XE. Which configuration snippet achieves this?",
+    "explanation": "In Cisco IOS-XE, RA Guard policies are attached to VLANs using the command 'ipv6 nd raguard attach-policy <policy-name> vlan <vlan-ids>' (or applied directly to target switch interfaces).",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 nd raguard attach-policy BLOCK-ROGUE vlan 20,30",
+        "is_correct": true
+      },
+      {
+        "text": "ipv6 raguard enable vlan 20-30 policy BLOCK-ROGUE",
+        "is_correct": false
+      },
+      {
+        "text": "switchport ipv6 router-advertisement filter 20,30",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 router-snoop attach BLOCK-ROGUE 20,30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A client on subnet 10.1.20.0/24 needs to obtain an IP lease from a central DHCP server at 10.1.100.5. What command must be configured on the client's router default gateway interface?",
+    "explanation": "The 'ip helper-address 10.1.100.5' command on the router's incoming interface turns the router into a DHCP relay agent. It receives client UDP broadcast requests on port 67 and forwards them as unicast packets to the specified DHCP server.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip helper-address 10.1.100.5",
+        "is_correct": true
+      },
+      {
+        "text": "ip dhcp-server 10.1.100.5",
+        "is_correct": false
+      },
+      {
+        "text": "ip forward-dhcp 10.1.100.5",
+        "is_correct": false
+      },
+      {
+        "text": "ip dhcp relay destination 10.1.100.5",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Besides DHCP (ports 67 and 68), which UDP service broadcast does the Cisco 'ip helper-address' command forward by default?",
+    "explanation": "By default, 'ip helper-address' forwards 8 UDP broadcast protocols: TFTP (69), DNS (53), Time (37), TACACS (49), BOOTP/DHCP server (67), BOOTP/DHCP client (68), NetBIOS Name Server (137), and NetBIOS Datagram Server (138).",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DNS (port 53) and TFTP (port 69)",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP (port 161) and Syslog (port 514)",
+        "is_correct": false
+      },
+      {
+        "text": "NTP (port 123) and RIP (port 520)",
+        "is_correct": false
+      },
+      {
+        "text": "HTTPS (port 443) and SSH (port 22)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol provides encrypted, authenticated file copy over an SSH connection, running by default over TCP port 22?",
+    "explanation": "SFTP (SSH File Transfer Protocol) and SCP (Secure Copy Protocol) both run over SSH (TCP port 22), providing encrypted transmission and authentication for file management. FTP (21) and TFTP (69) transmit in plaintext.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SFTP (Secure File Transfer Protocol)",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP (Trivial File Transfer Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "FTP (File Transfer Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "Telnet with ZMODEM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary operational difference between FTPS and SFTP?",
+    "explanation": "FTPS is standard FTP wrapped with TLS encryption, using multiple ports (command port 21 plus data ports). SFTP is a completely different protocol built as an extension to SSH, using a single encrypted channel over TCP port 22.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "FTPS relies on FTP over SSL/TLS requiring separate control and data ports, whereas SFTP runs entirely inside an SSH session over port 22",
+        "is_correct": true
+      },
+      {
+        "text": "FTPS uses symmetric SSH keys while SFTP requires X.509 public key infrastructure certificates",
+        "is_correct": false
+      },
+      {
+        "text": "SFTP does not support user authentication, relying strictly on network IP access control lists",
+        "is_correct": false
+      },
+      {
+        "text": "FTPS operates at Layer 4 UDP while SFTP operates at Layer 4 TCP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the correct chronological four-step message sequence exchanged between a client and a DHCP server during address leasing?",
+    "explanation": "The DHCP lease process follows the DORA acronym: Discover (client broadcast), Offer (server unicast/broadcast), Request (client broadcast), Acknowledgment (server unicast/broadcast).",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Discover, Offer, Request, Acknowledgment (DORA)",
+        "is_correct": true
+      },
+      {
+        "text": "Discover, Request, Offer, Acknowledgment",
+        "is_correct": false
+      },
+      {
+        "text": "Solicit, Advertise, Request, Reply",
+        "is_correct": false
+      },
+      {
+        "text": "Offer, Discover, Request, Confirm",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What DNS record type functions as an alias that directs a hostname query to another canonical hostname rather than directly to an IP address?",
+    "explanation": "A Canonical Name (CNAME) record is an alias record in DNS that points one domain name to another domain name (the canonical name), which is then resolved by looking up its A or AAAA record.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CNAME record",
+        "is_correct": true
+      },
+      {
+        "text": "NS record",
+        "is_correct": false
+      },
+      {
+        "text": "SOA record",
+        "is_correct": false
+      },
+      {
+        "text": "TXT record",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an IPsec VPN tunnel, which protocol provides data confidentiality through encryption, data integrity, and anti-replay protection?",
+    "explanation": "Encapsulating Security Payload (ESP, IP protocol 50) provides encryption (confidentiality), authentication, data integrity, and anti-replay protection. Authentication Header (AH, IP protocol 51) provides integrity and authentication but no encryption.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ESP (Encapsulating Security Payload, IP protocol 50)",
+        "is_correct": true
+      },
+      {
+        "text": "AH (Authentication Header, IP protocol 51)",
+        "is_correct": false
+      },
+      {
+        "text": "GRE (Generic Routing Encapsulation, IP protocol 47)",
+        "is_correct": false
+      },
+      {
+        "text": "IKEv2 over UDP port 500 only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary role of Internet Key Exchange (IKE) Phase 1 in establishing a site-to-site IPsec VPN tunnel?",
+    "explanation": "IKE Phase 1 authenticates the two VPN peers and negotiates a secure, authenticated, encrypted bidirectional management tunnel (ISAKMP SA) through which IKE Phase 2 negotiations can safely take place.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authenticates the remote VPN peers and establishes a secure management channel (IKE SA) for Phase 2 negotiations",
+        "is_correct": true
+      },
+      {
+        "text": "Negotiates the unidirectional IPsec security associations (SAs) used to encrypt user payload traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Translates private IPv4 addresses using dynamic Port Address Translation (PAT)",
+        "is_correct": false
+      },
+      {
+        "text": "Exchanges OSPF or EIGRP routing updates across the tunnel interfaces",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When DHCP Snooping is enabled on a switch, how are ports classified by default, and what happens when an unauthorized DHCP offer arrives on a client-facing port?",
+    "explanation": "When DHCP Snooping is enabled, all switch interfaces default to 'untrusted'. If a DHCP Offer or DHCP Ack arrives on an untrusted port, the switch discards the packet, preventing rogue DHCP servers from hijacking client addresses.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Ports default to untrusted; DHCP server response packets (Offers/Acks) on untrusted ports are dropped",
+        "is_correct": true
+      },
+      {
+        "text": "Ports default to trusted; all client DHCP discovery broadcasts are blocked until statically authorized",
+        "is_correct": false
+      },
+      {
+        "text": "Ports alternate between listening and forwarding states every 30 seconds",
+        "is_correct": false
+      },
+      {
+        "text": "Ports are placed into err-disabled state upon receiving any DHCP request frame",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What global configuration command encrypts all plaintext passwords (such as line console and enable passwords) in the running configuration using weak Type 7 reversible encryption?",
+    "explanation": "The command 'service password-encryption' obfuscates all current and future plaintext passwords in the running-config with a simple Cisco Type 7 XOR cipher to prevent shoulder surfing.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "service password-encryption",
+        "is_correct": true
+      },
+      {
+        "text": "enable secret 7",
+        "is_correct": false
+      },
+      {
+        "text": "security passwords encrypt-all",
+        "is_correct": false
+      },
+      {
+        "text": "crypto key encrypt passwords",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is 'enable secret <password>' strongly preferred over 'enable password <password>' for securing privileged EXEC mode on Cisco IOS devices?",
+    "explanation": "'enable secret' uses a strong one-way cryptographic hash (MD5 Type 5 or SHA-256 Type 8/9), whereas 'enable password' stores the password in plaintext or weak Type 7 reversible encryption.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "'enable secret' hashes passwords with a strong one-way cryptographic algorithm (Type 5/8/9), while 'enable password' is stored in plaintext or weak Type 7",
+        "is_correct": true
+      },
+      {
+        "text": "'enable secret' supports up to 64 characters while 'enable password' is limited to 8 characters",
+        "is_correct": false
+      },
+      {
+        "text": "'enable secret' disables console login access when SSH is active",
+        "is_correct": false
+      },
+      {
+        "text": "'enable secret' automatically replicates the credential to external TACACS+ servers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An administrator needs to restrict VTY remote management access on a router to administrative subnet 10.10.50.0/24 only. Which command pair correctly applies standard ACL 10 to lines vty 0 4?",
+    "explanation": "To filter management access on virtual terminal lines, create a standard access list (e.g., 'access-list 10 permit 10.10.50.0 0.0.0.255') and apply it under 'line vty 0 4' using the 'access-class 10 in' command.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "line vty 0 4 followed by access-class 10 in",
+        "is_correct": true
+      },
+      {
+        "text": "line vty 0 4 followed by ip access-group 10 in",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 followed by access-list 10 apply",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 followed by vty access-filter 10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Network Time Protocol (NTP), what does a stratum value indicate, and what is the highest-level authoritative reference clock (e.g., atomic clock or GPS)?",
+    "explanation": "NTP uses a hierarchy of strata to measure distance from the reference clock. Stratum 0 represents authoritative hardware clocks (GPS, atomic clocks). Stratum 1 servers connect directly to Stratum 0 devices. Higher numbers represent hops away.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Stratum indicates the hop distance from an authoritative reference clock; Stratum 0 is the primary precision hardware reference (e.g., atomic or GPS)",
+        "is_correct": true
+      },
+      {
+        "text": "Stratum indicates the latency in milliseconds; Stratum 1 indicates zero clock jitter",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum indicates the NTP authentication key strength; Stratum 1 uses SHA-512 hashes",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum indicates the number of active NTP peer associations on the router",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "A network engineer writes an extended IPv4 access control list: 'access-list 105 permit tcp 192.168.1.0 0.0.0.255 any eq 443'. What traffic does this statement permit?",
+    "explanation": "This statement permits TCP traffic originating from any host on the 192.168.1.0/24 subnet destined to any IP address with a destination TCP port of 443 (HTTPS).",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Outbound HTTPS traffic (TCP port 443) originating from subnet 192.168.1.0/24 to any destination",
+        "is_correct": true
+      },
+      {
+        "text": "Inbound HTTP traffic (TCP port 80) destined to web servers on 192.168.1.0/24",
+        "is_correct": false
+      },
+      {
+        "text": "Outbound DNS queries (UDP port 53) originating from host 192.168.1.0",
+        "is_correct": false
+      },
+      {
+        "text": "Inbound SSH connections (TCP port 22) from the Internet to 192.168.1.0/24",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What implicit rule is automatically evaluated at the end of every Cisco IPv4 access control list (ACL)?",
+    "explanation": "Every Cisco ACL ends with an invisible implicit 'deny all' statement (e.g., 'deny ip any any' in extended ACLs). Any packet that does not match an explicit permit statement is dropped.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Implicit deny (deny ip any any)",
+        "is_correct": true
+      },
+      {
+        "text": "Implicit permit (permit ip any any)",
+        "is_correct": false
+      },
+      {
+        "text": "Implicit rate-limit",
+        "is_correct": false
+      },
+      {
+        "text": "Implicit ICMP redirect",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an IPv6 network, which ICMPv6 message type is intercepted and inspected by IPv6 RA Guard to block rogue router advertisements?",
+    "explanation": "IPv6 Router Advertisements use ICMPv6 Type 134. (Router Solicitations are Type 133, Neighbor Solicitations are Type 135, Neighbor Advertisements are Type 136). IPv6 RA Guard inspects Type 134 packets.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ICMPv6 Type 134 (Router Advertisement)",
+        "is_correct": true
+      },
+      {
+        "text": "ICMPv6 Type 133 (Router Solicitation)",
+        "is_correct": false
+      },
+      {
+        "text": "ICMPv6 Type 135 (Neighbor Solicitation)",
+        "is_correct": false
+      },
+      {
+        "text": "ICMPv6 Type 136 (Neighbor Advertisement)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which remote access VPN technology allows teleworkers to establish secure TLS/SSL-encrypted tunnels to an enterprise ASA/FTD gateway using a web browser or the Cisco Secure Client (formerly AnyConnect)?",
+    "explanation": "SSL/TLS Remote Access VPNs allow remote teleworkers to connect to an enterprise gateway using TLS encryption via Cisco Secure Client (AnyConnect) or browser-based portal sessions over TCP port 443.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SSL/TLS VPN using Cisco Secure Client (AnyConnect)",
+        "is_correct": true
+      },
+      {
+        "text": "GRE over Frame Relay",
+        "is_correct": false
+      },
+      {
+        "text": "PPTP with MS-CHAPv1",
+        "is_correct": false
+      },
+      {
+        "text": "L2TP without IPsec encryption",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IPsec Remote Access VPNs, what feature dynamically pushes enterprise DNS server addresses, internal domain search suffixes, and private IP pool addresses to the client upon successful authentication?",
+    "explanation": "IKE Mode Config (or IKEv2 Configuration Payloads / ISAKMP Mode Config) allows the VPN headend to push IP address, subnet mask, internal DNS servers, and split-tunneling policies to the remote access VPN client.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IKE Mode Config (or IKEv2 Configuration Payload)",
+        "is_correct": true
+      },
+      {
+        "text": "DHCP Option 82 Relay",
+        "is_correct": false
+      },
+      {
+        "text": "Proxy ARP gratuitous discovery",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF Area 0 virtual link negotiation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is split tunneling in a remote access VPN configuration, and why is it implemented?",
+    "explanation": "Split tunneling encrypts and sends only corporate-destined traffic through the VPN tunnel, while allowing non-corporate internet traffic to go directly out the client's local ISP connection. This saves enterprise internet bandwidth.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Routes corporate traffic across the encrypted VPN while directing general internet traffic through the user's local ISP gateway",
+        "is_correct": true
+      },
+      {
+        "text": "Splits VPN packets between two redundant internet service providers for equal-cost multipathing",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts IP headers with ESP while leaving packet payloads unencrypted to improve throughput",
+        "is_correct": false
+      },
+      {
+        "text": "Isolates guest wireless devices onto a separate non-routable VLAN",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "An engineer enables Dynamic ARP Inspection (DAI) on VLAN 10. Workstations with statically assigned IP addresses cannot communicate with the gateway. What is the cause of this issue?",
+    "explanation": "DAI relies on the DHCP Snooping database. Because statically addressed hosts do not obtain an address via DHCP, they have no entries in the DHCP snooping table. DAI drops their ARP packets unless an ARP Access Control List (ARP ACL) is configured.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Static hosts have no entries in the DHCP snooping binding database, causing DAI to reject their ARP packets unless an ARP ACL is configured",
+        "is_correct": true
+      },
+      {
+        "text": "DAI disables all Layer 2 address learning on access switch ports",
+        "is_correct": false
+      },
+      {
+        "text": "Static hosts fail to negotiate 802.1Q Native VLAN tags with the access switch",
+        "is_correct": false
+      },
+      {
+        "text": "DAI requires all workstations to run the Cisco Discovery Protocol",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures an ARP access list on a Cisco switch to permit ARP replies for a static server with IP 10.1.10.50 and MAC aaaa.bbbb.cccc?",
+    "explanation": "The syntax for an ARP ACL is 'arp access-list <name>' followed by 'permit ip host <ip> mac host <mac>'. It is then mapped to the VLAN using 'ip arp inspection filter <name> vlan <vlan>'.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "arp access-list STATIC-HOST followed by permit ip host 10.1.10.50 mac host aaaa.bbbb.cccc",
+        "is_correct": true
+      },
+      {
+        "text": "access-list 101 permit arp 10.1.10.50 aaaa.bbbb.cccc",
+        "is_correct": false
+      },
+      {
+        "text": "ip arp permit 10.1.10.50 mac aaaa.bbbb.cccc",
+        "is_correct": false
+      },
+      {
+        "text": "mac access-list extended STATIC-HOST permit host aaaa.bbbb.cccc host 10.1.10.50",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When IP Source Guard (IPSG) is enabled on an untrusted switch port, what does it filter to prevent IP spoofing attacks?",
+    "explanation": "IP Source Guard (IPSG) filters traffic based on the DHCP snooping binding table (and optional static IP bindings). On Layer 2 untrusted ports, it dynamically creates a port ACL that permits traffic only if the source IP address matches the MAC/IP learned in the DHCP binding database.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops ingress packets whose source IP address does not match an entry in the DHCP snooping binding database",
+        "is_correct": true
+      },
+      {
+        "text": "It blocks outgoing ICMP Echo Request packets destined for external public IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "It inspects TCP SYN packets to prevent SYN-flood denial of service attacks",
+        "is_correct": false
+      },
+      {
+        "text": "It prevents switches from participating in VTP VLAN database replication",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In enterprise AAA security, what is the key protocol difference between RADIUS and TACACS+ regarding transport protocol and encryption?",
+    "explanation": "TACACS+ uses TCP port 49 and encrypts the entire packet payload (body). RADIUS uses UDP (ports 1812/1813 or 1645/1646) and encrypts only the password field, leaving usernames, accounting data, and packet headers in cleartext.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TACACS+ uses TCP (port 49) and encrypts the entire packet body; RADIUS uses UDP (ports 1812/1813) and encrypts only the password",
+        "is_correct": true
+      },
+      {
+        "text": "TACACS+ uses UDP and encrypts only passwords; RADIUS uses TCP and encrypts the full payload",
+        "is_correct": false
+      },
+      {
+        "text": "TACACS+ is an open IETF standard, while RADIUS is Cisco proprietary",
+        "is_correct": false
+      },
+      {
+        "text": "TACACS+ combines authentication and authorization into a single transaction, while RADIUS separates them",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary architectural advantage of TACACS+ separating Authentication, Authorization, and Accounting (AAA) into independent modular services?",
+    "explanation": "Because TACACS+ separates authorization from authentication, administrators can enforce granular per-command authorization (restricting which specific CLI commands each user or role can run) without re-authenticating.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Enables granular per-command authorization policies restricting which specific CLI commands users can execute",
+        "is_correct": true
+      },
+      {
+        "text": "Eliminates the requirement for local password databases on Cisco edge switches",
+        "is_correct": false
+      },
+      {
+        "text": "Allows client VPN endpoints to bypass 802.1X certificate validation",
+        "is_correct": false
+      },
+      {
+        "text": "Automatically synchronizes Cisco IOS running configurations to backup cloud storage",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What security vulnerability in WPA2-Personal makes WPA3-Personal with SAE significantly more secure against attacker eavesdropping?",
+    "explanation": "In WPA2-Personal (PSK), an attacker who captures the 4-way handshake and knows or guesses the pre-shared key can decrypt all recorded past and future traffic (no forward secrecy) and perform offline dictionary attacks. WPA3 SAE provides forward secrecy and prevents offline dictionary guessing.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "WPA2 lacks forward secrecy, allowing captured 4-way handshakes to be cracked via offline dictionary attacks to decrypt past traffic",
+        "is_correct": true
+      },
+      {
+        "text": "WPA2 uses 64-bit WEP encryption keys that repeat initialization vectors every 5000 frames",
+        "is_correct": false
+      },
+      {
+        "text": "WPA2 does not support AES-CCMP encryption algorithms",
+        "is_correct": false
+      },
+      {
+        "text": "WPA2 sends client MAC addresses in cleartext across the 5 GHz radio band",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a router receives a client's DHCPDISCOVER broadcast on an interface configured with 'ip helper-address 10.1.100.5', what action does the router perform?",
+    "explanation": "`ip helper-address` enables DHCP relay. The router intercepts broadcast DHCP packets (UDP port 67/68), replaces the broadcast destination with the helper unicast address, fills the GIADDR field with its interface IP, and unicasts it to the DHCP server.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It converts the Layer 2/Layer 3 broadcast into a unicast UDP packet destined to 10.1.100.5 on UDP port 67",
+        "is_correct": true
+      },
+      {
+        "text": "It intercepts the request, assigns an IP from its own local pool, and responds directly to the client",
+        "is_correct": false
+      },
+      {
+        "text": "It mirrors the packet to a SPAN monitoring session on VLAN 1",
+        "is_correct": false
+      },
+      {
+        "text": "It rejects the packet unless the client provides an 802.1X certificate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What security threat does IPv6 Router Advertisement (RA) Guard mitigate on a Layer 2 switch access port?",
+    "explanation": "IPv6 RA Guard analyzes incoming ICMPv6 Router Advertisement (Type 134) packets on switch access ports. It blocks unauthorized RAs from rogue routers or compromised hosts attempting to alter client routing tables or conduct man-in-the-middle attacks.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Rogue routers sending unauthorized ICMPv6 Type 134 Router Advertisements that cause clients to redirect traffic or autoconfigure bogus IPv6 gateways",
+        "is_correct": true
+      },
+      {
+        "text": "Spoofed IPv6 Neighbor Solicitation packets that poison the switch MAC table",
+        "is_correct": false
+      },
+      {
+        "text": "Denial-of-Service attacks flooding the network with DHCPv6 Solicit messages",
+        "is_correct": false
+      },
+      {
+        "text": "Unauthorized access points transmitting beacon frames on 5 GHz channels",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Network Time Protocol (NTP) hierarchy, what does a Stratum level of 1 indicate?",
+    "explanation": "Stratum 0 devices are the physical reference clocks (atomic clock, GPS). Stratum 1 servers are directly connected to Stratum 0 devices. Stratum 2 servers sync from Stratum 1 servers, and so forth.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A time server that is directly attached to a reference clock, such as an atomic clock or GPS receiver",
+        "is_correct": true
+      },
+      {
+        "text": "A primary reference clock source hardware itself (such as a GPS satellite)",
+        "is_correct": false
+      },
+      {
+        "text": "A client workstation that syncs its clock from an enterprise internal NTP server",
+        "is_correct": false
+      },
+      {
+        "text": "An NTP peer that is currently unsynchronized and unreachable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference between Dynamic NAT and Port Address Translation (PAT / NAT Overload)?",
+    "explanation": "Dynamic NAT maps internal hosts to a pool of external addresses on a 1:1 basis until the pool is exhausted. PAT (NAT Overload) allows thousands of internal hosts to share one (or few) public IPs by tracking source TCP/UDP port numbers.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Dynamic NAT maps private IPs to a pool of public IPs on a one-to-one basis, whereas PAT maps many private IPs to a single public IP using unique Layer 4 source port numbers",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic NAT translates IPv6 to IPv4, whereas PAT translates IPv4 to MAC addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic NAT requires an external DNS server, whereas PAT performs internal DNS lookup",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic NAT operates at Layer 3, whereas PAT operates exclusively at Layer 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS prerequisite commands must be configured on a router before the 'crypto key generate rsa' command can successfully create RSA keys for SSH?",
+    "explanation": "Cisco IOS requires both a valid hostname (other than the default 'Router' or 'Switch') and an IP domain name (`ip domain-name`) to create the Fully Qualified Domain Name (FQDN) used as the key pair's label.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A non-default hostname and an IP domain name ('ip domain-name <name>')",
+        "is_correct": true
+      },
+      {
+        "text": "An enable secret password and 'line vty 0 4 transport input telnet'",
+        "is_correct": false
+      },
+      {
+        "text": "A static default route and 'service password-encryption'",
+        "is_correct": false
+      },
+      {
+        "text": "An active NTP clock synchronization and an SVI IP address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is SCP or SFTP preferred over traditional TFTP or FTP for transferring Cisco IOS configuration and image files across an enterprise network?",
+    "explanation": "TFTP and FTP transmit credentials and data in cleartext. SCP (Secure Copy) and SFTP (Secure FTP) run over SSH (TCP port 22), providing strong cryptographic privacy and integrity protection.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SCP and SFTP encrypt both user authentication credentials and data payloads using SSH transport",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP requires complex Kerberos certificate management which slows transfer speeds",
+        "is_correct": false
+      },
+      {
+        "text": "FTP lacks support for files larger than 10 Megabytes",
+        "is_correct": false
+      },
+      {
+        "text": "SCP compresses data using proprietary Cisco HDLC encapsulation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Where should standard and extended IPv4 Access Control Lists (ACLs) be placed in a network according to Cisco best-practice guidelines?",
+    "explanation": "Extended ACLs filter by source, destination, and port, so placing them close to the source eliminates unwanted traffic early. Standard ACLs only filter by source IP; placing them near the source might inadvertently block valid traffic to other destinations, so they belong near the destination.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Extended ACLs as close to the traffic source as possible; Standard ACLs as close to the traffic destination as possible",
+        "is_correct": true
+      },
+      {
+        "text": "Standard ACLs as close to the source as possible; Extended ACLs as close to the destination as possible",
+        "is_correct": false
+      },
+      {
+        "text": "Both Standard and Extended ACLs must be placed exclusively on the core switch backplane",
+        "is_correct": false
+      },
+      {
+        "text": "Both ACL types should only be applied outbound on the final edge WAN interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference in Cisco IOS between the 'enable password' command and the 'enable secret' command?",
+    "explanation": "`enable password` uses weak Cisco Type 7 encryption (or plaintext), easily reversible by online crackers. `enable secret` uses salted cryptographic hashes (Type 5 MD5, Type 8 SHA-256, or Type 9 scrypt) and takes precedence.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "enable secret encrypts the password with a strong cryptographic hash (e.g., MD5 or scrypt), whereas enable password uses weak Type 7 or cleartext",
+        "is_correct": true
+      },
+      {
+        "text": "enable password grants privilege level 15, while enable secret grants privilege level 1",
+        "is_correct": false
+      },
+      {
+        "text": "enable secret is used only for console port logins, while enable password is for VTY lines",
+        "is_correct": false
+      },
+      {
+        "text": "enable secret expires automatically after 30 days",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS severity level corresponds to 'Warnings' in standard syslog messaging, and what is its numeric value?",
+    "explanation": "Cisco syslog severity levels run 0 to 7: 0=Emergency, 1=Alert, 2=Critical, 3=Error, 4=Warning, 5=Notification, 6=Informational, 7=Debugging. Mnemonics: 'Every Ally Can Ease Warn Not If Doubted'.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Level 4 (Warnings)",
+        "is_correct": true
+      },
+      {
+        "text": "Level 1 (Alerts)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 3 (Errors)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 6 (Informational)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the Cisco AAA (Authentication, Authorization, and Accounting) security framework, what is the specific role of the Accounting component?",
+    "explanation": "Accounting gathers and logs session metrics, including commands executed by administrators, login/logout timestamps, and packet/byte counts for billing, reporting, and forensic auditing.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Tracking and recording user actions, executed commands, and session duration for compliance and auditing",
+        "is_correct": true
+      },
+      {
+        "text": "Verifying the identity of the user via password or digital certificate",
+        "is_correct": false
+      },
+      {
+        "text": "Granting or restricting access permissions to specific privileged exec commands",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypting management sessions across SSH connections",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In DHCPv4 lease renewal timers, at what percentage of the total lease duration does a client send its initial unicast DHCPREQUEST (T1 timer) to renew its IP address?",
+    "explanation": "In DHCPv4, the T1 renewal timer defaults to 50% of the lease duration, at which point the client sends a unicast DHCPREQUEST to the leasing DHCP server. If unacknowledged, at T2 (87.5% of lease), it broadcasts a DHCPREQUEST to any server.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "50% of the lease time",
+        "is_correct": true
+      },
+      {
+        "text": "25% of the lease time",
+        "is_correct": false
+      },
+      {
+        "text": "75% of the lease time",
+        "is_correct": false
+      },
+      {
+        "text": "87.5% of the lease time",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which two UDP port numbers are utilized by standard IPv4 DHCP for server listening and client listening respectively?",
+    "explanation": "DHCPv4 uses UDP port 67 for the server (which listens for client DISCOVER/REQUEST messages) and UDP port 68 for the client (which receives OFFER/ACK messages).",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Server listens on UDP port 67; Client listens on UDP port 68",
+        "is_correct": true
+      },
+      {
+        "text": "Server listens on UDP port 68; Client listens on UDP port 67",
+        "is_correct": false
+      },
+      {
+        "text": "Server listens on TCP port 53; Client listens on UDP port 53",
+        "is_correct": false
+      },
+      {
+        "text": "Server listens on UDP port 161; Client listens on UDP port 162",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS resource record type designates the priority and domain name of the mail server responsible for receiving emails for an enterprise domain?",
+    "explanation": "An MX (Mail Exchange) record specifies the mail server responsible for accepting incoming email messages on behalf of a recipient's domain, accompanied by a preference number.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MX record",
+        "is_correct": true
+      },
+      {
+        "text": "SOA record",
+        "is_correct": false
+      },
+      {
+        "text": "NS record",
+        "is_correct": false
+      },
+      {
+        "text": "TXT record",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In site-to-site IPsec VPN negotiation, what is the primary objective of IKE Phase 1?",
+    "explanation": "IKE Phase 1 establishes a secure, authenticated, and encrypted bi-directional management tunnel (IKE SA) between the two peer gateways, which is subsequently used to securely negotiate Phase 2 IPsec SAs.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authenticating the peer gateways and establishing an encrypted management tunnel (IKE SA)",
+        "is_correct": true
+      },
+      {
+        "text": "Transmitting user data packets across GRE encapsulation headers",
+        "is_correct": false
+      },
+      {
+        "text": "Exchanging dynamic OSPF routing updates directly across cleartext TCP sockets",
+        "is_correct": false
+      },
+      {
+        "text": "Assigning dynamic DHCP IP addresses to remote teleworker client PCs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference in security capabilities between IPsec Encapsulating Security Payload (ESP) and Authentication Header (AH)?",
+    "explanation": "ESP (IP protocol 50) provides confidentiality (encryption), data integrity, and authentication. AH (IP protocol 51) provides data integrity and authentication only; it does NOT encrypt payload data.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ESP provides data confidentiality (encryption) along with integrity and authentication, whereas AH does not encrypt data payloads",
+        "is_correct": true
+      },
+      {
+        "text": "AH provides encryption while ESP provides only digital signatures",
+        "is_correct": false
+      },
+      {
+        "text": "ESP operates only in transport mode, while AH operates only in tunnel mode",
+        "is_correct": false
+      },
+      {
+        "text": "AH works through NAT devices, while ESP is completely incompatible with NAT",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When deploying IPv6 Router Advertisement (RA) Guard on a Layer 2 switch, which port role must be assigned to interfaces connected to legitimate network routers?",
+    "explanation": "IPv6 RA Guard defines two port roles: `trusted` (ports connected to legitimate routers where RA messages are permitted) and `untrusted` (ports connected to end-user clients where incoming RA messages are dropped).",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "trusted",
+        "is_correct": true
+      },
+      {
+        "text": "untrusted",
+        "is_correct": false
+      },
+      {
+        "text": "promiscuous",
+        "is_correct": false
+      },
+      {
+        "text": "delegated",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of the Cisco IOS command 'ip nat inside source static 192.168.1.50 203.0.113.10'?",
+    "explanation": "This command configures Static NAT, creating a permanent, one-to-one bidirectional mapping between an internal private IP address (192.168.1.50) and an external public IP address (203.0.113.10).",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It creates a permanent 1-to-1 static NAT translation between private IP 192.168.1.50 and public IP 203.0.113.10",
+        "is_correct": true
+      },
+      {
+        "text": "It maps an entire subnet of hosts to public IP 203.0.113.10 using dynamic PAT port overloading",
+        "is_correct": false
+      },
+      {
+        "text": "It blocks all traffic originated from public IP 203.0.113.10 destined for 192.168.1.50",
+        "is_correct": false
+      },
+      {
+        "text": "It redirects port 80 HTTP traffic to port 443 HTTPS on host 192.168.1.50",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default, unwritten action that occurs at the very end of every Cisco IOS IPv4 Access Control List (ACL)?",
+    "explanation": "Every Cisco ACL concludes with an implicit `deny ip any any` (or `deny any` in standard ACLs). If a packet does not match any configured permit statement, it is silently discarded.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An implicit deny statement that drops all unmatched packets ('deny ip any any')",
+        "is_correct": true
+      },
+      {
+        "text": "An implicit permit statement that forwards all unmatched packets ('permit ip any any')",
+        "is_correct": false
+      },
+      {
+        "text": "An automated logging trap sent to the syslog server for every unmatched packet",
+        "is_correct": false
+      },
+      {
+        "text": "An ICMP Redirect message sent back to the default gateway",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which lightweight, unauthenticated file transfer protocol operates over UDP port 69 and is frequently used by network switches to boot firmware images from a network server?",
+    "explanation": "TFTP (Trivial File Transfer Protocol) uses UDP port 69. It requires minimal code and memory footprint, making it ideal for network device firmware transfers, but lacks encryption and authentication.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TFTP (Trivial File Transfer Protocol)",
+        "is_correct": true
+      },
+      {
+        "text": "FTP (File Transfer Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP (Simple Network Management Protocol)",
+        "is_correct": false
+      },
+      {
+        "text": "NTP (Network Time Protocol)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Simple Network Management Protocol (SNMP), what is an unsolicited message sent asynchronously from an agent to the NMS to report a critical event called?",
+    "explanation": "An SNMP Trap is an unsolicited, asynchronous notification sent from an SNMP agent to the SNMP management station (NMS) on UDP port 162 to report alert conditions (such as link down).",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMP Trap",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP GetRequest",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP SetRequest",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP Response",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which file transfer protocol provides encrypted file transfers by establishing an SSL/TLS tunnel over standard FTP control and data ports?",
+    "explanation": "FTPS (FTP Secure / FTP over TLS) secures traditional FTP by wrapping the session in an SSL/TLS encryption tunnel. (Note: SFTP is SSH File Transfer Protocol, running over SSH port 22).",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "FTPS (FTP over SSL/TLS)",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "HTTP Basic",
+        "is_correct": false
+      },
+      {
+        "text": "NFS v2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco DHCP Snooping, what is the purpose of the DHCP Snooping Binding Database?",
+    "explanation": "The DHCP Snooping Binding Database records client IP address, MAC address, lease time, binding type, VLAN ID, and port interface for all DHCP leases negotiated on untrusted ports, which is then used by DAI and IPSG.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It tracks valid IP-to-MAC-to-port bindings of DHCP clients on untrusted ports, enabling DAI and IP Source Guard verification",
+        "is_correct": true
+      },
+      {
+        "text": "It stores routing table entries learned from neighboring DHCP servers",
+        "is_correct": false
+      },
+      {
+        "text": "It logs expired 802.1X user passwords for forensic investigations",
+        "is_correct": false
+      },
+      {
+        "text": "It distributes pool parameters to auxiliary Cisco IP phones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When DHCP Snooping is active on an untrusted port, what action does the switch take if an incoming DHCP packet has a source MAC that does not match the client hardware address (CHADDR) field?",
+    "explanation": "If `ip dhcp snooping verify mac-address` is active (the default), the switch verifies that the source MAC matches the CHADDR inside the DHCP packet. If they do not match, the packet is discarded to prevent spoofing.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The switch discards the packet to protect against MAC address spoofing and starvation attacks",
+        "is_correct": true
+      },
+      {
+        "text": "The switch alters the CHADDR field to match the incoming frame header",
+        "is_correct": false
+      },
+      {
+        "text": "The switch forwards the packet directly to the broadcast address",
+        "is_correct": false
+      },
+      {
+        "text": "The switch err-disables the connected router port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Dynamic ARP Inspection (DAI) determine whether an incoming ARP Reply packet on an untrusted port is valid or fraudulent?",
+    "explanation": "DAI intercepts all ARP requests and replies on untrusted ports and compares the sender MAC and sender IP against the trusted IP-to-MAC entries in the DHCP Snooping Binding Table (or configured ARP ACLs).",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It validates the sender IP and MAC address against entries in the DHCP Snooping Binding Database or static ARP ACLs",
+        "is_correct": true
+      },
+      {
+        "text": "It transmits an ICMP echo request to verify the destination host is reachable",
+        "is_correct": false
+      },
+      {
+        "text": "It checks the packet against the switch local Spanning Tree port state table",
+        "is_correct": false
+      },
+      {
+        "text": "It queries the DNS server to verify the reverse PTR record",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What type of Layer 2 attack floods a switch with thousands of bogus Ethernet frames with randomized source MAC addresses to overwhelm switch memory?",
+    "explanation": "A MAC Address Flooding attack (CAM table exhaustion attack) overflows the switch MAC table. Once the table is full, the switch enters fail-open behavior, flooding all incoming unicast frames to all ports like a hub.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MAC address flooding attack (CAM table exhaustion)",
+        "is_correct": true
+      },
+      {
+        "text": "VLAN hopping attack",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP starvation attack",
+        "is_correct": false
+      },
+      {
+        "text": "Smurf amplification attack",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does configuring Cisco Port Security effectively defend against CAM table exhaustion (MAC address flooding) attacks?",
+    "explanation": "Port Security limits the number of valid MAC addresses permitted on an access switch port. When the limit is reached, any additional MAC addresses trigger a violation (protect, restrict, or shutdown), halting the flood.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It enforces a maximum limit on learned MAC addresses per port, discarding excess MAC frames or disabling the port",
+        "is_correct": true
+      },
+      {
+        "text": "It encrypts the CAM table using hardware AES acceleration",
+        "is_correct": false
+      },
+      {
+        "text": "It converts all incoming frames to jumbo 9000-byte frames",
+        "is_correct": false
+      },
+      {
+        "text": "It forces the switch into VTP transparent mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of DHCP Option 67 in enterprise client deployment workflows?",
+    "explanation": "DHCP Option 67 specifies the Bootfile name (such as pxelinux.0 or bootx64.efi), used in conjunction with Option 66 (TFTP boot server IP) to enable PXE network booting of operating systems.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Specifies the bootfile name used by PXE network boot clients",
+        "is_correct": true
+      },
+      {
+        "text": "Provides the primary domain name search list",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns the NTP time server IPv4 address",
+        "is_correct": false
+      },
+      {
+        "text": "Configures the default router gateway address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol and port number is NOT among the standard UDP broadcast services forwarded by default when 'ip helper-address' is configured on a Cisco router interface?",
+    "explanation": "By default, `ip helper-address` forwards 8 UDP services: TFTP (69), DNS (53), Time (37), TACACS (49), BOOTP Server (67), BOOTP Client (68), NetBIOS Name Service (137), and NetBIOS Datagram (138). It does NOT forward HTTP (TCP 80) or NTP (UDP 123).",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "NTP (UDP port 123)",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP (UDP port 69)",
+        "is_correct": false
+      },
+      {
+        "text": "DNS (UDP port 53)",
+        "is_correct": false
+      },
+      {
+        "text": "Time (UDP port 37)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What action does a switch configured with IPv6 RA Guard take when an ICMPv6 Type 134 Router Advertisement packet is received on an untrusted access port?",
+    "explanation": "IPv6 RA Guard inspects incoming packets on untrusted ports. If an ICMPv6 Router Advertisement (Type 134) or Router Redirect (Type 137) message is detected, the switch drops the packet to prevent rogue router attacks.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It drops the packet and blocks the rogue advertisement from altering client routing tables",
+        "is_correct": true
+      },
+      {
+        "text": "It forwards the packet onto the voice VLAN with high priority",
+        "is_correct": false
+      },
+      {
+        "text": "It converts the ICMPv6 packet into an IPv4 ARP reply",
+        "is_correct": false
+      },
+      {
+        "text": "It modifies the advertised prefix to 2001:db8::/32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco IOS NTP configuration, what is the operational difference between the 'ntp server <ip>' command and the 'ntp peer <ip>' command?",
+    "explanation": "`ntp server` configures client-server mode, where the local router syncs its time from the server but will not sync the server. `ntp peer` establishes a symmetric active relationship where either device can sync from the other.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "'ntp server' configures client mode where the local device only receives time; 'ntp peer' enables symmetric synchronization where either device can synchronize the other",
+        "is_correct": true
+      },
+      {
+        "text": "'ntp server' uses UDP port 123; 'ntp peer' uses TCP port 123",
+        "is_correct": false
+      },
+      {
+        "text": "'ntp peer' requires Stratum 0 atomic clock hardware attached directly to the chassis",
+        "is_correct": false
+      },
+      {
+        "text": "'ntp server' encrypts time packets using SSH; 'ntp peer' sends plain text",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Network Address Translation (NAT) terminology, what is the 'Inside Local' address versus the 'Inside Global' address?",
+    "explanation": "An Inside Local address is the private IPv4 address configured on an internal host on the inside network. An Inside Global address is the registered public IPv4 address that represents that internal host to the outside world.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Inside Local is the private IP configured on the inside host; Inside Global is the public IP representing the inside host to the outside network",
+        "is_correct": true
+      },
+      {
+        "text": "Inside Local is the public IP; Inside Global is the private RFC 1918 IP",
+        "is_correct": false
+      },
+      {
+        "text": "Inside Local is the switch SVI MAC address; Inside Global is the ISP default gateway MAC",
+        "is_correct": false
+      },
+      {
+        "text": "Inside Local is the loopback interface IP; Inside Global is the physical WAN interface IP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport layer protocol and well-known destination port does Hypertext Transfer Protocol Secure (HTTPS) use to encrypt web traffic via TLS?",
+    "explanation": "HTTPS uses TCP port 443 (HTTP uses TCP port 80).",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP port 443",
+        "is_correct": true
+      },
+      {
+        "text": "UDP port 443",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 80",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 8443",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS command configures Login Enhancements to block brute-force authentication attacks by locking out login attempts for 60 seconds if 3 failed attempts occur within 30 seconds?",
+    "explanation": "The command `login block-for 60 attempts 3 within 30` instructs Cisco IOS to block all incoming login attempts for 60 seconds if 3 consecutive failures occur within a 30-second window.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "login block-for 60 attempts 3 within 30",
+        "is_correct": true
+      },
+      {
+        "text": "security authentication lockout 60 3 30",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 password-lockout 3 attempts 60",
+        "is_correct": false
+      },
+      {
+        "text": "login failure-threshold 3 time 30 block 60",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the standard numeric ranges reserved in Cisco IOS for traditional numbered standard IPv4 ACLs versus extended IPv4 ACLs?",
+    "explanation": "Standard ACLs (filter source IP only) use ranges 1–99 and 1300–1999. Extended ACLs (filter source, destination, protocol, and port) use ranges 100–199 and 2000–2699.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Standard ACLs: 1–99 and 1300–1999; Extended ACLs: 100–199 and 2000–2699",
+        "is_correct": true
+      },
+      {
+        "text": "Standard ACLs: 100–199; Extended ACLs: 1–99",
+        "is_correct": false
+      },
+      {
+        "text": "Standard ACLs: 1–500; Extended ACLs: 501–1000",
+        "is_correct": false
+      },
+      {
+        "text": "Standard ACLs: 10–99; Extended ACLs: 100–999",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When an administrator is connected to a Cisco switch via an RS-232 / USB console cable, which destination displays system syslog messages by default?",
+    "explanation": "By default, Cisco IOS sends syslog messages directly to the physical console line (`logging console`). For remote VTY (Telnet/SSH) sessions, `terminal monitor` must be enabled manually.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Directly to the active console session screen",
+        "is_correct": true
+      },
+      {
+        "text": "To an external TFTP server on UDP port 69",
+        "is_correct": false
+      },
+      {
+        "text": "To the local hard drive as a compressed zip archive",
+        "is_correct": false
+      },
+      {
+        "text": "Directly to all connected VTY Telnet sessions automatically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Secure Copy Protocol (SCP) authenticate users and encrypt file transfers to and from Cisco network switches?",
+    "explanation": "SCP operates on top of Secure Shell (SSH, TCP port 22). It relies on SSH for user authentication (passwords or public keys) and encrypts all transferred data payloads using symmetric ciphers (e.g. AES).",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It runs over SSH (TCP port 22), utilizing SSH authentication and cryptographic encryption",
+        "is_correct": true
+      },
+      {
+        "text": "It runs over TFTP UDP port 69 using MD5 checksum signatures",
+        "is_correct": false
+      },
+      {
+        "text": "It establishes an unencrypted FTP data session on port 20",
+        "is_correct": false
+      },
+      {
+        "text": "It encapsulates files inside SNMPv1 community strings",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS global configuration command enables Dynamic ARP Inspection across VLANs 10, 20, and 30?",
+    "explanation": "The global configuration command to activate DAI for specific VLANs is `ip arp inspection vlan <vlan-list>` (e.g., `ip arp inspection vlan 10,20,30`).",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip arp inspection vlan 10,20,30",
+        "is_correct": true
+      },
+      {
+        "text": "arp inspection enable 10 20 30",
+        "is_correct": false
+      },
+      {
+        "text": "set dai vlan 10-30",
+        "is_correct": false
+      },
+      {
+        "text": "ip dhcp snooping arp vlan 10,20,30",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When Dynamic ARP Inspection (DAI) is activated on a switch, how should the uplink port connecting to the default gateway router be configured?",
+    "explanation": "Because the gateway router legitimately answers ARP requests for its own IP and does not register via DHCP snooping, its connecting switch port must be configured as trusted using `ip arp inspection trust`.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Configured as trusted using 'ip arp inspection trust'",
+        "is_correct": true
+      },
+      {
+        "text": "Configured as untrusted using 'ip arp inspection untrusted'",
+        "is_correct": false
+      },
+      {
+        "text": "Configured with 'switchport port-security violation shutdown'",
+        "is_correct": false
+      },
+      {
+        "text": "Configured as a SPAN destination monitor port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which remote access VPN mode allows users to access internal web-based corporate applications using only a standard web browser without requiring a pre-installed software client?",
+    "explanation": "Clientless SSL/TLS VPN allows users to securely access web-based applications, portal shares, and email through a standard web browser without installing client software.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Clientless SSL VPN",
+        "is_correct": true
+      },
+      {
+        "text": "Full Tunnel IPsec VPN",
+        "is_correct": false
+      },
+      {
+        "text": "GRE over IPsec tunnel",
+        "is_correct": false
+      },
+      {
+        "text": "DMVPN Phase 3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of NAT Traversal (NAT-T) in IPsec Remote Access VPNs?",
+    "explanation": "NAT Traversal encapsulates IPsec ESP packets inside UDP port 4500 headers. This prevents NAT devices from dropping or failing to translate ESP packets, which lack Layer 4 port numbers.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It encapsulates IPsec ESP packets in UDP port 4500 to allow them to pass through intermediate PAT/NAT routers",
+        "is_correct": true
+      },
+      {
+        "text": "It converts IPv4 VPN connections to IPv6 without cryptographic overhead",
+        "is_correct": false
+      },
+      {
+        "text": "It compresses video data streams across low-bandwidth WAN connections",
+        "is_correct": false
+      },
+      {
+        "text": "It assigns dynamic public IP addresses to client workstations",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IPsec architecture, what is a Security Association (SA)?",
+    "explanation": "A Security Association (SA) is a simplex (one-way) logical agreement between two communicating IPsec peers that defines the encryption algorithms, cryptographic keys, and parameters used to protect data.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A one-way agreement between two peers establishing the shared encryption keys and security parameters for data transmission",
+        "is_correct": true
+      },
+      {
+        "text": "A physical fiber patch panel connecting redundant routers",
+        "is_correct": false
+      },
+      {
+        "text": "A digital certificate issued by an external public Certificate Authority",
+        "is_correct": false
+      },
+      {
+        "text": "An access control list applied to the external WAN interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the function of a DNS Pointer (PTR) resource record in domain name resolution?",
+    "explanation": "A PTR record enables Reverse DNS lookups, mapping an IP address back to its corresponding canonical Fully Qualified Domain Name (FQDN) in the `in-addr.arpa` (IPv4) or `ip6.arpa` (IPv6) zones.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It maps an IP address back to a domain hostname (Reverse DNS lookup)",
+        "is_correct": true
+      },
+      {
+        "text": "It creates an alias pointing one domain name to another domain name",
+        "is_correct": false
+      },
+      {
+        "text": "It specifies the primary authoritative name server for a DNS zone",
+        "is_correct": false
+      },
+      {
+        "text": "It verifies domain ownership for TLS/SSL certificates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which standard AAA protocol uses UDP, combines authentication and authorization into a single transaction, and encrypts only the password field within the packet?",
+    "explanation": "RADIUS (Remote Authentication Dial-In User Service) uses UDP (ports 1812/1813 or 1645/1646), combines authentication and authorization, and encrypts only the user password. TACACS+ uses TCP port 49, separates AAA, and encrypts the entire payload.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "RADIUS",
+        "is_correct": true
+      },
+      {
+        "text": "TACACS+",
+        "is_correct": false
+      },
+      {
+        "text": "Kerberos",
+        "is_correct": false
+      },
+      {
+        "text": "Diameter",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a host operating system attempts to renew its existing DHCP IP lease at the T1 timer, how does it transmit the DHCPREQUEST message?",
+    "explanation": "At the T1 renewal point, the client sends a unicast DHCPREQUEST directly to the IP address of the DHCP server that originally granted the lease.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "As a unicast packet directly to the leasing DHCP server",
+        "is_correct": true
+      },
+      {
+        "text": "As a broadcast packet sent to 255.255.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "As an all-routers multicast packet sent to 224.0.0.2",
+        "is_correct": false
+      },
+      {
+        "text": "As an encrypted IPsec payload over UDP port 4500",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When a router configured with 'ip helper-address' relays a client's DHCP request, which header field does it populate with its own local interface IP address?",
+    "explanation": "The router inserts its own incoming interface IP address into the GIADDR (Gateway IP Address / Relay Agent IP Address) field of the DHCP message. The DHCP server uses GIADDR to select the appropriate address pool.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "GIADDR (Gateway IP Address field)",
+        "is_correct": true
+      },
+      {
+        "text": "CHADDR (Client Hardware Address field)",
+        "is_correct": false
+      },
+      {
+        "text": "YIADDR ('Your' Client IP Address field)",
+        "is_correct": false
+      },
+      {
+        "text": "SIADDR (Next Server IP Address field)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an extended Cisco IPv4 ACL, what is the meaning of the operator 'eq 80' in the statement 'permit tcp 192.168.1.0 0.0.0.255 any eq 80'?",
+    "explanation": "The operator `eq` stands for 'equal to'. It filters packets whose destination TCP port number is exactly equal to 80 (HTTP).",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Matches packets whose destination port is strictly equal to TCP port 80 (HTTP)",
+        "is_correct": true
+      },
+      {
+        "text": "Matches packets whose source IP address equals 80",
+        "is_correct": false
+      },
+      {
+        "text": "Permits packets with a TTL value equal to 80",
+        "is_correct": false
+      },
+      {
+        "text": "Limits bandwidth throughput to 80 percent of line rate",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS interface command attaches a previously defined IPv6 RA Guard policy named 'BLOCK_ROGUE' to a switch access port?",
+    "explanation": "The command `ipv6 nd raguard attach-policy BLOCK_ROGUE` applies the RA Guard policy to an interface, causing the switch to inspect and filter ICMPv6 router advertisements.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ipv6 nd raguard attach-policy BLOCK_ROGUE",
+        "is_correct": true
+      },
+      {
+        "text": "raguard enable policy BLOCK_ROGUE",
+        "is_correct": false
+      },
+      {
+        "text": "ipv6 snooping apply BLOCK_ROGUE",
+        "is_correct": false
+      },
+      {
+        "text": "switchport ipv6 raguard BLOCK_ROGUE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Network Time Protocol (NTP) hierarchy, what does the Stratum level indicate regarding clock accuracy and source proximity?",
+    "explanation": "The Stratum level defines the distance in hops from a reference clock source (Stratum 0). Lower stratum numbers indicate closer proximity to reference clocks and higher time accuracy.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The number of hops away from a reference clock source (Stratum 0); lower stratum numbers represent higher accuracy",
+        "is_correct": true
+      },
+      {
+        "text": "The encryption strength of the NTP authentication key in bits",
+        "is_correct": false
+      },
+      {
+        "text": "The number of active client sessions currently connected to the server",
+        "is_correct": false
+      },
+      {
+        "text": "The network latency in milliseconds between peer time servers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is 'NAT Hairpinning' (NAT Loopback) on an enterprise edge router?",
+    "explanation": "NAT Hairpinning allows an internal LAN client to access an internal LAN server using the server's public (Inside Global) IP address. The router translates both the source and destination addresses as traffic enters and exits the same inside interface.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Allows an internal client to communicate with an internal server using the server's public IP by translating packets on the same inside interface",
+        "is_correct": true
+      },
+      {
+        "text": "Translates IPv6 multicast streams into IPv4 unicast packets",
+        "is_correct": false
+      },
+      {
+        "text": "Enforces two-factor authentication on outbound NAT connections",
+        "is_correct": false
+      },
+      {
+        "text": "Automatically loops dropped NAT packets back to the source sender",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Simple Network Management Protocol (SNMP), how does an 'InformRequest' (SNMP Inform) differ from a standard SNMP Trap?",
+    "explanation": "An SNMP Inform requires the management station (NMS) to return an acknowledgment response. If no ACK is received, the agent can retransmit, providing reliable delivery over UDP that unacknowledged Traps lack.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An Inform requires an acknowledgment response from the NMS for reliable delivery, whereas a Trap is unacknowledged",
+        "is_correct": true
+      },
+      {
+        "text": "An Inform is transmitted over TCP port 443; a Trap uses UDP port 162",
+        "is_correct": false
+      },
+      {
+        "text": "An Inform can only be generated by Cisco switches; Traps are for routers only",
+        "is_correct": false
+      },
+      {
+        "text": "An Inform contains plaintext passwords; Traps are always encrypted",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the standard TCP destination port used by Secure Shell (SSH) for encrypted remote command-line access?",
+    "explanation": "Secure Shell (SSH) listens on well-known TCP port 22.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP port 22",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 23",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 21",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 80",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is the use of unencrypted Trivial File Transfer Protocol (TFTP) across enterprise production networks considered a severe security risk?",
+    "explanation": "TFTP has no authentication and sends files completely in the clear. An attacker capturing network packets can read plaintext configurations, extracting enable secrets, SNMP community strings, and VPN pre-shared keys.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TFTP transmits data in plaintext without authentication, exposing passwords and sensitive configuration data to packet sniffing",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP consumes 100% of router CPU cycles during file transfers",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP requires open incoming firewall ports on TCP 443",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP automatically overwrites the startup-config on every connection",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an enterprise 802.1X/EAP wireless network architecture, what role is performed by the Access Point or Wireless LAN Controller?",
+    "explanation": "In 802.1X architecture, the AP/WLC acts as the 'Authenticator'. It relays EAP encapsulation packets between the client station (Supplicant) and the backend RADIUS server (Authentication Server).",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The Authenticator, relaying EAP messages between the client (Supplicant) and the RADIUS server",
+        "is_correct": true
+      },
+      {
+        "text": "The Supplicant, providing user credentials to the client station",
+        "is_correct": false
+      },
+      {
+        "text": "The Authentication Server, validating user passwords against Active Directory",
+        "is_correct": false
+      },
+      {
+        "text": "The Certificate Authority, issuing X.509 client identity certificates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS command configures default login authentication to verify credentials against a TACACS+ server group first, falling back to the local database if TACACS+ is unreachable?",
+    "explanation": "The command `aaa authentication login default group tacacs+ local` instructs Cisco IOS to query the TACACS+ group first and fall back to the local device database if no TACACS+ server responds.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "aaa authentication login default group tacacs+ local",
+        "is_correct": true
+      },
+      {
+        "text": "login authentication tacacs+ fallback local",
+        "is_correct": false
+      },
+      {
+        "text": "aaa login default local tacacs+",
+        "is_correct": false
+      },
+      {
+        "text": "security authentication method tacacs+ or-local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In DHCPv4 client-server communication, which message does a client transmit to gracefully surrender its assigned IP address and cancel its active lease?",
+    "explanation": "A client transmits a unicast DHCPRELEASE message to the DHCP server to release its IP address and return it to the available address pool.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPRELEASE",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPDECLINE",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPNAK",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINFORM",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a switch configured with DHCP Snooping, which switch ports must be explicitly designated as 'trusted' using the 'ip dhcp snooping trust' command?",
+    "explanation": "Switch ports that connect to authorized DHCP servers or uplink ports that connect to DHCP relay routers must be configured as trusted, allowing DHCP server responses (OFFER and ACK) to enter the switch.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Uplink ports connected to authorized DHCP servers or upstream DHCP relay routers",
+        "is_correct": true
+      },
+      {
+        "text": "All access ports connected to end-user desktop computers",
+        "is_correct": false
+      },
+      {
+        "text": "Ports connected to IP phones on the voice VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "The dedicated SPAN destination port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why must the 'ip helper-address' command be configured on the router's local LAN interface (default gateway) rather than on the WAN interface?",
+    "explanation": "The router must intercept the client's Layer 2/3 broadcast DHCPDISCOVER packet on the incoming LAN access subnet where it originates, before the broadcast is dropped at the router boundary.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "To intercept the client's local broadcast DHCP request on the LAN interface before it is discarded by the router",
+        "is_correct": true
+      },
+      {
+        "text": "Because WAN interfaces cannot process UDP packets",
+        "is_correct": false
+      },
+      {
+        "text": "To encrypt the DHCP payload with IPsec before leaving the LAN",
+        "is_correct": false
+      },
+      {
+        "text": "Because helper addresses are only supported on FastEthernet interfaces",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IPsec negotiation, what is the role of Diffie-Hellman (DH) key exchange during IKE Phase 1?",
+    "explanation": "Diffie-Hellman allows two peer gateways to securely generate a shared symmetric secret key over an unsecure public network without transmitting the secret key over the wire.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Allows two peers to securely generate a shared secret key over an untrusted public network without transmitting the key itself",
+        "is_correct": true
+      },
+      {
+        "text": "Verifies the cryptographic hash of the operating system image file",
+        "is_correct": false
+      },
+      {
+        "text": "Compresses IP payloads using LZW compression algorithms",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns dynamic IP addresses to remote branch routers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In hardware-accelerated Cisco Catalyst switches, at what layer does IPv6 RA Guard inspect and filter rogue Router Advertisements at line rate?",
+    "explanation": "Cisco Catalyst switches implement RA Guard directly in hardware (Data Plane ASICs / TCAM), allowing packets to be inspected and dropped at wire speed without burdening the main switch CPU.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In hardware TCAM / Data Plane ASICs at wire speed",
+        "is_correct": true
+      },
+      {
+        "text": "In software CPU memory buffers exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "On an external syslog monitoring server",
+        "is_correct": false
+      },
+      {
+        "text": "Inside the flash NVRAM memory card",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS command configures a router to synchronize its system clock with an NTP time server at IP address 192.168.1.10?",
+    "explanation": "The command `ntp server 192.168.1.10` configures the router in NTP client mode to sync its clock from the specified time server.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ntp server 192.168.1.10",
+        "is_correct": true
+      },
+      {
+        "text": "clock set server 192.168.1.10",
+        "is_correct": false
+      },
+      {
+        "text": "ntp sync 192.168.1.10",
+        "is_correct": false
+      },
+      {
+        "text": "service ntp 192.168.1.10",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When configuring Dynamic PAT (NAT Overload) on a Cisco router, what is the purpose of associating a standard Access Control List (ACL) with the NAT command?",
+    "explanation": "The ACL defines 'interesting traffic' by matching the inside private source IP addresses that are permitted to undergo NAT translation to the outside public IP address.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It defines which internal private IP addresses are permitted to be translated",
+        "is_correct": true
+      },
+      {
+        "text": "It blocks inbound Telnet access to the router loopback",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts translated packets with an IPsec transform set",
+        "is_correct": false
+      },
+      {
+        "text": "It allocates public IP addresses to external internet hosts",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which transport protocol and default UDP port number are utilized by Syslog to transmit logging events from network devices to an external log server?",
+    "explanation": "Syslog standardly transmits event messages over UDP port 514.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP port 514",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 514",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 8080",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the security objective of executing 'no ip http server' and 'no ip http secure-server' on a production Cisco router?",
+    "explanation": "These commands disable the integrated HTTP and HTTPS web management servers on the router, closing TCP ports 80 and 443 to eliminate exposure to web interface vulnerabilities and unauthorized web access.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Disables the unencrypted HTTP and HTTPS web management services, closing open web ports to prevent web interface exploits",
+        "is_correct": true
+      },
+      {
+        "text": "Blocks all LAN clients from browsing external internet web servers",
+        "is_correct": false
+      },
+      {
+        "text": "Prevents the router from obtaining an IP address via DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "Disables hardware packet routing between VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the recommended minimum RSA key modulus length in bits when generating SSH server keys ('crypto key generate rsa') on modern Cisco devices?",
+    "explanation": "Cisco and modern cryptographic guidelines recommend an RSA key modulus of at least 2048 bits for secure SSH operations (1024 bits is legacy; 768 bits is deprecated).",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "2048 bits",
+        "is_correct": true
+      },
+      {
+        "text": "512 bits",
+        "is_correct": false
+      },
+      {
+        "text": "768 bits",
+        "is_correct": false
+      },
+      {
+        "text": "128 bits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a Management Information Base (MIB) in Simple Network Management Protocol (SNMP)?",
+    "explanation": "A MIB is an organized, hierarchical database of managed objects resident on a network device. Each object is identified by an Object Identifier (OID) that can be queried or set by an NMS.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A hierarchical database of managed object definitions identified by Object Identifiers (OIDs) on a device",
+        "is_correct": true
+      },
+      {
+        "text": "The firmware operating system image stored in router flash memory",
+        "is_correct": false
+      },
+      {
+        "text": "An encrypted tunnel connecting two remote branch offices",
+        "is_correct": false
+      },
+      {
+        "text": "The physical backplane capacity of a chassis switch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the standard structural components of a Cisco IOS syslog message (e.g. '%LINK-3-UPDOWN: Interface Gi0/1, changed state to up')?",
+    "explanation": "A standard Cisco syslog message format consists of: Facility (e.g. LINK), Severity level (e.g. 3), Mnemonic (e.g. UPDOWN), and Message Text description.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Facility, Severity Level, Mnemonic, and Message Text description",
+        "is_correct": true
+      },
+      {
+        "text": "IP Header, TCP Flag, Payload, and FCS Checksum",
+        "is_correct": false
+      },
+      {
+        "text": "Username, Password, Privilege Level, and Timestamp",
+        "is_correct": false
+      },
+      {
+        "text": "Source MAC, Destination MAC, EtherType, and CRC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the minimum recommended passphrase character length for WPA2-Personal and WPA3-Personal Wi-Fi networks?",
+    "explanation": "WPA2 and WPA3 Pre-Shared Keys require a minimum of 8 characters (and up to 63 ASCII characters).",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "8 characters",
+        "is_correct": true
+      },
+      {
+        "text": "4 characters",
+        "is_correct": false
+      },
+      {
+        "text": "16 characters",
+        "is_correct": false
+      },
+      {
+        "text": "32 characters",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Why is WPA2/WPA3-Enterprise authentication preferred over Pre-Shared Key (Personal) modes in corporate enterprise wireless environments?",
+    "explanation": "Enterprise mode authenticates each individual user uniquely using 802.1X and RADIUS. This eliminates the security risk of a shared passphrase and allows an employee's wireless access to be revoked instantly when they leave the organization.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It authenticates users individually via 802.1X/RADIUS, eliminating shared passwords and enabling individual credential revocation",
+        "is_correct": true
+      },
+      {
+        "text": "It doubles radio frequency transmission distance",
+        "is_correct": false
+      },
+      {
+        "text": "It operates without requiring an Access Point",
+        "is_correct": false
+      },
+      {
+        "text": "It bypasses corporate firewall inspection",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco IP telephony deployments, what is the role of DHCP Option 150?",
+    "explanation": "DHCP Option 150 is a Cisco-proprietary option that provides a list of IP addresses for TFTP servers / Cisco Unified Communications Manager (CUCM) to IP phones so they can download firmware and configuration files.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Provides IP phone endpoints with the IP addresses of TFTP / CUCM call-processing servers",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns the subnet mask and default gateway address",
+        "is_correct": false
+      },
+      {
+        "text": "Configures the DNS domain search list",
+        "is_correct": false
+      },
+      {
+        "text": "Specifies the lease duration in seconds",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does DHCP Snooping rate-limiting ('ip dhcp snooping limit rate <pps>') protect an access switch from Denial of Service attacks?",
+    "explanation": "DHCP Snooping rate-limiting limits the number of incoming DHCP packets per second on untrusted ports, preventing attackers from flooding the switch CPU or exhausting the DHCP server pool (DHCP starvation attack).",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Limits incoming DHCP packets per second on untrusted ports to prevent DHCP starvation and CPU exhaustion attacks",
+        "is_correct": true
+      },
+      {
+        "text": "Restricts client download speeds across 802.1Q trunks",
+        "is_correct": false
+      },
+      {
+        "text": "Limits the number of concurrent SSH management sessions",
+        "is_correct": false
+      },
+      {
+        "text": "Prevents routing table overflows from OSPF LSA floods",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What destination IP and destination MAC address are used by an IPv4 workstation sending a DHCPDISCOVER message?",
+    "explanation": "Because the client has no IP configuration or knowledge of the network, DHCPDISCOVER is broadcast at Layer 2 (FF:FF:FF:FF:FF:FF) and Layer 3 (255.255.255.255).",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Destination IP 255.255.255.255 and destination MAC FF:FF:FF:FF:FF:FF",
+        "is_correct": true
+      },
+      {
+        "text": "Destination IP 0.0.0.0 and destination MAC 00:00:00:00:00:00",
+        "is_correct": false
+      },
+      {
+        "text": "Destination IP 127.0.0.1 and destination MAC 01:80:C2:00:00:00",
+        "is_correct": false
+      },
+      {
+        "text": "Destination IP 224.0.0.1 and destination MAC 01:00:5E:00:00:01",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a Cisco extended IPv4 Access Control List statement, which keyword can be used to replace the IP address and wildcard mask '0.0.0.0 255.255.255.255'?",
+    "explanation": "The keyword `any` is an abbreviation representing any source or destination IPv4 address (`0.0.0.0 255.255.255.255`).",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "any",
+        "is_correct": true
+      },
+      {
+        "text": "host",
+        "is_correct": false
+      },
+      {
+        "text": "all",
+        "is_correct": false
+      },
+      {
+        "text": "wildcard",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS resource record type maps a human-readable hostname (e.g. www.cisco.com) to a 32-bit IPv4 address?",
+    "explanation": "An 'A' (Address) record maps a Fully Qualified Domain Name (FQDN) directly to an IPv4 address. (An 'AAAA' record maps to an IPv6 address).",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A record",
+        "is_correct": true
+      },
+      {
+        "text": "AAAA record",
+        "is_correct": false
+      },
+      {
+        "text": "CNAME record",
+        "is_correct": false
+      },
+      {
+        "text": "PTR record",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary function of a DNS Start of Authority (SOA) record?",
+    "explanation": "The SOA record defines the core parameters of a DNS zone, including the primary authoritative master name server, administrator email, serial number, and zone transfer refresh/retry/expire timers.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Identifies the primary authoritative nameserver, zone serial number, and zone transfer timers",
+        "is_correct": true
+      },
+      {
+        "text": "Maps an IPv4 address to a reverse domain name",
+        "is_correct": false
+      },
+      {
+        "text": "Specifies the mail server priority for incoming email",
+        "is_correct": false
+      },
+      {
+        "text": "Creates a temporary cryptographic token for DNSSEC verification",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is 'Split Tunneling' in a remote access VPN deployment?",
+    "explanation": "Split Tunneling directs corporate intranet traffic through the encrypted VPN tunnel, while public internet browsing traffic bypasses the VPN and exits directly through the user's local ISP connection.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Routes corporate internal traffic through the encrypted VPN tunnel while general internet traffic exits directly via the user's local ISP",
+        "is_correct": true
+      },
+      {
+        "text": "Splits VPN traffic 50/50 across two redundant Wi-Fi network cards",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts outgoing traffic with AES and incoming traffic with 3DES",
+        "is_correct": false
+      },
+      {
+        "text": "Fragments packets into 576-byte pieces to fit path MTU limits",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What major security advantage does a 'Full Tunnel' VPN configuration offer over Split Tunneling in enterprise remote access deployments?",
+    "explanation": "In a Full Tunnel, ALL client traffic (including general web browsing) is routed through the central corporate VPN gateway, ensuring that all traffic is subject to corporate firewalls, intrusion prevention, and web content filtering.",
+    "domain": "services_security",
+    "subtopic": "IPsec Remote Access",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "All client traffic is forced through the corporate gateway, allowing full firewall inspection, DLP, and content filtering",
+        "is_correct": true
+      },
+      {
+        "text": "It doubles client internet bandwidth speeds",
+        "is_correct": false
+      },
+      {
+        "text": "It eliminates the need for user passwords or digital certificates",
+        "is_correct": false
+      },
+      {
+        "text": "It allows client laptops to bypass corporate antivirus software",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the two operational modes of IPsec Encapsulating Security Payload (ESP)?",
+    "explanation": "IPsec ESP supports Transport mode (which encrypts only the payload and preserves the original IP header, used host-to-host) and Tunnel mode (which encrypts the entire original IP packet and adds a new IP header, used gateway-to-gateway).",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Transport mode and Tunnel mode",
+        "is_correct": true
+      },
+      {
+        "text": "Symmetric mode and Asymmetric mode",
+        "is_correct": false
+      },
+      {
+        "text": "Access mode and Trunk mode",
+        "is_correct": false
+      },
+      {
+        "text": "Client mode and Server mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPsec mode is standardly utilized for site-to-site VPN tunnels interconnecting two branch office gateways across the public Internet?",
+    "explanation": "Tunnel mode is standard for site-to-site VPNs because it encapsulates and encrypts the entire private packet (including private RFC 1918 source and destination IPs) inside a new routable public IP header.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Tunnel mode",
+        "is_correct": true
+      },
+      {
+        "text": "Transport mode",
+        "is_correct": false
+      },
+      {
+        "text": "Promiscuous mode",
+        "is_correct": false
+      },
+      {
+        "text": "Transparent mode",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What specific network attack is mitigated by enabling IPv6 Router Advertisement (RA) Guard on access switch ports?",
+    "explanation": "IPv6 RA Guard blocks rogue routers or compromised hosts from sending unauthorized ICMPv6 Router Advertisements, preventing them from tricking clients into using a rogue gateway (Man-in-the-Middle) or bogus prefix.",
+    "domain": "services_security",
+    "subtopic": "IPv6 RA Guard",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Rogue router attacks advertising unauthorized default gateways or false IPv6 prefixes",
+        "is_correct": true
+      },
+      {
+        "text": "CAM table MAC address flooding attacks",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP starvation attacks on IPv4 access ports",
+        "is_correct": false
+      },
+      {
+        "text": "CDP spoofing attacks by rogue VoIP phones",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a 'DHCP Starvation Attack' in Layer 2 security, and what attack tool is commonly used to execute it?",
+    "explanation": "In a DHCP Starvation attack, an attacker uses a tool (such as Yersinia or Gobbler) to rapidly broadcast thousands of DHCPDISCOVER requests with spoofed MAC addresses, exhausting the DHCP server's available IP address pool and denying service to legitimate clients.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Flooding the network with thousands of DHCP requests using randomized MAC addresses to exhaust the DHCP address pool",
+        "is_correct": true
+      },
+      {
+        "text": "Intercepting cleartext passwords using an inline network tap",
+        "is_correct": false
+      },
+      {
+        "text": "Overwriting the VTP database using a rogue switch revision number",
+        "is_correct": false
+      },
+      {
+        "text": "Poisoning the DNS server cache using false PTR records",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Layer 2 security, what is an 802.1Q 'Double-Tagging' VLAN hopping attack, and why must the attacker's switch port be in the Native VLAN?",
+    "explanation": "In double-tagging, the attacker sends a frame with two 802.1Q tags. When the switch forwards it across a trunk, it strips the outer native tag without retagging (native VLAN behavior). The receiving switch reads the inner tag and forwards the frame into the target victim VLAN.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "An attacker crafts frames with two 802.1Q tags; the first switch strips the outer native tag, allowing the inner tag to reach the victim VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "An attacker sends two simultaneous ARP replies to overwrite the default gateway MAC",
+        "is_correct": false
+      },
+      {
+        "text": "An attacker establishes two concurrent SSH sessions to corrupt flash memory",
+        "is_correct": false
+      },
+      {
+        "text": "An attacker connects two physical patch cables to create a Spanning Tree loop",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What Layer 4 mechanism does Port Address Translation (PAT / NAT Overload) use to map hundreds of private internal IP addresses to a single public IP address?",
+    "explanation": "PAT tracks unique Layer 4 source port numbers (TCP and UDP) in its state table, allowing thousands of simultaneous private IP sessions to be multiplexed onto a single public IPv4 address.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Unique source Layer 4 TCP and UDP port numbers",
+        "is_correct": true
+      },
+      {
+        "text": "Unique 48-bit MAC addresses",
+        "is_correct": false
+      },
+      {
+        "text": "802.1Q VLAN tag headers",
+        "is_correct": false
+      },
+      {
+        "text": "IP TTL hop count decrements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which standard command-line network diagnostic tool is commonly used on Linux and Windows systems to test and query DNS name resolution?",
+    "explanation": "Both `nslookup` (available across Windows and Linux) and `dig` (standard on Linux/macOS) are used to perform manual DNS queries against configured nameservers.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "nslookup (or dig)",
+        "is_correct": true
+      },
+      {
+        "text": "netsh",
+        "is_correct": false
+      },
+      {
+        "text": "tracert",
+        "is_correct": false
+      },
+      {
+        "text": "ipconfig /flushdns",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which secure protocol is commonly used by network engineers to copy configuration files and software images securely over an encrypted TLS connection across the web?",
+    "explanation": "HTTPS (Hypertext Transfer Protocol Secure) runs over TLS/SSL (TCP port 443) and is supported in modern Cisco IOS for secure file downloads via `copy https://... flash:`.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HTTPS",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "Telnet",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco AAA security architecture, what is an 'Authentication Method List'?",
+    "explanation": "An Authentication Method List defines the sequential order of authentication security sources (e.g. query TACACS+ server group first; if unreachable, query local database) checked when a user logs in.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A configured sequence of authentication security sources queried in order during user login",
+        "is_correct": true
+      },
+      {
+        "text": "A list of approved MAC addresses allowed to bypass port security",
+        "is_correct": false
+      },
+      {
+        "text": "An access control list filtering TCP port 49 packets",
+        "is_correct": false
+      },
+      {
+        "text": "A database of digital X.509 user certificates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What action does a client workstation take if it receives a DHCPNAK (Negative Acknowledgment) message from a DHCP server during the DORA process?",
+    "explanation": "A DHCPNAK indicates the server rejected the client's request (e.g. requested address is invalid or leased elsewhere). The client immediately halts configuration and restarts the negotiation from the beginning with a new DHCPDISCOVER.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It immediately halts configuration and restarts the process with a new DHCPDISCOVER broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "It adopts the IP address anyway and ignores the NAK",
+        "is_correct": false
+      },
+      {
+        "text": "It immediately configures a static 192.168.1.1 address",
+        "is_correct": false
+      },
+      {
+        "text": "It disables its physical network interface card",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a switch with DHCP Snooping enabled, what validation action is performed when a client sends a DHCPRELEASE message on an untrusted port?",
+    "explanation": "The switch checks the DHCP Snooping Binding Table to verify that the source MAC address and port match the registered lease. If valid, it purges the entry and forwards the release to the server; if invalid, it drops the message to prevent spoofed lease terminations.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Validates that the source MAC and port match the binding database before purging the entry and forwarding the release",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcasts the release out all active trunk ports in VLAN 1",
+        "is_correct": false
+      },
+      {
+        "text": "Immediately places the interface into err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "Increments the Spanning Tree root bridge priority by 4096",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary architectural difference between a DHCP Server and a DHCP Relay Agent?",
+    "explanation": "A DHCP Server maintains IP address pools, assigns leases, and responds to client requests. A DHCP Relay Agent (configured via `ip helper-address`) receives client broadcast requests on local subnets and forwards them as unicast packets across routers to the central DHCP server.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A DHCP server manages IP pools and grants leases; a relay agent forwards client broadcasts as unicast packets across routers to the server",
+        "is_correct": true
+      },
+      {
+        "text": "A DHCP server operates only on serial links; a relay agent operates on Ethernet",
+        "is_correct": false
+      },
+      {
+        "text": "A relay agent assigns public IP addresses; a server assigns private IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP server requires optical fiber; a relay agent uses copper cabling",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS privileged exec command displays the operational status, enabled VLANs, and dropped packet statistics for Dynamic ARP Inspection (DAI)?",
+    "explanation": "The command `show ip arp inspection` displays the operational state of DAI across configured VLANs, showing packets inspected, permitted, and dropped.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ip arp inspection",
+        "is_correct": true
+      },
+      {
+        "text": "show dai status",
+        "is_correct": false
+      },
+      {
+        "text": "show arp inspection statistics",
+        "is_correct": false
+      },
+      {
+        "text": "show ip dhcp snooping dai",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Layer 2 security feature on Cisco Catalyst switches protects against unauthorized rogue DHCP servers offering bogus IP configurations to LAN clients?",
+    "explanation": "DHCP Snooping designates switch ports as trusted or untrusted, discarding unauthorized DHCP server responses (OFFER and ACK) on untrusted access ports to prevent rogue DHCP server attacks.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCP Snooping",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic ARP Inspection",
+        "is_correct": false
+      },
+      {
+        "text": "IP Source Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Port Security",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a single router interface, what is the maximum number of IPv4 Access Control Lists (ACLs) that can be applied?",
+    "explanation": "A router interface allows a maximum of two IPv4 ACLs: exactly one inbound ACL (`ip access-group <name> in`) and one outbound ACL (`ip access-group <name> out`).",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two ACLs: one inbound and one outbound",
+        "is_correct": true
+      },
+      {
+        "text": "One ACL in either direction only",
+        "is_correct": false
+      },
+      {
+        "text": "Unlimited ACLs in both directions",
+        "is_correct": false
+      },
+      {
+        "text": "Four ACLs: two standard and two extended",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS line configuration command sets an automatic inactivity logout timer of 5 minutes 0 seconds on VTY terminal lines?",
+    "explanation": "The command `exec-timeout 5 0` (minutes seconds) under `line vty 0 4` disconnects inactive administrative sessions after 5 minutes of inactivity.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "exec-timeout 5 0",
+        "is_correct": true
+      },
+      {
+        "text": "session-timeout 5",
+        "is_correct": false
+      },
+      {
+        "text": "timeout login 300",
+        "is_correct": false
+      },
+      {
+        "text": "line-timeout 5 minutes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type maps a domain hostname to an IPv6 address?",
+    "explanation": "An AAAA ('quad-A') record maps a hostname to a 128-bit IPv6 address. In contrast, an A record maps to a 32-bit IPv4 address, a PTR record handles reverse lookups, and an MX record points to mail exchange servers.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "AAAA record",
+        "is_correct": true
+      },
+      {
+        "text": "A record",
+        "is_correct": false
+      },
+      {
+        "text": "CNAME record",
+        "is_correct": false
+      },
+      {
+        "text": "PTR record",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-23-volume.json"
+  },
+  {
+    "stem": "What underlying database does Dynamic ARP Inspection (DAI) rely on by default to validate Address Resolution Protocol packets on untrusted switch ports?",
+    "explanation": "DAI relies on the DHCP snooping binding database (or user-configured ARP ACLs) to verify that the sender MAC address and sender IP address in an ARP message match a legitimate, known lease.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The DHCP snooping binding database",
+        "is_correct": true
+      },
+      {
+        "text": "The switch MAC address forwarding table",
+        "is_correct": false
+      },
+      {
+        "text": "The local CEF adjacency table",
+        "is_correct": false
+      },
+      {
+        "text": "The 802.1X RADIUS session cache",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-23-volume.json"
+  },
+  {
+    "stem": "Which Wi-Fi Protected Access 3 (WPA3) protocol replaces the vulnerable Pre-Shared Key (PSK) 4-way handshake to protect against offline dictionary attacks?",
+    "explanation": "WPA3-Personal replaces PSK with Simultaneous Authentication of Equals (SAE), based on the Dragonfly key exchange protocol. SAE provides forward secrecy and renders passive eavesdropping and offline dictionary attacks ineffective.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Simultaneous Authentication of Equals (SAE)",
+        "is_correct": true
+      },
+      {
+        "text": "Extensible Authentication Protocol - TLS (EAP-TLS)",
+        "is_correct": false
+      },
+      {
+        "text": "Temporal Key Integrity Protocol (TKIP)",
+        "is_correct": false
+      },
+      {
+        "text": "Protected Extensible Authentication Protocol (PEAP)",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-23-volume.json"
+  },
+  {
+    "stem": "Which command configures an uplink switch port connected to a legitimate enterprise DHCP server as a trusted port under DHCP Snooping?",
+    "explanation": "On the specific interface connected to the authorized DHCP server or upstream router, the command 'ip dhcp snooping trust' must be configured to allow DHCP Offer and Ack packets to pass.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip dhcp snooping trust",
+        "is_correct": true
+      },
+      {
+        "text": "ip dhcp trust enable",
+        "is_correct": false
+      },
+      {
+        "text": "switchport dhcp-server trusted",
+        "is_correct": false
+      },
+      {
+        "text": "ip dhcp relay trust-all",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-24-volume.json"
+  },
+  {
+    "stem": "Which SNMP version introduces cryptographic message integrity, authentication (SHA/MD5), and DES/AES payload encryption, addressing the plaintext community string vulnerability of earlier versions?",
+    "explanation": "SNMPv3 provides full security: authentication (verifying message origin) and encryption/privacy (preventing eavesdropping) via its User-based Security Model (USM). SNMPv1 and SNMPv2c transmit community strings in cleartext.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMPv3",
+        "is_correct": true
+      },
+      {
+        "text": "SNMPv2c",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      },
+      {
+        "text": "SNMP-Trap v2",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-24-volume.json"
+  },
+  {
+    "stem": "Which EAP authentication method used in WPA2/WPA3-Enterprise requires X.509 digital certificates to be installed on BOTH the RADIUS server and the client endpoint for mutual authentication?",
+    "explanation": "EAP-TLS (Extensible Authentication Protocol - Transport Layer Security) requires mutual certificate authentication: the authentication server presents a certificate to the client, and the client presents an individual client certificate to the server.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "EAP-TLS",
+        "is_correct": true
+      },
+      {
+        "text": "PEAP (Protected EAP)",
+        "is_correct": false
+      },
+      {
+        "text": "EAP-FAST",
+        "is_correct": false
+      },
+      {
+        "text": "EAP-MSCHAPv2",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-25-volume.json"
+  },
+  {
+    "stem": "What is the four-message sequence exchanged between a client and a DHCP server to dynamically obtain an IPv4 configuration?",
+    "explanation": "IPv4 DHCP follows the DORA sequence: Discover (broadcast by client), Offer (unicast/broadcast by server), Request (broadcast by client), Acknowledge (unicast/broadcast by server).",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCPDISCOVER, DHCPOFFER, DHCPREQUEST, DHCPACK",
+        "is_correct": true
+      },
+      {
+        "text": "DHCPSOLICIT, DHCPADVERTISE, DHCPCONFIRM, DHCPREPLY",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPINIT, DHCPOFFER, DHCPACCEPT, DHCPCONFIRM",
+        "is_correct": false
+      },
+      {
+        "text": "DHCPQUERY, DHCPRESPONSE, DHCPBIND, DHCPACK",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-26-volume.json"
+  },
+  {
+    "stem": "What is the default TCP and UDP port used by Domain Name System (DNS) for standard queries and zone transfers?",
+    "explanation": "DNS uses port 53 (UDP for standard client queries and small responses, TCP for zone transfers and responses exceeding 512 bytes).",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Port 53",
+        "is_correct": true
+      },
+      {
+        "text": "Port 67",
+        "is_correct": false
+      },
+      {
+        "text": "Port 123",
+        "is_correct": false
+      },
+      {
+        "text": "Port 161",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-26-volume.json"
+  },
+  {
+    "stem": "Which DNS resource record type is used to map a domain hostname directly to an IPv6 address?",
+    "explanation": "An 'A' record maps a hostname to an IPv4 address. An 'AAAA' (quad-A) record maps a hostname to a 128-bit IPv6 address.",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "AAAA record",
+        "is_correct": true
+      },
+      {
+        "text": "A record",
+        "is_correct": false
+      },
+      {
+        "text": "CNAME record",
+        "is_correct": false
+      },
+      {
+        "text": "PTR record",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-27-volume.json"
+  },
+  {
+    "stem": "Which well-known transport layer protocol and port number does Network Time Protocol (NTP) use for time synchronization?",
+    "explanation": "Network Time Protocol (NTP) operates over UDP port 123.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP port 123",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 123",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 8080",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-27-volume.json"
+  },
+  {
+    "stem": "What major security features were introduced in SNMPv3 that are absent in SNMPv1 and SNMPv2c?",
+    "explanation": "SNMPv3 introduces cryptographic message integrity, user-based authentication (using SHA or MD5), and payload encryption (privacy using AES or DES), eliminating the security risk of plain-text community strings.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "User-based cryptographic authentication (auth) and payload encryption privacy (priv)",
+        "is_correct": true
+      },
+      {
+        "text": "Community string passwords up to 128 characters in length",
+        "is_correct": false
+      },
+      {
+        "text": "Automatic failover across multiple redundant default gateways",
+        "is_correct": false
+      },
+      {
+        "text": "Conversion of MIB OID strings into human-readable XML documents",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-28-volume.json"
+  },
+  {
+    "stem": "Which Cisco IOS line configuration command enforces the use of SSH exclusively and blocks unencrypted Telnet sessions on VTY lines?",
+    "explanation": "Under `line vty 0 4` (or 0 15), configuring `transport input ssh` restricts remote terminal access solely to SSH, actively rejecting any incoming cleartext Telnet connections.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "transport input ssh",
+        "is_correct": true
+      },
+      {
+        "text": "login local ssh-only",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh enforce",
+        "is_correct": false
+      },
+      {
+        "text": "no telnet server enable",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-28-volume.json"
+  },
+  {
+    "stem": "In WPA3-Personal Wi-Fi networks, which key establishment protocol replaces WPA2 Pre-Shared Key (PSK) to protect against offline dictionary attacks?",
+    "explanation": "WPA3-Personal replaces the vulnerable WPA2 4-way PSK handshake with Simultaneous Authentication of Equals (SAE), based on the Dragonfly handshake. SAE provides forward secrecy and renders captured offline dictionary attacks impossible.",
+    "domain": "services_security",
+    "subtopic": "Wireless Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Simultaneous Authentication of Equals (SAE)",
+        "is_correct": true
+      },
+      {
+        "text": "Temporal Key Integrity Protocol (TKIP)",
+        "is_correct": false
+      },
+      {
+        "text": "Extensible Authentication Protocol-Flexible Authentication via Secure Tunneling (EAP-FAST)",
+        "is_correct": false
+      },
+      {
+        "text": "Wired Equivalent Privacy (WEP)",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-28-volume.json"
+  },
+  {
+    "stem": "In the Cisco AAA security framework, which component determines the specific configuration commands, privilege levels, and network services an authenticated user is permitted to access?",
+    "explanation": "Authorization determines what a verified user can do (e.g. restrict access to specific commands via TACACS+ command authorization or assign specific VLANs via RADIUS).",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Authorization",
+        "is_correct": true
+      },
+      {
+        "text": "Authentication",
+        "is_correct": false
+      },
+      {
+        "text": "Accounting",
+        "is_correct": false
+      },
+      {
+        "text": "Administration",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-29-volume.json"
+  },
+  {
+    "stem": "Which Cisco IOS global configuration command forces the router to exclusively support SSH Version 2 and reject vulnerable SSH Version 1 fallback connections?",
+    "explanation": "The command `ip ssh version 2` configures the router to accept only SSHv2 connections, preventing downgrade attacks to vulnerable SSHv1.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip ssh version 2",
+        "is_correct": true
+      },
+      {
+        "text": "ssh v2 enforce",
+        "is_correct": false
+      },
+      {
+        "text": "crypto key generate rsa version 2",
+        "is_correct": false
+      },
+      {
+        "text": "transport input sshv2",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-29-volume.json"
+  },
+  {
+    "stem": "Which well-known transport layer port does Network Time Protocol (NTP) use for UDP communication?",
+    "explanation": "NTP operates over UDP port 123.",
+    "domain": "services_security",
+    "subtopic": "Network Services",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP port 123",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 123",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 161",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 69",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-31-volume.json"
+  },
+  {
+    "stem": "Which global configuration command in Cisco IOS encrypts existing and future plaintext passwords (such as console or vty passwords) using Cisco Type 7 reversible encryption?",
+    "explanation": "The `service password-encryption` command applies Cisco Type 7 obfuscation to all plaintext passwords in the running configuration.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "service password-encryption",
+        "is_correct": true
+      },
+      {
+        "text": "enable secret all",
+        "is_correct": false
+      },
+      {
+        "text": "password encrypt type-7 enable",
+        "is_correct": false
+      },
+      {
+        "text": "crypto password encrypt",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-31-volume.json"
+  },
+  {
+    "stem": "Which DNS resource record type defines an alias that maps one domain name to an existing canonical domain name?",
+    "explanation": "A CNAME (Canonical Name) record is an alias record used in DNS to point one hostname (e.g. www.example.com) to another canonical hostname (e.g. server1.example.com).",
+    "domain": "services_security",
+    "subtopic": "DNS Record Types",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "CNAME record",
+        "is_correct": true
+      },
+      {
+        "text": "A record",
+        "is_correct": false
+      },
+      {
+        "text": "MX record",
+        "is_correct": false
+      },
+      {
+        "text": "NS record",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-32-volume.json"
+  },
+  {
+    "stem": "In an extended Cisco IPv4 ACL, what is the function of the 'established' keyword in the statement 'permit tcp any 192.168.1.0 0.0.0.255 established'?",
+    "explanation": "The `established` keyword matches TCP packets that have the ACK or RST control bit set in their header, allowing return traffic for outbound TCP sessions while blocking inbound connection attempts (SYN packets).",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Matches TCP packets with the ACK or RST flag set, allowing return traffic for established outbound connections",
+        "is_correct": true
+      },
+      {
+        "text": "Allows inbound TCP SYN packets to initiate new web server sessions",
+        "is_correct": false
+      },
+      {
+        "text": "Verifies the cryptographic signature of the TCP payload",
+        "is_correct": false
+      },
+      {
+        "text": "Ensures the connection has been active for at least 60 seconds",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-32-volume.json"
+  },
+  {
+    "stem": "Which standard TCP destination port is used by SSH File Transfer Protocol (SFTP) for encrypted file management?",
+    "explanation": "SFTP is an extension of the SSH protocol and operates over standard SSH TCP port 22.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TCP port 22",
+        "is_correct": true
+      },
+      {
+        "text": "TCP port 21",
+        "is_correct": false
+      },
+      {
+        "text": "UDP port 69",
+        "is_correct": false
+      },
+      {
+        "text": "TCP port 443",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-33-volume.json"
+  },
+  {
+    "stem": "Which AAA security protocol is Cisco-proprietary, utilizes TCP port 49, and encrypts the entire packet payload rather than just the password?",
+    "explanation": "TACACS+ is a Cisco-proprietary protocol (RFC 8907) that runs over TCP port 49, completely encrypts the entire packet body, and cleanly separates Authentication, Authorization, and Accounting.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TACACS+",
+        "is_correct": true
+      },
+      {
+        "text": "RADIUS",
+        "is_correct": false
+      },
+      {
+        "text": "Diameter",
+        "is_correct": false
+      },
+      {
+        "text": "Kerberos",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-33-volume.json"
+  },
+  {
+    "stem": "Which interface configuration command limits the rate of incoming ARP packets to 15 packets per second to protect against ARP flooding on a DAI-enabled switch?",
+    "explanation": "The command `ip arp inspection limit rate 15` restricts incoming ARP packets on an untrusted port to 15 pps; exceeding this threshold places the port into err-disabled state.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip arp inspection limit rate 15",
+        "is_correct": true
+      },
+      {
+        "text": "arp rate-limit 15",
+        "is_correct": false
+      },
+      {
+        "text": "storm-control arp pps 15",
+        "is_correct": false
+      },
+      {
+        "text": "switchport arp inspection max 15",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-33-volume.json"
+  },
+  {
+    "stem": "When an enterprise NTP client receives time synchronization packets from a Stratum 1 server, what Stratum level does that client become if it serves time to downstream LAN devices?",
+    "explanation": "NTP stratum increments by 1 at each hop. A client synchronizing from a Stratum 1 server operates at Stratum 2 when providing time to downstream clients.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Stratum 2",
+        "is_correct": true
+      },
+      {
+        "text": "Stratum 0",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 1",
+        "is_correct": false
+      },
+      {
+        "text": "Stratum 16",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-34-volume.json"
+  },
+  {
+    "stem": "Which version of Simple Network Management Protocol (SNMP) introduced cryptographic privacy (payload encryption) and user-based security authentication (USM)?",
+    "explanation": "SNMPv3 introduced User-based Security Model (USM) featuring cryptographic authentication (SHA/MD5) and encryption privacy (AES/DES), eliminating cleartext community strings used in SNMPv1 and SNMPv2c.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMPv3",
+        "is_correct": true
+      },
+      {
+        "text": "SNMPv2c",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv4",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-35-volume.json"
+  },
+  {
+    "stem": "Which command entered under 'line vty 0 4' instructs a Cisco switch or router to prompt for credentials defined in the device's local database during SSH or Telnet login?",
+    "explanation": "The command `login local` specifies that incoming terminal connection attempts should be authenticated against usernames and passwords created in the local device configuration (`username <name> secret <pass>`).",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "login local",
+        "is_correct": true
+      },
+      {
+        "text": "login",
+        "is_correct": false
+      },
+      {
+        "text": "login default",
+        "is_correct": false
+      },
+      {
+        "text": "password local",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-35-volume.json"
+  },
+  {
+    "stem": "In standard Cisco IOS syslog severity levels (0 to 7), which numerical level corresponds to the highest priority, indicating a catastrophic system panic or crash?",
+    "explanation": "Syslog severity 0 is 'Emergency' (system is unusable), representing the most severe system failure level.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Level 0 (Emergency)",
+        "is_correct": true
+      },
+      {
+        "text": "Level 1 (Alert)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 4 (Warning)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 7 (Debugging)",
+        "is_correct": false
+      }
+    ],
+    "_file": "pipeline/batches/seed-35-volume.json"
   }
 ]

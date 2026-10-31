@@ -1,0 +1,1510 @@
+[
+  {
+    "stem": "How does User Datagram Protocol (UDP) differ from Transmission Control Protocol (TCP) in connection state and transport overhead?",
+    "explanation": "UDP is connectionless and lightweight with an 8-byte fixed header. It provides no delivery guarantees, flow control, sequence numbering, or retransmission, making it optimal for latency-sensitive applications like VoIP and video streaming.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "UDP is connectionless with a fixed 8-byte header and low overhead, without delivery guarantees or retransmission",
+        "is_correct": true
+      },
+      {
+        "text": "UDP establishes stateful connections using a 3-way handshake",
+        "is_correct": false
+      },
+      {
+        "text": "UDP guarantees delivery through selective sequence acknowledgments",
+        "is_correct": false
+      },
+      {
+        "text": "UDP encrypts payloads using asymmetric cryptographic keys",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the total length of the standard User Datagram Protocol (UDP) header in bytes?",
+    "explanation": "The UDP header has a fixed size of 8 bytes (64 bits), consisting of four 2-byte fields: Source Port, Destination Port, Length, and Checksum.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "8 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "20 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "40 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "16 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco SD-WAN architecture, which component provides the centralized management plane GUI for device provisioning, monitoring, and software maintenance?",
+    "explanation": "Cisco vManage is the centralized Network Management System (NMS) providing a single-pane-of-glass dashboard for configuring, provisioning, monitoring, and troubleshooting the SD-WAN fabric.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cisco vManage",
+        "is_correct": true
+      },
+      {
+        "text": "Cisco vSmart",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco vBond",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco vEdge",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference in performance guarantees between an enterprise Private WAN service (e.g. MPLS) and an Internet-based WAN (e.g. Broadband, Cellular 5G)?",
+    "explanation": "Private WAN services offer strict Service Level Agreements (SLAs) for guaranteed bandwidth, low latency, predictable jitter, and end-to-end QoS. Internet-based WAN transports are best-effort, requiring IPsec encryption and dynamic path selection to mitigate unpredictable latency.",
+    "domain": "network_infra",
+    "subtopic": "WAN Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Private WAN provides guaranteed bandwidth SLAs, low jitter, and end-to-end QoS; Internet WAN is best-effort and requires IPsec encryption",
+        "is_correct": true
+      },
+      {
+        "text": "Private WAN operates over satellite radio only; Internet WAN uses optical fiber exclusively",
+        "is_correct": false
+      },
+      {
+        "text": "Internet WAN cannot transport IP packets; Private WAN can",
+        "is_correct": false
+      },
+      {
+        "text": "Private WAN requires software dial-up modems; Internet WAN uses SFP transceivers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless standard is commercially branded as Wi-Fi 6E, and what new frequency spectrum does it introduce?",
+    "explanation": "Wi-Fi 6E extends the IEEE 802.11ax standard into the newly unlicensed 6 GHz frequency band (5.925 GHz to 7.125 GHz), providing vast contiguous spectrum without legacy 2.4/5 GHz contention.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IEEE 802.11ax extended into the 6 GHz frequency band",
+        "is_correct": true
+      },
+      {
+        "text": "IEEE 802.11be operating in the 60 GHz band",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.11ac operating in the 900 MHz band",
+        "is_correct": false
+      },
+      {
+        "text": "IEEE 802.11n operating in the 4.9 GHz public safety band",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IEEE 802.11ax (Wi-Fi 6), what is Target Wake Time (TWT) and how does it benefit battery-powered Internet of Things (IoT) devices?",
+    "explanation": "Target Wake Time (TWT) allows the AP and client device to negotiate specific times to wake up and exchange data, allowing IoT sensors and mobile devices to remain in deep sleep mode for hours or days, dramatically prolonging battery life.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It negotiates scheduled wake-up intervals between the AP and device, allowing devices to enter deep sleep and dramatically extend battery life",
+        "is_correct": true
+      },
+      {
+        "text": "It doubles radio frequency transmit power when an endpoint battery falls below 20%",
+        "is_correct": false
+      },
+      {
+        "text": "It forces the access point to reboot automatically every 24 hours",
+        "is_correct": false
+      },
+      {
+        "text": "It switches the client device into autonomous ad-hoc mode when idle",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a Virtual Private Cloud (VPC) in public cloud infrastructure (such as AWS or Google Cloud)?",
+    "explanation": "A Virtual Private Cloud (VPC) is a logically isolated virtual network provisioned within a public cloud provider's infrastructure where customers can define subnets, route tables, and launch virtual compute instances.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A logically isolated virtual network in the public cloud where customers control subnets, IP addressing, and routing tables",
+        "is_correct": true
+      },
+      {
+        "text": "A physical hardware server shipped directly to a customer's data center",
+        "is_correct": false
+      },
+      {
+        "text": "A dedicated point-to-point fiber optic circuit connecting two branch offices",
+        "is_correct": false
+      },
+      {
+        "text": "An unmanaged workgroup hub connecting virtual machines",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which cloud service delivery model provides end-users with web-based access to business software applications without requiring local software installation or server maintenance?",
+    "explanation": "Software as a Service (SaaS) delivers complete software applications (e.g. Google Workspace, Microsoft 365, Salesforce) over the Internet on a subscription basis, fully managed by the provider.",
+    "domain": "network_infra",
+    "subtopic": "Cloud Connectivity",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Software as a Service (SaaS)",
+        "is_correct": true
+      },
+      {
+        "text": "Infrastructure as a Service (IaaS)",
+        "is_correct": false
+      },
+      {
+        "text": "Platform as a Service (PaaS)",
+        "is_correct": false
+      },
+      {
+        "text": "Network as a Service (NaaS)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the assignable host IPv4 address range for the subnet that contains the IP address 172.16.85.19/21?",
+    "explanation": "A /21 mask (255.255.248.0) has a block size of 8 in the third octet. Multiples of 8 in the third octet are 0, 8, ..., 80, 88. 85 falls between 80 and 87. Subnet ID = 172.16.80.0, Broadcast = 172.16.87.255. Usable hosts: 172.16.80.1 through 172.16.87.254.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "172.16.80.1 through 172.16.87.254",
+        "is_correct": true
+      },
+      {
+        "text": "172.16.85.1 through 172.16.85.254",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.80.1 through 172.16.85.254",
+        "is_correct": false
+      },
+      {
+        "text": "172.16.0.1 through 172.16.127.254",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address is universally reserved on all operating systems as the local host loopback address?",
+    "explanation": "127.0.0.1 is the standard loopback address within the 127.0.0.0/8 block, used by a host to verify its internal TCP/IP protocol stack.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "127.0.0.1",
+        "is_correct": true
+      },
+      {
+        "text": "192.168.1.1",
+        "is_correct": false
+      },
+      {
+        "text": "10.0.0.1",
+        "is_correct": false
+      },
+      {
+        "text": "169.254.1.1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What modification does an IP router make to an IPv4 packet header when forwarding a packet across a routing hop?",
+    "explanation": "At each router hop, the router decrements the Time to Live (TTL) field by 1 and recalculates the Header Checksum field to reflect the new TTL value.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It decrements the Time to Live (TTL) field by 1 and recalculates the Header Checksum",
+        "is_correct": true
+      },
+      {
+        "text": "It replaces the Source IP address with its own interface IP address",
+        "is_correct": false
+      },
+      {
+        "text": "It encrypts the payload using SHA-256",
+        "is_correct": false
+      },
+      {
+        "text": "It sets the Don't Fragment (DF) flag to 0 on all packets",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the standard Maximum Transmission Unit (MTU) size in bytes for traditional Ethernet frames at Layer 3?",
+    "explanation": "The standard Layer 3 IP MTU size for standard Ethernet networks is 1500 bytes (frames larger than this are termed baby-giant or jumbo frames).",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1500 bytes",
+        "is_correct": true
+      },
+      {
+        "text": "1492 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "9000 bytes",
+        "is_correct": false
+      },
+      {
+        "text": "64 bytes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the base 40-byte IPv6 packet header, how many bytes are allocated to the Source Address and Destination Address fields respectively?",
+    "explanation": "IPv6 addresses are 128 bits (16 bytes) each. Thus, 16 bytes are dedicated to the source address and 16 bytes to the destination address, totaling 32 bytes of the 40-byte base header.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "16 bytes each",
+        "is_correct": true
+      },
+      {
+        "text": "4 bytes each",
+        "is_correct": false
+      },
+      {
+        "text": "8 bytes each",
+        "is_correct": false
+      },
+      {
+        "text": "32 bytes each",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "How does Path MTU Discovery (PMTUD) operate in IPv6 when an originating host transmits a packet that exceeds a downstream link's MTU?",
+    "explanation": "Because intermediate routers cannot fragment IPv6 packets, the router drops the packet and transmits an ICMPv6 Type 2 (Packet Too Big) message containing the link's MTU back to the sender, prompting the sender to adjust its packet size.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The router drops the packet and returns an ICMPv6 Packet Too Big message with the link MTU so the sender can adjust its packet size",
+        "is_correct": true
+      },
+      {
+        "text": "The router fragments the packet into 1280-byte pieces and forwards them",
+        "is_correct": false
+      },
+      {
+        "text": "The router compresses the payload using hardware gzip acceleration",
+        "is_correct": false
+      },
+      {
+        "text": "The router converts the packet into an IPv4 GRE encapsulated datagram",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary difference in operational functionality between a Layer 2 switch and an IP router?",
+    "explanation": "A Layer 2 switch forwards frames within a local network/VLAN based on hardware MAC addresses. An IP router interconnects different subnets and networks, making forwarding decisions based on Layer 3 IP addresses.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A switch forwards frames within a local network using MAC addresses; a router interconnects different networks using IP addresses",
+        "is_correct": true
+      },
+      {
+        "text": "A router operates only at Layer 1; a switch operates at Layer 7",
+        "is_correct": false
+      },
+      {
+        "text": "A switch can route packets across the global Internet; a router cannot",
+        "is_correct": false
+      },
+      {
+        "text": "A router connects wireless endpoints; a switch connects cellular towers",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a Power over Ethernet (PoE) Splitter, and when is it utilized in network deployments?",
+    "explanation": "A PoE Splitter separates the electrical DC power from the data signal on an incoming PoE Ethernet cable, feeding data into the RJ-45 jack and delivering DC power to a separate barrel connector for non-PoE network devices.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A device that separates DC power from Ethernet data to power non-PoE network devices",
+        "is_correct": true
+      },
+      {
+        "text": "A device that injects 48V DC power into a non-PoE switchport",
+        "is_correct": false
+      },
+      {
+        "text": "A passive optical splitter used in Gigabit Passive Optical Networks (GPON)",
+        "is_correct": false
+      },
+      {
+        "text": "An adapter that converts single-mode fiber to multimode fiber",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco Switched Port Analyzer (SPAN), how does a switch port configured as a SPAN destination handle incoming user traffic by default?",
+    "explanation": "By default, incoming user traffic on a SPAN destination port is discarded. The port's transmitter is dedicated exclusively to sending mirrored packets to the attached network analyzer.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Incoming user traffic is discarded by default; the port only outputs mirrored traffic to the analyzer",
+        "is_correct": true
+      },
+      {
+        "text": "Incoming traffic is bridged normally into VLAN 1",
+        "is_correct": false
+      },
+      {
+        "text": "Incoming traffic is forwarded to the Spanning Tree root bridge",
+        "is_correct": false
+      },
+      {
+        "text": "Incoming traffic triggers an immediate port-security shutdown violation",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which software tool is commonly installed on a technician's laptop and connected to a SPAN destination port to perform packet-level protocol analysis?",
+    "explanation": "Wireshark is an open-source packet analyzer / protocol sniffer widely used to capture, decode, and analyze network frames mirrored from a SPAN destination port.",
+    "domain": "switching",
+    "subtopic": "Packet Capture",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Wireshark",
+        "is_correct": true
+      },
+      {
+        "text": "Cisco Catalyst Center",
+        "is_correct": false
+      },
+      {
+        "text": "Ansible",
+        "is_correct": false
+      },
+      {
+        "text": "PuTTY",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In IEEE 802.11 wireless networking, what is a Probe Request frame?",
+    "explanation": "A Probe Request is an 802.11 management frame broadcast by a client device searching for available wireless access points that broadcast a specific SSID or any available network.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A management frame broadcast by a wireless client searching for available access points",
+        "is_correct": true
+      },
+      {
+        "text": "A data frame carrying encrypted VoIP voice packets",
+        "is_correct": false
+      },
+      {
+        "text": "A control frame that acknowledges successful packet reception",
+        "is_correct": false
+      },
+      {
+        "text": "An 802.1X frame requesting user password verification",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the operational difference between an 'Active Scan' and a 'Passive Scan' performed by an 802.11 wireless client seeking connectivity?",
+    "explanation": "In active scanning, the client transmits Probe Request frames and listens for Probe Responses from APs. In passive scanning, the client stays quiet and listens for periodic Beacon frames broadcast by APs on each channel.",
+    "domain": "switching",
+    "subtopic": "Wireless Client Onboarding",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "In active scanning the client transmits Probe Requests; in passive scanning it listens quietly for periodic Beacon frames",
+        "is_correct": true
+      },
+      {
+        "text": "Active scanning requires WPA3 encryption; passive scanning uses WEP",
+        "is_correct": false
+      },
+      {
+        "text": "Active scanning operates only in 5 GHz; passive scanning is for 2.4 GHz only",
+        "is_correct": false
+      },
+      {
+        "text": "Active scanning requires a physical USB cable; passive scanning is wireless",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS interface command configures an interface into an LACP EtherChannel group that actively initiates bundle negotiation with the connected switch?",
+    "explanation": "The command `channel-group <number> mode active` configures the interface to actively transmit LACP packets to initiate channel formation.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "channel-group 1 mode active",
+        "is_correct": true
+      },
+      {
+        "text": "channel-group 1 mode passive",
+        "is_correct": false
+      },
+      {
+        "text": "channel-group 1 mode desirable",
+        "is_correct": false
+      },
+      {
+        "text": "channel-group 1 mode auto",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum number of physical member links that can be configured in a single LACP EtherChannel bundle on a Cisco Catalyst switch?",
+    "explanation": "LACP supports up to 16 physical links in a single port-channel: up to 8 active links forwarding traffic, and up to 8 hot-standby links that activate if an active member fails.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "16 links (up to 8 active and 8 standby)",
+        "is_correct": true
+      },
+      {
+        "text": "4 links (all active)",
+        "is_correct": false
+      },
+      {
+        "text": "32 links (16 active and 16 standby)",
+        "is_correct": false
+      },
+      {
+        "text": "2 links only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Administrative Distance of a directly connected network subnet associated with an active, up/up Switched Virtual Interface (SVI)?",
+    "explanation": "Directly connected routes (marked with code 'C' in the routing table), including active SVIs, have an Administrative Distance of 0.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": true
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which interface configuration command on a Cisco multilayer switch prevents an SVI from going down when all physical ports associated with that VLAN go down?",
+    "explanation": "The command `no autostate` entered under an SVI (`interface vlan <id>`) disables the default autostate feature, allowing the SVI to remain administratively and operationally up even if no physical access or trunk ports are active.",
+    "domain": "switching",
+    "subtopic": "Layer 3 Switching",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "no autostate",
+        "is_correct": true
+      },
+      {
+        "text": "autostate disable",
+        "is_correct": false
+      },
+      {
+        "text": "keepalive enable",
+        "is_correct": false
+      },
+      {
+        "text": "svi-persistent enable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Spanning Tree feature protects edge ports configured with PortFast by immediately shutting down the port if a BPDU is received from an unauthorized switch?",
+    "explanation": "BPDU Guard immediately err-disables an edge port if any BPDU is received, preventing unauthorized switches from altering the active Spanning Tree topology.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "BPDU Guard",
+        "is_correct": true
+      },
+      {
+        "text": "Root Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      },
+      {
+        "text": "UplinkFast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the operational effect of configuring 'spanning-tree bpdufilter enable' under interface configuration mode on a Cisco switch port?",
+    "explanation": "When BPDU Filter is enabled directly on an interface, the switch port stops sending BPDUs and drops any incoming BPDUs, completely disabling Spanning Tree participation on that port.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port stops transmitting BPDUs and drops any received BPDUs, effectively disabling STP on that port",
+        "is_correct": true
+      },
+      {
+        "text": "The port immediately transitions to the root bridge role",
+        "is_correct": false
+      },
+      {
+        "text": "The port err-disables upon receiving an unauthorized BPDU",
+        "is_correct": false
+      },
+      {
+        "text": "The port balances traffic across two EtherChannel bundles",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In standard IEEE 802.1D Spanning Tree, what is the total default convergence time required for a blocked port to transition to active data forwarding?",
+    "explanation": "Total convergence time is 50 seconds: 20 seconds Max Age + 15 seconds in the Listening state + 15 seconds in the Learning state.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "50 seconds (20s Max Age + 15s Listening + 15s Learning)",
+        "is_correct": true
+      },
+      {
+        "text": "30 seconds (15s Listening + 15s Learning)",
+        "is_correct": false
+      },
+      {
+        "text": "15 seconds (15s Forwarding Delay)",
+        "is_correct": false
+      },
+      {
+        "text": "Under 1 second (sub-second convergence)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What Bridge Priority value is configured on a Cisco switch when the macro command 'spanning-tree vlan 1 root primary' is executed (assuming all other switches use default priority 32768)?",
+    "explanation": "If other switches are at default priority (32768), executing `root primary` configures a bridge priority of 24576 (which is 32768 - 8192) to guarantee winning the root bridge election.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "24576",
+        "is_correct": true
+      },
+      {
+        "text": "4096",
+        "is_correct": false
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "28672",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS interface command configures storm control to suppress multicast traffic when it reaches 15% of total port bandwidth?",
+    "explanation": "The command `storm-control multicast level 15` sets the multicast storm suppression threshold to 15 percent.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "storm-control multicast level 15",
+        "is_correct": true
+      },
+      {
+        "text": "multicast storm-control 15",
+        "is_correct": false
+      },
+      {
+        "text": "traffic-shape multicast 15 percent",
+        "is_correct": false
+      },
+      {
+        "text": "set storm-control multicast 15",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a 24-port Ethernet switch with all ports configured in default VLAN 1 and operating in full-duplex, how many collision domains and broadcast domains exist?",
+    "explanation": "Each switch port represents an independent collision domain (24 collision domains). Since all ports reside in VLAN 1, they form a single shared broadcast domain (1 broadcast domain).",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "24 collision domains and 1 broadcast domain",
+        "is_correct": true
+      },
+      {
+        "text": "1 collision domain and 24 broadcast domains",
+        "is_correct": false
+      },
+      {
+        "text": "1 collision domain and 1 broadcast domain",
+        "is_correct": false
+      },
+      {
+        "text": "24 collision domains and 24 broadcast domains",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which switch forwarding method forwards a frame as soon as the 6-byte destination MAC address is read, offering the lowest switching latency?",
+    "explanation": "Cut-Through switching begins forwarding the frame immediately after reading the first 6 bytes (destination MAC address) without waiting for the entire frame to arrive or checking the FCS checksum.",
+    "domain": "switching",
+    "subtopic": "Switch Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Cut-Through switching",
+        "is_correct": true
+      },
+      {
+        "text": "Store-and-Forward switching",
+        "is_correct": false
+      },
+      {
+        "text": "Fragment-Free switching",
+        "is_correct": false
+      },
+      {
+        "text": "Adaptive switching",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What are the numerical ID ranges for Normal Range VLANs versus Extended Range VLANs on Cisco Catalyst switches?",
+    "explanation": "Normal Range VLANs span IDs 1 to 1005 (stored in `vlan.dat` in flash). Extended Range VLANs span IDs 1006 to 4094 (stored in the running configuration file).",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Normal Range: 1–1005; Extended Range: 1006–4094",
+        "is_correct": true
+      },
+      {
+        "text": "Normal Range: 1–500; Extended Range: 501–1000",
+        "is_correct": false
+      },
+      {
+        "text": "Normal Range: 1–255; Extended Range: 256–65535",
+        "is_correct": false
+      },
+      {
+        "text": "Normal Range: 10–99; Extended Range: 100–999",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the output of 'show ip route', what does an asterisk '*' adjacent to a route entry signify?",
+    "explanation": "The asterisk `*` indicates that the route is a candidate default route (eligible to be chosen as the Gateway of Last Resort).",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The route is a candidate default route",
+        "is_correct": true
+      },
+      {
+        "text": "The route has an administrative distance of 255",
+        "is_correct": false
+      },
+      {
+        "text": "The route is currently flapped and in the holddown state",
+        "is_correct": false
+      },
+      {
+        "text": "The route was learned via BGP community tagging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "When multiple routes exist to the exact same destination prefix with identical metric cost and administrative distance, what load-balancing mechanism is performed by Cisco IOS by default?",
+    "explanation": "Cisco IOS performs Equal-Cost Multi-Path (ECMP) load balancing, hashing flow parameters (source/destination IP and port numbers) to distribute flows evenly across all equal-cost next-hop paths.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Table Operations",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Equal-Cost Multi-Path (ECMP) load balancing across up to 4 parallel paths",
+        "is_correct": true
+      },
+      {
+        "text": "Unequal-cost load balancing based on variance multipliers",
+        "is_correct": false
+      },
+      {
+        "text": "Random packet dropping on the second interface",
+        "is_correct": false
+      },
+      {
+        "text": "Strict round-robin bit-by-bit packet interleaving",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default Administrative Distance of a route learned via Routing Information Protocol (RIP) in Cisco IOS?",
+    "explanation": "In Cisco IOS, RIP has an Administrative Distance of 120 (Connected=0, Static=1, EIGRP=90, OSPF=110, RIP=120).",
+    "domain": "ip_routing",
+    "subtopic": "Administrative Distance",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "120",
+        "is_correct": true
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS command configures an IPv4 floating static route to subnet 10.20.0.0/16 via next-hop 192.168.1.1 with an Administrative Distance of 115?",
+    "explanation": "The command syntax is `ip route <prefix> <mask> <next-hop> [distance]`. Thus: `ip route 10.20.0.0 255.255.0.0 192.168.1.1 115`.",
+    "domain": "ip_routing",
+    "subtopic": "Floating Static Routes",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip route 10.20.0.0 255.255.0.0 192.168.1.1 115",
+        "is_correct": true
+      },
+      {
+        "text": "ip route 10.20.0.0 255.255.0.0 192.168.1.1 distance 115",
+        "is_correct": false
+      },
+      {
+        "text": "ip static route 10.20.0.0/16 192.168.1.1 ad 115",
+        "is_correct": false
+      },
+      {
+        "text": "ip route floating 10.20.0.0 255.255.0.0 192.168.1.1 115",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a multilayer switch providing inter-VLAN routing, what IP address must be configured as the default gateway on host workstations in VLAN 10?",
+    "explanation": "Hosts in VLAN 10 must point to the IP address assigned to the multilayer switch's local Switched Virtual Interface (`interface Vlan 10`) as their default gateway.",
+    "domain": "ip_routing",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The IP address assigned to the switch's local SVI for VLAN 10 ('interface Vlan 10')",
+        "is_correct": true
+      },
+      {
+        "text": "The IP address of the core distribution BGP router",
+        "is_correct": false
+      },
+      {
+        "text": "The loopback 0 IP address of the switch supervisor engine",
+        "is_correct": false
+      },
+      {
+        "text": "The IP address of the public DNS server (e.g. 8.8.8.8)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In an OSPF network, what is an Autonomous System Boundary Router (ASBR)?",
+    "explanation": "An ASBR is any OSPF router that redistributes routes learned from external routing domains (such as BGP, EIGRP, RIP, or static routes) into the OSPF autonomous system.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A router that redistributes routes from external routing sources into the OSPF domain",
+        "is_correct": true
+      },
+      {
+        "text": "A router connected to multiple OSPF areas that connects to Area 0",
+        "is_correct": false
+      },
+      {
+        "text": "The designated router elected on a multi-access broadcast segment",
+        "is_correct": false
+      },
+      {
+        "text": "A router that resides entirely within an isolated stub area",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF Link-State Advertisement (LSA) type is generated by an ASBR to advertise external network prefixes into the OSPF domain?",
+    "explanation": "Type 5 External LSAs are generated by ASBRs to advertise external routes redistributed into OSPF across all standard areas.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Architecture",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 5 External LSA",
+        "is_correct": true
+      },
+      {
+        "text": "Type 1 Router LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 2 Network LSA",
+        "is_correct": false
+      },
+      {
+        "text": "Type 3 Summary LSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default OSPF reference bandwidth in Cisco IOS used to calculate interface cost metrics?",
+    "explanation": "In Cisco IOS, the default OSPF reference bandwidth is 100 Mbps (10^8 bps), meaning any interface of 100 Mbps or faster calculates to a cost metric of 1 unless `auto-cost reference-bandwidth` is adjusted.",
+    "domain": "ip_routing",
+    "subtopic": "OSPFv3",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "100 Mbps (10^8 bps)",
+        "is_correct": true
+      },
+      {
+        "text": "1 Gbps (10^9 bps)",
+        "is_correct": false
+      },
+      {
+        "text": "10 Gbps (10^10 bps)",
+        "is_correct": false
+      },
+      {
+        "text": "10 Mbps (10^7 bps)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command entered under 'router ospf' on an ASBR summarizes external routes before redistributing them into OSPF?",
+    "explanation": "The `summary-address <prefix> <mask>` command is used on ASBRs to aggregate external routes redistributed into OSPF. (The `area range` command is used on ABRs for inter-area summarization).",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "summary-address <prefix> <mask>",
+        "is_correct": true
+      },
+      {
+        "text": "area <area-id> range <prefix> <mask>",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf summary <prefix> <mask>",
+        "is_correct": false
+      },
+      {
+        "text": "aggregate-address <prefix> <mask>",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary operational advantage of Dynamic Routing protocols over Static Routing in expanding enterprise networks?",
+    "explanation": "Dynamic routing protocols automatically discover routes, calculate best paths, and reroute around link or node failures without manual administrative intervention, scaling seamlessly as the network grows.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Dynamic routing automatically discovers network paths and reroutes traffic around failures without manual intervention",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic routing consumes zero router memory and CPU cycles",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic routing eliminates the need for IP subnet masks",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic routing encrypts all user payload traffic using IPsec",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is 'Convergence Time' in dynamic routing protocol operations?",
+    "explanation": "Convergence time is the duration required for all routers in an internetwork to recognize a network topology change, exchange routing updates, recalculate best paths, and arrive at a consistent, loop-free view of the network.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Concepts",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The time required for all routers in the network to update their routing tables and agree on a consistent loop-free topology after a change",
+        "is_correct": true
+      },
+      {
+        "text": "The time required to boot the router operating system from flash memory",
+        "is_correct": false
+      },
+      {
+        "text": "The time elapsed between sending an ARP request and receiving a reply",
+        "is_correct": false
+      },
+      {
+        "text": "The duration of an active DHCP IP address lease",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS command creates an IPv4 static route directing traffic for subnet 172.16.5.0/24 out local interface GigabitEthernet0/0?",
+    "explanation": "The command `ip route 172.16.5.0 255.255.255.0 GigabitEthernet0/0` creates a directly attached static route using the exit interface.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ip route 172.16.5.0 255.255.255.0 GigabitEthernet0/0",
+        "is_correct": true
+      },
+      {
+        "text": "ip route 172.16.5.0/24 interface GigabitEthernet0/0",
+        "is_correct": false
+      },
+      {
+        "text": "static route 172.16.5.0 255.255.255.0 GigabitEthernet0/0",
+        "is_correct": false
+      },
+      {
+        "text": "route add 172.16.5.0 mask 255.255.255.0 GigabitEthernet0/0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In the OSPF neighbor state machine, what does the 'Init' state signify?",
+    "explanation": "The Init state indicates that a router has received a Hello packet from a neighbor, but the receiving router's own Router ID was not listed in that Hello packet (bidirectional communication is not yet established).",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Neighbor States",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A Hello packet has been received from the neighbor, but the local router's ID is not yet listed in the neighbor's Hello packet",
+        "is_correct": true
+      },
+      {
+        "text": "Bidirectional communication has been established and DBD exchange has begun",
+        "is_correct": false
+      },
+      {
+        "text": "The routers are actively synchronizing their complete Link-State Databases",
+        "is_correct": false
+      },
+      {
+        "text": "The neighbor interface has dropped into an err-disabled state",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command entered in OSPF configuration mode manually assigns an OSPF Router ID of 1.1.1.1 to the routing process?",
+    "explanation": "The command `router-id 1.1.1.1` under `router ospf` sets the 32-bit router identifier, overriding automatic election from loopback or physical interfaces.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF Configuration",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "router-id 1.1.1.1",
+        "is_correct": true
+      },
+      {
+        "text": "ospf router-id 1.1.1.1",
+        "is_correct": false
+      },
+      {
+        "text": "set router-id 1.1.1.1",
+        "is_correct": false
+      },
+      {
+        "text": "ip ospf router-id 1.1.1.1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which version of Simple Network Management Protocol (SNMP) introduced cryptographic privacy (payload encryption) and user-based security authentication (USM)?",
+    "explanation": "SNMPv3 introduced User-based Security Model (USM) featuring cryptographic authentication (SHA/MD5) and encryption privacy (AES/DES), eliminating cleartext community strings used in SNMPv1 and SNMPv2c.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMPv3",
+        "is_correct": true
+      },
+      {
+        "text": "SNMPv2c",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command entered under 'line vty 0 4' instructs a Cisco switch or router to prompt for credentials defined in the device's local database during SSH or Telnet login?",
+    "explanation": "The command `login local` specifies that incoming terminal connection attempts should be authenticated against usernames and passwords created in the local device configuration (`username <name> secret <pass>`).",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "login local",
+        "is_correct": true
+      },
+      {
+        "text": "login",
+        "is_correct": false
+      },
+      {
+        "text": "login default",
+        "is_correct": false
+      },
+      {
+        "text": "password local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which secure protocol is commonly used by network engineers to copy configuration files and software images securely over an encrypted TLS connection across the web?",
+    "explanation": "HTTPS (Hypertext Transfer Protocol Secure) runs over TLS/SSL (TCP port 443) and is supported in modern Cisco IOS for secure file downloads via `copy https://... flash:`.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HTTPS",
+        "is_correct": true
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "Telnet",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In standard Cisco IOS syslog severity levels (0 to 7), which numerical level corresponds to the highest priority, indicating a catastrophic system panic or crash?",
+    "explanation": "Syslog severity 0 is 'Emergency' (system is unusable), representing the most severe system failure level.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Level 0 (Emergency)",
+        "is_correct": true
+      },
+      {
+        "text": "Level 1 (Alert)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 4 (Warning)",
+        "is_correct": false
+      },
+      {
+        "text": "Level 7 (Debugging)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In Cisco AAA security architecture, what is an 'Authentication Method List'?",
+    "explanation": "An Authentication Method List defines the sequential order of authentication security sources (e.g. query TACACS+ server group first; if unreachable, query local database) checked when a user logs in.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A configured sequence of authentication security sources queried in order during user login",
+        "is_correct": true
+      },
+      {
+        "text": "A list of approved MAC addresses allowed to bypass port security",
+        "is_correct": false
+      },
+      {
+        "text": "An access control list filtering TCP port 49 packets",
+        "is_correct": false
+      },
+      {
+        "text": "A database of digital X.509 user certificates",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What action does a client workstation take if it receives a DHCPNAK (Negative Acknowledgment) message from a DHCP server during the DORA process?",
+    "explanation": "A DHCPNAK indicates the server rejected the client's request (e.g. requested address is invalid or leased elsewhere). The client immediately halts configuration and restarts the negotiation from the beginning with a new DHCPDISCOVER.",
+    "domain": "services_security",
+    "subtopic": "DHCP Operations",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "It immediately halts configuration and restarts the process with a new DHCPDISCOVER broadcast",
+        "is_correct": true
+      },
+      {
+        "text": "It adopts the IP address anyway and ignores the NAK",
+        "is_correct": false
+      },
+      {
+        "text": "It immediately configures a static 192.168.1.1 address",
+        "is_correct": false
+      },
+      {
+        "text": "It disables its physical network interface card",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a switch with DHCP Snooping enabled, what validation action is performed when a client sends a DHCPRELEASE message on an untrusted port?",
+    "explanation": "The switch checks the DHCP Snooping Binding Table to verify that the source MAC address and port match the registered lease. If valid, it purges the entry and forwards the release to the server; if invalid, it drops the message to prevent spoofed lease terminations.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Validates that the source MAC and port match the binding database before purging the entry and forwarding the release",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcasts the release out all active trunk ports in VLAN 1",
+        "is_correct": false
+      },
+      {
+        "text": "Immediately places the interface into err-disabled state",
+        "is_correct": false
+      },
+      {
+        "text": "Increments the Spanning Tree root bridge priority by 4096",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary architectural difference between a DHCP Server and a DHCP Relay Agent?",
+    "explanation": "A DHCP Server maintains IP address pools, assigns leases, and responds to client requests. A DHCP Relay Agent (configured via `ip helper-address`) receives client broadcast requests on local subnets and forwards them as unicast packets across routers to the central DHCP server.",
+    "domain": "services_security",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "A DHCP server manages IP pools and grants leases; a relay agent forwards client broadcasts as unicast packets across routers to the server",
+        "is_correct": true
+      },
+      {
+        "text": "A DHCP server operates only on serial links; a relay agent operates on Ethernet",
+        "is_correct": false
+      },
+      {
+        "text": "A relay agent assigns public IP addresses; a server assigns private IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "A DHCP server requires optical fiber; a relay agent uses copper cabling",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS privileged exec command displays the operational status, enabled VLANs, and dropped packet statistics for Dynamic ARP Inspection (DAI)?",
+    "explanation": "The command `show ip arp inspection` displays the operational state of DAI across configured VLANs, showing packets inspected, permitted, and dropped.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "show ip arp inspection",
+        "is_correct": true
+      },
+      {
+        "text": "show dai status",
+        "is_correct": false
+      },
+      {
+        "text": "show arp inspection statistics",
+        "is_correct": false
+      },
+      {
+        "text": "show ip dhcp snooping dai",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Layer 2 security feature on Cisco Catalyst switches protects against unauthorized rogue DHCP servers offering bogus IP configurations to LAN clients?",
+    "explanation": "DHCP Snooping designates switch ports as trusted or untrusted, discarding unauthorized DHCP server responses (OFFER and ACK) on untrusted access ports to prevent rogue DHCP server attacks.",
+    "domain": "services_security",
+    "subtopic": "Layer 2 Security",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCP Snooping",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic ARP Inspection",
+        "is_correct": false
+      },
+      {
+        "text": "IP Source Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Port Security",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "On a single router interface, what is the maximum number of IPv4 Access Control Lists (ACLs) that can be applied?",
+    "explanation": "A router interface allows a maximum of two IPv4 ACLs: exactly one inbound ACL (`ip access-group <name> in`) and one outbound ACL (`ip access-group <name> out`).",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Two ACLs: one inbound and one outbound",
+        "is_correct": true
+      },
+      {
+        "text": "One ACL in either direction only",
+        "is_correct": false
+      },
+      {
+        "text": "Unlimited ACLs in both directions",
+        "is_correct": false
+      },
+      {
+        "text": "Four ACLs: two standard and two extended",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco IOS line configuration command sets an automatic inactivity logout timer of 5 minutes 0 seconds on VTY terminal lines?",
+    "explanation": "The command `exec-timeout 5 0` (minutes seconds) under `line vty 0 4` disconnects inactive administrative sessions after 5 minutes of inactivity.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "exec-timeout 5 0",
+        "is_correct": true
+      },
+      {
+        "text": "session-timeout 5",
+        "is_correct": false
+      },
+      {
+        "text": "timeout login 300",
+        "is_correct": false
+      },
+      {
+        "text": "line-timeout 5 minutes",
+        "is_correct": false
+      }
+    ]
+  }
+]

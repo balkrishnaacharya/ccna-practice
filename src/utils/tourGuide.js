@@ -27,6 +27,16 @@ export const TOUR_STEPS = [
     },
   },
   {
+    element: '[data-tour="study-streak"]',
+    popover: {
+      title: "Daily Goals & Study Streak",
+      description:
+        "Track your daily question goals and build momentum. Answer questions daily to keep your learning streak alive.",
+      side: "bottom",
+      align: "center",
+    },
+  },
+  {
     element: '[data-tour="exam-blueprint"]',
     popover: {
       title: "Learn by Exam Domain",
@@ -37,11 +47,31 @@ export const TOUR_STEPS = [
     },
   },
   {
+    element: '[data-tour="weak-areas"]',
+    popover: {
+      title: "Targeted Weak-Spot Drills",
+      description:
+        "Zero in on low-accuracy topics and drill subtopics directly to turn vulnerabilities into strengths.",
+      side: "left",
+      align: "start",
+    },
+  },
+  {
+    element: '[data-tour="spaced-review"]',
+    popover: {
+      title: "SM-2 Spaced Repetition",
+      description:
+        "Review questions scheduled by the SuperMemo SM-2 algorithm right before you forget them for maximum retention.",
+      side: "left",
+      align: "start",
+    },
+  },
+  {
     element: '[data-tour="bottom-navigation"]',
     popover: {
       title: "Everything in Reach",
       description:
-        "Explore Home, Practice, Labs, Exam, Review, History, and Config from the bottom navigation.",
+        "Explore Dashboard, Practice, Exam, Review, History, and Settings from the bottom navigation.",
       side: "top",
       align: "center",
     },

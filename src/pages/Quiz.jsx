@@ -6,14 +6,23 @@ import gsap from "gsap";
 
 const MODES = [
   { id: "weak", label: "Weak Spots", desc: "Drills the questions you get wrong first" },
+  { id: "review", label: "Review (SM-2)", desc: "Spaced repetition: surfaces questions due for review" },
   { id: "easy", label: "Easy", desc: "No timer, fundamental concepts" },
   { id: "medium", label: "Medium", desc: "Standard difficulty, 90s pace" },
   { id: "hard", label: "Hard", desc: "Complex scenarios, 60s pace" },
   { id: "impossible", label: "Impossible", desc: "Multi-concept tricky questions" },
-  { id: "exam", label: "Exam Mode", desc: "120-min full 100-Q timed simulation" },
 ];
 
-export default function Quiz({ onOpenExamModal }) {
+const modeTexts = {
+  weak: "Weak Spots",
+  review: "Review (SM-2)",
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
+  impossible: "Impossible",
+};
+
+export default function Quiz() {
   const [searchParams] = useSearchParams();
   const requestedMode = searchParams.get("mode");
   const drillSubtopic = searchParams.get("subtopic")?.trim() || null;
@@ -33,7 +42,10 @@ export default function Quiz({ onOpenExamModal }) {
   const [flagNote, setFlagNote] = useState("");
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [hasPendingFlags, setHasPendingFlags] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const timerRef = useRef(null);
   const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
   const stemContainerRef = useRef(null);
@@ -41,37 +53,28 @@ export default function Quiz({ onOpenExamModal }) {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (mode === "exam") return;
-    loadQuestion();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, drillSubtopic, drillDomain]);
-
   // Parallax Stack Transition when question updates
-  useGSAP(
-    () => {
-      if (!question || !cardContainerRef.current) return;
+  useEffect(() => {
+    if (!question || !cardContainerRef.current) return;
 
-      const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
-      // Outer card enters from bottom
+    const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
+    // Outer card enters from bottom
+    tl.fromTo(
+      cardContainerRef.current,
+      { opacity: 0, y: 35 },
+      { opacity: 1, y: 0, duration: 0.25 }
+    );
+
+    // Inner stem moves with subtle parallax speed difference
+    if (stemContainerRef.current) {
       tl.fromTo(
-        cardContainerRef.current,
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 0.25 }
+        stemContainerRef.current,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.25 },
+        "-=0.15"
       );
-
-      // Inner stem moves with subtle parallax speed difference
-      if (stemContainerRef.current) {
-        tl.fromTo(
-          stemContainerRef.current,
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.25 },
-          "-=0.15"
-        );
-      }
-    },
-    { scope: rootRef, dependencies: [question?.id] }
-  );
+    }
+  }, [question, cardContainerRef]),
 
   // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
   useGSAP(
@@ -104,8 +107,36 @@ export default function Quiz({ onOpenExamModal }) {
     { scope: rootRef, dependencies: [feedback] }
   );
 
+  // Timer logic
+  const modeTimes = {
+    easy: 5 * 60,
+    medium: 2 * 60,
+    hard: 1 * 60,
+    impossible: 30,
+    exam: 120 * 60,
+  };
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    // Reset timer when mode or question changes
+    if (mode === 'exam') return; // exam mode handled by /exam page
+    if (timerRef.current) clearInterval(timerRef.current);
+    setTimeRemaining(modeTimes[mode] || 2 * 60);
+    timerRef.current = setInterval(() => {
+      setTimeRemaining((prev) => Math.max(prev - 1, 0));
+    }, 1000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [mode, question?.id]);
+
   async function loadQuestion() {
-    // If card exists, animate old card sliding UP and fading out
+    // Animate old card sliding up and fading out if exists
     if (cardContainerRef.current && question) {
       await new Promise((resolve) => {
         gsap.to(cardContainerRef.current, {
@@ -131,6 +162,7 @@ export default function Quiz({ onOpenExamModal }) {
       });
       setQuestion(q);
       if (q) checkFlagStatus(q.id);
+      setQuestionNumber((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to load question:", err);
     } finally {
@@ -156,10 +188,9 @@ export default function Quiz({ onOpenExamModal }) {
         note: flagNote.trim() || "Flagged for review",
       });
       setIsFlagged(nextStatus);
-      if (!nextStatus) {
-        setFlagNote("");
-        setShowNoteInput(false);
-      }
+      setFlagNote("");
+      setShowNoteInput(false);
+      setHasPendingFlags(nextStatus); // true if flagged, false if unflagged
     } catch (err) {
       console.error("Failed to toggle flag:", err);
     }
@@ -174,7 +205,10 @@ export default function Quiz({ onOpenExamModal }) {
         note: flagNote.trim() || "Flagged for review",
       });
       setIsFlagged(true);
+      setFlagNote("");
       setShowNoteInput(false);
+      // Keep flag status active after saving note
+      setHasPendingFlags(true);
     } catch (err) {
       console.error(err);
     }
@@ -182,11 +216,11 @@ export default function Quiz({ onOpenExamModal }) {
 
   function handleChoiceChange(choiceId, isMultiSelect) {
     if (isMultiSelect) {
-      if (selected.includes(choiceId)) {
-        setSelected(selected.filter((id) => id !== choiceId));
-      } else {
-        setSelected([...selected, choiceId]);
-      }
+      setSelected((prev) =>
+        prev.includes(choiceId)
+          ? prev.filter((id) => id !== choiceId)
+          : [...prev, choiceId]
+      );
     } else {
       setSelected([choiceId]);
     }
@@ -194,6 +228,7 @@ export default function Quiz({ onOpenExamModal }) {
 
   async function submit() {
     if (!question || selected.length === 0) return;
+    if (!canSubmit) return; // extra safety
     try {
       const result = await invoke("submit_answer", {
         payload: {
@@ -219,7 +254,7 @@ export default function Quiz({ onOpenExamModal }) {
         if (feedback) {
           e.preventDefault();
           loadQuestion();
-        } else if (selected.length > 0) {
+        } else if (canSubmit) {
           e.preventDefault();
           submit();
         }
@@ -242,6 +277,11 @@ export default function Quiz({ onOpenExamModal }) {
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question, feedback, selected]);
+
+  // Flag review overlay logic (simple warning)
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const canSubmit = !feedback && selected.length > 0 && timeRemaining > 0 && !hasPendingFlags;
 
   return (
     <div ref={rootRef} className="space-y-6 pb-12">
@@ -300,40 +340,25 @@ export default function Quiz({ onOpenExamModal }) {
           <p className="text-xs text-paper-dim font-sans">
             {MODES.find((m) => m.id === mode)?.desc}
           </p>
-          {!isDrilling && (
-            <Link
-              to="/topics"
-              className="text-xs font-medium text-gold hover:underline"
-            >
-              Browse topics to drill a subtopic →
-            </Link>
+          {/* Timer display */}
+          {mode !== "exam" && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-paper-muted">{modeTexts[mode]}</span>
+              <span className="text-sm text-paper-muted">{formatTime(timeRemaining)}</span>
+            </div>
           )}
+          {/* Flag note toggle */}
+          <Link
+            to="/topics"
+            className="text-xs font-medium text-gold hover:underline"
+          >
+            Browse topics to drill a subtopic →
+          </Link>
         </div>
       </div>
 
-      {/* Exam Mode Launcher */}
-      {mode === "exam" ? (
-        <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
-          <div className="w-14 h-14 bg-gold/15 text-gold border border-gold/30 rounded-full flex items-center justify-center mx-auto shadow-gold-glow">
-            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h2 className="font-serif text-2xl font-semibold text-paper">CCNA 2.0 Full Exam Simulator</h2>
-          <p className="text-sm text-paper-muted max-w-md mx-auto leading-relaxed">
-            100 questions precisely weighted to the CCNA 2.0 blueprint. 120-minute countdown timer
-            with no immediate feedback. Complete score and competency breakdown at the end.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenExamModal || (() => navigate("/exam"))}
-              className="px-6 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold text-xs tracking-wider uppercase rounded-full shadow-gold-glow transition-all duration-150 transform hover:scale-105 active:scale-95"
-            >
-              Begin 120-Minute Exam →
-            </button>
-          </div>
-        </div>
-      ) : loading ? (
+      {/* Question Card Area */}
+      {loading ? (
         <div className="py-24 text-center space-y-3">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
           <p className="text-paper-muted text-sm font-sans">Loading question stem...</p>
@@ -343,7 +368,7 @@ export default function Quiz({ onOpenExamModal }) {
           <p className="text-paper-muted text-sm font-sans">No questions available for this mode.</p>
           <button
             onClick={loadQuestion}
-            className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-colors shadow-gold-glow"
+            className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
           >
             Retry
           </button>
@@ -381,7 +406,7 @@ export default function Quiz({ onOpenExamModal }) {
                 onClick={handleToggleFlag}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-150 ${
                   isFlagged
-                    ? "bg-gold/20 text-gold border-gold shadow-gold-glow font-semibold"
+                    ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
                     : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
                 }`}
                 title={isFlagged ? "Click to unflag" : "Flag this question"}
@@ -392,130 +417,127 @@ export default function Quiz({ onOpenExamModal }) {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+                  />
                 </svg>
                 {isFlagged ? "Flagged" : "Flag"}
               </button>
-              {isFlagged && (
+            </div>
+
+            {/* Flag Note Form */}
+            {showNoteInput && isFlagged && (
+              <form onSubmit={handleSaveNote} className="bg-dark-surface p-4 rounded-xl border border-dark-border text-xs space-y-2">
+                <label className="block font-medium text-gold">Personal Review Note:</label>
+                <input
+                  type="text"
+                  value={flagNote}
+                  onChange={(e) => setFlagNote(e.target.value)}
+                  placeholder="e.g. Review OSPF LSAs and area border router rules"
+                  className="w-full px-3 py-2 border border-dark-border rounded-xl text-xs bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-4 py-1.5 bg-gold hover:bg-gold-hover text-dark-bg rounded-full font-semibold"
+                  >
+                    Save Note
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Choices list */}
+            <div className="space-y-3">
+              {question.choices.map((c, index) => {
+                const isChecked = selected.includes(c.id);
+                const inputType = question.multi_select ? "checkbox" : "radio";
+                return (
+                  <label
+                    key={c.id}
+                    className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer transition-all duration-200 ${
+                      isChecked
+                        ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
+                        : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
+                    } ${feedback ? "pointer-events-none" : ""}`}
+                  >
+                    <div className="flex items-start">
+                      <span
+                        className={`mt-0.5 mr-2.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-mono ${
+                          isChecked
+                            ? "border-gold bg-gold/20 text-gold"
+                            : "border-dark-border text-paper-dim"
+                        }`}
+                      >
+                        {index + 1}
+                      </span>
+                      <input
+                        type={inputType}
+                        name={`q-${question.id}`}
+                        className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
+                          inputType === "checkbox" ? "rounded" : ""
+                        }`}
+                        checked={isChecked}
+                        disabled={feedback !== null}
+                        onChange={() => handleChoiceChange(c.id, question.multi_select)}
+                      />
+                      <span className="leading-relaxed select-none font-sans">{c.text}</span>
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+
+            <p className="text-xs text-paper-dim font-sans">
+              Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
+              <kbd className="font-mono text-paper-muted">4</kbd> to pick an answer,{" "}
+              <kbd className="font-mono text-paper-muted">Enter</kbd> to submit or advance.
+            </p>
+
+            {/* Submit / Next Button */}
+            <div className="flex items-center gap-3 pt-2">
+              {!feedback ? (
                 <button
-                  onClick={() => setShowNoteInput(!showNoteInput)}
-                  className="text-xs text-gold hover:underline block mt-1.5 text-right w-full"
+                  onClick={submit}
+                  disabled={selected.length === 0}
+                  className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
                 >
-                  {showNoteInput ? "Close note" : flagNote ? "Edit note" : "+ Add note"}
+                  Submit Answer
+                </button>
+              ) : (
+                <button
+                  onClick={loadQuestion}
+                  className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
+                >
+                  Next Question →
                 </button>
               )}
             </div>
-          </div>
 
-          {/* Flag Note Form */}
-          {showNoteInput && isFlagged && (
-            <form onSubmit={handleSaveNote} className="bg-dark-surface p-4 rounded-xl border border-dark-border text-xs space-y-2">
-              <label className="block font-medium text-gold">Personal Review Note:</label>
-              <input
-                type="text"
-                value={flagNote}
-                onChange={(e) => setFlagNote(e.target.value)}
-                placeholder="e.g. Review OSPF LSAs and area border router rules"
-                className="w-full px-3 py-2 border border-dark-border rounded-xl text-xs bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
-              />
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-4 py-1.5 bg-gold hover:bg-gold-hover text-dark-bg rounded-full font-semibold"
-                >
-                  Save Note
-                </button>
+            {/* Feedback Section with Sage / Heart pulses */}
+            {feedback && (
+              <div
+                ref={feedbackRef}
+                className={`p-5 rounded-2xl border space-y-2 will-change-transform ${
+                  feedback.correct
+                    ? "bg-sage/15 border-sage text-sage-light shadow-sage-glow"
+                    : "bg-heart/15 border-heart text-heart-light shadow-heart-glow"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold">
+                    {feedback.correct ? "✓ Correct!" : "✗ Incorrect"}
+                  </span>
+                </div>
+                <p className="text-sm text-paper leading-relaxed pt-1 font-sans">
+                  {feedback.explanation}
+                </p>
               </div>
-            </form>
-          )}
-
-          {/* Choices list */}
-          <div className="space-y-3">
-            {question.choices.map((c, index) => {
-              const isChecked = selected.includes(c.id);
-              const inputType = question.multi_select ? "checkbox" : "radio";
-              return (
-                <label
-                  key={c.id}
-                  className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer transition-all duration-200 ${
-                    isChecked
-                      ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
-                      : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
-                  } ${feedback ? "pointer-events-none" : ""}`}
-                >
-                  <div className="flex items-start">
-                    <span
-                      className={`mt-0.5 mr-2.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-mono ${
-                        isChecked
-                          ? "border-gold bg-gold/20 text-gold"
-                          : "border-dark-border text-paper-dim"
-                      }`}
-                    >
-                      {index + 1}
-                    </span>
-                    <input
-                      type={inputType}
-                      name={`q-${question.id}`}
-                      className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
-                        inputType === "checkbox" ? "rounded" : ""
-                      }`}
-                      checked={isChecked}
-                      disabled={feedback !== null}
-                      onChange={() => handleChoiceChange(c.id, question.multi_select)}
-                    />
-                    <span className="leading-relaxed select-none font-sans">{c.text}</span>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-
-          <p className="text-xs text-paper-dim font-sans">
-            Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
-            <kbd className="font-mono text-paper-muted">4</kbd> to pick an answer,{" "}
-            <kbd className="font-mono text-paper-muted">Enter</kbd> to submit or advance.
-          </p>
-
-          {/* Submit / Next Button */}
-          <div className="flex items-center gap-3 pt-2">
-            {!feedback ? (
-              <button
-                onClick={submit}
-                disabled={selected.length === 0}
-                className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
-              >
-                Submit Answer
-              </button>
-            ) : (
-              <button
-                onClick={loadQuestion}
-                className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
-              >
-                Next Question →
-              </button>
             )}
           </div>
-
-          {/* Feedback Section with Sage / Heart pulses */}
-          {feedback && (
-            <div
-              ref={feedbackRef}
-              className={`p-5 rounded-2xl border space-y-2 will-change-transform ${
-                feedback.correct
-                  ? "bg-sage/15 border-sage text-sage-light shadow-sage-glow"
-                  : "bg-heart/15 border-heart text-heart-light shadow-heart-glow"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold">
-                  {feedback.correct ? "✓ Correct!" : "✗ Incorrect"}
-                </span>
-              </div>
-              <p className="text-sm text-paper leading-relaxed pt-1 font-sans">
-                {feedback.explanation}
-              </p>
-            </div>
-          )}
         </div>
       )}
     </div>

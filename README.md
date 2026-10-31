@@ -169,37 +169,32 @@ question enters the bank.
 
 ## Roadmap
 
-The app is a solid local practice tool (**9/10**). The bottleneck for a CCNA 2.0
-exam in five months is question volume and quality, not features.
+The app is a solid local practice tool (**9/10**). The question bank has reached
+its 2,000-question goal, so the focus shifts to app features and quality.
 
-**Current bank:** 369 unique questions, 0 duplicates, 0 invalid →
-**1,631 short of the 2,000 goal** (≈12 new questions/day for 150 days).
+**Current bank:** 2,007 unique questions, 0 duplicates, 0 invalid - at goal.
 
 Domain mix (goal weight in brackets):
 
 | Domain | Questions | Share |
 |---|---|---|
-| `network_infra` | 95 | 25.7% (25%) |
-| `switching` | 86 | 23.3% (25%) |
-| `ip_routing` | 72 | 19.5% (20%) |
-| `services_security` | 72 | 19.5% (20%) |
-| `ai_ops` | 44 | 11.9% (10%) |
+| `network_infra` | 500 | 24.9% (25%) |
+| `switching` | 500 | 24.9% (25%) |
+| `ip_routing` | 398 | 19.8% (20%) |
+| `services_security` | 399 | 19.9% (20%) |
+| `ai_ops` | 210 | 10.4% (10%) |
 
-Difficulty mix: 129 easy / 180 medium / 60 hard. Hard is the thin tier, so new
-batches should favour scenario-heavy items over recall.
+Difficulty mix: 645 easy / 942 medium / 422 hard.
 
 Priorities:
-
-1. **Grow the bank to 2,000 unique questions.** Add ~12/day, rotating domains
-   with the blueprint weights (25/25/20/20/10) and targeting whatever
-   `bank:stats` still flags as thin. Run `npm run bank:check` after every batch.
+1. **Add spaced repetition.** `user_question_stats` already records seen/correct
+   counts - scheduling reviews from it (SM-2 style) would beat random sampling.
 2. **Test the Android build on a real device.** Desktop and CI are exercised;
    touch input, back-button handling, and the 120-minute exam timer on mobile
    are not.
-3. **Add spaced repetition.** `user_question_stats` already records seen/correct
-   counts — scheduling reviews from it (SM-2 style) would beat random sampling.
-4. **Keep a screenshot-based UI regression check** for the quiz, exam navigator,
+3. **Keep a screenshot-based UI regression check** for the quiz, exam navigator,
    and results screens.
+4. **Maintenance:** run `npm run bank:check` after any question edits.
 
 ---
 

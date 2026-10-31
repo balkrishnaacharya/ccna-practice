@@ -1,0 +1,1432 @@
+[
+  {
+    "stem": "What is the primary advantage of a spine-leaf data center topology over a traditional three-tier design?",
+    "explanation": "Spine-leaf provides predictable, low-latency any-to-any connectivity with consistent hop counts (typically 2 hops) between any two leaves, improving east-west traffic performance.",
+    "domain": "network_infra",
+    "subtopic": "Spine-Leaf Topology",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Consistent low-latency path between any two endpoints",
+        "is_correct": true
+      },
+      {
+        "text": "Eliminates the need for routing protocols",
+        "is_correct": false
+      },
+      {
+        "text": "Reduces the number of physical switches required",
+        "is_correct": false
+      },
+      {
+        "text": "Provides built-in encryption for all traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless standard operates exclusively in the 6 GHz band?",
+    "explanation": "802.11ax (Wi-Fi 6E) extended Wi-Fi 6 into the 6 GHz band. 802.11be (Wi-Fi 7) also uses 6 GHz among other bands, but 6 GHz exclusivity as a new band was introduced with 6E.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11ax (Wi-Fi 6E)",
+        "is_correct": true
+      },
+      {
+        "text": "802.11ac (Wi-Fi 5)",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n (Wi-Fi 4)",
+        "is_correct": false
+      },
+      {
+        "text": "802.11g (Wi-Fi 3)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which 802.11 feature allows a client to remain connected while moving between access points without re-authenticating?",
+    "explanation": "802.11r (Fast BSS Transition) enables fast roaming by allowing a client to pre-authenticate with target APs, reducing transition time.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11r",
+        "is_correct": true
+      },
+      {
+        "text": "802.11k",
+        "is_correct": false
+      },
+      {
+        "text": "802.11v",
+        "is_correct": false
+      },
+      {
+        "text": "802.11w",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of IPv6 Router Advertisement (RA) Guard?",
+    "explanation": "RA Guard is a security feature that blocks rogue Router Advertisements on switch ports, preventing attackers from redirecting traffic or performing MITM attacks via fake RAs.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Block unauthorized Router Advertisements",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypt IPv6 traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Assign IPv6 addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Filter IPv6 multicast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which campus architecture layer is responsible for connecting end-user devices to the network?",
+    "explanation": "The access layer connects end-user devices (PCs, phones, APs) to the network and enforces port-level security policies.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Access layer",
+        "is_correct": true
+      },
+      {
+        "text": "Distribution layer",
+        "is_correct": false
+      },
+      {
+        "text": "Core layer",
+        "is_correct": false
+      },
+      {
+        "text": "Spine layer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DTP mode will form a trunk only if the neighboring port is also set to trunk or desirable?",
+    "explanation": "Dynamic auto forms a trunk only if the neighbor is in trunk or desirable mode. It does not actively initiate trunking.",
+    "domain": "switching",
+    "subtopic": "DTP Negotiation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Dynamic auto",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic desirable",
+        "is_correct": false
+      },
+      {
+        "text": "Trunk",
+        "is_correct": false
+      },
+      {
+        "text": "Access",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of storm control on a switch port?",
+    "explanation": "Storm control monitors traffic levels and drops broadcast/multicast/unicast traffic exceeding configured thresholds, preventing broadcast storms from consuming bandwidth.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Limit broadcast/multicast/unicast traffic to prevent storms",
+        "is_correct": true
+      },
+      {
+        "text": "Block all multicast traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Prioritize voice traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypt port traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port security violation mode shuts down the port when an unauthorized MAC is detected?",
+    "explanation": "Shutdown mode (default) err-disables the port upon a security violation. Protect drops packets, restrict drops and logs, shutdown disables the port.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Shutdown",
+        "is_correct": true
+      },
+      {
+        "text": "Protect",
+        "is_correct": false
+      },
+      {
+        "text": "Restrict",
+        "is_correct": false
+      },
+      {
+        "text": "Disable",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between SPAN and RSPAN?",
+    "explanation": "SPAN mirrors traffic to a local port on the same switch. RSPAN mirrors traffic across switches to a remote destination port using a dedicated RSPAN VLAN.",
+    "domain": "switching",
+    "subtopic": "SPAN/RSPAN",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SPAN is local; RSPAN mirrors across switches via a VLAN",
+        "is_correct": true
+      },
+      {
+        "text": "SPAN is remote; RSPAN is local",
+        "is_correct": false
+      },
+      {
+        "text": "Both are local only",
+        "is_correct": false
+      },
+      {
+        "text": "RSPAN requires encryption",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which feature prevents a switch from becoming the root bridge by manipulating BPDUs?",
+    "explanation": "Root Guard prevents a port from becoming a root port by putting it in root-inconsistent state if superior BPDUs are received, protecting the root bridge position.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Root Guard",
+        "is_correct": true
+      },
+      {
+        "text": "BPDU Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Loop Guard",
+        "is_correct": false
+      },
+      {
+        "text": "PortFast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does DHCP snooping do on a switch?",
+    "explanation": "DHCP snooping acts as a firewall between untrusted hosts and DHCP servers, building a binding table of IP/MAC/port mappings to prevent rogue DHCP servers.",
+    "domain": "switching",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Filters untrusted DHCP messages and builds a binding table",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses to hosts",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts DHCP traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all DHCP requests",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the native VLAN used for on an 802.1Q trunk?",
+    "explanation": "The native VLAN carries untagged traffic on an 802.1Q trunk. Frames in the native VLAN are not tagged.",
+    "domain": "switching",
+    "subtopic": "Trunking",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Untagged traffic",
+        "is_correct": true
+      },
+      {
+        "text": "Tagged voice traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Management traffic only",
+        "is_correct": false
+      },
+      {
+        "text": "Multicast traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables PortFast on an interface?",
+    "explanation": "PortFast allows an access port to transition immediately to forwarding state, skipping STP listening/learning phases. Configured with 'spanning-tree portfast'.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "spanning-tree portfast",
+        "is_correct": true
+      },
+      {
+        "text": "spanning-tree bpduguard enable",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree guard root",
+        "is_correct": false
+      },
+      {
+        "text": "spanning-tree loopguard default",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What happens when BPDU Guard receives a BPDU on a PortFast-enabled port?",
+    "explanation": "BPDU Guard err-disables the port if a BPDU is received, protecting against accidental switch connections to access ports.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "The port is err-disabled",
+        "is_correct": true
+      },
+      {
+        "text": "The port becomes a root port",
+        "is_correct": false
+      },
+      {
+        "text": "The BPDU is forwarded",
+        "is_correct": false
+      },
+      {
+        "text": "Nothing happens",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which port security feature dynamically learns MAC addresses and saves them to the running config?",
+    "explanation": "Sticky MAC addresses are learned dynamically and added to the running configuration, persisting across reboots if saved.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Sticky MAC",
+        "is_correct": true
+      },
+      {
+        "text": "Static MAC",
+        "is_correct": false
+      },
+      {
+        "text": "Dynamic MAC",
+        "is_correct": false
+      },
+      {
+        "text": "Secure MAC",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default administrative distance of a directly connected route?",
+    "explanation": "A directly connected route has an administrative distance of 0, the most trustworthy source.",
+    "domain": "ip_routing",
+    "subtopic": "Routing Fundamentals",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": true
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF area type does not allow external (Type 5) LSAs?",
+    "explanation": "Stub areas block Type 5 (external) LSAs and use a default route instead. Totally stubby areas also block Type 3 summary LSAs.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Stub area",
+        "is_correct": true
+      },
+      {
+        "text": "Backbone area",
+        "is_correct": false
+      },
+      {
+        "text": "NSSA",
+        "is_correct": false
+      },
+      {
+        "text": "Transit area",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the OSPF DR/BDR election priority default value?",
+    "explanation": "The default OSPF interface priority is 1. A priority of 0 makes a router ineligible to become DR/BDR.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "100",
+        "is_correct": false
+      },
+      {
+        "text": "255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which routing protocol uses DUAL (Diffusing Update Algorithm) to guarantee loop-free paths?",
+    "explanation": "EIGRP uses DUAL to compute loop-free paths and provide fast convergence. It is an advanced distance-vector protocol.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "EIGRP",
+        "is_correct": true
+      },
+      {
+        "text": "OSPF",
+        "is_correct": false
+      },
+      {
+        "text": "RIP",
+        "is_correct": false
+      },
+      {
+        "text": "BGP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In EIGRP, what is the Feasible Distance (FD)?",
+    "explanation": "Feasible Distance is the best (lowest) metric to reach a destination. The Reported Distance is the neighbor's metric to that destination.",
+    "domain": "ip_routing",
+    "subtopic": "EIGRP",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Best metric to reach the destination",
+        "is_correct": true
+      },
+      {
+        "text": "Neighbor's metric to the destination",
+        "is_correct": false
+      },
+      {
+        "text": "Hop count to destination",
+        "is_correct": false
+      },
+      {
+        "text": "Administrative distance",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 routing protocol is the link-state protocol commonly used?",
+    "explanation": "OSPFv3 is the IPv6 version of OSPF, a link-state routing protocol. EIGRP for IPv6 also exists but OSPFv3 is the standard link-state choice.",
+    "domain": "ip_routing",
+    "subtopic": "IPv6 Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "OSPFv3",
+        "is_correct": true
+      },
+      {
+        "text": "RIPng",
+        "is_correct": false
+      },
+      {
+        "text": "EIGRPv6 only",
+        "is_correct": false
+      },
+      {
+        "text": "BGP only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a floating static route?",
+    "explanation": "A floating static route has a higher administrative distance than the primary route, so it only installs when the primary route is unavailable, providing backup.",
+    "domain": "ip_routing",
+    "subtopic": "Static Routing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Backup route used when primary fails",
+        "is_correct": true
+      },
+      {
+        "text": "Load-balancing route",
+        "is_correct": false
+      },
+      {
+        "text": "Default route",
+        "is_correct": false
+      },
+      {
+        "text": "Route to null interface",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF LSA type is flooded by an ASBR to advertise external routes?",
+    "explanation": "Type 5 (AS External) LSAs are originated by an ASBR to advertise routes redistributed into OSPF from other routing domains.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Type 5",
+        "is_correct": true
+      },
+      {
+        "text": "Type 3",
+        "is_correct": false
+      },
+      {
+        "text": "Type 1",
+        "is_correct": false
+      },
+      {
+        "text": "Type 7",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is route summarization's primary benefit?",
+    "explanation": "Route summarization reduces routing table size and LSA flooding, improving convergence and scalability.",
+    "domain": "ip_routing",
+    "subtopic": "Route Summarization",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Reduces routing table size",
+        "is_correct": true
+      },
+      {
+        "text": "Increases bandwidth",
+        "is_correct": false
+      },
+      {
+        "text": "Eliminates the need for a default route",
+        "is_correct": false
+      },
+      {
+        "text": "Improves encryption",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol is used for first-hop redundancy and uses a virtual IP?",
+    "explanation": "HSRP (Hot Standby Router Protocol) provides first-hop redundancy using a virtual IP and virtual MAC, with active/standby routers.",
+    "domain": "ip_routing",
+    "subtopic": "First-Hop Redundancy",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "HSRP",
+        "is_correct": true
+      },
+      {
+        "text": "OSPF",
+        "is_correct": false
+      },
+      {
+        "text": "EIGRP",
+        "is_correct": false
+      },
+      {
+        "text": "STP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In OSPF, what does the 'O IA' code in the routing table indicate?",
+    "explanation": "O IA means OSPF Inter-Area route, learned from a summary LSA (Type 3) from another area.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "OSPF Inter-Area route",
+        "is_correct": true
+      },
+      {
+        "text": "OSPF Intra-Area route",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF External Type 1",
+        "is_correct": false
+      },
+      {
+        "text": "OSPF External Type 2",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which OSPF network type does not elect a DR/BDR?",
+    "explanation": "Point-to-point and point-to-multipoint network types do not elect a DR/BDR, reducing overhead on those links.",
+    "domain": "ip_routing",
+    "subtopic": "OSPF",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Point-to-point",
+        "is_correct": true
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      },
+      {
+        "text": "NBMA",
+        "is_correct": false
+      },
+      {
+        "text": "Loopback",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which secure protocol is used to transfer files and is based on SSH?",
+    "explanation": "SFTP (SSH File Transfer Protocol) provides secure file transfer over an SSH connection. SCP is also SSH-based but SFTP is more feature-rich.",
+    "domain": "services_security",
+    "subtopic": "Secure File Transfer",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SFTP",
+        "is_correct": true
+      },
+      {
+        "text": "FTP",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      },
+      {
+        "text": "HTTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which ACL type can filter traffic based on source and destination IP and ports?",
+    "explanation": "Extended ACLs (numbered 100-199, 2000-2699) can filter based on source/destination IP, protocol, and port numbers.",
+    "domain": "services_security",
+    "subtopic": "ACLs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Extended ACL",
+        "is_correct": true
+      },
+      {
+        "text": "Standard ACL",
+        "is_correct": false
+      },
+      {
+        "text": "Named ACL only",
+        "is_correct": false
+      },
+      {
+        "text": "Reflexive ACL only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between a standard and extended ACL in terms of placement?",
+    "explanation": "Standard ACLs should be placed close to the destination (they only filter source IP), while extended ACLs should be placed close to the source to save bandwidth.",
+    "domain": "services_security",
+    "subtopic": "ACLs",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Standard near destination; Extended near source",
+        "is_correct": true
+      },
+      {
+        "text": "Standard near source; Extended near destination",
+        "is_correct": false
+      },
+      {
+        "text": "Both near source",
+        "is_correct": false
+      },
+      {
+        "text": "Both near destination",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VPN technology is commonly used for site-to-site connections and uses IPsec?",
+    "explanation": "IPsec VPNs provide encrypted site-to-site tunnels. GRE over IPsec is common for carrying multicast/routing traffic.",
+    "domain": "services_security",
+    "subtopic": "VPN",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "IPsec",
+        "is_correct": true
+      },
+      {
+        "text": "SSL VPN",
+        "is_correct": false
+      },
+      {
+        "text": "PPTP",
+        "is_correct": false
+      },
+      {
+        "text": "L2TP only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol provides centralized authentication for network devices using TCP port 49?",
+    "explanation": "TACACS+ uses TCP port 49 and provides separate authentication, authorization, and accounting, commonly for device administration.",
+    "domain": "services_security",
+    "subtopic": "AAA",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "TACACS+",
+        "is_correct": true
+      },
+      {
+        "text": "RADIUS",
+        "is_correct": false
+      },
+      {
+        "text": "LDAP",
+        "is_correct": false
+      },
+      {
+        "text": "Kerberos",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of 802.1X in network security?",
+    "explanation": "802.1X provides port-based network access control, requiring authentication before granting network access.",
+    "domain": "services_security",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Port-based network access control",
+        "is_correct": true
+      },
+      {
+        "text": "Wireless encryption",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN tagging",
+        "is_correct": false
+      },
+      {
+        "text": "Traffic shaping",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which security feature validates DHCP messages and prevents rogue DHCP servers?",
+    "explanation": "DHCP snooping validates DHCP messages and prevents rogue servers by trusting only designated ports.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "DHCP snooping",
+        "is_correct": true
+      },
+      {
+        "text": "Dynamic ARP Inspection",
+        "is_correct": false
+      },
+      {
+        "text": "IP Source Guard",
+        "is_correct": false
+      },
+      {
+        "text": "Port security",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does Dynamic ARP Inspection (DAI) protect against?",
+    "explanation": "DAI validates ARP packets against the DHCP snooping binding table, preventing ARP spoofing/poisoning attacks.",
+    "domain": "services_security",
+    "subtopic": "ARP Security",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "ARP spoofing/poisoning",
+        "is_correct": true
+      },
+      {
+        "text": "DHCP starvation",
+        "is_correct": false
+      },
+      {
+        "text": "MAC flooding",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN hopping",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol uses UDP port 161 for device management?",
+    "explanation": "SNMP uses UDP 161 for queries and UDP 162 for traps. It is used for network device monitoring and management.",
+    "domain": "services_security",
+    "subtopic": "Network Management",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "SNMP",
+        "is_correct": true
+      },
+      {
+        "text": "Syslog",
+        "is_correct": false
+      },
+      {
+        "text": "NTP",
+        "is_correct": false
+      },
+      {
+        "text": "TFTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which DNS record type is used for email server routing?",
+    "explanation": "MX (Mail Exchange) records specify the mail servers responsible for accepting email on behalf of a domain.",
+    "domain": "services_security",
+    "subtopic": "DNS",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "MX record",
+        "is_correct": true
+      },
+      {
+        "text": "A record",
+        "is_correct": false
+      },
+      {
+        "text": "TXT record",
+        "is_correct": false
+      },
+      {
+        "text": "NS record",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which RESTCONF operation uses HTTP GET to retrieve data?",
+    "explanation": "RESTCONF maps CRUD operations to HTTP methods: GET retrieves, POST creates, PUT replaces, PATCH modifies, DELETE removes.",
+    "domain": "ai_ops",
+    "subtopic": "RESTCONF",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "GET",
+        "is_correct": true
+      },
+      {
+        "text": "POST",
+        "is_correct": false
+      },
+      {
+        "text": "PUT",
+        "is_correct": false
+      },
+      {
+        "text": "DELETE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol uses XML or JSON encoding and is used for network device configuration via RPC?",
+    "explanation": "NETCONF uses RPC-based operations with XML or JSON encoding to configure and manage network devices, typically over SSH.",
+    "domain": "ai_ops",
+    "subtopic": "NETCONF",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "NETCONF",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP",
+        "is_correct": false
+      },
+      {
+        "text": "Syslog",
+        "is_correct": false
+      },
+      {
+        "text": "REST API (generic)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is streaming telemetry used for?",
+    "explanation": "Streaming telemetry pushes real-time operational data from devices to collectors, enabling continuous monitoring without polling.",
+    "domain": "ai_ops",
+    "subtopic": "Streaming Telemetry",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Real-time push of device data to collectors",
+        "is_correct": true
+      },
+      {
+        "text": "Manual configuration backup",
+        "is_correct": false
+      },
+      {
+        "text": "Static routing table updates",
+        "is_correct": false
+      },
+      {
+        "text": "Wireless client roaming",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IaC tool uses declarative configuration files to manage infrastructure?",
+    "explanation": "Terraform uses HCL (HashiCorp Configuration Language) declarative files to define and provision infrastructure across providers.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Terraform",
+        "is_correct": true
+      },
+      {
+        "text": "Ansible (only)",
+        "is_correct": false
+      },
+      {
+        "text": "Puppet (only)",
+        "is_correct": false
+      },
+      {
+        "text": "Chef (only)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of AI output validation in network operations?",
+    "explanation": "AI output validation ensures AI-generated configurations or recommendations are checked for correctness, safety, and compliance before deployment.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Verify AI-generated configs before deployment",
+        "is_correct": true
+      },
+      {
+        "text": "Train AI models",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypt AI traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Replace human operators",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which YANG-based protocol provides a programmatic interface for network configuration?",
+    "explanation": "NETCONF and RESTCONF both use YANG data models to define network configuration and operational data structures.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "NETCONF/RESTCONF",
+        "is_correct": true
+      },
+      {
+        "text": "SNMPv2",
+        "is_correct": false
+      },
+      {
+        "text": "Syslog",
+        "is_correct": false
+      },
+      {
+        "text": "Telnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which tool is commonly used for network automation and configuration management using playbooks?",
+    "explanation": "Ansible uses YAML playbooks to automate configuration management and network device provisioning.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Ansible",
+        "is_correct": true
+      },
+      {
+        "text": "Terraform",
+        "is_correct": false
+      },
+      {
+        "text": "Docker",
+        "is_correct": false
+      },
+      {
+        "text": "Kubernetes",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a benefit of using NETCONF over traditional CLI for device configuration?",
+    "explanation": "NETCONF provides structured, transactional configuration with rollback capability and consistent data models, unlike CLI's text-based approach.",
+    "domain": "ai_ops",
+    "subtopic": "NETCONF",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Transactional config with rollback",
+        "is_correct": true
+      },
+      {
+        "text": "Faster console access",
+        "is_correct": false
+      },
+      {
+        "text": "No authentication required",
+        "is_correct": false
+      },
+      {
+        "text": "Works without SSH",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which data format is commonly used by RESTCONF for encoding?",
+    "explanation": "RESTCONF supports JSON and XML encoding for representing YANG data. JSON is commonly used for REST APIs.",
+    "domain": "ai_ops",
+    "subtopic": "RESTCONF",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "JSON or XML",
+        "is_correct": true
+      },
+      {
+        "text": "YAML only",
+        "is_correct": false
+      },
+      {
+        "text": "Binary only",
+        "is_correct": false
+      },
+      {
+        "text": "Plain text only",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a YANG model in network management?",
+    "explanation": "YANG is a data modeling language that defines the structure and constraints of configuration and operational data for network devices.",
+    "domain": "ai_ops",
+    "subtopic": "Network Automation",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Define data models for config and state",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypt network traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Route packets",
+        "is_correct": false
+      },
+      {
+        "text": "Assign IP addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which streaming telemetry protocol uses gRPC and is vendor-neutral?",
+    "explanation": "gNMI (gRPC Network Management Interface) uses gRPC for streaming telemetry and configuration, promoted by OpenConfig.",
+    "domain": "ai_ops",
+    "subtopic": "Streaming Telemetry",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "gNMI",
+        "is_correct": true
+      },
+      {
+        "text": "SNMP traps",
+        "is_correct": false
+      },
+      {
+        "text": "Syslog",
+        "is_correct": false
+      },
+      {
+        "text": "NetFlow",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a key consideration when validating AI-generated network configurations?",
+    "explanation": "AI outputs must be validated against intended policy, syntax, and safety constraints before applying to production devices.",
+    "domain": "ai_ops",
+    "subtopic": "AI Output Validation",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Check against policy and syntax before apply",
+        "is_correct": true
+      },
+      {
+        "text": "Apply immediately for speed",
+        "is_correct": false
+      },
+      {
+        "text": "Skip review if confidence is high",
+        "is_correct": false
+      },
+      {
+        "text": "Only validate on failure",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 header field replaces the IPv4 TTL field?",
+    "explanation": "IPv6 uses the Hop Limit field instead of TTL. It is decremented by each router and the packet is discarded when it reaches zero.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "easy",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Hop Limit",
+        "is_correct": true
+      },
+      {
+        "text": "TTL",
+        "is_correct": false
+      },
+      {
+        "text": "Flow Label",
+        "is_correct": false
+      },
+      {
+        "text": "Next Header",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the IPv6 Flow Label field?",
+    "explanation": "The Flow Label identifies a sequence of packets requiring special handling (e.g., QoS) by routers, enabling efficient forwarding without deep inspection.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Header",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Identify packets needing special router handling",
+        "is_correct": true
+      },
+      {
+        "text": "Specify packet length",
+        "is_correct": false
+      },
+      {
+        "text": "Indicate payload type",
+        "is_correct": false
+      },
+      {
+        "text": "Set TTL value",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wireless standard introduced Target Wake Time (TWT) to improve battery life for IoT devices?",
+    "explanation": "802.11ax (Wi-Fi 6) introduced TWT, allowing devices to negotiate wake/sleep schedules to conserve power.",
+    "domain": "network_infra",
+    "subtopic": "Wireless Standards",
+    "difficulty": "hard",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "802.11ax",
+        "is_correct": true
+      },
+      {
+        "text": "802.11ac",
+        "is_correct": false
+      },
+      {
+        "text": "802.11n",
+        "is_correct": false
+      },
+      {
+        "text": "802.11g",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "In a three-tier campus design, which layer aggregates traffic from the access layer and applies policies?",
+    "explanation": "The distribution layer aggregates access-layer traffic, applies routing policies, and provides redundancy between access and core.",
+    "domain": "network_infra",
+    "subtopic": "Campus Architectures",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Distribution layer",
+        "is_correct": true
+      },
+      {
+        "text": "Core layer",
+        "is_correct": false
+      },
+      {
+        "text": "Access layer",
+        "is_correct": false
+      },
+      {
+        "text": "Spine layer",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 address type is used for one-to-nearest communication to the closest interface?",
+    "explanation": "Anycast addresses are assigned to multiple interfaces; packets are delivered to the nearest one based on routing metrics.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Anycast",
+        "is_correct": true
+      },
+      {
+        "text": "Multicast",
+        "is_correct": false
+      },
+      {
+        "text": "Unicast",
+        "is_correct": false
+      },
+      {
+        "text": "Broadcast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary benefit of cloud-managed networking for branch offices?",
+    "explanation": "Cloud management provides centralized visibility, zero-touch provisioning, and simplified operations without on-site controllers.",
+    "domain": "network_infra",
+    "subtopic": "Cloud-Managed Networking",
+    "difficulty": "medium",
+    "source": "ai-generated",
+    "choices": [
+      {
+        "text": "Centralized management and zero-touch provisioning",
+        "is_correct": true
+      },
+      {
+        "text": "Eliminates all local hardware",
+        "is_correct": false
+      },
+      {
+        "text": "Removes need for internet connectivity",
+        "is_correct": false
+      },
+      {
+        "text": "Guarantees 100% uptime",
+        "is_correct": false
+      }
+    ]
+  }
+]

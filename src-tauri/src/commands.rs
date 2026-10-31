@@ -15,15 +15,60 @@ fn now_secs() -> i64 {
 }
 
 fn record_question_stat(conn: &Connection, question_id: i64, correct: bool, seen_at: i64) -> Result<(), String> {
+    // Fetch current SM-2 state (defaults for a never-seen question).
+    let (_times_seen, ef, interval, reps): (i64, f64, i64, i64) = conn
+        .query_row(
+            "SELECT times_seen,
+                    COALESCE(ease_factor, 2.5),
+                    COALESCE(interval_days, 0),
+                    COALESCE(repetitions, 0)
+             FROM user_question_stats WHERE question_id = ?1",
+            params![question_id],
+            |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?)),
+        )
+        .unwrap_or((0, 2.5, 0, 0));
+
+    // SM-2 quality grade: 4 for a correct answer, 1 for an incorrect one.
+    let q: i64 = if correct { 4 } else { 1 };
+
+    // Update repetitions + interval.
+    let (new_reps, new_interval) = if q < 3 {
+        (0i64, 1i64)
+    } else if reps == 0 {
+        (1i64, 1i64)
+    } else if reps == 1 {
+        (2i64, 6i64)
+    } else {
+        (reps + 1, ((interval as f64) * ef).round().max(1.0) as i64)
+    };
+
+    // Ease factor update (clamped to a minimum of 1.3).
+    let new_ef = (ef + (0.1 - (5 - q) as f64 * (0.08 + (5 - q) as f64 * 0.02))).max(1.3);
+    let next_review = seen_at + new_interval * 86400;
+
     conn.execute(
-        "INSERT INTO user_question_stats (question_id, times_seen, times_correct, last_seen_at)
-         VALUES (?1, 1, ?2, ?3)
+        "INSERT INTO user_question_stats (question_id, times_seen, times_correct, last_seen_at,
+                ease_factor, interval_days, repetitions, next_review_at)
+         VALUES (?1, 1, ?2, ?3, ?4, ?5, ?6, ?7)
          ON CONFLICT(question_id) DO UPDATE SET
            times_seen = times_seen + 1,
            times_correct = times_correct + excluded.times_correct,
-           last_seen_at = excluded.last_seen_at",
-        params![question_id, if correct { 1 } else { 0 }, seen_at],
-    ).map_err(|e| e.to_string())?;
+           last_seen_at = excluded.last_seen_at,
+           ease_factor = excluded.ease_factor,
+           interval_days = excluded.interval_days,
+           repetitions = excluded.repetitions,
+           next_review_at = excluded.next_review_at",
+        params![
+            question_id,
+            if correct { 1 } else { 0 },
+            seen_at,
+            new_ef,
+            new_interval,
+            new_reps,
+            next_review
+        ],
+    )
+    .map_err(|e| e.to_string())?;
     Ok(())
 }
 
@@ -293,6 +338,23 @@ pub fn get_subtopic_stats(db: State<Db>) -> Result<Vec<SubtopicStat>, String> {
     Ok(rows)
 }
 
+/// Number of questions currently due for spaced-repetition review.
+#[tauri::command]
+pub fn get_review_due_count(db: State<Db>) -> Result<i64, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let now = now_secs();
+    let count: i64 = conn
+        .query_row(
+            "SELECT COUNT(*) FROM questions q
+             LEFT JOIN user_question_stats s ON s.question_id = q.id
+             WHERE COALESCE(s.next_review_at, 0) = 0 OR COALESCE(s.next_review_at, 0) <= ?1",
+            params![now],
+            |r| r.get(0),
+        )
+        .unwrap_or(0);
+    Ok(count)
+}
+
 // ─── Study streak ─────────────────────────────────────────────────────────────
 
 #[derive(Serialize)]
@@ -549,6 +611,34 @@ pub fn get_random_question_conn(
         return row_to_question(conn, id, stem, domain, difficulty, multi_select).map(Some);
     }
 
+    // Spaced-repetition review mode: surface the most overdue question
+    // (next_review_at ascending; never-seen questions sort first at 0).
+    if mode == "review" {
+        let mut stmt = conn.prepare(
+            "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0)
+             FROM questions q
+             LEFT JOIN user_question_stats s ON s.question_id = q.id
+             ORDER BY COALESCE(s.next_review_at, 0) ASC, RANDOM()
+             LIMIT 1",
+        ).map_err(|e| e.to_string())?;
+        let row = stmt
+            .query_row([], |r| {
+                Ok((
+                    r.get::<_, i64>(0)?,
+                    r.get::<_, String>(1)?,
+                    r.get::<_, String>(2)?,
+                    r.get::<_, String>(3)?,
+                    r.get::<_, i64>(4)?,
+                ))
+            })
+            .optional()
+            .map_err(|e| e.to_string())?;
+        let Some((id, stem, domain, difficulty, multi_select)) = row else {
+            return Ok(None);
+        };
+        return row_to_question(conn, id, stem, domain, difficulty, multi_select).map(Some);
+    }
+
     let difficulty = match mode {
         "easy" => "easy",
         "medium" => "medium",
@@ -698,7 +788,7 @@ fn drill_question_conn(
         sql.push_str(" AND COALESCE(NULLIF(TRIM(q.subtopic), ''), 'Uncategorized') = ?");
         args.push(s.to_string());
     }
-    if mode != "weak" && mode != "exam" {
+    if mode != "weak" && mode != "exam" && mode != "review" {
         let difficulty = match mode {
             "easy" => "easy",
             "medium" => "medium",
@@ -710,17 +800,21 @@ fn drill_question_conn(
         args.push(difficulty.to_string());
     }
 
-    sql.push_str(
-        " ORDER BY
-            CASE
-              WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
-              WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
-              ELSE 1
-            END ASC,
-            COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
-            RANDOM()
-          LIMIT 1",
-    );
+    if mode == "review" {
+        sql.push_str(" ORDER BY COALESCE(s.next_review_at, 0) ASC, RANDOM() LIMIT 1");
+    } else {
+        sql.push_str(
+            " ORDER BY
+                CASE
+                  WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
+                  WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
+                  ELSE 1
+                END ASC,
+                COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
+                RANDOM()
+              LIMIT 1",
+        );
+    }
 
     let mut stmt = conn.prepare(&sql).map_err(|e| e.to_string())?;
     let row = stmt

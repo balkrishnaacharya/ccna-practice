@@ -61,6 +61,7 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
+          args: -c '{"bundle":{"createUpdaterArtifacts":true}}'
 
   build-android:
     name: Build Android

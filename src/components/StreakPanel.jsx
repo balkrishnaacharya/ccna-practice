@@ -34,7 +34,10 @@ export default function StreakPanel() {
 
   if (!data) {
     return (
-      <div className="h-[148px] animate-pulse rounded-2xl border border-dark-border bg-dark-card" />
+      <div
+        data-tour="study-streak"
+        className="h-[148px] animate-pulse rounded-2xl border border-dark-border bg-dark-card"
+      />
     );
   }
 
@@ -47,7 +50,10 @@ export default function StreakPanel() {
   const ceiling = Math.max(goal, ...recent.map((day) => day.answered), 1);
 
   return (
-    <section className="rounded-2xl border border-dark-border bg-dark-card p-5 shadow-dock">
+    <section
+      data-tour="study-streak"
+      className="rounded-2xl border border-dark-border bg-dark-card p-5 shadow-dock"
+    >
       <div className="flex items-start justify-between gap-3 border-b border-dark-borderSubtle pb-3">
         <div>
           <h2 className="font-serif text-xl font-semibold tracking-tight text-paper">

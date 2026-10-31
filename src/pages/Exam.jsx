@@ -81,7 +81,7 @@ export default function Exam({ onProgressChange }) {
 
   function handleCancelPreflight() {
     setShowPreflightModal(false);
-    navigate(-1 || "/");
+    navigate(window.history.length > 1 ? -1 : "/");
   }
 
   function handleSelectChoice(choiceId, isMultiSelect) {

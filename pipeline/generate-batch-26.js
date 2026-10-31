@@ -1,0 +1,799 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+
+const questions = [
+  // ==========================================
+  // NETWORK_INFRA (14 questions)
+  // ==========================================
+  {
+    stem: "Which IPv4 address block is designated by RFC 6598 for Shared Address Space (Carrier-Grade NAT / CGNAT)?",
+    explanation: "RFC 6598 allocates 100.64.0.0/10 specifically for Shared Address Space used in Carrier-Grade NAT (CGNAT) by service providers to avoid collisions with RFC 1918 private addressing.",
+    domain: "network_infra",
+    subtopic: "IPv4 Addressing",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "100.64.0.0/10", is_correct: true },
+      { text: "192.0.2.0/24", is_correct: false },
+      { text: "198.18.0.0/15", is_correct: false },
+      { text: "169.254.0.0/16", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an IPv4 packet header, what is the function of the Time to Live (TTL) field, and what occurs when a router decrements it to 0?",
+    explanation: "The IPv4 TTL field is decremented by 1 at each router hop to prevent looping packets from congesting links indefinitely. If a router decrements TTL to 0, it drops the packet and sends an ICMP Type 11 (Time Exceeded) message to the source.",
+    domain: "network_infra",
+    subtopic: "IPv4 Header",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It prevents routing loops by discarding the packet and transmitting an ICMP Time Exceeded message to the sender when TTL reaches 0", is_correct: true },
+      { text: "It specifies the maximum transmission duration in milliseconds before forcing TCP retransmission", is_correct: false },
+      { text: "It determines link-level QoS prioritization and triggers DSCP remarking when it reaches 0", is_correct: false },
+      { text: "It calculates the path MTU and signals ICMP Destination Unreachable when it reaches 0", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does the base IPv6 header achieve faster hardware routing processing compared to the standard IPv4 header?",
+    explanation: "The base IPv6 header has a fixed length of 40 bytes (unlike IPv4's variable 20-60 byte header) and eliminates the router-decremented header checksum, allowing ASICs to process packets at line rate without recalculating checksums at every hop.",
+    domain: "network_infra",
+    subtopic: "IPv6 Header",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It uses a fixed 40-byte header length and eliminates the header checksum field", is_correct: true },
+      { text: "It includes dynamic options directly within the mandatory 20-byte base header", is_correct: false },
+      { text: "It replaces 128-bit addresses with 64-bit MAC hashes in Layer 3 headers", is_correct: false },
+      { text: "It delegates all flow identification to upper-layer TCP or UDP headers", is_correct: false }
+    ]
+  },
+  {
+    stem: "In an IPv6 header, what is the role of the 20-bit Flow Label field?",
+    explanation: "The 20-bit Flow Label field in IPv6 enables routers to classify and forward packets in a specific packet stream (such as real-time audio or video) along the same path without opening and inspecting upper-layer payload headers.",
+    domain: "network_infra",
+    subtopic: "IPv6 Header",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It allows intermediate routers to identify and provide consistent QoS treatment to packets belonging to the same packet flow without inspecting Layer 4 payload headers", is_correct: true },
+      { text: "It indicates the size of extension headers attached immediately following the fixed header", is_correct: false },
+      { text: "It tracks packet fragmentation offsets across path MTU discovery sequences", is_correct: false },
+      { text: "It validates cryptographic integrity for IPsec Authentication Header (AH) payloads", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a Cisco centralized wireless architecture utilizing Lightweight Access Points (LWAPs), which protocol tunnel transports both control plane messages and client data frames between the AP and the Wireless LAN Controller (WLC)?",
+    explanation: "CAPWAP (RFC 5415/5416) is the standard tunneling protocol used between lightweight APs and WLCs. It uses UDP port 5246 for control and UDP port 5247 for data.",
+    domain: "network_infra",
+    subtopic: "Wireless Architecture",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "CAPWAP (Control and Provisioning of Wireless Access Points)", is_correct: true },
+      { text: "GRE (Generic Routing Encapsulation)", is_correct: false },
+      { text: "L2TPv3 (Layer 2 Tunneling Protocol version 3)", is_correct: false },
+      { text: "IPsec (IP Security Tunneling Protocol)", is_correct: false }
+    ]
+  },
+  {
+    stem: "When configuring a Cisco Lightweight Access Point in FlexConnect mode for a remote branch office, what occurs if the WAN connection to the central Wireless LAN Controller fails?",
+    explanation: "FlexConnect allows remote branch APs to switch client traffic locally into local VLANs. When WAN connectivity to the central WLC is lost, FlexConnect APs maintain local switching for connected clients and can authenticate local clients using pre-shared keys or local 802.1X.",
+    domain: "network_infra",
+    subtopic: "Wireless Architecture",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Locally switched WLANs continue to switch client traffic locally and can authenticate WPA2-PSK clients without controller connectivity", is_correct: true },
+      { text: "The access point immediately shuts down all radios until the controller connection is restored", is_correct: false },
+      { text: "The access point reboots into autonomous mode and resets its configuration to factory defaults", is_correct: false },
+      { text: "All client traffic is converted into central switched traffic and queued into flash memory", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Wi-Fi standard is commercially branded as Wi-Fi 6, operates in both the 2.4 GHz and 5 GHz frequency bands, and introduces OFDMA for high-density environments?",
+    explanation: "IEEE 802.11ax is branded as Wi-Fi 6. It introduces OFDMA, MU-MIMO improvements, and Target Wake Time (TWT), operating in both 2.4 GHz and 5 GHz bands (and 6 GHz in Wi-Fi 6E).",
+    domain: "network_infra",
+    subtopic: "Wireless Standards",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "IEEE 802.11ax", is_correct: true },
+      { text: "IEEE 802.11ac", is_correct: false },
+      { text: "IEEE 802.11n", is_correct: false },
+      { text: "IEEE 802.11be", is_correct: false }
+    ]
+  },
+  {
+    stem: "In IEEE 802.11ax (Wi-Fi 6), how does Orthogonal Frequency Division Multiple Access (OFDMA) improve channel efficiency over older 802.11 OFDM technology?",
+    explanation: "OFDMA subdivides radio channels into smaller sub-channels called Resource Units (RUs). This allows an AP to communicate with multiple clients concurrently in the same transmission window, drastically reducing contention in high-density networks.",
+    domain: "network_infra",
+    subtopic: "Wireless Standards",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It divides an RF channel into smaller subcarriers called Resource Units (RUs), enabling simultaneous transmissions to multiple clients within a single time slot", is_correct: true },
+      { text: "It operates exclusively in the 60 GHz millimeter wave band to eliminate microwave oven interference", is_correct: false },
+      { text: "It increases single-client transmission power by combining adjacent 160 MHz channels", is_correct: false },
+      { text: "It eliminates the need for CSMA/CA contention by switching entirely to full-duplex token passing", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a traditional Cisco 3-tier hierarchical campus network design, what is the primary role of the Distribution Layer?",
+    explanation: "The Distribution Layer aggregates access switches, enforces routing policies and ACLs, handles inter-VLAN routing, and delineates broadcast and failure domains before traffic reaches the core.",
+    domain: "network_infra",
+    subtopic: "Campus Architectures",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Policy-based connectivity, boundary routing, access control lists, and aggregation of access layer switches", is_correct: true },
+      { text: "High-speed non-blocking packet transport across disparate buildings without packet filtering", is_correct: false },
+      { text: "Direct physical attachment of end-user endpoints, IP phones, and wireless access points", is_correct: false },
+      { text: "Direct WAN termination and Internet edge BGP peering", is_correct: false }
+    ]
+  },
+  {
+    stem: "A user PC connected to an office wall jack obtains an IP address of 169.254.120.45 with a subnet mask of 255.255.0.0. Why is this PC unable to access internal network servers or the Internet?",
+    explanation: "169.254.0.0/16 is the IPv4 Link-Local (APIPA) address range assigned automatically by an OS when DHCP discovery fails and no static IP is configured. APIPA addresses cannot route outside the local link.",
+    domain: "network_infra",
+    subtopic: "Client Connectivity Troubleshooting",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The PC failed to receive a response from a DHCP server and generated an Automatic Private IP Addressing (APIPA) address", is_correct: true },
+      { text: "The PC received an invalid IPv4 default gateway assignment from the DHCP relay agent", is_correct: false },
+      { text: "The switch port was err-disabled due to an 802.1X port security MAC flood violation", is_correct: false },
+      { text: "The DNS server returned an unresolvable domain lookup loop for internal hosts", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which networking device operates primarily at Layer 2 to make forwarding decisions based on destination MAC addresses, maintaining a separate collision domain for every connected port?",
+    explanation: "A network switch operates at Layer 2 (Data Link), reading Ethernet frame headers and forwarding frames based on MAC addresses. Each switch port is an independent collision domain.",
+    domain: "network_infra",
+    subtopic: "Network Components",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Network switch", is_correct: true },
+      { text: "Network hub", is_correct: false },
+      { text: "Network repeater", is_correct: false },
+      { text: "Layer 3 router", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is Single-Mode Fiber (SMF) preferred over Multimode Fiber (MMF) for long-distance campus backbone and WAN interconnects?",
+    explanation: "Single-Mode Fiber (SMF) has a narrow core (typically 8-10 microns) through which light travels straight with virtually no modal dispersion, allowing signals to span tens of kilometers. MMF has a wider core (50-62.5 microns) suffering from modal dispersion.",
+    domain: "network_infra",
+    subtopic: "Physical Media",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "SMF has a much narrower core (~9 microns) which permits only a single light ray path, eliminating modal dispersion over long distances", is_correct: true },
+      { text: "SMF uses LED transmitters that generate higher lumens than solid-state lasers", is_correct: false },
+      { text: "SMF has a 50-micron core that allows multiple wavelengths to bounce at varying angles simultaneously", is_correct: false },
+      { text: "SMF requires no transceiver optics and connects directly to copper RJ-45 interfaces", is_correct: false }
+    ]
+  },
+  {
+    stem: "During TCP communication, what mechanism allows a receiver to inform the sender of how many bytes it can accept before its buffer overflows, dynamically adjusting throughput?",
+    explanation: "The TCP Window Size field implements flow control via the sliding window mechanism. The receiver announces how many bytes it is currently prepared to buffer, preventing the sender from overwhelming receiver memory.",
+    domain: "network_infra",
+    subtopic: "TCP/IP Transport",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "TCP Sliding Window (Window Size field in the TCP header)", is_correct: true },
+      { text: "TCP Maximum Segment Size (MSS) option negotiation", is_correct: false },
+      { text: "Selective Acknowledgment (SACK) bitmap permutation", is_correct: false },
+      { text: "Strict Priority Queuing (SPQ) header flags", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a Software-Defined WAN (SD-WAN) solution, what is the role of the Orchestration Plane (e.g., Cisco vBond)?",
+    explanation: "In Cisco SD-WAN, the orchestration plane (vBond) acts as the gatekeeper. It authenticates vSmart controllers, vManage, and WAN edge routers, provides NAT traversal, and coordinates their initial connections.",
+    domain: "network_infra",
+    subtopic: "WAN Architectures",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Authenticating SD-WAN components, facilitating NAT traversal, and orchestrating initial control/management plane discovery", is_correct: true },
+      { text: "Distributing BGP and OMP routing updates across WAN edge routers", is_correct: false },
+      { text: "Hosting the centralized graphical user interface for device provisioning and firmware upgrades", is_correct: false },
+      { text: "Forwarding customer data packets across transport underlay networks", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SWITCHING (14 questions)
+  // ==========================================
+  {
+    stem: "What is the primary function of the Storm Control feature on a Cisco Catalyst switch port?",
+    explanation: "Storm Control monitors incoming levels of broadcast, multicast, or unknown unicast traffic over a 1-second interval. If traffic exceeds the configured threshold, the switch drops the excess traffic or err-disables the interface.",
+    domain: "switching",
+    subtopic: "Storm Control",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "To monitor incoming broadcast, multicast, or unknown unicast levels and suppress packets or shut down the port when a configured threshold is exceeded", is_correct: true },
+      { text: "To prevent lightning electrical surges from damaging physical twisted-pair copper interfaces", is_correct: false },
+      { text: "To drop all oversized baby-giant Ethernet frames exceeding 1518 bytes", is_correct: false },
+      { text: "To block Spanning Tree BPDUs from altering the root bridge election", is_correct: false }
+    ]
+  },
+  {
+    stem: "When configuring a Cisco switch port connected to a Cisco IP Phone that has a co-located PC connected to the phone's auxiliary PC port, what switch configuration is required?",
+    explanation: "A multi-VLAN access port supports both an access VLAN (for untagged PC data) and a voice VLAN (where the IP Phone tags its VoIP packets with 802.1Q and 802.1p CoS 5 priority).",
+    domain: "switching",
+    subtopic: "Voice VLANs",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Configure an access VLAN for PC data traffic and a voice VLAN for tagged 802.1Q phone traffic (e.g., 'switchport voice vlan <id>')", is_correct: true },
+      { text: "Configure the port as a standard dynamic desirable trunk with native VLAN 1", is_correct: false },
+      { text: "Configure two separate access switchports with an external passive splitter", is_correct: false },
+      { text: "Enable spanning-tree bpduguard disable and switchport mode multi-access", is_correct: false }
+    ]
+  },
+  {
+    stem: "How does a Cisco IP phone learn which Voice VLAN ID and QoS CoS priority values to use when it connects to a switchport?",
+    explanation: "Cisco IP phones use CDP or LLDP-MED (standard) packet exchanges with the connected switch to automatically learn the Voice VLAN ID, 802.1p priority, and power negotiation parameters.",
+    domain: "switching",
+    subtopic: "Voice VLANs",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Via Cisco Discovery Protocol (CDP) or Link Layer Discovery Protocol - Media Endpoint Discovery (LLDP-MED)", is_correct: true },
+      { text: "Via DHCP Option 15 domain name search strings", is_correct: false },
+      { text: "Via ICMP Router Discovery Protocol (IRDP) advertisement packets", is_correct: false },
+      { text: "Via Spanning Tree Protocol Configuration BPDUs transmitted on VLAN 1", is_correct: false }
+    ]
+  },
+  {
+    stem: "During 802.11 client association, what are the three sequential states a wireless client must pass through before it can transmit data frames across an open BSSID?",
+    explanation: "The standard 802.11 client state machine requires: 1) Unauthenticated & Unassociated (Probe discovery), 2) Authenticated & Unassociated (802.11 open system or shared key authentication), and 3) Authenticated & Associated.",
+    domain: "switching",
+    subtopic: "Wireless Client Onboarding",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Probe/Discovery, 802.11 Authentication, and 802.11 Association", is_correct: true },
+      { text: "DHCP DORA, DNS Resolution, and ARP Binding", is_correct: false },
+      { text: "WPA 4-way Handshake, CAPWAP Discovery, and EAPOL-Start", is_correct: false },
+      { text: "SSID Broadcast, Link-Local Autoconfiguration, and Gateway Ping", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco-proprietary Layer 2 protocol periodically discovers directly connected neighboring Cisco devices such as routers, switches, and IP phones?",
+    explanation: "CDP is Cisco-proprietary and operates at Layer 2 to discover directly connected Cisco devices. LLDP is the open IEEE 802.1AB standard equivalent.",
+    domain: "switching",
+    subtopic: "Discovery Protocols",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "CDP (Cisco Discovery Protocol)", is_correct: true },
+      { text: "LLDP (Link Layer Discovery Protocol)", is_correct: false },
+      { text: "STP (Spanning Tree Protocol)", is_correct: false },
+      { text: "UDLD (UniDirectional Link Detection)", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which command globally enables the IEEE 802.1AB vendor-neutral Link Layer Discovery Protocol on a Cisco Catalyst switch running Cisco IOS?",
+    explanation: "In Cisco IOS, `lldp run` globally enables LLDP. Interface-specific LLDP operation can then be tuned with `lldp transmit` and `lldp receive`.",
+    domain: "switching",
+    subtopic: "Discovery Protocols",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "lldp run", is_correct: true },
+      { text: "lldp enable", is_correct: false },
+      { text: "cdp run", is_correct: false },
+      { text: "service lldp", is_correct: false }
+    ]
+  },
+  {
+    stem: "What command must be configured globally on a Cisco multilayer Catalyst switch to enable hardware Layer 3 IPv4 packet routing between Switched Virtual Interfaces (SVIs)?",
+    explanation: "On Cisco Catalyst switches that support Layer 3 switching, the `ip routing` global configuration command must be enabled to activate the IPv4 routing engine.",
+    domain: "switching",
+    subtopic: "Layer 3 Switching",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "ip routing", is_correct: true },
+      { text: "router enable", is_correct: false },
+      { text: "ip cef distributed", is_correct: false },
+      { text: "switchport routing", is_correct: false }
+    ]
+  },
+  {
+    stem: "When configuring Switched Port Analyzer (SPAN) on a Cisco Catalyst switch, what is the effect of setting a port as the SPAN destination port ('monitor session 1 destination interface <int>')?",
+    explanation: "A SPAN destination port does not forward standard ingress or egress network traffic; it dedicates its transmitter to outputting mirrored frames captured from SPAN source ports.",
+    domain: "switching",
+    subtopic: "Packet Capture",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The destination port disables normal incoming/outgoing user traffic and dedicates itself to transmitting mirrored packets to the packet analyzer", is_correct: true },
+      { text: "The destination port aggregates bandwidth with the source port using LACP", is_correct: false },
+      { text: "The destination port copies mirrored packets directly into the switch CPU memory buffer", is_correct: false },
+      { text: "The destination port transmits ICMP echo requests to verify network capture latency", is_correct: false }
+    ]
+  },
+  {
+    stem: "What trunking state results if Switch A's interface is configured with 'switchport mode dynamic auto' and connected Switch B's interface is configured with 'switchport mode dynamic desirable'?",
+    explanation: "`dynamic auto` is willing to trunk if the remote peer initiates, but does not initiate. `dynamic desirable` actively initiates trunking negotiation via DTP frames. Therefore, dynamic auto + dynamic desirable results in a trunk link.",
+    domain: "switching",
+    subtopic: "DTP Negotiation",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "The link becomes an 802.1Q trunk link", is_correct: true },
+      { text: "The link becomes an access link", is_correct: false },
+      { text: "The ports enter an err-disabled mismatch state", is_correct: false },
+      { text: "The link fluctuates continuously between trunking and access", is_correct: false }
+    ]
+  },
+  {
+    stem: "A network administrator executes 'show interfaces GigabitEthernet 0/1' and notices high 'input errors' along with a rising 'CRC' (Cyclic Redundancy Check) counter. What is the most common physical root cause?",
+    explanation: "CRC errors indicate frames arriving with corrupted checksums, most commonly caused by faulty cabling, damaged connectors, dirty fiber ends, electrical interference, or failing transceivers.",
+    domain: "switching",
+    subtopic: "Interface Troubleshooting",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A damaged cable, bad transceiver, EMI interference, or loose connector", is_correct: true },
+      { text: "A duplex mismatch on a half-duplex point-to-point link", is_correct: false },
+      { text: "Broadcast storm control dropping broadcast frames", is_correct: false },
+      { text: "MTU size mismatch between adjacent router subinterfaces", is_correct: false }
+    ]
+  },
+  {
+    stem: "Under the IEEE 802.3at (PoE+) standard, what is the maximum power allocated by Power Sourcing Equipment (PSE) per switch port?",
+    explanation: "IEEE 802.3af (PoE) provides up to 15.4W at the PSE (12.95W at device). IEEE 802.3at (PoE+) provides up to 30W at the PSE (25.5W at device). IEEE 802.3bt provides 60W (Type 3) to 90W (Type 4).",
+    domain: "switching",
+    subtopic: "PoE Standards",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "30.0 Watts", is_correct: true },
+      { text: "15.4 Watts", is_correct: false },
+      { text: "60.0 Watts", is_correct: false },
+      { text: "90.0 Watts", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does an Ethernet switch do when it receives a frame whose destination MAC address is already present in its MAC address table on a different port than the one it arrived on?",
+    explanation: "When the destination MAC is known (a table hit), the switch forwards the frame directly out the associated port. It only floods frames if the destination MAC is unknown unicast, broadcast, or multicast.",
+    domain: "switching",
+    subtopic: "Switch Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "It forwards the frame unicast out only the specific port listed in the MAC address table", is_correct: true },
+      { text: "It floods the frame out all active switch ports except the receiving port", is_correct: false },
+      { text: "It broadcasts the frame out every port including the receiving port", is_correct: false },
+      { text: "It drops the frame and sends an ICMP Redirect message to the sender", is_correct: false }
+    ]
+  },
+  {
+    stem: "In enterprise virtualization environments, what is a primary distinction between a standard virtual switch (vSwitch) and a distributed virtual switch (dvSwitch)?",
+    explanation: "A standard vSwitch is configured locally on each hypervisor host. A distributed virtual switch (such as VMware VDS or Cisco Nexus 1000v) functions as a single unified logical switch spanning across multiple ESXi hosts in a cluster, managed by vCenter.",
+    domain: "switching",
+    subtopic: "Virtual Switches",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A standard vSwitch exists on an individual hypervisor host, whereas a distributed virtual switch spans across multiple hypervisors under centralized cluster management", is_correct: true },
+      { text: "A standard vSwitch routes Layer 3 IP packets, whereas a distributed switch is limited to Layer 1 bridging", is_correct: false },
+      { text: "A distributed switch requires dedicated physical Coaxial cabling between host servers", is_correct: false },
+      { text: "A standard vSwitch operates without MAC address learning tables", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which EtherChannel load-balancing hash method ('port-channel load-balance') is most effective when multiple servers communicating with diverse clients on different IP subnets send traffic across an uplink bundle?",
+    explanation: "When traffic crosses subnets through a default gateway, destination MAC is always the router MAC. Therefore MAC-based hashing fails to distribute across bundle links. Hashing on both source and destination IP (`src-dst-ip`) provides the highest entropy and even distribution.",
+    domain: "switching",
+    subtopic: "EtherChannel",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "src-dst-ip (source and destination IP address hash)", is_correct: true },
+      { text: "src-mac (source MAC address hash only)", is_correct: false },
+      { text: "dst-mac (destination MAC address hash only)", is_correct: false },
+      { text: "src-port (source TCP/UDP port number hash only)", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // IP_ROUTING (11 questions)
+  // ==========================================
+  {
+    stem: "In OSPFv2, in which neighbor state do two adjacent routers exchange Database Description (DBD) packets to compare their Link-State Database contents?",
+    explanation: "In the ExStart state, master/slave roles and initial DBD sequence numbers are negotiated. In the Exchange state, routers send DBD packets describing the headers of every LSA in their LSDB.",
+    domain: "ip_routing",
+    subtopic: "OSPF Neighbor States",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "ExStart and Exchange", is_correct: true },
+      { text: "Init and 2-Way", is_correct: false },
+      { text: "Loading and Full", is_correct: false },
+      { text: "Attempt and Down", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does it indicate if two OSPF neighbor routers are stuck in the '2-Way' state on a multi-access Ethernet network segment?",
+    explanation: "On broadcast and NBMA networks, full adjacencies are formed only between DROthers and the DR/BDR. Routers that are both DROther remain permanently in the 2-Way state with each other, which is healthy, expected behavior.",
+    domain: "ip_routing",
+    subtopic: "OSPF Neighbor States",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "It is normal operational behavior between two non-DR/non-BDR (DROther) routers that do not form full adjacencies with each other", is_correct: true },
+      { text: "There is an MTU mismatch preventing DBD packet exchange", is_correct: false },
+      { text: "The OSPF area ID is misconfigured on one of the routers", is_correct: false },
+      { text: "OSPF authentication failed during initial hello exchange", is_correct: false }
+    ]
+  },
+  {
+    stem: "What formula does Cisco IOS use by default to calculate the OSPF cost metric of an interface, based on the reference bandwidth of 100 Mbps?",
+    explanation: "By default, Cisco IOS calculates OSPF interface cost as (Reference Bandwidth / Interface Bandwidth), where Reference Bandwidth defaults to 10^8 bps (100 Mbps). A 100 Mbps link has cost 1; faster links also calculate as cost 1 unless `auto-cost reference-bandwidth` is tuned.",
+    domain: "ip_routing",
+    subtopic: "OSPF Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Cost = 100 Mbps / Interface Bandwidth (bps)", is_correct: true },
+      { text: "Cost = 1000 Mbps * Delay / Bandwidth", is_correct: false },
+      { text: "Cost = Hop Count * 10", is_correct: false },
+      { text: "Cost = Bandwidth + Reliability + MTU", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is it recommended to configure 'auto-cost reference-bandwidth 1000000' (or higher) in modern enterprise networks running OSPF?",
+    explanation: "Because the default reference bandwidth is 100 Mbps, any interface of 100 Mbps, 1 Gbps, 10 Gbps, or 40 Gbps all evaluate to Cost = 1. Raising reference bandwidth enables differentiated metric cost for high-speed links.",
+    domain: "ip_routing",
+    subtopic: "OSPF Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "To allow OSPF to assign distinct, accurate cost metrics to interfaces faster than 100 Mbps, such as 1 Gbps, 10 Gbps, and 100 Gbps links", is_correct: true },
+      { text: "To decrease OSPF SPF computation time from 5 seconds to 1 second", is_correct: false },
+      { text: "To force OSPF to calculate route costs based on packet latency instead of bandwidth", is_correct: false },
+      { text: "To enable OSPFv3 dual-stack support on Gigabit Ethernet subinterfaces", is_correct: false }
+    ]
+  },
+  {
+    stem: "Unlike OSPFv2 which uses IPv4 subnet interfaces to establish adjacencies, how does OSPFv3 establish neighbor adjacencies across point-to-point and broadcast links?",
+    explanation: "OSPFv3 runs per-link rather than per-subnet and forms neighbor adjacencies using IPv6 Link-Local addresses (FE80::/10). Next-hop addresses in OSPFv3 routes also point to Link-Local addresses.",
+    domain: "ip_routing",
+    subtopic: "OSPFv3",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Using IPv6 Link-Local addresses (FE80::/10)", is_correct: true },
+      { text: "Using IPv6 Global Unicast addresses (2000::/3)", is_correct: false },
+      { text: "Using IPv6 Unique Local addresses (FD00::/8)", is_correct: false },
+      { text: "Using MAC-in-IPv6 encapsulated multicast tunnels", is_correct: false }
+    ]
+  },
+  {
+    stem: "What routing logic does an IP router always use to choose between two or more matching routes in its routing table when forwarding a destination packet?",
+    explanation: "The Longest Prefix Match rule always takes precedence in forwarding decisions. A /28 route will always be chosen over a /24 route for a matching IP, irrespective of administrative distance or protocol metric.",
+    domain: "ip_routing",
+    subtopic: "Routing Concepts",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Longest Prefix Match (the route with the most specific subnet mask / highest prefix length)", is_correct: true },
+      { text: "Lowest Administrative Distance regardless of prefix length", is_correct: false },
+      { text: "Lowest routing metric regardless of prefix length", is_correct: false },
+      { text: "The route that was entered or learned most recently", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is Administrative Distance (AD) in Cisco routing logic, and when is it evaluated?",
+    explanation: "Administrative Distance ranks the believability of routing information sources. When two different protocols (or a static route and a dynamic protocol) provide routes to the exact same prefix, the route with the lowest AD is installed in the routing table.",
+    domain: "ip_routing",
+    subtopic: "Routing Concepts",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It is a measure of route trustworthiness used to select the best path when the same prefix is learned via different routing protocols", is_correct: true },
+      { text: "It is the metric calculated by Dijkstra's algorithm to determine the shortest path within an OSPF area", is_correct: false },
+      { text: "It is the time delay in milliseconds required for a routing protocol update to propagate across an AS", is_correct: false },
+      { text: "It determines whether a packet should be switched via hardware CEF or punted to the CPU", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the Administrative Distance of a directly connected network versus a standard next-hop static route in Cisco IOS?",
+    explanation: "In Cisco IOS, directly connected interfaces have an Administrative Distance of 0. Standard static routes have an Administrative Distance of 1.",
+    domain: "ip_routing",
+    subtopic: "Static Routing",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Connected = 0, Static route = 1", is_correct: true },
+      { text: "Connected = 1, Static route = 0", is_correct: false },
+      { text: "Connected = 1, Static route = 90", is_correct: false },
+      { text: "Connected = 0, Static route = 110", is_correct: false }
+    ]
+  },
+  {
+    stem: "A router learns the prefix 192.168.10.0/24 from both EIGRP Internal (AD 90) and OSPF (AD 110). Which route is installed into the routing table, and why?",
+    explanation: "Because both protocols offer the identical prefix (192.168.10.0/24), the router compares Administrative Distances. EIGRP (AD 90) is preferred over OSPF (AD 110) and is installed in the routing table.",
+    domain: "ip_routing",
+    subtopic: "Administrative Distance",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "The EIGRP route, because EIGRP has a lower Administrative Distance than OSPF", is_correct: true },
+      { text: "The OSPF route, because link-state protocols always supersede distance-vector protocols", is_correct: false },
+      { text: "Both routes load-balance 50/50 using Equal-Cost Multi-Path (ECMP)", is_correct: false },
+      { text: "The route with the lowest bandwidth-delay product metric regardless of AD", is_correct: false }
+    ]
+  },
+  {
+    stem: "When configuring Router-on-a-Stick for inter-VLAN routing, what must be configured on each router subinterface to match the corresponding switch trunk VLAN?",
+    explanation: "On a router physical interface, subinterfaces are created (e.g., `interface G0/0.10`). Each subinterface requires `encapsulation dot1q <vlan-id>` to tag/untag 802.1Q frames for that VLAN, plus an IP address serving as the default gateway.",
+    domain: "ip_routing",
+    subtopic: "Inter-VLAN Routing",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "encapsulation dot1q <vlan-id> followed by an IP address in that VLAN's subnet", is_correct: true },
+      { text: "switchport access vlan <vlan-id> and no shutdown", is_correct: false },
+      { text: "ip nat inside and ip virtual-reassembly", is_correct: false },
+      { text: "vlan tag native and ip route 0.0.0.0 0.0.0.0", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the most optimal single summary route that encompasses the four subnets 172.16.8.0/24, 172.16.9.0/24, 172.16.10.0/24, and 172.16.11.0/24?",
+    explanation: "Binary breakdown of third octet: 8 (00001000), 9 (00001001), 10 (00001010), 11 (00001011). The first 6 bits of the 3rd octet match (000010xx). 16 + 6 = 22 bits. The base network is 172.16.8.0 with mask 255.255.252.0 (/22).",
+    domain: "ip_routing",
+    subtopic: "Route Summarization",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "172.16.8.0/22", is_correct: true },
+      { text: "172.16.8.0/21", is_correct: false },
+      { text: "172.16.0.0/20", is_correct: false },
+      { text: "172.16.8.0/23", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // SERVICES_SECURITY (11 questions)
+  // ==========================================
+  {
+    stem: "What is the four-message sequence exchanged between a client and a DHCP server to dynamically obtain an IPv4 configuration?",
+    explanation: "IPv4 DHCP follows the DORA sequence: Discover (broadcast by client), Offer (unicast/broadcast by server), Request (broadcast by client), Acknowledge (unicast/broadcast by server).",
+    domain: "services_security",
+    subtopic: "DHCP Operations",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "DHCPDISCOVER, DHCPOFFER, DHCPREQUEST, DHCPACK", is_correct: true },
+      { text: "DHCPSOLICIT, DHCPADVERTISE, DHCPCONFIRM, DHCPREPLY", is_correct: false },
+      { text: "DHCPINIT, DHCPOFFER, DHCPACCEPT, DHCPCONFIRM", is_correct: false },
+      { text: "DHCPQUERY, DHCPRESPONSE, DHCPBIND, DHCPACK", is_correct: false }
+    ]
+  },
+  {
+    stem: "When a router receives a client's DHCPDISCOVER broadcast on an interface configured with 'ip helper-address 10.1.100.5', what action does the router perform?",
+    explanation: "`ip helper-address` enables DHCP relay. The router intercepts broadcast DHCP packets (UDP port 67/68), replaces the broadcast destination with the helper unicast address, fills the GIADDR field with its interface IP, and unicasts it to the DHCP server.",
+    domain: "services_security",
+    subtopic: "DHCP and Helper Address",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It converts the Layer 2/Layer 3 broadcast into a unicast UDP packet destined to 10.1.100.5 on UDP port 67", is_correct: true },
+      { text: "It intercepts the request, assigns an IP from its own local pool, and responds directly to the client", is_correct: false },
+      { text: "It mirrors the packet to a SPAN monitoring session on VLAN 1", is_correct: false },
+      { text: "It rejects the packet unless the client provides an 802.1X certificate", is_correct: false }
+    ]
+  },
+  {
+    stem: "What security threat does IPv6 Router Advertisement (RA) Guard mitigate on a Layer 2 switch access port?",
+    explanation: "IPv6 RA Guard analyzes incoming ICMPv6 Router Advertisement (Type 134) packets on switch access ports. It blocks unauthorized RAs from rogue routers or compromised hosts attempting to alter client routing tables or conduct man-in-the-middle attacks.",
+    domain: "services_security",
+    subtopic: "IPv6 RA Guard",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Rogue routers sending unauthorized ICMPv6 Type 134 Router Advertisements that cause clients to redirect traffic or autoconfigure bogus IPv6 gateways", is_correct: true },
+      { text: "Spoofed IPv6 Neighbor Solicitation packets that poison the switch MAC table", is_correct: false },
+      { text: "Denial-of-Service attacks flooding the network with DHCPv6 Solicit messages", is_correct: false },
+      { text: "Unauthorized access points transmitting beacon frames on 5 GHz channels", is_correct: false }
+    ]
+  },
+  {
+    stem: "In Network Time Protocol (NTP) hierarchy, what does a Stratum level of 1 indicate?",
+    explanation: "Stratum 0 devices are the physical reference clocks (atomic clock, GPS). Stratum 1 servers are directly connected to Stratum 0 devices. Stratum 2 servers sync from Stratum 1 servers, and so forth.",
+    domain: "services_security",
+    subtopic: "NTP Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A time server that is directly attached to a reference clock, such as an atomic clock or GPS receiver", is_correct: true },
+      { text: "A primary reference clock source hardware itself (such as a GPS satellite)", is_correct: false },
+      { text: "A client workstation that syncs its clock from an enterprise internal NTP server", is_correct: false },
+      { text: "An NTP peer that is currently unsynchronized and unreachable", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary difference between Dynamic NAT and Port Address Translation (PAT / NAT Overload)?",
+    explanation: "Dynamic NAT maps internal hosts to a pool of external addresses on a 1:1 basis until the pool is exhausted. PAT (NAT Overload) allows thousands of internal hosts to share one (or few) public IPs by tracking source TCP/UDP port numbers.",
+    domain: "services_security",
+    subtopic: "Network Address Translation",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Dynamic NAT maps private IPs to a pool of public IPs on a one-to-one basis, whereas PAT maps many private IPs to a single public IP using unique Layer 4 source port numbers", is_correct: true },
+      { text: "Dynamic NAT translates IPv6 to IPv4, whereas PAT translates IPv4 to MAC addresses", is_correct: false },
+      { text: "Dynamic NAT requires an external DNS server, whereas PAT performs internal DNS lookup", is_correct: false },
+      { text: "Dynamic NAT operates at Layer 3, whereas PAT operates exclusively at Layer 2", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the default TCP and UDP port used by Domain Name System (DNS) for standard queries and zone transfers?",
+    explanation: "DNS uses port 53 (UDP for standard client queries and small responses, TCP for zone transfers and responses exceeding 512 bytes).",
+    domain: "services_security",
+    subtopic: "Network Services",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Port 53", is_correct: true },
+      { text: "Port 67", is_correct: false },
+      { text: "Port 123", is_correct: false },
+      { text: "Port 161", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS prerequisite commands must be configured on a router before the 'crypto key generate rsa' command can successfully create RSA keys for SSH?",
+    explanation: "Cisco IOS requires both a valid hostname (other than the default 'Router' or 'Switch') and an IP domain name (`ip domain-name`) to create the Fully Qualified Domain Name (FQDN) used as the key pair's label.",
+    domain: "services_security",
+    subtopic: "SSH Configuration",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "A non-default hostname and an IP domain name ('ip domain-name <name>')", is_correct: true },
+      { text: "An enable secret password and 'line vty 0 4 transport input telnet'", is_correct: false },
+      { text: "A static default route and 'service password-encryption'", is_correct: false },
+      { text: "An active NTP clock synchronization and an SVI IP address", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is SCP or SFTP preferred over traditional TFTP or FTP for transferring Cisco IOS configuration and image files across an enterprise network?",
+    explanation: "TFTP and FTP transmit credentials and data in cleartext. SCP (Secure Copy) and SFTP (Secure FTP) run over SSH (TCP port 22), providing strong cryptographic privacy and integrity protection.",
+    domain: "services_security",
+    subtopic: "Secure File Transfer",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "SCP and SFTP encrypt both user authentication credentials and data payloads using SSH transport", is_correct: true },
+      { text: "TFTP requires complex Kerberos certificate management which slows transfer speeds", is_correct: false },
+      { text: "FTP lacks support for files larger than 10 Megabytes", is_correct: false },
+      { text: "SCP compresses data using proprietary Cisco HDLC encapsulation", is_correct: false }
+    ]
+  },
+  {
+    stem: "Where should standard and extended IPv4 Access Control Lists (ACLs) be placed in a network according to Cisco best-practice guidelines?",
+    explanation: "Extended ACLs filter by source, destination, and port, so placing them close to the source eliminates unwanted traffic early. Standard ACLs only filter by source IP; placing them near the source might inadvertently block valid traffic to other destinations, so they belong near the destination.",
+    domain: "services_security",
+    subtopic: "Access Control Lists",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Extended ACLs as close to the traffic source as possible; Standard ACLs as close to the traffic destination as possible", is_correct: true },
+      { text: "Standard ACLs as close to the source as possible; Extended ACLs as close to the destination as possible", is_correct: false },
+      { text: "Both Standard and Extended ACLs must be placed exclusively on the core switch backplane", is_correct: false },
+      { text: "Both ACL types should only be applied outbound on the final edge WAN interface", is_correct: false }
+    ]
+  },
+  {
+    stem: "What is the primary difference in Cisco IOS between the 'enable password' command and the 'enable secret' command?",
+    explanation: "`enable password` uses weak Cisco Type 7 encryption (or plaintext), easily reversible by online crackers. `enable secret` uses salted cryptographic hashes (Type 5 MD5, Type 8 SHA-256, or Type 9 scrypt) and takes precedence.",
+    domain: "services_security",
+    subtopic: "Device Hardening",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "enable secret encrypts the password with a strong cryptographic hash (e.g., MD5 or scrypt), whereas enable password uses weak Type 7 or cleartext", is_correct: true },
+      { text: "enable password grants privilege level 15, while enable secret grants privilege level 1", is_correct: false },
+      { text: "enable secret is used only for console port logins, while enable password is for VTY lines", is_correct: false },
+      { text: "enable secret expires automatically after 30 days", is_correct: false }
+    ]
+  },
+  {
+    stem: "Which Cisco IOS severity level corresponds to 'Warnings' in standard syslog messaging, and what is its numeric value?",
+    explanation: "Cisco syslog severity levels run 0 to 7: 0=Emergency, 1=Alert, 2=Critical, 3=Error, 4=Warning, 5=Notification, 6=Informational, 7=Debugging. Mnemonics: 'Every Ally Can Ease Warn Not If Doubted'.",
+    domain: "services_security",
+    subtopic: "Syslog Operations",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Level 4 (Warnings)", is_correct: true },
+      { text: "Level 1 (Alerts)", is_correct: false },
+      { text: "Level 3 (Errors)", is_correct: false },
+      { text: "Level 6 (Informational)", is_correct: false }
+    ]
+  },
+
+  // ==========================================
+  // AI_OPS (5 questions)
+  // ==========================================
+  {
+    stem: "In Software-Defined Networking (SDN), what is the difference between Southbound APIs and Northbound APIs on a network controller?",
+    explanation: "Southbound APIs allow the SDN controller to program and monitor the underlying physical and virtual network data plane devices. Northbound APIs provide RESTful interfaces for external applications, DevOps scripts, and policy orchestrators.",
+    domain: "ai_ops",
+    subtopic: "Controller-Based Management",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "Southbound APIs (e.g., OpenFlow, NETCONF) communicate between the controller and network devices; Northbound APIs (e.g., REST) communicate between the controller and business applications/orchestrators", is_correct: true },
+      { text: "Southbound APIs connect to public cloud providers; Northbound APIs manage local hardware ASICs", is_correct: false },
+      { text: "Southbound APIs provide graphical web dashboards; Northbound APIs stream telemetry to time-series databases", is_correct: false },
+      { text: "Southbound APIs operate over UDP; Northbound APIs operate exclusively over Coaxial cables", is_correct: false }
+    ]
+  },
+  {
+    stem: "What does the principle of 'Idempotence' mean when executing Ansible playbooks or Terraform configurations on network devices?",
+    explanation: "Idempotence is the property where executing an automation task repeatedly produces the exact same end state as executing it once, only applying changes when the current state diverges from the desired state.",
+    domain: "ai_ops",
+    subtopic: "Infrastructure as Code",
+    difficulty: "hard",
+    source: "ai-generated",
+    choices: [
+      { text: "Applying the configuration multiple times results in the same intended system state without making unintended changes or duplicate entries", is_correct: true },
+      { text: "The automation script automatically rolls back to factory default if any device fails to reboot within 60 seconds", is_correct: false },
+      { text: "The configuration compiles directly into hardware microcode on router network interface cards", is_correct: false },
+      { text: "All configuration variables are encrypted using asymmetric RSA key pairs before execution", is_correct: false }
+    ]
+  },
+  {
+    stem: "In a cloud-managed network architecture (such as Cisco Meraki), where does the Management and Control plane reside versus the Data (Forwarding) plane?",
+    explanation: "In cloud-managed networks, configuration, monitoring, and AI analytics (management and control) are hosted centrally in the cloud. Local hardware switches, APs, and firewalls retain the data plane and forward user packets locally at line rate.",
+    domain: "ai_ops",
+    subtopic: "Cloud-Managed Networking",
+    difficulty: "easy",
+    source: "ai-generated",
+    choices: [
+      { text: "Management and Control planes reside centrally in the cloud vendor's data center; Data plane forwarding resides locally on physical devices at the customer site", is_correct: true },
+      { text: "All three planes (Management, Control, and Data) reside exclusively inside the public cloud", is_correct: false },
+      { text: "Data plane resides in the cloud, while Management plane resides on local hardware switches", is_correct: false },
+      { text: "Management plane resides on a dedicated on-premise hardware appliance in each wiring closet", is_correct: false }
+    ]
+  },
+  {
+    stem: "Why is Git-based version control considered essential in modern NetDevOps and Infrastructure as Code (IaC) workflows?",
+    explanation: "Storing network configurations and automation scripts as code in Git enables change tracking, rollback capabilities, collaborative peer reviews (PRs), and automated testing pipelines (CI/CD) before pushing changes to production.",
+    domain: "ai_ops",
+    subtopic: "Network Automation Architecture",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It provides an auditable history of network configuration changes, enables peer code reviews via pull requests, and supports automated CI/CD validation testing before deployment", is_correct: true },
+      { text: "It eliminates the need for dynamic routing protocols by computing static routing tables in software", is_correct: false },
+      { text: "It replaces hardware switch forwarding tables with distributed hash tables stored on GitHub", is_correct: false },
+      { text: "It automatically converts IPv4 routing configurations to IPv6 without manual intervention", is_correct: false }
+    ]
+  },
+  {
+    stem: "When using a Large Language Model (LLM) to generate Cisco IOS ACL configuration snippets, why is 'few-shot prompting' (providing 2-3 examples of input criteria and desired syntax) more effective than 'zero-shot prompting'?",
+    explanation: "Few-shot prompting provides contextual demonstration pairs within the prompt. This guides the generative model to conform to the exact required syntax, command structure, and style rules, minimizing hallucinations.",
+    domain: "ai_ops",
+    subtopic: "Prompt Engineering",
+    difficulty: "medium",
+    source: "ai-generated",
+    choices: [
+      { text: "It establishes the precise syntax format, naming conventions, and constraints for the model to follow, dramatically reducing hallucinations and syntax errors", is_correct: true },
+      { text: "It permanently fine-tunes the underlying model weights on the remote server", is_correct: false },
+      { text: "It bypasses the LLM token context window limit by compressing the model weights", is_correct: false },
+      { text: "It forces the LLM to execute the configuration directly on the production router via SSH", is_correct: false }
+    ]
+  }
+];
+
+const batchPath = path.join(__dirname, 'batches', 'seed-26-volume.json');
+fs.writeFileSync(batchPath, JSON.stringify(questions, null, 2) + '\n');
+console.log(`Generated ${questions.length} questions in ${batchPath}`);

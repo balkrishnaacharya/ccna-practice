@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { getVersion } from "@tauri-apps/api/app";
 
-const CURRENT_VERSION = "0.3.0";
 const GITHUB_REPO = "balkrishnaacharya/ccna-practice";
 
 export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
   const [status, setStatus] = useState("idle"); // idle | checking | available | up-to-date | downloading | error
+  const [currentVersion, setCurrentVersion] = useState("0.3.0"); // fallback; overwritten by Tauri on mount
   const [updateInfo, setUpdateInfo] = useState(null);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
@@ -13,6 +14,11 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
   const isAndroid = typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
   const hasAutoCheckedRef = useRef(false);
   const activeUpdateRef = useRef(null);
+
+  // Resolve the installed version from Tauri at runtime so it never drifts from tauri.conf.json
+  useEffect(() => {
+    getVersion().then(setCurrentVersion).catch(() => {/* keep fallback */});
+  }, []);
 
   // Check for updates
   const checkForUpdates = useCallback(async (isManual = false) => {
@@ -42,7 +48,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
           (a) => a.name.endsWith(".apk") && !a.name.includes("unsigned")
         );
 
-        if (cleanTag && cleanTag !== CURRENT_VERSION && isVersionGreater(cleanTag, CURRENT_VERSION)) {
+        if (cleanTag && cleanTag !== currentVersion && isVersionGreater(cleanTag, currentVersion)) {
           setUpdateInfo({
             version: cleanTag,
             body: data.body || "A new signed release is available.",
@@ -87,7 +93,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
           if (response.ok) {
             const data = await response.json();
             const cleanTag = (data.tag_name || "").replace(/^v/, "");
-            if (cleanTag && isVersionGreater(cleanTag, CURRENT_VERSION)) {
+            if (cleanTag && isVersionGreater(cleanTag, currentVersion)) {
               setUpdateInfo({
                 version: cleanTag,
                 body: data.body || "Update available on GitHub.",
@@ -108,15 +114,23 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
       setStatus("error");
       setErrorMessage(err.message || "Failed to connect to update service.");
     }
-  }, [isAndroid, isExamActive]);
+  }, [isAndroid, isExamActive, currentVersion]);
 
   // Execute update installation
   const applyUpdate = useCallback(async () => {
     if (!updateInfo) return;
 
     if (updateInfo.isAndroid && updateInfo.downloadUrl) {
-      // Android: open APK download in system browser/downloader
-      window.open(updateInfo.downloadUrl, "_blank");
+      // Android: open APK download in system browser/downloader.
+      // Tauri's webview blocks window.open for external URLs, so use the
+      // shell plugin (registered in lib.rs) which hands the URL to the OS.
+      try {
+        const { open } = await import("@tauri-apps/plugin-shell");
+        await open(updateInfo.downloadUrl);
+      } catch (err) {
+        console.warn("Shell open unavailable, falling back to window.open:", err);
+        window.open(updateInfo.downloadUrl, "_blank");
+      }
       setShowModal(false);
       return;
     }
@@ -151,7 +165,15 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
         setErrorMessage(err.message || "Installation failed.");
       }
     } else if (updateInfo.downloadUrl) {
-      window.open(updateInfo.downloadUrl, "_blank");
+      // Desktop fallback path (no Tauri updater manifest): hand the release
+      // URL to the OS browser. window.open is a no-op inside the Tauri webview.
+      try {
+        const { open } = await import("@tauri-apps/plugin-shell");
+        await open(updateInfo.downloadUrl);
+      } catch (err) {
+        console.warn("Shell open unavailable, falling back to window.open:", err);
+        window.open(updateInfo.downloadUrl, "_blank");
+      }
       setShowModal(false);
     }
   }, [updateInfo]);
@@ -170,7 +192,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
 
   return {
     status,
-    currentVersion: CURRENT_VERSION,
+    currentVersion: currentVersion,
     updateInfo,
     downloadProgress,
     errorMessage,

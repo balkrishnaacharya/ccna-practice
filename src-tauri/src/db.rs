@@ -1,4 +1,4 @@
-use rusqlite::{Connection, Result};
+use rusqlite::{params, Connection, Result};
 use std::path::Path;
 use std::sync::Mutex;
 
@@ -9,6 +9,7 @@ pub fn init(path: &Path) -> Result<Connection> {
     conn.execute_batch(
         "
         PRAGMA journal_mode=WAL;
+        PRAGMA foreign_keys = ON;
 
         CREATE TABLE IF NOT EXISTS questions (
             id INTEGER PRIMARY KEY,
@@ -145,6 +146,25 @@ pub fn init(path: &Path) -> Result<Connection> {
          ON questions(content_hash) WHERE content_hash IS NOT NULL",
         [],
     )?;
+
+    // --- Spaced repetition (SM-2) columns on user_question_stats ---
+    for (col, ddl) in [
+        ("ease_factor", "ALTER TABLE user_question_stats ADD COLUMN ease_factor REAL NOT NULL DEFAULT 2.5"),
+        ("interval_days", "ALTER TABLE user_question_stats ADD COLUMN interval_days INTEGER NOT NULL DEFAULT 0"),
+        ("repetitions", "ALTER TABLE user_question_stats ADD COLUMN repetitions INTEGER NOT NULL DEFAULT 0"),
+        ("next_review_at", "ALTER TABLE user_question_stats ADD COLUMN next_review_at INTEGER NOT NULL DEFAULT 0"),
+    ] {
+        let exists: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM pragma_table_info('user_question_stats') WHERE name=?1",
+                params![col],
+                |r| r.get(0),
+            )
+            .unwrap_or(0);
+        if exists == 0 {
+            conn.execute(ddl, []).map_err(|e| e)?;
+        }
+    }
 
     Ok(conn)
 }

@@ -144,7 +144,7 @@ export default function App() {
           </Link>
 
           {/* Desktop Navigation Links (subtle pill design) */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             {headerLinks.map((link) => {
               const isActive = location.pathname === link.to;
               return (
@@ -165,8 +165,20 @@ export default function App() {
           </div>
         </div>
 
-        {/* Right Candidate Badge */}
-        <div className="flex items-center gap-3">
+        {/* Right Header Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            to="/notes"
+            onClick={(event) => guardNavigation(event, "/notes")}
+            className="flex items-center gap-1.5 px-3 py-1 bg-dark-card hover:bg-dark-surface border border-dark-border hover:border-gold/30 rounded-full text-xs font-medium text-paper-muted hover:text-gold transition-colors duration-150"
+            title="Study Notes & Subnet Calculator"
+          >
+            <svg className="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+            <span className="inline">Notes</span>
+          </Link>
+
           <Link
             to="/settings"
             onClick={(event) => guardNavigation(event, "/settings")}
@@ -174,7 +186,7 @@ export default function App() {
             title="Edit local candidate profile"
           >
             <span className="w-2 h-2 rounded-full bg-sage shadow-sage-glow"></span>
-            <span className="truncate max-w-[140px]">
+            <span className="truncate max-w-[120px] sm:max-w-[140px]">
               {profileName || "Candidate Profile"}
             </span>
           </Link>
@@ -183,10 +195,10 @@ export default function App() {
 
       {/* Main Container */}
       <main
-        className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 sm:pb-32"
+        className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-32"
         style={{
           paddingTop: "1.5rem",
-          paddingBottom: "calc(var(--safe-bottom) + 6.5rem)",
+          paddingBottom: "calc(var(--safe-bottom) + 8rem)",
         }}
       >
         <DirectionalRouteWrapper>

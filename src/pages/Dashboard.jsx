@@ -12,6 +12,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [stats, setStats] = useState(null);
   const [subtopics, setSubtopics] = useState([]);
   const [flagCount, setFlagCount] = useState(0);
+  const [reviewDue, setReviewDue] = useState(0);
   const navigate = useNavigate();
 
   const containerRef = useRef(null);
@@ -25,6 +26,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       .catch(console.error);
     invoke("get_flags")
       .then((flags) => setFlagCount(flags ? flags.length : 0))
+      .catch(console.error);
+    invoke("get_review_due_count")
+      .then((n) => setReviewDue(n || 0))
       .catch(console.error);
   }, []);
 
@@ -144,6 +148,12 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             >
               Drill a Topic
             </Link>
+            <Link
+              to="/notes"
+              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-semibold tracking-wider uppercase rounded-full border border-dark-border transition-colors duration-150"
+            >
+              Subnetting & Notes
+            </Link>
           </div>
         </div>
       </div>
@@ -234,7 +244,10 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
         {/* Quick Launch Cards (1 col on desktop) */}
         <div className="space-y-4">
-          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+          <div
+            data-tour="weak-areas"
+            className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3"
+          >
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
                 Weak Areas
@@ -314,6 +327,50 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
               className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-peach bg-peach/10 hover:bg-peach/20 border border-peach/30 rounded-full transition-colors duration-150"
             >
               Open Review Queue →
+            </Link>
+          </div>
+
+          <div
+            data-tour="spaced-review"
+            className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3"
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-semibold text-paper">
+                Spaced Review
+              </h3>
+              <span className="text-xs font-mono font-semibold text-gold bg-gold/15 px-2.5 py-0.5 rounded-full border border-gold/30">
+                {reviewDue} due
+              </span>
+            </div>
+            <p className="text-xs text-paper-muted leading-relaxed font-sans">
+              Questions scheduled by SM-2 spaced repetition. Drill the ones due
+              today to lock in long-term retention.
+            </p>
+            <Link
+              to="/quiz?mode=review"
+              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
+            >
+              Start Review →
+            </Link>
+          </div>
+
+          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-semibold text-paper">
+                Study Notes & Calculators
+              </h3>
+              <span className="text-xs font-mono font-semibold text-sage-light bg-sage/15 px-2.5 py-0.5 rounded-full border border-sage/30">
+                IPv4 Tool
+              </span>
+            </div>
+            <p className="text-xs text-paper-muted leading-relaxed font-sans">
+              Interactive IPv4 subnetting calculators, wildcard mask converter, and CIDR prefix cheat sheet.
+            </p>
+            <Link
+              to="/notes"
+              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-sage-light bg-sage/10 hover:bg-sage/20 border border-sage/30 rounded-full transition-colors duration-150"
+            >
+              Open Subnet Calculator →
             </Link>
           </div>
 
