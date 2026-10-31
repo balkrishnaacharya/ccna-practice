@@ -8,16 +8,16 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 
 ---
 
-## Downloads (Latest Release: [v0.3.0](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.3.0))
+## Downloads (Latest Release: [v0.4.0](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.4.0))
 
 | Platform | Format | Direct Download |
 |---|---|---|
-| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.3.0-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/ccna-practice-v0.3.0-android-aarch64.apk) |
-| **Linux** | AppImage | [CCNA.Practice_0.3.0_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_amd64.AppImage) |
-| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.3.0_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_amd64.deb) |
-| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.3.0-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice-0.3.0-1.x86_64.rpm) |
-| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.3.0_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_x64-setup.exe) |
-| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.3.0_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.3.0/CCNA.Practice_0.3.0_x64_en-US.msi) |
+| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.4.0-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/ccna-practice-v0.4.0-android-aarch64.apk) |
+| **Linux** | AppImage | [CCNA.Practice_0.4.0_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/CCNA.Practice_0.4.0_amd64.AppImage) |
+| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.4.0_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/CCNA.Practice_0.4.0_amd64.deb) |
+| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.4.0-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/CCNA.Practice-0.4.0-1.x86_64.rpm) |
+| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.4.0_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/CCNA.Practice_0.4.0_x64-setup.exe) |
+| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.4.0_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.4.0/CCNA.Practice_0.4.0_x64_en-US.msi) |
 
 ---
 

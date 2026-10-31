@@ -185,7 +185,7 @@ export default function Settings({ onProfileChange, updater }) {
             </p>
           </div>
           <span className="text-xs font-mono text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/30">
-            Version {updater?.currentVersion || "0.3.0"}
+            Version {updater?.currentVersion || "0.4.0"}
           </span>
         </div>
 

@@ -1,6 +1,6 @@
 [package]
 name = "ccna-practice"
-version = "0.3.0"
+version = "0.4.0"
 description = "CCNA 2.0 practice app"
 edition = "2021"
 
