@@ -9,6 +9,11 @@ const validDomains = new Set([
 ]);
 const validDifficulties = new Set(["easy", "medium", "hard"]);
 
+/**
+ * Validates a JSON file containing questions.
+ *
+ * @param {string} filepath - The path to the JSON file to validate.
+ */
 function validateFile(filepath) {
   const content = fs.readFileSync(filepath, "utf8");
   let questions;
