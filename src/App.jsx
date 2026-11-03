@@ -1,16 +1,16 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { invoke } from "@tauri-apps/api/core";
 import Dashboard from "./pages/Dashboard";
-import Quiz from "./pages/Quiz";
-import Exam from "./pages/Exam";
-import Review from "./pages/Review";
-import Settings from "./pages/Settings";
-import ExamHistory from "./pages/ExamHistory";
-import SessionReview from "./pages/SessionReview";
-import Notes from "./pages/Notes";
-import PracticalExam from "./pages/PracticalExam";
-import Topics from "./pages/Topics";
+const Quiz = lazy(() => import("./pages/Quiz"));
+const Exam = lazy(() => import("./pages/Exam"));
+const Review = lazy(() => import("./pages/Review"));
+const Settings = lazy(() => import("./pages/Settings"));
+const ExamHistory = lazy(() => import("./pages/ExamHistory"));
+const SessionReview = lazy(() => import("./pages/SessionReview"));
+const Notes = lazy(() => import("./pages/Notes"));
+const PracticalExam = lazy(() => import("./pages/PracticalExam"));
+const Topics = lazy(() => import("./pages/Topics"));
 import FloatingBottomNav from "./components/FloatingBottomNav";
 import ExamConfirmationModal from "./components/ExamConfirmationModal";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
@@ -19,6 +19,8 @@ import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
 import { useUpdater } from "./utils/useUpdater";
 import UpdateModal from "./components/UpdateModal";
 import { hasSeenTour, startTour } from "./utils/tourGuide";
+import ErrorBoundary from "./components/ErrorBoundary";
+import RouteLoader from "./components/RouteLoader";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -152,9 +154,9 @@ export default function App() {
                   key={link.to}
                   to={link.to}
                   onClick={(event) => guardNavigation(event, link.to)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium tracking-wide transition-all duration-150 ${
+                  className={`px-3 py-1.5 rounded-full text-sm transition-all duration-150 ${
                     isActive
-                      ? "bg-gold/15 text-gold border border-gold/30 font-semibold"
+                      ? "bg-gold/10 text-gold"
                       : "text-paper-muted hover:text-paper hover:bg-dark-surface"
                   }`}
                 >
@@ -165,77 +167,50 @@ export default function App() {
           </div>
         </div>
 
-        {/* Right Header Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            to="/notes"
-            onClick={(event) => guardNavigation(event, "/notes")}
-            className="flex items-center gap-1.5 px-3 py-1 bg-dark-card hover:bg-dark-surface border border-dark-border hover:border-gold/30 rounded-full text-xs font-medium text-paper-muted hover:text-gold transition-colors duration-150"
-            title="Study Notes & Subnet Calculator"
-          >
-            <svg className="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
-            <span className="inline">Notes</span>
-          </Link>
-
+        <div className="flex items-center gap-2 pb-2">
           <Link
             to="/settings"
             onClick={(event) => guardNavigation(event, "/settings")}
-            className="flex items-center gap-2 px-3 py-1 bg-dark-card hover:bg-dark-surface border border-dark-border rounded-full text-xs font-medium text-paper-muted hover:text-gold transition-colors duration-150"
-            title="Edit local candidate profile"
+            className="px-3 py-1.5 rounded-full text-sm text-paper-muted hover:text-paper hover:bg-dark-surface transition-all duration-150 hidden sm:block"
           >
-            <span className="w-2 h-2 rounded-full bg-sage shadow-sage-glow"></span>
-            <span className="truncate max-w-[120px] sm:max-w-[140px]">
-              {profileName || "Candidate Profile"}
-            </span>
+            Settings
           </Link>
+          {profileName && (
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-surface/60 border border-dark-border text-xs text-paper-dim">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+              {profileName}
+            </div>
+          )}
         </div>
       </nav>
 
-      {/* Main Container */}
-      <main
-        className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-32"
-        style={{
-          paddingTop: "1.5rem",
-          paddingBottom: "calc(var(--safe-bottom) + 8rem)",
-        }}
-      >
+      {/* Main Content */}
+      <main className="flex-1 w-full relative z-10">
         <DirectionalRouteWrapper>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Dashboard
-                  profileName={profileName}
-                  onOpenExamModal={() => setIsExamModalOpen(true)}
+          <ErrorBoundary>
+            <Suspense fallback={<RouteLoader />}>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/quiz" element={<Quiz />} />
+                <Route path="/exam" element={<Exam reportExamProgress={reportExamProgress} />} />
+                <Route path="/practical-exam" element={<PracticalExam />} />
+                <Route path="/topics" element={<Topics />} />
+                <Route path="/history" element={<ExamHistory />} />
+                <Route path="/history/:sessionId" element={<SessionReview />} />
+                <Route path="/notes" element={<Notes />} />
+                <Route path="/review" element={<Review />} />
+                <Route
+                  path="/settings"
+                  element={
+                    <Settings
+                      onProfileChange={setProfileName}
+                      updater={updater}
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/quiz"
-              element={<Quiz onOpenExamModal={() => setIsExamModalOpen(true)} />}
-            />
-            <Route
-              path="/exam"
-              element={<Exam onProgressChange={reportExamProgress} />}
-            />
-            <Route path="/practical-exam" element={<PracticalExam />} />
-            <Route path="/topics" element={<Topics />} />
-            <Route path="/history" element={<ExamHistory />} />
-            <Route path="/history/:sessionId" element={<SessionReview />} />
-            <Route path="/notes" element={<Notes />} />
-            <Route path="/review" element={<Review />} />
-            <Route
-              path="/settings"
-              element={
-                <Settings
-                  onProfileChange={setProfileName}
-                  updater={updater}
-                />
-              }
-            />
-          </Routes>
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </DirectionalRouteWrapper>
       </main>
 

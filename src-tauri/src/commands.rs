@@ -1515,7 +1515,11 @@ mod tests {
                 question_id INTEGER NOT NULL UNIQUE REFERENCES questions(id),
                 times_seen INTEGER NOT NULL DEFAULT 0,
                 times_correct INTEGER NOT NULL DEFAULT 0,
-                last_seen_at INTEGER NOT NULL DEFAULT 0
+                last_seen_at INTEGER NOT NULL DEFAULT 0,
+                ease_factor REAL NOT NULL DEFAULT 2.5,
+                interval_days INTEGER NOT NULL DEFAULT 0,
+                repetitions INTEGER NOT NULL DEFAULT 0,
+                next_review_at INTEGER NOT NULL DEFAULT 0
             );
             ",
         )

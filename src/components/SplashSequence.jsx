@@ -201,17 +201,17 @@ export default function SplashSequence({ onComplete }) {
         </div>
 
         {/* Captions */}
-        <div className="w-full flex items-center justify-between text-xs px-2 pt-4">
+        <div className="w-full flex items-center justify-center gap-3 text-xs px-4 pt-6">
           <p
             ref={capLeftRef}
-            className="font-serif italic text-sm tracking-wide text-paper"
+            className="font-serif italic text-sm tracking-wide text-paper whitespace-nowrap"
           >
             CCNA 2.0
           </p>
-          <div className="h-px flex-1 mx-3 bg-dark-border" />
+          <div className="h-px w-12 bg-dark-border" />
           <p
             ref={capRightRef}
-            className="text-[11px] uppercase tracking-widest text-paper-muted font-mono"
+            className="text-[11px] uppercase tracking-widest text-paper-muted font-mono whitespace-nowrap"
           >
             Blueprint 200-301
           </p>
