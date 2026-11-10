@@ -46,7 +46,6 @@ export default function Quiz() {
   const [hasPendingFlags, setHasPendingFlags] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [confidence, setConfidence] = useState(""); // "guessed" | "unsure" | "confident"
-  const [timerRemaining, setTimeRemaining] = useState(0);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
@@ -236,6 +235,7 @@ export default function Quiz() {
         payload: {
           question_id: question.id,
           choice_ids: selected,
+          confidence: confidence,
         },
       });
       setFeedback(result);

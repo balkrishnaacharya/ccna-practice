@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ExamConfirmationModal from "../components/ExamConfirmationModal";
 
-export default function Exam({ onProgressChange }) {
+export default function Exam({ reportExamProgress }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export default function Exam({ onProgressChange }) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-    onProgressChange?.(false, 0);
+    reportExamProgress?.(false, 0);
     navigate("/");
   }
 
@@ -152,8 +152,8 @@ export default function Exam({ onProgressChange }) {
   const unansweredCount = questions.length - answeredCount;
 
   useEffect(() => {
-    onProgressChange?.(hasStarted && !loading && !examResult && questions.length > 0, unansweredCount);
-  }, [onProgressChange, hasStarted, loading, examResult, questions.length, unansweredCount]);
+    reportExamProgress?.(hasStarted && !loading && !examResult && questions.length > 0, unansweredCount);
+  }, [reportExamProgress, hasStarted, loading, examResult, questions.length, unansweredCount]);
 
   if (loading) {
     return (

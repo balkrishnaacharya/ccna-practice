@@ -895,7 +895,7 @@ pub fn submit_answer_conn(payload: &SubmitPayload, conn: &Connection) -> Result<
         params![payload.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
     )
     .map_err(|e| e.to_string())?;
-    record_question_stat(conn, payload.question_id, is_correct, "unsure", now)?;
+    record_question_stat(conn, payload.question_id, is_correct, &payload.confidence, now)?";
 
     Ok(SubmitResult {
         correct: is_correct,
@@ -1090,7 +1090,7 @@ pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResu
             params![session_id, item.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
         )
         .map_err(|e| e.to_string())?;
-        record_question_stat(&conn, item.question_id, is_correct, "unsure", now)?;
+        record_question_stat(&conn, item.question_id, is_correct, &item.confidence, now)?";
 
         reviews.push(QuestionReviewResult {
             question_id: item.question_id,
