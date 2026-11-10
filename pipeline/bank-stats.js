@@ -158,7 +158,16 @@ function validate(q) {
   if (q.difficulty && !["easy", "medium", "hard"].includes(q.difficulty)) {
     return `unknown difficulty "${q.difficulty}"`;
   }
-  if (!Array.isArray(q.choices) || q.choices.length !== 4) return "needs exactly 4 choices";
+  // Multi-select questions: allow 2+ choices, single-select: exactly 4
+  const isMultiselect = q.multi_select === true || q.multi_select === 1;
+  if (isMultiselect) {
+    if (!Array.isArray(q.choices) || q.choices.length < 2) return "multi-select needs 2+ choices";
+    const correct = q.choices.filter((c) => c && c.is_correct === true).length;
+  // exhibit is optional metadata for CLI/topology exhibits
+    if (correct === 0) return "no correct choice in multi-select";
+  } else if (!Array.isArray(q.choices) || q.choices.length !== 4) {
+    return "needs exactly 4 choices";
+  }
   const correct = q.choices.filter((c) => c && c.is_correct === true).length;
   if (correct === 0) return "no correct choice";
   if (correct === q.choices.length) return "all choices correct";

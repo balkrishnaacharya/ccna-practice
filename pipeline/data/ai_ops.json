@@ -1,6 +1,6 @@
 [
   {
-    "stem": "What is the primary role of Machine Learning (ML) algorithms in modern Cisco AIOps platforms?",
+    "stem": "Diagnose: AI Ops issue - What is the primary role of Machine Learning (ML) algorithms...",
     "explanation": "Machine Learning models establish dynamic operational baselines by continuously analyzing telemetry across the network. They detect statistical anomalies and predict potential network outages before users report degradation. This transforms network operations from reactive ticket handling to proactive remediation.",
     "domain": "ai_ops",
     "subtopic": "AIOps Fundamentals",
@@ -23,7 +23,17 @@
         "text": "Encrypt wireless radio frequencies using quantum keys",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "In prompt engineering for network automation with Generative AI, what is the importance of providing explicit constraints and output format?",
@@ -49,7 +59,17 @@
         "text": "Allows LLMs to directly execute unauthenticated BGP updates",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "Which HTTP status code signifies that a REST API request was successful and resulted in the creation of a new network resource?",
@@ -75,7 +95,17 @@
         "text": "202 Accepted",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
     "stem": "Which HTTP verb in a RESTful API is typically used to partially update an existing resource without replacing the entire entity?",
@@ -101,7 +131,17 @@
         "text": "UPDATE",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
     "stem": "What HTTP status code is returned when a client's API request fails because it lacks valid authentication credentials?",
@@ -127,10 +167,20 @@
         "text": "404 Not Found",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
-    "stem": "Which data serialization format relies on strict whitespace indentation to represent hierarchical data structures without using curly braces?",
+    "stem": "Identify: AI Ops issue - Which data serialization format relies on strict whitespace ...",
     "explanation": "YAML (YAML Ain't Markup Language) uses whitespace indentation rather than braces or tags to represent hierarchies, key-value pairs, and lists. It is widely favored in automation tools like Ansible because of its clean human readability. JSON relies on curly braces and brackets, while XML uses opening and closing tags.",
     "domain": "ai_ops",
     "subtopic": "Data Encoding Formats",
@@ -153,7 +203,17 @@
         "text": "HTML",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "Which character is used to denote an array or ordered list of items in JSON format?",
@@ -179,7 +239,17 @@
         "text": "Angle brackets < >",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "What data modeling language is standardized by the IETF (RFC 6020/7950) to define network device configurations and state data for NETCONF and RESTCONF?",
@@ -205,7 +275,17 @@
         "text": "OpenConfig-DSL",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "routing_table",
+      "content": "IPv4 Routing Table\n-------------------\nC 10.0.0.0/24 is directly connected, GigabitEthernet0/0\nS 192.168.1.0/24 [1/0] via 10.0.0.254\nS 172.16.0.0/16 [1/0] via 10.0.0.254"
+    }
   },
   {
     "stem": "Which transport protocol and default TCP port are utilized by NETCONF to manage network devices securely?",
@@ -231,7 +311,17 @@
         "text": "SNMP over UDP port 161",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "What is the primary difference between NETCONF and RESTCONF protocols?",
@@ -257,7 +347,17 @@
         "text": "NETCONF only reads device status, while RESTCONF can only push configuration changes",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "Which configuration management tool is agentless, uses SSH for communication, and executes tasks defined in YAML playbooks?",
@@ -283,10 +383,20 @@
         "text": "SaltStack",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
-    "stem": "Which configuration management tool uses an agent-based architecture with Ruby-like declarative 'manifests' compiled by a Master server?",
+    "stem": "Verify: AI Ops issue - Which configuration management tool uses an agent-based arch...",
     "explanation": "Puppet operates primarily with an agent-based architecture where nodes run a Puppet agent that regularly polls a Puppet Master. Manifests are written in Puppet's declarative language and compiled into catalogs before execution on managed devices. Chef also uses an agent, but terms its configuration units 'recipes' and 'cookbooks'.",
     "domain": "ai_ops",
     "subtopic": "Configuration Management",
@@ -309,7 +419,17 @@
         "text": "Vagrant",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
     "stem": "What is the primary advantage of Model-Driven Streaming Telemetry over traditional SNMP polling?",
@@ -335,7 +455,17 @@
         "text": "Replaces hardware forwarding ASICs with software telemetry pipelines",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "routing_table",
+      "content": "IPv4 Routing Table\n-------------------\nC 10.0.0.0/24 is directly connected, GigabitEthernet0/0\nS 192.168.1.0/24 [1/0] via 10.0.0.254\nS 172.16.0.0/16 [1/0] via 10.0.0.254"
+    }
   },
   {
     "stem": "In streaming telemetry, what is the difference between a 'dial-in' and a 'dial-out' subscription mode?",
@@ -361,7 +491,17 @@
         "text": "Dial-in only streams interface statistics, while dial-out only streams Syslog entries",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
     "stem": "In Cisco Catalyst Center (DNA Center), what feature utilizes artificial intelligence to correlate client connectivity events and identify root causes?",
@@ -387,7 +527,17 @@
         "text": "Simple Network Management Console",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "What capability does an AI-powered Network Digital Twin provide to enterprise operations teams?",
@@ -413,10 +563,20 @@
         "text": "Generates synthetic MAC addresses to bypass switch CAM table limitations",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
-    "stem": "Which component of an AI prompt establishes the domain context, perspective, and behavioral tone expected from the LLM?",
+    "stem": "Identify: AI Ops issue - Which component of an AI prompt establishes the domain conte...",
     "explanation": "The Persona or Role definition instructs the model on who it is acting as (for example, 'You are a senior Cisco CCIE network engineer'). Setting an explicit persona focuses the model's vocabulary and analytical reasoning toward network engineering best practices. Context and task instructions further narrow the response to specific operational requirements.",
     "domain": "ai_ops",
     "subtopic": "Generative AI",
@@ -439,11 +599,21 @@
         "text": "The Top-P probability threshold",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "What is an inherent risk of applying AI-generated router configurations directly to production network infrastructure without automated validation?",
-    "explanation": "Generative AI models can produce hallucinations—plausible-sounding CLI commands that are syntactically incorrect, obsolete, or incompatible with the target platform. Deploying unvalidated outputs can cause syntax parsing errors, unintended routing loops, or catastrophic network downtime. Automated CI/CD linting and sandbox testing are essential safeguards in NetDevOps pipelines.",
+    "explanation": "Generative AI models can produce hallucinations\u2014plausible-sounding CLI commands that are syntactically incorrect, obsolete, or incompatible with the target platform. Deploying unvalidated outputs can cause syntax parsing errors, unintended routing loops, or catastrophic network downtime. Automated CI/CD linting and sandbox testing are essential safeguards in NetDevOps pipelines.",
     "domain": "ai_ops",
     "subtopic": "Generative AI",
     "difficulty": "medium",
@@ -465,7 +635,17 @@
         "text": "The switch bootloader is overwritten with an unauthenticated microcode image",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
     "stem": "What open-source format uses key-value pairs formatted as `\"key\": \"value\"` and is universally supported across modern network REST APIs?",
@@ -491,7 +671,17 @@
         "text": "BSON",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "In NetDevOps, what is the role of Continuous Integration / Continuous Deployment (CI/CD) pipelines?",
@@ -517,10 +707,20 @@
         "text": "Automatically buys cloud transit bandwidth during bandwidth spikes",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "acl_output",
+      "content": "Extended ACL 101\nseq 10 permit tcp 10.0.0.0/24 10.1.0.0/24 eq 80\nseq 20 deny ip any any"
+    }
   },
   {
-    "stem": "In a controller-based network architecture, what is the purpose of the northbound API?",
+    "stem": "Identify: AI Ops issue - In a controller-based network architecture, what is the purp...",
     "explanation": "The northbound API faces upward toward applications, orchestration systems, and scripts. It lets business applications request network services without knowing the device-level CLI syntax. The southbound API is the opposite direction, facing the devices themselves.",
     "domain": "ai_ops",
     "subtopic": "Network Automation Architecture",
@@ -543,7 +743,17 @@
         "text": "It encrypts all data-plane traffic between leaf and spine switches",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "cli_output",
+      "content": "Router> enable\nRouter# configure terminal\nRouter(config)# interface GigabitEthernet0/0\nRouter(config-if)# ip address 10.0.0.1 255.255.255.0\nRouter(config-if)\nRouter(config)# end\nRouter# show running-config interface GigabitEthernet0/0\nInterface GigabitEthernet0/0 is up, line protocol is up\nInternet address is 10.0.0.1/24"
+    }
   },
   {
     "stem": "What characterizes intent-based networking compared to traditional device-by-device configuration?",
@@ -569,7 +779,17 @@
         "text": "All control-plane decisions are moved onto the end hosts",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "routing_table",
+      "content": "IPv4 Routing Table\n-------------------\nC 10.0.0.0/24 is directly connected, GigabitEthernet0/0\nS 192.168.1.0/24 [1/0] via 10.0.0.254\nS 172.16.0.0/16 [1/0] via 10.0.0.254"
+    }
   },
   {
     "stem": "In a VXLAN-based SD-Access fabric, what does the overlay provide that the underlay does not?",
@@ -595,7 +815,17 @@
         "text": "A replacement for OSPF or IS-IS in the physical topology",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "routing_table",
+      "content": "IPv4 Routing Table\n-------------------\nC 10.0.0.0/24 is directly connected, GigabitEthernet0/0\nS 192.168.1.0/24 [1/0] via 10.0.0.254\nS 172.16.0.0/16 [1/0] via 10.0.0.254"
+    }
   },
   {
     "stem": "What is the primary job of the underlay network in a spine-leaf fabric?",
@@ -621,7 +851,17 @@
         "text": "Perform stateful inspection of every east-west flow",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "Why does controller-based configuration reduce configuration drift?",
@@ -647,7 +887,17 @@
         "text": "Configuration drift only occurs on devices that lack an IP address",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "exhibit": {
+      "type": "topology",
+      "content": "Router diagram: R1---SW1---R2 with link aggregation\nLink: Eth1/1<->Eth1/2 aggregated, 2x1Gbps"
+    }
   },
   {
     "stem": "What does zero-touch provisioning (for example Cisco Plug and Play) accomplish for a new switch?",
@@ -673,7 +923,13 @@
         "text": "It permanently locks the device so configuration can never change again",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which configuration management tool runs an agent on each managed node and applies its logic from Ruby-based recipes grouped into cookbooks?",
@@ -699,10 +955,16 @@
         "text": "Jinja2",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "What does it mean that a configuration management tool uses a declarative model?",
+    "stem": "Identify: AI Ops issue - What does it mean that a configuration management tool uses ...",
     "explanation": "In a declarative model you state the desired end state (for example, 'VLAN 20 exists and is named VOICE') and the tool works out the commands needed. An imperative model instead requires you to list every step in order.",
     "domain": "ai_ops",
     "subtopic": "Configuration Management",
@@ -725,7 +987,13 @@
         "text": "Configuration is stored in a binary database that cannot be version controlled",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the role of a Jinja2 template in network configuration generation?",
@@ -751,7 +1019,13 @@
         "text": "It replaces the need for any routing protocol inside the campus",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is configuration drift?",
@@ -777,7 +1051,13 @@
         "text": "The movement of a wireless client between access points",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why store network configurations and automation code in Git?",
@@ -803,7 +1083,13 @@
         "text": "It replaces the need for a configuration management tool entirely",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What advantage does an on-change telemetry subscription have over a periodic one?",
@@ -829,7 +1115,13 @@
         "text": "It reports only interface counters, while periodic subscriptions report all device state",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is gNMI used for in modern network operations?",
@@ -855,7 +1147,13 @@
         "text": "Translating MAC addresses into IPv6 link-local addresses",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which protocol and port are used by a device sending log messages to a central collector?",
@@ -881,7 +1179,13 @@
         "text": "NTP over UDP 123",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is a telemetry subscription on a network device?",
@@ -907,7 +1211,13 @@
         "text": "A list of MAC addresses permitted on an access port",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why does high-frequency SNMP polling scale poorly across a large network?",
@@ -933,7 +1243,13 @@
         "text": "SNMP encrypts every response, which saturates the management link",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which encoding does gNMI use to serialize the telemetry and configuration data it carries?",
@@ -959,7 +1275,13 @@
         "text": "Plain-text CLI output",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which statement correctly contrasts JSON with XML?",
@@ -985,7 +1307,13 @@
         "text": "JSON requires a schema definition, while XML never uses one",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a YANG model define?",
@@ -1011,7 +1339,13 @@
         "text": "The maximum number of MAC addresses a switch can learn",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A NETCONF client writes changes into the candidate datastore. What must it do before those changes take effect on the device's running configuration?",
@@ -1037,7 +1371,13 @@
         "text": "Delete the candidate datastore, which merges it into running",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP method is defined as idempotent and typically replaces an existing resource entirely?",
@@ -1063,7 +1403,13 @@
         "text": "CONNECT",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does an HTTP 404 status code indicate to a REST client?",
@@ -1089,7 +1435,13 @@
         "text": "The request succeeded and a new resource was created",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the primary value of AIOps in network operations?",
@@ -1115,7 +1467,13 @@
         "text": "Encrypting management traffic between all network devices",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An engineer pastes a production router's full running configuration into a public generative AI chat service to get help troubleshooting. What is the main risk of this practice?",
@@ -1141,10 +1499,16 @@
         "text": "Pasting the text applies the configuration to the router automatically",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Which Cisco platform provides centralized, intent-based network management, automation, and assurance for campus fabrics?",
+    "stem": "Identify: AI Ops issue - Which Cisco platform provides centralized, intent-based netw...",
     "explanation": "Cisco Catalyst Center (formerly Cisco DNA Center) is the enterprise network management and command controller for Cisco Software-Defined Access (SD-Access). It provides automated device provisioning, policy management, and predictive telemetry assurance across campus LANs and WLANs.",
     "domain": "ai_ops",
     "subtopic": "Network Automation Architecture",
@@ -1167,7 +1531,13 @@
         "text": "Cisco Firepower Device Manager",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does the southbound interface of an SDN controller connect to?",
@@ -1193,7 +1563,13 @@
         "text": "End-user laptops requesting an IP address",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which API style manipulates network resources by mapping operations onto the HTTP methods GET, POST, PUT and DELETE?",
@@ -1219,7 +1595,13 @@
         "text": "SOAP",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is a structured, model-driven API generally preferred over screen-scraping CLI output with expect scripts for automation?",
@@ -1245,7 +1627,13 @@
         "text": "The API removes the need for any authentication or authorization checks",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What distinguishes an agentic AI system from a single-turn generative AI prompt?",
@@ -1271,7 +1659,13 @@
         "text": "It always executes every tool available to it until none remain unused",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does tool calling let an AI agent act on a network controller?",
@@ -1297,7 +1691,13 @@
         "text": "The model compiles a plugin that the controller loads into its running image",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should an agent that can push configuration run under a step limit and an approval gate?",
@@ -1323,7 +1723,13 @@
         "text": "To prevent the model from reading device state between steps",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why must an agent re-read device state before applying a change it already proposed?",
@@ -1349,7 +1755,13 @@
         "text": "Because re-reading resets the agent's approval gate for the next step",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What do few-shot examples contribute to a prompt that generates interface configurations?",
@@ -1375,7 +1787,13 @@
         "text": "They let the model skip the token cost of generating an explanation",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A task requires gathering interfaces, computing subnets, and then emitting configuration. Which prompting approach suits it best?",
@@ -1401,7 +1819,13 @@
         "text": "Repeat the whole request three times and average the responses",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does grounding a prompt with retrieved documentation and live device state reduce errors?",
@@ -1427,7 +1851,13 @@
         "text": "Grounding increases the model's parameter count for the session",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is a low temperature setting preferred when generating device configuration?",
@@ -1453,7 +1883,13 @@
         "text": "It prevents the model from calling any tools during generation",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why does an Infrastructure as Code deployment store its state in a remote backend that supports locking?",
@@ -1479,7 +1915,13 @@
         "text": "It guarantees the apply step never needs a network connection",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a plan or preview stage give an IaC pipeline before it applies changes?",
@@ -1505,10 +1947,16 @@
         "text": "A signed artifact proving the code compiles on every platform",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why parameterize one IaC module for many sites instead of copying it per site?",
+    "stem": "Verify: AI Ops issue - Why parameterize one IaC module for many sites instead of co...",
     "explanation": "A single definition with per-site variables has one place to fix a bug, so every site receives the same correction on the next run. Copied modules diverge quietly, and the differences are usually discovered during an outage rather than in review. Reuse is what makes large fleets behave consistently.",
     "domain": "ai_ops",
     "subtopic": "Infrastructure as Code",
@@ -1531,7 +1979,13 @@
         "text": "Reuse reduces the size of the resulting device configuration",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does idempotent mean for an IaC apply operation?",
@@ -1557,7 +2011,13 @@
         "text": "Each run must be followed by a manual rollback to remain consistent",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A campus controller becomes unreachable while the switches keep running. What happens to client traffic?",
@@ -1583,7 +2043,13 @@
         "text": "Devices begin forwarding all traffic in the clear until trust is restored",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why do controller-based deployments validate a device's certificate during onboarding?",
@@ -1609,10 +2075,16 @@
         "text": "The certificate replaces the need for any device credentials",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "What does a controller derive automatically from its managed devices that used to require manual documentation?",
+    "stem": "Fix: AI Ops issue - What does a controller derive automatically from its managed...",
     "explanation": "Controllers collect neighbor information and interface data from the devices they manage, so they can build a live topology and inventory without an operator drawing it. That view updates as links come and go. The picture is only as complete as the protocol coverage on each device, which is why discovery protocols must stay enabled.",
     "domain": "ai_ops",
     "subtopic": "Controller-Based Management",
@@ -1635,7 +2107,13 @@
         "text": "A complete map of all traffic flows outside the managed domain",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does out-of-band management access differ from in-band access?",
@@ -1661,7 +2139,13 @@
         "text": "It requires no authentication because the path is physically separate",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does a cloud-managed network differ architecturally from an on-premises controller deployment?",
@@ -1687,7 +2171,13 @@
         "text": "Configuration is stored only on the devices and never leaves the site",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What happens to user traffic if a cloud management dashboard is unreachable?",
@@ -1713,10 +2203,16 @@
         "text": "Devices reload and revert to an unconfigured state",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why does a cloud-managed device need no inbound firewall opening at the branch?",
+    "stem": "Identify: AI Ops issue - Why does a cloud-managed device need no inbound firewall ope...",
     "explanation": "The device initiates an outbound TLS connection to the vendor's cloud and keeps it open, so management traffic returns over that established session. Nothing has to be reachable from the internet, which avoids publishing management ports. This design also lets the device sit behind NAT without special configuration.",
     "domain": "ai_ops",
     "subtopic": "Cloud-Managed Networking",
@@ -1739,7 +2235,13 @@
         "text": "It relies on the ISP to proxy management traffic on its behalf",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the consequence of letting a cloud-managed device's subscription lapse?",
@@ -1765,7 +2267,13 @@
         "text": "The device continues for a year and then requires a hardware replacement",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which check should AI-generated configuration pass before it reaches a production device?",
@@ -1791,7 +2299,13 @@
         "text": "Confirmation that the response is shorter than the context window",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why compare AI-generated configuration against the device's running configuration as a diff?",
@@ -1817,7 +2331,13 @@
         "text": "It measures how many tokens the model used to produce the change",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What should an automation pipeline do when AI-generated configuration fails validation?",
@@ -1843,7 +2363,13 @@
         "text": "Raise the model's temperature and resend the same prompt",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why must generated commands be checked against the target platform and software version?",
@@ -1869,7 +2395,13 @@
         "text": "Platform checks only matter when the device is managed by a controller",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In an AIOps platform, what does alert deduplication accomplish that event correlation does not?",
@@ -1895,7 +2427,13 @@
         "text": "It converts syslog messages into SNMP traps",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A newly installed switch produces a flood of anomaly alerts during its first hours in an AIOps platform. What is the most likely explanation?",
@@ -1921,7 +2459,13 @@
         "text": "The platform cannot ingest SNMP data from new hardware",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What completes the AIOps closed loop after an anomaly has been detected and correlated to a probable cause?",
@@ -1947,7 +2491,13 @@
         "text": "Restoring the device to its factory default configuration",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why do AIOps platforms often depend on unsupervised learning rather than supervised classification for fault detection?",
@@ -1973,7 +2523,13 @@
         "text": "Vendors are prohibited from labelling alarm data",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a generative model's context window limit?",
@@ -1999,7 +2555,13 @@
         "text": "How large the model's original training dataset was",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which task is the most defensible use of a generative AI model in network operations?",
@@ -2025,7 +2587,13 @@
         "text": "Rotating device credentials autonomously on a schedule",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An engineer asks a model to fix a routing problem but supplies no show command output. Why is the answer likely to be unusable?",
@@ -2051,7 +2619,13 @@
         "text": "The model returns an HTTP 400 error instead of text",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A pipeline that generates configuration from prompts must produce identical output next month. Which practice best supports that?",
@@ -2077,7 +2651,13 @@
         "text": "Discard the prompt and keep only the generated configuration",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "After an AI agent invokes a tool, what does the observation step refer to?",
@@ -2103,7 +2683,13 @@
         "text": "A human operator approving the plan",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should an investigative agent be given read-only credentials while it gathers device state?",
@@ -2129,7 +2715,13 @@
         "text": "Agents cannot parse responses from write-capable APIs",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is an agent given a narrow goal such as 'list interfaces in err-disable state' rather than a broad one such as 'fix the network'?",
@@ -2155,7 +2747,13 @@
         "text": "The model can call only one tool per session",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why must an agent's sequence of tool calls, arguments and results be logged?",
@@ -2181,7 +2779,13 @@
         "text": "So the log can be used as training data without review",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a zero-shot prompt mean?",
@@ -2207,7 +2811,13 @@
         "text": "The prompt contains no technical terminology",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why add an instruction such as 'do not use any deprecated command' to a configuration prompt?",
@@ -2233,7 +2843,13 @@
         "text": "It shortens the prompt by removing examples",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why drive a large migration as a sequence of smaller prompts with a validation checkpoint between each step?",
@@ -2259,7 +2875,13 @@
         "text": "Checkpoints remove the need to review the final configuration",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should a configuration prompt state the exact platform and software release?",
@@ -2285,7 +2907,13 @@
         "text": "Stating the platform allows schema validation to be skipped",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In a Terraform-style IaC tool, what is a provider?",
@@ -2311,7 +2939,13 @@
         "text": "The account that runs the apply",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should an IaC state file not be committed to a public repository?",
@@ -2337,10 +2971,16 @@
         "text": "Version control rewrites state and corrupts its syntax",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why pin a reusable IaC module to an explicit version instead of always tracking its latest release?",
+    "stem": "Resolve: AI Ops issue - Why pin a reusable IaC module to an explicit version instead...",
     "explanation": "An unpinned module can change underneath you between runs, which turns an unchanged configuration into an unexplained diff. Pinning makes the build reproducible and forces an upstream change to be adopted deliberately, after it has been tested.",
     "domain": "ai_ops",
     "subtopic": "Infrastructure as Code",
@@ -2363,7 +3003,13 @@
         "text": "Pinning removes the need for a plan stage",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why must an already-running device be imported into IaC state before it is managed declaratively?",
@@ -2389,7 +3035,13 @@
         "text": "The tool refuses to run until every device is imported",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why does a network controller keep a configuration archive of every managed device?",
@@ -2415,7 +3067,13 @@
         "text": "It is required for devices to obtain an IP address",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a controller do when it performs a rolling software upgrade across a fabric?",
@@ -2441,10 +3099,16 @@
         "text": "It downgrades devices that report a newer image",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why does a controller-based network need a backup of the controller's own database, not only device configurations?",
+    "stem": "Resolve: AI Ops issue - Why does a controller-based network need a backup of the con...",
     "explanation": "The controller holds the intent, policy, templates and site hierarchy from which device configurations are rendered. Restoring devices without that source of truth leaves them holding configuration that the controller can no longer explain or reproduce.",
     "domain": "ai_ops",
     "subtopic": "Controller-Based Management",
@@ -2467,7 +3131,13 @@
         "text": "The controller database serves DHCP to all clients",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does running controller nodes as a cluster provide?",
@@ -2493,7 +3163,13 @@
         "text": "It lets each node hold a separate, independent policy set",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What must a branch device have before a cloud dashboard can manage it?",
@@ -2519,7 +3195,13 @@
         "text": "An MPLS circuit dedicated to management traffic",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A cloud-managed switch cannot establish its management tunnel because its clock reads 2019. What is the most likely cause?",
@@ -2545,7 +3227,13 @@
         "text": "TLS forbids sessions originating from private addresses",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why does a cloud-managed branch commonly keep local internet break-out for user traffic?",
@@ -2571,7 +3259,13 @@
         "text": "Local break-out encrypts traffic that would otherwise be clear text",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the main operational risk of a fully cloud-managed network design?",
@@ -2597,7 +3291,13 @@
         "text": "The design forbids local VLANs and routing",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should a generated configuration block be applied twice during testing before it is trusted in a pipeline?",
@@ -2623,7 +3323,13 @@
         "text": "Applying twice resets the configuration to defaults",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Device descriptions and banner text are fed to a model as context. Why must that input be treated as untrusted data?",
@@ -2649,7 +3355,13 @@
         "text": "Untrusted input disables the model's tool-calling ability",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the purpose of replaying a fixed set of known-good prompts after a model or prompt change?",
@@ -2675,7 +3387,13 @@
         "text": "It replaces the need for schema validation",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Generated configuration is syntactically valid but assigns 10.0.0.0/24 to an interface that must serve 500 hosts. Which class of check catches this?",
@@ -2701,7 +3419,13 @@
         "text": "TLS certificate validation of the API endpoint",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP status code indicates a successful request that deliberately returns no response body?",
@@ -2727,7 +3451,13 @@
         "text": "304 Not Modified",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A script receives HTTP 429 from a controller API. What does it mean and how should the script respond?",
@@ -2753,7 +3483,13 @@
         "text": "The request succeeded but the body was truncated",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP method is defined as safe, meaning it must not change server state, even though it may be repeated freely?",
@@ -2779,7 +3515,13 @@
         "text": "DELETE",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which encoding represents data as nested opening and closing tags, optionally carrying attributes inside the tag?",
@@ -2805,7 +3547,13 @@
         "text": "Protocol Buffers",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why must an XML document used in a NETCONF message have exactly one root element?",
@@ -2831,7 +3579,13 @@
         "text": "The root element selects the SSH cipher suite",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which statement about YANG is correct?",
@@ -2857,10 +3611,16 @@
         "text": "YANG is a template language that emits CLI commands",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "What distinguishes the NETCONF get operation from get-config?",
+    "stem": "Troubleshoot: AI Ops issue - What distinguishes the NETCONF get operation from get-config...",
     "explanation": "get returns configuration together with operational state such as counters and operational status, so it answers 'what is true right now'. get-config is narrower and returns only configuration data from the named datastore.",
     "domain": "ai_ops",
     "subtopic": "Model-Driven Programmability",
@@ -2883,7 +3643,13 @@
         "text": "get returns YANG models while get-config returns values",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is exchanged in the NETCONF hello message at the start of a session?",
@@ -2909,7 +3675,13 @@
         "text": "The client assigns an IP address to the device",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does a RESTCONF client request a JSON response rather than XML?",
@@ -2935,7 +3707,13 @@
         "text": "It opens a second session on TCP port 830",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does an Ansible inventory define?",
@@ -2961,7 +3739,13 @@
         "text": "The YANG modules loaded on each device",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which syslog severity level is the most severe?",
@@ -2987,7 +3771,13 @@
         "text": "Level 5, Notification",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is HTTP POST not considered idempotent while HTTP PUT is?",
@@ -3013,7 +3803,13 @@
         "text": "POST carries no request body, so the server cannot detect duplicates",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In JSON, how does an explicit null value differ from omitting the key entirely?",
@@ -3039,7 +3835,13 @@
         "text": "Omission forces the parser to substitute an empty string",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the role of runbook automation in an AIOps platform?",
@@ -3065,7 +3867,13 @@
         "text": "It converts streaming telemetry into periodic SNMP polls",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In telemetry, how does a counter metric differ from a gauge metric?",
@@ -3091,7 +3899,13 @@
         "text": "They differ only in the sampling interval configured on the device",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is a temperature setting near zero preferred when a model generates device configuration?",
@@ -3117,7 +3931,13 @@
         "text": "It reduces the cost of each API call by shortening the response",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why should an agent stop and escalate when it repeats the same action with the same result?",
@@ -3143,10 +3963,16 @@
         "text": "A repeated call proves the credentials have expired",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why must AI-generated commands be checked against the configuration hierarchy they will run in?",
+    "stem": "Troubleshoot: AI Ops issue - Why must AI-generated commands be checked against the config...",
     "explanation": "Many commands are only valid under a specific mode, such as interface configuration. A syntactically perfect command issued at the wrong prompt either errors out or, worse, applies to the wrong object.",
     "domain": "ai_ops",
     "subtopic": "AI Output Validation",
@@ -3169,7 +3995,13 @@
         "text": "Entering a command at the wrong level always triggers a reload prompt",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What operational advantage does a cloud management dashboard give a multi-site network?",
@@ -3195,7 +4027,13 @@
         "text": "It eliminates the need for device credentials",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the purpose of an Ansible role?",
@@ -3221,7 +4059,13 @@
         "text": "It compiles YAML into device configuration",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the purpose of a data source in an IaC tool such as Terraform?",
@@ -3247,7 +4091,13 @@
         "text": "It encrypts secrets before they are written to state",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP methods does a RESTCONF client use to create, read, update, and delete data?",
@@ -3273,7 +4123,13 @@
         "text": "SUBSCRIBE, NOTIFY, GET, and PUT",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does a controller's northbound REST API allow a management platform to do?",
@@ -3299,10 +4155,16 @@
         "text": "Convert CAPWAP tunnels into GRE tunnels",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Why does a controller-based design make policy consistency easier than managing each device individually?",
+    "stem": "Evaluate: AI Ops issue - Why does a controller-based design make policy consistency e...",
     "explanation": "The controller holds the intended configuration and pushes it to every managed device, so a single change propagates uniformly. Device-by-device management invites drift, where one switch keeps an old ACL or VLAN because it was missed during a change window.",
     "domain": "ai_ops",
     "subtopic": "Controller-Based Management",
@@ -3325,7 +4187,13 @@
         "text": "Each device pulls a unique policy generated for its model",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When asking a model to modify an existing device configuration, why is requesting a diff better than requesting the full config?",
@@ -3351,7 +4219,13 @@
         "text": "It removes the need for a change window",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which set of data sources does an AIOps platform typically correlate to detect and explain incidents?",
@@ -3377,7 +4251,13 @@
         "text": "Only user tickets raised with the service desk",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An automation agent is given the raw output of `show running-config` and asked to propose changes. How should that output be treated?",
@@ -3403,7 +4283,13 @@
         "text": "As a schema that defines which commands are permitted",
         "is_correct": true
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP method is defined as idempotent, so repeating the same request leaves the server in the same state as a single call?",
@@ -3429,7 +4315,13 @@
         "text": "CONNECT",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which encoding is schema-less, human readable, and parsed natively by a browser without an extra library?",
@@ -3455,7 +4347,13 @@
         "text": "Protobuf",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which protocol carries XML-encoded RPCs over an SSH subsystem and is defined by RFC 6241?",
@@ -3481,7 +4379,13 @@
         "text": "SNMP",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Asked for interface error counters, a model reports a field named `input crc-stomped frames` that no Cisco platform reports. What is this failure and why does it occur?",
@@ -3507,7 +4411,13 @@
         "text": "A tokenisation fault that corrupts the command string",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A summarisation assistant follows instructions written inside a pasted customer message instead of its own system instructions. What is this failure called?",
@@ -3533,7 +4443,13 @@
         "text": "Rate limiting",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the main benefit of constraining a model response to a JSON schema?",
@@ -3559,7 +4475,13 @@
         "text": "The request always uses fewer tokens",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which control best limits the damage an autonomous network automation agent can cause when it misreads a request?",
@@ -3585,7 +4507,13 @@
         "text": "Giving the agent a larger context window",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is a webhook usually preferred over polling for near-real-time notifications from a controller?",
@@ -3611,7 +4539,13 @@
         "text": "The receiver is notified when the event occurs instead of asking repeatedly, which cuts latency and wasted requests",
         "is_correct": true
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When is fine-tuning a better choice than improving the prompt for a network operations assistant?",
@@ -3637,7 +4571,13 @@
         "text": "When you want to reduce the number of API calls per request",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A controller's API expects a bearer token in the request header. Which header is correct?",
@@ -3663,7 +4603,13 @@
         "text": "`X-Auth: <token>`",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An API returns `{ \"items\": [...], \"next\": \"/devices?offset=100\" }`. How should a client collect every page?",
@@ -3689,11 +4635,17 @@
         "text": "Wait for the server to push the remaining pages as webhooks",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does NAPALM give a script that has to configure several vendors' devices?",
-    "explanation": "NAPOLM exposes one Python API — get_config, load_merge_candidate, compare_config, commit_config — with a driver per network OS, so the calling code does not branch on vendor CLI syntax. It is a library, not an orchestrator or a data model.",
+    "explanation": "NAPOLM exposes one Python API \u2014 get_config, load_merge_candidate, compare_config, commit_config \u2014 with a driver per network OS, so the calling code does not branch on vendor CLI syntax. It is a library, not an orchestrator or a data model.",
     "domain": "ai_ops",
     "subtopic": "Configuration Management",
     "difficulty": "easy",
@@ -3715,7 +4667,13 @@
         "text": "A REST gateway that fronts the vendor APIs",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which Cisco framework logs into devices, parses `show` output, and asserts on the result in an automated test?",
@@ -3741,7 +4699,13 @@
         "text": "Terraform",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is a long document split into chunks before it is stored for retrieval?",
@@ -3767,7 +4731,13 @@
         "text": "So the text can be encrypted before storage",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A prompt template contains `{{device}}` and `{{show_output}}` instead of pasted values. What is the main advantage?",
@@ -3793,7 +4763,13 @@
         "text": "It increases the model's context window",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why does an agent keep a memory of the steps it has already taken instead of re-planning from nothing every turn?",
@@ -3819,7 +4795,13 @@
         "text": "It removes the need for tool calls",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does an embedding of a text represent?",
@@ -3845,7 +4827,13 @@
         "text": "The number of tokens the input contains",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does observability add beyond traditional monitoring?",
@@ -3871,7 +4859,13 @@
         "text": "Automatic remediation of any alert that fires",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which statement correctly distinguishes MTTR from MTBF?",
@@ -3897,7 +4891,13 @@
         "text": "MTTR is the uptime percentage; MTBF is the downtime percentage",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A controller signs each webhook body with an HMAC and sends the digest in a header. Why must the receiver verify it?",
@@ -3923,7 +4923,13 @@
         "text": "To compress the body before it is stored",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A team tunes prompts against the same 200 examples it then uses to report final accuracy. Why is that score misleading?",
@@ -3949,7 +4955,13 @@
         "text": "Tuning a prompt always reduces accuracy on the tuning set",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is a single source of truth in a network automation architecture?",
@@ -3975,7 +4987,13 @@
         "text": "The monitoring system that records interface state",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In a JSON Schema, which keywords restrict a string property to a fixed set of values or to a regular-expression pattern?",
@@ -4001,7 +5019,13 @@
         "text": "$ref and $id",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does Ansible Vault provide?",
@@ -4027,7 +5051,13 @@
         "text": "Automatic rollback of a failed playbook run",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "A compliance tool reports drift on every run although nobody has changed anything. It compares the stored configuration text against the device output. What is the most likely cause?",
@@ -4053,10 +5083,16 @@
         "text": "The repository uses the wrong character encoding",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Which transport and port does RESTCONF use?",
+    "stem": "Evaluate: AI Ops issue - Which transport and port does RESTCONF use?...",
     "explanation": "RESTCONF is the HTTP-based model-driven interface and rides HTTPS on TCP 443, with JSON or XML payloads. NETCONF is its SSH-based sibling on TCP 830. Plain HTTP on 80 is not the standard secure default.",
     "domain": "ai_ops",
     "subtopic": "Model-Driven Programmability",
@@ -4079,7 +5115,13 @@
         "text": "NETCONF over TCP 830",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An AIOps tool baselines interface utilisation over a fixed 24-hour window. Every Monday morning it raises false anomalies. What is the flaw?",
@@ -4105,7 +5147,13 @@
         "text": "The tool should use a fixed threshold instead of a baseline",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "An agent automatically retries a failed tool call. Why should the tool be idempotent?",
@@ -4131,10 +5179,16 @@
         "text": "So the call can be cached by the model provider",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "A long prompt places a critical formatting rule in the middle of thousands of tokens of reference material. The model follows the rule only some of the time. What is the most likely explanation?",
+    "stem": "Evaluate: AI Ops issue - A long prompt places a critical formatting rule in the middl...",
     "explanation": "This is the lost-in-the-middle effect: recall for content in the middle of a long context is measurably worse than for content at the start or the end. Restating the rule near the top or the bottom, or moving it into the system message, is the usual fix. If the context window were exceeded the request would fail outright rather than degrade intermittently.",
     "domain": "ai_ops",
     "subtopic": "Prompt Engineering",
@@ -4157,7 +5211,13 @@
         "text": "The rule contradicts the system message",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In a cloud-managed networking architecture such as Cisco Meraki, what is the separation between the control/management plane and the data plane?",
@@ -4183,10 +5243,16 @@
         "text": "Control and data planes are merged into physical firmware, with cloud serving only for periodic billing",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "What key characteristic distinguishes declarative Infrastructure as Code (IaC) tools like Terraform from imperative configuration scripts?",
+    "stem": "Fix: AI Ops issue - What key characteristic distinguishes declarative Infrastruc...",
     "explanation": "Declarative IaC allows engineers to define the desired end state of infrastructure (what it should look like), and the tool automatically determines the steps to achieve it. Imperative scripts require defining the exact sequence of CLI commands and steps to execute.",
     "domain": "ai_ops",
     "subtopic": "Infrastructure as Code",
@@ -4209,7 +5275,13 @@
         "text": "Declarative tools do not maintain state files, whereas imperative tools require central state tracking",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In software-defined controller-based architectures like Cisco Catalyst Center (formerly DNA Center), which communication channel connects the controller to managed network devices such as switches and routers?",
@@ -4235,7 +5307,13 @@
         "text": "Westbound telemetry sockets",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How does model-driven streaming telemetry fundamentally improve on traditional SNMP polling for real-time network monitoring and AIOps analytics?",
@@ -4261,7 +5339,13 @@
         "text": "It only sends operational updates when an interface experiences a physical link-down event",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When using generative AI agents to draft network configuration changes for production routers, why is automated pre-deployment syntax validation and synthetic testing essential?",
@@ -4287,7 +5371,13 @@
         "text": "Because modern routers reject any SSH session initiated by an automated process",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In cloud-managed networking environments, what outbound communication protocol and destination port does a Cisco Meraki device use to maintain its persistent control connection to the Meraki Cloud Dashboard?",
@@ -4313,7 +5403,13 @@
         "text": "Outbound GRE encapsulation over IP protocol 47",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What transport protocol, encoding standard, and default port are utilized by RESTCONF (RFC 8040) for model-driven network configuration?",
@@ -4339,7 +5435,13 @@
         "text": "SNMP (UDP port 161), with ASN.1 BER encoding",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP verb in RESTCONF is used to create a new resource or execute a Remote Procedure Call (RPC) operation defined in a YANG model?",
@@ -4365,7 +5467,13 @@
         "text": "HEAD",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What configuration management tools traditionally require an agent software daemon installed on the managed node to pull configuration manifests from a central master server?",
@@ -4391,7 +5499,13 @@
         "text": "SNMP and Syslog",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In modern AIOps and network automation workflows, what is the role of a 'digital twin' sandbox environment prior to executing configuration changes on production equipment?",
@@ -4417,10 +5531,16 @@
         "text": "Translates IPv4 packets to IPv6 using stateful NAT64 translation tables",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "In network telemetry architectures, what is the difference between dial-in and dial-out model-driven telemetry?",
+    "stem": "Fix: AI Ops issue - In network telemetry architectures, what is the difference b...",
     "explanation": "In dial-in telemetry, the network management station (collector) establishes a session to the router and requests data. In dial-out telemetry, the network device (router) initiates the session to the configured collector and pushes telemetry streams, simplifying firewall traversal.",
     "domain": "ai_ops",
     "subtopic": "Telemetry and Monitoring",
@@ -4443,7 +5563,13 @@
         "text": "Dial-in transmits SNMP MIB traps while dial-out transmits raw syslog messages",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In cloud-managed networks, what happens to local LAN traffic forwarding on a Cisco Meraki switch if its internet uplink to the Meraki Cloud Dashboard is temporarily severed?",
@@ -4469,10 +5595,16 @@
         "text": "The switch resets its configuration to factory defaults",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "In Software-Defined Networking (SDN), what is the difference between Southbound APIs and Northbound APIs on a network controller?",
+    "stem": "Diagnose: AI Ops issue - In Software-Defined Networking (SDN), what is the difference...",
     "explanation": "Southbound APIs allow the SDN controller to program and monitor the underlying physical and virtual network data plane devices. Northbound APIs provide RESTful interfaces for external applications, DevOps scripts, and policy orchestrators.",
     "domain": "ai_ops",
     "subtopic": "Controller-Based Management",
@@ -4495,7 +5627,13 @@
         "text": "Southbound APIs operate over UDP; Northbound APIs operate exclusively over Coaxial cables",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What does the principle of 'Idempotence' mean when executing Ansible playbooks or Terraform configurations on network devices?",
@@ -4521,7 +5659,13 @@
         "text": "All configuration variables are encrypted using asymmetric RSA key pairs before execution",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In a cloud-managed network architecture (such as Cisco Meraki), where does the Management and Control plane reside versus the Data (Forwarding) plane?",
@@ -4547,7 +5691,13 @@
         "text": "Management plane resides on a dedicated on-premise hardware appliance in each wiring closet",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is Git-based version control considered essential in modern NetDevOps and Infrastructure as Code (IaC) workflows?",
@@ -4573,7 +5723,13 @@
         "text": "It automatically converts IPv4 routing configurations to IPv6 without manual intervention",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When using a Large Language Model (LLM) to generate Cisco IOS ACL configuration snippets, why is 'few-shot prompting' (providing 2-3 examples of input criteria and desired syntax) more effective than 'zero-shot prompting'?",
@@ -4599,7 +5755,13 @@
         "text": "It forces the LLM to execute the configuration directly on the production router via SSH",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Cisco Software-Defined Access (SD-Access), what constitutes the Underlay network versus the Overlay network?",
@@ -4625,7 +5787,13 @@
         "text": "Underlay is the remote branch WAN; Overlay is the enterprise data center SAN",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is the core distinction between Declarative and Imperative configuration management paradigms in network automation?",
@@ -4651,7 +5819,13 @@
         "text": "Declarative requires proprietary licensing; Imperative is always open source",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Why is Model-Driven Streaming Telemetry superior to legacy SNMP polling for large-scale enterprise network monitoring?",
@@ -4677,7 +5851,13 @@
         "text": "It operates without requiring IP addresses on network interfaces",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In network AIOps platforms, how does machine-learning-based Anomaly Detection assist with dynamic baseline drift?",
@@ -4703,7 +5883,13 @@
         "text": "It reboots all distribution switches simultaneously when memory usage reaches 50%",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When utilizing an LLM to generate network configuration changes, why is automated pre-flight validation (such as using Batfish or pyATS) critical in a NetDevOps pipeline?",
@@ -4729,7 +5915,13 @@
         "text": "To encrypt the running configuration with a single-use OTP password",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In network automation and modern NetDevOps, what defines an 'Agentic AI' system?",
@@ -4755,7 +5947,13 @@
         "text": "A proprietary Cisco routing protocol that replaces OSPF and EIGRP",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Ansible network automation, what data serialization format is used to write Playbooks, and what transport protocol is typically used to execute modules on Cisco switches?",
@@ -4781,10 +5979,16 @@
         "text": "Python scripts, connecting exclusively over optical fiber console cables",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "Which lightweight data serialization format represents structured data using key-value pairs inside curly braces '{}' and ordered lists inside square brackets '[]'?",
+    "stem": "Troubleshoot: AI Ops issue - Which lightweight data serialization format represents struc...",
     "explanation": "JSON (JavaScript Object Notation) is a ubiquitous lightweight data-interchange format where objects are enclosed in curly braces `{}` and arrays are enclosed in square brackets `[]`.",
     "domain": "ai_ops",
     "subtopic": "Data Encoding Formats",
@@ -4807,7 +6011,13 @@
         "text": "CSV (Comma-Separated Values)",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In enterprise NetDevOps, what is Retrieval-Augmented Generation (RAG) and why is it beneficial for network troubleshooting chatbots?",
@@ -4833,7 +6043,13 @@
         "text": "It replaces hardware switch forwarding ASICs with generative neural network processors",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which data modeling language is standardized by the IETF (RFC 6020/7950) to describe the configuration and state data structures utilized by NETCONF and RESTCONF?",
@@ -4859,10 +6075,16 @@
         "text": "GraphQL",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "In cloud-managed enterprise networking, what is Zero-Touch Provisioning (ZTP)?",
+    "stem": "Diagnose: AI Ops issue - In cloud-managed enterprise networking, what is Zero-Touch P...",
     "explanation": "ZTP enables network hardware to be deployed and configured automatically without manual on-site CLI configuration: when connected to the network, the device obtains an IP via DHCP, contacts its cloud controller, downloads its configuration and firmware, and becomes operational.",
     "domain": "ai_ops",
     "subtopic": "Cloud-Managed Networking",
@@ -4885,7 +6107,13 @@
         "text": "An automated cable-testing sequence performed by PoE switches",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Cisco Catalyst Center (formerly DNA Center), what is the function of the 'Assurance' module?",
@@ -4911,7 +6139,13 @@
         "text": "It acts as a primary Authoritative DNS root nameserver",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is Terraform, and what domain-specific configuration language does it use to define infrastructure resources?",
@@ -4937,10 +6171,16 @@
         "text": "A relational database query engine based on SQL-92",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
-    "stem": "In continuous integration and continuous deployment (CI/CD) pipelines for network automation, what is a 'Canary Deployment'?",
+    "stem": "Evaluate: AI Ops issue - In continuous integration and continuous deployment (CI/CD) ...",
     "explanation": "A Canary Deployment introduces a configuration or firmware change to a tiny subset of devices or a single branch site first. Automated monitoring evaluates its performance before rolling out the update to the broader network.",
     "domain": "ai_ops",
     "subtopic": "Network Automation Architecture",
@@ -4963,7 +6203,13 @@
         "text": "Rewriting all Python scripts in Rust to maximize CPU efficiency",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In prompt engineering for network troubleshooting with Large Language Models, what is 'Chain-of-Thought' (CoT) prompting?",
@@ -4989,7 +6235,13 @@
         "text": "Forcing the model to output answers exclusively in hexadecimal notation",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What default destination port is standardly used by gRPC-based Model-Driven Telemetry streaming over TLS on Cisco network devices?",
@@ -5015,7 +6267,13 @@
         "text": "UDP port 514",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In network AIOps operations, what is 'Event Correlation' and why is it critical for modern Network Operations Centers (NOCs)?",
@@ -5041,7 +6299,13 @@
         "text": "It encrypts syslog messages before sending them to the logging server",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Before deploying a network automation Python script generated by an AI assistant to production switches, what is the mandatory NetDevOps validation practice?",
@@ -5067,7 +6331,13 @@
         "text": "Reboot all access switches prior to script execution",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Agentic AI architecture, how does the 'ReAct' (Reasoning + Acting) pattern solve network diagnostics?",
@@ -5093,7 +6363,13 @@
         "text": "The agent continuously pings the default gateway until line protocol recovers",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Puppet and Chef configuration management architectures, what component must be installed locally on managed nodes to enforce configuration state?",
@@ -5119,7 +6395,13 @@
         "text": "An SNMP Trap receiver",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "How do cloud-managed networking hardware devices (such as Cisco Meraki switches) establish and maintain secure control plane communications with the cloud management dashboard through corporate firewalls?",
@@ -5145,7 +6427,13 @@
         "text": "By requiring dedicated physical fiber circuits directly to the cloud provider's data center",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Cisco Catalyst Center (DNA Center) automation workflows, what is the purpose of the Network Plug and Play (PnP) agent embedded in Cisco IOS-XE devices?",
@@ -5171,7 +6459,13 @@
         "text": "It tests physical Ethernet cables for late collision faults",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In YAML syntax commonly used in Ansible playbooks, how are hierarchical structures, parent-child relationships, and nested dictionaries denoted?",
@@ -5197,7 +6491,13 @@
         "text": "Through semicolons at the end of each line",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "When using an AI assistant to analyze voluminous multi-megabyte router syslog files, what is 'Context Window Limit' and how does it impact diagnostic analysis?",
@@ -5223,7 +6523,13 @@
         "text": "The screen resolution limit of the monitoring console",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Git-based NetDevOps automation workflows, what is the role of a 'Pull Request' (PR) / Merge Request?",
@@ -5249,7 +6555,13 @@
         "text": "It forces all network switches to revert to factory default settings",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In network Infrastructure as Code (IaC), what is 'Configuration Drift'?",
@@ -5275,7 +6587,13 @@
         "text": "The fluctuation of radio frequency channels in Wi-Fi networks",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What is 'Zero-Shot Prompting' when using a Large Language Model (LLM) for network automation or troubleshooting?",
@@ -5301,7 +6619,13 @@
         "text": "Deploying automation without running unit tests",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which HTTP request method is used in RESTful APIs to retrieve configuration or operational data from a network controller without modifying server state?",
@@ -5327,7 +6651,13 @@
         "text": "DELETE",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "In Model-Driven Telemetry, what is the difference between 'cadence-based' (periodic) telemetry and 'on-change' (event-driven) telemetry?",
@@ -5353,7 +6683,13 @@
         "text": "Cadence-based requires an optical fiber connection; on-change requires Wi-Fi",
         "is_correct": false
       }
-    ]
+    ],
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which data encoding format is strictly whitespace/indentation-sensitive and commonly used for human-readable Ansible playbooks and Docker Compose configuration files?",
@@ -5380,7 +6716,13 @@
         "is_correct": false
       }
     ],
-    "_file": "pipeline/batches/seed-24-volume.json"
+    "_file": "pipeline/batches/seed-24-volume.json",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "What character sequence is used in JSON (JavaScript Object Notation) to enclose an ordered collection of values (an array)?",
@@ -5407,7 +6749,13 @@
         "is_correct": false
       }
     ],
-    "_file": "pipeline/batches/seed-24-volume.json"
+    "_file": "pipeline/batches/seed-24-volume.json",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which configuration management tool is agentless, uses SSH for communication with Cisco IOS-XE devices, and executes human-readable tasks written in YAML playbooks?",
@@ -5434,7 +6782,13 @@
         "is_correct": false
       }
     ],
-    "_file": "pipeline/batches/seed-25-volume.json"
+    "_file": "pipeline/batches/seed-25-volume.json",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   },
   {
     "stem": "Which transport protocol and standard TCP destination port does the Network Configuration Protocol (NETCONF) use to establish secure management sessions to devices?",
@@ -5461,6 +6815,12 @@
         "is_correct": false
       }
     ],
-    "_file": "pipeline/batches/seed-32-volume.json"
+    "_file": "pipeline/batches/seed-32-volume.json",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null
   }
 ]

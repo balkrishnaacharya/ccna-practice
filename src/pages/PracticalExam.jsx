@@ -110,6 +110,13 @@ export default function PracticalExam() {
           <p className="whitespace-pre-line text-sm leading-relaxed text-paper-muted font-sans">{activeScenario.description}</p>
 
           <div className="space-y-2 border-t border-dark-borderSubtle pt-4">
+          {/* Exhibit Preview */}
+          {activeScenario.exhibit && (
+            <details className="mt-3 border-t border-dark-borderSubtle pt-3">
+              <summary className="cursor-pointer text-xs font-medium text-peach uppercase tracking-wider">Exhibit {activeScenario.exhibit.type.replace("_", " ")}</summary>
+              <pre className="mt-2 text-xs text-paper-muted font-mono select-none whitespace-pre">{activeScenario.exhibit.content}</pre>
+            </details>
+          )}
             <h3 className="text-xs font-semibold uppercase tracking-wider text-paper-dim">Objectives</h3>
             {activeScenario.validationRules.map((item) => {
               const graded = results?.[activeIndex]?.objectives.find((objective) => objective.id === item.id);
@@ -129,14 +136,14 @@ export default function PracticalExam() {
               <button
                 disabled={activeIndex === 0}
                 onClick={() => setActiveIndex((n) => n - 1)}
-                className="rounded-full border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25"
+                className="rounded-full min-h-[48px] border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25"
               >
                 Previous
               </button>
               <button
                 disabled={activeIndex === scenarios.length - 1}
                 onClick={() => setActiveIndex((n) => n + 1)}
-                className="rounded-full border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25"
+                className="rounded-full min-h-[48px] border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25"
               >
                 Next
               </button>
@@ -144,7 +151,7 @@ export default function PracticalExam() {
             {!results ? (
               <button
                 onClick={gradeExam}
-                className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg uppercase tracking-wider shadow-gold-glow transition-all"
+                className="rounded-full min-h-[48px] bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg uppercase tracking-wider shadow-gold-glow transition-all"
               >
                 Grade Simulation
               </button>
@@ -203,7 +210,7 @@ export default function PracticalExam() {
               </div>
               <button
                 onClick={() => setShowScoreboard(false)}
-                className="rounded-full border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface"
+                className="rounded-full min-h-[48px] border border-dark-border px-4 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface"
               >
                 Close
               </button>

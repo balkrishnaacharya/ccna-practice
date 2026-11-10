@@ -45,6 +45,8 @@ export default function Quiz() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [hasPendingFlags, setHasPendingFlags] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
+  const [confidence, setConfidence] = useState(""); // "guessed" | "unsure" | "confident"
+  const [timerRemaining, setTimeRemaining] = useState(0);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
@@ -365,7 +367,10 @@ export default function Quiz() {
         </div>
       ) : !question ? (
         <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
-          <p className="text-paper-muted text-sm font-sans">No questions available for this mode.</p>
+          <p className="text-paper-muted text-sm font-sans">
+              {mode === "review"
+                ? "Nothing is due for review right now. Answer a few questions first, then come back."
+                : "No questions available for this mode."}
           <button
             onClick={loadQuestion}
             className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
@@ -503,14 +508,14 @@ export default function Quiz() {
                 <button
                   onClick={submit}
                   disabled={selected.length === 0}
-                  className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
+                  className="w-full sm:w-auto px-7 min-h-[48px] py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
                 >
                   Submit Answer
                 </button>
               ) : (
                 <button
                   onClick={loadQuestion}
-                  className="w-full sm:w-auto px-7 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
+                  className="w-full sm:w-auto px-7 min-h-[48px] py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
                 >
                   Next Question →
                 </button>
@@ -535,6 +540,45 @@ export default function Quiz() {
                 <p className="text-sm text-paper leading-relaxed pt-1 font-sans">
                   {feedback.explanation}
                 </p>
+                {/* Confidence rating */}
+                <div className="mt-3 flex gap-2">
+                  <label
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted hover:border-gold/40 hover:text-gold transition-all"
+                    radioGroup="confidence"
+                    value="guessed"
+                    checked={confidence === "guessed"}
+                    onChange={(e) => setConfidence("guessed")}
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.08m.08-.03.15m4.92-4.92h.08m.08-.03-.15m4.92-4.92h.08m.08-.03-.15m-5.66 5.66h.08m.08-.03.15m4.92-4.92h.08m.08-.03-.15m-5.66 5.66h.08m.08-.03.15"/>
+                    </svg>
+                    Guessed
+                  </label>
+                  <label
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted hover:border-gold/40 hover:text-gold transition-all"
+                    radioGroup="confidence"
+                    value="unsure"
+                    checked={confidence === "unsure"}
+                    onChange={(e) => setConfidence("unsure")}
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15h.01m-3.01.41m3.01-.41m2.08 1.92h.08m.08.03.15m6.92-6.92h.08m.08-.03-.15m6.92-6.92h.08m.08-.03-.15m-2.08-1.92h.08m.08-.03-.15m6.92-6.92h.08m.08.03.15m-6.92 6.92h.08m.08.03.15"/>
+                    </svg>
+                    Unsure
+                  </label>
+                  <label
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold border-gold text-xs font-medium text-dark-bg hover:text-paper hover:border-gold/40 transition-all"
+                    radioGroup="confidence"
+                    value="confident"
+                    checked={confidence === "confident"}
+                    onChange={(e) => setConfidence("confident")}
+                  >
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 1v2m0 12v-2m6 0h.01m-6 0h.01m0 12v-2m6 0h.01m-6 0h.01m0 12v-2"/>
+                    </svg>
+                    Confident
+                  </label>
+                </div>
               </div>
             )}
           </div>

@@ -153,6 +153,7 @@ pub fn init(path: &Path) -> Result<Connection> {
         ("interval_days", "ALTER TABLE user_question_stats ADD COLUMN interval_days INTEGER NOT NULL DEFAULT 0"),
         ("repetitions", "ALTER TABLE user_question_stats ADD COLUMN repetitions INTEGER NOT NULL DEFAULT 0"),
         ("next_review_at", "ALTER TABLE user_question_stats ADD COLUMN next_review_at INTEGER NOT NULL DEFAULT 0"),
+        ("confidence", "ALTER TABLE user_question_stats ADD COLUMN confidence TEXT NOT NULL DEFAULT 'unsure'"),
     ] {
         let exists: i64 = conn
             .query_row(
