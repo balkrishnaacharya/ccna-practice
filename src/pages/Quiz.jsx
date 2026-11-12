@@ -291,7 +291,7 @@ export default function Quiz() {
       {isDrilling && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-semibold uppercase tracking-wider text-gold">
+            <span className="font-semibold text-gold">
               Topic Drill
             </span>
             <span className="text-paper font-sans">{drillSubtopic || "All subtopics"}</span>
@@ -354,7 +354,7 @@ export default function Quiz() {
             to="/topics"
             className="text-xs font-medium text-gold hover:underline"
           >
-            Browse topics to drill a subtopic →
+            Browse topics to drill a subtopic
           </Link>
         </div>
       </div>
@@ -388,7 +388,7 @@ export default function Quiz() {
           <div className="flex flex-wrap justify-between items-start gap-4">
             <div ref={stemContainerRef} className="space-y-3 max-w-3xl">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                   {question.domain.replace(/_/g, " ")}
                 </span>
                 <span className="text-xs font-medium tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
@@ -409,10 +409,10 @@ export default function Quiz() {
             <div className="relative shrink-0">
               <button
                 onClick={handleToggleFlag}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-150 ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border ${
                   isFlagged
                     ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
-                    : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
+                    : "bg-dark-surface text-paper-muted border-dark-border text-paper"
                 }`}
                 title={isFlagged ? "Click to unflag" : "Flag this question"}
               >
@@ -463,10 +463,10 @@ export default function Quiz() {
                 return (
                   <label
                     key={c.id}
-                    className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer transition-all duration-200 ${
+                    className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer ${
                       isChecked
                         ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
-                        : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
+                        : "border-dark-border bg-dark-surface/60 text-paper-muted"
                     } ${feedback ? "pointer-events-none" : ""}`}
                   >
                     <div className="flex items-start">
@@ -482,7 +482,7 @@ export default function Quiz() {
                       <input
                         type={inputType}
                         name={`q-${question.id}`}
-                        className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
+                        className={`mt-0.5 mr-3.5 text-gold focus:ring-gold ${
                           inputType === "checkbox" ? "rounded" : ""
                         }`}
                         checked={isChecked}
@@ -517,7 +517,7 @@ export default function Quiz() {
                   onClick={loadQuestion}
                   className="w-full sm:w-auto px-7 min-h-[48px] py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
                 >
-                  Next Question →
+                  Next Question
                 </button>
               )}
             </div>
@@ -543,7 +543,7 @@ export default function Quiz() {
                 {/* Confidence rating */}
                 <div className="mt-3 flex gap-2">
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted hover:border-gold/40 hover:text-gold transition-all"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted"
                     radioGroup="confidence"
                     value="guessed"
                     checked={confidence === "guessed"}
@@ -555,7 +555,7 @@ export default function Quiz() {
                     Guessed
                   </label>
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted hover:border-gold/40 hover:text-gold transition-all"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted"
                     radioGroup="confidence"
                     value="unsure"
                     checked={confidence === "unsure"}
@@ -567,7 +567,7 @@ export default function Quiz() {
                     Unsure
                   </label>
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold border-gold text-xs font-medium text-dark-bg hover:text-paper hover:border-gold/40 transition-all"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold border-gold text-xs font-medium text-dark-bg"
                     radioGroup="confidence"
                     value="confident"
                     checked={confidence === "confident"}
