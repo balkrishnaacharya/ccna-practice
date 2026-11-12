@@ -54,29 +54,6 @@ export default function Quiz() {
 
   const navigate = useNavigate();
 
-  // Parallax Stack Transition when question updates
-  useEffect(() => {
-    if (!question || !cardContainerRef.current) return;
-
-    const tl = gsap.timeline({ defaults: { ease: "power2.out", force3D: true } });
-    // Outer card enters from bottom
-    tl.fromTo(
-      cardContainerRef.current,
-      { opacity: 0, y: 35 },
-      { opacity: 1, y: 0, duration: 0.25 }
-    );
-
-    // Inner stem moves with subtle parallax speed difference
-    if (stemContainerRef.current) {
-      tl.fromTo(
-        stemContainerRef.current,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.25 },
-        "-=0.15"
-      );
-    }
-  }, [question, cardContainerRef]),
-
   // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
   useGSAP(
     () => {
@@ -137,20 +114,6 @@ export default function Quiz() {
   }, [mode, question?.id]);
 
   async function loadQuestion() {
-    // Animate old card sliding up and fading out if exists
-    if (cardContainerRef.current && question) {
-      await new Promise((resolve) => {
-        gsap.to(cardContainerRef.current, {
-          opacity: 0,
-          y: -20,
-          duration: 0.18,
-          ease: "power2.in",
-          force3D: true,
-          onComplete: resolve,
-        });
-      });
-    }
-
     setLoading(true);
     setFeedback(null);
     setSelected([]);
