@@ -101,10 +101,8 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       <div
         ref={heroRef}
         data-tour="home-welcome"
-        className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-dark-surface via-dark-card to-[#2A2A23] border border-dark-border shadow-dock relative overflow-hidden"
+        className="rounded-2xl p-6 sm:p-8 bg-dark-panel border border-dark-border shadow-dock relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold tracking-wider uppercase">

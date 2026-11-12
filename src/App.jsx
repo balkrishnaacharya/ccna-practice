@@ -115,7 +115,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-bg text-paper flex flex-col font-sans selection:bg-gold/30 selection:text-paper relative overflow-x-hidden">
+    <div className="min-h-screen bg-dark-bg text-ink flex flex-col font-sans selection:bg-accent/30 selection:text-ink relative overflow-x-hidden">
       {/* Background Organic Mesh Blobs */}
       <OrganicMeshBackground />
 

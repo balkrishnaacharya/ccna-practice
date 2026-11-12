@@ -5,7 +5,8 @@ export default {
     extend: {
       colors: {
         dark: {
-          bg: "#181815",
+          bg: "#0E1118",
+          panel: "#171D25",
           surface: "#21211D",
           card: "#262622",
           elevated: "#2E2E28",
@@ -17,6 +18,12 @@ export default {
           muted: "rgba(246, 242, 233, 0.70)",
           dim: "rgba(246, 242, 233, 0.60)",
           faint: "rgba(246, 242, 233, 0.20)",
+        },
+        ink: "#E8EEF5",
+        muted: "#7C8A97",
+        text: {
+          ink: "#E8EEF5",
+          muted: "#7C8A97",
         },
         gold: {
           DEFAULT: "#BD8D39",
@@ -41,7 +48,10 @@ export default {
           light: "#F0B891",
           muted: "rgba(232, 168, 124, 0.20)",
         },
-        accent: "#BD8D39",
+        accent: {
+          DEFAULT: "#BD8D39",
+          gold: "#C9A227",
+        },
       },
       fontFamily: {
         serif: ['Georgia', '"Iowan Old Style"', '"Palatino Linotype"', '"Book Antiqua"', '"Times New Roman"', 'serif'],
