@@ -1,12 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from "react-router-dom";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StreakPanel from "../components/StreakPanel";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Dashboard({ profileName, onOpenExamModal }) {
   const [stats, setStats] = useState(null);
@@ -15,9 +10,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [reviewDue, setReviewDue] = useState(0);
   const navigate = useNavigate();
 
-  const containerRef = useRef(null);
-  const domainContainerRef = useRef(null);
-  const heroRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     invoke("get_stats").then(setStats).catch(console.error);
@@ -31,44 +24,6 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       .then((n) => setReviewDue(n || 0))
       .catch(console.error);
   }, []);
-
-  useGSAP(
-    () => {
-      if (!stats) return;
-
-      // Animate Hero entrance
-      if (heroRef.current) {
-        gsap.fromTo(
-          heroRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", force3D: true }
-        );
-      }
-
-      // Parallax scroll on domain breakdown items
-      const cards = gsap.utils.toArray(".domain-row", containerRef.current);
-      cards.forEach((card, i) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.35,
-            delay: i * 0.05,
-            ease: "power2.out",
-            force3D: true,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 95%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-    },
-    { scope: containerRef, dependencies: [stats] }
-  );
 
   if (!stats) {
     return (
@@ -99,13 +54,12 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
     <div ref={containerRef} className="space-y-8 pb-12">
       {/* Greeting Banner */}
       <div
-        ref={heroRef}
         data-tour="home-welcome"
         className="rounded-2xl p-6 sm:p-8 bg-dark-panel border border-dark-border shadow-dock relative overflow-hidden"
       >
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
               CCNA 2.0 Editorial Platform
             </div>
@@ -130,25 +84,25 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             <button
               type="button"
               onClick={onOpenExamModal || (() => navigate("/exam"))}
-              className="px-6 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold text-xs tracking-wider uppercase rounded-full shadow-gold-glow transition-all duration-200 transform hover:scale-105 active:scale-95"
+              className="px-6 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold text-xs rounded-full shadow-gold-glow transition-all duration-200 transform hover:scale-105 active:scale-95"
             >
-              Start Full Exam (120m) →
+              Start Full Exam
             </button>
             <Link
               to="/quiz"
-              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-semibold tracking-wider uppercase rounded-full border border-dark-border transition-colors duration-150"
+              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-medium rounded-full border border-dark-border transition-colors duration-150"
             >
               Practice Quiz
             </Link>
             <Link
               to="/topics"
-              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-semibold tracking-wider uppercase rounded-full border border-dark-border transition-colors duration-150"
+              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-medium rounded-full border border-dark-border transition-colors duration-150"
             >
               Drill a Topic
             </Link>
             <Link
               to="/notes"
-              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-semibold tracking-wider uppercase rounded-full border border-dark-border transition-colors duration-150"
+              className="px-5 py-3 bg-dark-surface hover:bg-dark-elevated text-paper-muted hover:text-paper text-xs font-medium rounded-full border border-dark-border transition-colors duration-150"
             >
               Subnetting & Notes
             </Link>
@@ -163,12 +117,14 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           value={stats.total}
           subtitle={`${Math.min(100, Math.round((stats.total / 2000) * 100))}% of 2,000 goal`}
           icon="📚"
+          variant="soft"
         />
         <StatCard
           label="Answered"
           value={stats.answered}
           subtitle="lifetime questions"
           icon="✍️"
+          variant="panel"
         />
         <StatCard
           label="Correct Answers"
@@ -176,6 +132,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           subtitle={`${stats.answered > 0 ? ((stats.correct / stats.answered) * 100).toFixed(0) : 0}% of answered`}
           icon="✅"
           accent="sage"
+          variant="soft"
         />
         <StatCard
           label="Accuracy"
@@ -184,6 +141,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           highlight={stats.accuracy >= 82.5}
           icon="🎯"
           accent={stats.accuracy >= 82.5 ? "sage" : "gold"}
+          variant="accent"
         />
       </div>
 
@@ -192,7 +150,6 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
       {/* Blueprint Domains & Quick Actions - Responsive: stack vertically on mobile, 3 cols on desktop */}
       <div
-        ref={domainContainerRef}
         data-tour="exam-blueprint"
         className="flex flex-col lg:grid lg:grid-cols-3 gap-6"
       >
@@ -207,7 +164,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
                 Weighted blueprint allocation across the syllabus
               </p>
             </div>
-            <span className="text-xs text-gold font-mono bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+            <span className="text-xs text-gold font-sans bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
               5 Domains
             </span>
           </div>
@@ -224,7 +181,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
                 <div key={d.domain} className="domain-row space-y-2">
                   <div className="flex justify-between items-baseline text-xs">
                     <span className="text-paper font-medium font-sans">{friendlyName}</span>
-                    <span className="text-paper-dim font-mono">
+                    <span className="text-paper-dim font-sans">
                       {d.count} questions ({pct}%)
                     </span>
                   </div>
@@ -244,7 +201,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         <div className="space-y-4">
           <div
             data-tour="weak-areas"
-            className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3"
+            className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
@@ -296,24 +253,24 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             )}
             <Link
               to="/quiz?mode=weak"
-              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-full transition-colors duration-150"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-gold bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-full transition-colors duration-150"
             >
-              Drill Weak Spots →
+              Drill Weak Spots
             </Link>
             <Link
               to="/topics"
               className="block w-full text-center text-xs font-medium text-paper-dim hover:text-gold transition-colors"
             >
-              Browse all topics →
+              Browse all topics
             </Link>
           </div>
 
-          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+          <div className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
                 Flagged for Review
               </h3>
-              <span className="text-xs font-mono font-semibold text-peach bg-peach/15 px-2.5 py-0.5 rounded-full border border-peach/30">
+              <span className="text-xs font-sans font-semibold text-peach bg-peach/15 px-2.5 py-0.5 rounded-full border border-peach/30">
                 {flagCount} Qs
               </span>
             </div>
@@ -322,21 +279,21 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             </p>
             <Link
               to="/review"
-              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-peach bg-peach/10 hover:bg-peach/20 border border-peach/30 rounded-full transition-colors duration-150"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-peach bg-peach/10 hover:bg-peach/20 border border-peach/30 rounded-full transition-colors duration-150"
             >
-              Open Review Queue →
+              Open Review Queue
             </Link>
           </div>
 
           <div
             data-tour="spaced-review"
-            className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3"
+            className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
                 Spaced Review
               </h3>
-              <span className="text-xs font-mono font-semibold text-gold bg-gold/15 px-2.5 py-0.5 rounded-full border border-gold/30">
+              <span className="text-xs font-sans font-semibold text-gold bg-gold/15 px-2.5 py-0.5 rounded-full border border-gold/30">
                 {reviewDue} due
               </span>
             </div>
@@ -346,18 +303,18 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             </p>
             <Link
               to="/quiz?mode=review"
-              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
             >
-              Start Review →
+              Start Review
             </Link>
           </div>
 
-          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+          <div className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-serif text-lg font-semibold text-paper">
                 Study Notes & Calculators
               </h3>
-              <span className="text-xs font-mono font-semibold text-sage-light bg-sage/15 px-2.5 py-0.5 rounded-full border border-sage/30">
+              <span className="text-xs font-sans font-semibold text-sage-light bg-sage/15 px-2.5 py-0.5 rounded-full border border-sage/30">
                 IPv4 Tool
               </span>
             </div>
@@ -366,13 +323,13 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             </p>
             <Link
               to="/notes"
-              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-sage-light bg-sage/10 hover:bg-sage/20 border border-sage/30 rounded-full transition-colors duration-150"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-sage-light bg-sage/10 hover:bg-sage/20 border border-sage/30 rounded-full transition-colors duration-150"
             >
-              Open Subnet Calculator →
+              Open Subnet Calculator
             </Link>
           </div>
 
-          <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-3">
+          <div className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3">
             <h3 className="font-serif text-lg font-semibold text-paper">
               CCNA 2.0 Exam Standards
             </h3>
@@ -397,7 +354,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             <button
               type="button"
               onClick={onOpenExamModal || (() => navigate("/exam"))}
-              className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider uppercase text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
             >
               Simulate Full Exam
             </button>
@@ -408,17 +365,27 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   );
 }
 
-function StatCard({ label, value, subtitle, highlight, icon, accent }) {
+function StatCard({ label, value, subtitle, highlight, icon, accent, variant }) {
   let valColor = "text-paper";
   if (accent === "sage" || highlight) valColor = "text-sage-light";
   else if (accent === "gold") valColor = "text-gold";
 
+  const base = "p-5 bg-dark-card space-y-2 border border-dark-border";
+  const radius =
+    variant === "soft" ? "rounded-xl" : variant === "accent" ? "rounded-2xl" : "rounded-xl";
+  const extra =
+    variant === "panel"
+      ? "shadow-dock"
+      : variant === "accent"
+        ? "border-gold/30"
+        : "border-dark-borderSubtle";
+
   return (
-    <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-2 hover:border-gold/30 transition-all duration-200">
+    <div className={`${base} ${radius} ${extra}`}>
       <div className="flex items-center justify-between">
         <span className="text-lg">{icon}</span>
         {subtitle && (
-          <p className="text-xs text-paper-dim truncate max-w-[120px] font-mono">
+          <p className="text-xs text-paper-dim truncate max-w-[120px] font-sans">
             {subtitle}
           </p>
         )}
@@ -426,9 +393,7 @@ function StatCard({ label, value, subtitle, highlight, icon, accent }) {
       <p className={`font-serif text-3xl font-semibold tracking-tight ${valColor}`}>
         {value}
       </p>
-      <p className="text-xs font-medium uppercase tracking-wider text-paper-muted pt-0.5">
-        {label}
-      </p>
+      <p className="text-xs font-medium text-paper-muted pt-0.5">{label}</p>
     </div>
   );
 }
