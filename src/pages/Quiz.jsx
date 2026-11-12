@@ -334,6 +334,7 @@ export default function Quiz() {
               {mode === "review"
                 ? "Nothing is due for review right now. Answer a few questions first, then come back."
                 : "No questions available for this mode."}
+          </p>
           <button
             onClick={loadQuestion}
             className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"

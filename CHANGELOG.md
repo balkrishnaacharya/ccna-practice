@@ -2,7 +2,7 @@
 
 All notable changes to CCNA 2.0 Practice are documented here.
 
-## Unreleased
+## [0.5.0] - 2026-11-12
 
 ### Question bank
 - Grew the bank from ~1,900 to **2,007 unique questions** across the 5 CCNA 2.0 domains

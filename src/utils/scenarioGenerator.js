@@ -213,17 +213,17 @@ function portSecurityScenario() {
 
 
 function bgpScenario() {
-  const as = rand(1, 65535); const peerAs = rand(1, 65535); const peerIp = \`192.0.2.${rand(1, 254)}\`; const network = \`10.${rand(1, 10)}.${rand(1, 254)}.0\`; const mask = \`255.255.255.0\`;
-  const r1 = device("R1", {}, { acls: {}, bgp: { as, routers: [{ address: \`192.0.2.1\`, peerAs }] }, routes: [] });
+  const as = rand(1, 65535); const peerAs = rand(1, 65535); const peerIp = `192.0.2.${rand(1, 254)}`; const network = `10.${rand(1, 10)}.${rand(1, 254)}.0`; const mask = `255.255.255.0`;
+  const r1 = device("R1", {}, { acls: {}, bgp: { as, routers: [{ address: `192.0.2.1`, peerAs }] }, routes: [] });
   const r2 = device("R2", {}, { acls: {}, bgp: { as: peerAs, routers: [{ address: peerIp, as: as }] }, routes: [] });
   const check = (ds) => {
     const r1bgp = ds.R1.bgp; const r2bgp = ds.R2.bgp;
     const r1HasPeer = r1bgp.routers.some((r) => r.address === peerIp && r.peerAs === as);
-    const r2HasPeer = r2bgp.routers.some((r) => r.address === \`192.0.2.1\` && r.peerAs === as);
+    const r2HasPeer = r2bgp.routers.some((r) => r.address === `192.0.2.1` && r.peerAs === as);
     return r1HasPeer && r2HasPeer;
   };
-  const expected = \`Configure BGP AS \${as} on both routers, add neighbor \${peerIp} with AS \${peerAs}, and advertise network \${network}/${mask}.\`;
-  return { title: "BGP neighbor and network advertisement", domain: "ip_routing", description: \`R1 and R2 cannot exchange routes via BGP. \${expected}\`, devices: { R1: r1, R2: r2 }, validationRules: [rule("bgp-neighbor", "BGP neighbor adjacency between R1 and R2", "R1 / R2", check)] };
+  const expected = `Configure BGP AS ${as} on both routers, add neighbor ${peerIp} with AS ${peerAs}, and advertise network ${network}/${mask}.`;
+  return { title: "BGP neighbor and network advertisement", domain: "ip_routing", description: `R1 and R2 cannot exchange routes via BGP. ${expected}`, devices: { R1: r1, R2: r2 }, validationRules: [rule("bgp-neighbor", "BGP neighbor adjacency between R1 and R2", "R1 / R2", check)] };
 }
 
 function routeRedistributionScenario() {
@@ -235,47 +235,47 @@ function routeRedistributionScenario() {
     return r1routes.length > 0 && r2routes.length > 0 && !!redistributesOspf;
   };
   const expected = "Configure OSPF redistribution into BGP on R1, and EIGRP into OSPF on R2, so connected routes are shared across domains.";
-  return { title: "Route redistribution between OSPF and BGP", domain: "ip_routing", description: \`R1 learns OSPF routes but they are not present in R2's routing table. \${expected}\`, devices: { R1: r1, R2: r2 }, validationRules: [rule("redistribution", "OSPF and BGP redistribution configured", "R1 / R2", check)] };
+  return { title: "Route redistribution between OSPF and BGP", domain: "ip_routing", description: `R1 learns OSPF routes but they are not present in R2's routing table. ${expected}`, devices: { R1: r1, R2: r2 }, validationRules: [rule("redistribution", "OSPF and BGP redistribution configured", "R1 / R2", check)] };
 }
 
 function natOverflowScenario() {
-  const insidePool = \`10.${rand(10, 99)}.${rand(1, 254)}.0\${rand(1, 254)}/24";
-  const insideInside = \`10.${rand(1, 20)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}\`;
+  const insidePool = `10.${rand(10, 99)}.${rand(1, 254)}.0${rand(1, 254)}/24`;
+  const insideInside = `10.${rand(1, 20)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}`;
   const r1 = device("R1", {}, { nat: { static: [], overload: [] }, acls: {} });
   const check = (ds) => {
     const natInside = ds.R1.nat.inside || []; const natOverload = ds.R1.nat.overload || [];
-    const insideMatches = natInside.some((i) => i.ip === \`${insideInside}\`);
+    const insideMatches = natInside.some((i) => i.ip === `${insideInside}`);
     return natInside.length > 0 && insideMatches;
   };
-  const expected = \`Configure NAT inside source list with pool \${insidePool} for host \${insideInside}.\`;
-  return { title: "NAT inside misconfiguration", domain: "services_security", description: \`Host \${insideInside} cannot reach the Internet. NAT inside source list is missing or incorrectly configured. \${expected}\`, devices: { R1: r1 }, validationRules: [rule("nat-inside", "NAT inside source list configured with correct pool", "R1", check)] };
+  const expected = `Configure NAT inside source list with pool ${insidePool} for host ${insideInside}.`;
+  return { title: "NAT inside misconfiguration", domain: "services_security", description: `Host ${insideInside} cannot reach the Internet. NAT inside source list is missing or incorrectly configured. ${expected}`, devices: { R1: r1 }, validationRules: [rule("nat-inside", "NAT inside source list configured with correct pool", "R1", check)] };
 }
 
 function dhcpSnoopingScenario() {
   const r1 = device("R1", {}, { dhcpPools: {}, dhcpBindings: {}, acls: {} });
-  r1.interfaces = { GigabitEthernet0/0: { mode: "trunk", helperAddress: null, ip: "10.0.0.1", mask: "255.255.255.0" } };
+  r1.interfaces = { "GigabitEthernet0/0": { mode: "trunk", helperAddress: null, ip: "10.0.0.1", mask: "255.255.255.0" } };
   r1.mode = "user";
   const check = (ds) => {
-    const bindings = ds.R1.dhcpBindings || []; const helper = ds.R1.interfaces?.GigabitEthernet0/0?.helperAddress; return bindings.length > 0 && helper === "10.0.0.2";
+    const bindings = ds.R1.dhcpBindings || []; const helper = ds.R1.interfaces?.["GigabitEthernet0/0"]?.helperAddress; return bindings.length > 0 && helper === "10.0.0.2";
   };
   const expected = "Enable DHCP snooping with helper address 10.0.0.2 on the upstream VLAN.";
-  return { title: "DHCP snooping helper address", domain: "switching", description: \`DHCP snooping is not filtering untrusted messages. \${expected}\`, devices: { R1: r1 }, validationRules: [rule("dhcp-snooping", "DHCP snooping with helper address configured", "R1", check)] };
+  return { title: "DHCP snooping helper address", domain: "switching", description: `DHCP snooping is not filtering untrusted messages. ${expected}`, devices: { R1: r1 }, validationRules: [rule("dhcp-snooping", "DHCP snooping with helper address configured", "R1", check)] };
 }
 
 function vlanTrunkScenario() {
-  const native = rand(2, 50); const allowed = rand(10, 90); let required = rand(1, 20); if (required === native) required = required === 90 ? 89 : required + 1; const vlans = [{ id: 1, name: "default", status: "active" }, { id: native, name: "USERS", status: "active" }, { id: required, name: "VOICE", status: "active" }]; const sw1 = device("SW1", { "GigabitEthernet0/1": makeInterface("GigabitEthernet0/1", { switchportMode: "trunk", nativeVlan: native, allowedVlans: [1, native, required] }) }, { vlans: vlans }); const sw2 = device("SW2", { "GigabitEthernet0/1": makeInterface("GigabitEthernet0/1", { switchportMode: "trunk", nativeVlan: native, allowedVlans: [1, native, required] }) }, { vlans: sw1.vlans.map((v) => ({ ...v })) }); const check = (ds) => { const a = ds.SW1.interfaces["GigabitEthernet0/1"]; const b = ds.SW2.interfaces["GigabitEthernet0/1"]; return a.switchportMode === "trunk" && b.switchportMode === "trunk" && a.nativeVlan === native && b.nativeVlan === native && a.allowedVlans.includes(required) && b.allowedVlans.includes(required); }; const expected = \`Configure matching native VLAN (\${native}) and allowed VLAN list (including VLAN \${required}) on both SW1 and SW2 trunks."; return { title: "802.1Q trunk misconfiguration", domain: "switching", description: \`Hosts on VLAN \${required} cannot cross the SW1-SW2 trunk. Verify matching native VLAN and allowed VLANs on both switches. \${expected}\`, devices: { SW1: sw1, SW2: sw2 }, validationRules: [rule("trunk-vlans", "Matching native and allowed VLANs on trunk", "SW1 / SW2", check)] };
+  const native = rand(2, 50); const allowed = rand(10, 90); let required = rand(1, 20); if (required === native) required = required === 90 ? 89 : required + 1; const vlans = [{ id: 1, name: "default", status: "active" }, { id: native, name: "USERS", status: "active" }, { id: required, name: "VOICE", status: "active" }]; const sw1 = device("SW1", { "GigabitEthernet0/1": makeInterface("GigabitEthernet0/1", { switchportMode: "trunk", nativeVlan: native, allowedVlans: [1, native, required] }) }, { vlans: vlans }); const sw2 = device("SW2", { "GigabitEthernet0/1": makeInterface("GigabitEthernet0/1", { switchportMode: "trunk", nativeVlan: native, allowedVlans: [1, native, required] }) }, { vlans: sw1.vlans.map((v) => ({ ...v })) }); const check = (ds) => { const a = ds.SW1.interfaces["GigabitEthernet0/1"]; const b = ds.SW2.interfaces["GigabitEthernet0/1"]; return a.switchportMode === "trunk" && b.switchportMode === "trunk" && a.nativeVlan === native && b.nativeVlan === native && a.allowedVlans.includes(required) && b.allowedVlans.includes(required); }; const expected = `Configure matching native VLAN (${native}) and allowed VLAN list (including VLAN ${required}) on both SW1 and SW2 trunks.`; return { title: "802.1Q trunk misconfiguration", domain: "switching", description: `Hosts on VLAN ${required} cannot cross the SW1-SW2 trunk. Verify matching native VLAN and allowed VLANs on both switches. ${expected}`, devices: { SW1: sw1, SW2: sw2 }, validationRules: [rule("trunk-vlans", "Matching native and allowed VLANs on trunk", "SW1 / SW2", check)] };
 }
 
 function wirelessConfigScenario() {
-  const r1 = device("R1", {}, { caps: { ssid: "CCNA-Practice", auth: "WPA2", passphrase: "Cisco2024" }, acls: {} }); const r1.mode = "user"; const expected = "Verify SSID, authentication mode, and passphrase match across controller and APs."; return { title: "Wireless controller configuration", domain: "network_infra", description: \`Wireless clients cannot associate to SSID CCNA-Practice. \${expected}\`, devices: { R1: r1 }, validationRules: [rule("wireless-ssid", "SSID CCNA-Practice broadcast and authorized", "R1", check)] };
+  const r1 = device("R1", {}, { caps: { ssid: "CCNA-Practice", auth: "WPA2", passphrase: "Cisco2024" }, acls: {} }); r1.mode = "user"; const expected = "Verify SSID, authentication mode, and passphrase match across controller and APs."; return { title: "Wireless controller configuration", domain: "network_infra", description: `Wireless clients cannot associate to SSID CCNA-Practice. ${expected}`, devices: { R1: r1 }, validationRules: [rule("wireless-ssid", "SSID CCNA-Practice broadcast and authorized", "R1", check)] };
 }
 
 function aclExtendedScenario() {
-  const src = `${rand(1, 10)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}`; const dst = `${rand(1, 10)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}`; const r1 = device("R1", {}, { acls: { 101: [{ action: "permit", src, srcWildcard: "0.0.0.255", dst, dstWildcard: "0.0.0.255", proto: "tcp", dstPort: rand(1, 65535) }] }, mode: "user" }); const check = (ds) => { const entries = ds.R1.acls[101] || []; const hasPermit = entries.some((e) => e.action === "permit" && e.src === src && e.srcWildcard === "0.0.0.255" && e.dst === dst && e.dstWildcard === "0.0.0.255" && e.proto === "tcp" && e.dstPort === rand(1, 65535)); return hasPermit; }; const expected = \`Configure extended ACL 110 to permit TCP from \${src} to \${dst} on port \${rand(1, 65535)}."; return { title: "Extended ACL configuration", domain: "services_security", description: \`Hosts from \${src} cannot reach \${dst}. Extended ACL 101 is missing the required permit entry. \${expected}\`, devices: { R1: r1 }, validationRules: [rule("acl-extended", "Extended ACL 101 permits TCP source to destination", "R1", check)] };
+  const src = `${rand(1, 10)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}`; const dst = `${rand(1, 10)}.${rand(1, 254)}.${rand(1, 254)}.${rand(1, 254)}`; const r1 = device("R1", {}, { acls: { 101: [{ action: "permit", src, srcWildcard: "0.0.0.255", dst, dstWildcard: "0.0.0.255", proto: "tcp", dstPort: rand(1, 65535) }] }, mode: "user" }); const check = (ds) => { const entries = ds.R1.acls[101] || []; const hasPermit = entries.some((e) => e.action === "permit" && e.src === src && e.srcWildcard === "0.0.0.255" && e.dst === dst && e.dstWildcard === "0.0.0.255" && e.proto === "tcp" && e.dstPort === rand(1, 65535)); return hasPermit; }; const expected = `Configure extended ACL 110 to permit TCP from ${src} to ${dst} on port ${rand(1, 65535)}.`; return { title: "Extended ACL configuration", domain: "services_security", description: `Hosts from ${src} cannot reach ${dst}. Extended ACL 101 is missing the required permit entry. ${expected}`, devices: { R1: r1 }, validationRules: [rule("acl-extended", "Extended ACL 101 permits TCP source to destination", "R1", check)] };
 }
 
 function vtpScenario() {
-  const mode = pick(["server", "client", "transparent"]); const domain = pick(["CISCO", "CCNA-Practice", ""]); const r1 = device("R1", {}, { vtp: { mode, domain } }, { vlans: [{ id: 1, name: "default", status: "active" }] }); const expected = mode === "server" ? "VTP server mode: VLANs propagate to all clients in the domain." : mode === "client" ? "VTP client mode: VLANs learned from server, cannot create local VLANs." : "VTP transparent mode: VLANs configured locally do not propagate."; return { title: "VTP domain/mode mismatch", domain: "switching", description: \`VLANs are not propagating between switches. \${expected}\`, devices: { R1: r1 }, validationRules: [rule("vtp-domain", "VTP domain matches and mode is correct for VLAN propagation", "R1", check)] };
+  const mode = pick(["server", "client", "transparent"]); const domain = pick(["CISCO", "CCNA-Practice", ""]); const r1 = device("R1", {}, { vtp: { mode, domain } }, { vlans: [{ id: 1, name: "default", status: "active" }] }); const expected = mode === "server" ? "VTP server mode: VLANs propagate to all clients in the domain." : mode === "client" ? "VTP client mode: VLANs learned from server, cannot create local VLANs." : "VTP transparent mode: VLANs configured locally do not propagate."; return { title: "VTP domain/mode mismatch", domain: "switching", description: `VLANs are not propagating between switches. ${expected}`, devices: { R1: r1 }, validationRules: [rule("vtp-domain", "VTP domain matches and mode is correct for VLAN propagation", "R1", check)] };
 }
 
 const factories = [ospfScenario, ospfAreaScenario, trunkScenario, subnetScenario, ipv6Scenario, sshAclScenario, webAclScenario, bgpScenario, routeRedistributionScenario, etherchannelScenario, dhcpScenario, staticRouteScenario, portSecurityScenario, natScenario, sviScenario, discoveryScenario, aaaScenario, bgpScenario, routeRedistributionScenario];

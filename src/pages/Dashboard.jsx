@@ -10,8 +10,6 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [reviewDue, setReviewDue] = useState(0);
   const navigate = useNavigate();
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     invoke("get_stats").then(setStats).catch(console.error);
     invoke("get_subtopic_stats")

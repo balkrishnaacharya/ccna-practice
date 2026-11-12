@@ -18,7 +18,6 @@ fn record_question_stat(
     conn: &Connection,
     question_id: i64,
     correct: bool,
-    confidence: &str,
     seen_at: i64,
 ) -> Result<(), String> {
     // Fetch current SM-2 state (defaults for a never-seen question).
@@ -54,8 +53,8 @@ fn record_question_stat(
 
     conn.execute(
         "INSERT INTO user_question_stats (question_id, times_seen, times_correct, last_seen_at,
-                ease_factor, interval_days, repetitions, next_review_at, confidence)
-         VALUES (?1, 1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+                ease_factor, interval_days, repetitions, next_review_at)
+         VALUES (?1, 1, ?2, ?3, ?4, ?5, ?6, ?7)
          ON CONFLICT(question_id) DO UPDATE SET
            times_seen = times_seen + 1,
            times_correct = times_correct + excluded.times_correct,
@@ -63,8 +62,7 @@ fn record_question_stat(
            ease_factor = excluded.ease_factor,
            interval_days = excluded.interval_days,
            repetitions = excluded.repetitions,
-           next_review_at = excluded.next_review_at,
-           confidence = excluded.confidence",
+           next_review_at = excluded.next_review_at",
         params![
             question_id,
             if correct { 1 } else { 0 },
@@ -73,7 +71,6 @@ fn record_question_stat(
             new_interval,
             new_reps,
             next_review,
-            confidence,
         ],
     )
     .map_err(|e| e.to_string())?;
@@ -895,7 +892,7 @@ pub fn submit_answer_conn(payload: &SubmitPayload, conn: &Connection) -> Result<
         params![payload.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
     )
     .map_err(|e| e.to_string())?;
-    record_question_stat(conn, payload.question_id, is_correct, &payload.confidence, now)?";
+    record_question_stat(conn, payload.question_id, is_correct, now)?;
 
     Ok(SubmitResult {
         correct: is_correct,
@@ -1090,7 +1087,7 @@ pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResu
             params![session_id, item.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
         )
         .map_err(|e| e.to_string())?;
-        record_question_stat(&conn, item.question_id, is_correct, &item.confidence, now)?";
+        record_question_stat(&conn, item.question_id, is_correct, now)?;
 
         reviews.push(QuestionReviewResult {
             question_id: item.question_id,
