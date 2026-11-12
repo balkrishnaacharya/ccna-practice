@@ -64,7 +64,7 @@ export default function Quiz() {
         gsap.fromTo(
           feedbackRef.current,
           { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out", force3D: true }
+          { scale: 1, opacity: 1, duration: 0.2, ease: "power1.out", force3D: true }
         );
       } else {
         // Heart pulse + micro-shake
@@ -72,7 +72,7 @@ export default function Quiz() {
         tl.fromTo(
           feedbackRef.current,
           { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.15, ease: "power2.out" }
+          { scale: 1, opacity: 1, duration: 0.15, ease: "power1.out" }
         ).to(feedbackRef.current, {
           x: -4,
           duration: 0.05,
