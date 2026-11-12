@@ -382,16 +382,16 @@ export default function Quiz() {
         /* Practice Mode Card with Parallax Stack */
         <div
           ref={cardContainerRef}
-          className="border border-dark-border rounded-2xl p-6 sm:p-7 bg-dark-card shadow-dock space-y-6 will-change-transform"
+          className="border border-dark-border border-l-4 border-gold rounded-xl p-6 sm:p-7 bg-dark-card space-y-6"
         >
           {/* Header & Badges */}
           <div className="flex flex-wrap justify-between items-start gap-4">
             <div ref={stemContainerRef} className="space-y-3 max-w-3xl">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                <span className="text-xs font-semibold font-mono text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                   {question.domain.replace(/_/g, " ")}
                 </span>
-                <span className="text-xs font-medium tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                <span className="text-xs font-medium font-mono tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                   {question.difficulty}
                 </span>
                 {question.multi_select && (
@@ -400,7 +400,8 @@ export default function Quiz() {
                   </span>
                 )}
               </div>
-              <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper leading-relaxed pt-1">
+              <div className="border-b border-dark-borderSubtle pb-2" />
+              <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper text-left leading-relaxed pt-1">
                 {question.stem}
               </h2>
             </div>
