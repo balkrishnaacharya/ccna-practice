@@ -102,7 +102,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
         y: targetY,
         opacity: 1,
         duration: 0.25,
-        ease: "power2.out",
+        ease: "power1.out",
         force3D: true,
         overwrite: "auto",
       });
