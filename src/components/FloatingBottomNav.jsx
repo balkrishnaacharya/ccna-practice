@@ -164,7 +164,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
         {/* Continuous Sliding Background Active Pill (transform-only motion) */}
         <div
           ref={pillRef}
-          className="absolute top-0 left-0 rounded-full bg-gold/15 border border-gold/30 shadow-gold-glow pointer-events-none opacity-0 will-change-transform z-0"
+          className="absolute top-0 left-0 rounded-full bg-gold/20 pointer-events-none opacity-0 will-change-transform z-0"
         />
 
         {/* Left items (3 icons) */}
@@ -220,7 +220,7 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
               />
             </svg>
           </button>
-          <span className="text-[11px] uppercase tracking-wider font-semibold text-gold mt-0.5 select-none">
+          <span className="text-[11px] font-semibold text-gold mt-0.5 select-none">
             Exam
           </span>
         </div>
