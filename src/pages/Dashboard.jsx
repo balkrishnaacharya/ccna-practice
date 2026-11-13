@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from "react-router-dom";
 import StreakPanel from "../components/StreakPanel";
@@ -9,6 +9,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [flagCount, setFlagCount] = useState(0);
   const [reviewDue, setReviewDue] = useState(0);
   const navigate = useNavigate();
+  const containerRef = useRef(null);
 
   useEffect(() => {
     invoke("get_stats").then(setStats).catch(console.error);

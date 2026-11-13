@@ -5,7 +5,7 @@ const GITHUB_REPO = "balkrishnaacharya/ccna-practice";
 
 export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
   const [status, setStatus] = useState("idle"); // idle | checking | available | up-to-date | downloading | error
-  const [currentVersion, setCurrentVersion] = useState("0.4.0"); // fallback; overwritten by Tauri on mount
+  const [currentVersion, setCurrentVersion] = useState("0.5.1"); // fallback; overwritten by Tauri on mount
   const [updateInfo, setUpdateInfo] = useState(null);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
@@ -127,12 +127,14 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
       try {
         const { open } = await import("@tauri-apps/plugin-shell");
         await open(updateInfo.downloadUrl);
+        setShowModal(false);
+        return;
       } catch (err) {
-        console.warn("Shell open unavailable, falling back to window.open:", err);
-        window.open(updateInfo.downloadUrl, "_blank");
+        console.error("Failed to open APK download URL:", err);
+        setStatus("error");
+        setErrorMessage(`Could not open download link: ${err.message || err}. Try the manual GitHub release link below.`);
+        return;
       }
-      setShowModal(false);
-      return;
     }
 
     if (activeUpdateRef.current) {
@@ -170,11 +172,18 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
       try {
         const { open } = await import("@tauri-apps/plugin-shell");
         await open(updateInfo.downloadUrl);
+        setShowModal(false);
       } catch (err) {
         console.warn("Shell open unavailable, falling back to window.open:", err);
-        window.open(updateInfo.downloadUrl, "_blank");
+        try {
+          window.open(updateInfo.downloadUrl, "_blank");
+          setShowModal(false);
+        } catch (openErr) {
+          console.error("Failed to open update URL:", openErr);
+          setStatus("error");
+          setErrorMessage(`Could not open update link: ${openErr.message || openErr}. Visit GitHub releases manually.`);
+        }
       }
-      setShowModal(false);
     }
   }, [updateInfo]);
 
