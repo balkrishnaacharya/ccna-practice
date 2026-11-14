@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from "react-router-dom";
 import StreakPanel from "../components/StreakPanel";
 import ReadinessScore from "../components/analytics/ReadinessScore";
+import WeaknessHeatmap from "../components/analytics/WeaknessHeatmap";
 import { useReadiness } from "@/hooks/useReadiness";
 
 export default function Dashboard({ profileName, onOpenExamModal }) {
@@ -216,6 +217,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
       {/* Readiness Score */}
       <ReadinessScore score={readiness?.value} />
+
+      {/* Weakness Heatmap */}
+      <WeaknessHeatmap />
 
       {/* Blueprint Domains & Quick Actions - Responsive: stack vertically on mobile, 3 cols on desktop */}
       <div

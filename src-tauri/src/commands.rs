@@ -1609,6 +1609,55 @@ pub fn review_flashcard(payload: ReviewFlashcardPayload, db: State<Db>) -> Resul
     Ok(())
 }
 
+// ─── Weakness Heatmap ─────────────────────────────────────────────────────────
+
+#[derive(Serialize)]
+pub struct HeatmapCell {
+    pub subtopic: String,
+    pub date: String,
+    pub answered: i64,
+    pub correct: i64,
+    pub accuracy: f64,
+}
+
+#[tauri::command]
+pub fn get_heatmap_data(db: State<Db>) -> Result<Vec<HeatmapCell>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    // Last 7 days inclusive of today
+    let seven_days_ago = now_secs() - 7 * 86400;
+
+    let mut stmt = conn.prepare(
+        "SELECT q.subtopic,
+                 date(a.answered_at, 'unixepoch', 'localtime') AS day,
+                 COUNT(*) AS answered,
+                 COALESCE(SUM(a.correct), 0) AS correct
+          FROM answers a
+          JOIN questions q ON a.question_id = q.id
+          WHERE a.answered_at > 0 AND a.answered_at >= ?1
+          GROUP BY q.subtopic, day
+          ORDER BY q.subtopic, day",
+    ).map_err(|e| e.to_string())?;
+
+    let rows = stmt
+        .query_map(params![seven_days_ago], |r| {
+            let answered: i64 = r.get(2)?;
+            let correct: i64 = r.get(3)?;
+            let accuracy = if answered > 0 { (correct as f64 / answered as f64) * 100.0 } else { 0.0 };
+            Ok(HeatmapCell {
+                subtopic: r.get(0)?,
+                date: r.get(1)?,
+                answered,
+                correct,
+                accuracy,
+            })
+        }).map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .collect();
+
+    Ok(rows)
+}
+
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
