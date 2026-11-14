@@ -1658,6 +1658,48 @@ pub fn get_heatmap_data(db: State<Db>) -> Result<Vec<HeatmapCell>, String> {
     Ok(rows)
 }
 
+// ─── Question Notes ───────────────────────────────────────────────────────────
+
+#[derive(Serialize, Deserialize)]
+pub struct QuestionNote {
+    pub question_id: i64,
+    pub note: String,
+    pub updated_at: String,
+}
+
+#[derive(Deserialize)]
+pub struct SaveQuestionNotePayload {
+    pub question_id: i64,
+    pub note: String,
+}
+
+#[tauri::command]
+pub fn get_question_note(question_id: i64, db: State<Db>) -> Result<Option<String>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let note: Option<String> = conn
+        .query_row(
+            "SELECT note FROM question_notes WHERE question_id = ?1",
+            params![question_id],
+            |r| r.get(0),
+        )
+        .optional()
+        .map_err(|e| e.to_string())?;
+    Ok(note)
+}
+
+#[tauri::command]
+pub fn save_question_note(payload: SaveQuestionNotePayload, db: State<Db>) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    conn.execute(
+        "INSERT INTO question_notes (question_id, note, updated_at)
+         VALUES (?1, ?2, datetime('now'))
+         ON CONFLICT(question_id) DO UPDATE SET note = ?2, updated_at = datetime('now')",
+        params![payload.question_id, payload.note],
+    )
+    .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]

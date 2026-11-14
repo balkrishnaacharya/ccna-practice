@@ -65,6 +65,8 @@ pub fn run() {
             commands::create_flashcard,
             commands::review_flashcard,
             commands::get_heatmap_data,
+            commands::get_question_note,
+            commands::save_question_note,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

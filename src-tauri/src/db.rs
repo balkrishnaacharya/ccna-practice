@@ -71,6 +71,12 @@ pub fn init(path: &Path) -> Result<Connection> {
             created_at TEXT NOT NULL DEFAULT (datetime('now'))
         );
 
+        CREATE TABLE IF NOT EXISTS question_notes (
+            question_id INTEGER NOT NULL PRIMARY KEY,
+            note TEXT NOT NULL,
+            updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+
         CREATE TABLE IF NOT EXISTS user_question_stats (
             id INTEGER PRIMARY KEY,
             question_id INTEGER NOT NULL UNIQUE REFERENCES questions(id),

@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Pencil } from "lucide-react";
 
 const MODES = [
   { id: "weak", label: "Weak Spots", desc: "Drills the questions you get wrong first" },
@@ -46,6 +47,9 @@ export default function Quiz() {
   const [hasPendingFlags, setHasPendingFlags] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [confidence, setConfidence] = useState(""); // "guessed" | "unsure" | "confident"
+  const [questionNote, setQuestionNote] = useState("");
+  const [noteInputVisible, setNoteInputVisible] = useState(false);
+  const [noteSaved, setNoteSaved] = useState(false);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
@@ -118,6 +122,9 @@ export default function Quiz() {
     setFeedback(null);
     setSelected([]);
     setShowNoteInput(false);
+    setQuestionNote("");
+    setNoteInputVisible(false);
+    setNoteSaved(false);
     try {
       const q = await invoke("get_random_question", {
         mode,
@@ -125,7 +132,16 @@ export default function Quiz() {
         domain: drillDomain,
       });
       setQuestion(q);
-      if (q) checkFlagStatus(q.id);
+      if (q) {
+        checkFlagStatus(q.id);
+        // Fetch existing question note
+        try {
+          const note = await invoke("get_question_note", { questionId: q.id });
+          if (note) setQuestionNote(note);
+        } catch (err) {
+          // Note may not exist yet — ignore
+        }
+      }
       setQuestionNumber((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to load question:", err);
@@ -225,6 +241,21 @@ export default function Quiz() {
       }
     } catch (err) {
       console.error("Failed to submit answer:", err);
+    }
+  }
+
+  async function saveQuestionNote() {
+    if (!question) return;
+    try {
+      await invoke("save_question_note", {
+        question_id: question.id,
+        note: questionNote.trim(),
+      });
+      setNoteSaved(true);
+      setNoteInputVisible(false);
+      setTimeout(() => setNoteSaved(false), 3000);
+    } catch (err) {
+      console.error("Failed to save note:", err);
     }
   }
 
@@ -565,6 +596,61 @@ export default function Quiz() {
                     Confident
                   </label>
                 </div>
+
+                {/* Question Note */}
+                {!feedback.correct && (
+                  <div className="mt-4 pt-3 border-t border-border space-y-2">
+                    {questionNote ? (
+                      <div className="flex items-start gap-2">
+                        <Pencil className="w-4 h-4 text-gold mt-0.5 shrink-0" />
+                        <div>
+                          <p className="text-xs text-paper font-sans">{questionNote}</p>
+                          <button
+                            onClick={() => setNoteInputVisible(true)}
+                            className="text-xs text-gold hover:underline font-medium"
+                          >
+                            Edit note
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <button
+                          onClick={() => setNoteInputVisible(true)}
+                          className="w-full py-2 bg-[#B8842A]/10 text-[#B8842A] border border-[#B8842A]/30 rounded-xl text-xs font-semibold hover:bg-[#B8842A]/20 transition-colors"
+                        >
+                          Add note to this question
+                        </button>
+                        {noteInputVisible && (
+                          <div className="space-y-2">
+                            <textarea
+                              value={questionNote}
+                              onChange={(e) => setQuestionNote(e.target.value)}
+                              placeholder="e.g. Remember that OSPF uses multicast 224.0.0.5"
+                              className="w-full px-3 py-2 border border-dark-border rounded-xl text-sm bg-dark-surface text-paper focus:outline-none focus:ring-1 focus:ring-gold"
+                              rows={2}
+                            />
+                            <div className="flex justify-end gap-2">
+                              <button
+                                onClick={() => setNoteInputVisible(false)}
+                                className="px-3 py-1.5 text-xs text-paper-muted border border-dark-border rounded-xl hover:bg-dark-surface"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                onClick={saveQuestionNote}
+                                disabled={!questionNote.trim()}
+                                className="px-3 py-1.5 text-xs bg-[#B8842A] text-dark-bg font-semibold rounded-full hover:bg-[#B8842A]/90 disabled:opacity-50 disabled:pointer-events-none"
+                              >
+                                {noteSaved ? "Saved!" : "Save Note"}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>
