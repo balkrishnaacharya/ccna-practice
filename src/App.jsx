@@ -26,6 +26,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import RouteLoader from "./components/RouteLoader";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useNotifications } from "@/hooks/useNotifications";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -59,6 +60,43 @@ export default function App() {
   const reportExamProgress = useCallback((active, unanswered) => {
     setExamProgress({ active, unanswered });
   }, []);
+
+  const { settings: notifSettings, showToast: showNotifToast, checkReminderStatus } =
+    useNotifications();
+
+  // Check reminder status on mount and when settings/exam state change.
+  // Reminders are suppressed during an active exam.
+  useEffect(() => {
+    let mounted = true;
+    const check = async () => {
+      if (!mounted || examProgress.active) return;
+      const status = await checkReminderStatus();
+      if (!mounted || !status) return;
+      if (status.study_reminder && notifSettings?.enabled) {
+        showNotifToast(
+          "study_reminder",
+          "Time for a little networking practice?",
+          "Your daily study reminder is ready.",
+        );
+      }
+      if (status.streak_at_risk && notifSettings?.enabled) {
+        showNotifToast(
+          "streak_at_risk",
+          "Keep your streak going!",
+          "A few minutes of practice can keep your learning streak alive.",
+        );
+      }
+      if (status.review_reminder && notifSettings?.enabled) {
+        showNotifToast(
+          "review_reminder",
+          "Questions ready for review",
+          "Spaced repetition helps lock in what you've learned.",
+        );
+      }
+    };
+    check();
+  }, [examProgress.active, notifSettings, checkReminderStatus, showNotifToast]);
+
 
   function guardNavigation(event, destination) {
     if (location.pathname === "/exam" && examProgress.active && destination !== "/exam") {
