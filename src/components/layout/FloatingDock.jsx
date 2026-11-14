@@ -17,7 +17,7 @@ const DOCK_ITEMS = [
   { to: "/settings", label: "Settings", icon: <Settings size={18} strokeWidth={2} />, "aria-label": "Settings" },
 ];
 
-const DOCK_ITEM_ANIMATION_DELAY = 0.1;
+const DOCK_ITEM_ANIMATION_DELAY = 0.08;
 
 export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
   const location = useLocation();
@@ -42,8 +42,8 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
       <Dock
         direction="bottom"
         iconSize={30}
-        iconMagnification={48}
-        iconDistance={120}
+        iconMagnification={40}
+        iconDistance={100}
         className="gap-2"
       >
         {DOCK_ITEMS.map((item, index) => {
@@ -60,23 +60,19 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
                 to={item.to}
                 onClick={(e) => guardNavigation(e, item.to)}
                 className={cn(
-                  "group flex flex-col items-center justify-center rounded-full transition-colors duration-150 select-none",
+                  "group flex flex-col items-center justify-center rounded-full transition-colors duration-150 select-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-[#181815] outline-none",
                   active
                     ? "bg-[#B8842A]/10 text-[#B8842A]"
-                    : "text-[#A09A8A] hover:text-[#F6F2E9] hover:bg-[#4A443A]/30",
+                    : "text-[#A09A8A] hover:text-[#F6F2E9] hover:bg-[#4A443A]/40",
                   "sm:py-1.5 sm:px-2",
                 )}
                 aria-label={item["aria-label"]}
                 title={item.label}
               >
-                <span
-                  className="flex-1 flex flex-col items-center gap-1.5 text-xs font-medium"
-                >
+                <span className="flex-1 flex flex-col items-center gap-1.5 text-xs font-medium">
                   {item.icon}
                   {showBadge && (
-                    <span
-                      className="absolute -top-0.5 -right-1.5 px-1.5 py-0.5 text-[9px] font-bold border border-black"
-                    >
+                    <span className="absolute -top-0.5 -right-1.5 px-1.5 py-0.5 rounded-full bg-[#B8842A] text-dark-bg text-[9px] font-bold">
                       {flashcardCount > 9 ? "9+" : flashcardCount}
                     </span>
                   )}
@@ -97,7 +93,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
         })}
       </Dock>
 
-      {/* Center floating Exam action button */}
+      {/* Center floating Exam action button — opens the exam confirmation modal */}
       <div className="mt-2 sm:mt-0 flex flex-col sm:flex-row items-center justify-center pointer-events-auto z-20">
         <Button
           onClick={(e) => {
@@ -106,7 +102,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
           }}
           variant="ghost"
           size="icon"
-          className={`w-10 h-10 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/30 shadow-lg shadow-[#B8842A]/20 ${window.innerWidth < 640 ? 'w-9 h-9' : ''}`}
+          className={`w-10 h-10 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/30 focus-visible:ring-2 focus-visible:ring-gold ${window.innerWidth < 640 ? 'w-9 h-9' : ''}`}
           aria-label="Take Full CCNA Exam"
         >
           <Timer size={16} strokeWidth={2} />
