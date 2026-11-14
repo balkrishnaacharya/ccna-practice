@@ -280,27 +280,21 @@ useEffect(() => {
           return correct;
         });
 
-        // Move to next question index
-        setQuickCurrentIndex(prev => {
-          const next = prev + 1;
-          if (next >= 5) {
-            // Show end screen after all 5 questions
-            const totalTime = Math.round((Date.now() - quickStartTime) / 1000);
-            const minutes = Math.floor(totalTime / 60);
-            const seconds = totalTime % 60;
-            // Determine weakest subtopic from the 5 questions served
-            const weakest = quickQuestions
-              .slice(0, 5)
-              .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
-              ?.subtopic || "unknown";
-            setQuickEnded(true);
-            return 5; // stop advancement
-          }
-          return next;
-        });
-
-        // Load next question after delay, or stop if ended
-        if (quickCurrentIndex < 4 && !quickEnded) {
+        const nextIndex = quickCurrentIndex + 1;
+        if (nextIndex >= 5) {
+          // Show end screen after all 5 questions
+          const totalTime = Math.round((Date.now() - quickStartTime) / 1000);
+          const minutes = Math.floor(totalTime / 60);
+          const seconds = totalTime % 60;
+          // Determine weakest subtopic from the 5 questions served
+          const weakest = quickQuestions
+            .slice(0, 5)
+            .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
+            ?.subtopic || "unknown";
+          setQuickEnded(true);
+        } else {
+          setQuickCurrentIndex(nextIndex);
+          // Load next question after delay
           setTimeout(() => {
             // Reset feedback before loading next question
             setFeedback(null);
@@ -389,7 +383,7 @@ useEffect(() => {
   // Flag review overlay logic (simple warning)
   const [showOverlay, setShowOverlay] = useState(false);
 
-  const canSubmit = !feedback && selected.length > 0 && timeRemaining > 0 && !hasPendingFlags;
+  const canSubmit = !feedback && selected.length > 0 && !hasPendingFlags && (mode === "quick" || timeRemaining > 0);
 
   return (
     <div ref={rootRef} className="space-y-6 pb-12">
@@ -480,7 +474,7 @@ useEffect(() => {
           <p className="text-paper text-2xl font-semibold mb-4">
             {`${quickQuestions.length} done in ${Math.floor(
               (Date.now() - quickStartTime) / 60000
-            )}:${((Date.now() - quickStartTime) % 60000) / 1000
+            )}:${Math.floor(((Date.now() - quickStartTime) % 60000) / 1000)
               .toString()
               .padStart(2, "0")} — ${quickScore} correct. Weakest: ${quickQuestions
                 .slice(0, 5)

@@ -216,7 +216,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       <StreakPanel />
 
       {/* Readiness Score */}
-      <ReadinessScore score={readiness?.value} />
+      <ReadinessScore score={readinessScore} />
 
       {/* Weakness Heatmap */}
       <WeaknessHeatmap />
