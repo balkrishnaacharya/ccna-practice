@@ -17,7 +17,7 @@ import FloatingDock from "@/components/layout/FloatingDock";
 import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
 import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
-import SplashSequence from "./components/SplashSequence";
+import SplashAnimation from "./components/SplashAnimation";
 import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
 import { useUpdater } from "./utils/useUpdater";
 import UpdateModal from "./components/UpdateModal";
@@ -129,7 +129,7 @@ export default function App() {
       <SmoothCursorWrapper />
 
       {/* Opening Splash Sequence (Polpharma-inspired) */}
-      <SplashSequence onComplete={handleSplashComplete} />
+      <SplashAnimation onComplete={handleSplashComplete} />
 
       {/* Top Editorial Nav Bar */}
       <nav
