@@ -380,7 +380,6 @@ pub fn check_reminder_status(conn: &Connection) -> Result<ReminderStatus, String
 
 /// Current streak count from the DB.
 fn streak_current(conn: &Connection) -> Result<i64, String> {
-    let settings = get_notification_settings(conn)?;
     // Read current_streak by recomputing from activity: count consecutive
     // days ending today (or yesterday if today not answered).
     let today_answered: i64 = conn
