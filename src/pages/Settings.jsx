@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { useNavigate } from "react-router-dom";
 import { startTour } from "../utils/tourGuide";
+import { useNotifications } from "../hooks/useNotifications";
 
 const DEFAULT_DAILY_GOAL = 12;
 
@@ -173,6 +174,169 @@ export default function Settings({ onProfileChange, updater }) {
             )}
           </div>
         </form>
+      </div>
+
+      {/* Notification Settings Section */}
+      <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-paper mb-1">
+            Notification Settings
+          </h2>
+          <p className="text-xs text-paper-dim font-sans">
+            Gentle, opt-in reminders to support your study routine. You remain in
+            control of when and how CCNA Practice notifies you.
+          </p>
+        </div>
+
+        <div className="space-y-4 max-w-md pt-1">
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={settings?.enabled}
+                onChange={(e) =>
+                  updateSetting("notif_enabled", e.target.checked ? "1" : "0")
+                }
+                className="w-4 h-4 rounded border border-dark-border text-gold focus:ring-gold bg-dark-surface cursor-pointer"
+              />
+              <span className="text-sm font-medium text-paper">
+                Enable notifications
+              </span>
+            </label>
+            {settings?.enabled ? (
+              <span className="text-xs font-medium text-sage-light bg-sage/20 px-3 py-1 rounded-full border border-sage/40 shadow-sage-glow">
+                On
+              </span>
+            ) : (
+              <span className="text-xs font-medium text-paper-dim bg-dark-surface/60 px-3 py-1 rounded-full border border-dark-border">
+                Off
+              </span>
+            )}
+          </div>
+
+          {settings?.enabled && (
+            <div className="space-y-3 pl-8">
+              <div>
+                <label className="block text-xs font-medium text-paper-muted mb-1.5">
+                  Study reminder time
+                </label>
+                <input
+                  type="time"
+                  value={settings.reminder_time || "09:00"}
+                  onChange={(e) =>
+                    updateSetting("notif_reminder_time", e.target.value)
+                  }
+                  className="w-32 px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.streak_at_risk}
+                    onChange={(e) =>
+                      updateSetting(
+                        "notif_streak_at_risk",
+                        e.target.checked ? "1" : "0"
+                      )
+                    }
+                    className="w-4 h-4 rounded border border-dark-border text-gold focus:ring-gold bg-dark-surface cursor-pointer"
+                  />
+                  <span className="text-sm font-medium text-paper">
+                    Streak-at-risk reminders
+                  </span>
+                </label>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-paper-muted mb-1.5">
+                  Review reminder threshold (due questions)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="50"
+                  value={settings.review_threshold || 3}
+                  onChange={(e) =>
+                    updateSetting("notif_review_threshold", e.target.value)
+                  }
+                  className="w-32 px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.weekly_summary}
+                    onChange={(e) =>
+                      updateSetting(
+                        "notif_weekly_summary",
+                        e.target.checked ? "1" : "0"
+                      )
+                    }
+                    className="w-4 h-4 rounded border border-dark-border text-gold focus:ring-gold bg-dark-surface cursor-pointer"
+                  />
+                  <span className="text-sm font-medium text-paper">
+                    Weekly learning summary
+                  </span>
+                </label>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-paper-muted mb-1.5">
+                  Quiet hours
+                </label>
+                <div className="flex gap-3">
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-paper-muted mb-1">
+                      Start
+                    </label>
+                    <input
+                      type="time"
+                      value={settings.quiet_start || "21:00"}
+                      onChange={(e) =>
+                        updateSetting("notif_quiet_start", e.target.value)
+                      }
+                      className="w-full px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-paper-muted mb-1">
+                      End
+                    </label>
+                    <input
+                      type="time"
+                      value={settings.quiet_end || "08:00"}
+                      onChange={(e) => updateSetting("notif_quiet_end", e.target.value)}
+                      className="w-full px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-dark-border">
+            <h3 className="text-xs font-semibold text-paper-muted uppercase tracking-wider mb-3">
+              Preview
+            </h3>
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface/50 border border-dark-border/50">
+              <span className="w-8 h-8 text-gold shrink-0">
+                🔔
+              </span>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-paper">
+                  Time for a little networking practice?
+                </p>
+                <p className="text-xs text-paper-muted">
+                  Your daily study reminder is ready.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Software Updates Section */}
