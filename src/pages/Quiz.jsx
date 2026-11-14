@@ -57,6 +57,7 @@ export default function Quiz() {
   const cardContainerRef = useRef(null);
   const stemContainerRef = useRef(null);
   const feedbackRef = useRef(null);
+  const loadQuestionRef = useRef(0); // tracks the latest loadQuestion call to discard stale responses
 
   const navigate = useNavigate();
 
@@ -136,7 +137,20 @@ useEffect(() => {
     loadQuestion();
   }, []);
 
+  // Reload the question and reset transient state whenever the mode changes.
+  useEffect(() => {
+    setSelected([]);
+    setFeedback(null);
+    setConfidence("");
+    setShowNoteInput(false);
+    setQuestionNote("");
+    setNoteSaved(false);
+    setNoteInputVisible(false);
+    loadQuestion();
+  }, [mode]);
+
   async function loadQuestion() {
+    const myLoadId = ++loadQuestionRef.current;
     setLoading(true);
     setFeedback(null);
     setSelected([]);
@@ -149,6 +163,7 @@ useEffect(() => {
     if (mode === "quick") {
       try {
         const data = await invoke("get_quick_quiz_questions", {});
+        if (myLoadId !== loadQuestionRef.current) return;
         setQuickQuestions(data || []);
         setQuickCurrentIndex(0);
         setQuickScore(0);
@@ -159,6 +174,7 @@ useEffect(() => {
           // Fetch existing question note
           try {
             const note = await invoke("get_question_note", { questionId: data[0].id });
+            if (myLoadId !== loadQuestionRef.current) return;
             if (note) setQuestionNote(note);
           } catch (err) {
             // Note may not exist yet — ignore
@@ -189,12 +205,14 @@ useEffect(() => {
         subtopic: drillSubtopic,
         domain: drillDomain,
       });
+      if (myLoadId !== loadQuestionRef.current) return;
       setQuestion(q);
       if (q) {
         checkFlagStatus(q.id);
         // Fetch existing question note
         try {
           const note = await invoke("get_question_note", { questionId: q.id });
+          if (myLoadId !== loadQuestionRef.current) return;
           if (note) setQuestionNote(note);
         } catch (err) {
           // Note may not exist yet — ignore
