@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import FlashcardReview from "./FlashcardReview";
 import { cn } from "@/lib/utils";
 
