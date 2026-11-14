@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { invoke } from "@tauri-apps/api/core";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 import { Home, BookOpen, Calculator, Timer, History, Settings, ShieldAlert, Terminal } from "lucide-react";
 
 const DOCK_ITEMS = [
@@ -12,6 +14,7 @@ const DOCK_ITEMS = [
   { to: "/quiz", label: "Practice", icon: <BookOpen size={18} strokeWidth={2} />, "aria-label": "Practice" },
   { to: "/practical-exam", label: "Labs", icon: <Terminal size={18} strokeWidth={2} />, "aria-label": "Labs" },
   { to: "/tools/subnet", label: "Subnet", icon: <Calculator size={18} strokeWidth={2} />, "aria-label": "Subnet Calculator" },
+  { to: "/flashcards", label: "Flashcards", icon: <BookOpen size={18} strokeWidth={2} />, "aria-label": "Flashcards" },
   { to: "/review", label: "Review", icon: <ShieldAlert size={18} strokeWidth={2} />, "aria-label": "Review" },
   { to: "/history", label: "History", icon: <History size={18} strokeWidth={2} />, "aria-label": "History" },
   { to: "/settings", label: "Settings", icon: <Settings size={18} strokeWidth={2} />, "aria-label": "Settings" },
@@ -21,6 +24,9 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
   const location = useLocation();
   const navRef = useRef(null);
   const [mounted, setMounted] = useState(false);
+  const [flashcardCount, setFlashcardCount] = useState(0);
+
+  const today = new Date().toISOString().split("T")[0];
 
   const prefersReducedMotion =
     typeof window !== "undefined" &&
@@ -29,6 +35,12 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    invoke("get_flashcard_due_count", { today })
+      .then((c) => setFlashcardCount(Number(c) || 0))
+      .catch(console.error);
+  }, [today]);
 
   useGSAP(
     () => {
@@ -56,6 +68,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
       <div className="pointer-events-auto relative w-full max-w-3xl mx-auto bg-[#181815]/90 backdrop-blur-md border border-[#4A443A]/40 rounded-full px-2 sm:px-3 py-2 shadow-dock flex items-center justify-between">
         {DOCK_ITEMS.map((item) => {
           const active = isActive(item.to);
+          const showBadge = item.to === "/flashcards" && flashcardCount > 0;
           return (
             <Tooltip key={item.to} delayDuration={0}>
               <TooltipTrigger asChild>
@@ -63,7 +76,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
                   to={item.to}
                   onClick={(e) => guardNavigation(e, item.to)}
                   className={cn(
-                    "flex flex-col items-center justify-center px-2 py-1.5 min-w-[44px] rounded-full transition-colors duration-150 select-none",
+                    "flex flex-col items-center justify-center px-2 py-1.5 min-w-[44px] rounded-full transition-colors duration-150 select-none relative",
                     active
                       ? "bg-[#B8842A]/10 text-[#B8842A]"
                       : "text-[#A09A8A] hover:text-[#F6F2E9] hover:bg-[#4A443A]/30",
@@ -72,13 +85,21 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
                   title={item.label}
                 >
                   {item.icon}
+                  {showBadge && (
+                    <Badge
+                      className="absolute -top-1 -right-1 px-1 py-0.5 text-[10px] font-bold border border-[#181815]"
+                      variant="destructive"
+                    >
+                      {flashcardCount > 9 ? "9+" : flashcardCount}
+                    </Badge>
+                  )}
                   <span className="text-[10px] font-semibold mt-0.5 uppercase tracking-tighter">
                     {item.label}
                   </span>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="top">
-                {item.label}
+                {item.label}{showBadge ? ` (${flashcardCount} due)` : ""}
               </TooltipContent>
             </Tooltip>
           );

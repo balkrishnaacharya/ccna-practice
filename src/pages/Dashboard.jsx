@@ -8,6 +8,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [subtopics, setSubtopics] = useState([]);
   const [flagCount, setFlagCount] = useState(0);
   const [reviewDue, setReviewDue] = useState(0);
+  const [flashcardDue, setFlashcardDue] = useState(0);
   const [statsError, setStatsError] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
   const navigate = useNavigate();
@@ -47,6 +48,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       .catch(console.error);
     invoke("get_review_due_count")
       .then((n) => setReviewDue(n || 0))
+      .catch(console.error);
+    invoke("get_flashcard_due_count", { today: new Date().toISOString().split("T")[0] })
+      .then((n) => setFlashcardDue(Number(n) || 0))
       .catch(console.error);
 
     return () => {
@@ -193,6 +197,14 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           icon="🎯"
           accent={stats.accuracy >= 82.5 ? "sage" : "gold"}
           variant="accent"
+        />
+        <StatCard
+          label="Flashcards Due"
+          value={flashcardDue}
+          subtitle="spaced repetition review"
+          icon="🃏"
+          accent={flashcardDue > 0 ? "gold" : "sage"}
+          variant="soft"
         />
       </div>
 

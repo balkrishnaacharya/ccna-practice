@@ -59,6 +59,18 @@ pub fn init(path: &Path) -> Result<Connection> {
             value TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS flashcards (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question_id INTEGER NOT NULL UNIQUE,
+            front TEXT NOT NULL,
+            back TEXT NOT NULL,
+            ease_factor REAL NOT NULL DEFAULT 2.5,
+            interval_days REAL NOT NULL DEFAULT 0,
+            repetitions INTEGER NOT NULL DEFAULT 0,
+            due_date TEXT NOT NULL,
+            created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+
         CREATE TABLE IF NOT EXISTS user_question_stats (
             id INTEGER PRIMARY KEY,
             question_id INTEGER NOT NULL UNIQUE REFERENCES questions(id),

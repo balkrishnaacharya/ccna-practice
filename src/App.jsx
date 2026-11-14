@@ -12,6 +12,7 @@ const Notes = lazy(() => import("./pages/Notes"));
 const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
 const Subnet = lazy(() => import("./pages/Subnet"));
+const Flashcards = lazy(() => import("./pages/Flashcards"));
 import FloatingDock from "@/components/layout/FloatingDock";
 import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
@@ -203,6 +204,7 @@ export default function App() {
                 <Route path="/practical-exam" element={<PracticalExam />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/tools/subnet" element={<Subnet />} />
+                <Route path="/flashcards" element={<Flashcards />} />
                 <Route path="/history" element={<ExamHistory />} />
                 <Route path="/history/:sessionId" element={<SessionReview />} />
                 <Route path="/notes" element={<Notes />} />

@@ -60,6 +60,10 @@ pub fn run() {
             commands::reset_stats,
             commands::get_exam_history,
             commands::get_session_detail,
+            commands::get_flashcards_due,
+            commands::get_flashcard_due_count,
+            commands::create_flashcard,
+            commands::review_flashcard,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

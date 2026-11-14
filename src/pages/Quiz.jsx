@@ -202,6 +202,27 @@ export default function Quiz() {
         },
       });
       setFeedback(result);
+
+      // Auto-create flashcard for incorrect answers (SM-2 spaced repetition)
+      if (!result.correct && question.choices) {
+        const correctChoice = question.choices.find((c) => c.is_correct);
+        const front = question.stem.length > 120 ? question.stem.slice(0, 120) + "…" : question.stem;
+        const back = correctChoice ? correctChoice.text : "";
+        const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+
+        try {
+          await invoke("create_flashcard", {
+            question_id: question.id,
+            front,
+            back,
+            due_date: tomorrow,
+          });
+        } catch (err) {
+          // Flashcard may already exist (UNIQUE constraint) — ignore silently
+          if (err && String(err).includes("UNIQUE")) return;
+          console.error("Failed to create flashcard:", err);
+        }
+      }
     } catch (err) {
       console.error("Failed to submit answer:", err);
     }

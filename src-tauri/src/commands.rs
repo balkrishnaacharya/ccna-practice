@@ -1477,6 +1477,138 @@ pub fn reset_stats(db: State<Db>) -> Result<(), String> {
     Ok(())
 }
 
+// ─── Flashcards (SM-2) ─────────────────────────────────────────────────────────
+
+#[derive(Serialize)]
+pub struct Flashcard {
+    pub id: i64,
+    pub question_id: i64,
+    pub front: String,
+    pub back: String,
+    pub ease_factor: f64,
+    pub interval_days: f64,
+    pub repetitions: i64,
+    pub due_date: String,
+    pub created_at: String,
+}
+
+#[tauri::command]
+pub fn get_flashcards_due(today: String, db: State<Db>) -> Result<Vec<Flashcard>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    let mut stmt = conn.prepare(
+        "SELECT id, question_id, front, back, ease_factor, interval_days, repetitions,
+                 due_date, created_at
+         FROM flashcards
+         WHERE due_date <= ?1
+         ORDER BY due_date ASC, id ASC",
+    )
+    .map_err(|e| e.to_string())?;
+    let rows = stmt
+        .query_map(params![today], |r| {
+            Ok(Flashcard {
+                id: r.get(0)?,
+                question_id: r.get(1)?,
+                front: r.get(2)?,
+                back: r.get(3)?,
+                ease_factor: r.get(4)?,
+                interval_days: r.get(5)?,
+                repetitions: r.get(6)?,
+                due_date: r.get(7)?,
+                created_at: r.get(8)?,
+            })
+        })
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .collect();
+
+    Ok(rows)
+}
+
+#[tauri::command]
+pub fn get_flashcard_due_count(today: String, db: State<Db>) -> Result<i64, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    let count: i64 = conn
+        .query_row(
+            "SELECT COUNT(*) FROM flashcards WHERE due_date <= ?1",
+            params![today],
+            |r| r.get(0),
+        )
+        .map_err(|e| e.to_string())?;
+
+    Ok(count)
+}
+
+#[derive(Deserialize)]
+pub struct CreateFlashcardPayload {
+    pub question_id: i64,
+    pub front: String,
+    pub back: String,
+    pub due_date: String,
+}
+
+#[tauri::command]
+pub fn create_flashcard(payload: CreateFlashcardPayload, db: State<Db>) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    conn.execute(
+        "INSERT INTO flashcards (question_id, front, back, due_date)
+         VALUES (?1, ?2, ?3, ?4)",
+        params![payload.question_id, payload.front, payload.back, payload.due_date],
+    )
+    .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[derive(Deserialize)]
+pub struct ReviewFlashcardPayload {
+    pub id: i64,
+    pub quality: i64, // 0-5, 4 = hard, 5 = easy
+    pub due_date: String,
+}
+
+#[tauri::command]
+pub fn review_flashcard(payload: ReviewFlashcardPayload, db: State<Db>) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    // Fetch current state
+    let (ef, interval, reps): (f64, f64, i64) = conn
+        .query_row(
+            "SELECT ease_factor, interval_days, repetitions FROM flashcards WHERE id = ?1",
+            params![payload.id],
+            |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?)),
+        )
+        .map_err(|e| e.to_string())?;
+
+    let q = payload.quality as f64;
+    let (new_ef, new_interval, new_reps) = if q >= 3.0 {
+        // Correct
+        let new_reps = reps + 1;
+        let new_interval = if new_reps == 1 {
+            1.0
+        } else if new_reps == 2 {
+            6.0
+        } else {
+            interval * ef
+        };
+        let ef_adjustment = 0.1 - (5.0 - q) * 0.08 * (5.0 - q);
+        let new_ef = (ef + ef_adjustment).max(1.3);
+        (new_ef, new_interval, new_reps)
+    } else {
+        // Incorrect
+        ((ef - 0.2).max(1.3), 0.0, 0)
+    };
+
+    conn.execute(
+        "UPDATE flashcards SET ease_factor = ?1, interval_days = ?2, repetitions = ?3, due_date = ?4 WHERE id = ?5",
+        params![new_ef, new_interval, new_reps, payload.due_date, payload.id],
+    )
+    .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
