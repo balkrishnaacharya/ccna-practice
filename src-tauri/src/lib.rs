@@ -2,6 +2,8 @@ pub mod commands;
 pub mod db;
 pub mod notifications;
 
+use db::BUNDLED_DB;
+
 use std::sync::Mutex;
 use tauri::Manager;
 
@@ -32,10 +34,23 @@ pub fn run() {
 
             // Always synchronize the bundled question bank into the user DB.
             // Preserves user progress, never overwrites user data, idempotent.
-            match db::sync_bundled_bank(&mut conn, std::path::Path::new("../resources/ccna.db")) {
+            // Write the embedded bundled DB to a temp file in the app data dir
+            // so it can be opened by rusqlite (works on Android where the
+            // resources/ccna.db path does not exist as a filesystem path).
+            let bundled_path = app
+                .path()
+                .app_data_dir()
+                .map_err(|_| "Failed to resolve app data directory".to_string())?
+                .join("bundled_ccna.db");
+            std::fs::write(&bundled_path, BUNDLED_DB)
+                .map_err(|e| format!("Failed to write bundled DB: {}", e))?;
+
+            match db::sync_bundled_bank(&mut conn, &bundled_path) {
                 Ok(added) => eprintln!("[bank-sync] added {} new questions", added),
                 Err(e) => eprintln!("[bank-sync] failed: {}", e),
             }
+            // Clean up the temp bundled DB file after sync.
+            let _ = std::fs::remove_file(&bundled_path);
 
             app.manage(db::Db(Mutex::new(conn)));
             Ok(())
