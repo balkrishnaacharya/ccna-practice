@@ -11,8 +11,8 @@ const SessionReview = lazy(() => import("./pages/SessionReview"));
 const Notes = lazy(() => import("./pages/Notes"));
 const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
-import FloatingBottomNav from "./components/FloatingBottomNav";
-import ExamConfirmationModal from "./components/ExamConfirmationModal";
+import FloatingDock from "@/components/layout/FloatingDock";
+import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
 import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
 import SplashSequence from "./components/SplashSequence";
@@ -221,7 +221,7 @@ export default function App() {
       </main>
 
       {/* Floating Bottom Navigation Pill Dock (Universal across all screens) */}
-      <FloatingBottomNav
+      <FloatingDock
         onOpenExamModal={() => setIsExamModalOpen(true)}
         guardNavigation={guardNavigation}
       />

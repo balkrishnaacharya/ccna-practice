@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ExamConfirmationModal from "../components/ExamConfirmationModal";
+import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 
 export default function Exam({ reportExamProgress }) {
   const location = useLocation();
