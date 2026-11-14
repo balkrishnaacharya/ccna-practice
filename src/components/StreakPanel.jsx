@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link } from "react-router-dom";
+import { useStreak } from "@/hooks/useStreak";
 
 // Date strings come back as YYYY-MM-DD. Parsing them without a time component
 // is treated as UTC, which can shift the weekday for western timezones.
@@ -17,21 +18,21 @@ function shortDate(dateStr) {
 }
 
 export default function StreakPanel() {
-  const [data, setData] = useState(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    invoke("get_streak_stats")
-      .then(setData)
-      .catch((err) => {
-        console.error(err);
-        setFailed(true);
-      });
-  }, []);
+  const {
+    data,
+    loading,
+    streak,
+    longestStreak,
+    todayAnswered,
+    todayCorrect,
+    dailyGoal,
+    remainingToday,
+    goalMetToday,
+    activeDays,
+    recent,
+  } = useStreak();
 
   // Purely motivational; never take the dashboard down over it.
-  if (failed) return null;
-
   if (!data) {
     return (
       <div
@@ -41,10 +42,9 @@ export default function StreakPanel() {
     );
   }
 
-  const goal = Math.max(1, data.daily_goal);
-  const answered = data.today_answered;
+  const goal = Math.max(1, dailyGoal);
+  const answered = todayAnswered;
   const progress = Math.min(100, Math.round((answered / goal) * 100));
-  const recent = data.recent || [];
   // Scale bars against the goal so a hit goal fills the track, but let an
   // over-goal day push past it instead of clipping.
   const ceiling = Math.max(goal, ...recent.map((day) => day.answered), 1);
@@ -65,12 +65,12 @@ export default function StreakPanel() {
         </div>
         <span
           className={`shrink-0 rounded-full border px-3 py-1 font-mono text-xs font-semibold ${
-            data.current_streak > 0
+            streak > 0
               ? "border-gold/30 bg-gold/10 text-gold"
               : "border-dark-border bg-dark-surface text-paper-dim"
           }`}
         >
-          🔥 {data.current_streak} day{data.current_streak === 1 ? "" : "s"}
+          🔥 {streak} day{streak === 1 ? "" : "s"}
         </span>
       </div>
 
@@ -79,16 +79,16 @@ export default function StreakPanel() {
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <p
               className={`font-serif text-3xl font-semibold tracking-tight ${
-                data.goal_met_today ? "text-sage-light" : "text-paper"
+                goalMetToday ? "text-sage-light" : "text-paper"
               }`}
             >
               {answered}
               <span className="text-base font-normal text-paper-dim">/{goal}</span>
             </p>
             <p className="text-xs font-medium text-paper-muted">
-              {data.goal_met_today
+              {goalMetToday
                 ? "Daily goal met — nice work."
-                : `${data.remaining_today} more to hit today's goal`}
+                : `${remainingToday} more to hit today's goal`}
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function StreakPanel() {
           >
             <div
               className={`h-full rounded-full transition-all duration-500 ${
-                data.goal_met_today ? "bg-sage-light" : "bg-gold"
+                goalMetToday ? "bg-sage-light" : "bg-gold"
               }`}
               style={{ width: `${progress}%` }}
             />
@@ -111,27 +111,27 @@ export default function StreakPanel() {
           <dl className="flex gap-6 pt-1 text-xs">
             <div>
               <dt className="uppercase tracking-wider text-paper-dim">Longest</dt>
-              <dd className="font-mono text-sm text-paper">{data.longest_streak} d</dd>
+              <dd className="font-mono text-sm text-paper">{longestStreak} d</dd>
             </div>
             <div>
               <dt className="uppercase tracking-wider text-paper-dim">Active days</dt>
-              <dd className="font-mono text-sm text-paper">{data.active_days}</dd>
+              <dd className="font-mono text-sm text-paper">{activeDays}</dd>
             </div>
             <div>
               <dt className="uppercase tracking-wider text-paper-dim">Today correct</dt>
               <dd className="font-mono text-sm text-paper">
-                {answered > 0 ? `${data.today_correct}/${answered}` : "—"}
+                {answered > 0 ? `${todayCorrect}/${answered}` : "—"}
               </dd>
             </div>
           </dl>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
-            {!data.goal_met_today && data.remaining_today > 0 && (
+            {!goalMetToday && remainingToday > 0 && (
               <Link
                 to="/quiz?mode=weak"
                 className="rounded-full bg-gold px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-dark-bg shadow-gold-glow transition-all hover:bg-gold-hover"
               >
-                Answer {data.remaining_today} more
+                Answer {remainingToday} more
               </Link>
             )}
             <Link
