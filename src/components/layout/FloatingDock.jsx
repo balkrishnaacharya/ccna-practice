@@ -73,7 +73,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
       </Dock>
 
       {/* Center floating Exam action button */}
-      <div className="absolute left-1/2 -translate-x-1/2 -top-8 flex flex-col items-center pointer-events-auto z-20">
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center pointer-events-auto z-20">
         <Button
           onClick={onOpenExamModal}
           variant="ghost"
