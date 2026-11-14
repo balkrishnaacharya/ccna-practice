@@ -1,6 +1,13 @@
-use rusqlite::{params, Connection, Result};
+use rusqlite::{params, Connection, OptionalExtension, Result};
 use std::path::Path;
 use std::sync::Mutex;
+
+// Bundled question bank embedded at compile time.
+pub static BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
+
+// Version of the bundled question bank. synced into the user DB as the
+// `bank_version` setting so repeated syncs are idempotent.
+pub static BUNDLED_BANK_VERSION: &str = "1.0.0";
 
 pub struct Db(pub Mutex<Connection>);
 
@@ -187,3 +194,201 @@ pub fn init(path: &Path) -> Result<Connection> {
 
     Ok(conn)
 }
+
+/// Merge questions from the bundled seed DB into the user database.
+///
+/// Preserves user progress (answers, flags, stats, settings) and never
+/// overwrites user-specific data. Uses a transaction so a failed sync rolls
+/// back completely. Repeated syncs are idempotent: questions already present
+/// (matched by `content_hash`, or by stem when `content_hash` is NULL) are
+/// backfilled and skipped; new questions are inserted with their choices.
+///
+/// When a legacy row has a `content_hash` that matches a bundled question but
+/// different choices (a stale hash), the legacy hash is cleared and the
+/// bundled question is inserted as new.
+///
+/// Returns the number of newly added questions.
+pub fn sync_bundled_bank(
+    conn: &mut Connection,
+    seed_path: &Path,
+) -> Result<i64, String> {
+    let seed = Connection::open(seed_path).map_err(|e| e.to_string())?;
+
+    let tx = conn
+        .transaction()
+        .map_err(|e| e.to_string())?;
+
+    let mut added: i64 = 0;
+
+    // Fetch all bundled questions with their content_hash.
+    let bundled: Vec<(i64, String, String, String, i64, Option<String>)> = seed
+        .prepare(
+            "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0), q.content_hash
+             FROM questions q",
+        )
+        .map_err(|e| e.to_string())?
+        .query_map([], |r| {
+            Ok((
+                r.get::<_, i64>(0)?,
+                r.get::<_, String>(1)?,
+                r.get::<_, String>(2)?,
+                r.get::<_, String>(3)?,
+                r.get::<_, i64>(4)?,
+                r.get::<_, Option<String>>(5)?,
+            ))
+        })
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .collect();
+
+    for (_seed_id, stem, domain, difficulty, multi_select, content_hash) in &bundled {
+        let mut existing_id: Option<i64> = None;
+        let mut content_hash_match = false;
+        let mut should_insert = false;
+
+        // 1. Match by content_hash if available.
+        if let Some(hash) = content_hash {
+            if let Ok(found) = tx
+                .query_row(
+                    "SELECT id FROM questions WHERE content_hash = ?1",
+                    params![hash],
+                    |r| r.get(0),
+                )
+                .optional()
+            {
+                if let Some(id) = found {
+                    existing_id = Some(id);
+                    content_hash_match = true;
+                }
+            }
+        }
+
+        // 2. If no content_hash match, try stem + domain + difficulty where
+        //    content_hash is NULL (legacy row without a hash).
+        if existing_id.is_none() {
+            if let Ok(found) = tx.query_row(
+                "SELECT id FROM questions
+                 WHERE stem = ?1 AND domain = ?2 AND difficulty = ?3
+                   AND content_hash IS NULL
+                 LIMIT 1",
+                params![stem, domain, difficulty],
+                |r| r.get(0),
+            ).optional() {
+                existing_id = found;
+            }
+        }
+
+        match existing_id {
+            Some(existing) => {
+                if content_hash_match {
+                    // Content hash matched: check if choices also match.
+                    // If choices differ, the legacy hash is stale — clear it
+                    // and insert the bundled question as new.
+                    let bundled_choices: Vec<(String, i64)> = seed
+                        .prepare(
+                            "SELECT text, is_correct FROM choices
+                             WHERE question_id = ?1 ORDER BY sort_order",
+                        )
+                        .map_err(|e| e.to_string())?
+                        .query_map(params![_seed_id], |r| {
+                            Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?))
+                        })
+                        .map_err(|e| e.to_string())?
+                        .filter_map(|r| r.ok())
+                        .collect();
+
+                    let legacy_choices: Vec<(String, i64)> = tx
+                        .prepare(
+                            "SELECT text, is_correct FROM choices
+                             WHERE question_id = ?1 ORDER BY sort_order",
+                        )
+                        .map_err(|e| e.to_string())?
+                        .query_map(params![existing], |r| {
+                            Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?))
+                        })
+                        .map_err(|e| e.to_string())?
+                        .filter_map(|r| r.ok())
+                        .collect();
+
+                    if bundled_choices == legacy_choices {
+                        // Same content: backfill hash if NULL, skip insertion.
+                        tx.execute(
+                            "UPDATE questions SET content_hash = ?1
+                             WHERE id = ?2 AND content_hash IS NULL",
+                            params![content_hash, existing],
+                        )
+                        .map_err(|e| e.to_string())?;
+                        continue;
+                    }
+
+                    // Stale hash: clear it, mark for insertion.
+                    tx.execute(
+                        "UPDATE questions SET content_hash = NULL WHERE id = ?1",
+                        params![existing],
+                    )
+                    .map_err(|e| e.to_string())?;
+                    should_insert = true;
+                } else {
+                    // Matched by stem only: backfill content_hash if NULL.
+                    if let Some(hash) = content_hash {
+                        tx.execute(
+                            "UPDATE questions SET content_hash = ?1
+                             WHERE id = ?2 AND content_hash IS NULL",
+                            params![hash, existing],
+                        )
+                        .map_err(|e| e.to_string())?;
+                    }
+                    continue;
+                }
+            }
+            None => {
+                should_insert = true;
+            }
+        }
+
+        if should_insert {
+            // New question: insert it.
+            tx.execute(
+                "INSERT INTO questions (stem, domain, difficulty, multi_select, content_hash)
+                 VALUES (?1, ?2, ?3, ?4, ?5)",
+                params![stem, domain, difficulty, multi_select, content_hash],
+            )
+            .map_err(|e| e.to_string())?;
+            let new_id = tx.last_insert_rowid();
+
+            // Copy choices from the bundled DB.
+            let choices: Vec<(String, i64, i64)> = seed
+                .prepare(
+                    "SELECT text, is_correct, sort_order FROM choices WHERE question_id = ?1 ORDER BY sort_order",
+                )
+                .map_err(|e| e.to_string())?
+                .query_map(params![_seed_id], |r| {
+                    Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?, r.get::<_, i64>(2)?))
+                })
+                .map_err(|e| e.to_string())?
+                .filter_map(|r| r.ok())
+                .collect();
+
+            for (text, is_correct, sort_order) in choices {
+                tx.execute(
+                    "INSERT INTO choices (question_id, text, is_correct, sort_order) VALUES (?1, ?2, ?3, ?4)",
+                    params![new_id, text, is_correct, sort_order],
+                )
+                .map_err(|e| e.to_string())?;
+            }
+
+            added += 1;
+        }
+    }
+
+    // Record the bank version so repeated syncs are idempotent.
+    tx.execute(
+        "INSERT OR REPLACE INTO settings (key, value) VALUES ('bank_version', ?1)",
+        params![BUNDLED_BANK_VERSION],
+    )
+    .map_err(|e| e.to_string())?;
+
+    tx.commit().map_err(|e| e.to_string())?;
+    Ok(added)
+}
+

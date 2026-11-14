@@ -14,7 +14,7 @@ fn now_secs() -> i64 {
         .unwrap_or(0)
 }
 
-fn record_question_stat(
+pub fn record_question_stat(
     conn: &Connection,
     question_id: i64,
     correct: bool,
@@ -254,9 +254,8 @@ fn weighted_exam_sample(
 
 // ─── Stats ────────────────────────────────────────────────────────────────────
 
-#[tauri::command]
-pub fn get_stats(db: State<Db>) -> Result<Stats, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+/// Connection-level stats query, usable by tests and commands alike.
+pub fn get_stats_conn(conn: &Connection) -> Result<Stats, String> {
     let total: i64 = conn
         .query_row("SELECT COUNT(*) FROM questions", [], |r| r.get(0))
         .map_err(|e| e.to_string())?;
@@ -295,6 +294,12 @@ pub fn get_stats(db: State<Db>) -> Result<Stats, String> {
         accuracy: (accuracy * 10.0).round() / 10.0,
         by_domain,
     })
+}
+
+#[tauri::command]
+pub fn get_stats(db: State<Db>) -> Result<Stats, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    get_stats_conn(&conn)
 }
 
 /// Per-subtopic accuracy, used to point the learner at weak areas.
@@ -392,7 +397,7 @@ const DEFAULT_DAILY_GOAL: i64 = 12;
 
 /// Day counts keyed by a local calendar-day ordinal (days since an arbitrary
 /// epoch). Ordinals come from SQLite so the local-time conversion matches.
-fn daily_activity(conn: &Connection) -> Result<Vec<(i64, i64, i64)>, String> {
+fn daily_activity(conn: &mut Connection) -> Result<Vec<(i64, i64, i64)>, String> {
     let mut stmt = conn
         .prepare(
             "SELECT CAST(julianday(date(answered_at, 'unixepoch', 'localtime')) AS INTEGER) AS day,
@@ -414,7 +419,7 @@ fn daily_activity(conn: &Connection) -> Result<Vec<(i64, i64, i64)>, String> {
     Ok(rows)
 }
 
-fn daily_goal(conn: &Connection) -> i64 {
+fn daily_goal(conn: &mut Connection) -> i64 {
     conn.query_row(
         "SELECT value FROM settings WHERE key = 'daily_goal'",
         [],
@@ -429,7 +434,7 @@ fn daily_goal(conn: &Connection) -> i64 {
     .unwrap_or(DEFAULT_DAILY_GOAL)
 }
 
-fn today_ordinal(conn: &Connection) -> Result<i64, String> {
+fn today_ordinal(conn: &mut Connection) -> Result<i64, String> {
     conn.query_row(
         "SELECT CAST(julianday(date('now', 'localtime')) AS INTEGER)",
         [],
@@ -451,11 +456,11 @@ fn date_label(conn: &Connection, ordinal: i64) -> Result<String, String> {
 
 #[tauri::command]
 pub fn get_streak_stats(db: State<Db>) -> Result<StreakStats, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
-    streak_stats_conn(&conn)
+    let mut conn = db.0.lock().map_err(|e| e.to_string())?;
+    streak_stats_conn(&mut *conn)
 }
 
-fn streak_stats_conn(conn: &Connection) -> Result<StreakStats, String> {
+pub fn streak_stats_conn(conn: &mut Connection) -> Result<StreakStats, String> {
     let goal = daily_goal(conn);
     let today = today_ordinal(conn)?;
     let activity = daily_activity(conn)?;
@@ -935,9 +940,8 @@ pub fn submit_answer_conn(payload: &SubmitPayload, conn: &Connection) -> Result<
 // ─── Exam questions ───────────────────────────────────────────────────────────
 
 #[tauri::command]
-pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
-
+/// Connection-level exam question selection, usable by tests and commands alike.
+pub fn get_exam_questions_conn(conn: &Connection) -> Result<Vec<Question>, String> {
     // Blueprint counts total 100. The bundled bank has only 12 switching topics,
     // so the two-per-topic cap shifts one seat to network infrastructure (±1).
     let targets = [
@@ -1032,7 +1036,7 @@ pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
     for (_, _, _, selected) in domain_candidates {
         for candidate in selected {
             all_questions.push(row_to_question(
-                &conn, candidate.id, candidate.stem, candidate.domain,
+                conn, candidate.id, candidate.stem, candidate.domain,
                 candidate.difficulty, candidate.multi_select,
             )?);
         }
@@ -1041,18 +1045,25 @@ pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
     Ok(all_questions)
 }
 
+#[tauri::command]
+pub fn get_exam_questions(db: State<Db>) -> Result<Vec<Question>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    get_exam_questions_conn(&conn)
+}
+
 // ─── Submit exam ──────────────────────────────────────────────────────────────
 
-#[tauri::command]
-pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResult, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
-
+/// Connection-level exam submission, usable by tests and commands alike.
+pub fn submit_exam_conn(
+    payload: &ExamSubmitPayload,
+    conn: &Connection,
+    now: i64,
+) -> Result<ExamResult, String> {
     let mut total_correct = 0i64;
     let total_questions = payload.answers.len() as i64;
     let mut reviews: Vec<QuestionReviewResult> = Vec::new();
     let mut domain_map: HashMap<String, (i64, i64)> = HashMap::new();
 
-    let now = now_secs();
     let started_at = now - payload.time_spent_seconds;
 
     // Insert session first to get session_id (Task 3)
@@ -1118,7 +1129,7 @@ pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResu
             params![session_id, item.question_id, if is_correct { 1 } else { 0 }, now, selected_json],
         )
         .map_err(|e| e.to_string())?;
-        record_question_stat(&conn, item.question_id, is_correct, now)?;
+        record_question_stat(conn, item.question_id, is_correct, now)?;
 
         reviews.push(QuestionReviewResult {
             question_id: item.question_id,
@@ -1178,6 +1189,13 @@ pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResu
         domain_scores,
         reviews,
     })
+}
+
+#[tauri::command]
+pub fn submit_exam(payload: ExamSubmitPayload, db: State<Db>) -> Result<ExamResult, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let now = now_secs();
+    submit_exam_conn(&payload, &conn, now)
 }
 
 // ─── Exam History (Task 3) ────────────────────────────────────────────────────
@@ -2129,9 +2147,9 @@ mod tests {
 
     #[test]
     fn test_streak_stats_counts_consecutive_days() {
-        let conn = setup_test_db();
+        let mut conn = setup_test_db();
 
-        let empty = streak_stats_conn(&conn).unwrap();
+        let empty = streak_stats_conn(&mut conn).unwrap();
         assert_eq!(empty.daily_goal, DEFAULT_DAILY_GOAL);
         assert_eq!(empty.current_streak, 0);
         assert_eq!(empty.longest_streak, 0);
@@ -2145,7 +2163,7 @@ mod tests {
         }
         add_answer(&conn, 2, false, noon_epoch(&conn, 6));
 
-        let stats = streak_stats_conn(&conn).unwrap();
+        let stats = streak_stats_conn(&mut conn).unwrap();
         assert_eq!(stats.current_streak, 3, "an untouched today must not break the run");
         assert_eq!(stats.today_answered, 0);
         assert_eq!(stats.remaining_today, DEFAULT_DAILY_GOAL);
@@ -2156,7 +2174,7 @@ mod tests {
 
         // Answering today extends the run and closes the gap by one.
         add_answer(&conn, 3, false, noon_epoch(&conn, 0));
-        let stats = streak_stats_conn(&conn).unwrap();
+        let stats = streak_stats_conn(&mut conn).unwrap();
         assert_eq!(stats.today_answered, 1);
         assert_eq!(stats.today_correct, 0);
         assert_eq!(stats.current_streak, 4);
@@ -2169,7 +2187,7 @@ mod tests {
             .unwrap();
         conn.execute("INSERT INTO settings (key, value) VALUES ('daily_goal', '1')", [])
             .unwrap();
-        let stats = streak_stats_conn(&conn).unwrap();
+        let stats = streak_stats_conn(&mut conn).unwrap();
         assert_eq!(stats.daily_goal, 1);
         assert_eq!(stats.remaining_today, 0);
         assert!(stats.goal_met_today);

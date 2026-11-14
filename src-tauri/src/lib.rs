@@ -1,5 +1,5 @@
-mod commands;
-mod db;
+pub mod commands;
+pub mod db;
 
 use std::sync::Mutex;
 use tauri::Manager;
@@ -25,21 +25,16 @@ pub fn run() {
                 .join("ccna.db");
             std::fs::create_dir_all(db_path.parent().ok_or_else(|| "Failed to resolve db path parent".to_string())?).ok();
 
-            // Bundled DB baked into the binary at compile time
-            const BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
+            // Always initialize the schema and run migrations (idempotent).
+            let mut conn = db::init(&db_path).expect("failed to init db");
 
-            if !db_path.exists() {
-                match std::fs::write(&db_path, BUNDLED_DB) {
-                    Ok(_) => eprintln!(
-                        "[seed] wrote {} bytes to {}",
-                        BUNDLED_DB.len(),
-                        db_path.display()
-                    ),
-                    Err(e) => eprintln!("[seed] write failed: {}", e),
-                }
+            // Always synchronize the bundled question bank into the user DB.
+            // Preserves user progress, never overwrites user data, idempotent.
+            match db::sync_bundled_bank(&mut conn, std::path::Path::new("../resources/ccna.db")) {
+                Ok(added) => eprintln!("[bank-sync] added {} new questions", added),
+                Err(e) => eprintln!("[bank-sync] failed: {}", e),
             }
 
-            let conn = db::init(&db_path).expect("failed to init db");
             app.manage(db::Db(Mutex::new(conn)));
             Ok(())
         })

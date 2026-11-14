@@ -137,7 +137,7 @@ fn test_sync_bundled_bank_merges_and_is_idempotent() {
             );
         }
 
-        let added = db::sync_bundled_bank(conn, dir.path()).unwrap();
+        let added = db::sync_bundled_bank(conn, &seed_copy).unwrap();
         assert_eq!(added as i64, seed_count - 1);
         assert_eq!(question_count(conn), seed_count);
 
@@ -166,7 +166,7 @@ fn test_sync_bundled_bank_merges_and_is_idempotent() {
         assert_eq!(version, db::BUNDLED_BANK_VERSION);
 
         // The merge is a no-op once the version matches.
-        assert_eq!(db::sync_bundled_bank(conn, dir.path()).unwrap(), 0);
+        assert_eq!(db::sync_bundled_bank(conn, &seed_copy).unwrap(), 0);
         assert_eq!(question_count(conn), seed_count);
     });
 }
@@ -215,7 +215,7 @@ fn test_sync_replaces_mismatched_legacy_question() {
             );
         }
 
-        let added = db::sync_bundled_bank(conn, dir.path()).unwrap();
+        let added = db::sync_bundled_bank(conn, &seed_copy).unwrap();
         assert_eq!(
             added as i64, seed_count,
             "mismatched legacy row must not suppress the curated row"

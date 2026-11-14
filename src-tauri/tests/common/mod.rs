@@ -12,13 +12,13 @@ pub fn setup_integration_db() -> (db::Db, TempDir) {
 
 /// Runs `f` with the database mutex locked; the lock is released when `f`
 /// returns so `db` can be moved into a `tauri::State` afterwards.
-pub fn with_locked<T>(db: &db::Db, f: impl FnOnce(&rusqlite::Connection) -> T) -> T {
-    let conn = db.0.lock().unwrap();
-    f(&conn)
+pub fn with_locked<T>(db: &db::Db, f: impl FnOnce(&mut rusqlite::Connection) -> T) -> T {
+    let mut conn = db.0.lock().unwrap();
+    f(&mut conn)
 }
 
 pub fn insert_question(
-    conn: &rusqlite::Connection,
+    conn: &mut rusqlite::Connection,
     id: i64,
     stem: &str,
     domain: &str,
@@ -35,7 +35,7 @@ pub fn insert_question(
 }
 
 pub fn insert_choice(
-    conn: &rusqlite::Connection,
+    conn: &mut rusqlite::Connection,
     id: i64,
     question_id: i64,
     text: &str,
@@ -48,7 +48,7 @@ pub fn insert_choice(
     .unwrap();
 }
 
-pub fn add_answer(conn: &rusqlite::Connection, question_id: i64, correct: bool, answered_at: i64) {
+pub fn add_answer(conn: &mut rusqlite::Connection, question_id: i64, correct: bool, answered_at: i64) {
     conn.execute(
         "INSERT INTO answers (question_id, correct, answered_at) VALUES (?1, ?2, ?3)",
         params![question_id, if correct { 1 } else { 0 }, answered_at],
@@ -56,7 +56,7 @@ pub fn add_answer(conn: &rusqlite::Connection, question_id: i64, correct: bool, 
     .unwrap();
 }
 
-pub fn noon_epoch(conn: &rusqlite::Connection, days_ago: i64) -> i64 {
+pub fn noon_epoch(conn: &mut rusqlite::Connection, days_ago: i64) -> i64 {
     conn.query_row(
         "SELECT CAST(strftime('%s', date('now', 'localtime', ?1) || ' 12:00:00', 'utc') AS INTEGER)",
         params![format!("{} days", -days_ago)],
@@ -65,7 +65,7 @@ pub fn noon_epoch(conn: &rusqlite::Connection, days_ago: i64) -> i64 {
     .unwrap()
 }
 
-pub fn seed_exam_bank(conn: &rusqlite::Connection) {
+pub fn seed_exam_bank(conn: &mut rusqlite::Connection) {
     let targets = [
         ("network_infra", 25usize),
         ("switching", 25usize),

@@ -20,11 +20,13 @@ fn test_streak_stats_integration() {
     // Three-day streak ending yesterday, plus one isolated older day.
     for offset in [1, 2, 3] {
         common::with_locked(&db, |conn| {
-            common::add_answer(conn, 1, true, common::noon_epoch(conn, offset))
+            let epoch = common::noon_epoch(conn, offset);
+            common::add_answer(conn, 1, true, epoch);
         });
     }
     common::with_locked(&db, |conn| {
-        common::add_answer(conn, 2, false, common::noon_epoch(conn, 6))
+        let epoch = common::noon_epoch(conn, 6);
+        common::add_answer(conn, 2, false, epoch);
     });
 
     let stats = common::with_locked(&db, commands::streak_stats_conn).unwrap();
@@ -33,7 +35,8 @@ fn test_streak_stats_integration() {
 
     // Answering today extends the run.
     common::with_locked(&db, |conn| {
-        common::add_answer(conn, 3, false, common::noon_epoch(conn, 0))
+        let epoch = common::noon_epoch(conn, 0);
+        common::add_answer(conn, 3, false, epoch)
     });
     let stats = common::with_locked(&db, commands::streak_stats_conn).unwrap();
     assert_eq!(stats.current_streak, 4);
