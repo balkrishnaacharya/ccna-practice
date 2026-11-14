@@ -306,7 +306,7 @@ dependencies = [
 
 [[package]]
 name = "ccna-practice"
-version = "0.6.0"
+version = "0.5.1"
 dependencies = [
  "rand",
  "rusqlite",
@@ -317,6 +317,7 @@ dependencies = [
  "tauri-plugin-process",
  "tauri-plugin-shell",
  "tauri-plugin-updater",
+ "tempfile",
 ]
 
 [[package]]
