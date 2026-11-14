@@ -49,6 +49,25 @@ fn test_init_idempotent() {
 }
 
 #[test]
+fn test_metadata_table_created() {
+    let (db, _dir) = common::setup_integration_db();
+    common::with_locked(&db, |conn| {
+        // Table must exist (pragma returns columns).
+        let col_count: i64 = conn.query_row(
+            "SELECT COUNT(*) FROM pragma_table_info('question_bank_metadata')",
+            [], |r| r.get(0)
+        ).unwrap();
+        assert!(col_count > 0, "question_bank_metadata table must exist");
+        // bank_version row must be present.
+        let row_count: i64 = conn.query_row(
+            "SELECT COUNT(*) FROM question_bank_metadata WHERE key='bank_version'",
+            [], |r| r.get(0)
+        ).unwrap();
+        assert_eq!(row_count, 1, "question_bank_metadata must have bank_version row");
+    });
+}
+
+#[test]
 fn test_bundled_seed_contains_the_full_bank() {
     let dir = tempdir().unwrap();
     let seed_path = dir.path().join("seed.db");

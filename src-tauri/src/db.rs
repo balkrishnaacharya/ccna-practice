@@ -94,7 +94,38 @@ pub fn init(path: &Path) -> Result<Connection> {
 
         CREATE INDEX IF NOT EXISTS idx_q_domain ON questions(domain);
         CREATE INDEX IF NOT EXISTS idx_q_difficulty ON questions(difficulty);
+
+        CREATE TABLE IF NOT EXISTS question_bank_metadata (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
         ",
+    )?;
+
+    // Initialize default metadata rows (idempotent).
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('bank_version', ?1)",
+        params![BUNDLED_BANK_VERSION],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('schema_version', '1')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('total_active_questions', '0')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('generation_timestamp', '')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('source_revision', '')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('content_checksum', '')",
+        [],
     )?;
 
     // --- Idempotent migrations ---
