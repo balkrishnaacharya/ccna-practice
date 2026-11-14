@@ -444,7 +444,7 @@ export default function SplashAnimation({ onComplete }) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0E1118] select-none overflow-hidden"
+      className="fixed inset-0 z-[100] w-full h-full flex items-center justify-center bg-[#0E1118] select-none overflow-hidden"
     />
   );
 }

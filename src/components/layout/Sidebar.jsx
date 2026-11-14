@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X, Home, BookOpen, Calculator, Timer, History, Settings, ShieldAlert } from "lucide-react";
 
 const SIDEBAR_WIDTH = 260;
-const COLLAPSED_WIDTH = 80;
+const COLLAPSED_WIDTH = 100;
 
 export const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: <Home size={18} strokeWidth={2} />, key: "dashboard" },
