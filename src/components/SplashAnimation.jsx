@@ -54,10 +54,6 @@ const NODE_GEOMETRIES = [
 export default function SplashAnimation({ onComplete }) {
   const canvasRef = useRef(null);
   const [isSkipped, setIsSkipped] = useState(false);
-  const [hasSeen, setHasSeen] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return sessionStorage.getItem("ccna_splash_seen") === "true";
-  });
 
   useGSAP(
     () => {
@@ -68,11 +64,16 @@ export default function SplashAnimation({ onComplete }) {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const bloom = canvas.getContext("2d");
         if (bloom) {
-          const w = canvas.width;
-          const h = canvas.height;
+          const rect = canvas.getBoundingClientRect();
+          const w = rect.width || window.innerWidth;
+          const h = rect.height || window.innerHeight;
           const grad = bloom.createRadialGradient(
-            w / 2, h / 2, 0,
-            w / 2, h / 2, Math.max(w, h)
+            w / 2,
+            h / 2,
+            0,
+            w / 2,
+            h / 2,
+            Math.max(w, h)
           );
           grad.addColorStop(0, CONFIG.gold);
           grad.addColorStop(1, "rgba(0,0,0,0)");
@@ -88,13 +89,17 @@ export default function SplashAnimation({ onComplete }) {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
-      const w = rect.width;
-      const h = rect.height;
+      // Ensure canvas has valid dimensions (may be 0x0 on first render)
+      const setSize = () => {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(rect.width, 1) * dpr;
+        canvas.height = Math.max(rect.height, 1) * dpr;
+        ctx.scale(dpr, dpr);
+        return { w: rect.width, h: rect.height };
+      };
+      let size = setSize();
+      let { w, h } = size;
       const cx = w / 2;
       const cy = h / 2;
       const s = Math.min(w, h); // shorter side for scaling
@@ -124,17 +129,17 @@ export default function SplashAnimation({ onComplete }) {
       window.addEventListener("pointerdown", onSkip, { once: true });
       window.addEventListener("keydown", onKeySkip, { once: true });
 
-      // State for the render loop
+      // State driven ONLY by GSAP timeline (single source of truth)
       const state = {
-        t: 0, // timeline progress 0..1
+        t: 0,
         nodes: [],
-        links: [], // {from, to, progress, failed, rerouteTarget}
-        packets: [], // {linkIndex, progress, color}
+        links: [],
+        packets: [],
         bloom: 0,
         ringRadius: 0,
       };
 
-      // Initialize node positions in a pentagon-ish spiral
+      // Initialize node positions at center (will spiral out via GSAP)
       const baseRadius = s * 0.34;
       const weights = [0.25, 0.25, 0.20, 0.20, 0.10]; // exam weighting
       for (let i = 0; i < CONFIG.nodeCount; i++) {
@@ -146,11 +151,12 @@ export default function SplashAnimation({ onComplete }) {
           geo,
           angle,
           radius,
-          orbitSpeed: 0.15 + i * 0.06, // distinct speeds
+          orbitSpeed: 0.15 + i * 0.06,
           orbitOffset: i * 0.7,
           color: i === 0 ? CONFIG.gold : CONFIG.coolBlue,
           size: 6 + i * 2,
-          x: cx, y: cy, // start at center, spiral out
+          x: cx,
+          y: cy,
         });
       }
 
@@ -159,7 +165,7 @@ export default function SplashAnimation({ onComplete }) {
         state.links.push({
           from: i,
           to: (i + 1) % CONFIG.nodeCount,
-          progress: 0, // stroke-dashoffset reveal 0..1
+          progress: 0,
           failed: false,
           rerouteTarget: null,
           failTime: null,
@@ -169,7 +175,7 @@ export default function SplashAnimation({ onComplete }) {
       // Pick one link to fail/reroute (randomize per launch)
       const failLinkIdx = Math.floor(Math.random() * CONFIG.nodeCount);
       state.links[failLinkIdx].failed = true;
-      state.links[failLinkIdx].failTime = 2.6; // fail during packets phase
+      state.links[failLinkIdx].failTime = 2.6;
 
       const tl = gsap.timeline({
         defaults: { ease: "power2.out" },
@@ -181,21 +187,15 @@ export default function SplashAnimation({ onComplete }) {
         },
       });
 
+      // Register labels for reliable sequencing
+      tl.addLabel("ping", 0);
+      tl.addLabel("nodes", 0.8);
+      tl.addLabel("packets", 2.2);
+      tl.addLabel("collapse", 3.8);
+      tl.addLabel("bloom", 4.6);
+
       // 0.0-0.8s: Ping — gold point at center, thin ring
-      tl.to(
-        {},
-        { duration: 0.01 },
-        "ping"
-      )
-        .to(
-          state,
-          {
-            t: 0.15,
-            duration: 0.8,
-            ease: "power2.out",
-          },
-          "ping"
-        );
+      tl.to(state, { t: 0.15, duration: 0.8, ease: "power2.out" }, "ping");
 
       // 0.8-2.2s: Nodes spiral outward, links draw
       tl.to(
@@ -221,20 +221,7 @@ export default function SplashAnimation({ onComplete }) {
         );
 
       // 2.2-3.8s: Packets travel, one link fails & reroutes
-      tl.to(
-        {},
-        { duration: 1.6 },
-        "packets"
-      )
-        .to(
-          state,
-          {
-            t: 0.7,
-            duration: 1.6,
-            ease: "power2.inOut",
-          },
-          "packets"
-        );
+      tl.to(state, { t: 0.7, duration: 1.6, ease: "power2.inOut" }, "packets");
 
       // 3.8-4.8s: Collapse to ring, bloom
       tl.to(
@@ -265,15 +252,22 @@ export default function SplashAnimation({ onComplete }) {
           },
           "collapse+=0.6"
         )
-        .to(
-          {},
-          { duration: 0.6 },
-          "bloom"
-        );
+        .to({}, { duration: 0.6 }, "bloom");
 
       let rafId = 0;
       const render = () => {
-        // Clear with chassis color (additive glow via lighter compositing)
+        // Re-read canvas size each frame (handles resize)
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width !== w || rect.height !== h) {
+          w = rect.width;
+          h = rect.height;
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.max(w, 1) * dpr;
+          canvas.height = Math.max(h, 1) * dpr;
+          ctx.scale(dpr, dpr);
+        }
+
+        // Clear with chassis color
         ctx.fillStyle = CONFIG.chassis;
         ctx.fillRect(0, 0, w, h);
 
@@ -304,16 +298,14 @@ export default function SplashAnimation({ onComplete }) {
           const to = state.nodes[link.to];
           if (!from || !to) return;
 
-          // If failed, draw a flickering reroute
-          let x1 = from.x, y1 = from.y;
-          let x2 = to.x, y2 = to.y;
+          let x1 = from.x,
+            y1 = from.y;
+          let x2 = to.x,
+            y2 = to.y;
           let alpha = link.progress;
           let color = CONFIG.gold;
 
           if (link.failed && state.t > link.failTime / 5.4) {
-            // Reroute via center (self-healing)
-            const midX = (from.x + to.x) / 2;
-            const midY = (from.y + to.y) / 2;
             const t = (state.t * 5.4 - link.failTime) / 0.6;
             const k = Math.min(Math.max(t, 0), 1);
             x1 = from.x + (cx - from.x) * k;
@@ -333,7 +325,6 @@ export default function SplashAnimation({ onComplete }) {
           ctx.globalAlpha = alpha * 0.7;
           ctx.stroke();
 
-          // Glow on link
           ctx.save();
           ctx.strokeStyle = color;
           ctx.lineWidth = 3;
@@ -384,9 +375,19 @@ export default function SplashAnimation({ onComplete }) {
         // Draw radial bloom
         if (state.bloom > 0) {
           ctx.save();
-          const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 1.2);
+          const grad = ctx.createRadialGradient(
+            cx,
+            cy,
+            0,
+            cx,
+            cy,
+            Math.max(w, h) * 1.2
+          );
           grad.addColorStop(0, `rgba(189, 141, 57, ${0.5 * state.bloom})`);
-          grad.addColorStop(0.4, `rgba(242, 235, 221, ${0.25 * state.bloom})`);
+          grad.addColorStop(
+            0.4,
+            `rgba(242, 235, 221, ${0.25 * state.bloom})`
+          );
           grad.addColorStop(1, "rgba(0,0,0,0)");
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, w, h);
@@ -396,18 +397,12 @@ export default function SplashAnimation({ onComplete }) {
         rafId = requestAnimationFrame(render);
       };
 
-      // Advance timeline-driven state each frame
+      // Advance packets along links each frame (state.t comes ONLY from GSAP)
       const advance = () => {
-        // Map render time 0..5.4 to timeline progress 0..1
-        const elapsed = (performance.now() - startTime) / 1000;
-        const t = Math.min(Math.max(elapsed / 5.4, 0), 1);
-        state.t = t;
-
-        // Animate packets along links
-        const packetTime = t * 5.4;
+        const packetTime = state.t * 5.4;
         state.packets = [];
         state.links.forEach((link, li) => {
-          if (link.progress < 0.3) return; // link not drawn yet
+          if (link.progress < 0.3) return;
           const numPackets = link.failed ? 1 : 2;
           for (let p = 0; p < numPackets; p++) {
             const offset = (p / numPackets) * 0.4 + (packetTime * 0.5) % 1;
@@ -421,11 +416,9 @@ export default function SplashAnimation({ onComplete }) {
             }
           }
         });
-
         rafId = requestAnimationFrame(advance);
       };
 
-      const startTime = performance.now();
       rafId = requestAnimationFrame(advance);
       render();
 
