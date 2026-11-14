@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { invoke } from "@tauri-apps/api/core";
 import { cn } from "@/lib/utils";
@@ -17,54 +17,79 @@ const DOCK_ITEMS = [
   { to: "/settings", label: "Settings", icon: <Settings size={18} strokeWidth={2} />, "aria-label": "Settings" },
 ];
 
+const DOCK_ITEM_ANIMATION_DELAY = 0.1;
+
+// Quick flashcard count refresh on mount
+useEffect(() => {
+  const today = new Date().toISOString().split("T")[0];
+  invoke("get_flashcard_due_count", { today })
+    .then((c) => setFlashcardCount(Number(c) || 0))
+    .catch(console.error);
+}, []);
+
 export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
   const location = useLocation();
   const [flashcardCount, setFlashcardCount] = useState(0);
-
-  const today = new Date().toISOString().split("T")[0];
-
-  useState(() => {
-    invoke("get_flashcard_due_count", { today })
-      .then((c) => setFlashcardCount(Number(c) || 0))
-      .catch(console.error);
-  }, []);
 
   const isActive = (to) => location.pathname === to;
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none"
+      className="fixed bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-3 sm:px-6 pointer-events-none"
       style={{ paddingBottom: "var(--safe-bottom)" }}
       aria-label="Main navigation"
     >
-      <Dock direction="bottom" iconSize={34} iconMagnification={52} iconDistance={100}>
-        {DOCK_ITEMS.map((item) => {
+      <Dock
+        direction="bottom"
+        iconSize={30}
+        iconMagnification={48}
+        iconDistance={120}
+        className="gap-2"
+      >
+        {DOCK_ITEMS.map((item, index) => {
           const active = isActive(item.to);
           const showBadge = item.to === "/flashcards" && flashcardCount > 0;
+          const delay = index * DOCK_ITEM_ANIMATION_DELAY;
           return (
-            <DockIcon key={item.to} className="relative">
+            <DockIcon
+              key={item.to}
+              className="relative"
+              style={{ animationDelay: `${delay}s` }}
+            >
               <Link
                 to={item.to}
                 onClick={(e) => guardNavigation(e, item.to)}
                 className={cn(
-                  "flex flex-col items-center justify-center px-2 py-1.5 min-w-[44px] rounded-full transition-colors duration-150 select-none relative",
+                  "group flex flex-col items-center justify-center rounded-full transition-colors duration-150 select-none",
                   active
                     ? "bg-[#B8842A]/10 text-[#B8842A]"
                     : "text-[#A09A8A] hover:text-[#F6F2E9] hover:bg-[#4A443A]/30",
+                  "sm:py-1.5 sm:px-2",
                 )}
                 aria-label={item["aria-label"]}
                 title={item.label}
               >
-                {item.icon}
-                {showBadge && (
+                <span
+                  className="flex-1 flex flex-col items-center gap-1.5 text-xs font-medium"
+                >
+                  {item.icon}
+                  {showBadge && (
+                    <span
+                      className="absolute -top-0.5 -right-1.5 px-1.5 py-0.5 text-[9px] font-bold border border-black"
+                    >
+                      {flashcardCount > 9 ? "9+" : flashcardCount}
+                    </span>
+                  )}
                   <span
-                    className="absolute -top-1 -right-1 px-1 py-0.5 text-[10px] font-bold border border-[#181815]"
+                    className={cn(
+                      "text-[10px] font-semibold mt-0.5 opacity-0 transition-opacity duration-200",
+                      active
+                        ? "opacity-100"
+                        : "group-hover:opacity-100",
+                    )}
                   >
-                    {flashcardCount > 9 ? "9+" : flashcardCount}
+                    {item.label}
                   </span>
-                )}
-                <span className="text-[10px] font-semibold mt-0.5">
-                  {item.label}
                 </span>
               </Link>
             </DockIcon>
@@ -73,19 +98,21 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
       </Dock>
 
       {/* Center floating Exam action button */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center pointer-events-auto z-20">
+      <div className="mt-2 sm:mt-0 flex flex-col sm:flex-row items-center justify-center pointer-events-auto z-20">
         <Button
-          onClick={onOpenExamModal}
+          onClick={(e) => guardNavigation(e, "/practical-exam")}
           variant="ghost"
           size="icon"
-          className="w-10 h-10 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/30 shadow-lg shadow-[#B8842A]/20"
+          className={`w-10 h-10 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/30 shadow-lg shadow-[#B8842A]/20 ${window.innerWidth < 640 ? 'w-9 h-9' : ''}`}
           aria-label="Take Full CCNA Exam"
         >
-          <Timer size={18} strokeWidth={2} />
+          <Timer size={16} strokeWidth={2} />
         </Button>
-        <span className="text-[10px] font-semibold mt-0.5 text-[#B8842A]">
-          Exam
-        </span>
+        {window.innerWidth >= 640 && (
+          <span className="text-[10px] font-semibold mt-0.5 text-[#B8842A]">
+            Exam
+          </span>
+        )}
       </div>
     </nav>
   );

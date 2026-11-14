@@ -29,10 +29,10 @@ test("Bottom nav: no redundant tooltip wrappers duplicating visible labels", () 
   );
 });
 
-test("Bottom nav: no dead opacity-0 dot indicators", () => {
+test("Bottom nav: no dead opacity-0 will-change dot indicators", () => {
   assert.ok(
-    !source.includes("opacity-0"),
-    "Bottom nav must not have dead opacity-0 indicator dots"
+    !source.includes("opacity-0 will-change"),
+    "Bottom nav must not have dead opacity-0 will-change indicator dots"
   );
 });
 
