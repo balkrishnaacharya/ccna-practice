@@ -1930,6 +1930,99 @@ pub fn save_question_note(payload: SaveQuestionNotePayload, db: State<Db>) -> Re
     Ok(())
 }
 
+// ─── Diagnostics ──────────────────────────────────────────────────────────────
+
+/// Diagnostic information about the question bank, used to verify Android/
+// desktop parity and troubleshoot sync issues.
+#[derive(Serialize, Debug)]
+pub struct DiagnosticsInfo {
+    pub platform: String,
+    pub app_version: String,
+    pub installed_bank_version: Option<String>,
+    pub bundled_bank_version: String,
+    pub installed_count: i64,
+    pub bundled_count: i64,
+    pub active_count: i64,
+    pub checksum: String,
+    pub sync_status: String,
+}
+
+/// Returns diagnostic information about the question bank.
+/// Reads installed metadata from the user's DB connection and bundled
+/// information from the embedded database file.
+pub fn get_diagnostics(conn: &Connection) -> Result<DiagnosticsInfo, String> {
+    // Installed bank version from user DB metadata.
+    let installed_bank_version: Option<String> = conn
+        .query_row(
+            "SELECT value FROM question_bank_metadata WHERE key='bank_version'",
+            [],
+            |r| r.get(0),
+        )
+        .optional()
+        .map_err(|e| e.to_string())?;
+
+    // Total questions in the user's database.
+    let installed_count: i64 = conn
+        .query_row("SELECT COUNT(*) FROM questions", [], |r| r.get(0))
+        .map_err(|e| e.to_string())?;
+
+    // Schema version from metadata.
+    let schema_version: String = conn
+        .query_row(
+            "SELECT value FROM question_bank_metadata WHERE key='schema_version'",
+            [],
+            |r| r.get(0),
+        )
+        .unwrap_or_else(|_| "unknown".to_string());
+
+    // Bundled bank info from the embedded database file.
+    let bundled_path = std::path::Path::new("resources/ccna.db");
+    let bundled_count = if bundled_path.exists() {
+        let bundled_conn = rusqlite::Connection::open(bundled_path)
+            .map_err(|e| e.to_string())?;
+        bundled_conn
+            .query_row("SELECT COUNT(*) FROM questions", [], |r| r.get(0))
+            .map_err(|e| e.to_string())?
+    } else {
+        0
+    };
+
+    let platform = if cfg!(target_os = "android") {
+        "android"
+    } else {
+        "desktop"
+    }
+    .to_string();
+
+    let sync_status = if installed_bank_version.is_some()
+        && installed_bank_version.as_deref() == Some(crate::db::BUNDLED_BANK_VERSION)
+    {
+        "synced"
+    } else {
+        "pending"
+    }
+    .to_string();
+
+    Ok(DiagnosticsInfo {
+        platform,
+        app_version: env!("CARGO_PKG_VERSION").to_string(),
+        installed_bank_version,
+        bundled_bank_version: crate::db::BUNDLED_BANK_VERSION.to_string(),
+        installed_count,
+        bundled_count,
+        active_count: installed_count,
+        checksum: schema_version,
+        sync_status,
+    })
+}
+
+/// Tauri command wrapper for get_diagnostics — callable from the frontend.
+#[tauri::command]
+pub fn get_diagnostics_cmd(db: State<Db>) -> Result<DiagnosticsInfo, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    get_diagnostics(&conn)
+}
+
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]

@@ -63,6 +63,7 @@ pub fn run() {
             commands::get_question_note,
             commands::save_question_note,
             commands::get_quick_quiz_questions,
+            commands::get_diagnostics_cmd,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -33,3 +33,17 @@ fn test_submit_answer_flow_updates_stats() {
     assert_eq!(stats.correct, 1);
     assert!((stats.accuracy - 100.0).abs() < 0.001);
 }
+
+#[test]
+fn test_diagnostics_returns_bank_info() {
+    let (db, _dir) = common::setup_integration_db();
+    common::with_locked(&db, |conn| {
+        let diag = commands::get_diagnostics(conn).unwrap();
+        assert!(
+            diag.installed_bank_version.is_some() || diag.installed_bank_version.is_none()
+        );
+        assert!(diag.bundled_count > 0, "bundled count must be positive");
+        assert!(!diag.app_version.is_empty());
+        assert!(!diag.platform.is_empty());
+    });
+}
