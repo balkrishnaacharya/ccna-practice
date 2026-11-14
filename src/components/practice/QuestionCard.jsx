@@ -3,12 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import DragDropQuestion from "./DragDropQuestion";
 
 export default function QuestionCard({
   question,
   currentAnswer,
   onAnswer,
   showExplanation = false,
+  onDragDropComplete,
 }) {
   const correctChoiceId =
     question.choices?.find((c) => c.is_correct)?.id || null;
@@ -16,6 +18,41 @@ export default function QuestionCard({
   const selectedIsCorrect = currentAnswer === correctChoiceId;
   const selectedChoice =
     question.choices?.find((c) => c.id === currentAnswer) || null;
+
+  // Drag-drop question type
+  if (question.type === "drag-drop") {
+    return (
+      <Card className="border-l-4 border-l-primary rounded-xl bg-card overflow-hidden">
+        <CardHeader className="flex flex-col items-start gap-2 px-5 py-4">
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs font-mono">
+              Q
+            </Badge>
+            <Badge variant="secondary" className="text-xs font-mono uppercase">
+              {question.domain?.replace(/_/g, " ") || "General"}
+            </Badge>
+            <Badge
+              variant={question.difficulty === "easy" ? "secondary" : "default"}
+              className="text-xs font-mono uppercase"
+            >
+              {question.difficulty}
+            </Badge>
+          </div>
+          <CardTitle className="text-lg leading-relaxed text-foreground">
+            {question.stem}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-5 py-4">
+          <DragDropQuestion
+            question={question}
+            onComplete={(score, correct, total) => {
+              onDragDropComplete?.(score, correct, total);
+            }}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="border-l-4 border-l-primary rounded-xl bg-card overflow-hidden">
