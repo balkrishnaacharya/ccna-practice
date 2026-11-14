@@ -32,8 +32,8 @@ export function useReadiness() {
         if (!domainData[d]) {
           domainData[d] = { correct: 0, attempts: 0 };
         }
-        domainData[d].correct += s.times_correct || 0;
-        domainData[d].attempts += s.times_seen || 0;
+        domainData[d].correct += s.correct || 0;
+        domainData[d].attempts += s.attempts || 0;
       }
 
       const totalWeight = Object.values(DOMAIN_WEIGHTS).reduce((a, b) => a + b, 0);
