@@ -26,6 +26,7 @@ import RouteLoader from "./components/RouteLoader";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useNotifications } from "@/hooks/useNotifications";
+import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import { cn } from "@/lib/utils";
 
 export default function App() {
@@ -173,9 +174,11 @@ export default function App() {
       <SmoothCursorWrapper />
 
       {/* Opening Splash Sequence (Polpharma-inspired) */}
-      <ErrorBoundary onError={() => setIsSplashActive(false)}>
-        <SplashAnimation onComplete={handleSplashComplete} />
-      </ErrorBoundary>
+      {isSplashActive && (
+        <ErrorBoundary onError={() => setIsSplashActive(false)}>
+          <SplashAnimation onComplete={handleSplashComplete} />
+        </ErrorBoundary>
+      )}
 
       {/* Top Editorial Nav Bar - MOVED TO MOBILE ONLY */}
       <nav
@@ -225,7 +228,7 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex-1 w-full relative z-10 pb-24">
-        <div className="bg-dark-card border border-dark-border rounded-2xl shadow-dock p-6">
+        <div className="bg-dark-card border border-dark-border rounded-2xl shadow-dock p-6" style={{ paddingTop: "calc(3.5rem + var(--safe-top))" }}>
           <DirectionalRouteWrapper>
           <ErrorBoundary>
             <Suspense fallback={<RouteLoader />}>
