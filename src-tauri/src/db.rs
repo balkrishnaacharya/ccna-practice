@@ -100,6 +100,20 @@ pub fn init(path: &Path) -> Result<Connection> {
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS notification_preferences (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS notification_events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            event_type TEXT NOT NULL,
+            title TEXT NOT NULL,
+            body TEXT NOT NULL,
+            occurred_at INTEGER NOT NULL DEFAULT (strftime('%s','now')),
+            dismissed_at INTEGER
+        );
         ",
     )?;
 
@@ -126,6 +140,36 @@ pub fn init(path: &Path) -> Result<Connection> {
     )?;
     conn.execute(
         "INSERT OR IGNORE INTO question_bank_metadata (key, value) VALUES ('content_checksum', '')",
+        [],
+    )?;
+
+    // Default notification preferences (idempotent).
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_enabled', '1')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_reminder_time', '09:00')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_quiet_start', '21:00')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_quiet_end', '08:00')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_review_threshold', '3')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_weekly_summary', '0')",
+        [],
+    )?;
+    conn.execute(
+        "INSERT OR IGNORE INTO notification_preferences (key, value) VALUES ('notif_streak_at_risk', '1')",
         [],
     )?;
 
