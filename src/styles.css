@@ -29,6 +29,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Design tokens — centralized visual values for the CCNA Practice design system */
+:root {
+  --ccna-bg: #181815;
+  --ccna-gold: #B8842A;
+  --ccna-paper: #F6F2E9;
+  --ccna-card: #2A2A27;
+  --ccna-border: #3A3A36;
+  --ccna-muted: #8A8A82;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: #BD8D39;
