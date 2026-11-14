@@ -105,6 +105,11 @@ input[type="radio"] {
   .animate-mesh-blob-3 {
     animation: none !important;
   }
+  /* Disable continuous pulse animation for accessibility */
+  .animate-pulse {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Stop compositor work entirely while the window is in the background. */

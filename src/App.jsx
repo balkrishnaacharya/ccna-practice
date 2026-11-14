@@ -13,7 +13,7 @@ const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
 const Subnet = lazy(() => import("./pages/Subnet"));
 const Flashcards = lazy(() => import("./pages/Flashcards"));
-import FloatingDock from "@/components/layout/FloatingDock";
+import Sidebar from "@/components/layout/Sidebar";
 import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
 import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
@@ -27,6 +27,8 @@ import RouteLoader from "./components/RouteLoader";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useNotifications } from "@/hooks/useNotifications";
+import { cn } from "@/lib/utils";
+import { NAV_ITEMS } from "@/components/layout/Sidebar";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -35,7 +37,12 @@ export default function App() {
   const [isExamModalOpen, setIsExamModalOpen] = useState(false);
   const [isSplashActive, setIsSplashActive] = useState(() => {
     if (typeof window === "undefined") return false;
-    return !sessionStorage.getItem("ccna_splash_seen");
+    try {
+      return !sessionStorage.getItem("ccna_splash_seen");
+    } catch (e) {
+      // sessionStorage unavailable (private browsing, etc.); default to showing splash
+      return true;
+    }
   });
 
   const location = useLocation();
@@ -267,11 +274,32 @@ export default function App() {
         </div>
       </main>
 
-      {/* Floating Bottom Navigation Pill Dock (Universal across all screens) */}
-      <FloatingDock
-        onOpenExamModal={() => setIsExamModalOpen(true)}
-        guardNavigation={guardNavigation}
-      />
+      {/* Desktop Sidebar (expands on hover/focus for accessibility, collapsed by default on mobile) */}
+      <Sidebar onNavigate={navigate} />
+
+      {/* Mobile Bottom Navigation (visible on small screens, hidden on desktop) */}
+      <nav
+        className="block sm:hidden md:hidden lg:hidden sticky bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-4 sm:px-6"
+        style={{ paddingBottom: "var(--safe-bottom)" }}
+        aria-label="Main navigation"
+      >
+        {NAV_ITEMS.map((item) => {
+          const isActive = location.pathname === item.to;
+          return (
+            <Link
+              key={item.key}
+              to={item.to}
+              className={cn(
+                "flex items-center gap-2 rounded-full px-3 py-2 text-sm transition-colors duration-150",
+                isActive ? "bg-gold/10 text-gold" : "text-paper hover:text-gold hover:bg-dark-surface"
+              )}
+            >
+              <span className="w-3 h-3 rounded-full flex-shrink-0">{item.icon}</span>
+              <span className="hidden sm:block text-xs">{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
 
       {/* GSAP-Animated Exam Confirmation Modal */}
       <ExamConfirmationModal

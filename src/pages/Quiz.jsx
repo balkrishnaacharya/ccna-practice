@@ -37,17 +37,13 @@ export default function Quiz() {
     if (isDrilling) return "weak";
     return "easy";
   });
+  const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState([]);
   const [feedback, setFeedback] = useState(null);
   const [isFlagged, setIsFlagged] = useState(false);
   const [flagNote, setFlagNote] = useState("");
   const [showNoteInput, setShowNoteInput] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [questionNumber, setQuestionNumber] = useState(1);
-  const [hasPendingFlags, setHasPendingFlags] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(0);
-  const [confidence, setConfidence] = useState(""); // "guessed" | "unsure" | "confident"
   const [questionNote, setQuestionNote] = useState("");
   const [noteInputVisible, setNoteInputVisible] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
@@ -57,48 +53,12 @@ export default function Quiz() {
   const cardContainerRef = useRef(null);
   const stemContainerRef = useRef(null);
   const feedbackRef = useRef(null);
-  const loadQuestionRef = useRef(0); // tracks the latest loadQuestion call to discard stale responses
+  const loadQuestionRef = useRef(0);
+  const noteRef = useRef(null);
 
   const navigate = useNavigate();
 
-  // Quick quiz state
-  const [quickQuestions, setQuickQuestions] = useState([]);
-  const [quickCurrentIndex, setQuickCurrentIndex] = useState(0);
-  const [quickScore, setQuickScore] = useState(0);
-  const [quickStartTime, setQuickStartTime] = useState(0);
-
-  // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
-  useGSAP(
-    () => {
-      if (!feedback || !feedbackRef.current) return;
-
-      if (feedback.correct) {
-        // Sage pulse
-        gsap.fromTo(
-          feedbackRef.current,
-          { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.2, ease: "power1.out", force3D: true }
-        );
-      } else {
-        // Heart pulse + micro-shake
-        const tl = gsap.timeline({ defaults: { force3D: true } });
-        tl.fromTo(
-          feedbackRef.current,
-          { scale: 0.98, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.15, ease: "power1.out" }
-        ).to(feedbackRef.current, {
-          x: -4,
-          duration: 0.05,
-          repeat: 3,
-          yoyo: true,
-          ease: "power1.inOut",
-        });
-      }
-    },
-    { scope: rootRef, dependencies: [feedback] }
-  );
-
-  // Timer logic
+  // Mode timing
   const modeTimes = {
     easy: 5 * 60,
     medium: 2 * 60,
@@ -113,12 +73,11 @@ export default function Quiz() {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-useEffect(() => {
-    // Reset timer when mode or question changes
+  // Timer logic
+  useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (mode === 'exam') return; // exam mode handled by /exam page
-    if (mode === 'quick') {
-      // Quick mode: track total elapsed time, no countdown
+    if (mode === "exam") return;
+    if (mode === "quick") {
       setTimeRemaining(0);
       if (quickStartTime === 0) setQuickStartTime(Date.now());
       return;
@@ -132,20 +91,45 @@ useEffect(() => {
     };
   }, [mode, question?.id]);
 
-  // Load the first question when the practice page mounts.
+  // Quick quiz state
+  const [quickQuestions, setQuickQuestions] = useState([]);
+  const [quickCurrentIndex, setQuickCurrentIndex] = useState(0);
+  const [quickScore, setQuickScore] = useState(0);
+  const [quickStartTime, setQuickStartTime] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+
+  useEffect(() => {
+    // Reset timer when mode or question changes
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (mode === "exam") return;
+    if (mode === "quick") {
+      setTimeRemaining(0);
+      if (quickStartTime === 0) setQuickStartTime(Date.now());
+      return;
+    }
+    setTimeRemaining(modeTimes[mode] || 2 * 60);
+    timerRef.current = setInterval(() => {
+      setTimeRemaining((prev) => Math.max(prev - 1, 0));
+    }, 1000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [mode, question?.id]);
+
+  // Load first question
   useEffect(() => {
     loadQuestion();
   }, []);
 
-  // Reload the question and reset transient state whenever the mode changes.
+  // Reset transient state on mode change
   useEffect(() => {
     setSelected([]);
     setFeedback(null);
     setConfidence("");
     setShowNoteInput(false);
     setQuestionNote("");
-    setNoteSaved(false);
     setNoteInputVisible(false);
+    setNoteSaved(false);
     loadQuestion();
   }, [mode]);
 
@@ -159,7 +143,7 @@ useEffect(() => {
     setNoteInputVisible(false);
     setNoteSaved(false);
 
-    // Quick mode: fetch 5 questions upfront if not already loaded
+    // Quick mode
     if (mode === "quick") {
       try {
         const data = await invoke("get_quick_quiz_questions", {});
@@ -171,13 +155,12 @@ useEffect(() => {
         if (data && data.length > 0) {
           setQuestion(data[0]);
           checkFlagStatus(data[0].id);
-          // Fetch existing question note
           try {
             const note = await invoke("get_question_note", { questionId: data[0].id });
             if (myLoadId !== loadQuestionRef.current) return;
             if (note) setQuestionNote(note);
           } catch (err) {
-            // Note may not exist yet — ignore
+            // Note may not exist yet
           }
         }
       } catch (err) {
@@ -187,47 +170,32 @@ useEffect(() => {
       setQuestionNumber((prev) => prev + 1);
       setLoading(false);
       return;
-      // fallback: normal question loading for other modes
-      // (the rest of this function handles non-quick modes)
     }
 
-    // Existing non-quick mode logic
-    setLoading(true);
-    setFeedback(null);
-    setSelected([]);
-    setShowNoteInput(false);
-    setQuestionNote("");
-    setNoteInputVisible(false);
-    setNoteSaved(false);
+    // Normal mode
     try {
       const q = await invoke("get_random_question", {
         mode,
         subtopic: drillSubtopic,
         domain: drillDomain,
       });
-      // Discard stale responses from previous mode selections
       if (myLoadId !== loadQuestionRef.current) return;
       setQuestion(q);
       if (q) {
         checkFlagStatus(q.id);
-        // Fetch existing question note
         try {
           const note = await invoke("get_question_note", { questionId: q.id });
-          // Discard stale note responses
           if (myLoadId !== loadQuestionRef.current) return;
           if (note) setQuestionNote(note);
         } catch (err) {
-          // Note may not exist yet — ignore
+          // Note may not exist yet
         }
       }
       setQuestionNumber((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to load question:", err);
     } finally {
-      // Only clear loading if this is still the active load
-      if (myLoadId === loadQuestionRef.current) {
-        setLoading(false);
-      }
+      if (myLoadId === loadQuestionRef.current) setLoading(false);
     }
   }
 
@@ -251,7 +219,6 @@ useEffect(() => {
       setIsFlagged(nextStatus);
       setFlagNote("");
       setShowNoteInput(false);
-      setHasPendingFlags(nextStatus); // true if flagged, false if unflagged
     } catch (err) {
       console.error("Failed to toggle flag:", err);
     }
@@ -259,105 +226,6 @@ useEffect(() => {
 
   async function handleSaveNote(e) {
     e.preventDefault();
-    if (!question) return;
-    try {
-      await invoke("toggle_flag", {
-        questionId: question.id,
-        note: flagNote.trim() || "Flagged for review",
-      });
-      setIsFlagged(true);
-      setFlagNote("");
-      setShowNoteInput(false);
-      // Keep flag status active after saving note
-      setHasPendingFlags(true);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  function handleChoiceChange(choiceId, isMultiSelect) {
-    if (isMultiSelect) {
-      setSelected((prev) =>
-        prev.includes(choiceId)
-          ? prev.filter((id) => id !== choiceId)
-          : [...prev, choiceId]
-      );
-    } else {
-      setSelected([choiceId]);
-    }
-  }
-
-  async function submit() {
-    if (!question || selected.length === 0) return;
-    if (!canSubmit) return; // extra safety
-    try {
-      const result = await invoke("submit_answer", {
-        payload: {
-          question_id: question.id,
-          choice_ids: selected,
-          confidence: confidence,
-        },
-      });
-      setFeedback(result);
-
-      // Quick mode: auto-advance tracking + end screen after 5 questions
-      if (mode === "quick") {
-        // Record if correct
-        setQuickScore(prev => {
-          const correct = result.correct ? prev + 1 : prev;
-          return correct;
-        });
-
-        const nextIndex = quickCurrentIndex + 1;
-        if (nextIndex >= 5) {
-          // Show end screen after all 5 questions
-          const totalTime = Math.round((Date.now() - quickStartTime) / 1000);
-          const minutes = Math.floor(totalTime / 60);
-          const seconds = totalTime % 60;
-          // Determine weakest subtopic from the 5 questions served
-          const weakest = quickQuestions
-            .slice(0, 5)
-            .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
-            ?.subtopic || "unknown";
-          setQuickEnded(true);
-        } else {
-          setQuickCurrentIndex(nextIndex);
-          // Load next question after delay
-          setTimeout(() => {
-            // Reset feedback before loading next question
-            setFeedback(null);
-            setSelected([]);
-            loadQuestion();
-          }, 1500);
-        }
-      } else {
-        // Existing SM-2 flashcard logic for other modes
-        if (!result.correct && question.choices) {
-          const correctChoice = question.choices.find((c) => c.is_correct);
-          const front = question.stem.length > 120 ? question.stem.slice(0, 120) + "…" : question.stem;
-          const back = correctChoice ? correctChoice.text : "";
-          const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
-
-          try {
-            await invoke("create_flashcard", {
-              question_id: question.id,
-              front,
-              back,
-              due_date: tomorrow,
-            });
-          } catch (err) {
-            // Flashcard may already exist (UNIQUE constraint) — ignore silently
-            if (err && String(err).includes("UNIQUE")) return;
-            console.error("Failed to create flashcard:", err);
-          }
-        }
-      }
-    } catch (err) {
-      console.error("Failed to submit answer:", err);
-    }
-  }
-
-  async function saveQuestionNote() {
     if (!question) return;
     try {
       await invoke("save_question_note", {
@@ -372,7 +240,51 @@ useEffect(() => {
     }
   }
 
-  // Keyboard-first answering: 1-4 picks a choice, Enter submits or advances.
+  function handleChoiceChange(choiceId, isMultiSelect) {
+    setSelected((prev) =>
+      isMultiSelect
+        ? prev.includes(choiceId)
+          ? prev.filter((id) => id !== choiceId)
+          : [...prev, choiceId]
+        : prev.includes(choiceId)
+          ? prev.filter((id) => id !== choiceId)
+          : [choiceId]
+    );
+  }
+
+  async function submit() {
+    if (!question || selected.length === 0) return;
+    try {
+      const result = await invoke("submit_answer", {
+        question_id: question.id,
+        choice_ids: selected,
+        confidence,
+      });
+      setFeedback(result);
+    } catch (err) {
+      console.error("Failed to submit answer:", err);
+    }
+  }
+
+  // Quick mode: auto-advance + end screen
+  useEffect(() => {
+    if (mode !== "quick" || !feedback) return;
+    if (quickCurrentIndex + 1 >= 5) {
+      setQuickEnded(true);
+    } else {
+      setQuickCurrentIndex((prev) => prev + 1);
+      setTimeout(() => {
+        setFeedback(null);
+        setSelected([]);
+        loadQuestion();
+      }, 1500);
+    }
+  }, [mode, feedback, quickCurrentIndex]);
+
+  // Confidence state
+  const [confidence, setConfidence] = useState("");
+
+  // Keyboard navigation
   useEffect(() => {
     function onKeyDown(e) {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -405,12 +317,10 @@ useEffect(() => {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [question, feedback, selected]);
+  }, [question, feedback, selected, canSubmit]);
 
-  // Flag review overlay logic (simple warning)
+  // Flag overlay
   const [showOverlay, setShowOverlay] = useState(false);
-
   const canSubmit = !feedback && selected.length > 0 && !hasPendingFlags && (mode === "quick" || timeRemaining > 0);
 
   return (
@@ -419,34 +329,24 @@ useEffect(() => {
       {isDrilling && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-semibold text-gold">
-              Topic Drill
-            </span>
+            <span className="font-semibold text-gold">Topic Drill</span>
             <span className="text-paper font-sans">{drillSubtopic || "All subtopics"}</span>
             {drillDomain && (
-              <span className="text-paper-dim capitalize font-sans">
-                · {drillDomain.replace(/_/g, " ")}
-              </span>
+              <span className="text-paper-dim capitalize font-sans">· {drillDomain.replace(/_/g, " ")}</span>
             )}
           </div>
           <div className="flex items-center gap-2">
-            <Link
-              to="/topics"
-              className="px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-gold/40 text-gold hover:bg-gold/20 transition-colors"
-            >
+            <Link to="/topics" className="px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-gold/40 text-gold hover:bg-gold/20 transition-colors">
               Change topic
             </Link>
-            <Link
-              to="/quiz"
-              className="px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
-            >
+            <Link to="/quiz" className="px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors">
               Exit drill
             </Link>
           </div>
         </div>
       )}
 
-      {/* Mode Selector Tabs */}
+      {/* Mode Selector */}
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
           {MODES.map((m) => {
@@ -456,9 +356,7 @@ useEffect(() => {
                 key={m.id}
                 onClick={() => setMode(m.id)}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 ${
-                  isActive
-                    ? "bg-gold text-dark-bg font-semibold shadow-gold-glow"
-                    : "bg-dark-card border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface"
+                  isActive ? "bg-gold text-dark-bg font-semibold shadow-gold-glow" : "bg-dark-card border border-dark-border text-paper-muted hover:text-paper hover:bg-dark-surface"
                 }`}
               >
                 {m.label}
@@ -470,14 +368,14 @@ useEffect(() => {
           <p className="text-xs text-paper-dim font-sans">
             {MODES.find((m) => m.id === mode)?.desc}
           </p>
-          {/* Timer display */}
-          {mode !== "exam" && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-paper-muted">{modeTexts[mode]}</span>
-              <span className="text-sm text-paper-muted">{formatTime(timeRemaining)}</span>
-            </div>
-          )}
-          {/* Flag note toggle */}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-paper-muted">{modeTexts[mode]}</span>
+            {mode !== "exam" && mode !== "quick" && (
+              <span className="text-sm text-paper-muted" id="timer-elapsed">
+                {formatTime(timeRemaining)}
+              </span>
+            )}
+          </div>
           <Link
             to="/topics"
             className="text-xs font-medium text-gold hover:underline"
@@ -487,28 +385,18 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Question Card Area */}
+      {/* Question Card */}
       {loading ? (
-        <div className="py-24 text-center space-y-3">
+        <div className="py-12 text-center space-y-3">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
           <p className="text-paper-muted text-sm font-sans">Loading question stem...</p>
         </div>
-) : quickEnded ? (
+      ) : quickEnded ? (
         <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent mb-4"></div>
-          <p className="text-3xl font-serif font-normal text-gold tracking-tight mb-4">
-            Quick Quiz Complete
-          </p>
+          <p className="text-3xl font-serif font-normal text-gold tracking-tight">Quick Quiz Complete</p>
           <p className="text-paper text-2xl font-semibold mb-4">
-            {`${quickQuestions.length} done in ${Math.floor(
-              (Date.now() - quickStartTime) / 60000
-            )}:${Math.floor(((Date.now() - quickStartTime) % 60000) / 1000)
-              .toString()
-              .padStart(2, "0")} — ${quickScore} correct. Weakest: ${quickQuestions
-                .slice(0, 5)
-                .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
-                ?.subtopic || "unknown"}.`}
-          </p>
+            {quickQuestions.length} done in {Math.floor((Date.now() - quickStartTime) / 60000)}:{Math.floor(((Date.now() - quickStartTime) % 60000) / 1000).toString().padStart(2, "0")} — {quickScore} correct</p>
           <button
             onClick={() => {
               setQuickEnded(false);
@@ -528,58 +416,47 @@ useEffect(() => {
       ) : !question ? (
         <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
           <p className="text-paper-muted text-sm font-sans">
-              {mode === "review"
-                ? "Nothing is due for review right now. Answer a few questions first, then come back."
-                : "No questions available for this mode."}
+            {mode === "review"
+              ? "Nothing is due for review right now. Answer a few questions first, then come back."
+              : "No questions available for this mode."}
           </p>
-          <button
-            onClick={loadQuestion}
-            className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
-          >
+          <button onClick={loadQuestion} className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow">
             Retry
           </button>
         </div>
       ) : (
-        /* Practice Mode Card with Parallax Stack */
+        /* Practice Question Card */
         <div
           ref={cardContainerRef}
-          className="border border-dark-border border-l-4 border-gold rounded-xl p-6 sm:p-7 bg-dark-card space-y-6"
+          className="border border-dark-border rounded-xl p-6 sm:p-7 bg-dark-card space-y-5"
         >
-          {/* Header & Badges */}
-          <div className="flex flex-wrap justify-between items-start gap-4">
-            <div ref={stemContainerRef} className="space-y-3 max-w-3xl">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold font-mono text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
-                  {question.domain.replace(/_/g, " ")}
+          {/* Header: domain, difficulty, flag */}
+          <div className="flex flex-col sm:flex-wrap items-start gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-semibold font-mono text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                {question.domain.replace(/_/g, " ")}
+              </span>
+              <span className="text-xs font-medium font-mono tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                {question.difficulty}
+              </span>
+              {question.multi_select && (
+                <span className="text-xs font-semibold text-peach bg-peach/15 border border-peach/30 px-3 py-1 rounded-full">
+                  Select all that apply
                 </span>
-                <span className="text-xs font-medium font-mono tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
-                  {question.difficulty}
-                </span>
-                {question.multi_select && (
-                  <span className="text-xs font-semibold text-peach bg-peach/15 border border-peach/30 px-3 py-1 rounded-full">
-                    Select all that apply
-                  </span>
-                )}
-              </div>
-              <div className="border-b border-dark-borderSubtle pb-2" />
-              <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper text-left leading-relaxed pt-1">
-                {question.stem}
-              </h2>
+              )}
             </div>
 
-            {/* Flag Button */}
-            <div className="relative shrink-0">
+            {/* Flag button */}
+            <div className="relative">
               <button
                 onClick={handleToggleFlag}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border ${
-                  isFlagged
-                    ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
-                    : "bg-dark-surface text-paper-muted border-dark-border text-paper"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border ${
+                  isFlagged ? "bg-gold/20 text-gold border-gold shadow-gold-glow" : "bg-dark-surface text-paper-muted border-dark-border text-paper"}
                 }`}
                 title={isFlagged ? "Click to unflag" : "Flag this question"}
               >
                 <svg
-                  className="w-3.5 h-3.5"
+                  className="w-3 h-3"
                   fill={isFlagged ? "currentColor" : "none"}
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -594,59 +471,35 @@ useEffect(() => {
                 {isFlagged ? "Flagged" : "Flag"}
               </button>
             </div>
+          </div>
 
-            {/* Flag Note Form */}
-            {showNoteInput && isFlagged && (
-              <form onSubmit={handleSaveNote} className="bg-dark-surface p-4 rounded-xl border border-dark-border text-xs space-y-2">
-                <label className="block font-medium text-gold">Personal Review Note:</label>
-                <input
-                  type="text"
-                  value={flagNote}
-                  onChange={(e) => setFlagNote(e.target.value)}
-                  placeholder="e.g. Review OSPF LSAs and area border router rules"
-                  className="w-full px-3 py-2 border border-dark-border rounded-xl text-xs bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
-                />
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    className="px-4 py-1.5 bg-gold hover:bg-gold-hover text-dark-bg rounded-full font-semibold"
-                  >
-                    Save Note
-                  </button>
-                </div>
-              </form>
-            )}
+          {/* Question stem */}
+          <div className="border-b border-dark-borderSubtle pb-3">
+            <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper leading-relaxed">
+              {question.stem}
+            </h2>
+          </div>
 
-            {/* Choices list */}
-            <div className="space-y-3">
-              {question.choices.map((c, index) => {
-                const isChecked = selected.includes(c.id);
-                const inputType = question.multi_select ? "checkbox" : "radio";
-                return (
-                  <label
-                    key={c.id}
-                    className={`block w-full rounded-xl border p-4 text-[15px] cursor-pointer ${
-                      isChecked
-                        ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
-                        : "border-dark-border bg-dark-surface/60 text-paper-muted"
-                    } ${feedback ? "pointer-events-none" : ""}`}
+          {/* Choices */}
+          <div className="space-y-3">
+            {question.choices.map((c, index) => {
+              const isChecked = selected.includes(c.id);
+              const inputType = question.multi_select ? "checkbox" : "radio";
+              return (
+                <label
+                  key={c.id}
+                  className={"block rounded-xl border p-3 cursor-pointer " + (isChecked ? "border-gold bg-gold/10 text-gold" : "border-border bg-card") + " " + (feedback ? "pointer-events-none" : "")}
                   >
-                    <div className="flex items-start">
+                    <div className="flex items-start gap-3">
                       <span
-                        className={`mt-0.5 mr-2.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-mono ${
-                          isChecked
-                            ? "border-gold bg-gold/20 text-gold"
-                            : "border-dark-border text-paper-dim"
-                        }`}
+                        className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isChecked ? "border-gold bg-gold/20 text-gold" : "border-border text-paper-dim")}
                       >
                         {index + 1}
                       </span>
                       <input
                         type={inputType}
-                        name={`q-${question.id}`}
-                        className={`mt-0.5 mr-3.5 text-gold focus:ring-gold ${
-                          inputType === "checkbox" ? "rounded" : ""
-                        }`}
+                        name={"q-" + question.id}
+                        className={"mt-0.5 text-gold focus:ring-gold " + (inputType === "checkbox" ? "rounded" : "")}
                         checked={isChecked}
                         disabled={feedback !== null}
                         onChange={() => handleChoiceChange(c.id, question.multi_select)}
@@ -654,151 +507,110 @@ useEffect(() => {
                       <span className="leading-relaxed select-none font-sans">{c.text}</span>
                     </div>
                   </label>
-                );
-              })}
-            </div>
+              );
+            })}
+          </div>
 
+          {/* Tip */}
+          {feedback ? null : (
             <p className="text-xs text-paper-dim font-sans">
               Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
-              <kbd className="font-mono text-paper-muted">4</kbd> to pick an answer,{" "}
-              <kbd className="font-mono text-paper-muted">Enter</kbd> to submit or advance.
+              <kbd className="font-mono text-paper-muted">{question.choices.length}</kbd> to pick, {" "}
+              <kbd className="font-mono text-paper-muted">Enter</kbd> to submit
             </p>
+          )}
 
-            {/* Submit / Next Button */}
-            <div className="flex items-center gap-3 pt-2">
-              {!feedback ? (
-                <button
-                  onClick={submit}
-                  disabled={selected.length === 0}
-                  className="w-full sm:w-auto px-7 min-h-[48px] py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase disabled:opacity-30 disabled:pointer-events-none transition-all shadow-gold-glow"
-                >
-                  Submit Answer
-                </button>
-              ) : (
-                <button
-                  onClick={loadQuestion}
-                  className="w-full sm:w-auto px-7 min-h-[48px] py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
-                >
-                  Next Question
-                </button>
-              )}
-            </div>
-
-            {/* Feedback Section with Sage / Heart pulses */}
-            {feedback && (
-              <div
-                ref={feedbackRef}
-                className={`p-5 rounded-2xl border space-y-2 will-change-transform ${
-                  feedback.correct
-                    ? "bg-sage/15 border-sage text-sage-light shadow-sage-glow"
-                    : "bg-heart/15 border-heart text-heart-light shadow-heart-glow"
-                }`}
+          {/* Submit / Next */}
+          <div className="mt-4">
+            {!feedback ? (
+              <button
+                onClick={submit}
+                disabled={selected.length === 0}
+                className="w-full sm:w-auto px-6 min-h-[48px] py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold">
-                    {feedback.correct ? "✓ Correct!" : "✗ Incorrect"}
-                  </span>
-                </div>
-                <p className="text-sm text-paper leading-relaxed pt-1 font-sans">
-                  {feedback.explanation}
-                </p>
-                {/* Confidence rating */}
+                Submit Answer
+              </button>
+            ) : (
+              <button
+                onClick={loadQuestion}
+                className="w-full sm:w-auto px-6 min-h-[48px] py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
+              >
+                Next Question
+              </button>
+            )}
+          </div>
+
+          {/* Feedback */}
+          {feedback && (
+            <div className="mt-4 p-4 rounded-xl border space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold">
+                  {feedback.correct ? "Correct" : "Incorrect"}
+                </span>
+              </div>
+              <p className="text-sm text-paper leading-relaxed">{feedback.explanation}</p>
+
+              {/* Confidence rating - simplified */}
+              {(!feedback.correct || mode !== "quick") && (
                 <div className="mt-3 flex gap-2">
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted"
+                    className="flex items-center gap-1 px-2 py-1.5 rounded-border text-xs font-medium text-paper-muted"
                     radioGroup="confidence"
                     value="guessed"
                     checked={confidence === "guessed"}
                     onChange={(e) => setConfidence("guessed")}
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.08m.08-.03.15m4.92-4.92h.08m.08-.03-.15m4.92-4.92h.08m.08-.03-.15m-5.66 5.66h.08m.08-.03.15m4.92-4.92h.08m.08-.03-.15m-5.66 5.66h.08m.08-.03.15"/>
-                    </svg>
                     Guessed
                   </label>
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dark-border text-xs font-medium text-paper-muted"
+                    className="flex items-center gap-1 px-2 py-1.5 rounded border border-dark-border text-xs font-medium text-paper-muted"
                     radioGroup="confidence"
                     value="unsure"
                     checked={confidence === "unsure"}
                     onChange={(e) => setConfidence("unsure")}
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15h.01m-3.01.41m3.01-.41m2.08 1.92h.08m.08.03.15m6.92-6.92h.08m.08-.03-.15m6.92-6.92h.08m.08-.03-.15m-2.08-1.92h.08m.08-.03-.15m6.92-6.92h.08m.08.03.15m-6.92 6.92h.08m.08.03.15"/>
-                    </svg>
                     Unsure
                   </label>
                   <label
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold border-gold text-xs font-medium text-dark-bg"
+                    className="flex items-center gap-1 px-2 py-1.5 rounded bg-gold border-gold text-xs font-medium text-dark-bg"
                     radioGroup="confidence"
                     value="confident"
                     checked={confidence === "confident"}
                     onChange={(e) => setConfidence("confident")}
                   >
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 1v2m0 12v-2m6 0h.01m-6 0h.01m0 12v-2m6 0h.01m-6 0h.01m0 12v-2"/>
-                    </svg>
                     Confident
                   </label>
                 </div>
+              )}
 
-                {/* Question Note */}
-                {!feedback.correct && (
-                  <div className="mt-4 pt-3 border-t border-border space-y-2">
-                    {questionNote ? (
-                      <div className="flex items-start gap-2">
-                        <Pencil className="w-4 h-4 text-gold mt-0.5 shrink-0" />
-                        <div>
-                          <p className="text-xs text-paper font-sans">{questionNote}</p>
-                          <button
-                            onClick={() => setNoteInputVisible(true)}
-                            className="text-xs text-gold hover:underline font-medium"
-                          >
-                            Edit note
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
+              {/* Question note */}
+              {(!feedback.correct || mode === "quick") && (
+                <div className="mt-3 pt-3 border-t border-border space-y-2">
+                  {questionNote ? (
+                    <div className="flex items-start gap-2">
+                      <Pencil className="w-3 h-3 text-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-paper font-sans">{questionNote}</p>
                         <button
                           onClick={() => setNoteInputVisible(true)}
-                          className="w-full py-2 bg-[#B8842A]/10 text-[#B8842A] border border-[#B8842A]/30 rounded-xl text-xs font-semibold hover:bg-[#B8842A]/20 transition-colors"
+                          className="text-xs text-gold hover:underline font-medium"
                         >
-                          Add note to this question
+                          Edit
                         </button>
-                        {noteInputVisible && (
-                          <div className="space-y-2">
-                            <textarea
-                              value={questionNote}
-                              onChange={(e) => setQuestionNote(e.target.value)}
-                              placeholder="e.g. Remember that OSPF uses multicast 224.0.0.5"
-                              className="w-full px-3 py-2 border border-dark-border rounded-xl text-sm bg-dark-surface text-paper focus:outline-none focus:ring-1 focus:ring-gold"
-                              rows={2}
-                            />
-                            <div className="flex justify-end gap-2">
-                              <button
-                                onClick={() => setNoteInputVisible(false)}
-                                className="px-3 py-1.5 text-xs text-paper-muted border border-dark-border rounded-xl hover:bg-dark-surface"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                onClick={saveQuestionNote}
-                                disabled={!questionNote.trim()}
-                                className="px-3 py-1.5 text-xs bg-[#B8842A] text-dark-bg font-semibold rounded-full hover:bg-[#B8842A]/90 disabled:opacity-50 disabled:pointer-events-none"
-                              >
-                                {noteSaved ? "Saved!" : "Save Note"}
-                              </button>
-                            </div>
-                          </div>
-                        )}
                       </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setNoteInputVisible(true)}
+                      className="w-full py-2 bg-gold/10 text-gold border border-gold/30 rounded-xl text-xs font-semibold hover:bg-gold/20 transition-colors"
+                    >
+                      Add note to this question
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

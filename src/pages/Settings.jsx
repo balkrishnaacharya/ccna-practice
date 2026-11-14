@@ -163,11 +163,7 @@ export default function Settings({ onProfileChange, updater }) {
             </button>
             {goalStatus && (
               <span
-                className={`text-xs font-semibold px-3 py-1 rounded-full border ${
-                  goalStatus.ok
-                    ? "text-sage-light bg-sage/20 border-sage/40"
-                    : "text-heart-light bg-heart/15 border-heart/30"
-                }`}
+                className={"text-xs font-semibold px-3 py-1 rounded-full border " + (goalStatus.ok ? "text-sage-light bg-sage/20 border-sage/40" : "text-heart-light bg-heart/15 border-heart/30")}
               >
                 {goalStatus.text}
               </span>
@@ -316,13 +312,14 @@ export default function Settings({ onProfileChange, updater }) {
                 </div>
               </div>
             </div>
+          )}
           </div>
 
           <div className="pt-4 border-t border-dark-border">
             <h3 className="text-xs font-semibold text-paper-muted uppercase tracking-wider mb-3">
               Preview
             </h3>
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface/50 border border-dark-border/50">
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface-50 border border-dark-border-50">
               <span className="w-8 h-8 text-gold shrink-0">
                 🔔
               </span>
@@ -337,7 +334,6 @@ export default function Settings({ onProfileChange, updater }) {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Software Updates Section */}
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">

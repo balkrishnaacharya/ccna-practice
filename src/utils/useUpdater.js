@@ -17,7 +17,16 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
 
   // Resolve the installed version from Tauri at runtime so it never drifts from tauri.conf.json
   useEffect(() => {
-    getVersion().then(setCurrentVersion).catch(() => {/* keep fallback */});
+    let cancelled = false;
+    (async () => {
+      try {
+        const v = await getVersion();
+        if (!cancelled) setCurrentVersion(v);
+      } catch {
+        // keep fallback if Tauri app plugin is unavailable
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   // Check for updates

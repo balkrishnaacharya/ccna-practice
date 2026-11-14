@@ -90,7 +90,7 @@ export default function Exam({ reportExamProgress }) {
     navigate(window.history.length > 1 ? -1 : "/");
   }
 
-  function handleSelectChoice(choiceId, isMultiSelect) {
+  async function handleSelectChoice(choiceId, isMultiSelect) {
     const q = questions[currentIndex];
     const currentSelected = answers[q.id] || [];
     let updated;
@@ -178,7 +178,7 @@ export default function Exam({ reportExamProgress }) {
         <p className="text-paper-muted font-sans text-sm">{examError || "No questions available."}</p>
         <button
           onClick={loadExamQuestions}
-          className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs   transition-all shadow-gold-glow"
+          className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs transition-all shadow-gold-glow"
         >
           Retry
         </button>
@@ -192,10 +192,9 @@ export default function Exam({ reportExamProgress }) {
 
   const currentQ = questions[currentIndex] ?? null;
   const selectedChoices = answers[currentQ?.id] || [];
-  const isLastQuestion = currentIndex === questions.length - 1;
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-dark/95">
       {/* Preflight Modal if user landed directly on /exam without confirmation */}
       {showPreflightModal && (
         <ExamConfirmationModal
@@ -205,252 +204,176 @@ export default function Exam({ reportExamProgress }) {
         />
       )}
 
-      {/* Top Exam Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-dark-card border border-dark-border rounded-2xl shadow-dock">
-        <div>
-          <span className="text-xs font-semibold   text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
-            CCNA 2.0 Full Exam Simulator
-          </span>
-          <p className="text-sm font-medium text-paper mt-2">
-            Question <span className="font-serif text-peach text-base">{currentIndex + 1}</span> of {questions.length}
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-full border font-mono text-sm font-semibold transition-colors ${
-              secondsRemaining < 600
-                ? "bg-heart/20 text-heart-light border-heart shadow-heart-glow animate-pulse"
-                : "bg-dark-surface text-gold border-dark-border"
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{formatTime(secondsRemaining)}</span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setShowExitModal(true)}
-            className="px-4 py-2 border border-dark-border hover:border-heart/50 hover:text-heart rounded-full text-xs font-medium text-paper-muted transition-colors cursor-pointer"
-            title="Exit Exam"
-          >
-            Exit
-          </button>
-
-          <button
-            onClick={() => setShowConfirmModal(true)}
-            disabled={unansweredCount > 0 || isSubmitting}
-            className="px-5 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all duration-150 disabled:bg-dark-surface disabled:text-paper-dim disabled:border disabled:border-dark-border disabled:shadow-none disabled:cursor-not-allowed"
-          >
-            {unansweredCount > 0 ? `Finish Exam (${unansweredCount} left)` : "Finish Exam"}
-          </button>
-        </div>
-      </div>
-
-      {/* Explicit Exit Modal */}
-      {showExitModal && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="exit-exam-title"
-            className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
-          >
-            <h2 id="exit-exam-title" className="font-serif text-xl font-semibold text-paper">
-              Exit this exam?
-            </h2>
-            <p className="text-sm leading-relaxed text-paper-muted font-sans">
-              You have {unansweredCount} unanswered question{unansweredCount === 1 ? "" : "s"}. Are you sure you want to exit? Your timer will stop and progress will be lost.
+      {/* Top Header - minimal, dark, gold accent */}
+      <header className="px-6 py-3 bg-dark/80 border-b border-dark-border/50 backdrop-blur-sm shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+              CCNA 2.0 Full Exam Simulator
+            </span>
+            <p className="text-sm font-medium text-paper">
+              Question <span className="font-serif text-base text-gold">{currentIndex + 1}</span> of {questions.length}
             </p>
-            <div className="flex justify-end gap-3 pt-2">
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="relative">
               <button
-                type="button"
-                onClick={() => setShowExitModal(false)}
-                className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors cursor-pointer"
+                onClick={toggleQuestionFlag}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                  flagged.has(currentQ?.id)
+                    ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
+                    : "bg-transparent text-paper-muted border-border hover:border-gold/40 hover:text-gold"
+                }`}
+                title={flagged.has(currentQ?.id) ? "Click to unflag" : "Flag this question"}
               >
-                Stay in exam
+                <svg
+                  className="w-3 h-3"
+                  fill={flagged.has(currentQ?.id) ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+                  />
+                </svg>
+                {flagged.has(currentQ?.id) ? "Flagged" : "Flag"}
               </button>
-              <button
-                type="button"
-                onClick={handleExplicitExit}
-                className="rounded-full bg-heart hover:bg-heart-hover px-5 py-2 text-xs font-semibold text-paper shadow-heart-glow transition-colors cursor-pointer"
-              >
-                Exit to Dashboard
-              </button>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-medium text-paper">
+                {formatTime(secondsRemaining)}
+              </span>
             </div>
           </div>
         </div>
-      )}
+      </header>
 
-      {/* Main Grid: Question Content & Navigator */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Question & Choices */}
-        <div className="lg:col-span-3 border border-dark-border rounded-2xl p-6 sm:p-7 bg-dark-card shadow-dock space-y-6">
-          <div className="flex justify-between items-start gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-medium   text-paper-muted bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
-                  {currentQ?.domain.replace(/_/g, " ")}
-                </span>
-                {currentQ?.multi_select && (
-                  <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
-                    Select all that apply
-                  </span>
-                )}
-              </div>
-              <h2 className="font-serif text-xl sm:text-2xl text-paper leading-relaxed font-normal pt-1">
-                {currentQ?.stem}
-              </h2>
-            </div>
+      {/* Main Content Area */}
+      <main className="max-w-7xl mx-auto px-6 pb-12">
+        {/* Question Stem */}
+        <div className="border-b border-dark-border/50 pb-5 mb-6">
+          <h2 className="font-serif text-xl sm:text-2xl text-paper font-normal leading-relaxed">
+            {currentQ?.stem}
+          </h2>
+        </div>
 
-            <button
-              onClick={toggleQuestionFlag}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium  border transition-all duration-150 shrink-0 ${
-                flagged.has(currentQ?.id)
-                  ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
-                  : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
-              }`}
-            >
-              <svg
-                className="w-3.5 h-3.5"
-                fill={flagged.has(currentQ?.id) ? "currentColor" : "none"}
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        {/* Choices */}
+        <div className="space-y-3 pt-1">
+          {currentQ?.choices.map((c) => {
+            const isSelected = selectedChoices.includes(c.id);
+            const inputType = currentQ.multi_select ? "checkbox" : "radio";
+            const isRadio = inputType === "radio";
+            const letter = isRadio
+              ? String.fromCharCode(65 + currentQ.choices.indexOf(c))
+              : String.fromCharCode(97 + currentQ.choices.indexOf(c));
+            const checkboxClass = inputType === "checkbox" ? "rounded" : "";
+            return (
+              <div
+                key={c.id}
+                onClick={() => handleSelectChoice(c.id, currentQ.multi_select)}
+                className={"block rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 " + (isSelected ? "border-gold bg-gold/10 text-gold" : "border-border bg-card") + " " + (feedback ? "pointer-events-none" : "")}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-              </svg>
-              <span>{flagged.has(currentQ?.id) ? "Flagged" : "Flag"}</span>
-            </button>
-          </div>
-
-          {/* Choices list */}
-          <div className="space-y-3 pt-1">
-            {currentQ?.choices.map((c) => {
-              const isSelected = selectedChoices.includes(c.id);
-              const inputType = currentQ.multi_select ? "checkbox" : "radio";
-              return (
-                <div
-                  key={c.id}
-                  onClick={() => handleSelectChoice(c.id, currentQ.multi_select)}
-                  className={`block w-full rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 ${
-                    isSelected
-                      ? "border-gold bg-gold/15 text-paper shadow-gold-glow"
-                      : "border-dark-border bg-dark-surface/60 hover:border-gold/40 text-paper-muted hover:text-paper"
-                  }`}
-                >
-                  <div className="flex items-start">
-                    <input
-                      type={inputType}
-                      name={`exam-q-${currentQ.id}`}
-                      className={`mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold ${
-                        inputType === "checkbox" ? "rounded" : ""
-                      }`}
-                      checked={isSelected}
-                      readOnly
-                    />
-                    <span className="select-none leading-relaxed font-sans">{c.text}</span>
-                  </div>
+                <div className="flex items-start gap-3">
+                  <span
+                    className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isSelected ? "border-gold bg-gold/20 text-gold" : "border-border text-paper-dim")}
+                  >
+                    {letter}
+                  </span>
+                  <input
+                    type={inputType}
+                    name={"exam-q-" + currentQ.id}
+                    className={"mt-0.5 mr-3.5 accent-gold text-gold focus:ring-gold " + checkboxClass}
+                    checked={isSelected}
+                    readOnly
+                  />
+                  <span className="leading-relaxed select-none font-sans">{c.text}</span>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+        </div>
 
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-between pt-5 border-t border-dark-borderSubtle">
+        {/* Navigation Controls */}
+        <div className="flex items-center justify-between pt-5 border-t border-dark-border/50">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
               disabled={currentIndex === 0}
-              className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25 disabled:pointer-events-none transition-colors"
+              className="px-4 py-2.5 border border-dark-border rounded-full text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25 disabled:pointer-events-none transition-colors"
             >
               Previous
             </button>
 
-            <span className="text-xs text-paper-muted font-mono ">
+            <span className="text-xs font-mono text-paper-muted">
               {answeredCount} / {questions.length} answered
             </span>
+          </div>
 
+          <div className="flex gap-2">
             {isLastQuestion ? (
               <button
                 onClick={() => setShowLastQModal(true)}
-                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  transition-all shadow-gold-glow"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs shadow-gold-glow transition-all"
               >
                 Finish Exam
               </button>
             ) : (
               <button
                 onClick={() => setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))}
-                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  transition-all shadow-gold-glow"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs shadow-gold-glow transition-all"
               >
                 Next Question
               </button>
             )}
           </div>
         </div>
+      </main>
 
-        {/* Question Navigator */}
-        <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-4">
-          <div className="flex justify-between items-center pb-3 border-b border-dark-borderSubtle">
-            <h3 className="text-xs font-semibold text-paper  ">
-              Question Grid
-            </h3>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-paper-dim">
-                {answeredCount}/{questions.length}
-              </span>
-              <button
-                onClick={() => setShowMobileNav(!showMobileNav)}
-                className="lg:hidden text-xs text-gold font-medium px-2.5 py-1 bg-gold/15 rounded-full border border-gold/30"
-              >
-                {showMobileNav ? "Hide" : "Show"}
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 text-xs text-paper-muted">
-            <div className="flex items-center gap-1.5">
+      {/* Question Navigator - compact, always visible on mobile */}
+      <div className="mt-4 max-w-7xl mx-auto px-6">
+        <div className="border border-dark-border/50 rounded-2xl p-4 bg-dark-card shadow-sm space-y-3">
+          <div className="flex justify-between items-center pb-2 border-b border-dark-border/50">
+            <h3 className="text-xs font-semibold text-paper">Question Grid</h3>
+            <div className="flex items-center gap-2 text-xs text-paper-muted">
               <span className="w-2.5 h-2.5 rounded-full bg-gold"></span>
               <span>Answered</span>
-            </div>
-            <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-peach"></span>
               <span>Flagged</span>
-            </div>
-            <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-dark-surface border border-dark-border"></span>
               <span>Pending</span>
             </div>
           </div>
 
-          <div className={`${showMobileNav ? "block" : "hidden lg:block"}`}>
-            <div className="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 max-h-[460px] overflow-y-auto p-1 custom-scrollbar">
-              {questions.map((q, idx) => {
-                const hasAnswer = (answers[q.id] || []).length > 0;
-                const isFlag = flagged.has(q.id);
-                const isCurrent = idx === currentIndex;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 max-h-[460px] overflow-y-auto">
+            {questions.map((q, idx) => {
+              const hasAnswer = (answers[q.id] || []).length > 0;
+              const isFlag = flagged.has(q.id);
+              const isCurrent = idx === currentIndex;
 
-                let bgClass = "bg-dark-surface text-paper-dim border border-dark-border hover:border-gold/40 hover:text-paper";
-                if (hasAnswer) bgClass = "bg-gold text-dark-bg font-semibold border-gold shadow-gold-glow";
-                else if (isFlag) bgClass = "bg-peach text-dark-bg font-semibold border-peach";
+              let bgClass = "bg-dark-surface text-paper-dim border border-dark-border hover:border-gold/40 hover:text-paper";
+              if (hasAnswer) bgClass = "bg-gold text-dark-bg font-semibold border-gold shadow-gold-glow";
+              else if (isFlag) bgClass = "bg-peach text-dark-bg font-semibold border-peach";
 
-                return (
-                  <button
-                    key={q.id}
-                    onClick={() => {
-                      setCurrentIndex(idx);
-                      setShowMobileNav(false);
-                    }}
-                    className={`w-9 h-9 rounded-lg text-xs font-mono font-medium transition-all relative flex items-center justify-center shrink-0 ${bgClass} ${
-                      isCurrent ? "ring-2 ring-paper ring-offset-2 ring-offset-dark-card scale-105 z-10" : ""
-                    }`}
-                    title={`Question ${idx + 1}`}
-                  >
-                    {idx + 1}
-                  </button>
-                );
-              })}
-            </div>
+              return (
+                <button
+                  key={q.id}
+                  onClick={() => {
+                    setCurrentIndex(idx);
+                  }}
+                  className={`w-full rounded-lg text-xs font-mono font-medium transition-all relative flex items-center justify-center shrink-0 ${bgClass} ${
+                    isCurrent ? "ring-2 ring-paper ring-offset-2 ring-offset-dark-card scale-105 z-10" : ""
+                  }`}
+                  title={`Question ${idx + 1}`}
+                >
+                  {idx + 1}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -459,7 +382,7 @@ export default function Exam({ reportExamProgress }) {
       {showConfirmModal && (
         <div className="fixed inset-0 bg-dark-bg/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="bg-dark-card rounded-2xl max-w-md w-full p-6 shadow-dock space-y-4 border border-dark-border text-paper">
-            <h3 className="font-serif text-2xl font-semibold text-paper">Submit Examination?</h3>
+            <h3 className="font-serif text-xl font-semibold text-paper">Submit Examination?</h3>
             <p className="text-sm text-paper-muted leading-relaxed">
               You have answered <strong className="text-paper">{answeredCount}</strong> of{" "}
               <strong className="text-paper">{questions.length}</strong> questions.
@@ -472,14 +395,14 @@ export default function Exam({ reportExamProgress }) {
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowConfirmModal(false)}
-                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Return to Exam
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Yes, Submit Exam"}
               </button>
@@ -492,7 +415,7 @@ export default function Exam({ reportExamProgress }) {
       {showLastQModal && (
         <div className="fixed inset-0 bg-dark-bg/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="bg-dark-card rounded-2xl max-w-md w-full p-6 shadow-dock space-y-4 border border-dark-border text-paper">
-            <h3 className="font-serif text-2xl font-semibold text-paper">This is the last question</h3>
+            <h3 className="font-serif text-xl font-semibold text-paper">This is the last question</h3>
             <p className="text-sm text-paper-muted leading-relaxed">
               You have answered <strong className="text-paper">{answeredCount}</strong> of{" "}
               <strong className="text-paper">{questions.length}</strong> questions.
@@ -506,14 +429,14 @@ export default function Exam({ reportExamProgress }) {
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowLastQModal(false)}
-                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
-                Go Back &amp; Review
+                Go Back & Review
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Submit Exam"}
               </button>
@@ -553,11 +476,11 @@ export default function Exam({ reportExamProgress }) {
           }`}
         >
           {passed ? (
-            <span className="inline-block bg-sage/20 text-sage-light px-4 py-1.5 rounded-full border border-sage/40 text-xs font-semibold   mb-1 shadow-sage-glow">
+            <span className="inline-block bg-sage/20 text-sage-light px-4 py-1.5 rounded-full border border-sage/40 text-xs font-semibold mb-1 shadow-sage-glow">
               Result: PASS
             </span>
           ) : (
-            <span className="inline-block bg-heart/20 text-heart-light px-4 py-1.5 rounded-full border border-heart/40 text-xs font-semibold   mb-1 shadow-heart-glow">
+            <span className="inline-block bg-heart/20 text-heart-light px-4 py-1.5 rounded-full border border-heart/40 text-xs font-semibold mb-1 shadow-heart-glow">
               Result: FAIL
             </span>
           )}
@@ -585,19 +508,19 @@ export default function Exam({ reportExamProgress }) {
                 setShowPreflightModal(true);
                 loadExamQuestions();
               }}
-              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold  rounded-full shadow-gold-glow transition-all"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold rounded-full shadow-gold-glow transition-all"
             >
               Take Another Exam
             </button>
             <Link
               to="/history"
-              className="px-6 py-2.5 border border-gold/40 text-gold hover:bg-gold/15 text-xs font-medium  rounded-full transition-colors"
+              className="px-6 py-2.5 border border-gold/40 text-gold hover:bg-gold/15 text-xs font-medium rounded-full transition-colors"
             >
               View Exam History
             </Link>
             <Link
               to="/"
-              className="px-6 py-2.5 border border-dark-border hover:bg-dark-surface text-paper-muted hover:text-paper text-xs font-medium  rounded-full transition-colors"
+              className="px-6 py-2.5 border border-dark-border hover:bg-dark-surface text-paper-muted hover:text-paper text-xs font-medium rounded-full transition-colors"
             >
               Return to Dashboard
             </Link>
@@ -647,7 +570,7 @@ export default function Exam({ reportExamProgress }) {
                 <button
                   key={f}
                   onClick={() => setReviewFilter(f)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium  border capitalize transition-all ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-medium border capitalize transition-all ${
                     reviewFilter === f
                       ? "bg-gold text-dark-bg border-gold shadow-gold-glow font-semibold"
                       : "border-dark-border text-paper-muted hover:bg-dark-surface hover:text-paper"
@@ -670,13 +593,11 @@ export default function Exam({ reportExamProgress }) {
               <div
                 key={r.question_id}
                 className={`p-5 rounded-2xl border space-y-3 ${
-                  r.is_correct
-                    ? "border-sage/40 bg-sage/5"
-                    : "border-heart/40 bg-heart/5"
+                  r.is_correct ? "border-sage/40 bg-sage/5" : "border-heart/40 bg-heart/5"
                 }`}
               >
                 <div className="flex justify-between items-start gap-2">
-                  <span className="text-xs font-medium  text-paper-dim ">
+                  <span className="text-xs font-medium text-paper-dim">
                     Q{i + 1} • {r.domain.replace(/_/g, " ")}
                     {r.subtopic ? ` • ${r.subtopic}` : ""}
                   </span>

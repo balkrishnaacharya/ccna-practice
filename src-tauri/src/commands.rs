@@ -339,8 +339,9 @@ pub fn get_subtopic_stats(db: State<Db>) -> Result<Vec<SubtopicStat>, String> {
                 seen: r.get(3)?,
                 attempts,
                 correct,
+                // Accuracy as percentage (was *1000 /10 = *100, simplified directly).
                 accuracy: if attempts > 0 {
-                    (correct as f64 / attempts as f64) * 1000.0
+                    (correct as f64 / attempts as f64) * 100.0
                 } else {
                     0.0
                 },
@@ -348,10 +349,6 @@ pub fn get_subtopic_stats(db: State<Db>) -> Result<Vec<SubtopicStat>, String> {
         })
         .map_err(|e| e.to_string())?
         .filter_map(|r| r.ok())
-        .map(|mut s| {
-            s.accuracy = (s.accuracy / 10.0).round();
-            s
-        })
         .collect();
 
     Ok(rows)
@@ -1982,6 +1979,10 @@ pub fn get_diagnostics(conn: &Connection) -> Result<DiagnosticsInfo, String> {
         .unwrap_or_else(|_| "unknown".to_string());
 
     // Bundled bank info from the embedded database file.
+    // Note: on Android the relative "resources/ccna.db" path does not exist as a
+    // filesystem path, so bundled_count will be 0. The sync_status below uses
+    // version comparison (installed_bank_version vs BUNDLED_BANK_VERSION) which
+    // works correctly on all platforms.
     let bundled_path = std::path::Path::new("resources/ccna.db");
     let bundled_count = if bundled_path.exists() {
         let bundled_conn = rusqlite::Connection::open(bundled_path)
