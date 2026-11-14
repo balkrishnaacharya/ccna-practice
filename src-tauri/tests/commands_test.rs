@@ -47,3 +47,16 @@ fn test_diagnostics_returns_bank_info() {
         assert!(!diag.platform.is_empty());
     });
 }
+
+#[test]
+fn test_get_notification_settings_command() {
+    let (db, _dir) = common::setup_integration_db();
+    let settings = common::with_locked(&db, |conn| commands::get_notification_settings(conn)).unwrap();
+    assert!(settings.enabled);
+    assert_eq!(settings.reminder_time, "09:00");
+    assert_eq!(settings.quiet_start, "21:00");
+    assert_eq!(settings.quiet_end, "08:00");
+    assert_eq!(settings.review_threshold, 3);
+    assert!(!settings.weekly_summary);
+    assert!(settings.streak_at_risk);
+}

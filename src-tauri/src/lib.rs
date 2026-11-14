@@ -10,7 +10,8 @@ pub fn run() {
     #[allow(unused_mut)]
     let mut builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_process::init());
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_notification::init());
 
     #[cfg(desktop)]
     {
@@ -65,6 +66,11 @@ pub fn run() {
             commands::save_question_note,
             commands::get_quick_quiz_questions,
             commands::get_diagnostics_cmd,
+            notifications::get_notification_settings_cmd,
+            notifications::update_notification_setting_cmd,
+            notifications::send_in_app_notification_cmd,
+            notifications::get_notification_history_cmd,
+            notifications::check_reminder_status_cmd,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

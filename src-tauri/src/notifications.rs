@@ -1,6 +1,8 @@
+use crate::db::Db;
 use rusqlite::{params, Connection, OptionalExtension, Result};
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
+use tauri::State;
 
 // ─── Notification settings ───────────────────────────────────────────────────
 
@@ -336,4 +338,132 @@ fn now_epoch() -> i64 {
         .duration_since(UNIX_EPOCH)
         .map(|d| d.as_secs() as i64)
         .unwrap_or(0)
+}
+
+/// Status of all reminder types, computed from current DB state.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ReminderStatus {
+    pub study_reminder: bool,
+    pub streak_at_risk: bool,
+    pub review_reminder: bool,
+    pub today_ordinal: i64,
+    pub now_hour: i64,
+}
+
+/// Today's Julian day ordinal in local time (same convention as commands.rs).
+fn today_ordinal(conn: &Connection) -> Result<i64, String> {
+    conn.query_row(
+        "SELECT CAST(julianday(date('now', 'localtime')) AS INTEGER)",
+        [],
+        |r| r.get(0),
+    )
+    .map_err(|e| e.to_string())
+}
+
+/// Combined reminder status: which reminders should fire right now.
+pub fn check_reminder_status(conn: &Connection) -> Result<ReminderStatus, String> {
+    let today = today_ordinal(conn)?;
+    let now_hour = hour_of_day(now_epoch());
+
+    let study = should_send_study_reminder(conn, today, now_hour)?;
+    let streak = should_send_streak_at_risk(conn, today, streak_current(conn)?)?;
+    let review = should_send_review_reminder(conn, today, now_hour)?;
+
+    Ok(ReminderStatus {
+        study_reminder: study,
+        streak_at_risk: streak,
+        review_reminder: review,
+        today_ordinal: today,
+        now_hour,
+    })
+}
+
+/// Current streak count from the DB.
+fn streak_current(conn: &Connection) -> Result<i64, String> {
+    let settings = get_notification_settings(conn)?;
+    // Read current_streak by recomputing from activity: count consecutive
+    // days ending today (or yesterday if today not answered).
+    let today_answered: i64 = conn
+        .query_row(
+            "SELECT COUNT(*) FROM answers
+             WHERE CAST(julianday(date(answered_at, 'unixepoch', 'localtime')) AS INTEGER) = ?1",
+            params![today_ordinal(conn)?],
+            |r| r.get(0),
+        )
+        .unwrap_or(0);
+
+    let today = today_ordinal(conn)?;
+    let mut streak = 0;
+    let mut cursor = if today_answered > 0 { today } else { today - 1 };
+    loop {
+        let day_answered: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM answers
+                 WHERE CAST(julianday(date(answered_at, 'unixepoch', 'localtime')) AS INTEGER) = ?1",
+                params![cursor],
+                |r| r.get(0),
+            )
+            .unwrap_or(0);
+        if day_answered == 0 {
+            break;
+        }
+        streak += 1;
+        cursor -= 1;
+    }
+    Ok(streak)
+}
+
+// ─── Tauri command wrappers ─────────────────────────────────────────────────
+
+/// Tauri command: get notification settings.
+#[tauri::command]
+pub fn get_notification_settings_cmd(db: State<Db>) -> Result<NotificationSettings, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    get_notification_settings(&conn)
+}
+
+/// Tauri command: update a single notification setting.
+#[tauri::command]
+pub fn update_notification_setting_cmd(
+    db: State<Db>,
+    key: String,
+    value: String,
+) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    conn.execute(
+        "INSERT OR REPLACE INTO notification_preferences (key, value) VALUES (?1, ?2)",
+        params![key, value],
+    )
+    .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+/// Tauri command: record an in-app notification event.
+#[tauri::command]
+pub fn send_in_app_notification_cmd(
+    db: State<Db>,
+    event_type: String,
+    title: String,
+    body: String,
+) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    record_notification_event(&conn, &event_type, &title, &body)?;
+    Ok(())
+}
+
+/// Tauri command: get notification history.
+#[tauri::command]
+pub fn get_notification_history_cmd(
+    db: State<Db>,
+    limit: Option<i64>,
+) -> Result<Vec<NotificationEvent>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    get_notification_events(&conn, limit)
+}
+
+/// Tauri command: compute whether any reminder should fire now.
+#[tauri::command]
+pub fn check_reminder_status_cmd(db: State<Db>) -> Result<ReminderStatus, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    check_reminder_status(&conn)
 }

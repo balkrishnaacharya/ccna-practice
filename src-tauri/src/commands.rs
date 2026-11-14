@@ -7,6 +7,12 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::State;
 
+pub use crate::notifications::{
+    get_notification_settings,
+    NotificationSettings,
+    ReminderStatus,
+};
+
 fn now_secs() -> i64 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
