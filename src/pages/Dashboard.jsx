@@ -101,7 +101,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         
         {/* Domain Mastery (span 2) */}
-        <div className="group bg-dark-surface/50 rounded-2xl border border-border/30 p-6 sm:p-8">
+        <div className="group bg-dark-surface/50 rounded-2xl border border-border/30 p-6 sm:p-8 md:col-span-2">
           <h2 className="font-semibold text-base text-paper mb-4">Domain Mastery</h2>
           <div className="space-y-3">
             {[

@@ -21,7 +21,7 @@ export default function Exam({ reportExamProgress }) {
   const [showLastQModal, setShowLastQModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [examResult, setExamResult] = useState(null);
-  const [examError, setExamError] = useState<string | null>(null);
+  const [examError, setExamError] = useState(null);
   const [reviewFilter, setReviewFilter] = useState("all");
   const [showMobileNav, setShowMobileNav] = useState(false);
 

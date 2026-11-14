@@ -18,7 +18,7 @@ export const NAV_ITEMS = [
 ];
 
 export const Sidebar = ({ onNavigate }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 

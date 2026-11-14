@@ -106,7 +106,7 @@ export default function Topics() {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="border border-dark-border rounded-2xl p-4 bg-dark-card shadow-dock text-center">
               <p className="font-mono text-2xl text-peach">{totalQuestions}</p>
               <p className="text-[11px] uppercase tracking-wider text-paper-dim mt-1">Questions</p>

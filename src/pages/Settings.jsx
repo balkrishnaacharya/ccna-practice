@@ -319,7 +319,7 @@ export default function Settings({ onProfileChange, updater }) {
             <h3 className="text-xs font-semibold text-paper-muted uppercase tracking-wider mb-3">
               Preview
             </h3>
-            <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface-50 border border-dark-border-50">
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface/50 border border-dark-border/50">
               <span className="w-8 h-8 text-gold shrink-0">
                 🔔
               </span>

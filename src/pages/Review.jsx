@@ -56,7 +56,7 @@ export default function Review() {
             <select
               value={filterDomain}
               onChange={(e) => setFilterDomain(e.target.value)}
-              className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold"
+              className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper focus:outline-none focus:ring-1 focus:ring-gold max-w-xs sm:max-w-none"
             >
               <option value="all">All Domains ({flags.length})</option>
               {domains.map((d) => (
@@ -135,7 +135,7 @@ export default function Review() {
                 </button>
               </div>
 
-              <h2 className="font-serif text-lg font-normal text-paper leading-relaxed">
+              <h2 className="font-serif text-lg font-normal text-paper leading-relaxed line-clamp-3">
                 {f.stem}
               </h2>
 
