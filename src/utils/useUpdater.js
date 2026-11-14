@@ -62,6 +62,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
               : data.body || "A new signed release is available.",
             date: data.published_at,
             downloadUrl,
+            githubReleaseUrl: data.html_url,
             isAndroid: true,
           });
           setStatus("available");
@@ -144,7 +145,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
         console.error("Failed to open APK download URL:", err);
         setStatus("error");
         setErrorMessage(
-          `Could not open download link. Download manually from GitHub: ${updateInfo.downloadUrl}`
+          `Could not open download link. Visit the GitHub release page to install manually: ${updateInfo.githubReleaseUrl || updateInfo.downloadUrl}`
         );
         return;
       }
