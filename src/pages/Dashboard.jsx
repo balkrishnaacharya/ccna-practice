@@ -403,6 +403,25 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           </div>
 
           <div className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-lg font-semibold text-paper">
+                Quick Quiz
+              </h3>
+              <span className="text-xs font-mono font-semibold text-gold bg-gold/15 px-2.5 py-0.5 rounded-full border border-gold/30">
+                5 questions
+              </span>
+            </div>
+            <p className="text-xs text-paper-muted leading-relaxed font-sans">
+              70% from weakest subtopics, 30% random. Instant feedback.
+            </p>
+            <Link
+              to="/quiz?mode=quick"
+              className="block w-full py-2.5 text-center text-xs font-semibold text-dark-bg bg-gold hover:bg-gold-hover rounded-full shadow-gold-glow transition-all duration-150"
+            >
+              Start Quick Quiz
+            </Link>
+          </div>
+          <div className="border border-dark-border rounded-xl p-5 bg-dark-card space-y-3">
             <h3 className="font-serif text-lg font-semibold text-paper">
               CCNA 2.0 Exam Standards
             </h3>

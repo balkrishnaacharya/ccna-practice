@@ -12,6 +12,7 @@ const MODES = [
   { id: "medium", label: "Medium", desc: "Standard difficulty, 90s pace" },
   { id: "hard", label: "Hard", desc: "Complex scenarios, 60s pace" },
   { id: "impossible", label: "Impossible", desc: "Multi-concept tricky questions" },
+  { id: "quick", label: "Quick Quiz", desc: "5 questions: 70% weakest subtopics, 30% random, instant feedback" },
 ];
 
 const modeTexts = {
@@ -21,6 +22,7 @@ const modeTexts = {
   medium: "Medium",
   hard: "Hard",
   impossible: "Impossible",
+  quick: "Quick Quiz",
 };
 
 export default function Quiz() {
@@ -29,13 +31,12 @@ export default function Quiz() {
   const drillSubtopic = searchParams.get("subtopic")?.trim() || null;
   const drillDomain = searchParams.get("domain")?.trim() || null;
   const isDrilling = Boolean(drillSubtopic || drillDomain);
-  const [mode, setMode] = useState(() =>
-    MODES.some((m) => m.id === requestedMode)
-      ? requestedMode
-      : isDrilling
-      ? "weak"
-      : "easy"
-  );
+  const [mode, setMode] = useState(() => {
+    if (requestedMode === "quick") return "quick";
+    if (MODES.some((m) => m.id === requestedMode)) return requestedMode;
+    if (isDrilling) return "weak";
+    return "easy";
+  });
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState([]);
   const [feedback, setFeedback] = useState(null);
@@ -50,6 +51,7 @@ export default function Quiz() {
   const [questionNote, setQuestionNote] = useState("");
   const [noteInputVisible, setNoteInputVisible] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
+  const [quickEnded, setQuickEnded] = useState(false);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
   const cardContainerRef = useRef(null);
@@ -57,6 +59,12 @@ export default function Quiz() {
   const feedbackRef = useRef(null);
 
   const navigate = useNavigate();
+
+  // Quick quiz state
+  const [quickQuestions, setQuickQuestions] = useState([]);
+  const [quickCurrentIndex, setQuickCurrentIndex] = useState(0);
+  const [quickScore, setQuickScore] = useState(0);
+  const [quickStartTime, setQuickStartTime] = useState(0);
 
   // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
   useGSAP(
@@ -104,10 +112,16 @@ export default function Quiz() {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  useEffect(() => {
+useEffect(() => {
     // Reset timer when mode or question changes
-    if (mode === 'exam') return; // exam mode handled by /exam page
     if (timerRef.current) clearInterval(timerRef.current);
+    if (mode === 'exam') return; // exam mode handled by /exam page
+    if (mode === 'quick') {
+      // Quick mode: track total elapsed time, no countdown
+      setTimeRemaining(0);
+      if (quickStartTime === 0) setQuickStartTime(Date.now());
+      return;
+    }
     setTimeRemaining(modeTimes[mode] || 2 * 60);
     timerRef.current = setInterval(() => {
       setTimeRemaining((prev) => Math.max(prev - 1, 0));
@@ -118,6 +132,45 @@ export default function Quiz() {
   }, [mode, question?.id]);
 
   async function loadQuestion() {
+    setLoading(true);
+    setFeedback(null);
+    setSelected([]);
+    setShowNoteInput(false);
+    setQuestionNote("");
+    setNoteInputVisible(false);
+    setNoteSaved(false);
+
+    // Quick mode: fetch 5 questions upfront if not already loaded
+    if (mode === "quick") {
+      try {
+        const data = await invoke("get_quick_quiz_questions", {});
+        setQuickQuestions(data || []);
+        setQuickCurrentIndex(0);
+        setQuickScore(0);
+        setQuickStartTime(Date.now());
+        if (data && data.length > 0) {
+          setQuestion(data[0]);
+          checkFlagStatus(data[0].id);
+          // Fetch existing question note
+          try {
+            const note = await invoke("get_question_note", { questionId: data[0].id });
+            if (note) setQuestionNote(note);
+          } catch (err) {
+            // Note may not exist yet — ignore
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load quick quiz questions:", err);
+        setQuickQuestions([]);
+      }
+      setQuestionNumber((prev) => prev + 1);
+      setLoading(false);
+      return;
+      // fallback: normal question loading for other modes
+      // (the rest of this function handles non-quick modes)
+    }
+
+    // Existing non-quick mode logic
     setLoading(true);
     setFeedback(null);
     setSelected([]);
@@ -219,24 +272,62 @@ export default function Quiz() {
       });
       setFeedback(result);
 
-      // Auto-create flashcard for incorrect answers (SM-2 spaced repetition)
-      if (!result.correct && question.choices) {
-        const correctChoice = question.choices.find((c) => c.is_correct);
-        const front = question.stem.length > 120 ? question.stem.slice(0, 120) + "…" : question.stem;
-        const back = correctChoice ? correctChoice.text : "";
-        const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+      // Quick mode: auto-advance tracking + end screen after 5 questions
+      if (mode === "quick") {
+        // Record if correct
+        setQuickScore(prev => {
+          const correct = result.correct ? prev + 1 : prev;
+          return correct;
+        });
 
-        try {
-          await invoke("create_flashcard", {
-            question_id: question.id,
-            front,
-            back,
-            due_date: tomorrow,
-          });
-        } catch (err) {
-          // Flashcard may already exist (UNIQUE constraint) — ignore silently
-          if (err && String(err).includes("UNIQUE")) return;
-          console.error("Failed to create flashcard:", err);
+        // Move to next question index
+        setQuickCurrentIndex(prev => {
+          const next = prev + 1;
+          if (next >= 5) {
+            // Show end screen after all 5 questions
+            const totalTime = Math.round((Date.now() - quickStartTime) / 1000);
+            const minutes = Math.floor(totalTime / 60);
+            const seconds = totalTime % 60;
+            // Determine weakest subtopic from the 5 questions served
+            const weakest = quickQuestions
+              .slice(0, 5)
+              .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
+              ?.subtopic || "unknown";
+            setQuickEnded(true);
+            return 5; // stop advancement
+          }
+          return next;
+        });
+
+        // Load next question after delay, or stop if ended
+        if (quickCurrentIndex < 4 && !quickEnded) {
+          setTimeout(() => {
+            // Reset feedback before loading next question
+            setFeedback(null);
+            setSelected([]);
+            loadQuestion();
+          }, 1500);
+        }
+      } else {
+        // Existing SM-2 flashcard logic for other modes
+        if (!result.correct && question.choices) {
+          const correctChoice = question.choices.find((c) => c.is_correct);
+          const front = question.stem.length > 120 ? question.stem.slice(0, 120) + "…" : question.stem;
+          const back = correctChoice ? correctChoice.text : "";
+          const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+
+          try {
+            await invoke("create_flashcard", {
+              question_id: question.id,
+              front,
+              back,
+              due_date: tomorrow,
+            });
+          } catch (err) {
+            // Flashcard may already exist (UNIQUE constraint) — ignore silently
+            if (err && String(err).includes("UNIQUE")) return;
+            console.error("Failed to create flashcard:", err);
+          }
         }
       }
     } catch (err) {
@@ -379,6 +470,38 @@ export default function Quiz() {
         <div className="py-24 text-center space-y-3">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
           <p className="text-paper-muted text-sm font-sans">Loading question stem...</p>
+        </div>
+) : quickEnded ? (
+        <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent mb-4"></div>
+          <p className="text-3xl font-serif font-normal text-gold tracking-tight mb-4">
+            Quick Quiz Complete
+          </p>
+          <p className="text-paper text-2xl font-semibold mb-4">
+            {`${quickQuestions.length} done in ${Math.floor(
+              (Date.now() - quickStartTime) / 60000
+            )}:${((Date.now() - quickStartTime) % 60000) / 1000
+              .toString()
+              .padStart(2, "0")} — ${quickScore} correct. Weakest: ${quickQuestions
+                .slice(0, 5)
+                .sort((a, b) => a.accuracy - b.accuracy || b.attempts - a.attempts)[0]
+                ?.subtopic || "unknown"}.`}
+          </p>
+          <button
+            onClick={() => {
+              setQuickEnded(false);
+              setQuickQuestions([]);
+              setQuickCurrentIndex(0);
+              setQuickScore(0);
+              setQuickStartTime(0);
+              setQuestion(null);
+              setFeedback(null);
+              setSelected([]);
+            }}
+            className="px-6 py-3 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase transition-all shadow-gold-glow"
+          >
+            Start New Quiz
+          </button>
         </div>
       ) : !question ? (
         <div className="border border-dark-border rounded-2xl p-8 bg-dark-card text-center shadow-dock space-y-4">

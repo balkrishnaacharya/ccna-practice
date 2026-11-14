@@ -114,6 +114,9 @@ pub struct Question {
     pub domain: String,
     pub difficulty: String,
     pub multi_select: bool,
+    pub subtopic: String,
+    pub accuracy: f64,
+    pub attempts: i64,
     pub choices: Vec<Choice>,
 }
 
@@ -542,12 +545,40 @@ fn row_to_question(
     multi_select: i64,
 ) -> Result<Question, String> {
     let choices = load_choices(conn, id)?;
+
+    // Get subtopic from questions table
+    let subtopic: String = conn
+        .query_row(
+            "SELECT COALESCE(NULLIF(TRIM(subtopic), ''), 'Uncategorized') FROM questions WHERE id = ?1",
+            params![id],
+            |r| r.get(0),
+        )
+        .unwrap_or_else(|_| "Uncategorized".to_string());
+
+    // Get per-question accuracy and attempts from user_question_stats
+    let (times_seen, times_correct): (i64, i64) = conn
+        .query_row(
+            "SELECT COALESCE(times_seen, 0), COALESCE(times_correct, 0) FROM user_question_stats WHERE question_id = ?1",
+            params![id],
+            |r| Ok((r.get(0)?, r.get(1)?)),
+        )
+        .unwrap_or((0, 0));
+
+    let accuracy = if times_seen > 0 {
+        (times_correct as f64 / times_seen as f64) * 100.0
+    } else {
+        0.0
+    };
+
     Ok(Question {
         id,
         stem,
         domain,
         difficulty,
         multi_select: multi_select != 0,
+        subtopic,
+        accuracy,
+        attempts: times_seen,
         choices,
     })
 }
@@ -1438,6 +1469,186 @@ pub fn get_flags(db: State<Db>) -> Result<Vec<serde_json::Value>, String> {
     }
 
     Ok(result)
+}
+
+// ─── Quick Quiz ─────────────────────────────────────────────────────────────────
+/// Select 4 questions from the weakest subtopics (lowest accuracy) and 1 random question,
+/// for a total of 5 questions with instant feedback.
+#[tauri::command]
+pub fn get_quick_quiz_questions(db: State<Db>) -> Result<Vec<Question>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+
+    // 1. Get subtopic stats ordered by accuracy (weakest first)
+    let mut stmt = conn.prepare(
+        "SELECT q.domain,
+                COALESCE(NULLIF(TRIM(q.subtopic), ''), 'Uncategorized') AS sub,
+                COUNT(*) AS total,
+                COUNT(s.question_id) AS seen,
+                COALESCE(SUM(s.times_seen), 0) AS attempts,
+                COALESCE(SUM(s.times_correct), 0) AS correct
+         FROM questions q
+         LEFT JOIN user_question_stats s ON s.question_id = q.id
+         GROUP BY q.domain, sub
+         ORDER BY q.domain ASC, sub ASC",
+    )
+    .map_err(|e| e.to_string())?;
+
+    let stats_rows: Vec<SubtopicStat> = stmt
+        .query_map([], |r| {
+            let attempts: i64 = r.get(4)?;
+            let correct: i64 = r.get(5)?;
+            Ok(SubtopicStat {
+                domain: r.get(0)?,
+                subtopic: r.get(1)?,
+                total: r.get(2)?,
+                seen: r.get(3)?,
+                attempts,
+                correct,
+                accuracy: if attempts > 0 {
+                    (correct as f64 / attempts as f64) * 1000.0
+                } else {
+                    0.0
+                },
+            })
+        })
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .map(|mut s| {
+            s.accuracy = (s.accuracy / 10.0).round();
+            s
+        })
+        .collect();
+
+    // 2. Sort subtopics by accuracy (weakest first)
+    let mut sorted_stats = stats_rows;
+    sorted_stats.sort_by(|a, b| a.accuracy.partial_cmp(&b.accuracy).unwrap_or(std::cmp::Ordering::Equal));
+
+    // 3. Build a pool of question IDs grouped by subtopic, prioritizing weakest
+    let mut weak_question_ids: Vec<i64> = Vec::new();
+    let mut all_question_ids: Vec<i64> = Vec::new();
+
+    // First, collect question IDs from the weakest subtopics (up to 4 questions)
+    let weak_count = 4; // 70% of 5 = 3.5, rounded up to 4
+    let weak_stats = &sorted_stats[..weak_count.min(sorted_stats.len())];
+
+    for stat in weak_stats {
+        let mut qstmt = conn
+            .prepare(
+                "SELECT q.id FROM questions q
+                 LEFT JOIN user_question_stats s ON s.question_id = q.id
+                 WHERE COALESCE(NULLIF(TRIM(q.subtopic), ''), 'Uncategorized') = ?1
+                 ORDER BY s.times_correct * 10 < s.times_seen * 7 ASC, RANDOM()
+                 LIMIT 1",
+            )
+            .map_err(|e| e.to_string())?;
+        let row = qstmt
+            .query_row(params![stat.subtopic], |r| r.get(0))
+            .optional()
+            .map_err(|e| e.to_string())?;
+        if let Some(qid) = row {
+            weak_question_ids.push(qid);
+        }
+        // Also add to general pool
+        let mut qstmt2 = conn
+            .prepare("SELECT id FROM questions WHERE COALESCE(NULLIF(TRIM(subtopic), ''), 'Uncategorized') = ?1")
+            .map_err(|e| e.to_string())?;
+        let rows: Vec<i64> = qstmt2
+            .query_map(params![stat.subtopic], |r| r.get(0))
+            .map_err(|e| e.to_string())?
+            .filter_map(|r| r.ok())
+            .collect();
+        all_question_ids.extend(rows);
+    }
+
+    // 4. Add 1 random question from the remaining pool (30%)
+    let mut rng = rand::thread_rng();
+
+    // Shuffle and pick random from questions not already selected
+    let mut remaining: Vec<i64> = all_question_ids
+        .into_iter()
+        .filter(|&id| !weak_question_ids.contains(&id))
+        .collect();
+    remaining.shuffle(&mut rng);
+
+    let random_question_id = remaining
+        .first()
+        .copied()
+        .or_else(|| {
+            // Fallback: pick any random question from the bank
+            let mut rstmt = match conn.prepare("SELECT id FROM questions ORDER BY RANDOM() LIMIT 1") {
+                Ok(s) => s,
+                Err(_) => return None,
+            };
+            rstmt.query_row([], |r| r.get(0)).optional().ok().flatten()
+        });
+
+    if let Some(qid) = random_question_id {
+        // Make sure it's not already in weak_question_ids
+        if !weak_question_ids.contains(&qid) {
+            weak_question_ids.push(qid);
+        }
+    }
+
+    // If we don't have 5 questions yet, fill from the general pool
+    while weak_question_ids.len() < 5 {
+        let mut rstmt = conn
+            .prepare("SELECT id FROM questions ORDER BY RANDOM() LIMIT 1")
+            .map_err(|e| e.to_string())?;
+        let qid = match rstmt.query_row([], |r| r.get(0)).optional().ok().flatten() {
+            Some(q) => q,
+            None => break,
+        };
+        if !weak_question_ids.contains(&qid) {
+            weak_question_ids.push(qid);
+        }
+    }
+
+    // 5. Load all 5 questions with their choices
+    let mut questions = Vec::new();
+    let mut seen_ids = std::collections::HashSet::new();
+    for &qid in &weak_question_ids {
+        if seen_ids.contains(&qid) {
+            continue;
+        }
+        seen_ids.insert(qid);
+
+        let choices = load_choices(&*conn, qid)?;
+        let mut stem_query = conn.prepare("SELECT q.stem, q.domain, q.difficulty, q.multi_select, q.subtopic, COALESCE(s.times_seen, 0), COALESCE(s.times_correct, 0) FROM questions q LEFT JOIN user_question_stats s ON s.question_id = q.id WHERE q.id = ?1").map_err(|e| e.to_string())?;
+        let row = stem_query.query_row(params![qid], |r| {
+            Ok((
+                r.get::<_, String>(0)?,
+                r.get::<_, String>(1)?,
+                r.get::<_, String>(2)?,
+                r.get::<_, i64>(3)?,
+                r.get::<_, String>(4)?,
+                r.get::<_, i64>(5)?,
+                r.get::<_, i64>(6)?,
+            ))
+        }).map_err(|e| e.to_string())?;
+
+        let (stem, domain, difficulty, multi_select, subtopic, times_seen, times_correct) = row;
+        let accuracy = if times_seen > 0 {
+            (times_correct as f64 / times_seen as f64) * 100.0
+        } else {
+            0.0
+        };
+        questions.push(Question {
+            id: qid,
+            stem,
+            domain,
+            difficulty,
+            multi_select: multi_select != 0,
+            subtopic,
+            accuracy,
+            attempts: times_seen,
+            choices,
+        });
+        if questions.len() >= 5 {
+            break;
+        }
+    }
+
+    Ok(questions)
 }
 
 // ─── Settings ─────────────────────────────────────────────────────────────────
