@@ -53,19 +53,15 @@ export default {
           gold: "#C9A227",
         },
       },
-      fontFamily: {
-        serif: ['Georgia', '"Iowan Old Style"', '"Palatino Linotype"', '"Book Antiqua"', '"Times New Roman"', 'serif'],
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Courier New"', 'monospace'],
-      },
-      boxShadow: {
-        'gold-glow': '0 0 25px -4px rgba(189, 141, 57, 0.45)',
-        'gold-glow-lg': '0 0 35px -2px rgba(189, 141, 57, 0.60)',
-        'sage-glow': '0 0 25px -4px rgba(92, 110, 78, 0.45)',
-        'heart-glow': '0 0 25px -4px rgba(195, 104, 66, 0.45)',
-        'dock': '0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(246, 242, 233, 0.1)',
-      },
     },
+    safelist: [
+      {
+        pattern: /bg-dark-bg/,
+      },
+      {
+        pattern: /text-ink/,
+      },
+    ],
   },
   plugins: [],
 };

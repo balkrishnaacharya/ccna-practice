@@ -1872,6 +1872,7 @@ pub fn get_heatmap_data(db: State<Db>) -> Result<Vec<HeatmapCell>, String> {
 // ─── Question Notes ───────────────────────────────────────────────────────────
 
 #[derive(Serialize, Deserialize)]
+#[allow(dead_code)]
 pub struct QuestionNote {
     pub question_id: i64,
     pub note: String,

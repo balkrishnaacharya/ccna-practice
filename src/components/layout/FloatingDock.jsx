@@ -19,17 +19,17 @@ const DOCK_ITEMS = [
 
 const DOCK_ITEM_ANIMATION_DELAY = 0.1;
 
-// Quick flashcard count refresh on mount
-useEffect(() => {
-  const today = new Date().toISOString().split("T")[0];
-  invoke("get_flashcard_due_count", { today })
-    .then((c) => setFlashcardCount(Number(c) || 0))
-    .catch(console.error);
-}, []);
-
 export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
   const location = useLocation();
   const [flashcardCount, setFlashcardCount] = useState(0);
+
+  // Quick flashcard count refresh on mount
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    invoke("get_flashcard_due_count", { today })
+      .then((c) => setFlashcardCount(Number(c) || 0))
+      .catch(console.error);
+  }, []);
 
   const isActive = (to) => location.pathname === to;
 
