@@ -131,6 +131,11 @@ useEffect(() => {
     };
   }, [mode, question?.id]);
 
+  // Load the first question when the practice page mounts.
+  useEffect(() => {
+    loadQuestion();
+  }, []);
+
   async function loadQuestion() {
     setLoading(true);
     setFeedback(null);
