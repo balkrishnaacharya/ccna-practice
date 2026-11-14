@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Menu, X, Home, BookOpen, Calculator, Timer, History, Settings, ShieldAlert, } from "lucide-react";
 
 const SIDEBAR_WIDTH = 260;
-const COLLAPSED_WIDTH = 60;
+const COLLAPSED_WIDTH = 80;
 
 export const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: <Home size={20} strokeWidth={2} />, key: "dashboard" },
@@ -17,26 +17,36 @@ export const NAV_ITEMS = [
   { to: "/settings", label: "Settings", icon: <Settings size={20} strokeWidth={2} />, key: "settings" },
 ];
 
-export default function Sidebar({ onNavigate }) {
-  const [isOpen, setIsOpen] = useState(false);
+export const Sidebar = ({ onNavigate }) => {
+  const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleClick = (to) => {
-    onNavigate(to);
-    // Auto-collapse after navigation on mobile
+    navigate(to);
     if (window.innerWidth < 768) {
       setIsOpen(false);
     }
   };
 
+  useEffect(() => {
+    // Close sidebar on mobile nav link click
+    const handleLinkClick = () => {
+      setIsOpen(false);
+    };
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', handleLinkClick);
+    });
+    return () => {
+      document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        link.removeEventListener('click', handleLinkClick);
+      });
+    };
+  }, []);
+
   return (
     <aside
-      className={`fixed left-0 top-0 bottom-0 w-${isOpen ? 260 : 60} border2 border-dark-border bg-dark-surface/90 shadow-2xl z-50 transform transition-transform ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      } ease-out duration-300`}
-      aria-label="Main sidebar"
-      onClick={(e) => e.stopPropagation()}
-    >
+      className={`fixed left-0 top-0 bottom-0 w-${isOpen ? SIDEBAR_WIDTH : COLLAPSED_WIDTH} border border-dark-border bg-dark-surface/90 shadow-2xl z-50 transform transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"} ease-out duration-300`}      aria-label="Main sidebar"      onClick={(e) => e.stopPropagation()}    >
       <div className="flex flex-col h-full p-6 pt-2">
         {/* Brand header */}
         <div className="flex items-center justify-between mb-8">
@@ -104,4 +114,4 @@ export default function Sidebar({ onNavigate }) {
       </div>
     </aside>
   );
-}
+};

@@ -13,8 +13,7 @@ const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
 const Subnet = lazy(() => import("./pages/Subnet"));
 const Flashcards = lazy(() => import("./pages/Flashcards"));
-import Sidebar from "@/components/layout/Sidebar";
-import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
+import { Sidebar, NAV_ITEMS } from "@/components/layout/Sidebar";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
 import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
 import SplashAnimation from "./components/SplashAnimation";
@@ -28,7 +27,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useNotifications } from "@/hooks/useNotifications";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/components/layout/Sidebar";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -40,7 +38,6 @@ export default function App() {
     try {
       return !sessionStorage.getItem("ccna_splash_seen");
     } catch (e) {
-      // sessionStorage unavailable (private browsing, etc.); default to showing splash
       return true;
     }
   });
@@ -102,8 +99,10 @@ export default function App() {
       }
     };
     check();
+    return () => {
+      mounted = false;
+    };
   }, [examProgress.active, notifSettings, checkReminderStatus, showNotifToast]);
-
 
   function guardNavigation(event, destination) {
     if (location.pathname === "/exam" && examProgress.active && destination !== "/exam") {
@@ -178,9 +177,9 @@ export default function App() {
         <SplashAnimation onComplete={handleSplashComplete} />
       </ErrorBoundary>
 
-      {/* Top Editorial Nav Bar */}
+      {/* Top Editorial Nav Bar - MOVED TO MOBILE ONLY */}
       <nav
-        className="bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 flex items-end justify-between sticky top-0 z-40 box-content"
+        className="hidden lg:block bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 flex items-end justify-between sticky top-0 z-40 box-content"
         style={{
           paddingTop: "var(--safe-top)",
           height: "3.5rem",
@@ -201,7 +200,7 @@ export default function App() {
             </span>
           </Link>
 
-          {/* Desktop Navigation Links (subtle pill design) */}
+          {/* Desktop Navigation Links (subtle pill design) - hidden on mobile */}
           <div className="hidden md:flex items-center gap-1">
             {headerLinks.map((link) => {
               const isActive = location.pathname === link.to;
@@ -221,22 +220,6 @@ export default function App() {
               );
             })}
           </div>
-        </div>
-
-        <div className="flex items-center gap-2 pb-2">
-          <Link
-            to="/settings"
-            onClick={(event) => guardNavigation(event, "/settings")}
-            className="px-3 py-1.5 rounded-full text-sm text-paper-muted hover:text-paper hover:bg-dark-surface transition-all duration-150 hidden sm:block"
-          >
-            Settings
-          </Link>
-          {profileName && (
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-surface/60 border border-dark-border text-xs text-paper-dim">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              {profileName}
-            </div>
-          )}
         </div>
       </nav>
 
@@ -274,12 +257,12 @@ export default function App() {
         </div>
       </main>
 
-      {/* Desktop Sidebar (expands on hover/focus for accessibility, collapsed by default on mobile) */}
+      {/* Desktop Sidebar (visible on lg+) */}
       <Sidebar onNavigate={navigate} />
 
-      {/* Mobile Bottom Navigation (visible on small screens, hidden on desktop) */}
+      {/* Mobile Bottom Navigation (visible on sm-only, hidden on lg+) */}
       <nav
-        className="block sm:hidden md:hidden lg:hidden sticky bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-4 sm:px-6"
+        className="block lg:hidden md:hidden bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-4 sm:px-6"
         style={{ paddingBottom: "var(--safe-bottom)" }}
         aria-label="Main navigation"
       >
@@ -295,7 +278,7 @@ export default function App() {
               )}
             >
               <span className="w-3 h-3 rounded-full flex-shrink-0">{item.icon}</span>
-              <span className="hidden sm:block text-xs">{item.label}</span>
+              <span className="hidden lg:block text-xs">{item.label}</span>
             </Link>
           );
         })}
