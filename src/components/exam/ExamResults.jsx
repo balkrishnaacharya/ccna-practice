@@ -34,7 +34,7 @@ export default function ExamResults({
             strokeWidth="8"
             fill="none"
             strokeLinecap="round"
-            className="transition-all duration-1000 ease-out"
+            className="transition-all duration-200 ease-out"
             style={{
               strokeDasharray: 2 * Math.PI * 42,
               strokeDashoffset: 2 * Math.PI * 42 * (1 - percentage / 100),

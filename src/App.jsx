@@ -22,6 +22,7 @@ import UpdateModal from "./components/UpdateModal";
 import { hasSeenTour, startTour } from "./utils/tourGuide";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RouteLoader from "./components/RouteLoader";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -278,6 +279,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Sonner Toaster for notifications */}
+      <Toaster />
     </div>
   );
 }

@@ -47,7 +47,7 @@ export default function ExamTimer({
           strokeWidth="4"
           fill="none"
           strokeLinecap="round"
-          className="transition-all duration-500 ease-out"
+          className="transition-all duration-200 ease-out"
           style={{
             strokeDasharray: circumference,
             strokeDashoffset,
