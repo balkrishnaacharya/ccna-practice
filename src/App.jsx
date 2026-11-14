@@ -25,6 +25,7 @@ import { hasSeenTour, startTour } from "./utils/tourGuide";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RouteLoader from "./components/RouteLoader";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -119,7 +120,8 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-bg text-ink flex flex-col font-sans selection:bg-accent/30 selection:text-ink relative overflow-x-hidden">
+    <TooltipProvider>
+      <div className="min-h-screen bg-dark-bg text-ink flex flex-col font-sans selection:bg-accent/30 selection:text-ink relative overflow-x-hidden">
       {/* Background Organic Mesh Blobs */}
       <OrganicMeshBackground />
 
@@ -286,6 +288,7 @@ export default function App() {
 
       {/* Sonner Toaster for notifications */}
       <Toaster />
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
