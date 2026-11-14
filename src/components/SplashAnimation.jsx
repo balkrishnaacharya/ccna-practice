@@ -87,7 +87,13 @@ export default function SplashAnimation({ onComplete }) {
       }
 
       const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+      if (!ctx) {
+        // Canvas context unavailable — gracefully skip to Dashboard
+        sessionStorage.setItem("ccna_splash_seen", "true");
+        setIsSkipped(true);
+        onComplete();
+        return;
+      }
 
       // Ensure canvas has valid dimensions (may be 0x0 on first render)
       const setSize = () => {

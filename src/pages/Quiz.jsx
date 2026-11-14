@@ -205,6 +205,7 @@ useEffect(() => {
         subtopic: drillSubtopic,
         domain: drillDomain,
       });
+      // Discard stale responses from previous mode selections
       if (myLoadId !== loadQuestionRef.current) return;
       setQuestion(q);
       if (q) {
@@ -212,6 +213,7 @@ useEffect(() => {
         // Fetch existing question note
         try {
           const note = await invoke("get_question_note", { questionId: q.id });
+          // Discard stale note responses
           if (myLoadId !== loadQuestionRef.current) return;
           if (note) setQuestionNote(note);
         } catch (err) {
@@ -222,7 +224,10 @@ useEffect(() => {
     } catch (err) {
       console.error("Failed to load question:", err);
     } finally {
-      setLoading(false);
+      // Only clear loading if this is still the active load
+      if (myLoadId === loadQuestionRef.current) {
+        setLoading(false);
+      }
     }
   }
 
