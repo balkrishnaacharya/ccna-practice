@@ -35,7 +35,7 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-3 sm:px-6 pointer-events-none"
+      className="fixed bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-3 sm:px-6"
       style={{ paddingBottom: "var(--safe-bottom)" }}
       aria-label="Main navigation"
     >
@@ -100,7 +100,10 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
       {/* Center floating Exam action button */}
       <div className="mt-2 sm:mt-0 flex flex-col sm:flex-row items-center justify-center pointer-events-auto z-20">
         <Button
-          onClick={(e) => guardNavigation(e, "/practical-exam")}
+          onClick={(e) => {
+            e.preventDefault();
+            onOpenExamModal();
+          }}
           variant="ghost"
           size="icon"
           className={`w-10 h-10 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/30 shadow-lg shadow-[#B8842A]/20 ${window.innerWidth < 640 ? 'w-9 h-9' : ''}`}
