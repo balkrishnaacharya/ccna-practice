@@ -276,7 +276,7 @@ export default function Exam({ reportExamProgress }) {
               <div
                 key={c.id}
                 onClick={() => handleSelectChoice(c.id, currentQ.multi_select)}
-                className={"block rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 " + (isSelected ? "border-gold bg-gold/10 text-gold" : "border-border bg-card") + " " + (feedback ? "pointer-events-none" : "")}
+                className={"block rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 " + (isSelected ? "border-gold bg-gold/10 text-gold" : "border-border bg-card")}
               >
                 <div className="flex items-start gap-3">
                   <span
