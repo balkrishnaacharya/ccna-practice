@@ -11,6 +11,7 @@ const SessionReview = lazy(() => import("./pages/SessionReview"));
 const Notes = lazy(() => import("./pages/Notes"));
 const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
+const Subnet = lazy(() => import("./pages/Subnet"));
 import FloatingDock from "@/components/layout/FloatingDock";
 import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
@@ -201,6 +202,7 @@ export default function App() {
                 <Route path="/exam" element={<Exam reportExamProgress={reportExamProgress} />} />
                 <Route path="/practical-exam" element={<PracticalExam />} />
                 <Route path="/topics" element={<Topics />} />
+                <Route path="/tools/subnet" element={<Subnet />} />
                 <Route path="/history" element={<ExamHistory />} />
                 <Route path="/history/:sessionId" element={<SessionReview />} />
                 <Route path="/notes" element={<Notes />} />

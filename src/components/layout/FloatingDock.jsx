@@ -5,12 +5,13 @@ import gsap from "gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { Home, BookOpen, Calculator, Timer, History, Settings, ShieldAlert } from "lucide-react";
+import { Home, BookOpen, Calculator, Timer, History, Settings, ShieldAlert, Terminal } from "lucide-react";
 
 const DOCK_ITEMS = [
   { to: "/", label: "Home", icon: <Home size={18} strokeWidth={2} />, "aria-label": "Home" },
   { to: "/quiz", label: "Practice", icon: <BookOpen size={18} strokeWidth={2} />, "aria-label": "Practice" },
-  { to: "/practical-exam", label: "Labs", icon: <Calculator size={18} strokeWidth={2} />, "aria-label": "Labs" },
+  { to: "/practical-exam", label: "Labs", icon: <Terminal size={18} strokeWidth={2} />, "aria-label": "Labs" },
+  { to: "/tools/subnet", label: "Subnet", icon: <Calculator size={18} strokeWidth={2} />, "aria-label": "Subnet Calculator" },
   { to: "/review", label: "Review", icon: <ShieldAlert size={18} strokeWidth={2} />, "aria-label": "Review" },
   { to: "/history", label: "History", icon: <History size={18} strokeWidth={2} />, "aria-label": "History" },
   { to: "/settings", label: "Settings", icon: <Settings size={18} strokeWidth={2} />, "aria-label": "Settings" },
