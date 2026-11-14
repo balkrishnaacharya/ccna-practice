@@ -129,7 +129,9 @@ export default function App() {
       <SmoothCursorWrapper />
 
       {/* Opening Splash Sequence (Polpharma-inspired) */}
-      <SplashAnimation onComplete={handleSplashComplete} />
+      <ErrorBoundary onError={() => setIsSplashActive(false)}>
+        <SplashAnimation onComplete={handleSplashComplete} />
+      </ErrorBoundary>
 
       {/* Top Editorial Nav Bar */}
       <nav
