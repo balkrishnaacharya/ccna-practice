@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from "react-router-dom";
 import StreakPanel from "../components/StreakPanel";
+import ReadinessScore from "../components/analytics/ReadinessScore";
+import { useReadiness } from "@/hooks/useReadiness";
 
 export default function Dashboard({ profileName, onOpenExamModal }) {
   const [stats, setStats] = useState(null);
@@ -13,6 +15,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [statsLoading, setStatsLoading] = useState(true);
   const navigate = useNavigate();
   const containerRef = useRef(null);
+  const { score: readinessScore, loading: readinessLoading } = useReadiness();
 
   useEffect(() => {
     let mounted = true;
@@ -210,6 +213,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
       {/* Study streak + daily goal */}
       <StreakPanel />
+
+      {/* Readiness Score */}
+      <ReadinessScore score={readiness?.value} />
 
       {/* Blueprint Domains & Quick Actions - Responsive: stack vertically on mobile, 3 cols on desktop */}
       <div
