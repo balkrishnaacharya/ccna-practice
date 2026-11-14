@@ -135,7 +135,10 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
       try {
         const { open } = await import("@tauri-apps/plugin-shell");
         await open(updateInfo.downloadUrl);
-        setShowModal(false);
+        setStatus("available");
+        setErrorMessage(
+          `The download page opened in your browser. Download and install ${updateInfo.version} manually from GitHub releases.`
+        );
         return;
       } catch (err) {
         console.error("Failed to open APK download URL:", err);
@@ -179,19 +182,29 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
     } else if (updateInfo.downloadUrl) {
       // Desktop fallback path (no Tauri updater manifest): hand the release
       // URL to the OS browser. window.open is a no-op inside the Tauri webview.
+      // Opening a download page is NOT a completed update — the user must
+      // manually download and install the package.
       try {
         const { open } = await import("@tauri-apps/plugin-shell");
         await open(updateInfo.downloadUrl);
-        setShowModal(false);
+        setStatus("available");
+        setErrorMessage(
+          `The download page opened in your browser. Download and install ${updateInfo.version} manually from GitHub releases.`
+        );
       } catch (err) {
         console.warn("Shell open unavailable, falling back to window.open:", err);
         try {
           window.open(updateInfo.downloadUrl, "_blank");
-          setShowModal(false);
+          setStatus("available");
+          setErrorMessage(
+            `The download page opened in your browser. Download and install ${updateInfo.version} manually from GitHub releases.`
+          );
         } catch (openErr) {
           console.error("Failed to open update URL:", openErr);
           setStatus("error");
-          setErrorMessage(`Could not open update link: ${openErr.message || openErr}. Visit GitHub releases manually.`);
+          setErrorMessage(
+            `Could not open update link: ${openErr.message || openErr}. Visit GitHub releases manually to download v${updateInfo.version}.`
+          );
         }
       }
     }
