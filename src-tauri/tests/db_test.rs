@@ -275,3 +275,28 @@ fn question_count(conn: &Connection) -> i64 {
     conn.query_row("SELECT COUNT(*) FROM questions", [], |r| r.get(0))
         .unwrap()
 }
+
+#[test]
+fn test_sync_updates_metadata() {
+    let (db, dir) = common::setup_integration_db();
+    let seed_copy = dir.path().join("seed.db");
+    std::fs::write(&seed_copy, db::BUNDLED_DB).unwrap();
+
+    common::with_locked(&db, |conn| {
+        let added = db::sync_bundled_bank(conn, &seed_copy).unwrap();
+        assert!(added >= 0);
+
+        // Verify metadata was updated
+        let bank_version: String = conn.query_row(
+            "SELECT value FROM question_bank_metadata WHERE key='bank_version'",
+            [], |r| r.get(0)
+        ).unwrap();
+        assert_eq!(bank_version, db::BUNDLED_BANK_VERSION);
+
+        let total: String = conn.query_row(
+            "SELECT value FROM question_bank_metadata WHERE key='total_active_questions'",
+            [], |r| r.get(0)
+        ).unwrap();
+        assert_eq!(total, added.to_string());
+    });
+}

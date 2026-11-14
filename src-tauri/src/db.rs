@@ -1,6 +1,7 @@
 use rusqlite::{params, Connection, OptionalExtension, Result};
 use std::path::Path;
 use std::sync::Mutex;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 // Bundled question bank embedded at compile time.
 pub static BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
@@ -406,6 +407,47 @@ pub fn sync_bundled_bank(
 
         added += 1;
     }
+
+    // Update question_bank_metadata after all inserts succeed.
+    let total_count: i64 = tx
+        .query_row("SELECT COUNT(*) FROM questions", [], |r| r.get(0))
+        .map_err(|e| e.to_string())?;
+
+    let timestamp = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_secs().to_string())
+        .unwrap_or_default();
+
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('bank_version', ?1)",
+        params![BUNDLED_BANK_VERSION],
+    )
+    .map_err(|e| e.to_string())?;
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('schema_version', ?1)",
+        params!["1"],
+    )
+    .map_err(|e| e.to_string())?;
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('total_active_questions', ?1)",
+        params![total_count.to_string()],
+    )
+    .map_err(|e| e.to_string())?;
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('generation_timestamp', ?1)",
+        params![timestamp],
+    )
+    .map_err(|e| e.to_string())?;
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('source_revision', ?1)",
+        params![BUNDLED_BANK_VERSION],
+    )
+    .map_err(|e| e.to_string())?;
+    tx.execute(
+        "INSERT OR REPLACE INTO question_bank_metadata (key, value) VALUES ('content_checksum', ?1)",
+        params![BUNDLED_BANK_VERSION],
+    )
+    .map_err(|e| e.to_string())?;
 
     // Record the bank version so repeated syncs are idempotent.
     tx.execute(
