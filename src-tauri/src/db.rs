@@ -244,11 +244,10 @@ pub fn sync_bundled_bank(
     for (_seed_id, stem, domain, difficulty, multi_select, content_hash) in &bundled {
         let mut existing_id: Option<i64> = None;
         let mut content_hash_match = false;
-        let mut should_insert = false;
 
         // 1. Match by content_hash if available.
         if let Some(hash) = content_hash {
-            if let Ok(found) = tx
+            if let Ok(Some(id)) = tx
                 .query_row(
                     "SELECT id FROM questions WHERE content_hash = ?1",
                     params![hash],
@@ -256,10 +255,8 @@ pub fn sync_bundled_bank(
                 )
                 .optional()
             {
-                if let Some(id) = found {
-                    existing_id = Some(id);
-                    content_hash_match = true;
-                }
+                existing_id = Some(id);
+                content_hash_match = true;
             }
         }
 
@@ -321,13 +318,13 @@ pub fn sync_bundled_bank(
                         continue;
                     }
 
-                    // Stale hash: clear it, mark for insertion.
+                    // Stale hash: clear it, then insert bundled as new.
                     tx.execute(
                         "UPDATE questions SET content_hash = NULL WHERE id = ?1",
                         params![existing],
                     )
                     .map_err(|e| e.to_string())?;
-                    should_insert = true;
+                    // Fall through to insert below.
                 } else {
                     // Matched by stem only: backfill content_hash if NULL.
                     if let Some(hash) = content_hash {
@@ -342,43 +339,41 @@ pub fn sync_bundled_bank(
                 }
             }
             None => {
-                should_insert = true;
+                // Insert new question below.
             }
         }
 
-        if should_insert {
-            // New question: insert it.
+        // Insert new question (reached for None branch or stale-hash branch).
+        tx.execute(
+            "INSERT INTO questions (stem, domain, difficulty, multi_select, content_hash)
+             VALUES (?1, ?2, ?3, ?4, ?5)",
+            params![stem, domain, difficulty, multi_select, content_hash],
+        )
+        .map_err(|e| e.to_string())?;
+        let new_id = tx.last_insert_rowid();
+
+        // Copy choices from the bundled DB.
+        let choices: Vec<(String, i64, i64)> = seed
+            .prepare(
+                "SELECT text, is_correct, sort_order FROM choices WHERE question_id = ?1 ORDER BY sort_order",
+            )
+            .map_err(|e| e.to_string())?
+            .query_map(params![_seed_id], |r| {
+                Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?, r.get::<_, i64>(2)?))
+            })
+            .map_err(|e| e.to_string())?
+            .filter_map(|r| r.ok())
+            .collect();
+
+        for (text, is_correct, sort_order) in choices {
             tx.execute(
-                "INSERT INTO questions (stem, domain, difficulty, multi_select, content_hash)
-                 VALUES (?1, ?2, ?3, ?4, ?5)",
-                params![stem, domain, difficulty, multi_select, content_hash],
+                "INSERT INTO choices (question_id, text, is_correct, sort_order) VALUES (?1, ?2, ?3, ?4)",
+                params![new_id, text, is_correct, sort_order],
             )
             .map_err(|e| e.to_string())?;
-            let new_id = tx.last_insert_rowid();
-
-            // Copy choices from the bundled DB.
-            let choices: Vec<(String, i64, i64)> = seed
-                .prepare(
-                    "SELECT text, is_correct, sort_order FROM choices WHERE question_id = ?1 ORDER BY sort_order",
-                )
-                .map_err(|e| e.to_string())?
-                .query_map(params![_seed_id], |r| {
-                    Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?, r.get::<_, i64>(2)?))
-                })
-                .map_err(|e| e.to_string())?
-                .filter_map(|r| r.ok())
-                .collect();
-
-            for (text, is_correct, sort_order) in choices {
-                tx.execute(
-                    "INSERT INTO choices (question_id, text, is_correct, sort_order) VALUES (?1, ?2, ?3, ?4)",
-                    params![new_id, text, is_correct, sort_order],
-                )
-                .map_err(|e| e.to_string())?;
-            }
-
-            added += 1;
         }
+
+        added += 1;
     }
 
     // Record the bank version so repeated syncs are idempotent.
