@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -26,6 +26,7 @@ function formatDuration(sec) {
 export default function ExamHistory() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     invoke("get_exam_history")
@@ -33,6 +34,16 @@ export default function ExamHistory() {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
+
+  const filteredSessions = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    return sessions.filter((s) => {
+      const date = formatDate(s.started_at).toLowerCase();
+      const score = String(s.scaled_score).toLowerCase();
+      const pct = String(s.percentage).toLowerCase();
+      return !term || date.includes(term) || score.includes(term) || pct.includes(term);
+    });
+  }, [sessions, search]);
 
   if (loading) {
     return (
@@ -77,55 +88,70 @@ export default function ExamHistory() {
         </div>
       ) : (
         <div className="space-y-3">
-          {sessions.map((s) => (
-            <Link
-              key={s.id}
-              to={`/history/${s.id}`}
-              className="block border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock hover:border-gold/50 transition-all duration-200 group"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${
-                        s.passed
-                          ? "bg-sage/20 text-sage-light border-sage/40 shadow-sage-glow"
-                          : "bg-heart/20 text-heart-light border-heart/40"
-                      }`}
-                    >
-                      {s.passed ? "PASS" : "FAIL"}
-                    </span>
-                    <span className="text-xs text-paper-dim uppercase tracking-wider font-mono">
-                      {s.mode} mode
-                    </span>
-                  </div>
-                  <p className="text-xs text-paper-dim font-mono">{formatDate(s.started_at)}</p>
-                </div>
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by date or score..."
+            className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper placeholder:text-paper-dim focus:outline-none focus:ring-1 focus:ring-gold w-full sm:w-56"
+          />
+          {filteredSessions.length === 0 ? (
+            <div className="border border-dark-border rounded-2xl p-12 bg-dark-card text-center shadow-dock">
+              <p className="text-paper-muted text-sm font-sans">No matching sessions</p>
+            </div>
+          ) : (
+            <>
+              {filteredSessions.map((s) => (
+                <Link
+                  key={s.id}
+                  to={`/history/${s.id}`}
+                  className="block border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock hover:border-gold/50 transition-all duration-200 group"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${
+                            s.passed
+                              ? "bg-sage/20 text-sage-light border-sage/40 shadow-sage-glow"
+                              : "bg-heart/20 text-heart-light border-heart/40"
+                          }`}
+                        >
+                          {s.passed ? "PASS" : "FAIL"}
+                        </span>
+                        <span className="text-xs text-paper-dim uppercase tracking-wider font-mono">
+                          {s.mode} mode
+                        </span>
+                      </div>
+                      <p className="text-xs text-paper-dim font-mono">{formatDate(s.started_at)}</p>
+                    </div>
 
-                <div className="flex items-center gap-6 text-right">
-                  <div>
-                    <p className="font-serif text-3xl font-semibold text-paper group-hover:text-gold transition-colors">
-                      {s.scaled_score}
-                    </p>
-                    <p className="text-xs text-paper-dim font-mono">/ 1000</p>
+                    <div className="flex items-center gap-6 text-right">
+                      <div>
+                        <p className="font-serif text-3xl font-semibold text-paper group-hover:text-gold transition-colors">
+                          {s.scaled_score}
+                        </p>
+                        <p className="text-xs text-paper-dim font-mono">/ 1000</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-paper">
+                          {s.score} / {s.total}
+                        </p>
+                        <p className="text-xs text-paper-dim font-mono">{s.percentage}%</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-mono text-paper-muted">{formatDuration(s.duration_sec)}</p>
+                        <p className="text-xs text-paper-dim font-mono">duration</p>
+                      </div>
+                      <svg className="w-4 h-4 text-paper-dim group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-paper">
-                      {s.score} / {s.total}
-                    </p>
-                    <p className="text-xs text-paper-dim font-mono">{s.percentage}%</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-mono text-paper-muted">{formatDuration(s.duration_sec)}</p>
-                    <p className="text-xs text-paper-dim font-mono">duration</p>
-                  </div>
-                  <svg className="w-4 h-4 text-paper-dim group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-          ))}
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       )}
     </div>

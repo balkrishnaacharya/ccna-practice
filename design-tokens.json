@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json.schemastore.org/design-token",
+  "name": "CCNA Practice 2.0 Design Tokens",
+  "version": "0.4.0",
+  "description": "Extracted design token set for CCNA Practice 2.0 (Tauri + React + Tailwind). Dark canvas, warm paper text, gold primary accent, sage/heart/peach semantic accents.",
+  "platform": "web",
+  "source": [
+    "tailwind.config.js",
+    "src/styles.css",
+    "src/components/*.jsx",
+    "src/pages/*.jsx",
+    "src/App.jsx"
+  ],
+  "tokens": {
+    "color": {
+      "dark": {
+        "bg": { "value": "#181815", "role": "base-canvas", "description": "Page background / base canvas" },
+        "surface": { "value": "#21211D", "role": "raised-surface", "description": "Modal sheets, bottom nav pill" },
+        "card": { "value": "#262622", "role": "card-container", "description": "Stat cards, domain panels" },
+        "elevated": { "value": "#2E2E28", "role": "hover-surface", "description": "Hover-state surface for links" },
+        "border": { "value": "rgba(246, 242, 233, 0.10)", "role": "primary-border", "description": "Card borders, input borders" },
+        "borderSubtle": { "value": "rgba(246, 242, 233, 0.06)", "role": "subtle-divider", "description": "Progress bar tracks, popover footer divider" }
+      },
+      "paper": {
+        "DEFAULT": { "value": "#F6F2E9", "role": "primary-text", "description": "Body text, headings" },
+        "muted": { "value": "rgba(246, 242, 233, 0.70)", "role": "secondary-text", "description": "Body captions, descriptions" },
+        "dim": { "value": "rgba(246, 242, 233, 0.60)", "role": "tertiary-text", "description": "Sub-labels, stats" },
+        "faint": { "value": "rgba(246, 242, 233, 0.20)", "role": "decorative", "description": "Blend modes, empty states" }
+      },
+      "gold": {
+        "DEFAULT": { "value": "#BD8D39", "role": "primary-accent", "description": "Brand accent, CTAs, active nav state" },
+        "hover": { "value": "#C99A47", "role": "accent-hover", "description": "Hovered gold buttons" },
+        "light": { "value": "#D8A243", "role": "accent-light", "description": "Progress bar gradient end" },
+        "glow": { "value": "rgba(189, 141, 57, 0.35)", "role": "glow-alpha", "description": "shadow-gold-glow alpha, mesh blobs" }
+      },
+      "sage": {
+        "DEFAULT": { "value": "#5C6E4E", "role": "success-accent", "description": "Correct answers, pass states" },
+        "hover": { "value": "#6C805C", "role": "success-hover", "description": "Interactive sage elements" },
+        "light": { "value": "#93AB80", "role": "success-text", "description": "Accuracy value text" },
+        "glow": { "value": "rgba(92, 110, 78, 0.35)", "role": "glow-alpha", "description": "shadow-sage-glow alpha" }
+      },
+      "heart": {
+        "DEFAULT": { "value": "#C36842", "role": "danger-accent", "description": "Reset progress, leave exam" },
+        "hover": { "value": "#D1724B", "role": "danger-hover", "description": "Hovered heart buttons" },
+        "light": { "value": "#E1825B", "role": "danger-text", "description": "Weak-area label chips" },
+        "glow": { "value": "rgba(195, 104, 66, 0.35)", "role": "glow-alpha", "description": "shadow-heart-glow alpha" }
+      },
+      "peach": {
+        "DEFAULT": { "value": "#E8A87C", "role": "warning-accent", "description": "Flagged-for-review chips" },
+        "light": { "value": "#F0B891", "role": "warning-light", "description": "Peach hover variants" },
+        "muted": { "value": "rgba(232, 168, 124, 0.20)", "role": "warning-subtle", "description": "Flag badge backgrounds" }
+      },
+      "accent": { "value": "#BD8D39", "role": "alias-primary", "description": "Alias to gold.DEFAULT, fallback accent" }
+    },
+    "typography": {
+      "fontSerif": { "value": "Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', 'Times New Roman', serif", "role": "headings", "description": "Editorial display for page titles" },
+      "fontSans": { "value": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", "role": "body", "description": "UI copy, buttons, body text" },
+      "fontMono": { "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace", "role": "data", "description": "Accuracy %, labels, monospaced data" }
+    },
+    "shadow": {
+      "goldGlow": { "value": "0 0 25px -4px rgba(189, 141, 57, 0.45)", "role": "brand-glow", "description": "Primary brand glow on CTAs" },
+      "goldGlowLg": { "value": "0 0 35px -2px rgba(189, 141, 57, 0.60)", "role": "brand-glow-strong", "description": "Stronger brand glow" },
+      "sageGlow": { "value": "0 0 25px -4px rgba(92, 110, 78, 0.45)", "role": "success-glow", "description": "Success accent glow" },
+      "heartGlow": { "value": "0 0 25px -4px rgba(195, 104, 66, 0.45)", "role": "danger-glow", "description": "Danger accent glow" },
+      "dock": { "value": "0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(246, 242, 233, 0.1)", "role": "depth", "description": "Bottom nav / card depth shadow" }
+    },
+    "borderRadius": {
+      "full": { "value": "9999px", "role": "pill", "description": "Pills, nav items, stat badges, buttons" },
+      "xl": { "value": "0.75rem", "role": "input", "description": "Inputs, section panels" },
+      "2xl": { "value": "1rem", "role": "card", "description": "Cards, hero banner, modals" },
+      "custom14": { "value": "14px", "role": "logo", "description": "Logo core inner radius" },
+      "custom12": { "value": "12px", "role": "splash-shape", "description": "Splash square shape" }
+    },
+    "spacing": {
+      "unit": "4px",
+      "scale": "Tailwind default 4px grid (0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96)",
+      "commonUsages": { "pagePadding": "px-4 / sm:px-6", "cardPadding": "p-6 / p-5", "sectionGap": "gap-4 / gap-6", "verticalRhythm": "space-y-3 / space-y-4 / space-y-5" }
+    },
+    "breakpoints": {
+      "sm": { "value": "640px", "role": "small" },
+      "md": { "value": "768px", "role": "medium" },
+      "lg": { "value": "1024px", "role": "large" },
+      "xl": { "value": "1280px", "role": "xlarge" },
+      "2xl": { "value": "1536px", "role": "xxlarge" }
+    },
+    "motion": {
+      "prefersReducedMotion": { "supported": true, "behavior": "Disable mesh blob animations; skip splash sequence" },
+      "meshDurations": ["28s", "34s", "40s"],
+      "gsapEases": ["expo.out", "power3.out", "power4.inOut", "back.out(2)", "power2.out", "power1.inOut"],
+      "transitionDurations": ["duration-150", "duration-200", "duration-700"],
+      "transformOnlyMotion": true,
+      "pausesWhenBackgrounded": true
+    }
+  },
+  "cssCustomProperties": {
+    "prefix": "--ccna",
+    "mapping": {
+      "color-dark-bg": "--ccna-color-dark-bg",
+      "color-dark-surface": "--ccna-color-dark-surface",
+      "color-dark-card": "--ccna-color-dark-card",
+      "color-dark-elevated": "--ccna-color-dark-elevated",
+      "color-dark-border": "--ccna-color-dark-border",
+      "color-dark-borderSubtle": "--ccna-color-dark-borderSubtle",
+      "color-paper": "--ccna-color-paper",
+      "color-paper-muted": "--ccna-color-paper-muted",
+      "color-paper-dim": "--ccna-color-paper-dim",
+      "color-paper-faint": "--ccna-color-paper-faint",
+      "color-gold": "--ccna-color-gold",
+      "color-gold-hover": "--ccna-color-gold-hover",
+      "color-gold-light": "--ccna-color-gold-light",
+      "color-gold-glow": "--ccna-color-gold-glow",
+      "color-sage": "--ccna-color-sage",
+      "color-sage-hover": "--ccna-color-sage-hover",
+      "color-sage-light": "--ccna-color-sage-light",
+      "color-sage-glow": "--ccna-color-sage-glow",
+      "color-heart": "--ccna-color-heart",
+      "color-heart-hover": "--ccna-color-heart-hover",
+      "color-heart-light": "--ccna-color-heart-light",
+      "color-heart-glow": "--ccna-color-heart-glow",
+      "color-peach": "--ccna-color-peach",
+      "color-peach-light": "--ccna-color-peach-light",
+      "color-peach-muted": "--ccna-color-peach-muted",
+      "color-accent": "--ccna-color-accent",
+      "fontSerif": "--ccna-font-serif",
+      "fontSans": "--ccna-font-sans",
+      "fontMono": "--ccna-font-mono",
+      "shadow-gold-glow": "--ccna-shadow-gold-glow",
+      "shadow-gold-glow-lg": "--ccna-shadow-gold-glow-lg",
+      "shadow-sage-glow": "--ccna-shadow-sage-glow",
+      "shadow-heart-glow": "--ccna-shadow-heart-glow",
+      "shadow-dock": "--ccna-shadow-dock",
+      "borderRadius-full": "--ccna-radius-full",
+      "borderRadius-xl": "--ccna-radius-xl",
+      "borderRadius-2xl": "--ccna-radius-2xl",
+      "breakpoint-sm": "--ccna-breakpoint-sm",
+      "breakpoint-md": "--ccna-breakpoint-md",
+      "breakpoint-lg": "--ccna-breakpoint-lg",
+      "breakpoint-xl": "--ccna-breakpoint-xl",
+      "breakpoint-2xl": "--ccna-breakpoint-2xl"
+    }
+  }
+}

@@ -21,9 +21,9 @@ pub fn run() {
             let db_path = app
                 .path()
                 .app_data_dir()
-                .unwrap()
+                .map_err(|_| "Failed to resolve app data directory".to_string())?
                 .join("ccna.db");
-            std::fs::create_dir_all(db_path.parent().unwrap()).ok();
+            std::fs::create_dir_all(db_path.parent().ok_or_else(|| "Failed to resolve db path parent".to_string())?).ok();
 
             // Bundled DB baked into the binary at compile time
             const BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");

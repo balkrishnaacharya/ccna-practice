@@ -1,0 +1,24 @@
+@import "./styles.css";
+
+:root {
+  --background: 40 6% 9%;
+  --foreground: 40 15% 90%;
+  --card: 40 5% 12%;
+  --card-foreground: 40 15% 90%;
+  --popover: 40 5% 12%;
+  --popover-foreground: 40 15% 90%;
+  --primary: 35 55% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 90 20% 38%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 40 5% 18%;
+  --muted-foreground: 40 8% 55%;
+  --accent: 90 20% 38%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 20 55% 52%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 40 5% 18%;
+  --input: 40 5% 18%;
+  --ring: 35 55% 45%;
+  --radius: 0.5rem;
+}

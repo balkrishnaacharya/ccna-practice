@@ -585,15 +585,15 @@ pub fn get_random_question_conn(
                 "SELECT q.id, q.stem, q.domain, q.difficulty, COALESCE(q.multi_select, 0)
                  FROM questions q
                  LEFT JOIN user_question_stats s ON s.question_id = q.id
-                 ORDER BY
-                   CASE
-                     WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
-                     WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
-                     ELSE 1
-                   END ASC,
-                   COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
-                   RANDOM()
-                 LIMIT 1",
+                  ORDER BY
+                    CASE
+                      WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
+                      WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 1
+                      ELSE 2
+                    END ASC,
+                    COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
+                    RANDOM()
+                  LIMIT 1",
             )
             .map_err(|e| e.to_string())?;
 
@@ -811,9 +811,9 @@ fn drill_question_conn(
         sql.push_str(
             " ORDER BY
                 CASE
-                  WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 2
                   WHEN s.times_correct * 10 < s.times_seen * 7 THEN 0
-                  ELSE 1
+                  WHEN s.times_seen IS NULL OR s.times_seen = 0 THEN 1
+                  ELSE 2
                 END ASC,
                 COALESCE(CAST(s.times_correct AS REAL) / NULLIF(s.times_seen, 0), 1.0) ASC,
                 RANDOM()
@@ -1739,5 +1739,34 @@ mod tests {
         assert_eq!(stats.remaining_today, 0);
         assert!(stats.goal_met_today);
         assert!(stats.recent[6].goal_met);
+    }
+
+    #[test]
+    fn test_weak_mode_serves_unseen_before_mastered() {
+        let conn = setup_test_db();
+
+        // Master every seeded question (priority 2) so a never-seen question wins.
+        for q_id in 1..=30i64 {
+            conn.execute(
+                "INSERT INTO user_question_stats (question_id, times_seen, times_correct) VALUES (?1, 10, 10)",
+                params![q_id],
+            )
+            .unwrap();
+        }
+
+        // One never-seen question: no stats row at all (priority 1).
+        conn.execute(
+            "INSERT INTO questions (id, stem, domain, difficulty, multi_select) VALUES (?1, ?2, 'network_infra', 'easy', 0)",
+            params![99i64, "Unseen question"],
+        )
+        .unwrap();
+
+        // Weak mode must return the never-seen question every time, never a mastered one.
+        for _ in 0..25 {
+            let q = get_random_question_conn("weak", None, None, &conn)
+                .unwrap()
+                .unwrap();
+            assert_eq!(q.id, 99, "weak mode deprioritized a never-seen question: {}", q.id);
+        }
     }
 }

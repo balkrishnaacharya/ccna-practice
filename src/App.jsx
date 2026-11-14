@@ -14,6 +14,7 @@ const Topics = lazy(() => import("./pages/Topics"));
 import FloatingBottomNav from "./components/FloatingBottomNav";
 import ExamConfirmationModal from "./components/ExamConfirmationModal";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
+import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
 import SplashSequence from "./components/SplashSequence";
 import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
 import { useUpdater } from "./utils/useUpdater";
@@ -119,6 +120,9 @@ export default function App() {
       {/* Background Organic Mesh Blobs */}
       <OrganicMeshBackground />
 
+      {/* Desktop Smooth Cursor (self-gates to fine-pointer devices; null on Android) */}
+      <SmoothCursorWrapper />
+
       {/* Opening Splash Sequence (Polpharma-inspired) */}
       <SplashSequence onComplete={handleSplashComplete} />
 
@@ -185,8 +189,9 @@ export default function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 w-full relative z-10">
-        <DirectionalRouteWrapper>
+      <main className="flex-1 w-full relative z-10 pb-24">
+        <div className="bg-dark-card border border-dark-border rounded-2xl shadow-dock p-6">
+          <DirectionalRouteWrapper>
           <ErrorBoundary>
             <Suspense fallback={<RouteLoader />}>
               <Routes>
@@ -212,6 +217,7 @@ export default function App() {
             </Suspense>
           </ErrorBoundary>
         </DirectionalRouteWrapper>
+        </div>
       </main>
 
       {/* Floating Bottom Navigation Pill Dock (Universal across all screens) */}

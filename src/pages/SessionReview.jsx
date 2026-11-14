@@ -33,8 +33,17 @@ export default function SessionReview() {
     [detail],
   );
 
-  function generateStudyPrompt() {
-    if (!detail) return;
+  function escapeHtml(text) {
+    return text
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function buildReviewText() {
+    if (!detail) return "";
     const wrongByDomain = new Map();
     for (const review of wrongReviews) {
       if (!wrongByDomain.has(review.domain)) wrongByDomain.set(review.domain, []);
@@ -54,7 +63,7 @@ export default function SessionReview() {
       return `Domain: ${domain.replace(/_/g, " ")}\nMissed subtopics: ${subtopicLine}\nMissed questions:\n${questionText}`;
     }).join("\n\n");
 
-    setStudyPrompt([
+    return [
       `My CCNA 2.0 exam score was ${detail.session.score} out of ${detail.session.total} (${detail.session.percentage}%).`,
       "",
       "Weak areas and missed questions:",
@@ -69,7 +78,12 @@ export default function SessionReview() {
       "Provide short study notes (bullet form, ~200 words) for each weak subtopic.",
       "",
       "End with a 5-question mixed quiz covering only my weak areas.",
-    ].join("\n"));
+    ].join("\n");
+  }
+
+  function generateStudyPrompt() {
+    const text = buildReviewText();
+    setStudyPrompt(text);
     setCopyStatus("");
   }
 
@@ -80,6 +94,23 @@ export default function SessionReview() {
     } catch {
       setCopyStatus("Clipboard access failed. Select and copy the text manually.");
     }
+  }
+
+  function exportReview() {
+    const text = buildReviewText();
+    if (!text) return;
+    setStudyPrompt(text);
+    const win = window.open("", "_blank");
+    if (!win) {
+      setCopyStatus("Popup blocked. Allow popups to export.");
+      return;
+    }
+    win.document.write(
+      `<!DOCTYPE html><html><head><meta charset="utf-8"><title>CCNA Exam Review</title></head><body style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;white-space:pre-wrap;padding:2rem;line-height:1.5;color:#1f2937">${escapeHtml(text)}</body></html>`,
+    );
+    win.document.close();
+    win.print();
+    setCopyStatus("Print dialog opened.");
   }
 
   function toggleChoice(choiceId) {
@@ -241,6 +272,12 @@ export default function SessionReview() {
                 className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold uppercase tracking-wider text-dark-bg shadow-gold-glow"
               >
                 Copy
+              </button>
+              <button
+                onClick={exportReview}
+                className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper hover:text-gold hover:bg-dark-surface transition-colors"
+              >
+                Export Review
               </button>
               <span role="status" className="text-xs text-peach font-mono">{copyStatus}</span>
             </div>

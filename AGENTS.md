@@ -8,10 +8,10 @@ A local-first CCNA 2.0 practice app built with Tauri 2.0 (Rust + React). Questio
 
 ## Stack Rules
 
-- **Frontend:** React + Vite + Tailwind. No component libraries. Keep it simple.
+- **Frontend:** React + Vite + Tailwind. shadcn/ui + MagicUI component libraries are permitted (registry `@magicui` configured in `components.json`; components live in `src/components/ui/`). Keep it simple otherwise.
 - **Backend:** Rust + rusqlite. No ORM. Write raw SQL.
 - **Database:** SQLite only. One file: `ccna.db` in the app data directory.
-- **No network calls from the app itself.** All data is local.
+- **No network calls from the app itself.** All data is local. (Dev tooling/installation may use the network.)
 - **No authentication.** Single-user local app.
 
 ## Code Style

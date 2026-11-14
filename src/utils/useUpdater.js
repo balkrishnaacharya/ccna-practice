@@ -43,17 +43,25 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
         const latestTag = data.tag_name || "";
         const cleanTag = latestTag.replace(/^v/, "");
 
-        // Find signed APK asset
-        const apkAsset = data.assets?.find(
+        // Find signed APK asset, with fallbacks
+        let apkAsset = data.assets?.find(
           (a) => a.name.endsWith(".apk") && !a.name.includes("unsigned")
         );
+        if (!apkAsset) {
+          // Accept any .apk asset if no signed one exists
+          apkAsset = data.assets?.find((a) => a.name.endsWith(".apk"));
+        }
+        const downloadUrl = apkAsset?.browser_download_url || data.html_url;
+        const isManualDownload = !apkAsset;
 
         if (cleanTag && cleanTag !== currentVersion && isVersionGreater(cleanTag, currentVersion)) {
           setUpdateInfo({
             version: cleanTag,
-            body: data.body || "A new signed release is available.",
+            body: isManualDownload
+              ? "No APK asset in this release. Download from GitHub below."
+              : data.body || "A new signed release is available.",
             date: data.published_at,
-            downloadUrl: apkAsset?.browser_download_url || data.html_url,
+            downloadUrl,
             isAndroid: true,
           });
           setStatus("available");
@@ -132,7 +140,9 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
       } catch (err) {
         console.error("Failed to open APK download URL:", err);
         setStatus("error");
-        setErrorMessage(`Could not open download link: ${err.message || err}. Try the manual GitHub release link below.`);
+        setErrorMessage(
+          `Could not open download link. Download manually from GitHub: ${updateInfo.downloadUrl}`
+        );
         return;
       }
     }
@@ -213,8 +223,9 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
 }
 
 export function isVersionGreater(remote, local) {
-  const rParts = remote.split(".").map(Number);
-  const lParts = local.split(".").map(Number);
+  const normalize = (v) => v.split("-")[0].split(".").map(Number);
+  const rParts = normalize(remote);
+  const lParts = normalize(local);
   for (let i = 0; i < Math.max(rParts.length, lParts.length); i++) {
     const r = rParts[i] || 0;
     const l = lParts[i] || 0;

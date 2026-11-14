@@ -21,6 +21,7 @@ export default function Exam({ reportExamProgress }) {
   const [showLastQModal, setShowLastQModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [examResult, setExamResult] = useState(null);
+  const [examError, setExamError] = useState<string | null>(null);
   const [reviewFilter, setReviewFilter] = useState("all");
   const [showMobileNav, setShowMobileNav] = useState(false);
 
@@ -67,6 +68,11 @@ export default function Exam({ reportExamProgress }) {
     try {
       const qs = await invoke("get_exam_questions");
       setQuestions(qs);
+      if (!qs || qs.length === 0) {
+        setExamError("No exam questions available. Please try again.");
+      } else {
+        setExamError(null);
+      }
       setLoading(false);
     } catch (err) {
       console.error("Failed to load exam questions:", err);
@@ -166,11 +172,25 @@ export default function Exam({ reportExamProgress }) {
     );
   }
 
+  if (examError || questions.length === 0) {
+    return (
+      <div className="py-24 text-center space-y-4">
+        <p className="text-paper-muted font-sans text-sm">{examError || "No questions available."}</p>
+        <button
+          onClick={loadExamQuestions}
+          className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs   transition-all shadow-gold-glow"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   if (examResult) {
     return renderScoreReport();
   }
 
-  const currentQ = questions[currentIndex];
+  const currentQ = questions[currentIndex] ?? null;
   const selectedChoices = answers[currentQ?.id] || [];
   const isLastQuestion = currentIndex === questions.length - 1;
 
@@ -188,7 +208,7 @@ export default function Exam({ reportExamProgress }) {
       {/* Top Exam Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-dark-card border border-dark-border rounded-2xl shadow-dock">
         <div>
-          <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+          <span className="text-xs font-semibold   text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
             CCNA 2.0 Full Exam Simulator
           </span>
           <p className="text-sm font-medium text-paper mt-2">
@@ -222,7 +242,7 @@ export default function Exam({ reportExamProgress }) {
           <button
             onClick={() => setShowConfirmModal(true)}
             disabled={unansweredCount > 0 || isSubmitting}
-            className="px-5 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all duration-150 disabled:bg-dark-surface disabled:text-paper-dim disabled:border disabled:border-dark-border disabled:shadow-none disabled:cursor-not-allowed"
+            className="px-5 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all duration-150 disabled:bg-dark-surface disabled:text-paper-dim disabled:border disabled:border-dark-border disabled:shadow-none disabled:cursor-not-allowed"
           >
             {unansweredCount > 0 ? `Finish Exam (${unansweredCount} left)` : "Finish Exam"}
           </button>
@@ -271,7 +291,7 @@ export default function Exam({ reportExamProgress }) {
           <div className="flex justify-between items-start gap-4">
             <div className="space-y-3">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-medium uppercase tracking-wider text-paper-muted bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                <span className="text-xs font-medium   text-paper-muted bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                   {currentQ?.domain.replace(/_/g, " ")}
                 </span>
                 {currentQ?.multi_select && (
@@ -287,7 +307,7 @@ export default function Exam({ reportExamProgress }) {
 
             <button
               onClick={toggleQuestionFlag}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-150 shrink-0 ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium  border transition-all duration-150 shrink-0 ${
                 flagged.has(currentQ?.id)
                   ? "bg-gold/20 text-gold border-gold shadow-gold-glow"
                   : "bg-dark-surface text-paper-muted border-dark-border hover:text-paper hover:border-gold/40"
@@ -342,28 +362,28 @@ export default function Exam({ reportExamProgress }) {
             <button
               onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
               disabled={currentIndex === 0}
-              className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25 disabled:pointer-events-none transition-colors"
+              className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface disabled:opacity-25 disabled:pointer-events-none transition-colors"
             >
-              ← Previous
+              Previous
             </button>
 
-            <span className="text-xs text-paper-muted font-mono tracking-wide">
+            <span className="text-xs text-paper-muted font-mono ">
               {answeredCount} / {questions.length} answered
             </span>
 
             {isLastQuestion ? (
               <button
                 onClick={() => setShowLastQModal(true)}
-                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide transition-all shadow-gold-glow"
+                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  transition-all shadow-gold-glow"
               >
-                Finish →
+                Finish Exam
               </button>
             ) : (
               <button
                 onClick={() => setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))}
-                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide transition-all shadow-gold-glow"
+                className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  transition-all shadow-gold-glow"
               >
-                Next →
+                Next Question
               </button>
             )}
           </div>
@@ -372,7 +392,7 @@ export default function Exam({ reportExamProgress }) {
         {/* Question Navigator */}
         <div className="border border-dark-border rounded-2xl p-5 bg-dark-card shadow-dock space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-dark-borderSubtle">
-            <h3 className="text-xs font-semibold text-paper uppercase tracking-wider">
+            <h3 className="text-xs font-semibold text-paper  ">
               Question Grid
             </h3>
             <div className="flex items-center gap-2">
@@ -452,14 +472,14 @@ export default function Exam({ reportExamProgress }) {
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowConfirmModal(false)}
-                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Return to Exam
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Yes, Submit Exam"}
               </button>
@@ -486,14 +506,14 @@ export default function Exam({ reportExamProgress }) {
             <div className="flex justify-end gap-3 pt-3">
               <button
                 onClick={() => setShowLastQModal(false)}
-                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium tracking-wide text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                className="px-5 py-2.5 border border-dark-border rounded-full text-xs font-medium  text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
               >
                 Go Back &amp; Review
               </button>
               <button
                 onClick={submitExamFinal}
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wide shadow-gold-glow transition-all"
+                className="px-5 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs  shadow-gold-glow transition-all"
               >
                 {isSubmitting ? "Calculating..." : "Submit Exam"}
               </button>
@@ -533,11 +553,11 @@ export default function Exam({ reportExamProgress }) {
           }`}
         >
           {passed ? (
-            <span className="inline-block bg-sage/20 text-sage-light px-4 py-1.5 rounded-full border border-sage/40 text-xs font-semibold tracking-wider uppercase mb-1 shadow-sage-glow">
+            <span className="inline-block bg-sage/20 text-sage-light px-4 py-1.5 rounded-full border border-sage/40 text-xs font-semibold   mb-1 shadow-sage-glow">
               Result: PASS
             </span>
           ) : (
-            <span className="inline-block bg-heart/20 text-heart-light px-4 py-1.5 rounded-full border border-heart/40 text-xs font-semibold tracking-wider uppercase mb-1 shadow-heart-glow">
+            <span className="inline-block bg-heart/20 text-heart-light px-4 py-1.5 rounded-full border border-heart/40 text-xs font-semibold   mb-1 shadow-heart-glow">
               Result: FAIL
             </span>
           )}
@@ -565,19 +585,19 @@ export default function Exam({ reportExamProgress }) {
                 setShowPreflightModal(true);
                 loadExamQuestions();
               }}
-              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold tracking-wide rounded-full shadow-gold-glow transition-all"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold  rounded-full shadow-gold-glow transition-all"
             >
               Take Another Exam
             </button>
             <Link
               to="/history"
-              className="px-6 py-2.5 border border-gold/40 text-gold hover:bg-gold/15 text-xs font-medium tracking-wide rounded-full transition-colors"
+              className="px-6 py-2.5 border border-gold/40 text-gold hover:bg-gold/15 text-xs font-medium  rounded-full transition-colors"
             >
               View Exam History
             </Link>
             <Link
               to="/"
-              className="px-6 py-2.5 border border-dark-border hover:bg-dark-surface text-paper-muted hover:text-paper text-xs font-medium tracking-wide rounded-full transition-colors"
+              className="px-6 py-2.5 border border-dark-border hover:bg-dark-surface text-paper-muted hover:text-paper text-xs font-medium  rounded-full transition-colors"
             >
               Return to Dashboard
             </Link>
@@ -627,7 +647,7 @@ export default function Exam({ reportExamProgress }) {
                 <button
                   key={f}
                   onClick={() => setReviewFilter(f)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide border capitalize transition-all ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-medium  border capitalize transition-all ${
                     reviewFilter === f
                       ? "bg-gold text-dark-bg border-gold shadow-gold-glow font-semibold"
                       : "border-dark-border text-paper-muted hover:bg-dark-surface hover:text-paper"
@@ -656,7 +676,7 @@ export default function Exam({ reportExamProgress }) {
                 }`}
               >
                 <div className="flex justify-between items-start gap-2">
-                  <span className="text-xs font-medium uppercase text-paper-dim tracking-wide">
+                  <span className="text-xs font-medium  text-paper-dim ">
                     Q{i + 1} • {r.domain.replace(/_/g, " ")}
                     {r.subtopic ? ` • ${r.subtopic}` : ""}
                   </span>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function OrganicMeshBackground() {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(() => /android/i.test(navigator.userAgent));
 
   // Don't burn GPU on the blob animation while the app is backgrounded.
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function OrganicMeshBackground() {
 
       {/* Organic Shape 1: Polpharma Sage #5C6E4E fluid mesh blob */}
       <div
-        className="animate-mesh-blob-1 absolute -left-24 -top-24 h-[30rem] w-[30rem] rounded-full opacity-25 blur-[75px]"
+        className="animate-mesh-blob-1 absolute -left-24 -top-24 h-[20rem] w-[20rem] rounded-full opacity-25 blur-[40px]"
         style={{
           background:
             "radial-gradient(circle, rgba(92, 110, 78, 0.40) 0%, rgba(92, 110, 78, 0.08) 55%, transparent 75%)",
@@ -44,7 +44,7 @@ export default function OrganicMeshBackground() {
 
       {/* Organic Shape 2: Polpharma Gold #BD8D39 fluid mesh blob */}
       <div
-        className="animate-mesh-blob-2 absolute -bottom-28 -right-28 h-[32rem] w-[32rem] rounded-full opacity-20 blur-[80px]"
+        className="animate-mesh-blob-2 absolute -bottom-28 -right-28 h-[22rem] w-[22rem] rounded-full opacity-20 blur-[48px]"
         style={{
           background:
             "radial-gradient(circle, rgba(189, 141, 57, 0.35) 0%, rgba(189, 141, 57, 0.06) 60%, transparent 75%)",
@@ -53,7 +53,7 @@ export default function OrganicMeshBackground() {
 
       {/* Organic Shape 3: Gentle ambient core highlight */}
       <div
-        className="animate-mesh-blob-3 absolute left-1/2 top-1/2 h-[24rem] w-[24rem] rounded-full opacity-15 blur-[90px]"
+        className="animate-mesh-blob-3 absolute left-1/2 top-1/2 h-[18rem] w-[18rem] rounded-full opacity-15 blur-[56px]"
         style={{
           background:
             "radial-gradient(circle, rgba(92, 110, 78, 0.25) 0%, rgba(189, 141, 57, 0.15) 45%, transparent 70%)",

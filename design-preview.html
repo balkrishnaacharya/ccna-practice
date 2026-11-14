@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCNA Practice 2.0 — Design Token Preview</title>
+<style>
+  :root {
+    /* Colors */
+    --ccna-color-dark-bg: #181815;
+    --ccna-color-dark-surface: #21211D;
+    --ccna-color-dark-card: #262622;
+    --ccna-color-dark-elevated: #2E2E28;
+    --ccna-color-dark-border: rgba(246, 242, 233, 0.10);
+    --ccna-color-dark-borderSubtle: rgba(246, 242, 233, 0.06);
+    --ccna-color-paper: #F6F2E9;
+    --ccna-color-paper-muted: rgba(246, 242, 233, 0.70);
+    --ccna-color-paper-dim: rgba(246, 242, 233, 0.60);
+    --ccna-color-paper-faint: rgba(246, 242, 233, 0.20);
+    --ccna-color-gold: #BD8D39;
+    --ccna-color-gold-hover: #C99A47;
+    --ccna-color-gold-light: #D8A243;
+    --ccna-color-gold-glow: rgba(189, 141, 57, 0.35);
+    --ccna-color-sage: #5C6E4E;
+    --ccna-color-sage-hover: #6C805C;
+    --ccna-color-sage-light: #93AB80;
+    --ccna-color-sage-glow: rgba(92, 110, 78, 0.35);
+    --ccna-color-heart: #C36842;
+    --ccna-color-heart-hover: #D1724B;
+    --ccna-color-heart-light: #E1825B;
+    --ccna-color-heart-glow: rgba(195, 104, 66, 0.35);
+    --ccna-color-peach: #E8A87C;
+    --ccna-color-peach-light: #F0B891;
+    --ccna-color-peach-muted: rgba(232, 168, 124, 0.20);
+    --ccna-color-accent: #BD8D39;
+    /* Typography */
+    --ccna-font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+    --ccna-font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ccna-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    /* Shadows */
+    --ccna-shadow-gold-glow: 0 0 25px -4px rgba(189, 141, 57, 0.45);
+    --ccna-shadow-gold-glow-lg: 0 0 35px -2px rgba(189, 141, 57, 0.60);
+    --ccna-shadow-sage-glow: 0 0 25px -4px rgba(92, 110, 78, 0.45);
+    --ccna-shadow-heart-glow: 0 0 25px -4px rgba(195, 104, 66, 0.45);
+    --ccna-shadow-dock: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(246, 242, 233, 0.1);
+    /* Radius */
+    --ccna-radius-full: 9999px;
+    --ccna-radius-xl: 0.75rem;
+    --ccna-radius-2xl: 1rem;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--ccna-color-dark-bg);
+    color: var(--ccna-color-paper);
+    font-family: var(--ccna-font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+  header { margin-bottom: 3rem; }
+  header h1 { font-family: var(--ccna-font-serif); font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  header p { color: var(--ccna-color-paper-muted); font-size: 0.95rem; }
+  section { margin-bottom: 3rem; }
+  section h2 { font-family: var(--ccna-font-serif); font-size: 1.5rem; margin-bottom: 1rem; color: var(--ccna-color-paper); }
+  section h3 { font-size: 1rem; color: var(--ccna-color-paper-muted); margin-bottom: 0.75rem; font-family: var(--ccna-font-sans); }
+  /* Color grid */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .swatch { border: 1px solid var(--ccna-color-dark-border); border-radius: var(--ccna-radius-xl); padding: 1rem; background: var(--ccna-color-dark-card); }
+  .swatch .name { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-paper-dim); margin-bottom: 0.5rem; display: block; }
+  .swatch .box { height: 80px; border-radius: 8px; margin-bottom: 0.5rem; }
+  .swatch .value { font-family: var(--ccna-font-mono); font-size: 0.8rem; color: var(--ccna-color-paper-muted); }
+  .swatch.gold .box { box-shadow: var(--ccna-shadow-gold-glow); }
+  .swatch.sage .box { box-shadow: var(--ccna-shadow-sage-glow); }
+  .swatch.heart .box { box-shadow: var(--ccna-shadow-heart-glow); }
+  /* Typography */
+  .type-show { display: grid; gap: 1rem; }
+  .type-item h4 { font-family: var(--ccna-font-serif); font-size: 1.25rem; color: var(--ccna-color-paper); margin-bottom: 0.25rem; }
+  .type-item .sample { font-size: 1rem; color: var(--ccna-color-paper-muted); }
+  .type-item .sample.serif { font-family: var(--ccna-font-serif); }
+  .type-item .sample.sans { font-family: var(--ccna-font-sans); }
+  .type-item .sample.mono { font-family: var(--ccna-font-mono); }
+  .type-item .token { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-paper-dim); margin-top: 0.25rem; display: block; }
+  /* Shadow cards */
+  .shadow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .shadow-card { border: 1px solid var(--ccna-color-dark-border); border-radius: var(--ccna-radius-xl); padding: 1rem; background: var(--ccna-color-dark-card); }
+  .shadow-card .box { height: 100px; border-radius: 12px; background: var(--ccna-color-dark-surface); margin-bottom: 0.75rem; }
+  .shadow-card .name { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-paper-dim); display: block; margin-bottom: 0.25rem; }
+  .shadow-card .value { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-paper-muted); white-space: pre-wrap; word-break: break-all; }
+  .shadow-card.gold-glow .box { box-shadow: var(--ccna-shadow-gold-glow); }
+  .shadow-card.dock .box { box-shadow: var(--ccna-shadow-dock); }
+  /* Radius */
+  .radius-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+  .radius-item { border: 1px solid var(--ccna-color-dark-border); padding: 1rem; background: var(--ccna-color-dark-card); text-align: center; }
+  .radius-item .pill { display: inline-block; padding: 0.5rem 1rem; background: var(--ccna-color-gold); color: var(--ccna-color-dark-bg); font-family: var(--ccna-font-mono); font-size: 0.75rem; margin-bottom: 0.5rem; }
+  .radius-item .name { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-paper-dim); display: block; }
+  .radius-full .pill { border-radius: var(--ccna-radius-full); }
+  .radius-xl .pill { border-radius: var(--ccna-radius-xl); }
+  .radius-2xl .pill { border-radius: var(--ccna-radius-2xl); }
+  /* Breakpoints */
+  .bp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+  .bp-item { border: 1px solid var(--ccna-color-dark-border); border-radius: var(--ccna-radius-xl); padding: 1rem; background: var(--ccna-color-dark-surface); }
+  .bp-item .name { font-family: var(--ccna-font-mono); font-size: 0.75rem; color: var(--ccna-color-gold); margin-bottom: 0.25rem; display: block; }
+  .bp-item .value { font-family: var(--ccna-font-mono); font-size: 0.8rem; color: var(--ccna-color-paper-muted); }
+  /* Buttons */
+  .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
+  .btn { display: inline-block; padding: 0.6rem 1.2rem; border: none; border-radius: var(--ccna-radius-full); font-family: var(--ccna-font-sans); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.15s; }
+  .btn-gold { background: var(--ccna-color-gold); color: var(--ccna-color-dark-bg); box-shadow: var(--ccna-shadow-gold-glow); }
+  .btn-gold:hover { background: var(--ccna-color-gold-hover); transform: scale(1.05); }
+  .btn-outline { background: transparent; color: var(--ccna-color-paper); border: 1px solid var(--ccna-color-dark-border); }
+  .btn-outline:hover { background: var(--ccna-color-dark-elevated); color: var(--ccna-color-paper); }
+  .btn-heart { background: var(--ccna-color-heart); color: var(--ccna-color-paper); box-shadow: var(--ccna-shadow-heart-glow); }
+  .btn-heart:hover { background: var(--ccna-color-heart-hover); transform: scale(1.05); }
+  .btn-sage { background: var(--ccna-color-sage); color: var(--ccna-color-paper); box-shadow: var(--ccna-shadow-sage-glow); }
+  .btn-sage:hover { background: var(--ccna-color-sage-hover); transform: scale(1.05); }
+  /* Card example */
+  .card-example { border: 1px solid var(--ccna-color-dark-border); border-radius: var(--ccna-radius-2xl); padding: 1.5rem; background: var(--ccna-color-dark-card); box-shadow: var(--ccna-shadow-dock); max-width: 340px; }
+  .card-example .tag { display: inline-block; font-family: var(--ccna-font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ccna-color-gold); background: rgba(189,141,57,0.10); border: 1px solid rgba(189,141,57,0.30); padding: 0.25rem 0.6rem; border-radius: var(--ccna-radius-full); margin-bottom: 0.75rem; }
+  .card-example h3 { font-family: var(--ccna-font-serif); font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .card-example p { font-size: 0.875rem; color: var(--ccna-color-paper-muted); margin-bottom: 1rem; }
+  .card-example .btn { width: 100%; text-align: center; }
+  /* Responsive note */
+  @media (max-width: 640px) { .wrap { padding: 1rem; } header h1 { font-size: 1.75rem; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>CCNA Practice 2.0 — Design Tokens</h1>
+      <p>Self-contained design-system preview. Extracted from <code>tailwind.config.js</code> and <code>src/styles.css</code>. No dependencies.</p>
+    </header>
+
+    <section>
+      <h2>Colors</h2>
+      <div class="color-grid">
+        <div class="swatch gold"><span class="name">color-dark-bg</span><div class="box" style="background:var(--ccna-color-dark-bg)"></div><span class="value">#181815</span></div>
+        <div class="swatch"><span class="name">color-dark-surface</span><div class="box" style="background:var(--ccna-color-dark-surface)"></div><span class="value">#21211D</span></div>
+        <div class="swatch"><span class="name">color-dark-card</span><div class="box" style="background:var(--ccna-color-dark-card)"></div><span class="value">#262622</span></div>
+        <div class="swatch"><span class="name">color-dark-elevated</span><div class="box" style="background:var(--ccna-color-dark-elevated)"></div><span class="value">#2E2E28</span></div>
+        <div class="swatch"><span class="name">color-paper</span><div class="box" style="background:var(--ccna-color-paper)"></div><span class="value">#F6F2E9</span></div>
+        <div class="swatch gold"><span class="name">color-gold (accent)</span><div class="box" style="background:var(--ccna-color-gold)"></div><span class="value">#BD8D39</span></div>
+        <div class="swatch gold"><span class="name">color-gold-hover</span><div class="box" style="background:var(--ccna-color-gold-hover)"></div><span class="value">#C99A47</span></div>
+        <div class="swatch gold"><span class="name">color-gold-light</span><div class="box" style="background:var(--ccna-color-gold-light)"></div><span class="value">#D8A243</span></div>
+        <div class="swatch sage"><span class="name">color-sage</span><div class="box" style="background:var(--ccna-color-sage)"></div><span class="value">#5C6E4E</span></div>
+        <div class="swatch heart"><span class="name">color-heart</span><div class="box" style="background:var(--ccna-color-heart)"></div><span class="value">#C36842</span></div>
+        <div class="swatch"><span class="name">color-peach</span><div class="box" style="background:var(--ccna-color-peach)"></div><span class="value">#E8A87C</span></div>
+        <div class="swatch"><span class="name">color-paper-muted</span><div class="box" style="background:var(--ccna-color-paper-muted)"></div><span class="value">rgba(246,242,233,0.70)</span></div>
+        <div class="swatch"><span class="name">color-dark-border</span><div class="box" style="background:var(--ccna-color-dark-border)"></div><span class="value">rgba(246,242,233,0.10)</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Typography</h2>
+      <div class="type-show">
+        <div class="type-item">
+          <h4>Headings (serif)</h4>
+          <div class="sample serif">CCNA 2.0 Editorial Platform</div>
+          <span class="token">font-serif: Georgia, "Iowan Old Style", … serif</span>
+        </div>
+        <div class="type-item">
+          <h4>Body / UI (sans)</h4>
+          <div class="sample sans">Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, … sans-serif</div>
+          <span class="token">font-sans: Inter, system-ui, … sans-serif</span>
+        </div>
+        <div class="type-item">
+          <h4>Data (mono)</h4>
+          <div class="sample mono">82.5% · 100 Q · ui-monospace</div>
+          <span class="token">font-mono: ui-monospace, SFMono-Regular, … monospace</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Shadows</h2>
+      <div class="shadow-grid">
+        <div class="shadow-card gold-glow"><span class="name">shadow-gold-glow</span><div class="box"></div><span class="value">0 0 25px -4px rgba(189,141,57,0.45)</span></div>
+        <div class="shadow-card gold-glow"><span class="name">shadow-gold-glow-lg</span><div class="box" style="box-shadow:var(--ccna-shadow-gold-glow-lg)"></div><span class="value">0 0 35px -2px rgba(189,141,57,0.60)</span></div>
+        <div class="shadow-card"><span class="name">shadow-sage-glow</span><div class="box" style="box-shadow:var(--ccna-shadow-sage-glow)"></div><span class="value">0 0 25px -4px rgba(92,110,78,0.45)</span></div>
+        <div class="shadow-card"><span class="name">shadow-heart-glow</span><div class="box" style="box-shadow:var(--ccna-shadow-heart-glow)"></div><span class="value">0 0 25px -4px rgba(195,104,66,0.45)</span></div>
+        <div class="shadow-card dock"><span class="name">shadow-dock</span><div class="box"></div><span class="value">0 20px 45px -10px rgba(0,0,0,0.7) + 1px border</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Border Radius</h2>
+      <div class="radius-grid">
+        <div class="radius-item radius-full"><span class="pill">Pill (9999px)</span><span class="name">rounded-full</span></div>
+        <div class="radius-item radius-xl"><span class="pill">XL (0.75rem)</span><span class="name">rounded-xl</span></div>
+        <div class="radius-item radius-2xl"><span class="pill">2XL (1rem)</span><span class="name">rounded-2xl</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Breakpoints</h2>
+      <div class="bp-grid">
+        <div class="bp-item"><span class="name">sm</span><span class="value">640px</span></div>
+        <div class="bp-item"><span class="name">md</span><span class="value">768px</span></div>
+        <div class="bp-item"><span class="name">lg</span><span class="value">1024px</span></div>
+        <div class="bp-item"><span class="name">xl</span><span class="value">1280px</span></div>
+        <div class="bp-item"><span class="name">2xl</span><span class="value">1536px</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Components (preview)</h2>
+      <div class="btn-grid">
+        <button class="btn btn-gold">Primary (gold)</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-heart">Danger (heart)</button>
+        <button class="btn btn-sage">Success (sage)</button>
+      </div>
+      <div class="card-example" style="margin-top:1.5rem;">
+        <span class="tag">Stat Card</span>
+        <h3>Accuracy</h3>
+        <p style="font-family:var(--ccna-font-serif); font-size:2rem; color:var(--ccna-color-paper); margin-bottom:0.5rem;">84%</p>
+        <p>target &gt;= 82.5%</p>
+        <button class="btn btn-gold" style="margin-top:0.5rem;">Start Review</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Spacing & Motion Notes</h2>
+      <ul style="color:var(--ccna-color-paper-muted); font-size:0.9rem; list-style:disc inside; space-y:0.4rem;">
+        <li>Spacing grid: 4px base (Tailwind default).</li>
+        <li>Motion: compositor-only (transform), pauses when backgrounded, respects <code>prefers-reduced-motion</code>.</li>
+        <li>Mesh blobs: 28s / 34s / 40s ease-in-out infinite alternate.</li>
+        <li>Safe-area vars: <code>--safe-top</code>, <code>--safe-bottom</code> for Android notches.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

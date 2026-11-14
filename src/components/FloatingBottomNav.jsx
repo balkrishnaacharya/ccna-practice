@@ -9,6 +9,9 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
   const pillRef = useRef(null);
   const itemRefs = useRef({});
 
+  const prefersReducedMotion =
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const leftLinks = [
     {
       to: "/",
@@ -136,6 +139,10 @@ export default function FloatingBottomNav({ onOpenExamModal, guardNavigation }) 
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) {
+        updatePillPosition(false);
+        return;
+      }
       updatePillPosition(true);
     },
     { scope: navRef, dependencies: [location.pathname] }

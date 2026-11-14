@@ -8,11 +8,37 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [subtopics, setSubtopics] = useState([]);
   const [flagCount, setFlagCount] = useState(0);
   const [reviewDue, setReviewDue] = useState(0);
+  const [statsError, setStatsError] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(true);
   const navigate = useNavigate();
   const containerRef = useRef(null);
 
   useEffect(() => {
-    invoke("get_stats").then(setStats).catch(console.error);
+    let mounted = true;
+
+    const loadStats = async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      try {
+        const data = await invoke("get_stats", { signal: controller.signal });
+        if (mounted) {
+          setStats(data);
+          setStatsLoading(false);
+        }
+      } catch (err) {
+        if (mounted && err.name !== "AbortError") {
+          console.error("get_stats failed:", err);
+          setStatsError(String(err));
+          setStatsLoading(false);
+        }
+      } finally {
+        if (mounted) clearTimeout(timeout);
+      }
+    };
+
+    loadStats();
+
     invoke("get_subtopic_stats")
       .then((rows) => setSubtopics(rows || []))
       .catch(console.error);
@@ -22,15 +48,41 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
     invoke("get_review_due_count")
       .then((n) => setReviewDue(n || 0))
       .catch(console.error);
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  if (!stats) {
+  if (statsLoading && !statsError) {
     return (
       <div className="py-24 text-center space-y-3">
         <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-gold border-t-transparent"></div>
         <p className="text-paper-muted text-sm font-sans">
-          Loading candidate analytics...
+          Loading candidate analytics…
         </p>
+      </div>
+    );
+  }
+
+  if (!stats && statsError) {
+    return (
+      <div className="py-24 text-center space-y-4">
+        <div className="inline-block animate-pulse rounded-full h-8 w-8 border-2 border-heart/40"></div>
+        <p className="text-sm text-heart-light font-sans">
+          Unable to load analytics — {statsError}
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setStatsError(null);
+            setStatsLoading(true);
+            invoke("get_stats").then(setStats).catch((e) => setStatsError(String(e))).finally(() => setStatsLoading(false));
+          }}
+          className="px-5 py-2.5 bg-heart/10 hover:bg-heart/20 border border-heart/30 text-heart-light text-xs font-medium rounded-full transition-colors"
+        >
+          Retry
+        </button>
       </div>
     );
   }

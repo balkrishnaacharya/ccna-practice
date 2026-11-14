@@ -77,7 +77,7 @@ export default function PracticalExam() {
     <div className="mx-auto max-w-6xl space-y-6 pb-12">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-peach">Practical Lab</p>
+          <p className="text-xs font-semibold text-peach">Practical Lab</p>
           <h1 className="mt-1 font-serif text-3xl font-semibold tracking-tight text-paper">IOS Troubleshooting Lab</h1>
           <p className="mt-1 text-sm text-paper-muted font-sans">Diagnose topology issues and repair running configs locally in the virtual terminal.</p>
         </div>
@@ -113,11 +113,11 @@ export default function PracticalExam() {
           {/* Exhibit Preview */}
           {activeScenario.exhibit && (
             <details className="mt-3 border-t border-dark-borderSubtle pt-3">
-              <summary className="cursor-pointer text-xs font-medium text-peach uppercase tracking-wider">Exhibit {activeScenario.exhibit.type.replace("_", " ")}</summary>
+              <summary className="cursor-pointer text-xs font-semibold text-peach">Exhibit {activeScenario.exhibit.type.replace("_", " ")}</summary>
               <pre className="mt-2 text-xs text-paper-muted font-mono select-none whitespace-pre">{activeScenario.exhibit.content}</pre>
             </details>
           )}
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-paper-dim">Objectives</h3>
+            <h3 className="text-xs font-semibold text-paper-dim">Objectives</h3>
             {activeScenario.validationRules.map((item) => {
               const graded = results?.[activeIndex]?.objectives.find((objective) => objective.id === item.id);
               return (
@@ -151,14 +151,14 @@ export default function PracticalExam() {
             {!results ? (
               <button
                 onClick={gradeExam}
-                className="rounded-full min-h-[48px] bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg uppercase tracking-wider shadow-gold-glow transition-all"
+                className="rounded-full min-h-[48px] bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg shadow-gold-glow transition-all"
               >
                 Grade Simulation
               </button>
             ) : (
               <button
                 onClick={() => setShowScoreboard(true)}
-                className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg uppercase tracking-wider shadow-gold-glow transition-all"
+                className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg shadow-gold-glow transition-all"
               >
                 Scoreboard
               </button>
@@ -168,7 +168,7 @@ export default function PracticalExam() {
 
         <div className="min-w-0 space-y-2">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-paper-dim font-mono">Virtual Cisco IOS Terminal</h2>
+            <h2 className="text-xs font-semibold text-paper-dim font-mono">Virtual Cisco IOS Terminal</h2>
             <span className="text-xs text-paper-dim">Interactive local emulator</span>
           </div>
           <CliTerminal key={activeScenario.id} devices={activeScenario.devices} onDevicesChange={refreshDevices} />
@@ -186,7 +186,7 @@ export default function PracticalExam() {
                 : "border-dark-border bg-dark-card hover:border-gold/40 text-paper-muted"
             }`}
           >
-            <span className="block text-xs font-semibold uppercase tracking-wider text-peach">{DOMAIN_LABELS[scenario.domain]}</span>
+            <span className="block text-xs font-semibold text-peach">{DOMAIN_LABELS[scenario.domain]}</span>
             <span className="mt-1 block truncate text-xs font-medium text-paper">{scenario.title}</span>
             {results && (
               <span className={`mt-1 block text-xs font-mono ${results[index].passed ? "text-sage-light" : "text-heart-light"}`}>
@@ -202,7 +202,7 @@ export default function PracticalExam() {
           <section role="dialog" aria-modal="true" aria-labelledby="practical-score-title" className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-dark-card border border-dark-border p-6 shadow-dock text-paper sm:p-7 space-y-4">
             <div className="flex flex-wrap items-start justify-between gap-3 border-b border-dark-borderSubtle pb-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-peach">Practical Exam Score</p>
+                <p className="text-xs font-semibold text-peach">Practical Exam Score</p>
                 <h2 id="practical-score-title" className="mt-1 font-serif text-3xl font-bold">{score} <span className="text-base font-normal text-paper-dim">/ 1000</span></h2>
                 <p className={`mt-1 text-xs font-mono font-medium ${score >= 825 ? "text-sage-light" : "text-heart-light"}`}>
                   {score >= 825 ? "PASS" : "FAIL"} · {passedCount} of {scenarios.length} scenarios passed · Passing threshold 825
@@ -245,7 +245,7 @@ export default function PracticalExam() {
             <div className="flex flex-wrap justify-end gap-3 pt-3">
               <button
                 onClick={startFresh}
-                className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2.5 text-xs font-semibold text-dark-bg uppercase tracking-wider shadow-gold-glow"
+                className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2.5 text-xs font-semibold text-dark-bg shadow-gold-glow"
               >
                 Start Another Lab
               </button>

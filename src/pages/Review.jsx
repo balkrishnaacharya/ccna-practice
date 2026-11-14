@@ -52,7 +52,7 @@ export default function Review() {
 
         {flags.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-paper-dim font-medium tracking-wide">Domain:</span>
+            <span className="text-xs text-paper-dim font-medium ">Domain:</span>
             <select
               value={filterDomain}
               onChange={(e) => setFilterDomain(e.target.value)}
@@ -100,7 +100,7 @@ export default function Review() {
           <div className="pt-2">
             <Link
               to="/quiz"
-              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs tracking-wider uppercase shadow-gold-glow transition-all duration-150 inline-block"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs   shadow-gold-glow transition-all duration-150 inline-block"
             >
               Start Practicing Questions
             </Link>
@@ -115,10 +115,10 @@ export default function Review() {
             >
               <div className="flex flex-wrap justify-between items-start gap-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold tracking-wider uppercase text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                  <span className="text-xs font-semibold   text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                     {f.domain.replace(/_/g, " ")}
                   </span>
-                  <span className="text-xs font-medium tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                  <span className="text-xs font-medium  text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                     {f.difficulty}
                   </span>
                 </div>
