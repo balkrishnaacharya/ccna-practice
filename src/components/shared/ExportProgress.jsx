@@ -78,10 +78,10 @@ export default function ExportProgress({
             </div>
             <div>
               <div className="font-serif text-base font-semibold text-paper">CCNA Practice</div>
-              <div className="text-[10px] text-paper-dim">CCNA 2.0 Practice App</div>
+              <div className="text-[10px] text-paper">CCNA 2.0 Practice App</div>
             </div>
           </div>
-          <div className="text-[10px] text-paper-dim text-right">{today}</div>
+          <div className="text-[10px] text-paper text-right">{today}</div>
         </div>
 
         <div className="mb-6">

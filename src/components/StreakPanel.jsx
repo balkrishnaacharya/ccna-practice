@@ -59,7 +59,7 @@ export default function StreakPanel() {
           <h2 className="font-serif text-xl font-semibold tracking-tight text-paper">
             Study Streak
           </h2>
-          <p className="mt-0.5 text-xs text-paper-dim">
+          <p className="mt-0.5 text-xs text-paper-muted">
             Answer at least one question to keep the run alive.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function StreakPanel() {
           className={`shrink-0 rounded-full border px-3 py-1 font-mono text-xs font-semibold ${
             streak > 0
               ? "border-gold/30 bg-gold/10 text-gold"
-              : "border-dark-border bg-dark-surface text-paper-dim"
+              : "border-dark-border bg-dark-surface text-paper-muted"
           }`}
         >
           🔥 {streak} day{streak === 1 ? "" : "s"}
@@ -83,7 +83,7 @@ export default function StreakPanel() {
               }`}
             >
               {answered}
-              <span className="text-base font-normal text-paper-dim">/{goal}</span>
+              <span className="text-base font-normal text-paper-muted">/{goal}</span>
             </p>
             <p className="text-xs font-medium text-paper-muted">
               {goalMetToday
@@ -110,15 +110,15 @@ export default function StreakPanel() {
 
           <dl className="flex gap-6 pt-1 text-xs">
             <div>
-              <dt className="uppercase tracking-wider text-paper-dim">Longest</dt>
+              <dt className="uppercase tracking-wider text-paper-muted">Longest</dt>
               <dd className="font-mono text-sm text-paper">{longestStreak} d</dd>
             </div>
             <div>
-              <dt className="uppercase tracking-wider text-paper-dim">Active days</dt>
+              <dt className="uppercase tracking-wider text-paper-muted">Active days</dt>
               <dd className="font-mono text-sm text-paper">{activeDays}</dd>
             </div>
             <div>
-              <dt className="uppercase tracking-wider text-paper-dim">Today correct</dt>
+              <dt className="uppercase tracking-wider text-paper-muted">Today correct</dt>
               <dd className="font-mono text-sm text-paper">
                 {answered > 0 ? `${todayCorrect}/${answered}` : "—"}
               </dd>
@@ -136,7 +136,7 @@ export default function StreakPanel() {
             )}
             <Link
               to="/settings"
-              className="text-xs font-medium text-paper-dim transition-colors hover:text-gold"
+              className="text-xs font-medium text-paper-muted transition-colors hover:text-gold"
             >
               Adjust daily goal →
             </Link>
@@ -171,7 +171,7 @@ export default function StreakPanel() {
                 </div>
                 <span
                   className={`text-xs font-mono ${
-                    isToday ? "font-semibold text-gold" : "text-paper-dim"
+                    isToday ? "font-semibold text-gold" : "text-paper"
                   }`}
                 >
                   {weekdayLetter(day.date)}

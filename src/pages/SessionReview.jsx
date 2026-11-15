@@ -232,7 +232,7 @@ export default function SessionReview() {
         <div>
           <Link to="/history" className="text-xs text-gold hover:underline">← Exam History</Link>
           <h1 className="mt-2 font-serif text-3xl font-semibold text-paper">Session Review</h1>
-          <p className="mt-1 text-xs text-paper-dim font-mono">{formatDate(session.started_at)} · {session.mode} mode · Score {session.score}/{session.total}</p>
+          <p className="mt-1 text-xs text-paper font-mono">{formatDate(session.started_at)} · {session.mode} mode · Score {session.score}/{session.total}</p>
         </div>
         {wrongReviews.length > 0 && (
           <button
@@ -248,7 +248,7 @@ export default function SessionReview() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="font-serif text-lg font-semibold text-paper">Study Prompt Generator</h2>
-            <p className="mt-0.5 text-xs text-paper-dim">Generated locally from this session's weak domains.</p>
+            <p className="mt-0.5 text-xs text-paper">Generated locally from this session's weak domains.</p>
           </div>
           <button
             onClick={generateStudyPrompt}
@@ -293,7 +293,7 @@ export default function SessionReview() {
           }`}
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-medium uppercase tracking-wider text-paper-dim">
+            <span className="text-xs font-medium uppercase tracking-wider text-paper">
               Question {index + 1} · {review.domain.replace(/_/g, " ")}{review.subtopic ? ` · ${review.subtopic}` : ""}
             </span>
             <span className={`rounded-full px-3 py-0.5 text-xs font-semibold border ${

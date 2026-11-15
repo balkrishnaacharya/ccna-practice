@@ -56,7 +56,7 @@ function complementMask(value) {
 function ResultCard({ title, value }) {
   return (
     <div className="rounded-xl border border-dark-border bg-dark-surface/60 p-3 space-y-1">
-      <p className="text-xs text-paper-dim font-sans">{title}</p>
+      <p className="text-xs text-paper font-sans">{title}</p>
       <p className="break-all font-mono text-sm font-medium text-peach">{value}</p>
     </div>
   );
@@ -90,7 +90,7 @@ export default function Notes() {
       <section className="space-y-5 rounded-2xl border border-dark-border bg-dark-card p-6 shadow-dock sm:p-7">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper">Subnet Calculator</h2>
-          <p className="mt-0.5 text-xs text-paper-dim">Enter an IPv4 address and CIDR prefix.</p>
+          <p className="mt-0.5 text-xs text-paper">Enter an IPv4 address and CIDR prefix.</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="space-y-1.5 text-xs font-medium text-paper-muted">IPv4 address
@@ -134,7 +134,7 @@ export default function Notes() {
       <section className="space-y-5 rounded-2xl border border-dark-border bg-dark-card p-6 shadow-dock sm:p-7">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper">Wildcard Mask Calculator</h2>
-          <p className="mt-0.5 text-xs text-paper-dim">Each value is the bitwise complement of the other.</p>
+          <p className="mt-0.5 text-xs text-paper">Each value is the bitwise complement of the other.</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           <label className="space-y-1.5 text-xs font-medium text-paper-muted">Subnet mask
@@ -165,11 +165,11 @@ export default function Notes() {
       <section className="space-y-5 rounded-2xl border border-dark-border bg-dark-card p-6 shadow-dock sm:p-7">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper">CIDR Reference</h2>
-          <p className="mt-0.5 text-xs text-paper-dim">Subnet masks and address/usable-host counts for /8 through /32.</p>
+          <p className="mt-0.5 text-xs text-paper">Subnet masks and address/usable-host counts for /8 through /32.</p>
         </div>
         <div className="overflow-x-auto rounded-xl border border-dark-border">
           <table className="w-full min-w-[520px] text-left text-xs">
-            <thead className="bg-dark-surface text-paper-dim">
+            <thead className="bg-dark-surface text-paper">
               <tr>
                 <th className="px-4 py-3 font-semibold uppercase tracking-wider">CIDR</th>
                 <th className="px-4 py-3 font-semibold uppercase tracking-wider">Subnet mask</th>

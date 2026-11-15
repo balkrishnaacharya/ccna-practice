@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
+import ExamConfirmationModal from "@/components/exam/ExamConfirmationModal";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 export default function Exam({ reportExamProgress }) {
   const location = useLocation();
@@ -263,7 +264,8 @@ export default function Exam({ reportExamProgress }) {
         </div>
 
         {/* Choices */}
-        <div className="space-y-3 pt-1">
+        <div className="relative space-y-3 pt-1">
+          <ShineBorder borderWidth={2} shineColor="#B8842A" duration={10} />
           {currentQ?.choices.map((c) => {
             const isSelected = selectedChoices.includes(c.id);
             const inputType = currentQ.multi_select ? "checkbox" : "radio";
@@ -280,7 +282,7 @@ export default function Exam({ reportExamProgress }) {
               >
                 <div className="flex items-start gap-3">
                   <span
-                    className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isSelected ? "border-gold bg-gold/20 text-gold" : "border-border text-paper-dim")}
+                    className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isSelected ? "border-gold bg-gold/20 text-gold" : "border-border text-paper")}
                   >
                     {letter}
                   </span>
@@ -355,7 +357,7 @@ export default function Exam({ reportExamProgress }) {
               const isFlag = flagged.has(q.id);
               const isCurrent = idx === currentIndex;
 
-              let bgClass = "bg-dark-surface text-paper-dim border border-dark-border hover:border-gold/40 hover:text-paper";
+              let bgClass = "bg-dark-surface text-paper border border-dark-border hover:border-gold/40 hover:text-paper";
               if (hasAnswer) bgClass = "bg-gold text-dark-bg font-semibold border-gold shadow-gold-glow";
               else if (isFlag) bgClass = "bg-peach text-dark-bg font-semibold border-peach";
 
@@ -486,14 +488,14 @@ export default function Exam({ reportExamProgress }) {
           )}
 
           <h1 className="font-serif text-5xl font-semibold text-paper tracking-tight">
-            {scaled_score} <span className="text-xl font-normal text-paper-dim">/ 1000</span>
+            {scaled_score} <span className="text-xl font-normal text-paper">/ 1000</span>
           </h1>
 
           <p className="text-sm font-medium text-paper-muted">
             Passing Standard: <strong className="text-peach">825 / 1000 (82.5%)</strong> • Raw Score:{" "}
             <strong className="text-paper">{score} / {total_questions}</strong> ({percentage}%)
           </p>
-          <p className="text-xs text-paper-dim">
+          <p className="text-xs text-paper">
             Time Taken: {Math.floor(time_spent_seconds / 60)} min {time_spent_seconds % 60}s
           </p>
 
@@ -561,7 +563,7 @@ export default function Exam({ reportExamProgress }) {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h2 className="font-serif text-xl font-semibold text-paper">Detailed Question Review</h2>
-              <p className="text-xs text-paper-dim mt-0.5">
+              <p className="text-xs text-paper mt-0.5">
                 Examine your answers against correct choices and technical explanations.
               </p>
             </div>
@@ -597,7 +599,7 @@ export default function Exam({ reportExamProgress }) {
                 }`}
               >
                 <div className="flex justify-between items-start gap-2">
-                  <span className="text-xs font-medium text-paper-dim">
+                  <span className="text-xs font-medium text-paper">
                     Q{i + 1} • {r.domain.replace(/_/g, " ")}
                     {r.subtopic ? ` • ${r.subtopic}` : ""}
                   </span>

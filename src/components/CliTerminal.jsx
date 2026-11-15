@@ -109,7 +109,7 @@ export default function CliTerminal({ devices, onDevicesChange }) {
         {deviceNames.map((name) => (
           <button key={name} onClick={() => { setActiveDevice(name); inputRef.current?.focus(); }} className={`min-w-14 rounded-lg px-4 py-2 font-mono text-sm font-semibold transition-all ${activeDevice === name ? "bg-gold text-dark-bg shadow-gold-glow" : "bg-dark-card text-paper-muted hover:bg-dark-elevated"}`}>{name}</button>
         ))}
-        <span className="ml-auto hidden pr-2 font-mono text-xs text-paper-dim sm:inline">IOS command line</span>
+        <span className="ml-auto hidden pr-2 font-mono text-xs text-paper sm:inline">IOS command line</span>
       </div>
 
       <div ref={outputRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 font-mono text-[13px] leading-5 text-paper sm:p-4 sm:text-sm">

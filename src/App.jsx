@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from "react";
-import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { invoke } from "@tauri-apps/api/core";
 import Dashboard from "./pages/Dashboard";
 const Quiz = lazy(() => import("./pages/Quiz"));
@@ -13,11 +13,10 @@ const PracticalExam = lazy(() => import("./pages/PracticalExam"));
 const Topics = lazy(() => import("./pages/Topics"));
 const Subnet = lazy(() => import("./pages/Subnet"));
 const Flashcards = lazy(() => import("./pages/Flashcards"));
-import { Sidebar, NAV_ITEMS } from "@/components/layout/Sidebar";
+import AppShell from "@/components/layout/AppShell";
 import OrganicMeshBackground from "./components/OrganicMeshBackground";
 import SmoothCursorWrapper from "./components/SmoothCursorWrapper";
 import SplashAnimation from "./components/SplashAnimation";
-import DirectionalRouteWrapper from "./components/DirectionalRouteWrapper";
 import { useUpdater } from "./utils/useUpdater";
 import UpdateModal from "./components/UpdateModal";
 import { hasSeenTour, startTour } from "./utils/tourGuide";
@@ -26,8 +25,7 @@ import RouteLoader from "./components/RouteLoader";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useNotifications } from "@/hooks/useNotifications";
-import ExamConfirmationModal from "@/components/shared/ConfirmDialog";
-import { cn } from "@/lib/utils";
+import ExamConfirmationModal from "@/components/exam/ExamConfirmationModal";
 
 export default function App() {
   const [profileName, setProfileName] = useState("");
@@ -155,87 +153,46 @@ export default function App() {
       .catch(console.error);
   }, []);
 
-  const headerLinks = [
-    { to: "/", label: "Dashboard" },
-    { to: "/quiz", label: "Practice" },
-    { to: "/practical-exam", label: "Labs" },
-    { to: "/notes", label: "Notes" },
-    { to: "/history", label: "History" },
-    { to: "/review", label: "Review" },
-  ];
-
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#0E1118] text-ink flex flex-col font-sans selection:bg-accent/30 selection:text-ink relative overflow-x-hidden">
-      {/* Background Organic Mesh Blobs */}
-      <OrganicMeshBackground />
+      {/* <FloatingDock /> — legacy dock replaced with AppShell Sidebar */}
+      <div className="h-screen w-screen bg-dark-bg text-ink flex flex-col font-sans selection:bg-accent/30 selection:text-ink relative overflow-hidden">
+        {/* Background Organic Mesh Blobs */}
+        <OrganicMeshBackground />
 
-      {/* Desktop Smooth Cursor (self-gates to fine-pointer devices; null on Android) */}
-      <SmoothCursorWrapper />
+        {/* Desktop Smooth Cursor (self-gates to fine-pointer devices; null on Android) */}
+        <SmoothCursorWrapper />
 
-      {/* Opening Splash Sequence (Polpharma-inspired) */}
-      {isSplashActive && (
-        <ErrorBoundary onError={() => setIsSplashActive(false)}>
-          <SplashAnimation onComplete={handleSplashComplete} />
-        </ErrorBoundary>
-      )}
+        {/* Opening Splash Sequence (Polpharma-inspired) */}
+        {isSplashActive && (
+          <ErrorBoundary onError={() => setIsSplashActive(false)}>
+            <SplashAnimation onComplete={handleSplashComplete} />
+          </ErrorBoundary>
+        )}
 
-      {/* Top Editorial Nav Bar - MOVED TO MOBILE ONLY */}
-      <nav
-        className="hidden lg:block bg-dark-surface/90 backdrop-blur-md border-b border-dark-border px-4 sm:px-6 flex items-end justify-between sticky top-0 z-40 box-content"
-        style={{
-          paddingTop: "var(--safe-top)",
-          height: "3.5rem",
-          minHeight: "calc(3.5rem + var(--safe-top))",
-        }}
-      >
-        <div className="flex items-center gap-6">
-          <Link
-            to="/"
-            onClick={(event) => guardNavigation(event, "/")}
-            className="font-semibold text-base text-gold tracking-tight flex items-center gap-2 group"
-          >
-            <span className="w-7 h-7 rounded-full bg-gold text-dark-bg flex items-center justify-center text-xs font-bold shadow-gold-glow transition-transform group-hover:scale-105">
-              2.0
-            </span>
-            <span className="font-serif text-base tracking-wide text-paper">
-              CCNA <span className="italic text-gold font-normal">Practice</span>
-            </span>
-          </Link>
-
-          {/* Desktop Navigation Links (subtle pill design) - hidden on mobile */}
-          <div className="hidden md:flex items-center gap-1">
-            {headerLinks.map((link) => {
-              const isActive = location.pathname === link.to;
-              return (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={(event) => guardNavigation(event, link.to)}
-                  className={`px-3 py-1.5 rounded-full text-sm transition-all duration-150 ${
-                    isActive
-                      ? "bg-gold/10 text-gold"
-                      : "text-paper-muted hover:text-paper hover:bg-dark-surface"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="flex-1 w-full relative z-10 pb-24">
-        <div className="bg-dark-card border border-dark-border rounded-2xl shadow-dock p-6" style={{ paddingTop: "calc(3.5rem + var(--safe-top))" }}>
-          <DirectionalRouteWrapper>
+        {/* Unified Responsive AppShell Layout */}
+        <AppShell
+          guardNavigation={guardNavigation}
+          onOpenExamModal={() => setIsExamModalOpen(true)}
+          profileName={profileName}
+        >
           <ErrorBoundary>
             <Suspense fallback={<RouteLoader />}>
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route
+                  path="/"
+                  element={
+                    <Dashboard
+                      profileName={profileName}
+                      onOpenExamModal={() => setIsExamModalOpen(true)}
+                    />
+                  }
+                />
                 <Route path="/quiz" element={<Quiz />} />
-                <Route path="/exam" element={<Exam reportExamProgress={reportExamProgress} />} />
+                <Route
+                  path="/exam"
+                  element={<Exam reportExamProgress={reportExamProgress} />}
+                />
                 <Route path="/practical-exam" element={<PracticalExam />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/tools/subnet" element={<Subnet />} />
@@ -256,92 +213,63 @@ export default function App() {
               </Routes>
             </Suspense>
           </ErrorBoundary>
-        </DirectionalRouteWrapper>
-        </div>
-      </main>
+        </AppShell>
 
-      {/* Desktop Sidebar (visible on lg+) */}
-      <Sidebar onNavigate={navigate} />
+        {/* GSAP-Animated Exam Confirmation Modal */}
+        <ExamConfirmationModal
+          isOpen={isExamModalOpen}
+          onCancel={() => setIsExamModalOpen(false)}
+          onConfirm={handleStartExamConfirmed}
+        />
 
-      {/* Mobile Bottom Navigation (visible on sm-only, hidden on lg+) */}
-      <nav
-        className="block lg:hidden md:hidden bottom-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-center px-4 sm:px-6"
-        style={{ paddingBottom: "var(--safe-bottom)" }}
-        aria-label="Main navigation"
-      >
-        {NAV_ITEMS.map((item) => {
-          const isActive = location.pathname === item.to;
-          return (
-            <Link
-              key={item.key}
-              to={item.to}
-              className={cn(
-                "flex items-center gap-2 rounded-full px-3 py-2 text-sm transition-colors duration-150",
-                isActive ? "bg-gold/10 text-gold" : "text-paper hover:text-gold hover:bg-dark-surface"
-              )}
+        {/* Application Update Modal */}
+        <UpdateModal
+          isOpen={updater.showModal}
+          updateInfo={updater.updateInfo}
+          status={updater.status}
+          downloadProgress={updater.downloadProgress}
+          onClose={() => updater.setShowModal(false)}
+          onApply={updater.applyUpdate}
+        />
+
+        {/* Leave Exam Modal Guard */}
+        {pendingNavigation && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="leave-exam-title"
+              className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
             >
-              <span className="w-3 h-3 rounded-full flex-shrink-0">{item.icon}</span>
-              <span className="hidden lg:block text-xs">{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* GSAP-Animated Exam Confirmation Modal */}
-      <ExamConfirmationModal
-        isOpen={isExamModalOpen}
-        onCancel={() => setIsExamModalOpen(false)}
-        onConfirm={handleStartExamConfirmed}
-      />
-
-      {/* Application Update Modal */}
-      <UpdateModal
-        isOpen={updater.showModal}
-        updateInfo={updater.updateInfo}
-        status={updater.status}
-        downloadProgress={updater.downloadProgress}
-        onClose={() => updater.setShowModal(false)}
-        onApply={updater.applyUpdate}
-      />
-
-      {/* Leave Exam Modal Guard */}
-      {pendingNavigation && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="leave-exam-title"
-            className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
-          >
-            <h2 id="leave-exam-title" className="font-serif text-xl font-semibold text-paper">
-              Leave this exam?
-            </h2>
-            <p className="text-sm leading-relaxed text-paper-muted font-sans">
-              You have {examProgress.unanswered} unanswered question
-              {examProgress.unanswered === 1 ? "" : "s"}. Are you sure you want to exit? Your timer will stop and progress will be lost.
-            </p>
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                type="button"
-                onClick={cancelLeaveExam}
-                className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
-              >
-                Stay in exam
-              </button>
-              <button
-                type="button"
-                onClick={leaveExam}
-                className="rounded-full bg-heart hover:bg-heart-hover px-5 py-2 text-xs font-semibold text-paper shadow-heart-glow transition-colors"
-              >
-                Leave exam
-              </button>
+              <h2 id="leave-exam-title" className="font-serif text-xl font-semibold text-paper">
+                Leave this exam?
+              </h2>
+              <p className="text-sm leading-relaxed text-paper-muted font-sans">
+                You have {examProgress.unanswered} unanswered question
+                {examProgress.unanswered === 1 ? "" : "s"}. Are you sure you want to exit? Your timer will stop and progress will be lost.
+              </p>
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={cancelLeaveExam}
+                  className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                >
+                  Stay in exam
+                </button>
+                <button
+                  type="button"
+                  onClick={leaveExam}
+                  className="rounded-full bg-heart hover:bg-heart-hover px-5 py-2 text-xs font-semibold text-paper shadow-heart-glow transition-colors"
+                >
+                  Leave exam
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Sonner Toaster for notifications */}
-      <Toaster />
+        {/* Sonner Toaster for notifications */}
+        <Toaster />
       </div>
     </TooltipProvider>
   );

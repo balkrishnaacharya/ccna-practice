@@ -7,6 +7,7 @@ import { useNotifications } from "../hooks/useNotifications";
 const DEFAULT_DAILY_GOAL = 12;
 
 export default function Settings({ onProfileChange, updater }) {
+  const { settings, updateSetting } = useNotifications();
   const [name, setName] = useState("");
   const [savedMsg, setSavedMsg] = useState("");
   const [goal, setGoal] = useState(String(DEFAULT_DAILY_GOAL));
@@ -88,7 +89,7 @@ export default function Settings({ onProfileChange, updater }) {
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper mb-1">Local Profile</h2>
-          <p className="text-xs text-paper-dim">
+          <p className="text-xs text-paper">
             All candidate data remains strictly local on this device. No cloud sync, external telemetry, or passwords.
           </p>
         </div>
@@ -128,7 +129,7 @@ export default function Settings({ onProfileChange, updater }) {
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper mb-1">Daily Study Goal</h2>
-          <p className="text-xs text-paper-dim font-sans">
+          <p className="text-xs text-paper font-sans">
             Sets the target used by the study streak panel on your dashboard. Any answer keeps the streak alive;
             the goal only measures how much of today's work is done.
           </p>
@@ -149,7 +150,7 @@ export default function Settings({ onProfileChange, updater }) {
               onChange={(e) => setGoal(e.target.value)}
               className="w-32 px-3.5 py-2.5 border border-dark-border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-gold text-paper bg-dark-surface font-mono"
             />
-            <p className="text-xs text-paper-dim mt-1.5">
+            <p className="text-xs text-paper mt-1.5">
               Between 1 and 500. Default is {DEFAULT_DAILY_GOAL}.
             </p>
           </div>
@@ -178,7 +179,7 @@ export default function Settings({ onProfileChange, updater }) {
           <h2 className="font-serif text-xl font-semibold text-paper mb-1">
             Notification Settings
           </h2>
-          <p className="text-xs text-paper-dim font-sans">
+          <p className="text-xs text-paper font-sans">
             Gentle, opt-in reminders to support your study routine. You remain in
             control of when and how CCNA Practice notifies you.
           </p>
@@ -204,7 +205,7 @@ export default function Settings({ onProfileChange, updater }) {
                 On
               </span>
             ) : (
-              <span className="text-xs font-medium text-paper-dim bg-dark-surface/60 px-3 py-1 rounded-full border border-dark-border">
+              <span className="text-xs font-medium text-paper bg-dark-surface/60 px-3 py-1 rounded-full border border-dark-border">
                 Off
               </span>
             )}
@@ -340,7 +341,7 @@ export default function Settings({ onProfileChange, updater }) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="font-serif text-xl font-semibold text-paper mb-1">Application Updates</h2>
-            <p className="text-xs text-paper-dim font-sans">
+            <p className="text-xs text-paper font-sans">
               Verify your installation against verified signed releases.
             </p>
           </div>
@@ -398,7 +399,7 @@ export default function Settings({ onProfileChange, updater }) {
               </span>
               {updater.errorMessage &&
                 !updater.errorMessage.toLowerCase().includes("404") && (
-                  <span className="text-xs font-mono text-paper-dim px-3.5">
+                  <span className="text-xs font-mono text-paper px-3.5">
                     {updater.errorMessage}
                   </span>
               )}
@@ -411,7 +412,7 @@ export default function Settings({ onProfileChange, updater }) {
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper mb-1">Feature Tour</h2>
-          <p className="text-xs text-paper-dim font-sans">
+          <p className="text-xs text-paper font-sans">
             Take another look at the app's main features.
           </p>
         </div>
@@ -434,7 +435,7 @@ export default function Settings({ onProfileChange, updater }) {
       <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
         <div>
           <h2 className="font-serif text-xl font-semibold text-paper mb-1">CCNA 2.0 Blueprint Allocation</h2>
-          <p className="text-xs text-paper-dim">
+          <p className="text-xs text-paper">
             Exam simulations strictly mirror the 100-question distribution across the 5 core blueprint domains:
           </p>
         </div>

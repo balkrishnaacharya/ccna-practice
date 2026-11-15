@@ -52,7 +52,7 @@ export default function Review() {
 
         {flags.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-paper-dim font-medium ">Domain:</span>
+            <span className="text-xs text-paper font-medium ">Domain:</span>
             <select
               value={filterDomain}
               onChange={(e) => setFilterDomain(e.target.value)}
@@ -118,14 +118,14 @@ export default function Review() {
                   <span className="text-xs font-semibold   text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                     {f.domain.replace(/_/g, " ")}
                   </span>
-                  <span className="text-xs font-medium  text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+                  <span className="text-xs font-medium  text-paper capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                     {f.difficulty}
                   </span>
                 </div>
 
                 <button
                   onClick={() => handleUnflag(f.question_id)}
-                  className="text-xs font-medium text-paper-dim hover:text-heart-light px-3.5 py-1.5 rounded-full border border-dark-border hover:border-heart/40 transition-colors flex items-center gap-1.5"
+                  className="text-xs font-medium text-paper hover:text-heart-light px-3.5 py-1.5 rounded-full border border-dark-border hover:border-heart/40 transition-colors flex items-center gap-1.5"
                   title="Remove from review queue"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

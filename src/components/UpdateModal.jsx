@@ -62,7 +62,7 @@ export default function UpdateModal({
           >
             Version {updateInfo.version} Available
           </h2>
-          <p className="text-xs text-paper-dim font-mono">
+          <p className="text-xs text-paper font-mono">
             Published: {updateInfo.date ? new Date(updateInfo.date).toLocaleDateString() : "Recent"}
           </p>
         </div>

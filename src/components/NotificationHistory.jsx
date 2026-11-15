@@ -11,7 +11,7 @@ export default function NotificationHistory() {
   const [dismissedIds, setDismissedIds] = useState(new Set());
 
   const dismissEvent = useCallback(
-    async (eventId: number) => {
+    async (eventId) => {
       setDismissedIds((prev) => new Set([...prev, eventId]));
       try {
         // Record dismissal by updating the event's dismissed_at via a
@@ -34,7 +34,7 @@ export default function NotificationHistory() {
         <h2 className="font-serif text-xl font-semibold text-paper mb-1">
           Notification History
         </h2>
-        <p className="text-xs text-paper-dim font-sans">
+        <p className="text-xs text-paper font-sans">
           Recent milestones, reminders, and review alerts. Dismiss items you no
           longer need.
         </p>
@@ -74,7 +74,7 @@ export default function NotificationHistory() {
               </div>
               <button
                 onClick={() => dismissEvent(event.id)}
-                className="text-xs font-medium text-paper-dim hover:text-gold px-3 py-1.5 rounded-full border border-dark-border hover:border-gold/30 transition-colors"
+                className="text-xs font-medium text-paper hover:text-gold px-3 py-1.5 rounded-full border border-dark-border hover:border-gold/30 transition-colors"
               >
                 Dismiss
               </button>

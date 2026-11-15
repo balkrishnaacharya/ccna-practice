@@ -83,9 +83,9 @@ export default function PracticalExam() {
         </div>
         <div className="flex items-center gap-2 rounded-full border border-dark-border bg-dark-card px-4 py-2 text-xs font-mono">
           <span className="font-semibold text-peach">{scenarios.length} scenarios</span>
-          <span className="text-paper-dim">·</span>
+          <span className="text-paper">·</span>
           <span className="text-paper">1000 pts</span>
-          <span className="text-paper-dim">·</span>
+          <span className="text-paper">·</span>
           <span className="text-sage-light">Pass: 825</span>
         </div>
       </header>
@@ -117,12 +117,12 @@ export default function PracticalExam() {
               <pre className="mt-2 text-xs text-paper-muted font-mono select-none whitespace-pre">{activeScenario.exhibit.content}</pre>
             </details>
           )}
-            <h3 className="text-xs font-semibold text-paper-dim">Objectives</h3>
+            <h3 className="text-xs font-semibold text-paper">Objectives</h3>
             {activeScenario.validationRules.map((item) => {
               const graded = results?.[activeIndex]?.objectives.find((objective) => objective.id === item.id);
               return (
                 <div key={item.id} className="flex items-start gap-2 text-xs text-paper-muted font-sans">
-                  <span className={graded ? (graded.passed ? "text-sage-light font-bold" : "text-heart-light font-bold") : "text-paper-dim"}>
+                  <span className={graded ? (graded.passed ? "text-sage-light font-bold" : "text-heart-light font-bold") : "text-paper"}>
                     {graded ? (graded.passed ? "✓" : "✕") : "○"}
                   </span>
                   <span>{item.objective}</span>
@@ -168,8 +168,8 @@ export default function PracticalExam() {
 
         <div className="min-w-0 space-y-2">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-semibold text-paper-dim font-mono">Virtual Cisco IOS Terminal</h2>
-            <span className="text-xs text-paper-dim">Interactive local emulator</span>
+            <h2 className="text-xs font-semibold text-paper font-mono">Virtual Cisco IOS Terminal</h2>
+            <span className="text-xs text-paper">Interactive local emulator</span>
           </div>
           <CliTerminal key={activeScenario.id} devices={activeScenario.devices} onDevicesChange={refreshDevices} />
         </div>
@@ -203,7 +203,7 @@ export default function PracticalExam() {
             <div className="flex flex-wrap items-start justify-between gap-3 border-b border-dark-borderSubtle pb-4">
               <div>
                 <p className="text-xs font-semibold text-peach">Practical Exam Score</p>
-                <h2 id="practical-score-title" className="mt-1 font-serif text-3xl font-bold">{score} <span className="text-base font-normal text-paper-dim">/ 1000</span></h2>
+                <h2 id="practical-score-title" className="mt-1 font-serif text-3xl font-bold">{score} <span className="text-base font-normal text-paper">/ 1000</span></h2>
                 <p className={`mt-1 text-xs font-mono font-medium ${score >= 825 ? "text-sage-light" : "text-heart-light"}`}>
                   {score >= 825 ? "PASS" : "FAIL"} · {passedCount} of {scenarios.length} scenarios passed · Passing threshold 825
                 </p>
@@ -228,14 +228,14 @@ export default function PracticalExam() {
                       {result.passed ? `PASS · ${result.points} pts` : "FAIL · 0 pts"}
                     </span>
                   </div>
-                  <p className="text-xs text-paper-dim">{DOMAIN_LABELS[result.domain]}</p>
+                  <p className="text-xs text-paper">{DOMAIN_LABELS[result.domain]}</p>
                   <ul className="space-y-1.5 pt-1">
                     {result.objectives.map((objective) => (
                       <li key={objective.id} className="flex gap-2 text-xs text-paper-muted">
                         <span className={objective.passed ? "text-sage-light font-bold" : "text-heart-light font-bold"}>
                           {objective.passed ? "✓" : "✕"}
                         </span>
-                        <span>{objective.objective} <span className="font-mono text-paper-dim">({objective.device})</span></span>
+                        <span>{objective.objective} <span className="font-mono text-paper">({objective.device})</span></span>
                       </li>
                     ))}
                   </ul>

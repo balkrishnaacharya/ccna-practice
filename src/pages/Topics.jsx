@@ -88,7 +88,7 @@ export default function Topics() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Filter subtopics..."
-          className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper placeholder:text-paper-dim focus:outline-none focus:ring-1 focus:ring-gold w-full sm:w-56"
+          className="text-xs border border-dark-border rounded-xl px-3 py-2 bg-dark-card text-paper placeholder:text-paper-muted focus:outline-none focus:ring-1 focus:ring-gold w-full sm:w-56"
         />
       </div>
 
@@ -109,15 +109,15 @@ export default function Topics() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="border border-dark-border rounded-2xl p-4 bg-dark-card shadow-dock text-center">
               <p className="font-mono text-2xl text-peach">{totalQuestions}</p>
-              <p className="text-[11px] uppercase tracking-wider text-paper-dim mt-1">Questions</p>
+              <p className="text-[11px] uppercase tracking-wider text-paper mt-1">Questions</p>
             </div>
             <div className="border border-dark-border rounded-2xl p-4 bg-dark-card shadow-dock text-center">
               <p className="font-mono text-2xl text-paper">{totalSubtopics}</p>
-              <p className="text-[11px] uppercase tracking-wider text-paper-dim mt-1">Subtopics</p>
+              <p className="text-[11px] uppercase tracking-wider text-paper mt-1">Subtopics</p>
             </div>
             <div className="border border-dark-border rounded-2xl p-4 bg-dark-card shadow-dock text-center">
               <p className="font-mono text-2xl text-sage-light">{startedCount}</p>
-              <p className="text-[11px] uppercase tracking-wider text-paper-dim mt-1">Started</p>
+              <p className="text-[11px] uppercase tracking-wider text-paper mt-1">Started</p>
             </div>
           </div>
 
@@ -134,7 +134,7 @@ export default function Topics() {
                       <h2 className="font-serif text-lg font-semibold text-paper">
                         {DOMAIN_LABELS[domain] || domain}
                       </h2>
-                      <p className="text-xs text-paper-dim font-mono mt-0.5">
+                      <p className="text-xs text-paper font-mono mt-0.5">
                         {rows.length} subtopics · {domainTotal} questions
                       </p>
                     </div>
@@ -159,7 +159,7 @@ export default function Topics() {
                               <p className="text-sm text-paper font-sans truncate">
                                 {s.subtopic}
                               </p>
-                              <span className="text-xs text-paper-dim font-mono shrink-0">
+                              <span className="text-xs text-paper font-mono shrink-0">
                                 {s.seen}/{s.total} seen
                               </span>
                             </div>
@@ -174,7 +174,7 @@ export default function Topics() {
                               </div>
                               <span
                                 className={`text-xs font-mono w-12 text-right ${
-                                  started ? accuracyText(s.accuracy) : "text-paper-dim"
+                                  started ? accuracyText(s.accuracy) : "text-paper"
                                 }`}
                               >
                                 {started ? `${s.accuracy}%` : "—"}

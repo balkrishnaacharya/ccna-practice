@@ -119,11 +119,11 @@ export default function ExamHistory() {
                         >
                           {s.passed ? "PASS" : "FAIL"}
                         </span>
-                        <span className="text-xs text-paper-dim uppercase tracking-wider font-mono">
+                        <span className="text-xs text-paper uppercase tracking-wider font-mono">
                           {s.mode} mode
                         </span>
                       </div>
-                      <p className="text-xs text-paper-dim font-mono">{formatDate(s.started_at)}</p>
+                      <p className="text-xs text-paper font-mono">{formatDate(s.started_at)}</p>
                     </div>
 
                     <div className="flex items-center gap-6 text-right">
@@ -131,17 +131,17 @@ export default function ExamHistory() {
                         <p className="font-serif text-3xl font-semibold text-paper group-hover:text-gold transition-colors">
                           {s.scaled_score}
                         </p>
-                        <p className="text-xs text-paper-dim font-mono">/ 1000</p>
+                        <p className="text-xs text-paper font-mono">/ 1000</p>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-paper">
                           {s.score} / {s.total}
                         </p>
-                        <p className="text-xs text-paper-dim font-mono">{s.percentage}%</p>
+                        <p className="text-xs text-paper font-mono">{s.percentage}%</p>
                       </div>
                       <div>
                         <p className="text-sm font-mono text-paper-muted">{formatDuration(s.duration_sec)}</p>
-                        <p className="text-xs text-paper-dim font-mono">duration</p>
+                        <p className="text-xs text-paper font-mono">duration</p>
                       </div>
                       <svg className="w-4 h-4 text-paper-dim group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

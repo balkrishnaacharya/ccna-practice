@@ -48,15 +48,52 @@ export default function Quiz() {
   const [noteInputVisible, setNoteInputVisible] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
   const [quickEnded, setQuickEnded] = useState(false);
+  const [quickQuestions, setQuickQuestions] = useState([]);
+  const [quickCurrentIndex, setQuickCurrentIndex] = useState(0);
+  const [quickScore, setQuickScore] = useState(0);
+  const [quickStartTime, setQuickStartTime] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const [confidence, setConfidence] = useState("");
+  const [showOverlay, setShowOverlay] = useState(false);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
-  const cardContainerRef = useRef(null);
   const stemContainerRef = useRef(null);
   const feedbackRef = useRef(null);
   const loadQuestionRef = useRef(0);
   const noteRef = useRef(null);
 
   const navigate = useNavigate();
+
+  // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
+  useGSAP(
+    () => {
+      if (!feedback || !feedbackRef.current) return;
+
+      if (feedback.correct) {
+        gsap.fromTo(
+          feedbackRef.current,
+          { scale: 0.98, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.2, ease: "power1.out", force3D: true }
+        );
+      } else {
+        const tl = gsap.timeline({ defaults: { force3D: true } });
+        tl.fromTo(
+          feedbackRef.current,
+          { scale: 0.98, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.15, ease: "power1.out" }
+        ).to(feedbackRef.current, {
+          x: -4,
+          duration: 0.05,
+          repeat: 3,
+          yoyo: true,
+          ease: "power1.inOut",
+        });
+      }
+    },
+    { scope: rootRef, dependencies: [feedback] }
+  );
+
+  const canSubmit = !feedback && selected.length > 0 && (mode === "quick" || timeRemaining > 0);
 
   // Mode timing
   const modeTimes = {
@@ -75,31 +112,6 @@ export default function Quiz() {
 
   // Timer logic
   useEffect(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    if (mode === "exam") return;
-    if (mode === "quick") {
-      setTimeRemaining(0);
-      if (quickStartTime === 0) setQuickStartTime(Date.now());
-      return;
-    }
-    setTimeRemaining(modeTimes[mode] || 2 * 60);
-    timerRef.current = setInterval(() => {
-      setTimeRemaining((prev) => Math.max(prev - 1, 0));
-    }, 1000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [mode, question?.id]);
-
-  // Quick quiz state
-  const [quickQuestions, setQuickQuestions] = useState([]);
-  const [quickCurrentIndex, setQuickCurrentIndex] = useState(0);
-  const [quickScore, setQuickScore] = useState(0);
-  const [quickStartTime, setQuickStartTime] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(0);
-
-  useEffect(() => {
-    // Reset timer when mode or question changes
     if (timerRef.current) clearInterval(timerRef.current);
     if (mode === "exam") return;
     if (mode === "quick") {
@@ -281,9 +293,6 @@ export default function Quiz() {
     }
   }, [mode, feedback, quickCurrentIndex]);
 
-  // Confidence state
-  const [confidence, setConfidence] = useState("");
-
   // Keyboard navigation
   useEffect(() => {
     function onKeyDown(e) {
@@ -319,10 +328,6 @@ export default function Quiz() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [question, feedback, selected, canSubmit]);
 
-  // Flag overlay
-  const [showOverlay, setShowOverlay] = useState(false);
-  const canSubmit = !feedback && selected.length > 0 && !hasPendingFlags && (mode === "quick" || timeRemaining > 0);
-
   return (
     <div ref={rootRef} className="space-y-6 pb-12">
       {/* Topic Drill Banner */}
@@ -332,7 +337,7 @@ export default function Quiz() {
             <span className="font-semibold text-gold">Topic Drill</span>
             <span className="text-paper font-sans">{drillSubtopic || "All subtopics"}</span>
             {drillDomain && (
-              <span className="text-paper-dim capitalize font-sans">· {drillDomain.replace(/_/g, " ")}</span>
+              <span className="text-paper-muted capitalize font-sans">· {drillDomain.replace(/_/g, " ")}</span>
             )}
           </div>
           <div className="flex items-center gap-2">
@@ -365,7 +370,7 @@ export default function Quiz() {
           })}
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-xs text-paper-dim font-sans">
+          <p className="text-xs text-paper font-sans">
             {MODES.find((m) => m.id === mode)?.desc}
           </p>
           <div className="flex items-center gap-2">
@@ -427,8 +432,7 @@ export default function Quiz() {
       ) : (
         /* Practice Question Card */
         <div
-          ref={cardContainerRef}
-          className="border border-dark-border rounded-xl p-6 sm:p-7 bg-dark-card space-y-5"
+          className="border border-l-4 border-dark-border border-l-gold rounded-xl p-6 sm:p-7 bg-dark-card space-y-5"
         >
           {/* Header: domain, difficulty, flag */}
           <div className="flex flex-col sm:flex-wrap items-start gap-3">
@@ -436,7 +440,7 @@ export default function Quiz() {
               <span className="text-xs font-semibold font-mono text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                 {question.domain.replace(/_/g, " ")}
               </span>
-              <span className="text-xs font-medium font-mono tracking-wide text-paper-dim capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
+              <span className="text-xs font-medium font-mono tracking-wide text-paper capitalize bg-dark-surface border border-dark-border px-3 py-1 rounded-full">
                 {question.difficulty}
               </span>
               {question.multi_select && (
@@ -451,7 +455,7 @@ export default function Quiz() {
               <button
                 onClick={handleToggleFlag}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border ${
-                  isFlagged ? "bg-gold/20 text-gold border-gold shadow-gold-glow" : "bg-dark-surface text-paper-muted border-dark-border text-paper"}
+                  isFlagged ? "bg-gold/20 text-gold border-gold shadow-gold-glow" : "bg-dark-surface text-paper-muted border-dark-border text-paper"
                 }`}
                 title={isFlagged ? "Click to unflag" : "Flag this question"}
               >
@@ -475,7 +479,7 @@ export default function Quiz() {
 
           {/* Question stem */}
           <div className="border-b border-dark-borderSubtle pb-3">
-            <h2 className="font-serif text-xl sm:text-2xl font-normal text-paper leading-relaxed">
+            <h2 className="font-serif text-left text-xl sm:text-2xl font-normal text-paper leading-relaxed">
               {question.stem}
             </h2>
           </div>
@@ -492,7 +496,7 @@ export default function Quiz() {
                   >
                     <div className="flex items-start gap-3">
                       <span
-                        className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isChecked ? "border-gold bg-gold/20 text-gold" : "border-border text-paper-dim")}
+                        className={"mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-xs font-mono " + (isChecked ? "border-gold bg-gold/20 text-gold" : "border-border text-paper")}
                       >
                         {index + 1}
                       </span>
@@ -513,11 +517,9 @@ export default function Quiz() {
 
           {/* Tip */}
           {feedback ? null : (
-            <p className="text-xs text-paper-dim font-sans">
-              Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
-              <kbd className="font-mono text-paper-muted">{question.choices.length}</kbd> to pick, {" "}
-              <kbd className="font-mono text-paper-muted">Enter</kbd> to submit
-            </p>
+<p className="text-xs text-paper font-sans">
+                Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
+                <kbd className="font-mono text-paper-muted">{question.choices.length}</kbd> to pick, {" "}}</p>
           )}
 
           {/* Submit / Next */}
@@ -542,7 +544,14 @@ export default function Quiz() {
 
           {/* Feedback */}
           {feedback && (
-            <div className="mt-4 p-4 rounded-xl border space-y-3">
+            <div
+              ref={feedbackRef}
+              className={`mt-4 p-4 rounded-xl border space-y-3 ${
+                feedback.correct
+                  ? "bg-sage/15 border-sage text-sage-light shadow-sage-glow"
+                  : "bg-heart/15 border-heart text-heart-light shadow-heart-glow"
+              }`}
+            >
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold">
                   {feedback.correct ? "Correct" : "Incorrect"}
@@ -553,33 +562,39 @@ export default function Quiz() {
               {/* Confidence rating - simplified */}
               {(!feedback.correct || mode !== "quick") && (
                 <div className="mt-3 flex gap-2">
-                  <label
-                    className="flex items-center gap-1 px-2 py-1.5 rounded-border text-xs font-medium text-paper-muted"
-                    radioGroup="confidence"
-                    value="guessed"
-                    checked={confidence === "guessed"}
-                    onChange={(e) => setConfidence("guessed")}
+                  <button
+                    type="button"
+                    onClick={() => setConfidence("guessed")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      confidence === "guessed"
+                        ? "bg-heart/20 border-heart text-heart-light"
+                        : "border-dark-border text-paper-muted hover:border-dark-border/80"
+                    }`}
                   >
                     Guessed
-                  </label>
-                  <label
-                    className="flex items-center gap-1 px-2 py-1.5 rounded border border-dark-border text-xs font-medium text-paper-muted"
-                    radioGroup="confidence"
-                    value="unsure"
-                    checked={confidence === "unsure"}
-                    onChange={(e) => setConfidence("unsure")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfidence("unsure")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      confidence === "unsure"
+                        ? "bg-gold/20 border-gold text-gold"
+                        : "border-dark-border text-paper-muted hover:border-dark-border/80"
+                    }`}
                   >
                     Unsure
-                  </label>
-                  <label
-                    className="flex items-center gap-1 px-2 py-1.5 rounded bg-gold border-gold text-xs font-medium text-dark-bg"
-                    radioGroup="confidence"
-                    value="confident"
-                    checked={confidence === "confident"}
-                    onChange={(e) => setConfidence("confident")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfidence("confident")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      confidence === "confident"
+                        ? "bg-sage/20 border-sage text-sage-light"
+                        : "border-dark-border text-paper-muted hover:border-dark-border/80"
+                    }`}
                   >
                     Confident
-                  </label>
+                  </button>
                 </div>
               )}
 
