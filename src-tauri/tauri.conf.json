@@ -13,9 +13,12 @@
     "windows": [
       {
         "title": "CCNA_Practice",
-        "width": 900,
-        "height": 700,
-        "resizable": true
+        "width": 1200,
+        "height": 800,
+        "minWidth": 768,
+        "minHeight": 600,
+        "resizable": true,
+        "maximized": true
       }
     ],
     "security": {

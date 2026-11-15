@@ -5,14 +5,19 @@ import DirectionalRouteWrapper from "../DirectionalRouteWrapper";
 import { Menu, X } from "lucide-react";
 
 export function AppShell({ children, guardNavigation, onOpenExamModal, profileName }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // Default to expanded on desktop (>= md / 768px), collapsed on mobile.
+  // Uses window.innerWidth so the Tauri webview (often < 1024px wide) still
+  // gets a fully expanded sidebar instead of the collapsed w-20 sliver.
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 768
+  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-dark-bg text-paper font-sans">
-      {/* Desktop Sidebar (visible on lg+) */}
-      <div className="hidden lg:block h-full shrink-0">
+      {/* Desktop Sidebar (visible on md+) */}
+      <div className="hidden md:block h-full shrink-0">
         <Sidebar
           isOpen={isSidebarOpen}
           setIsOpen={setIsSidebarOpen}
@@ -22,10 +27,10 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
         />
       </div>
 
-      {/* Mobile Drawer (visible on < lg when opened) */}
+      {/* Mobile Drawer (visible on < md when opened) */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-dark-bg/80 backdrop-blur-md lg:hidden flex"
+          className="fixed inset-0 z-50 bg-dark-bg/80 backdrop-blur-md md:hidden flex"
           role="dialog"
           aria-modal="true"
         >
@@ -75,7 +80,7 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-paper-muted hover:text-paper hover:bg-dark-elevated transition-colors"
+              className="md:hidden p-2 rounded-lg text-paper-muted hover:text-paper hover:bg-dark-elevated transition-colors"
               aria-label="Open navigation menu"
             >
               <Menu size={20} />
