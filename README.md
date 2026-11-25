@@ -10,7 +10,7 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 
 ## Downloads
 
-The app version is `0.6.5`. Download the latest published artifacts from the [GitHub Releases](https://github.com/balkrishnaacharya/ccna-practice/releases) page.
+The app version is `0.6.6`. Download the latest published artifacts from the [GitHub Releases](https://github.com/balkrishnaacharya/ccna-practice/releases) page.
 
 ---
 

@@ -8,7 +8,7 @@ pub static BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
 
 // Version of the bundled question bank. synced into the user DB as the
 // `bank_version` setting so repeated syncs are idempotent.
-pub const BUNDLED_BANK_VERSION: &str = "2307-30183b0d5876";
+pub static BUNDLED_BANK_VERSION: &str = "2307-30183b0d5876";
 
 pub struct Db(pub Mutex<Connection>);
 
