@@ -5,7 +5,7 @@ const GITHUB_REPO = "balkrishnaacharya/ccna-practice";
 
 export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
   const [status, setStatus] = useState("idle"); // idle | checking | available | up-to-date | downloading | error
-  const [currentVersion, setCurrentVersion] = useState("0.5.1"); // fallback; overwritten by Tauri on mount
+  const [currentVersion, setCurrentVersion] = useState(null);
   const [updateInfo, setUpdateInfo] = useState(null);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,6 +32,7 @@ export function useUpdater({ autoCheck = true, isExamActive = false } = {}) {
   // Check for updates
   const checkForUpdates = useCallback(async (isManual = false) => {
     if (isExamActive && !isManual) return;
+    if (!currentVersion) return;
 
     setStatus("checking");
     setErrorMessage("");

@@ -86,6 +86,7 @@ pub fn run() {
             notifications::send_in_app_notification_cmd,
             notifications::get_notification_history_cmd,
             notifications::check_reminder_status_cmd,
+            notifications::dismiss_notification_event_cmd,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

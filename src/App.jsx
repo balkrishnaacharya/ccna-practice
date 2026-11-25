@@ -50,10 +50,12 @@ export default function App() {
 
   // Automatic first-launch onboarding tour trigger
   useEffect(() => {
-    if (!isSplashActive && !hasSeenTour() && location.pathname === "/") {
+    // Automatic first-launch onboarding tour trigger
+    // Allow tour on any page (not just /), but only once per session
+    if (!isSplashActive && !hasSeenTour()) {
       startTour();
     }
-  }, [isSplashActive, location.pathname]);
+  }, [isSplashActive, hasSeenTour]);
 
   const updater = useUpdater({
     autoCheck: true,

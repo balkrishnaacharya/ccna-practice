@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
+import { SidebarProvider } from "./SidebarContext";
 import DirectionalRouteWrapper from "../DirectionalRouteWrapper";
 import { Menu, X } from "lucide-react";
 
 export function AppShell({ children, guardNavigation, onOpenExamModal, profileName }) {
-  // Default to expanded on desktop (>= md / 768px), collapsed on mobile.
-  // Uses window.innerWidth so the Tauri webview (often < 1024px wide) still
-  // gets a fully expanded sidebar instead of the collapsed w-20 sliver.
-  const [isSidebarOpen, setIsSidebarOpen] = useState(
-    () => typeof window !== "undefined" && window.innerWidth >= 768
-  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  return (
-    <div className="flex h-screen w-screen overflow-hidden bg-dark-bg text-paper font-sans">
-      {/* Desktop Sidebar (visible on md+) */}
-      <div className="hidden md:block h-full shrink-0">
-        <Sidebar
-          isOpen={isSidebarOpen}
-          setIsOpen={setIsSidebarOpen}
-          isMobile={false}
-          guardNavigation={guardNavigation}
-          onOpenExamModal={onOpenExamModal}
-        />
-      </div>
+  // Mobile menu toggle
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
-      {/* Mobile Drawer (visible on < md when opened) */}
+  // Mobile drawer state is independent from desktop sidebar state
+  // The new Sidebar component handles its own collapsed/expanded state
+  // based on window width
+
+  return (
+    <div className="relative z-10 flex h-screen w-screen overflow-hidden bg-dark-bg text-paper font-sans">
+      {/* Sidebar wrapped in provider for state management */}
+      <SidebarProvider isMobile={false}>
+        <div className="relative z-10 hidden h-full shrink-0 md:flex">
+          <Sidebar
+            onOpenExamModal={onOpenExamModal}
+            guardNavigation={guardNavigation}
+          />
+        </div>
+      </SidebarProvider>
+
+      {/* Mobile Drawer (independent from desktop sidebar) */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 z-50 bg-dark-bg/80 backdrop-blur-md md:hidden flex"
@@ -48,19 +49,21 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
                 <X size={18} />
               </button>
             </div>
-            <Sidebar
-              isOpen={true}
-              setIsOpen={() => setIsMobileMenuOpen(false)}
-              isMobile={true}
-              guardNavigation={(e, to) => {
-                setIsMobileMenuOpen(false);
-                guardNavigation?.(e, to);
-              }}
-              onOpenExamModal={() => {
-                setIsMobileMenuOpen(false);
-                onOpenExamModal?.();
-              }}
-            />
+            <SidebarProvider isMobile={true}>
+              <Sidebar
+                isOpen={true}
+                setIsOpen={() => setIsMobileMenuOpen(false)}
+                isMobile={true}
+                guardNavigation={(e, to) => {
+                  setIsMobileMenuOpen(false);
+                  guardNavigation?.(e, to);
+                }}
+                onOpenExamModal={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenExamModal?.();
+                }}
+              />
+            </SidebarProvider>
           </div>
           <div
             className="flex-1 h-full"
@@ -85,7 +88,7 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
             >
               <Menu size={20} />
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 md:hidden">
               <span className="font-serif text-sm tracking-wide text-paper">
                 CCNA <span className="italic text-gold font-normal">Practice</span>
               </span>
@@ -102,6 +105,7 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
               type="button"
               onClick={onOpenExamModal}
               className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 hover:bg-gold/20 text-gold border border-gold/30 text-xs font-semibold shadow-gold-glow transition-all"
+              data-tour="exam-button"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
               <span>Full Exam</span>

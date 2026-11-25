@@ -138,7 +138,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className="px-6 py-2.5 bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors"
+          className="px-6 py-2.5 bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 rounded-full text-xs font-semibold transition-colors"
         >
           Retry
         </button>
@@ -184,7 +184,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           <button
             type="button"
             onClick={onOpenExamModal || (() => navigate("/exam"))}
-            className="px-4 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-xl text-xs uppercase tracking-wide shadow-gold-glow transition-all"
+            className="px-4 py-2 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-xl text-xs shadow-gold-glow transition-all"
           >
             Simulate Exam
           </button>
@@ -200,7 +200,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         >
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full uppercase tracking-wide">
+              <span className="text-xs font-semibold text-gold bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
                 Targeted Focus
               </span>
               <span className="text-xs text-paper font-sans">{recommendedFocus.domain}</span>
@@ -222,7 +222,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             </div>
             <Link
               to={recommendedFocus.link}
-              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs uppercase tracking-wide shadow-gold-glow transition-all flex items-center justify-center gap-2 shrink-0"
+              className="px-6 py-2.5 bg-gold hover:bg-gold-hover text-dark-bg font-semibold rounded-full text-xs shadow-gold-glow transition-all flex items-center justify-center gap-2 shrink-0"
             >
               <span>Continue Practice</span>
               <ArrowRight size={14} />
@@ -237,7 +237,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
         >
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-paper uppercase tracking-wide flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-paper flex items-center gap-1.5">
                 <Target size={14} className="text-gold" />
                 Daily Goal
               </span>
@@ -380,7 +380,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
             className="bg-dark-card border border-dark-border rounded-xl p-6 space-y-4"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-paper uppercase tracking-wide flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-paper flex items-center gap-1.5">
                 <Clock size={14} className="text-gold" />
                 Spaced Repetition
               </span>

@@ -466,3 +466,18 @@ pub fn check_reminder_status_cmd(db: State<Db>) -> Result<ReminderStatus, String
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     check_reminder_status(&conn)
 }
+
+/// Tauri command: dismiss a notification event by setting dismissed_at.
+#[tauri::command]
+pub fn dismiss_notification_event_cmd(
+    db: State<Db>,
+    event_id: i64,
+) -> Result<(), String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    conn.execute(
+        "UPDATE notification_events SET dismissed_at = ?1 WHERE id = ?2 AND dismissed_at IS NULL",
+        params![now_epoch(), event_id],
+    )
+    .map_err(|e| e.to_string())?;
+    Ok(())
+}

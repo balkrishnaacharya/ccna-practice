@@ -4,7 +4,7 @@ import gsap from "gsap";
 export const TOUR_STORAGE_KEY = "ccna_has_seen_tour";
 
 // Steps defined in display order.
-// Selectors are verified against Dashboard.jsx and FloatingBottomNav.jsx.
+// Selectors are verified against Dashboard.jsx and Sidebar.jsx.
 export const TOUR_STEPS = [
   {
     element: '[data-tour="home-welcome"]',
@@ -71,7 +71,7 @@ export const TOUR_STEPS = [
     popover: {
       title: "Everything in Reach",
       description:
-        "Explore Dashboard, Practice, Exam, Review, History, and Settings from the bottom navigation.",
+        "Explore Dashboard, Practice, Exam, Review, History, and Settings from the sidebar navigation.",
       side: "top",
       align: "center",
     },

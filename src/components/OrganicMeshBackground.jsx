@@ -14,7 +14,7 @@ export default function OrganicMeshBackground() {
   return (
     <div
       aria-hidden="true"
-      className={`pointer-events-none fixed inset-0 z-0 overflow-hidden bg-dark-bg ${paused ? "mesh-paused" : ""}`}
+      className={`pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-dark-bg ${paused ? "mesh-paused" : ""}`}
       style={{
         background: `
           radial-gradient(at 15% 15%, rgba(92, 110, 78, 0.08) 0px, transparent 50%),

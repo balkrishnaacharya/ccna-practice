@@ -517,9 +517,11 @@ export default function Quiz() {
 
           {/* Tip */}
           {feedback ? null : (
-<p className="text-xs text-paper font-sans">
-                Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
-                <kbd className="font-mono text-paper-muted">{question.choices.length}</kbd> to pick, {" "}}</p>
+            <p className="text-xs text-paper-dim font-sans">
+              Tip: press <kbd className="font-mono text-paper-muted">1</kbd>–
+              <kbd className="font-mono text-paper-muted">{question.choices.length}</kbd> to pick,{" "}
+              <kbd className="font-mono text-paper-muted">Enter</kbd> to submit
+            </p>
           )}
 
           {/* Submit / Next */}

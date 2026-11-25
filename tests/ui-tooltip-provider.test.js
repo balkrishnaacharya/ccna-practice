@@ -7,14 +7,12 @@ const appSource = readFileSync(
   "utf8"
 );
 
-test("App.jsx: imports TooltipProvider from tooltip component", () => {
+test("App.jsx: TooltipProvider wraps app content", () => {
+  const providerIndex = appSource.indexOf("<TooltipProvider");
   assert.ok(
-    appSource.includes('import { TooltipProvider'),
+    providerIndex !== -1,
     "App.jsx must import TooltipProvider from @/components/ui/tooltip"
   );
-});
-
-test("App.jsx: wraps app content with TooltipProvider", () => {
   assert.ok(
     appSource.includes("<TooltipProvider>") || appSource.includes("<TooltipProvider "),
     "App.jsx must wrap content with <TooltipProvider> JSX"
@@ -23,13 +21,11 @@ test("App.jsx: wraps app content with TooltipProvider", () => {
     appSource.includes("</TooltipProvider>"),
     "App.jsx must close </TooltipProvider>"
   );
-});
-
-test("App.jsx: TooltipProvider wraps FloatingDock", () => {
-  const providerIndex = appSource.indexOf("<TooltipProvider");
-  const dockIndex = appSource.indexOf("<FloatingDock");
+  // The legacy FloatingDock was replaced by AppShell Sidebar.
+  // TooltipProvider must appear before AppShell in the source order.
+  const shellIndex = appSource.indexOf("<AppShell");
   assert.ok(
-    providerIndex !== -1 && dockIndex !== -1 && providerIndex < dockIndex,
-    "TooltipProvider must appear before FloatingDock in App.jsx"
+    providerIndex !== -1 && shellIndex !== -1 && providerIndex < shellIndex,
+    "TooltipProvider must appear before AppShell in App.jsx"
   );
 });

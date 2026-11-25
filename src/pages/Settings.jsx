@@ -317,7 +317,7 @@ export default function Settings({ onProfileChange, updater }) {
           </div>
 
           <div className="pt-4 border-t border-dark-border">
-            <h3 className="text-xs font-semibold text-paper-muted uppercase tracking-wider mb-3">
+            <h3 className="text-xs font-semibold text-paper-muted mb-3">
               Preview
             </h3>
             <div className="flex items-start gap-3 p-4 rounded-xl bg-dark-surface/50 border border-dark-border/50">
@@ -346,7 +346,7 @@ export default function Settings({ onProfileChange, updater }) {
             </p>
           </div>
           <span className="text-xs font-mono text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/30">
-            Version {updater?.currentVersion || "0.5.1"}
+            Version {updater?.currentVersion || "Loading..."}
           </span>
         </div>
 

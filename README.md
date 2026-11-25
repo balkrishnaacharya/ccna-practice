@@ -8,16 +8,9 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 
 ---
 
-## Downloads (Latest Release: [v0.5.1](https://github.com/balkrishnaacharya/ccna-practice/releases/tag/v0.5.1))
+## Downloads
 
-| Platform | Format | Direct Download |
-|---|---|---|
-| **Android** | Signed APK (`arm64-v8a`) | [ccna-practice-v0.5.1-android-aarch64.apk](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/ccna-practice-v0.5.1-android-aarch64.apk) |
-| **Linux** | AppImage | [CCNA.Practice_0.5.1_amd64.AppImage](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/CCNA.Practice_0.5.1_amd64.AppImage) |
-| **Linux** | Debian / Ubuntu (`.deb`) | [CCNA.Practice_0.5.1_amd64.deb](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/CCNA.Practice_0.5.1_amd64.deb) |
-| **Linux** | Fedora / RHEL (`.rpm`) | [CCNA.Practice-0.5.1-1.x86_64.rpm](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/CCNA.Practice-0.5.1-1.x86_64.rpm) |
-| **Windows** | Setup Installer (`.exe`) | [CCNA.Practice_0.5.1_x64-setup.exe](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/CCNA.Practice_0.5.1_x64-setup.exe) |
-| **Windows** | MSI Package (`.msi`) | [CCNA.Practice_0.5.1_x64_en-US.msi](https://github.com/balkrishnaacharya/ccna-practice/releases/download/v0.5.1/CCNA.Practice_0.5.1_x64_en-US.msi) |
+The app version is `0.6.5`. Download the latest published artifacts from the [GitHub Releases](https://github.com/balkrishnaacharya/ccna-practice/releases) page.
 
 ---
 
@@ -172,19 +165,19 @@ question enters the bank.
 The app is a solid local practice tool (**9/10**). The question bank has reached
 its 2,000-question goal, so the focus shifts to app features and quality.
 
-**Current bank:** 2,007 unique questions, 0 duplicates, 0 invalid - at goal.
+**Current bank:** 2,307 unique questions, 0 duplicates, 0 invalid.
 
 Domain mix (goal weight in brackets):
 
 | Domain | Questions | Share |
 |---|---|---|
-| `network_infra` | 500 | 24.9% (25%) |
-| `switching` | 500 | 24.9% (25%) |
-| `ip_routing` | 398 | 19.8% (20%) |
-| `services_security` | 399 | 19.9% (20%) |
-| `ai_ops` | 210 | 10.4% (10%) |
+| `network_infra` | 582 | 25.2% |
+| `switching` | 478 | 20.7% |
+| `ip_routing` | 519 | 22.5% |
+| `services_security` | 462 | 20.0% |
+| `ai_ops` | 266 | 11.5% |
 
-Difficulty mix: 645 easy / 942 medium / 422 hard.
+Difficulty mix: 797 easy / 1,057 medium / 453 hard.
 
 Priorities:
 1. **Add spaced repetition.** `user_question_stats` already records seen/correct
