@@ -81,8 +81,7 @@ jobs:
           releaseBody: 'See the assets to download and install this version.'
           releaseDraft: false
           prerelease: false
-          includeUpdaterJson: true
-          args: -c'{"bundle":{"createUpdaterArtifacts":true}}'
+          uploadUpdaterJson: true
 
   build-android:
     name: Build Android
