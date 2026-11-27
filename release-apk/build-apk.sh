@@ -145,8 +145,8 @@ fi
 echo "==> Building frontend bundle..."
 npm run build
 
-echo "==> Building Android release bundle via Tauri (aarch64)..."
-npm run tauri android build -- --apk --target aarch64
+echo "==> Building Android release bundle via Tauri (universal — all 4 ABIs)..."
+npm run tauri android build -- --apk
 
 UNSIGNED_APK="$REPO_ROOT/src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk"
 if [ ! -f "$UNSIGNED_APK" ]; then

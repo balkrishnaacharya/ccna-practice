@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { EXAM_CONFIG } from "@/lib/constants";
 
 const DOMAIN_WEIGHTS = {
   network_infra: 25,
@@ -57,12 +56,10 @@ export function useReadiness() {
 
       const recent = streak.recent || [];
       let recentQuestions = 0;
-      let recentCorrect = 0;
       for (const day of recent) {
         const dayDate = new Date(day.date + "T00:00:00");
         if (dayDate >= sevenDaysAgo && dayDate <= now) {
           recentQuestions += day.answered || 0;
-          recentCorrect += day.correct || 0;
         }
       }
 

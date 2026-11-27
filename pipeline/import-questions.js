@@ -8,6 +8,10 @@
  * JSON schema:
  *   [{ stem, explanation, domain, subtopic, difficulty, choices: [{ text, is_correct }] }]
  *
+ * Validation runs to completion before the database is opened. Any structural
+ * error (malformed JSON, missing field, duplicate id) produces a structured
+ * report on stdout and exits with code 1 without touching the database.
+ *
  * Uniqueness is content-based: normalized stem + sorted choice texts. A question
  * that differs only in option order, casing, punctuation, or id is a duplicate.
  */
@@ -38,6 +42,182 @@ if (!file) {
   process.exit(1);
 }
 
+// ---------------------------------------------------------------------------
+// Pre-write validation
+// ---------------------------------------------------------------------------
+
+/** Map the generic authoring shape onto the canonical DB schema. */
+function normalizeQuestion(q) {
+  const choices = (q.choices ?? q.options).map((c) => ({
+    text: c.text,
+    is_correct: c.is_correct === true,
+  }));
+
+  if (q.answer !== undefined && q.answer !== null) {
+    const index =
+      typeof q.answer === "number"
+        ? q.answer
+        : choices.findIndex((c) => c.text === q.answer);
+    if (index >= 0 && index < choices.length) {
+      choices.forEach((c, i) => {
+        c.is_correct = i === index;
+      });
+    }
+  }
+
+  return {
+    ...q,
+    stem: q.stem ?? q.question,
+    choices,
+    explanation: q.explanation,
+  };
+}
+
+function makeReport() {
+  return {
+    file,
+    totalRows: 0,
+    validRows: 0,
+    errors: [],
+    warnings: [],
+    ok: true,
+  };
+}
+
+function addError(report, row, field, message) {
+  report.errors.push({ row, field, message });
+  report.ok = false;
+}
+
+function validateDocument(report) {
+  let questions;
+  try {
+    questions = JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (err) {
+    addError(report, 0, "json", `Malformed JSON: ${err.message}`);
+    return [];
+  }
+
+  if (!Array.isArray(questions)) {
+    addError(report, 0, "json", "Root element must be an array of questions");
+    return [];
+  }
+
+  report.totalRows = questions.length;
+  const seenIds = new Set();
+
+  questions.forEach((q, index) => {
+    const row = index + 1;
+
+    if (!q || typeof q !== "object" || Array.isArray(q)) {
+      addError(report, row, "question", "Entry is not an object");
+      return;
+    }
+
+    // Accept both the canonical schema and the generic {question, options, answer}
+    // shape used by some authoring tools.
+    const stem = q.stem ?? q.question;
+    const choices = q.choices ?? q.options;
+    const explanation = q.explanation;
+
+    if (typeof stem !== "string" || stem.trim().length < 10) {
+      addError(report, row, "stem/question", "Missing or too short (minimum 10 characters)");
+    }
+    if (typeof explanation !== "string" || explanation.trim().length < 25) {
+      addError(report, row, "explanation", "Missing or too short (minimum 25 characters)");
+    }
+    if (!Array.isArray(choices) || choices.length < 2) {
+      addError(report, row, "choices/options", "Must be an array with at least two options");
+    } else {
+      choices.forEach((choice, ci) => {
+        if (!choice || typeof choice !== "object") {
+          addError(report, row, `choices[${ci}]`, "Choice is not an object");
+        } else if (typeof choice.text !== "string" || !choice.text.trim()) {
+          addError(report, row, `choices[${ci}].text`, "Missing choice text");
+        }
+      });
+
+      // "answer" can carry the correct index or text; otherwise exactly one
+      // choice must be flagged with is_correct.
+      let correctCount = choices.filter(
+        (c) => c && c.is_correct === true
+      ).length;
+      if (q.answer !== undefined && q.answer !== null) {
+        const resolved =
+          typeof q.answer === "number"
+            ? choices[q.answer]
+            : choices.find(
+                (c) => c && c.text === q.answer
+              );
+        if (!resolved) {
+          addError(report, row, "answer", "Answer does not resolve to a choice");
+        } else {
+          correctCount += 1;
+        }
+      }
+      if (correctCount === 0) {
+        addError(report, row, "answer", "No correct answer specified");
+      } else if (correctCount > 1) {
+        addError(report, row, "answer", "More than one correct answer specified");
+      }
+    }
+
+    if (q.id !== undefined && q.id !== null) {
+      if (seenIds.has(q.id)) {
+        addError(report, row, "id", `Duplicate id: ${q.id}`);
+      }
+      seenIds.add(q.id);
+    } else {
+      report.warnings.push({
+        row,
+        field: "id",
+        message: "No id supplied — the database will assign one",
+      });
+    }
+
+    if (q.domain !== undefined && !VALID_DOMAINS.has(q.domain)) {
+      addError(report, row, "domain", `Unknown domain: ${q.domain}`);
+    }
+    if (
+      q.difficulty !== undefined &&
+      !VALID_DIFFICULTIES.has(q.difficulty)
+    ) {
+      addError(report, row, "difficulty", `Unknown difficulty: ${q.difficulty}`);
+    }
+  });
+
+  report.validRows = report.errors.length === 0 ? report.totalRows : 0;
+  return questions;
+}
+
+function printReport(report) {
+  const displayed = {
+    ...report,
+    warnings: report.warnings.slice(0, 20),
+    truncatedWarnings: Math.max(0, report.warnings.length - 20),
+  };
+  console.log("=== Import validation report ===");
+  console.log(JSON.stringify(displayed, null, 2));
+  if (report.ok) {
+    console.log(`Validation passed: ${report.validRows} question(s) ready to import.`);
+  } else {
+    console.error(
+      `Validation failed: ${report.errors.length} error(s) in ${report.file}. No database changes were made.`
+    );
+  }
+}
+
+const validationReport = makeReport();
+const questions = validateDocument(validationReport);
+printReport(validationReport);
+if (!validationReport.ok) {
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Import (only reached when validation passed)
+// ---------------------------------------------------------------------------
+
 const dbPath = process.env.CCNA_DB_PATH || dbArg || resolveDbPath();
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 const db = new Database(dbPath);
@@ -63,12 +243,6 @@ db.exec(`
 
 ensureContentHashColumn();
 
-const questions = JSON.parse(fs.readFileSync(file, "utf8"));
-if (!Array.isArray(questions)) {
-  console.error("Root of the JSON file must be an array");
-  process.exit(1);
-}
-
 const insertQ = db.prepare(
   "INSERT INTO questions (stem, explanation, domain, subtopic, difficulty, source, content_hash) VALUES (?, ?, ?, ?, ?, ?, ?)"
 );
@@ -84,7 +258,8 @@ let skipped = 0;
 let invalid = 0;
 
 const tx = db.transaction((rows) => {
-  rows.forEach((q, i) => {
+  rows.forEach((raw, i) => {
+    const q = normalizeQuestion(raw);
     const problem = validate(q);
     if (problem) {
       invalid++;
@@ -132,20 +307,23 @@ if (dryRun) console.log("No database changes were written.");
 
 function validate(q) {
   if (!q || typeof q !== "object") return "not an object";
-  if (!q.stem || typeof q.stem !== "string" || q.stem.trim().length < 10) {
+  const stem = q.stem ?? q.question;
+  if (!stem || typeof stem !== "string" || stem.trim().length < 10) {
     return "stem missing or too short";
   }
-  if (!VALID_DOMAINS.has(q.domain)) return `unknown domain "${q.domain}"`;
+  const domain = q.domain ?? "network_infra";
+  if (!VALID_DOMAINS.has(domain)) return `unknown domain "${domain}"`;
   if (q.difficulty && !VALID_DIFFICULTIES.has(q.difficulty)) {
     return `unknown difficulty "${q.difficulty}"`;
   }
-  if (!Array.isArray(q.choices) || q.choices.length < 2) return "fewer than 2 choices";
-  if (q.choices.some((c) => !c || typeof c.text !== "string" || !c.text.trim())) {
+  const choices = q.choices ?? q.options;
+  if (!Array.isArray(choices) || choices.length < 2) return "fewer than 2 choices";
+  if (choices.some((c) => !c || typeof c.text !== "string" || !c.text.trim())) {
     return "empty choice text";
   }
-  const correct = q.choices.filter((c) => c.is_correct === true).length;
-  if (correct === 0) return "no correct choice";
-  if (correct === q.choices.length) return "every choice marked correct";
+  const correct = choices.filter((c) => c.is_correct === true).length;
+  if (correct === 0 && q.answer === undefined) return "no correct choice";
+  if (correct === choices.length) return "every choice marked correct";
   return null;
 }
 

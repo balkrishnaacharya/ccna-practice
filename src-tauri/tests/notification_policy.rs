@@ -66,7 +66,7 @@ fn test_quiet_hours_normal_range() {
 
 #[test]
 fn test_study_reminder_goal_met_suppressed() {
-    let (db, dir) = common::setup_integration_db();
+    let (db, _dir) = common::setup_integration_db();
     let today = todays_ordinal(&db.0.lock().unwrap());
 
     common::with_locked(&db, |conn| {
@@ -99,7 +99,7 @@ fn test_study_reminder_goal_met_suppressed() {
 
 #[test]
 fn test_study_reminder_allowed() {
-    let (db, dir) = common::setup_integration_db();
+    let (db, _dir) = common::setup_integration_db();
     let today = todays_ordinal(&db.0.lock().unwrap());
 
     common::with_locked(&db, |conn| {
@@ -140,7 +140,7 @@ fn test_study_reminder_in_quiet_hours_suppressed() {
 
 #[test]
 fn test_streak_at_risk_detection() {
-    let (db, dir) = common::setup_integration_db();
+    let (db, _dir) = common::setup_integration_db();
     let today = todays_ordinal(&db.0.lock().unwrap());
 
     common::with_locked(&db, |conn| {
@@ -169,7 +169,7 @@ fn test_streak_at_risk_detection() {
 
 #[test]
 fn test_review_reminder_threshold() {
-    let (db, dir) = common::setup_integration_db();
+    let (db, _dir) = common::setup_integration_db();
     let today = todays_ordinal(&db.0.lock().unwrap());
 
     common::with_locked(&db, |conn| {
@@ -225,7 +225,7 @@ fn test_review_reminder_threshold() {
 
 #[test]
 fn test_no_repeat_reminder_same_day() {
-    let (db, dir) = common::setup_integration_db();
+    let (db, _dir) = common::setup_integration_db();
     let today = todays_ordinal(&db.0.lock().unwrap());
 
     common::with_locked(&db, |conn| {

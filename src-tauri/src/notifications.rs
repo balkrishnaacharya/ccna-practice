@@ -1,4 +1,4 @@
-use crate::db::Db;
+use crate::db::{with_immediate_tx_string, Db};
 use rusqlite::{params, Connection, OptionalExtension, Result};
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -65,9 +65,15 @@ pub fn get_notification_settings(conn: &Connection) -> Result<NotificationSettin
     })
 }
 
-/// Current hour of day (0-23) from a Unix epoch timestamp.
-pub fn hour_of_day(now_epoch: i64) -> i64 {
-    (now_epoch / 3600) % 24
+/// Local wall-clock hour (0-23). Quiet hours are configured in local time, so
+/// deriving them from a UTC epoch shifts the window by the user's timezone.
+pub fn local_hour(conn: &Connection) -> Result<i64, String> {
+    conn.query_row(
+        "SELECT CAST(strftime('%H', 'now', 'localtime') AS INTEGER)",
+        [],
+        |r| r.get(0),
+    )
+    .map_err(|e| e.to_string())
 }
 
 /// True when `now_hour` falls inside the quiet-hours window.
@@ -238,10 +244,12 @@ pub fn should_send_review_reminder(
         return Ok(false);
     }
 
+    // Never-seen questions have no stats row and are not "due" — otherwise a
+    // fresh install would immediately fire a review reminder for the whole bank.
     let due_count: i64 = conn
         .query_row(
-            "SELECT COUNT(*) FROM questions q
-             LEFT JOIN user_question_stats s ON s.question_id = q.id
+            "SELECT COUNT(*) FROM user_question_stats s
+             JOIN questions q ON q.id = s.question_id
              WHERE COALESCE(s.next_review_at, 0) <= ?1",
             params![now_epoch()],
             |r| r.get(0),
@@ -363,7 +371,7 @@ fn today_ordinal(conn: &Connection) -> Result<i64, String> {
 /// Combined reminder status: which reminders should fire right now.
 pub fn check_reminder_status(conn: &Connection) -> Result<ReminderStatus, String> {
     let today = today_ordinal(conn)?;
-    let now_hour = hour_of_day(now_epoch());
+    let now_hour = local_hour(conn)?;
 
     let study = should_send_study_reminder(conn, today, now_hour)?;
     let streak = should_send_streak_at_risk(conn, today, streak_current(conn)?)?;
@@ -429,12 +437,14 @@ pub fn update_notification_setting_cmd(
     value: String,
 ) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
-    conn.execute(
-        "INSERT OR REPLACE INTO notification_preferences (key, value) VALUES (?1, ?2)",
-        params![key, value],
-    )
-    .map_err(|e| e.to_string())?;
-    Ok(())
+    with_immediate_tx_string(&conn, |conn| {
+        conn.execute(
+            "INSERT OR REPLACE INTO notification_preferences (key, value) VALUES (?1, ?2)",
+            params![key, value],
+        )
+        .map_err(|e| e.to_string())?;
+        Ok(())
+    })
 }
 
 /// Tauri command: record an in-app notification event.
@@ -446,8 +456,10 @@ pub fn send_in_app_notification_cmd(
     body: String,
 ) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
-    record_notification_event(&conn, &event_type, &title, &body)?;
-    Ok(())
+    with_immediate_tx_string(&conn, |conn| {
+        record_notification_event(conn, &event_type, &title, &body)?;
+        Ok(())
+    })
 }
 
 /// Tauri command: get notification history.
@@ -474,10 +486,12 @@ pub fn dismiss_notification_event_cmd(
     event_id: i64,
 ) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
-    conn.execute(
-        "UPDATE notification_events SET dismissed_at = ?1 WHERE id = ?2 AND dismissed_at IS NULL",
-        params![now_epoch(), event_id],
-    )
-    .map_err(|e| e.to_string())?;
-    Ok(())
+    with_immediate_tx_string(&conn, |conn| {
+        conn.execute(
+            "UPDATE notification_events SET dismissed_at = ?1 WHERE id = ?2 AND dismissed_at IS NULL",
+            params![now_epoch(), event_id],
+        )
+        .map_err(|e| e.to_string())?;
+        Ok(())
+    })
 }

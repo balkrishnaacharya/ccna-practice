@@ -22,6 +22,9 @@ ccna.db
 # Generated question bank (rebuild with: npm run bank:build)
 pipeline/questions.bank.json
 
+# Generated updater manifest (produced by CI on release)
+latest.json
+
 # Secrets
 .env
 .env.local
@@ -41,9 +44,13 @@ Thumbs.db
 *.apk
 *.idsig
 *.aab
-release-apk/*.apk
+
+# Android release staging directory: keep only the build script and its docs
+release-apk/*
 !release-apk/build-apk.sh
 !release-apk/README.md
+
+# Cargo.lock is intentionally committed for reproducible Rust builds
 
 # Tauri generated Android project (regenerate with: npm run tauri android init)
 src-tauri/gen/

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { invoke } from "@tauri-apps/api/core";
 import Dashboard from "./pages/Dashboard";
+import { initNotifications } from "./utils/notifications";
 const Quiz = lazy(() => import("./pages/Quiz"));
 const Exam = lazy(() => import("./pages/Exam"));
 const Review = lazy(() => import("./pages/Review"));
@@ -32,6 +33,7 @@ export default function App() {
   const [examProgress, setExamProgress] = useState({ active: false, unanswered: 0 });
   const [pendingNavigation, setPendingNavigation] = useState(null);
   const [isExamModalOpen, setIsExamModalOpen] = useState(false);
+  const [examDraft, setExamDraft] = useState(null);
   const [isSplashActive, setIsSplashActive] = useState(() => {
     if (typeof window === "undefined") return false;
     try {
@@ -46,6 +48,14 @@ export default function App() {
 
   const handleSplashComplete = useCallback(() => {
     setIsSplashActive(false);
+  }, []);
+
+  // Initialize platform-aware notifications on app mount.
+  // - Desktop: auto-grants permission (no prompt).
+  // - Android 13+: triggers system POST_NOTIFICATIONS permission dialog.
+  // - Linux: no OS prompt; depends on libnotify/notify-send availability.
+  useEffect(() => {
+    initNotifications();
   }, []);
 
   // Automatic first-launch onboarding tour trigger
@@ -155,6 +165,45 @@ export default function App() {
       .catch(console.error);
   }, []);
 
+  // An interrupted exam leaves a checkpoint draft behind. Offer to resume it
+  // once on launch rather than silently throwing away the candidate's work.
+  useEffect(() => {
+    let mounted = true;
+    invoke("get_exam_draft")
+      .then((draft) => {
+        if (mounted && draft) setExamDraft(draft);
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  function resumeExamDraft() {
+    try {
+      const draft = examDraft;
+      setExamDraft(null);
+      navigate("/exam", {
+        state: {
+          resumeDraft: {
+            questions: JSON.parse(draft.questions_json),
+            answers: JSON.parse(draft.answers_json),
+            seconds_remaining: draft.seconds_remaining,
+          },
+        },
+      });
+    } catch (err) {
+      console.error("Failed to resume exam draft:", err);
+      invoke("clear_exam_draft").catch(() => {});
+      setExamDraft(null);
+    }
+  }
+
+  function discardExamDraft() {
+    invoke("clear_exam_draft").catch(console.error);
+    setExamDraft(null);
+  }
+
   return (
     <TooltipProvider>
       {/* <FloatingDock /> — legacy dock replaced with AppShell Sidebar */}
@@ -233,6 +282,42 @@ export default function App() {
           onClose={() => updater.setShowModal(false)}
           onApply={updater.applyUpdate}
         />
+
+        {/* Resume interrupted exam */}
+        {examDraft && (
+          <div className="fixed inset-0 z-[85] flex items-center justify-center bg-dark-bg/80 backdrop-blur-md p-4">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="resume-exam-title"
+              className="w-full max-w-md space-y-4 rounded-2xl border border-dark-border bg-dark-card p-6 sm:p-7 shadow-dock text-paper"
+            >
+              <h2 id="resume-exam-title" className="font-serif text-xl font-semibold text-paper">
+                Resume your exam?
+              </h2>
+              <p className="text-sm leading-relaxed text-paper-muted font-sans">
+                An unfinished exam was saved on {new Date(examDraft.updated_at * 1000).toLocaleString()}.
+                Resuming restores your answers and remaining time. Discarding clears the draft permanently.
+              </p>
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={discardExamDraft}
+                  className="rounded-full border border-dark-border px-5 py-2 text-xs font-medium text-paper-muted hover:text-paper hover:bg-dark-surface transition-colors"
+                >
+                  Discard
+                </button>
+                <button
+                  type="button"
+                  onClick={resumeExamDraft}
+                  className="rounded-full bg-gold hover:bg-gold-hover px-5 py-2 text-xs font-semibold text-dark-bg shadow-gold-glow transition-colors"
+                >
+                  Resume exam
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Leave Exam Modal Guard */}
         {pendingNavigation && (

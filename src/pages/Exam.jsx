@@ -3,13 +3,15 @@ import { invoke } from "@tauri-apps/api/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ExamConfirmationModal from "@/components/exam/ExamConfirmationModal";
 import { ShineBorder } from "@/components/ui/shine-border";
+import ShortcutsHint from "@/components/shared/ShortcutsHint";
 
 export default function Exam({ reportExamProgress }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const resumeDraft = location.state?.resumeDraft;
 
-  const [hasStarted, setHasStarted] = useState(Boolean(location.state?.started));
-  const [showPreflightModal, setShowPreflightModal] = useState(!location.state?.started);
+  const [hasStarted, setHasStarted] = useState(Boolean(location.state?.started || resumeDraft));
+  const [showPreflightModal, setShowPreflightModal] = useState(!location.state?.started && !resumeDraft);
 
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,9 +29,18 @@ export default function Exam({ reportExamProgress }) {
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   const timerRef = useRef(null);
+  const submittedRef = useRef(false);
+  const checkpointRef = useRef({ questions: [], answers: {}, secondsRemaining: 120 * 60 });
 
   useEffect(() => {
-    loadExamQuestions();
+    if (resumeDraft) {
+      setQuestions(resumeDraft.questions || []);
+      setAnswers(resumeDraft.answers || {});
+      setSecondsRemaining(resumeDraft.seconds_remaining ?? 120 * 60);
+      setLoading(false);
+    } else {
+      loadExamQuestions();
+    }
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -37,6 +48,31 @@ export default function Exam({ reportExamProgress }) {
       }
     };
   }, []);
+
+  // Keep the latest values in a ref so the checkpoint interval stays stable.
+  useEffect(() => {
+    checkpointRef.current = { questions, answers, secondsRemaining };
+  }, [questions, answers, secondsRemaining]);
+
+  // Checkpoint every 30 seconds so an interrupted exam survives an app restart.
+  useEffect(() => {
+    if (!hasStarted || loading || examResult) return;
+    const id = setInterval(async () => {
+      const snapshot = checkpointRef.current;
+      try {
+        await invoke("save_exam_draft", {
+          payload: {
+            questions_json: JSON.stringify(snapshot.questions),
+            answers_json: JSON.stringify(snapshot.answers),
+            seconds_remaining: snapshot.secondsRemaining,
+          },
+        });
+      } catch (err) {
+        console.error("Failed to save exam draft:", err);
+      }
+    }, 30000);
+    return () => clearInterval(id);
+  }, [hasStarted, loading, examResult]);
 
   function handleExplicitExit() {
     if (timerRef.current) {
@@ -47,22 +83,51 @@ export default function Exam({ reportExamProgress }) {
     navigate("/");
   }
 
-  // Timer only starts if hasStarted is true, loading is done, no result, and seconds remain
+  // Arrow keys and Enter move between questions; submission stays behind the
+  // explicit confirmation modal so a stray keypress cannot end the exam.
   useEffect(() => {
-    if (hasStarted && !loading && !examResult && secondsRemaining > 0) {
-      timerRef.current = setInterval(() => {
-        setSecondsRemaining((prev) => {
-          if (prev <= 1) {
-            clearInterval(timerRef.current);
-            submitExamFinal();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timerRef.current);
+    if (!hasStarted || examResult) return;
+    function onKeyDown(e) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = e.target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (!questions.length) return;
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setCurrentIndex((prev) => Math.max(0, prev - 1));
+      } else if (e.key === "ArrowRight" || e.key === "Enter") {
+        e.preventDefault();
+        if (currentIndex >= questions.length - 1) {
+          setShowLastQModal(true);
+        } else {
+          setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1));
+        }
+      }
     }
-  }, [hasStarted, loading, examResult]);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [hasStarted, examResult, questions.length, currentIndex]);
+
+  const timerExpired = secondsRemaining <= 0;
+
+  // The interval only changes state. Submitting from inside a state updater
+  // would run twice under React StrictMode's double-invocation in development.
+  useEffect(() => {
+    if (!hasStarted || loading || examResult || timerExpired) return;
+    timerRef.current = setInterval(() => {
+      setSecondsRemaining((prev) => Math.max(prev - 1, 0));
+    }, 1000);
+    return () => clearInterval(timerRef.current);
+  }, [hasStarted, loading, examResult, timerExpired]);
+
+  useEffect(() => {
+    if (!hasStarted || loading || examResult || secondsRemaining !== 0) return;
+    if (submittedRef.current) return;
+    submittedRef.current = true;
+    if (timerRef.current) clearInterval(timerRef.current);
+    submitExamFinal();
+  }, [secondsRemaining, hasStarted, loading, examResult]);
 
   async function loadExamQuestions() {
     setLoading(true);
@@ -140,6 +205,8 @@ export default function Exam({ reportExamProgress }) {
 
     try {
       const result = await invoke("submit_exam", { payload });
+      // The attempt is now recorded; a stale draft must not prompt on next launch.
+      await invoke("clear_exam_draft").catch(() => {});
       setExamResult(result);
     } catch (err) {
       console.error("Failed to submit exam:", err);
@@ -193,6 +260,7 @@ export default function Exam({ reportExamProgress }) {
 
   const currentQ = questions[currentIndex] ?? null;
   const selectedChoices = answers[currentQ?.id] || [];
+  const isLastQuestion = currentIndex >= questions.length - 1;
 
   return (
     <div className="min-h-screen bg-dark/95">
@@ -245,7 +313,8 @@ export default function Exam({ reportExamProgress }) {
               </button>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
+              <ShortcutsHint variant="exam" />
               <span className="text-sm font-medium text-paper">
                 {formatTime(secondsRemaining)}
               </span>
@@ -502,6 +571,7 @@ export default function Exam({ reportExamProgress }) {
           <div className="flex justify-center gap-3 mt-6 flex-wrap pt-2">
             <button
               onClick={() => {
+                submittedRef.current = false;
                 setExamResult(null);
                 setAnswers({});
                 setFlagged(new Set());

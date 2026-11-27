@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { useNavigate } from "react-router-dom";
 import { startTour } from "../utils/tourGuide";
 import { useNotifications } from "../hooks/useNotifications";
+import { writeTextFile } from "@tauri-apps/plugin-fs";
 
 const DEFAULT_DAILY_GOAL = 12;
 
@@ -14,6 +15,7 @@ export default function Settings({ onProfileChange, updater }) {
   const [goalStatus, setGoalStatus] = useState(null);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [resetMsg, setResetMsg] = useState("");
+  const [exportStatus, setExportStatus] = useState(null);
 
   const navigate = useNavigate();
 
@@ -62,6 +64,23 @@ export default function Settings({ onProfileChange, updater }) {
       setTimeout(() => setSavedMsg(""), 3000);
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  async function handleExportProgress() {
+    setExportStatus(null);
+    try {
+      const result = await invoke("export_progress");
+      // On Android the save dialog yields a content URI that Rust cannot open
+      // directly, so the FS plugin performs the write there.
+      if (!result.written) {
+        await writeTextFile(result.path, result.json);
+      }
+      setExportStatus({ ok: true, text: `Exported to ${result.path}` });
+    } catch (err) {
+      if (String(err).includes("cancelled")) return;
+      console.error(err);
+      setExportStatus({ ok: false, text: "Could not export progress." });
     }
   }
 
@@ -461,6 +480,28 @@ export default function Settings({ onProfileChange, updater }) {
             <span className="text-peach font-mono font-semibold">10% (10 Qs)</span>
           </div>
         </div>
+      </div>
+
+      {/* Export Progress */}
+      <div className="border border-dark-border rounded-2xl p-6 bg-dark-card shadow-dock space-y-4">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-paper mb-1">Export Progress</h2>
+          <p className="text-xs text-paper-muted">
+            Save per-domain accuracy, streaks, and total questions answered to a JSON file. Everything stays on this device.
+          </p>
+        </div>
+        {exportStatus && (
+          <p className={`text-xs font-sans ${exportStatus.ok ? "text-sage-light" : "text-heart-light"}`}>
+            {exportStatus.text}
+          </p>
+        )}
+        <button
+          type="button"
+          onClick={handleExportProgress}
+          className="px-5 py-2.5 rounded-full bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold shadow-gold-glow transition-all"
+        >
+          Export progress as JSON
+        </button>
       </div>
 
       {/* Danger Zone: Reset Stats */}

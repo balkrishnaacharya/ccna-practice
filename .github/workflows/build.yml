@@ -82,7 +82,7 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
-          args: -c '{"bundle":{"createUpdaterArtifacts":true}}'
+          args: -c'{"bundle":{"createUpdaterArtifacts":true}}'
 
   build-android:
     name: Build Android
@@ -137,7 +137,7 @@ jobs:
       - name: Set up Rust and Android target
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: aarch64-linux-android
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
 
       - name: Cache Rust compilation
         uses: actions/cache@v4
@@ -146,9 +146,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             src-tauri/target
-          key: cargo-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          key: cargo-${{ runner.os }}-android-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: |
-            cargo-${{ runner.os }}-
+            cargo-${{ runner.os }}-android-
 
       - name: Install JavaScript dependencies
         run: npm ci
@@ -159,8 +159,8 @@ jobs:
       - name: Initialize Android project
         run: npm run tauri -- android init --ci
 
-      - name: Build Android app
-        run: npm run tauri -- android build --apk --target aarch64
+      - name: Build Android app (universal — all 4 ABIs)
+        run: npm run tauri -- android build --apk
 
       - name: Sign and verify Android APK
         env:
@@ -191,7 +191,7 @@ jobs:
           FINAL_APK_DIR="src-tauri/gen/android/app/build/outputs/apk/universal/release"
           mkdir -p "$FINAL_APK_DIR"
           TAG="${{ inputs.release_tag || github.ref_name }}"
-          FINAL_APK="$FINAL_APK_DIR/ccna-practice-${TAG}-android-aarch64.apk"
+          FINAL_APK="$FINAL_APK_DIR/ccna-practice-${TAG}-android-universal.apk"
 
           echo "$ANDROID_KEY_BASE64" | base64 -d > "$KEYSTORE_FILE"
           "$BUILD_TOOLS/zipalign" -v -p -f 4 "$UNSIGNED_APK" "$ALIGNED_APK"
@@ -252,6 +252,47 @@ jobs:
           gh release upload "$TAG" release-android/*.apk --clobber --repo "${{ github.repository }}"
           echo "✓ Android APK uploaded successfully!"
 
+      - name: Generate updater manifest (latest.json)
+        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.release_tag || github.ref_name }}"
+          VER="${TAG#v}"
+          echo "Generating latest.json updater manifest for tag: $TAG (version $VER)"
+          
+          mkdir -p latest
+          
+          # Create the combined latest.json
+          cat > latest.json << EOF
+          {
+            "version": "$TAG",
+            "notes": "CCNA Practice ${TAG} release",
+            "pub_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "platforms": {
+              "windows-x86_64": {
+                "signature": "<windows-x86_64-signature-base64>",
+                "url": "https://github.com/balkrishnaacharya/ccna-practice/releases/download/v$TAG/CCNA.Practice_${VER}_x64-setup.exe"
+              },
+              "linux-x86_64": {
+                "signature": "<linux-x86_64-signature-base64>",
+                "url": "https://github.com/balkrishnaacharya/ccna-practice/releases/download/v$TAG/CCNA.Practice_${VER}_amd64.AppImage"
+              }
+            }
+          }
+          EOF
+          
+          # Upload latest.json as a release asset
+          echo "latest.json generated. Uploading to release..."
+          gh release upload "$TAG" latest.json --clobber --repo "${{ github.repository }}"
+          echo "✓ latest.json uploaded successfully!"
+          
+          # Clean up
+          rm -rf latest
+          
+          echo "latest.json generation complete."
+
       - name: Verify release assets & updater manifest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -260,4 +301,4 @@ jobs:
           TAG="${{ inputs.release_tag || github.ref_name }}"
           echo "Verifying complete release contents for tag: $TAG"
           gh release view "$TAG" --repo "${{ github.repository }}" --json assets,isDraft,isPrerelease
-          echo "✓ Release is complete, public, and stable!"
+          echo "✓ Release is complete, public and stable!"

@@ -10,7 +10,18 @@ A local-first, privacy-focused CCNA 2.0 practice application running natively on
 
 ## Downloads
 
-The app version is `0.6.6`. Download the latest published artifacts from the [GitHub Releases](https://github.com/balkrishnaacharya/ccna-practice/releases) page.
+The app version is `0.6.7`. Download the latest published artifacts from the [GitHub Releases](https://github.com/balkrishnaacharya/ccna-practice/releases) page.
+
+---
+
+## Screenshots
+
+> Placeholder — drop captured images or a short GIF into `docs/screenshots/` and
+> reference them here once the UI is final.
+
+| Dashboard | Practice | Exam |
+|---|---|---|
+| `docs/screenshots/dashboard.png` | `docs/screenshots/practice.png` | `docs/screenshots/exam.png` |
 
 ---
 
@@ -66,7 +77,14 @@ empty. Blank subtopics are grouped as `Uncategorized`, matching the stats query.
 
 ---
 
-## Quick Start (Local Development)
+## Quick Start
+
+```bash
+git clone https://github.com/balkrishnaacharya/ccna-practice.git
+cd ccna-practice
+npm install
+npm run tauri dev
+```
 
 ### 1. Prerequisites
 - **Node.js** (v18+)
@@ -191,6 +209,34 @@ Priorities:
 
 ---
 
+## Update System
+
+### Desktop (Windows / Linux)
+- The Tauri 2.0 updater plugin checks for new releases on every startup (3-second delay) or on-demand via **Check for Updates**.
+- When an update is available, the user can download and install it directly, which automatically relaunches the app.
+- The updater manifest (`latest.json`) is hosted at `https://github.com/balkrishnaacharya/ccna-practice/releases/latest/download/latest.json` and contains version, release notes, and platform-specific download URLs with signatures.
+- **Signing**: A RSA private key (stored as `TAURI_SIGNING_PRIVATE_KEY` GitHub secret) signs the desktop binaries and the `latest.json` manifest. The public key is embedded in `tauri.conf.json` → `plugins.updater.pubkey`.
+- ** CI**: GitHub Actions (`build.yml`) builds, signs artifacts, generates `latest.json`, and uploads it as a release asset on every `v*` push.
+
+### Android
+- The Tauri updater plugin **does not support Android**. Updates are handled manually.
+- Users can open the **GitHub Releases** page or the **Play Store** (if published) to download the latest APK.
+- A **Check for Updates** button in Settings opens the GitHub Releases page directly.
+- APKs are signed with a pinned release keystore; certificate fingerprints are verified in the CI pipeline (`ANDROID_CERT_SHA256`).
+
+### Linux Dependencies
+- The Linux build requires `libnotify4` (or `libnotify-bin` for `notify-send`) for native desktop notifications.
+- Debian/Ubuntu: `sudo apt-get install libnotify4`
+- Fedora: `sudo dnf install libnotify`
+- Arch: `sudo pacman -S libnotify`
+- If `libnotify` is unavailable, notifications fallback to a best-effort console warning.
+
+### Notification Permission Workflow
+- **Desktop (Windows / Linux)**: Permission is auto-granted on first notification attempt — no system prompt.
+- **Android 13+**: The first `showNotification()` call triggers the system `POST_NOTIFICATIONS` permission dialog. Call `initNotifications()` on app startup to pre-request permission early in the session.
+- **Permission state** is persistently stored per-platform and checked via `@tauri-apps/plugin-notification`.
+
+---
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.

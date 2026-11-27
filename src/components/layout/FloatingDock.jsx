@@ -102,16 +102,14 @@ export default function FloatingDock({ onOpenExamModal, guardNavigation }) {
           }}
           variant="ghost"
           size="icon"
-          className={`w-11 h-11 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/25 focus-visible:ring-2 focus-visible:ring-gold ${window.innerWidth < 640 ? 'w-9 h-9' : ''}`}
+          className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#B8842A]/10 text-[#B8842A] hover:bg-[#B8842A]/20 border border-[#B8842A]/25 focus-visible:ring-2 focus-visible:ring-gold"
           aria-label="Take Full CCNA Exam"
         >
           <Timer size={16} strokeWidth={1.5} />
         </Button>
-        {window.innerWidth >= 640 && (
-          <span className="text-[10px] font-semibold mt-0.5 text-[#B8842A]">
-            Exam
-          </span>
-        )}
+        <span className="hidden sm:inline text-[10px] font-semibold mt-0.5 text-[#B8842A]">
+          Exam
+        </span>
       </div>
     </nav>
   );

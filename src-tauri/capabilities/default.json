@@ -9,6 +9,10 @@
     "process:default",
     "updater:default",
     "core:app:default",
-    "notification:default"
+    "notification:default",
+    "dialog:default",
+    "window-state:default",
+    "fs:default",
+    "fs:allow-write-text-file"
   ]
 }

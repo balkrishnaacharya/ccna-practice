@@ -8420,5 +8420,261 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is the purpose of REST APIs in network programmability?",
+    "explanation": "REST APIs use HTTP methods (GET, POST, PUT, DELETE) to interact with network devices, enabling programmatic configuration and monitoring.",
+    "domain": "ai_ops",
+    "subtopic": "REST APIs",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Assign IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Programmatically configure and monitor network devices",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypt network traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Route packets between networks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which data encoding format is commonly used in network automation APIs?",
+    "explanation": "JSON (JavaScript Object Notation) is a lightweight, human-readable data format widely used in REST APIs and network automation.",
+    "domain": "ai_ops",
+    "subtopic": "Data Encoding Formats",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "JSON",
+        "is_correct": true
+      },
+      {
+        "text": "HTML",
+        "is_correct": false
+      },
+      {
+        "text": "CSV",
+        "is_correct": false
+      },
+      {
+        "text": "MP3",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is Infrastructure as Code (IaC) in network automation?",
+    "explanation": "IaC manages network infrastructure using code and configuration files, enabling version-controlled, repeatable deployments instead of manual CLI changes.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Uses only physical hardware changes",
+        "is_correct": false
+      },
+      {
+        "text": "Requires no version control",
+        "is_correct": false
+      },
+      {
+        "text": "Manages infrastructure using code and configuration files",
+        "is_correct": true
+      },
+      {
+        "text": "Manually configures each device via CLI",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol is used for model-driven network programmability with YANG models?",
+    "explanation": "NETCONF uses YANG data models to install, manipulate, and delete configuration of network devices over a transport protocol like SSH.",
+    "domain": "ai_ops",
+    "subtopic": "Model-Driven Programmability",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "CDP",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv2c",
+        "is_correct": false
+      },
+      {
+        "text": "NETCONF with YANG models",
+        "is_correct": true
+      },
+      {
+        "text": "Telnet",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of Ansible in network automation?",
+    "explanation": "Ansible is an agentless automation tool that uses SSH to configure network devices using YAML-based playbooks.",
+    "domain": "ai_ops",
+    "subtopic": "Infrastructure as Code",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Agentless automation using SSH and YAML playbooks",
+        "is_correct": true
+      },
+      {
+        "text": "Only works with Cisco devices",
+        "is_correct": false
+      },
+      {
+        "text": "Requires agents on every device",
+        "is_correct": false
+      },
+      {
+        "text": "Replaces the need for IP addressing",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol provides telemetry data streaming from network devices?",
+    "explanation": "gNMI (gRPC Network Management Interface) streams telemetry data from network devices for real-time monitoring.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "gNMI",
+        "is_correct": true
+      },
+      {
+        "text": "LLDP",
+        "is_correct": false
+      },
+      {
+        "text": "SNMPv1",
+        "is_correct": false
+      },
+      {
+        "text": "CDP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is model-driven telemetry in network management?",
+    "explanation": "Model-driven telemetry uses YANG data models to push structured data from devices to collectors on a subscription basis.",
+    "domain": "ai_ops",
+    "subtopic": "Telemetry and Monitoring",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Using only Syslog messages",
+        "is_correct": false
+      },
+      {
+        "text": "Polling devices via SNMP GET requests",
+        "is_correct": false
+      },
+      {
+        "text": "Manually collecting CLI output",
+        "is_correct": false
+      },
+      {
+        "text": "Uses YANG models to push structured device data",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which tool is commonly used for intent-based networking in Cisco environments?",
+    "explanation": "Cisco DNA Center (now Cisco Catalyst Center) provides intent-based networking, automation, and assurance for enterprise networks.",
+    "domain": "ai_ops",
+    "subtopic": "AIOps Fundamentals",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "PuTTY",
+        "is_correct": false
+      },
+      {
+        "text": "GNS3",
+        "is_correct": false
+      },
+      {
+        "text": "Cisco DNA Center / Catalyst Center",
+        "is_correct": true
+      },
+      {
+        "text": "Wireshark",
+        "is_correct": false
+      }
+    ]
   }
 ]

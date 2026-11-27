@@ -24,6 +24,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [subtopics, setSubtopics] = useState([]);
   const [reviewDue, setReviewDue] = useState(0);
   const [flashcardDue, setFlashcardDue] = useState(0);
+  const [streak, setStreak] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -34,11 +35,12 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
 
     const fetchAllData = async () => {
       try {
-        const [statsData, subtopicData, reviewCount, flashcardCount] = await Promise.all([
+        const [statsData, subtopicData, reviewCount, flashcardCount, streakData] = await Promise.all([
           invoke("get_stats"),
           invoke("get_subtopic_stats").catch(() => []),
           invoke("get_review_due_count").catch(() => 0),
           invoke("get_flashcard_due_count", { today }).catch(() => 0),
+          invoke("get_streak_stats").catch(() => null),
         ]);
 
         if (mounted) {
@@ -46,6 +48,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           setSubtopics(subtopicData || []);
           setReviewDue(Number(reviewCount) || 0);
           setFlashcardDue(Number(flashcardCount) || 0);
+          setStreak(streakData);
         }
       } catch (err) {
         console.error("Dashboard data load failed:", err);
@@ -63,8 +66,8 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   }, []);
 
   // Compute daily goal stats
-  const dailyGoalTarget = stats?.daily_goal || 12;
-  const todayAnswered = stats?.today_answered || 0;
+  const dailyGoalTarget = streak?.daily_goal || 12;
+  const todayAnswered = streak?.today_answered || 0;
   const dailyGoalPct = Math.min(100, Math.round((todayAnswered / Math.max(1, dailyGoalTarget)) * 100));
 
   // Identify recommended subtopic or weakest domain for "Continue Studying"
@@ -275,7 +278,11 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
           <div className="pt-4 border-t border-dark-border/60 text-xs text-paper flex items-center justify-between">
             <span>Streak status</span>
             <span className="text-gold font-medium">
-              {stats?.streak_info || (todayAnswered > 0 ? "Active today" : "Practice to maintain")}
+              {streak?.current_streak > 0
+                ? `${streak.current_streak} day${streak.current_streak === 1 ? "" : "s"}`
+                : todayAnswered > 0
+                  ? "Active today"
+                  : "Practice to maintain"}
             </span>
           </div>
         </div>
@@ -421,23 +428,30 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
       </div>
 
       {/* Row 4: Recent Activity */}
-      {stats?.recent_activity && stats.recent_activity.length > 0 && (
+      {streak?.recent?.some((day) => day.answered > 0) && (
         <div className="bg-dark-card border border-dark-border rounded-xl p-6 space-y-3">
           <h2 className="font-serif text-base font-normal text-paper">
             Recent Practice Activity
           </h2>
           <div className="divide-y divide-dark-border/40 text-xs">
-            {stats.recent_activity.slice(0, 5).map((act, i) => (
-              <div key={i} className="py-2.5 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-gold" />
-                  <span className="text-paper font-medium">{act.label || "Practice session"}</span>
+            {streak.recent
+              .filter((day) => day.answered > 0)
+              .slice(-5)
+              .reverse()
+              .map((day) => (
+                <div key={day.date} className="py-2.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={`w-2 h-2 rounded-full ${day.goal_met ? "bg-sage" : "bg-gold"}`}
+                    />
+                    <span className="text-paper font-medium">
+                      {day.answered} question{day.answered === 1 ? "" : "s"} answered
+                      {day.correct > 0 && ` · ${day.correct} correct`}
+                    </span>
+                  </div>
+                  <span className="text-paper font-mono">{day.date}</span>
                 </div>
-                {act.date && (
-                  <span className="text-paper font-mono">{act.date}</span>
-                )}
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       )}

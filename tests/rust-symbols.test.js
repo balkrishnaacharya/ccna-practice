@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 const db = readFileSync(new URL("../src-tauri/src/db.rs", import.meta.url), "utf8");
-const commands = readFileSync(new URL("../src-tauri/src/commands.rs", import.meta.url), "utf8");
+const commands = readFileSync(new URL("../src-tauri/src/commands/stats.rs", import.meta.url), "utf8");
 test("Rust: db exports BUNDLED_DB embedded bytes", () => {
   assert.ok(db.includes("pub static BUNDLED_DB"), "BUNDLED_DB must be exported");
 });

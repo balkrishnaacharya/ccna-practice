@@ -12426,5 +12426,709 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which STP port state forwards traffic and learns MAC addresses?",
+    "explanation": "The forwarding state is the normal operational state where the port forwards frames, learns MAC addresses, and sends/receives BPDUs.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Listening",
+        "is_correct": false
+      },
+      {
+        "text": "Learning",
+        "is_correct": false
+      },
+      {
+        "text": "Forwarding",
+        "is_correct": true
+      },
+      {
+        "text": "Blocking",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the default bridge priority value in Cisco PVST+?",
+    "explanation": "The default bridge priority in Cisco PVST+ is 32768. Lower values are preferred when electing the root bridge.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "text": "32768",
+        "is_correct": true
+      },
+      {
+        "text": "4096",
+        "is_correct": false
+      },
+      {
+        "text": "61440",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a trunk port on a Cisco switch interface?",
+    "explanation": "The `switchport mode trunk` command configures the interface as an 802.1Q trunk, allowing multiple VLANs to traverse the link.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "switchport port-security",
+        "is_correct": false
+      },
+      {
+        "text": "switchport access vlan 1",
+        "is_correct": false
+      },
+      {
+        "text": "no shutdown",
+        "is_correct": false
+      },
+      {
+        "text": "switchport mode trunk",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of EtherChannel in a switched network?",
+    "explanation": "EtherChannel bundles multiple physical links into one logical link, increasing bandwidth and providing redundancy through load balancing.",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Filters traffic by MAC address",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks redundant paths",
+        "is_correct": false
+      },
+      {
+        "text": "Bundles multiple physical links into one logical link",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses to ports",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which VLAN is the default native VLAN on Cisco switches?",
+    "explanation": "VLAN 1 is the default native VLAN on Cisco switches and carries untagged traffic on 802.1Q trunks.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "VLAN 1000",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 1",
+        "is_correct": true
+      },
+      {
+        "text": "VLAN 10",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN 100",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is port security used for on a Cisco switch port?",
+    "explanation": "Port security restricts the number of MAC addresses that can be learned on a port, preventing MAC flooding attacks and unauthorized device connections.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Encrypts traffic on the port",
+        "is_correct": false
+      },
+      {
+        "text": "Restricts learned MAC addresses on a port",
+        "is_correct": true
+      },
+      {
+        "text": "Routes packets between VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns VLANs dynamically",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which STP role is assigned to the port with the lowest cost path to the root bridge?",
+    "explanation": "The root port is the port on a non-root bridge with the lowest path cost to the root bridge; it forwards traffic toward the root.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Root port",
+        "is_correct": true
+      },
+      {
+        "text": "Alternate port",
+        "is_correct": false
+      },
+      {
+        "text": "Backup port",
+        "is_correct": false
+      },
+      {
+        "text": "Designated port",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum number of VLANs supported on a standard Cisco Catalyst switch?",
+    "explanation": "Standard Cisco Catalyst switches support VLANs 1 through 4094, though some VLANs are reserved and cannot be created or modified.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "4094",
+        "is_correct": true
+      },
+      {
+        "text": "255",
+        "is_correct": false
+      },
+      {
+        "text": "1000",
+        "is_correct": false
+      },
+      {
+        "text": "1005",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command verifies EtherChannel configuration on a Cisco switch?",
+    "explanation": "The `show etherchannel summary` command displays the status of all EtherChannel bundles, including member ports and protocol (PAgP or LACP).",
+    "domain": "switching",
+    "subtopic": "EtherChannel",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "show interfaces trunk",
+        "is_correct": false
+      },
+      {
+        "text": "show vlan brief",
+        "is_correct": false
+      },
+      {
+        "text": "show etherchannel summary",
+        "is_correct": true
+      },
+      {
+        "text": "show spanning-tree",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the difference between access mode and trunk mode on a switch port?",
+    "explanation": "Access mode carries traffic for a single VLAN; trunk mode carries traffic for multiple VLANs using 802.1Q tagging.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Access carries one VLAN; trunk carries multiple tagged VLANs",
+        "is_correct": true
+      },
+      {
+        "text": "Access is faster than trunk",
+        "is_correct": false
+      },
+      {
+        "text": "Trunk is only for fiber links",
+        "is_correct": false
+      },
+      {
+        "text": "Access uses 802.1Q tagging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol provides rapid spanning tree convergence in Cisco networks?",
+    "explanation": "Rapid PVST+ (Per-VLAN Spanning Tree Plus) provides faster convergence than classic 802.1D STP by using handshake-based port state transitions.",
+    "domain": "switching",
+    "subtopic": "Rapid PVST+",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "STP",
+        "is_correct": false
+      },
+      {
+        "text": "Rapid PVST+",
+        "is_correct": true
+      },
+      {
+        "text": "802.1D",
+        "is_correct": false
+      },
+      {
+        "text": "CDP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the `show vlan brief` command?",
+    "explanation": "It displays a summary of all VLANs on the switch, including VLAN ID, name, and the ports assigned to each VLAN.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Displays the MAC address table",
+        "is_correct": false
+      },
+      {
+        "text": "Displays the routing table",
+        "is_correct": false
+      },
+      {
+        "text": "Displays STP port states",
+        "is_correct": false
+      },
+      {
+        "text": "Displays VLAN summary and port assignments",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables storm control for broadcast traffic on a switch port?",
+    "explanation": "The `storm-control broadcast level` command limits broadcast traffic on a port, shutting it down or trapping excess traffic when the threshold is exceeded.",
+    "domain": "switching",
+    "subtopic": "Storm Control",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "spanning-tree portfast",
+        "is_correct": false
+      },
+      {
+        "text": "storm-control broadcast level",
+        "is_correct": true
+      },
+      {
+        "text": "switchport port-security",
+        "is_correct": false
+      },
+      {
+        "text": "ip dhcp snooping",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is a designated port in STP?",
+    "explanation": "A designated port is the forwarding port on a LAN segment that provides the best path to the root bridge.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "A blocked port with no traffic",
+        "is_correct": false
+      },
+      {
+        "text": "A port connected to a PC",
+        "is_correct": false
+      },
+      {
+        "text": "The root bridge itself",
+        "is_correct": false
+      },
+      {
+        "text": "The best forwarding path to the root bridge on a LAN segment",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command displays the MAC address table on a Cisco switch?",
+    "explanation": "The `show mac address-table` command displays dynamically learned MAC addresses, their associated ports, and the VLANs they belong to.",
+    "domain": "switching",
+    "subtopic": "MAC Address Table",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "show vlan",
+        "is_correct": false
+      },
+      {
+        "text": "show ip route",
+        "is_correct": false
+      },
+      {
+        "text": "show arp",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of VTP (VLAN Trunking Protocol)?",
+    "explanation": "VTP propagates VLAN configurations across a switching domain, synchronizing VLAN names and numbers across multiple switches.",
+    "domain": "switching",
+    "subtopic": "VTP",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Assigns IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts trunk traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Propagates VLAN configurations across switches",
+        "is_correct": true
+      },
+      {
+        "text": "Routes packets between VLANs",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a Cisco switch port with port security allowing only one MAC address?",
+    "explanation": "The `switchport port-security` and `switchport port-security maximum 1` commands enable port security and limit the port to one learned MAC address.",
+    "domain": "switching",
+    "subtopic": "Port Security",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "spanning-tree portfast",
+        "is_correct": false
+      },
+      {
+        "text": "switchport port-security maximum 1",
+        "is_correct": true
+      },
+      {
+        "text": "switchport access vlan 1",
+        "is_correct": false
+      },
+      {
+        "text": "ip arp inspection vlan 1",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the native VLAN mismatch detection in CDP?",
+    "explanation": "CDP reports native VLAN mismatches on trunk links because mismatched native VLANs can cause traffic leakage between VLANs and security issues.",
+    "domain": "switching",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Detects and reports native VLAN mismatches on trunks",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns native VLANs automatically",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all trunk traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts CDP advertisements",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which spanning-tree port state discards traffic but still listens for BPDUs?",
+    "explanation": "The listening state processes BPDUs to determine the port role but does not forward frames or learn MAC addresses.",
+    "domain": "switching",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "hard",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Learning",
+        "is_correct": false
+      },
+      {
+        "text": "Blocking",
+        "is_correct": false
+      },
+      {
+        "text": "Listening",
+        "is_correct": true
+      },
+      {
+        "text": "Forwarding",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of BPDU Guard on a Cisco switch port?",
+    "explanation": "BPDU Guard shuts down a PortFast-enabled port if it receives a BPDU, preventing accidental or malicious switches from creating loops.",
+    "domain": "switching",
+    "subtopic": "STP Features",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Assigns VLANs dynamically",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all traffic on the port",
+        "is_correct": false
+      },
+      {
+        "text": "Shuts down PortFast ports that receive BPDUs",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts trunk traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command verifies VLAN trunking status on a Cisco switch interface?",
+    "explanation": "The `show interfaces trunk` command displays trunking status, encapsulation, native VLAN, and allowed VLANs for trunk interfaces.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "show vlan brief",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "show ip route",
+        "is_correct": false
+      },
+      {
+        "text": "show interfaces trunk",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of VLAN pruning on a trunk link?",
+    "explanation": "VLAN pruning prevents unnecessary VLAN traffic from traversing trunk links where it is not needed, reducing broadcast propagation.",
+    "domain": "switching",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Prevents unnecessary VLAN traffic on trunk links",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses to VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all inter-VLAN traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts trunk traffic",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Pencil } from "lucide-react";
+import ShortcutsHint from "@/components/shared/ShortcutsHint";
 
 const MODES = [
   { id: "weak", label: "Weak Spots", desc: "Drills the questions you get wrong first" },
@@ -14,6 +15,14 @@ const MODES = [
   { id: "impossible", label: "Impossible", desc: "Multi-concept tricky questions" },
   { id: "quick", label: "Quick Quiz", desc: "5 questions: 70% weakest subtopics, 30% random, instant feedback" },
 ];
+
+const MODE_TIMES = {
+  easy: 5 * 60,
+  medium: 2 * 60,
+  hard: 1 * 60,
+  impossible: 30,
+  exam: 120 * 60,
+};
 
 const modeTexts = {
   weak: "Weak Spots",
@@ -45,7 +54,6 @@ export default function Quiz() {
   const [flagNote, setFlagNote] = useState("");
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [questionNote, setQuestionNote] = useState("");
-  const [noteInputVisible, setNoteInputVisible] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
   const [quickEnded, setQuickEnded] = useState(false);
   const [quickQuestions, setQuickQuestions] = useState([]);
@@ -54,15 +62,10 @@ export default function Quiz() {
   const [quickStartTime, setQuickStartTime] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [confidence, setConfidence] = useState("");
-  const [showOverlay, setShowOverlay] = useState(false);
   const timerRef = useRef(null);
   const rootRef = useRef(null);
-  const stemContainerRef = useRef(null);
   const feedbackRef = useRef(null);
   const loadQuestionRef = useRef(0);
-  const noteRef = useRef(null);
-
-  const navigate = useNavigate();
 
   // Answer Feedback Pulse: Sage for Correct, Heart for Incorrect
   useGSAP(
@@ -96,13 +99,6 @@ export default function Quiz() {
   const canSubmit = !feedback && selected.length > 0 && (mode === "quick" || timeRemaining > 0);
 
   // Mode timing
-  const modeTimes = {
-    easy: 5 * 60,
-    medium: 2 * 60,
-    hard: 1 * 60,
-    impossible: 30,
-    exam: 120 * 60,
-  };
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -119,7 +115,7 @@ export default function Quiz() {
       if (quickStartTime === 0) setQuickStartTime(Date.now());
       return;
     }
-    setTimeRemaining(modeTimes[mode] || 2 * 60);
+    setTimeRemaining(MODE_TIMES[mode] || 2 * 60);
     timerRef.current = setInterval(() => {
       setTimeRemaining((prev) => Math.max(prev - 1, 0));
     }, 1000);
@@ -140,7 +136,6 @@ export default function Quiz() {
     setConfidence("");
     setShowNoteInput(false);
     setQuestionNote("");
-    setNoteInputVisible(false);
     setNoteSaved(false);
     loadQuestion();
   }, [mode]);
@@ -152,7 +147,6 @@ export default function Quiz() {
     setSelected([]);
     setShowNoteInput(false);
     setQuestionNote("");
-    setNoteInputVisible(false);
     setNoteSaved(false);
 
     // Quick mode
@@ -179,7 +173,6 @@ export default function Quiz() {
         console.error("Failed to load quick quiz questions:", err);
         setQuickQuestions([]);
       }
-      setQuestionNumber((prev) => prev + 1);
       setLoading(false);
       return;
     }
@@ -203,7 +196,6 @@ export default function Quiz() {
           // Note may not exist yet
         }
       }
-      setQuestionNumber((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to load question:", err);
     } finally {
@@ -245,7 +237,7 @@ export default function Quiz() {
         note: questionNote.trim(),
       });
       setNoteSaved(true);
-      setNoteInputVisible(false);
+      setShowNoteInput(false);
       setTimeout(() => setNoteSaved(false), 3000);
     } catch (err) {
       console.error("Failed to save note:", err);
@@ -312,6 +304,22 @@ export default function Quiz() {
         return;
       }
 
+      // Quick Quiz is the only practice mode with a question list to navigate.
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        if (mode !== "quick" || quickQuestions.length < 2) return;
+        e.preventDefault();
+        const delta = e.key === "ArrowRight" ? 1 : -1;
+        const next = Math.min(
+          quickQuestions.length - 1,
+          Math.max(0, quickCurrentIndex + delta)
+        );
+        setQuickCurrentIndex(next);
+        setQuestion(quickQuestions[next]);
+        setFeedback(null);
+        setSelected([]);
+        return;
+      }
+
       const digit = Number(e.key);
       if (
         !feedback &&
@@ -326,7 +334,7 @@ export default function Quiz() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [question, feedback, selected, canSubmit]);
+  }, [question, feedback, selected, canSubmit, mode, quickQuestions, quickCurrentIndex]);
 
   return (
     <div ref={rootRef} className="space-y-6 pb-12">
@@ -374,6 +382,7 @@ export default function Quiz() {
             {MODES.find((m) => m.id === mode)?.desc}
           </p>
           <div className="flex items-center gap-2">
+            <ShortcutsHint />
             <span className="text-sm text-paper-muted">{modeTexts[mode]}</span>
             {mode !== "exam" && mode !== "quick" && (
               <span className="text-sm text-paper-muted" id="timer-elapsed">
@@ -603,13 +612,39 @@ export default function Quiz() {
               {/* Question note */}
               {(!feedback.correct || mode === "quick") && (
                 <div className="mt-3 pt-3 border-t border-border space-y-2">
-                  {questionNote ? (
+                  {showNoteInput ? (
+                    <form onSubmit={handleSaveNote} className="space-y-2">
+                      <textarea
+                        autoFocus
+                        rows={3}
+                        value={questionNote}
+                        onChange={(e) => setQuestionNote(e.target.value)}
+                        placeholder="Write a note to remember this question..."
+                        className="w-full rounded-xl border border-dark-border bg-dark-surface px-3 py-2 text-xs text-paper placeholder:text-paper-dim focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          type="submit"
+                          className="px-4 py-1.5 rounded-full bg-gold hover:bg-gold-hover text-dark-bg text-xs font-semibold transition-colors"
+                        >
+                          Save note
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowNoteInput(false)}
+                          className="px-4 py-1.5 rounded-full border border-dark-border text-paper-muted hover:text-paper text-xs font-medium transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  ) : questionNote ? (
                     <div className="flex items-start gap-2">
                       <Pencil className="w-3 h-3 text-gold mt-0.5 shrink-0" />
                       <div>
                         <p className="text-xs text-paper font-sans">{questionNote}</p>
                         <button
-                          onClick={() => setNoteInputVisible(true)}
+                          onClick={() => setShowNoteInput(true)}
                           className="text-xs text-gold hover:underline font-medium"
                         >
                           Edit
@@ -618,11 +653,14 @@ export default function Quiz() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => setNoteInputVisible(true)}
+                      onClick={() => setShowNoteInput(true)}
                       className="w-full py-2 bg-gold/10 text-gold border border-gold/30 rounded-xl text-xs font-semibold hover:bg-gold/20 transition-colors"
                     >
                       Add note to this question
                     </button>
+                  )}
+                  {noteSaved && (
+                    <p className="text-xs text-sage-light font-sans">Note saved.</p>
                   )}
                 </div>
               )}

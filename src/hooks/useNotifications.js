@@ -84,20 +84,3 @@ export function useNotifications() {
     checkReminderStatus,
   };
 }
-
-/**
- * Hook that returns whether an exam is currently active, for use in
- * suppressing reminders during an exam.
- */
-export function useExamActive() {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    // Exam progress is set via the Exam page's reportExamProgress prop.
-    // This hook is a placeholder that App.jsx can wire up via context
-    // or prop drilling. Defaults to false (no exam active).
-    setIsActive(false);
-  }, []);
-
-  return isActive;
-}

@@ -14450,5 +14450,421 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "Which command creates a standard numbered ACL 10 on a Cisco router?",
+    "explanation": "The `access-list 10 permit` or `access-list 10 deny` command creates a standard numbered ACL. Standard ACLs use numbers 1-99 or 1300-1999.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "ip access-list standard 10",
+        "is_correct": false
+      },
+      {
+        "text": "ip access-list extended 10",
+        "is_correct": false
+      },
+      {
+        "text": "access-list 100 permit ip any any",
+        "is_correct": false
+      },
+      {
+        "text": "access-list 10 permit <source>",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of NAT (Network Address Translation)?",
+    "explanation": "NAT translates private IPv4 addresses to public addresses (and vice versa), allowing multiple internal hosts to share a smaller set of public IP addresses.",
+    "domain": "services_security",
+    "subtopic": "Network Address Translation",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Blocks broadcast traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts traffic between networks",
+        "is_correct": false
+      },
+      {
+        "text": "Translates private addresses to public addresses",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns MAC addresses to hosts",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command disables unused ports on a Cisco switch as a security best practice?",
+    "explanation": "The `shutdown` command administratively disables an unused switch port, preventing unauthorized devices from connecting.",
+    "domain": "services_security",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "spanning-tree portfast",
+        "is_correct": false
+      },
+      {
+        "text": "shutdown",
+        "is_correct": true
+      },
+      {
+        "text": "switchport port-security",
+        "is_correct": false
+      },
+      {
+        "text": "no shutdown",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of DHCP snooping on a Cisco switch?",
+    "explanation": "DHCP snooping filters untrusted DHCP messages and builds a binding table, preventing rogue DHCP servers from assigning incorrect IP addresses.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Filters untrusted DHCP messages and prevents rogue servers",
+        "is_correct": true
+      },
+      {
+        "text": "Blocks all DHCP traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts DHCP traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns static IP addresses",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a Cisco device to use an NTP server?",
+    "explanation": "The `ntp server <ip-address>` command configures the device to synchronize its clock with the specified NTP time source.",
+    "domain": "services_security",
+    "subtopic": "NTP Operations",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "ntp peer <ip-address>",
+        "is_correct": false
+      },
+      {
+        "text": "clock timezone",
+        "is_correct": false
+      },
+      {
+        "text": "ntp server <ip-address>",
+        "is_correct": true
+      },
+      {
+        "text": "ntp update-calendar",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of an ACL applied with `ip access-group` in the inbound direction?",
+    "explanation": "An inbound ACL filters packets as they enter the interface, before the router makes a routing decision, reducing processing overhead.",
+    "domain": "services_security",
+    "subtopic": "Access Control Lists",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Filters packets entering the interface",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts packets",
+        "is_correct": false
+      },
+      {
+        "text": "Filters packets leaving the interface",
+        "is_correct": false
+      },
+      {
+        "text": "Routes packets by ACL number",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables SSH on a Cisco device for remote management?",
+    "explanation": "The `ip domain-name`, `crypto key generate rsa`, and `ip ssh version 2` commands enable SSH. Telnet is disabled in favor of encrypted SSH.",
+    "domain": "services_security",
+    "subtopic": "SSH Configuration",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "ip telnet enable",
+        "is_correct": false
+      },
+      {
+        "text": "line vty 0 4 + password",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh version 1",
+        "is_correct": false
+      },
+      {
+        "text": "ip domain-name + crypto key generate rsa",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of SNMP on a network device?",
+    "explanation": "SNMP (Simple Network Management Protocol) monitors and manages network devices, collecting status information and sending alerts (traps) to a management station.",
+    "domain": "services_security",
+    "subtopic": "SNMP Operations",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Assigns IP addresses dynamically",
+        "is_correct": false
+      },
+      {
+        "text": "Routes packets between subnets",
+        "is_correct": false
+      },
+      {
+        "text": "Monitors and manages network devices",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts traffic between devices",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables AAA authentication for console access on a Cisco device?",
+    "explanation": "The `aaa authentication login console local` command enables AAA authentication using the local database for console line access.",
+    "domain": "services_security",
+    "subtopic": "AAA Security",
+    "difficulty": "hard",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "aaa authentication login console local",
+        "is_correct": true
+      },
+      {
+        "text": "line console 0 + password",
+        "is_correct": false
+      },
+      {
+        "text": "aaa new-model",
+        "is_correct": false
+      },
+      {
+        "text": "username admin password",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of Dynamic ARP Inspection (DAI)?",
+    "explanation": "DAI validates ARP packets against the DHCP snooping binding table, preventing ARP spoofing and man-in-the-middle attacks on the LAN.",
+    "domain": "services_security",
+    "subtopic": "Dynamic ARP Inspection",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Assigns IP addresses via DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "Validates ARP packets against DHCP snooping bindings",
+        "is_correct": true
+      },
+      {
+        "text": "Encrypts ARP traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all ARP traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command verifies DHCP snooping binding table entries?",
+    "explanation": "The `show ip dhcp snooping binding` command displays MAC-to-IP-to-VLAN bindings learned from trusted DHCP servers.",
+    "domain": "services_security",
+    "subtopic": "DHCP Snooping",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "show ip arp",
+        "is_correct": false
+      },
+      {
+        "text": "show mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "show ip dhcp pool",
+        "is_correct": false
+      },
+      {
+        "text": "show ip dhcp snooping binding",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of IPsec transport mode?",
+    "explanation": "Transport mode encrypts only the IP payload (not the original IP header), used for end-to-end encryption between hosts.",
+    "domain": "services_security",
+    "subtopic": "IPsec Site-to-Site",
+    "difficulty": "hard",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Encrypts the entire original IP packet",
+        "is_correct": false
+      },
+      {
+        "text": "Filters traffic by ACL",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns public IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts only the IP payload, not the original header",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command enables Syslog logging on a Cisco device?",
+    "explanation": "The `logging host <ip-address>` command sends Syslog messages to a remote Syslog server for centralized monitoring and auditing.",
+    "domain": "services_security",
+    "subtopic": "Syslog Operations",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "logging host <ip-address>",
+        "is_correct": true
+      },
+      {
+        "text": "ntp server <ip-address>",
+        "is_correct": false
+      },
+      {
+        "text": "ip ssh version 2",
+        "is_correct": false
+      },
+      {
+        "text": "snmp-server host",
+        "is_correct": false
+      }
+    ]
   }
 ]

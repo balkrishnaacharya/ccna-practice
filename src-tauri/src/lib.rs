@@ -13,11 +13,15 @@ pub fn run() {
     let mut builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_process::init())
-        .plugin(tauri_plugin_notification::init());
+        .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_fs::init());
 
     #[cfg(desktop)]
     {
-        builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
+        builder = builder
+            .plugin(tauri_plugin_updater::Builder::new().build())
+            .plugin(tauri_plugin_window_state::Builder::default().build());
     }
 
     builder
@@ -27,10 +31,16 @@ pub fn run() {
                 .app_data_dir()
                 .map_err(|_| "Failed to resolve app data directory".to_string())?
                 .join("ccna.db");
-            std::fs::create_dir_all(db_path.parent().ok_or_else(|| "Failed to resolve db path parent".to_string())?).ok();
+            std::fs::create_dir_all(
+                db_path
+                    .parent()
+                    .ok_or_else(|| "Failed to resolve db path parent".to_string())?,
+            )
+            .map_err(|e| format!("Failed to create app data directory: {e}"))?;
 
             // Always initialize the schema and run migrations (idempotent).
-            let mut conn = db::init(&db_path).expect("failed to init db");
+            let mut conn = db::init(&db_path)
+                .map_err(|e| format!("Failed to initialize the question database: {e}"))?;
 
             // Always synchronize the bundled question bank into the user DB.
             // Preserves user progress, never overwrites user data, idempotent.
@@ -81,6 +91,11 @@ pub fn run() {
             commands::save_question_note,
             commands::get_quick_quiz_questions,
             commands::get_diagnostics_cmd,
+            commands::get_practice_streak,
+            commands::export_progress,
+            commands::save_exam_draft,
+            commands::get_exam_draft,
+            commands::clear_exam_draft,
             notifications::get_notification_settings_cmd,
             notifications::update_notification_setting_cmd,
             notifications::send_in_app_notification_cmd,

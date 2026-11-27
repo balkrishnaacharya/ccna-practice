@@ -1,50 +1,64 @@
-// CCNA Practice — centralized design tokens
-// Single source of truth for colors, typography, and spacing.
-// Use these values consistently across all components.
+// CCNA Practice — canonical design tokens.
+//
+// This is the single source of truth for the palette. tailwind.config.js imports
+// PALETTE directly; styles.css mirrors the same values in CSS custom properties
+// for the few rules Tailwind cannot express. Do not hardcode hex values in
+// components — use the Tailwind utilities generated from these tokens.
 
-export const COLORS = {
-  // Backgrounds
-  background: "#181815",
-  card: "#2A2A27",
-  elevated: "#3A3A36",
-
-  // Primary accent (gold)
-  primary: "#B8842A",
-  primaryHover: "#C99A47",
-  primaryLight: "#B8842A/10",
-  primaryBorder: "#B8842A/30",
+export const PALETTE = {
+  // Chassis
+  chassis: "#0E1118",
+  panel: "#171D25",
+  surface: "#21211D",
+  card: "#262622",
+  elevated: "#2E2E28",
+  border: "rgba(246, 242, 233, 0.10)",
+  borderSubtle: "rgba(246, 242, 233, 0.06)",
 
   // Text
-  text: "#F6F2E9",
-  textMuted: "#A09A8A",
-  textDim: "#6B6B64",
+  ink: "#E8EEF5",
+  muted: "#7C8A97",
+  paper: "#F6F2E9",
+  paperMuted: "rgba(246, 242, 233, 0.70)",
+  paperDim: "rgba(246, 242, 233, 0.60)",
+  paperFaint: "rgba(246, 242, 233, 0.20)",
 
-  // Borders
-  border: "#3A3A36",
+  // Gold — surgical accent
+  gold: "#BD8D39",
+  goldHover: "#C99A47",
+  goldLight: "#D8A243",
+  goldGlow: "rgba(189, 141, 57, 0.35)",
+  accentGold: "#C9A227",
 
-  // Semantic
-  success: "#8FAE62",
-  warning: "#D9A441",
-  error: "#C1633C",
-  disabled: "#4A443A",
+  // Sage — correct / success
+  sage: "#5C6E4E",
+  sageHover: "#6C805C",
+  sageLight: "#93AB80",
+  sageGlow: "rgba(92, 110, 78, 0.35)",
+
+  // Heart — incorrect / danger
+  heart: "#C36842",
+  heartHover: "#D1724B",
+  heartLight: "#E1825B",
+  heartGlow: "rgba(195, 104, 66, 0.35)",
+
+  // Peach — secondary signal
+  peach: "#E8A87C",
+  peachLight: "#F0B891",
+  peachMuted: "rgba(232, 168, 124, 0.20)",
 };
 
+// Back-compatible aliases retained for any code importing the old names.
+export const COLORS = PALETTE;
+
 export const TYPOGRAPHY = {
-  // Page titles
   pageTitle: "text-2xl font-serif font-normal text-paper",
-  // Section headings
   sectionHeading: "text-lg font-semibold text-paper",
-  // Card headings
   cardHeading: "text-base font-semibold text-paper",
-  // Body text
   body: "text-sm text-paper",
-  // Supporting descriptions
   description: "text-xs text-paper-muted",
-  // Labels
   label: "text-xs font-medium text-paper-dim",
-  // Small metadata
   metadata: "text-xs text-paper-dim",
-  // Numeric statistics
   statistic: "text-2xl font-serif font-normal text-paper",
 };
 

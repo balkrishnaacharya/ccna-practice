@@ -1,7 +1,50 @@
-use rusqlite::{params, Connection, OptionalExtension, Result};
+use rusqlite::{params, Connection, OptionalExtension, Result, TransactionBehavior};
 use std::path::Path;
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
+
+/// Run `f` inside a `BEGIN IMMEDIATE` transaction.
+///
+/// `BEGIN DEFERRED` (rusqlite's default) lets two writers upgrade to a write
+/// lock at the same time and one of them fails with SQLITE_BUSY. Taking the
+/// RESERVED lock up front serializes writers, which matters most on Android
+/// where the database lives on slower shared storage.
+pub fn with_immediate_tx<T>(
+    conn: &Connection,
+    f: impl FnOnce(&Connection) -> Result<T>,
+) -> Result<T> {
+    conn.execute_batch("BEGIN IMMEDIATE;")?;
+    match f(conn) {
+        Ok(value) => {
+            conn.execute_batch("COMMIT;")?;
+            Ok(value)
+        }
+        Err(err) => {
+            let _ = conn.execute_batch("ROLLBACK;");
+            Err(err)
+        }
+    }
+}
+
+/// Same as `with_immediate_tx` for call sites that already use `String` errors.
+pub fn with_immediate_tx_string<T>(
+    conn: &Connection,
+    f: impl FnOnce(&Connection) -> Result<T, String>,
+) -> Result<T, String> {
+    conn.execute_batch("BEGIN IMMEDIATE;")
+        .map_err(|e| format!("failed to begin transaction: {e}"))?;
+    match f(conn) {
+        Ok(value) => {
+            conn.execute_batch("COMMIT;")
+                .map_err(|e| format!("failed to commit transaction: {e}"))?;
+            Ok(value)
+        }
+        Err(err) => {
+            let _ = conn.execute_batch("ROLLBACK;");
+            Err(err)
+        }
+    }
+}
 
 // Bundled question bank embedded at compile time.
 pub static BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
@@ -14,11 +57,12 @@ pub struct Db(pub Mutex<Connection>);
 
 pub fn init(path: &Path) -> Result<Connection> {
     let conn = Connection::open(path)?;
+    // journal_mode cannot be changed once a transaction is open.
+    conn.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys = ON;")?;
+
+    with_immediate_tx(&conn, |conn| {
     conn.execute_batch(
         "
-        PRAGMA journal_mode=WAL;
-        PRAGMA foreign_keys = ON;
-
         CREATE TABLE IF NOT EXISTS questions (
             id INTEGER PRIMARY KEY,
             stem TEXT NOT NULL,
@@ -113,6 +157,14 @@ pub fn init(path: &Path) -> Result<Connection> {
             body TEXT NOT NULL,
             occurred_at INTEGER NOT NULL DEFAULT (strftime('%s','now')),
             dismissed_at INTEGER
+        );
+
+        CREATE TABLE IF NOT EXISTS exam_drafts (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            questions_json TEXT NOT NULL,
+            answers_json TEXT NOT NULL,
+            seconds_remaining INTEGER NOT NULL,
+            updated_at INTEGER NOT NULL
         );
         ",
     )?;
@@ -268,6 +320,9 @@ pub fn init(path: &Path) -> Result<Connection> {
         }
     }
 
+    Ok(())
+    })?;
+
     Ok(conn)
 }
 
@@ -291,7 +346,7 @@ pub fn sync_bundled_bank(
     let seed = Connection::open(seed_path).map_err(|e| e.to_string())?;
 
     let tx = conn
-        .transaction()
+        .transaction_with_behavior(TransactionBehavior::Immediate)
         .map_err(|e| e.to_string())?;
 
     let mut added: i64 = 0;

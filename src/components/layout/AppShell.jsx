@@ -3,11 +3,13 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 import DirectionalRouteWrapper from "../DirectionalRouteWrapper";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Flame } from "lucide-react";
+import { useStreak } from "@/hooks/useStreak";
 
 export function AppShell({ children, guardNavigation, onOpenExamModal, profileName }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { practiceStreak, practiceStreakMin } = useStreak();
 
   // Mobile menu toggle
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
@@ -96,6 +98,16 @@ export function AppShell({ children, guardNavigation, onOpenExamModal, profileNa
           </div>
 
           <div className="flex items-center gap-4">
+            {practiceStreak > 0 && (
+              <span
+                aria-label="Practice streak"
+                title={`${practiceStreak}-day practice streak (at least ${practiceStreakMin} questions per day)`}
+                className="inline-flex items-center gap-1 rounded-full border border-gold/30 bg-gold/10 px-2.5 py-1 text-xs font-semibold text-gold"
+              >
+                <Flame size={13} strokeWidth={2} />
+                {practiceStreak}
+              </span>
+            )}
             {profileName && (
               <span className="text-xs text-paper-muted hidden sm:inline">
                 Candidate: <span className="text-paper font-medium">{profileName}</span>

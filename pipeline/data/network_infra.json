@@ -18166,5 +18166,741 @@
         "is_correct": false
       }
     ]
+  },
+  {
+    "stem": "What is the default administrative distance of a directly connected route in Cisco IOS?",
+    "explanation": "Directly connected routes have an administrative distance of 0, making them the most preferred source of routing information in Cisco IOS.",
+    "domain": "network_infra",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "0",
+        "is_correct": true
+      },
+      {
+        "text": "90",
+        "is_correct": false
+      },
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "110",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv4 address class provides the largest number of hosts per network?",
+    "explanation": "Class A networks use a default mask of /8 (255.0.0.0), providing approximately 16.7 million hosts per network, the largest of the traditional classes.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Addressing",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Class B",
+        "is_correct": false
+      },
+      {
+        "text": "Class A",
+        "is_correct": true
+      },
+      {
+        "text": "Class C",
+        "is_correct": false
+      },
+      {
+        "text": "Class D",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the `ip helper-address` command do on a Cisco router interface?",
+    "explanation": "It forwards UDP broadcast requests (such as DHCP Discover) from clients to a specified DHCP server on a different subnet, enabling centralized DHCP services.",
+    "domain": "network_infra",
+    "subtopic": "DHCP and Helper Address",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Encrypts traffic between clients and servers",
+        "is_correct": false
+      },
+      {
+        "text": "Assigns static IP addresses to clients",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks unauthorized DHCP servers",
+        "is_correct": false
+      },
+      {
+        "text": "Forwards broadcast DHCP requests to a remote DHCP server",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which command saves the running configuration to NVRAM on a Cisco device?",
+    "explanation": "The `copy running-config startup-config` command copies the active configuration from RAM to NVRAM, where it is stored as startup-config and loaded on reboot.",
+    "domain": "network_infra",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "reload",
+        "is_correct": false
+      },
+      {
+        "text": "write erase",
+        "is_correct": false
+      },
+      {
+        "text": "copy running-config startup-config",
+        "is_correct": true
+      },
+      {
+        "text": "copy startup-config running-config",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the Spanning Tree Protocol (STP) in a switched LAN?",
+    "explanation": "STP prevents Layer 2 loops by blocking redundant paths while maintaining a loop-free topology, avoiding broadcast storms and MAC table instability.",
+    "domain": "network_infra",
+    "subtopic": "Spanning Tree Protocol",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Routes packets between VLANs",
+        "is_correct": false
+      },
+      {
+        "text": "Prevents Layer 2 loops by blocking redundant paths",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses to clients",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts wireless traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which subnet mask provides 14 usable host addresses per subnet?",
+    "explanation": "A /28 mask (255.255.255.240) provides 16 total addresses minus 2 (network and broadcast), leaving 14 usable host addresses.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "255.255.255.224",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.255.192",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.255.240",
+        "is_correct": true
+      },
+      {
+        "text": "255.255.255.248",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the primary function of a default gateway on a host?",
+    "explanation": "The default gateway is the router interface that forwards traffic destined for networks outside the local subnet, enabling communication beyond the local LAN.",
+    "domain": "network_infra",
+    "subtopic": "Inter-VLAN Routing",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Forwards traffic to networks outside the local subnet",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses via DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "Resolves hostnames to IP addresses",
+        "is_correct": false
+      },
+      {
+        "text": "Filters traffic by MAC address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which Cisco command displays the current ARP table on a router or switch?",
+    "explanation": "The `show arp` command displays the Address Resolution Protocol table, mapping known IP addresses to their corresponding MAC addresses.",
+    "domain": "network_infra",
+    "subtopic": "Network Components",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "show mac address-table",
+        "is_correct": false
+      },
+      {
+        "text": "show interfaces",
+        "is_correct": false
+      },
+      {
+        "text": "show ip route",
+        "is_correct": false
+      },
+      {
+        "text": "show arp",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the broadcast address for the subnet 192.168.10.96/27?",
+    "explanation": "A /27 mask has 5 host bits (32 addresses). The network address is 192.168.10.96, so the broadcast address is 192.168.10.127.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "192.168.10.223",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.95",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.126",
+        "is_correct": false
+      },
+      {
+        "text": "192.168.10.127",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which protocol dynamically discovers neighboring Cisco devices and their directly connected interfaces?",
+    "explanation": "CDP (Cisco Discovery Protocol) is a proprietary Layer 2 protocol that discovers directly connected Cisco neighbors, their IP addresses, platform, and capabilities.",
+    "domain": "network_infra",
+    "subtopic": "Discovery Protocols",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "STP",
+        "is_correct": false
+      },
+      {
+        "text": "DHCP",
+        "is_correct": false
+      },
+      {
+        "text": "CDP",
+        "is_correct": true
+      },
+      {
+        "text": "LLDP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the maximum number of usable hosts in a /26 subnet?",
+    "explanation": "A /26 mask leaves 6 host bits: 2^6 = 64 total addresses, minus 2 for network and broadcast = 62 usable hosts.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "30",
+        "is_correct": false
+      },
+      {
+        "text": "254",
+        "is_correct": false
+      },
+      {
+        "text": "62",
+        "is_correct": true
+      },
+      {
+        "text": "14",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command enters privileged EXEC mode on a Cisco IOS device?",
+    "explanation": "The `enable` command moves the user from user EXEC mode to privileged EXEC mode, granting access to configuration and diagnostic commands.",
+    "domain": "network_infra",
+    "subtopic": "Device Hardening",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "enable",
+        "is_correct": true
+      },
+      {
+        "text": "configure terminal",
+        "is_correct": false
+      },
+      {
+        "text": "disable",
+        "is_correct": false
+      },
+      {
+        "text": "exit",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the native VLAN on an 802.1Q trunk?",
+    "explanation": "The native VLAN carries untagged traffic on an 802.1Q trunk. By default, VLAN 1 is the native VLAN on Cisco switches.",
+    "domain": "network_infra",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Carries untagged traffic on an 802.1Q trunk",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns IP addresses to trunk ports",
+        "is_correct": false
+      },
+      {
+        "text": "Blocks all inter-VLAN traffic",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts trunk traffic",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 address type is used for communication on a single link segment?",
+    "explanation": "Link-local IPv6 addresses (fe80::/10) are used for communication between devices on the same local link and are not routable beyond that link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Global unicast",
+        "is_correct": false
+      },
+      {
+        "text": "Multicast",
+        "is_correct": false
+      },
+      {
+        "text": "Link-local",
+        "is_correct": true
+      },
+      {
+        "text": "Anycast",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the `show ip route` command display on a Cisco router?",
+    "explanation": "It displays the routing table, including directly connected routes, static routes, and dynamically learned routes with their administrative distances and metrics.",
+    "domain": "network_infra",
+    "subtopic": "Routing Concepts",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "The running configuration",
+        "is_correct": false
+      },
+      {
+        "text": "The router's routing table",
+        "is_correct": true
+      },
+      {
+        "text": "The ARP cache",
+        "is_correct": false
+      },
+      {
+        "text": "The MAC address table",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which wildcard mask matches all hosts in the 10.1.16.0/21 network?",
+    "explanation": "A /21 network has 11 host bits. The wildcard mask is the bitwise inverse of 255.255.248.0, which is 0.0.7.255.",
+    "domain": "network_infra",
+    "subtopic": "IPv4 Subnetting",
+    "difficulty": "hard",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "0.0.7.255",
+        "is_correct": true
+      },
+      {
+        "text": "0.0.31.255",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "0.0.15.255",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of a VLAN in a switched network?",
+    "explanation": "A VLAN (Virtual LAN) logically segments a switched network into separate broadcast domains, improving security and reducing broadcast traffic.",
+    "domain": "network_infra",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Logically segments a switched network into separate broadcast domains",
+        "is_correct": true
+      },
+      {
+        "text": "Assigns MAC addresses to ports",
+        "is_correct": false
+      },
+      {
+        "text": "Connects multiple WAN links",
+        "is_correct": false
+      },
+      {
+        "text": "Encrypts traffic between switches",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which command configures a Cisco switch port as an access port in VLAN 10?",
+    "explanation": "The `switchport mode access` and `switchport access vlan 10` commands configure an interface as a Layer 2 access port assigned to VLAN 10.",
+    "domain": "network_infra",
+    "subtopic": "VLANs and Trunking",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "switchport mode access; switchport access vlan 10",
+        "is_correct": true
+      },
+      {
+        "text": "switchport trunk native vlan 10",
+        "is_correct": false
+      },
+      {
+        "text": "switchport mode trunk",
+        "is_correct": false
+      },
+      {
+        "text": "ip address 10.0.0.1 255.255.255.0",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What is the loopback IPv4 address used to test the local TCP/IP stack?",
+    "explanation": "127.0.0.1 is the IPv4 loopback address, used to verify that the TCP/IP stack is installed and functioning correctly on the local host.",
+    "domain": "network_infra",
+    "subtopic": "TCP/IP Transport",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "0.0.0.0",
+        "is_correct": false
+      },
+      {
+        "text": "255.255.255.255",
+        "is_correct": false
+      },
+      {
+        "text": "169.254.0.1",
+        "is_correct": false
+      },
+      {
+        "text": "127.0.0.1",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "Which cable type is used to connect two Cisco switches directly using their Gigabit Ethernet ports?",
+    "explanation": "A straight-through Ethernet cable is used to connect switches to switches using auto-MDIX or standard Gigabit Ethernet ports on modern Cisco switches.",
+    "domain": "network_infra",
+    "subtopic": "Cabling Standards",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Rollover cable",
+        "is_correct": false
+      },
+      {
+        "text": "Fiber optic cable",
+        "is_correct": false
+      },
+      {
+        "text": "Crossover cable",
+        "is_correct": false
+      },
+      {
+        "text": "Straight-through Ethernet cable",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "stem": "What is the purpose of the `no shutdown` command on a Cisco interface?",
+    "explanation": "It administratively enables the interface, bringing it up if the physical layer is operational. Interfaces are shut down by default on Cisco routers.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Administratively enables the interface",
+        "is_correct": true
+      },
+      {
+        "text": "Disables the interface",
+        "is_correct": false
+      },
+      {
+        "text": "Configures an IP address",
+        "is_correct": false
+      },
+      {
+        "text": "Resets the interface to factory defaults",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "Which IPv6 prefix is reserved for link-local addresses?",
+    "explanation": "IPv6 link-local addresses use the fe80::/10 prefix, meaning the first 10 bits are fixed and the address is only valid on the local link.",
+    "domain": "network_infra",
+    "subtopic": "IPv6 Addressing",
+    "difficulty": "medium",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "fe80::/10",
+        "is_correct": true
+      },
+      {
+        "text": "ff00::/8",
+        "is_correct": false
+      },
+      {
+        "text": "::1/128",
+        "is_correct": false
+      },
+      {
+        "text": "2001::/16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "stem": "What does the `show interfaces status` command display on a Cisco switch?",
+    "explanation": "It displays a summary of all switch interfaces, including their administrative status, operational status, VLAN assignment, duplex, and speed.",
+    "domain": "network_infra",
+    "subtopic": "Interface Troubleshooting",
+    "difficulty": "easy",
+    "source": "legacy-bank",
+    "verified": false,
+    "reviewer": null,
+    "source_url": null,
+    "reported": false,
+    "reporter": null,
+    "report_reason": null,
+    "choices": [
+      {
+        "text": "Spanning Tree state",
+        "is_correct": false
+      },
+      {
+        "text": "Interface status summary",
+        "is_correct": true
+      },
+      {
+        "text": "Routing table entries",
+        "is_correct": false
+      },
+      {
+        "text": "ARP cache entries",
+        "is_correct": false
+      }
+    ]
   }
 ]

@@ -7,10 +7,10 @@
 
 /* CCNA design tokens — single source of truth for the CCNA Practice design system */
 :root {
-  --ccna-bg: #181815;
-  --ccna-gold: #B8842A;
+  --ccna-bg: #0E1118;
+  --ccna-gold: #BD8D39;
   --ccna-paper: #F6F2E9;
-  --ccna-card: #2A2A27;
+  --ccna-card: #262622;
   --ccna-border: #3A3A36;
   --ccna-muted: #8A8A82;
 }
@@ -119,7 +119,7 @@
 }
 
 .driver-popover.ccna-tour-popover {
-  background-color: #181815 !important;
+  background-color: #0E1118 !important;
   color: #F6F2E9 !important;
   border: 1px solid rgba(189, 141, 57, 0.35) !important;
   border-radius: 1rem !important;
@@ -191,7 +191,7 @@
 .driver-popover.ccna-tour-popover .driver-popover-next-btn {
   background: #BD8D39 !important;
   border: 1px solid #BD8D39 !important;
-  color: #181815 !important;
+  color: #0E1118 !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   border-radius: 9999px !important;
@@ -224,11 +224,11 @@
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-arrow-side-bottom {
-  border-top-color: #181815 !important;
+  border-top-color: #0E1118 !important;
 }
 
 .driver-popover.ccna-tour-popover .driver-popover-arrow-side-top {
-  border-bottom-color: #181815 !important;
+  border-bottom-color: #0E1118 !important;
 }
 
 /* Skip Tour button — quiet secondary action, sits left of progress text */

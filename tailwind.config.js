@@ -1,56 +1,89 @@
+import { PALETTE as p } from "./src/lib/design-tokens.js";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
+        // shadcn/Radix primitives use these CSS-variable-backed tokens. Without
+        // the mappings their utility classes (bg-popover, text-muted-foreground,
+        // ring-ring, ...) are silently dropped by Tailwind at build time.
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
         dark: {
-          bg: "#0E1118",
-          panel: "#171D25",
-          surface: "#21211D",
-          card: "#262622",
-          elevated: "#2E2E28",
-          border: "rgba(246, 242, 233, 0.10)",
-          borderSubtle: "rgba(246, 242, 233, 0.06)",
+          bg: p.chassis,
+          panel: p.panel,
+          surface: p.surface,
+          card: p.card,
+          elevated: p.elevated,
+          border: p.border,
+          borderSubtle: p.borderSubtle,
         },
         paper: {
-          DEFAULT: "#F6F2E9",
-          muted: "rgba(246, 242, 233, 0.70)",
-          dim: "rgba(246, 242, 233, 0.60)",
-          faint: "rgba(246, 242, 233, 0.20)",
+          DEFAULT: p.paper,
+          muted: p.paperMuted,
+          dim: p.paperDim,
+          faint: p.paperFaint,
         },
-        ink: "#E8EEF5",
-        muted: "#7C8A97",
+        ink: p.ink,
+        muted: {
+          DEFAULT: p.muted,
+          foreground: "hsl(var(--muted-foreground))",
+        },
         text: {
-          ink: "#E8EEF5",
-          muted: "#7C8A97",
+          ink: p.ink,
+          muted: p.muted,
         },
         gold: {
-          DEFAULT: "#BD8D39",
-          hover: "#C99A47",
-          light: "#D8A243",
-          glow: "rgba(189, 141, 57, 0.35)",
+          DEFAULT: p.gold,
+          hover: p.goldHover,
+          light: p.goldLight,
+          glow: p.goldGlow,
         },
         sage: {
-          DEFAULT: "#5C6E4E",
-          hover: "#6C805C",
-          light: "#93AB80",
-          glow: "rgba(92, 110, 78, 0.35)",
+          DEFAULT: p.sage,
+          hover: p.sageHover,
+          light: p.sageLight,
+          glow: p.sageGlow,
         },
         heart: {
-          DEFAULT: "#C36842",
-          hover: "#D1724B",
-          light: "#E1825B",
-          glow: "rgba(195, 104, 66, 0.35)",
+          DEFAULT: p.heart,
+          hover: p.heartHover,
+          light: p.heartLight,
+          glow: p.heartGlow,
         },
         peach: {
-          DEFAULT: "#E8A87C",
-          light: "#F0B891",
-          muted: "rgba(232, 168, 124, 0.20)",
+          DEFAULT: p.peach,
+          light: p.peachLight,
+          muted: p.peachMuted,
         },
         accent: {
-          DEFAULT: "#BD8D39",
-          gold: "#C9A227",
+          DEFAULT: p.gold,
+          gold: p.accentGold,
+          foreground: "hsl(var(--accent-foreground))",
         },
         border: "var(--ccna-border)",
       },
@@ -72,21 +105,11 @@ export default {
     },
   },
   safelist: [
-    {
-      pattern: /bg-dark-bg/,
-    },
-    {
-      pattern: /text-ink/,
-    },
-    {
-      pattern: /text-paper/,
-    },
-    {
-      pattern: /text-paper-muted/,
-    },
-    {
-      pattern: /border-border/,
-    },
+    { pattern: /bg-dark-bg/ },
+    { pattern: /text-ink/ },
+    { pattern: /text-paper/ },
+    { pattern: /text-paper-muted/ },
+    { pattern: /border-border/ },
   ],
   plugins: [],
 };

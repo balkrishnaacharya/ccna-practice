@@ -34,6 +34,7 @@ pub fn insert_question(
     .unwrap();
 }
 
+#[allow(dead_code)]
 pub fn insert_choice(
     conn: &mut rusqlite::Connection,
     id: i64,
@@ -48,6 +49,7 @@ pub fn insert_choice(
     .unwrap();
 }
 
+#[allow(dead_code)]
 pub fn add_answer(conn: &mut rusqlite::Connection, question_id: i64, correct: bool, answered_at: i64) {
     conn.execute(
         "INSERT INTO answers (question_id, correct, answered_at) VALUES (?1, ?2, ?3)",
@@ -56,6 +58,7 @@ pub fn add_answer(conn: &mut rusqlite::Connection, question_id: i64, correct: bo
     .unwrap();
 }
 
+#[allow(dead_code)]
 pub fn noon_epoch(conn: &mut rusqlite::Connection, days_ago: i64) -> i64 {
     conn.query_row(
         "SELECT CAST(strftime('%s', date('now', 'localtime', ?1) || ' 12:00:00', 'utc') AS INTEGER)",
@@ -65,6 +68,7 @@ pub fn noon_epoch(conn: &mut rusqlite::Connection, days_ago: i64) -> i64 {
     .unwrap()
 }
 
+#[allow(dead_code)]
 pub fn seed_exam_bank(conn: &mut rusqlite::Connection) {
     let targets = [
         ("network_infra", 25usize),

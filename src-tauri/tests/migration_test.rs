@@ -3,6 +3,7 @@ mod common;
 use ccna_practice_lib::db;
 use rusqlite::{params, Connection, OptionalExtension};
 use std::fs;
+#[allow(unused_imports)]
 use tempfile::tempdir;
 
 // Helper: write bundled DB to a temp file and return the path.

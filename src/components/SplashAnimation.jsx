@@ -117,11 +117,14 @@ export default function SplashAnimation({ onComplete }) {
         onComplete();
       }, 5600);
 
+      let fpsMonitorId = 0;
+
       const skip = () => {
         sessionStorage.setItem("ccna_splash_seen", "true");
         setIsSkipped(true);
         tl.kill();
         cancelAnimationFrame(rafId);
+        cancelAnimationFrame(fpsMonitorId);
         window.removeEventListener("pointerdown", onSkip);
         window.removeEventListener("keydown", onKeySkip);
         onComplete();
@@ -134,6 +137,21 @@ export default function SplashAnimation({ onComplete }) {
 
       window.addEventListener("pointerdown", onSkip, { once: true });
       window.addEventListener("keydown", onKeySkip, { once: true });
+
+      // Sample the first 500ms. A webview that cannot sustain 30 FPS should
+      // hand off immediately instead of showing a stuttering intro.
+      let fpsFrames = 0;
+      const fpsStart = performance.now();
+      const monitorFps = (now) => {
+        fpsFrames += 1;
+        const elapsed = now - fpsStart;
+        if (elapsed < 500) {
+          fpsMonitorId = requestAnimationFrame(monitorFps);
+        } else if ((fpsFrames * 1000) / elapsed < 30) {
+          skip();
+        }
+      };
+      fpsMonitorId = requestAnimationFrame(monitorFps);
 
       // State driven ONLY by GSAP timeline (single source of truth)
       const state = {
@@ -432,6 +450,7 @@ export default function SplashAnimation({ onComplete }) {
         clearTimeout(safetyTimer);
         tl.kill();
         cancelAnimationFrame(rafId);
+        cancelAnimationFrame(fpsMonitorId);
         window.removeEventListener("pointerdown", onSkip);
         window.removeEventListener("keydown", onKeySkip);
       };
