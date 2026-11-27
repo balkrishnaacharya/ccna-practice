@@ -251,47 +251,6 @@ jobs:
           gh release upload "$TAG" release-android/*.apk --clobber --repo "${{ github.repository }}"
           echo "✓ Android APK uploaded successfully!"
 
-      - name: Generate updater manifest (latest.json)
-        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '')
-        env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-        run: |
-          set -euo pipefail
-          TAG="${{ inputs.release_tag || github.ref_name }}"
-          VER="${TAG#v}"
-          echo "Generating latest.json updater manifest for tag: $TAG (version $VER)"
-          
-          mkdir -p latest
-          
-          # Create the combined latest.json
-          cat > latest.json << EOF
-          {
-            "version": "$TAG",
-            "notes": "CCNA Practice ${TAG} release",
-            "pub_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-            "platforms": {
-              "windows-x86_64": {
-                "signature": "<windows-x86_64-signature-base64>",
-                "url": "https://github.com/balkrishnaacharya/ccna-practice/releases/download/v$TAG/CCNA.Practice_${VER}_x64-setup.exe"
-              },
-              "linux-x86_64": {
-                "signature": "<linux-x86_64-signature-base64>",
-                "url": "https://github.com/balkrishnaacharya/ccna-practice/releases/download/v$TAG/CCNA.Practice_${VER}_amd64.AppImage"
-              }
-            }
-          }
-          EOF
-          
-          # Upload latest.json as a release asset
-          echo "latest.json generated. Uploading to release..."
-          gh release upload "$TAG" latest.json --clobber --repo "${{ github.repository }}"
-          echo "✓ latest.json uploaded successfully!"
-          
-          # Clean up
-          rm -rf latest
-          
-          echo "latest.json generation complete."
-
       - name: Verify release assets & updater manifest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -45,22 +45,13 @@ test("CI: lint workflow runs on pushes and pull requests", () => {
   assert.ok(wf.includes("npm run lint"), "lint runs in CI");
 });
 
-test("CI: release URLs derive the version from the tag", () => {
+test("CI: updater manifest is produced by tauri-action, not a redundant step", () => {
   const wf = read("../.github/workflows/build.yml");
-  assert.ok(wf.includes('VER="${TAG#v}"'), "version is stripped from the tag");
-  assert.ok(wf.includes("CCNA.Practice_${VER}_x64-setup.exe"), "Windows URL is dynamic");
-  assert.ok(wf.includes("CCNA.Practice_${VER}_amd64.AppImage"), "Linux URL is dynamic");
+  assert.ok(wf.includes("uploadUpdaterJson: true"), "tauri-action uploads latest.json");
+  assert.ok(!wf.includes("Generate updater manifest"), "manual manifest step removed");
+  assert.ok(!wf.includes("includeUpdaterJson"), "unsupported input removed");
+  assert.ok(!wf.includes('-c\'{"bundle"'), "broken inline config override removed");
   assert.ok(!/CCNA\.Practice_0\.\d+\.\d+/.test(wf), "no hardcoded version in release URLs");
-});
-
-test("CI: heredoc body stays indented inside the run block", () => {
-  const wf = read("../.github/workflows/build.yml");
-  const start = wf.indexOf("cat > latest.json << EOF");
-  const end = wf.indexOf("\n          EOF", start);
-  assert.ok(start !== -1 && end !== -1, "heredoc found");
-  const body = wf.slice(start, end).split("\n").slice(1);
-  const unindented = body.filter((line) => line.length > 0 && !/^\s+/.test(line));
-  assert.deepEqual(unindented, [], "heredoc content must be indented for valid YAML");
 });
 
 test("Rust commands are split into cohesive modules with a facade", () => {
