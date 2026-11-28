@@ -7,7 +7,7 @@ pub fn setup_integration_db() -> (db::Db, TempDir) {
     let dir = tempfile::tempdir().unwrap();
     let path = dir.path().join("test.db");
     let conn = db::init(path.as_path()).unwrap();
-    (db::Db(Mutex::new(conn)), dir)
+    (db::Db::new(conn), dir)
 }
 
 /// Runs `f` with the database mutex locked; the lock is released when `f`

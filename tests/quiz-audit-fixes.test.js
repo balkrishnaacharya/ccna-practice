@@ -48,12 +48,19 @@ test("Backend: row_to_question fetches subtopic and stats in one query", () => {
   );
 });
 
-test("Backend: DB setup returns errors instead of panicking", () => {
+test("Backend: DB setup always registers state and reports failures", () => {
   const src = readFileSync(
     new URL("../src-tauri/src/lib.rs", import.meta.url),
     "utf8"
   );
   assert.ok(!src.includes(".expect(\"failed to init db\")"), "no panic on init failure");
-  assert.ok(src.includes("Failed to initialize the question database"), "descriptive error");
+  assert.ok(src.includes("open_database(&db_path)"), "DB init has a retry/fallback path");
+  assert.ok(src.includes(".manage(db::Db(db::shared_connection()))"), "Db registered on Builder");
+  assert.ok(src.includes("db::install_connection(conn)"), "setup installs the real connection");
+  assert.ok(src.includes("get_startup_error"), "startup failures are surfaced to the UI");
+
+  const dbSrc = readFileSync(new URL("../src-tauri/src/db.rs", import.meta.url), "utf8");
+  assert.ok(dbSrc.includes("fn wait_ready()"), "commands wait for DB readiness");
+  assert.ok(dbSrc.includes("Condvar"), "readiness uses a condvar");
   assert.ok(!src.includes("[DEBUG]"), "debug logging removed");
 });

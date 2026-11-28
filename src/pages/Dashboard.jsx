@@ -27,6 +27,7 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
   const [streak, setStreak] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [startupError, setStartupError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +35,9 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
     const today = new Date().toISOString().split("T")[0];
 
     const fetchAllData = async () => {
+      invoke("get_startup_error")
+        .then((msg) => { if (mounted && msg) setStartupError(msg); })
+        .catch(() => {});
       try {
         const [statsData, subtopicData, reviewCount, flashcardCount, streakData] = await Promise.all([
           invoke("get_stats"),
@@ -138,6 +142,11 @@ export default function Dashboard({ profileName, onOpenExamModal }) {
     return (
       <div className="py-24 text-center space-y-4 max-w-md mx-auto">
         <p className="text-heart-light text-sm font-sans">Unable to load dashboard data: {error}</p>
+        {startupError && (
+          <p className="text-xs text-paper-muted font-mono break-words">
+            Startup diagnostic: {startupError}
+          </p>
+        )}
         <button
           type="button"
           onClick={() => window.location.reload()}

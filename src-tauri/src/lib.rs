@@ -4,8 +4,57 @@ pub mod notifications;
 
 use db::BUNDLED_DB;
 
-use std::sync::Mutex;
+use std::sync::{Mutex, OnceLock};
 use tauri::Manager;
+
+/// Captures a startup failure so the UI can show the real cause instead of the
+/// opaque "state not managed for field 'db'" Tauri error.
+static STARTUP_ERROR: OnceLock<Mutex<Option<String>>> = OnceLock::new();
+
+fn record_startup_error(message: impl Into<String>) {
+    let message = message.into();
+    let slot = STARTUP_ERROR.get_or_init(|| Mutex::new(None));
+    if let Ok(mut guard) = slot.lock() {
+        *guard = Some(message.clone());
+    }
+    eprintln!("[ccna-startup] {message}");
+}
+
+#[tauri::command]
+fn get_startup_error() -> Option<String> {
+    STARTUP_ERROR
+        .get()
+        .and_then(|slot| slot.lock().ok())
+        .and_then(|guard| guard.clone())
+}
+
+fn open_database(path: &std::path::Path) -> rusqlite::Connection {
+    match db::init(path) {
+        Ok(conn) => conn,
+        Err(first) => {
+            // A stale -wal/-shm from a killed app can block BEGIN IMMEDIATE.
+            record_startup_error(format!("db init failed ({first}); retrying after clearing WAL/SHM"));
+            let name = path.to_string_lossy();
+            let _ = std::fs::remove_file(format!("{name}-wal"));
+            let _ = std::fs::remove_file(format!("{name}-shm"));
+            match db::init(path) {
+                Ok(conn) => {
+                    record_startup_error("recovered on retry".to_string());
+                    conn
+                }
+                Err(second) => {
+                    record_startup_error(format!(
+                        "db retry failed ({second}); falling back to in-memory database"
+                    ));
+                    // Keep the app alive with an empty in-memory DB so commands
+                    // still resolve; the bank can be re-synced on next launch.
+                    rusqlite::Connection::open_in_memory()
+                        .expect("in-memory sqlite must be available")
+                }
+            }
+        }
+    }
+}
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -15,7 +64,10 @@ pub fn run() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_dialog::init())
-        .plugin(tauri_plugin_fs::init());
+        .plugin(tauri_plugin_fs::init())
+        // Register Db on the Builder, not in setup(): on Android the state
+        // manager used by commands does not see state added later in setup.
+        .manage(db::Db(db::shared_connection()));
 
     #[cfg(desktop)]
     {
@@ -26,46 +78,44 @@ pub fn run() {
 
     builder
         .setup(|app| {
-            let db_path = app
+            let data_dir = app
                 .path()
                 .app_data_dir()
-                .map_err(|_| "Failed to resolve app data directory".to_string())?
-                .join("ccna.db");
-            std::fs::create_dir_all(
-                db_path
-                    .parent()
-                    .ok_or_else(|| "Failed to resolve db path parent".to_string())?,
-            )
-            .map_err(|e| format!("Failed to create app data directory: {e}"))?;
+                .map_err(|e| {
+                    record_startup_error(format!("app_data_dir failed: {e}"));
+                    format!("Failed to resolve app data directory: {e}")
+                })?;
+            let db_path = data_dir.join("ccna.db");
+            eprintln!("[ccna-startup] db path: {}", db_path.display());
 
-            // Always initialize the schema and run migrations (idempotent).
-            let mut conn = db::init(&db_path)
-                .map_err(|e| format!("Failed to initialize the question database: {e}"))?;
-
-            // Always synchronize the bundled question bank into the user DB.
-            // Preserves user progress, never overwrites user data, idempotent.
-            // Write the embedded bundled DB to a temp file in the app data dir
-            // so it can be opened by rusqlite (works on Android where the
-            // resources/ccna.db path does not exist as a filesystem path).
-            let bundled_path = app
-                .path()
-                .app_data_dir()
-                .map_err(|_| "Failed to resolve app data directory".to_string())?
-                .join("bundled_ccna.db");
-            std::fs::write(&bundled_path, BUNDLED_DB)
-                .map_err(|e| format!("Failed to write bundled DB: {}", e))?;
-
-            match db::sync_bundled_bank(&mut conn, &bundled_path) {
-                Ok(added) => eprintln!("[bank-sync] added {} new questions", added),
-                Err(e) => eprintln!("[bank-sync] failed: {}", e),
+            if let Err(e) = std::fs::create_dir_all(&data_dir) {
+                record_startup_error(format!("create_dir_all failed: {e}"));
             }
-            // Clean up the temp bundled DB file after sync.
+
+            // Never let a DB problem skip state registration — that produces the
+            // opaque "state not managed" error in every command.
+            let mut conn = open_database(&db_path);
+
+            // The bundled bank is embedded via include_bytes!, so the source
+            // path does not exist on Android. Stage it in the app data dir.
+            let bundled_path = data_dir.join("bundled_ccna.db");
+            match std::fs::write(&bundled_path, BUNDLED_DB) {
+                Ok(()) => match db::sync_bundled_bank(&mut conn, &bundled_path) {
+                    Ok(added) => eprintln!("[bank-sync] added {} new questions", added),
+                    Err(e) => record_startup_error(format!("bank sync failed: {e}")),
+                },
+                Err(e) => record_startup_error(format!("bundled DB write failed: {e}")),
+            }
             let _ = std::fs::remove_file(&bundled_path);
 
-            app.manage(db::Db(Mutex::new(conn)));
+            if !db::install_connection(conn) {
+                record_startup_error("db mutex poisoned while installing connection");
+            }
+            eprintln!("[ccna-startup] Db state registered");
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            get_startup_error,
             commands::get_stats,
             commands::get_subtopic_stats,
             commands::get_review_due_count,

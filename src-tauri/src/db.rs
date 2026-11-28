@@ -1,6 +1,7 @@
 use rusqlite::{params, Connection, OptionalExtension, Result, TransactionBehavior};
 use std::path::Path;
-use std::sync::Mutex;
+use std::sync::{Arc, Condvar, Mutex, OnceLock};
+use std::time::{Duration, Instant};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Run `f` inside a `BEGIN IMMEDIATE` transaction.
@@ -53,7 +54,85 @@ pub static BUNDLED_DB: &[u8] = include_bytes!("../resources/ccna.db");
 // `bank_version` setting so repeated syncs are idempotent.
 pub static BUNDLED_BANK_VERSION: &str = "2307-30183b0d5876";
 
-pub struct Db(pub Mutex<Connection>);
+/// The connection is shared through an Arc so the Db registered on the
+/// Builder and the Db observed by commands always point at the same connection,
+/// even though Android gives setup and commands different StateManagers.
+static SHARED_CONNECTION: OnceLock<Arc<ReadyConnection>> = OnceLock::new();
+
+static READY: OnceLock<(Mutex<bool>, Condvar)> = OnceLock::new();
+
+fn ready_state() -> &'static (Mutex<bool>, Condvar) {
+    READY.get_or_init(|| (Mutex::new(false), Condvar::new()))
+}
+
+/// Commands can be invoked by the Android WebView while setup is still opening
+/// the database. Block until setup installs the real connection (bounded so a
+/// stuck startup cannot hang every command forever).
+fn wait_ready() {
+    let (lock, cvar) = ready_state();
+    let deadline = Instant::now() + Duration::from_secs(20);
+    let mut ready = match lock.lock() {
+        Ok(guard) => guard,
+        Err(poisoned) => poisoned.into_inner(),
+    };
+    while !*ready && Instant::now() < deadline {
+        let (guard, _) = match cvar.wait_timeout(ready, Duration::from_millis(250)) {
+            Ok(result) => result,
+            Err(poisoned) => poisoned.into_inner(),
+        };
+        ready = guard;
+    }
+}
+
+/// A Mutex that never hands out the placeholder connection before setup has
+/// installed the real one. Commands keep calling `db.0.lock()` unchanged.
+pub struct ReadyConnection(Mutex<Connection>);
+
+impl ReadyConnection {
+    pub fn lock(&self) -> std::sync::LockResult<std::sync::MutexGuard<'_, Connection>> {
+        wait_ready();
+        self.0.lock()
+    }
+}
+
+pub struct Db(pub Arc<ReadyConnection>);
+
+impl Db {
+    /// Used by integration tests that build their own isolated Db.
+    pub fn new(conn: Connection) -> Self {
+        let (lock, cvar) = ready_state();
+        if let Ok(mut ready) = lock.lock() {
+            *ready = true;
+        }
+        cvar.notify_all();
+        Db(Arc::new(ReadyConnection(Mutex::new(conn))))
+    }
+}
+
+/// Swap the shared placeholder connection for the real one opened in setup.
+pub fn install_connection(conn: Connection) -> bool {
+    let shared = shared_connection();
+    let mut guard = match shared.0.lock() {
+        Ok(guard) => guard,
+        Err(_) => return false,
+    };
+    *guard = conn;
+    drop(guard);
+    let (lock, cvar) = ready_state();
+    if let Ok(mut ready) = lock.lock() {
+        *ready = true;
+    }
+    cvar.notify_all();
+    true
+}
+
+pub fn shared_connection() -> Arc<ReadyConnection> {
+    SHARED_CONNECTION
+        .get_or_init(|| Arc::new(ReadyConnection(Mutex::new(
+            Connection::open_in_memory().expect("sqlite in-memory must be available"),
+        ))))
+        .clone()
+}
 
 pub fn init(path: &Path) -> Result<Connection> {
     let conn = Connection::open(path)?;
