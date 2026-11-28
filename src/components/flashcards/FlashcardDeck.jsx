@@ -55,9 +55,11 @@ export default function FlashcardDeck() {
 
     try {
       await invoke("review_flashcard", {
-        id: cardId,
-        quality,
-        due_date: tomorrow,
+        payload: {
+          id: cardId,
+          quality,
+          due_date: tomorrow,
+        },
       });
 
       setReviewResults((prev) => [...prev, { cardId, quality }]);

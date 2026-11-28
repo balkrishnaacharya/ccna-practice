@@ -233,8 +233,10 @@ export default function Quiz() {
     if (!question) return;
     try {
       await invoke("save_question_note", {
-        question_id: question.id,
-        note: questionNote.trim(),
+        payload: {
+          question_id: question.id,
+          note: questionNote.trim(),
+        },
       });
       setNoteSaved(true);
       setShowNoteInput(false);
@@ -260,9 +262,10 @@ export default function Quiz() {
     if (!question || selected.length === 0) return;
     try {
       const result = await invoke("submit_answer", {
-        question_id: question.id,
-        choice_ids: selected,
-        confidence,
+        payload: {
+          question_id: question.id,
+          choice_ids: selected,
+        },
       });
       setFeedback(result);
     } catch (err) {
@@ -533,8 +536,8 @@ export default function Quiz() {
             </p>
           )}
 
-          {/* Submit / Next */}
-          <div className="mt-4">
+          {/* Submit / Next — sticky so it stays reachable above the system bar */}
+          <div className="sticky bottom-0 z-20 -mx-2 mt-4 bg-dark-card px-2 pb-2 pt-3 shadow-[0_-10px_24px_rgba(0,0,0,0.45)]">
             {!feedback ? (
               <button
                 onClick={submit}
